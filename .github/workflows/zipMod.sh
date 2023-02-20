@@ -22,19 +22,19 @@ zipName=$outputFolderName.zip
 echo "Version: $version"
 
 # Recreate the temp folder if it happens to be present
-rm -rf "./$outputFolderName"
-mkdir "$outputFolderName"
+rm -rf "./$outputFolderName-$version"
+mkdir "$outputFolderName-$version"
 
 # 1. List all files in git, which uses gitignore
 # 2. Remove any file matching the blacklist (eg afphoto files)
 # 3. Copy to a new folder with the mod name and version
 echo "Reading blacklist...\n$(cat $startingDir/blacklist.txt)"
-git ls-files | grep -Evf $startingDir/blacklist.txt | while read file; do cp --parents "$file" "$outputFolderName"; done
+git ls-files | grep -Evf $startingDir/blacklist.txt | while read file; do cp --parents "$file" "$outputFolderName-$version"; done
 
 # Zip the folder, then clean it up
-zip -r $zipName "./$outputFolderName"
+zip -r $zipName "./$outputFolderName-$version"
 echo "Created zip file at $(realpath $zipName)"
-rm -rf "./$outputFolderName"
+rm -rf "./$outputFolderName-$version"
 
 # Move the zip to the artifacts folder in the executing directory
 mkdir -p $startingDir/artifacts
