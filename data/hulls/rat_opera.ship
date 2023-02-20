@@ -1,0 +1,132 @@
+{
+  "hullName": "Opera",
+  "hullId": "rat_opera",
+  "hullSize": "FRIGATE",
+  "spriteName": "graphics/ships/rift_opera.png",
+  "style": "CHIRALITY",
+  "height": 74,
+  "width": 92,
+  "center": [46, 37],
+  "collisionRadius": 83.5,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 71,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_chiral_hull"
+  ],
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": 66.5,
+      "locations": [-3, 24]
+    },
+    {
+      "id": "WS0002",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": -66.5,
+      "locations": [-3, -24]
+    },
+    {
+      "id": "WS0003",
+      "size": "MEDIUM",
+      "type": "MISSILE",
+      "mount": "HARDPOINT",
+      "arc": 10,
+      "angle": 0,
+      "locations": [29, -25]
+    },
+    {
+      "id": "WS0004",
+      "size": "MEDIUM",
+      "type": "MISSILE",
+      "mount": "HARDPOINT",
+      "arc": 10,
+      "angle": -0,
+      "locations": [29, 25]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-33.5, 20],
+      "length": 0,
+      "width": 6,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    },
+    {
+      "location": [-33.5, -20],
+      "length": 0,
+      "width": 6,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    },
+    {
+      "location": [-31, -25],
+      "length": 0,
+      "width": 5,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    },
+    {
+      "location": [-31, 25],
+      "length": 0,
+      "width": 5,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    },
+    {
+      "location": [-26, 28.5],
+      "length": 0,
+      "width": 4,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    },
+    {
+      "location": [-26, -28.5],
+      "length": 0,
+      "width": 4,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    },
+    {
+      "location": [-37, -0],
+      "length": 0,
+      "width": 9,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    }
+  ],
+  "bounds": [
+    29.5, -13,
+    36, -34,
+    21, -44.5,
+    -28.5, -28.5,
+    -35.5, -8.5,
+    -35.5, 8.5,
+    -28.5, 28.5,
+    21, 44.5,
+    36, 34,
+    29.5, 13
+  ]
+}

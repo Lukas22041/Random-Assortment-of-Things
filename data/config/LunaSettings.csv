@@ -1,0 +1,30 @@
+modID,fieldID,fieldName,fieldType,defaultValue,fieldDescription,minValue,maxValue
+,,,,,,,
+assortment_of_things,rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,
+assortment_of_things,rat_parallelEnabled,Enable Parallel Construction,Boolean,false,"Removes the queue system in Colony Construction, allowing everything to be build at the same time.",,
+assortment_of_things,rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,"If set to true and parallel construction is enabled, it will apply the same effect to NPC markets.",,
+,,,,,,,
+,,,,,,,
+assortment_of_things,rat_themeHeader,Expanded Themes,Header,Expanded Themes,,,
+assortment_of_things,rat_themeText,,Text,"Adds more Themes to the Procedual Generation of Starsector. A Theme determines what kind of things get generated in to a constellation, like [REDACTED] and derelicts for example. ",,,
+assortment_of_things,rat_enableOutposts,Outpost Theme,Boolean,false,"Adds a type of system that is closely guarded by a faction, in which they attack any fleet that is entering it, even if they are allied. Only generates them for vanilla factions.",,
+assortment_of_things,rat_enableBlackmarket,Blackmarket Theme,Boolean,false,"A once per sector, fringe-world pirate constellation that hosts a blackmarket that sells some wares not purchaseable anywhere else.",,
+assortment_of_things,rat_enableChiral,Chiral Theme,Boolean,false,"A more supernatural themed constellation with some of its own loot to find. Currently still in development, so you may find its content lacking.",,
+,,,,,,,
+assortment_of_things,rat_procgenHeader,Procedual Generation Tweaks,Header,Procedual Generation Config,,,
+assortment_of_things,rat_procgenText,,Text,"Changes to how starsectors procedual generation works. 
+This section is basicly a simplified and more idiot-proof version of Adjusted Sector.
+If Adjusted Sector is installed, this Section is completly ignored and Adjusted Sectors configs are used instead.",,,
+assortment_of_things,rat_systemScale,Change amount of generated Systems,Int,1,"Increases the amount of generated Systems. 
+Do not increase it if youre playing on hardware that already struggles with the base settings. 
+An increase in generated systems come with a heavy performance cost.
+
+1 - 212 Systems (Vanilla).
+2 - 325 Systems.
+3 - 523 Systems.
+4 - 1077 Systems.",1,4
+assortment_of_things,rat_hyperspaceCloudsMod,Hyperspace Clouds Spawn Modifier,Double,0.8,"Lets you modify how many hyperspace clouds spawn. Vanilla uses a value of 0.8. A lower value will spawn less of them, with a value of 0 spawning none. ",0,1.0
+assortment_of_things,rat_miscSkipMod,Modify system skip chance,Double,0.5,"After the game finishes generating systems with more specific themes, starsector generates filler systems for any system that hasnt received a theme yet, for those it does a coinflip deciding if it should generate loot (Debri, Derelicts, Research Stations) in them or not, this lets you modify that coinflip. A value of 0.5 is the same as Vannila Starsector (50 Percent). A value of 1.0 removes this behaviour (0 Percent). This wont completly get rid of fully empty systems, but will reduce the amount of them that you encounter.",0.5,1.0
+,,,,,,,
+assortment_of_things,rat_miscHeader,Miscellaneous,Header,Miscellaneous,,,
+assortment_of_things,rat_forceDisableHelp,Force disable help-popups,Boolean,false,"Disables help popups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, does not re-enable help-popups if disabled.",,

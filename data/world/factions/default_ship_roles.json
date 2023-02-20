@@ -1,0 +1,18 @@
+{
+	"combatSmallForSmallFleet":{
+		"rat_dune_support":10,
+		"rat_opera_strike":8,
+	},
+	"combatSmall":{
+		"rat_dune_support":10,
+		"rat_opera_strike":8,
+		"rat_phenix_supression":2,
+		"rat_phenix_strike":2,
+	},
+	"combatMedium":{
+		"rat_dune_support":10,
+		"rat_opera_strike":8,
+		"rat_phenix_supression":2,
+		"rat_phenix_strike":2,
+	},
+}

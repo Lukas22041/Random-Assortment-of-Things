@@ -1,0 +1,22 @@
+{
+    "id": "assortment_of_things",
+    "name": "Random Assortment of Things",
+    "author": "Lukas04",
+    "utility": "true",
+    "version": "0.3.0",
+    "description": "A collection of things that that i add to whenever a random idea pops up in to my brain",
+    "gameVersion": "0.95.1a-RC6",
+	"jars":["jars/RandomAssortmentofThings.jar"],
+	"modPlugin":"assortment_of_things.RATModPlugin",
+	"dependencies": [
+		{
+			"id": "lunalib",
+			"name": "LunaLib",
+		},
+		{
+			"id": "MagicLib",
+			"name": "MagicLib",
+		},
+	]
+}
+

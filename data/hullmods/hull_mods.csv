@@ -1,0 +1,2 @@
+name,id,tier,rarity,tech/manufacturer,tags,uiTags,base value,unlocked,hidden,hiddenEverywhere,cost_frigate,cost_dest,cost_cruiser,cost_capital,script,desc,short,sprite
+Chiral Hull,rat_chiral_hull,0,,Chiral,"defensive, shields, merc",Shields,3000,FALSE,TRUE,,3,6,9,15,assortment_of_things.combat.hullmods.ChiralHull,,,graphics/hullmods/chiral_hull.png

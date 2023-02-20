@@ -1,0 +1,131 @@
+{
+  "hullName": "Phenix",
+  "hullId": "rat_phenix",
+  "hullSize": "DESTROYER",
+  "spriteName": "graphics/ships/rift_phenix.png",
+  "style": "CHIRALITY",
+  "height": 168,
+  "width": 88,
+  "center": [44, 84],
+  "collisionRadius": 154,
+  "shieldCenter": [15, -0],
+  "shieldRadius": 115.5,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_chiral_hull"
+  ],
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 280,
+      "angle": 90,
+      "locations": [-38, 29]
+    },
+    {
+      "id": "WS0002",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 280,
+      "angle": -90,
+      "locations": [-38, -29]
+    },
+    {
+      "id": "WS0003",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "HARDPOINT",
+      "arc": 0,
+      "angle": 0,
+      "locations": [55, 20]
+    },
+    {
+      "id": "WS0004",
+      "size": "MEDIUM",
+      "type": "SYNERGY",
+      "mount": "HARDPOINT",
+      "arc": 0,
+      "angle": 0,
+      "locations": [74, 0]
+    },
+    {
+      "id": "WS0005",
+      "size": "MEDIUM",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 90,
+      "angle": 0,
+      "locations": [43.5, 0],
+      "renderOrderMod": 1
+    },
+    {
+      "id": "WS0006",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": 0,
+      "locations": [-28.5, 0]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-83.5, 0],
+      "length": 1,
+      "width": 10,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    },
+    {
+      "location": [-81.5, -15.5],
+      "length": 1,
+      "width": 8,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    },
+    {
+      "location": [-81.5, 15.5],
+      "length": 1,
+      "width": 8,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    },
+    {
+      "location": [-59.5, -33],
+      "length": 1,
+      "width": 7,
+      "angle": 0.5,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    },
+    {
+      "location": [-59.5, 33],
+      "length": 1,
+      "width": 7,
+      "angle": -0.5,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "RIFT"
+    }
+  ],
+  "bounds": [
+    82.5, -14.5,
+    57.5, -25,
+    -55.5, -41.5,
+    -80, -21,
+    -80, 21,
+    -55.5, 41.5,
+    57.5, 25,
+    82.5, 14.5
+  ]
+}

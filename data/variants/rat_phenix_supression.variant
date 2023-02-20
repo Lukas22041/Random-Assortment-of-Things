@@ -1,0 +1,29 @@
+{
+  "variantId": "rat_phenix_supression",
+  "hullId": "rat_phenix",
+  "displayName": "Supression",
+  "goalVariant": true,
+  "fluxCapacitors": 20,
+  "fluxVents": 19,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [
+    "hardenedshieldemitter",
+    "fluxdistributor",
+    "fluxcoil"
+  ],
+  "weaponGroups": [
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0001": "ioncannon_fighter",
+        "WS0002": "ioncannon",
+        "WS0004": "heavyblaster",
+        "WS0005": "ionpulser"
+      }
+    }
+  ],
+  "modules": [],
+  "wings": []
+}
