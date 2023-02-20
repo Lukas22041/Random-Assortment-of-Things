@@ -17,7 +17,7 @@ echo "Location of folder to zip:" $(realpath $1)
 
 cd $folderToZip
 version=$(git describe --tags)
-zipName=$outputFolderName-$version.zip
+zipName=$outputFolderName.zip
 
 echo "Version: $version"
 
