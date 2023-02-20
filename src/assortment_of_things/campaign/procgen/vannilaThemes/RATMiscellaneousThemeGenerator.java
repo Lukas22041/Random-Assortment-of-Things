@@ -1,12 +1,8 @@
 package assortment_of_things.campaign.procgen.vannilaThemes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+import assortment_of_things.misc.RATSettings;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageSpecialAssigner;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.ThemeGenContext;
@@ -37,9 +33,11 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageSpecialAssigner.
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 
-
+//This file modified its static values, and the Hypershunt spawn amount.
 public class RATMiscellaneousThemeGenerator extends BaseThemeGenerator {
 
+	//Gets the scale from RATSectorProcGen
+	public static float RAT_SCALE = 1f;
 	public static float PROB_TO_ADD_SOMETHING = 0.5f;
 	
 	public static int MIN_GATES = Global.getSettings().getInt("minNonCoreGatesInSector");
@@ -86,11 +84,23 @@ public class RATMiscellaneousThemeGenerator extends BaseThemeGenerator {
 				if (!derelict && theme != null && !data.system.getTags().isEmpty()) continue;
 //				if (!derelict && theme != null && !theme.equals(Themes.DERELICTS) &&
 //						!theme.equals(Themes.NO_THEME)) continue;
-				
-				if (random.nextFloat() > PROB_TO_ADD_SOMETHING || (derelict && theme != null)) {
-					data.system.addTag(Tags.THEME_MISC_SKIP);
-					continue;
+
+				if (RATSettings.getProcgenImprovedMisc())
+				{
+					if ((derelict && theme != null)) {
+						data.system.addTag(Tags.THEME_MISC_SKIP);
+						continue;
+					}
 				}
+				else
+				{
+					if (random.nextFloat() > PROB_TO_ADD_SOMETHING || (derelict && theme != null)) {
+						data.system.addTag(Tags.THEME_MISC_SKIP);
+						continue;
+					}
+				}
+
+
 
 				populateNonMain(data);
 				all.add(data);
@@ -105,13 +115,16 @@ public class RATMiscellaneousThemeGenerator extends BaseThemeGenerator {
 		SalvageSpecialAssigner.assignSpecials(all, specialContext);
 		
 		if (DEBUG) System.out.println("Finished generating misc derelicts\n\n\n\n\n");
-		
-		
-		addDerelicts(context, "legion_xiv_Elite", 2, 3, 1, 2, Tags.THEME_REMNANT);
+
+
+		/*addDerelicts(context, "legion_xiv_Elite", 2, 3, 1, 2, Tags.THEME_REMNANT);
 		addDerelicts(context, "phantom_Elite", 1, 2, 0, 1, Tags.THEME_REMNANT, Tags.THEME_RUINS, Tags.THEME_DERELICT, Tags.THEME_UNSAFE);
-		addDerelicts(context, "revenant_Elite", 1, 2, 0, 1, Tags.THEME_REMNANT, Tags.THEME_RUINS, Tags.THEME_DERELICT, Tags.THEME_UNSAFE);
-		
-		
+		addDerelicts(context, "revenant_Elite", 1, 2, 0, 1, Tags.THEME_REMNANT, Tags.THEME_RUINS, Tags.THEME_DERELICT, Tags.THEME_UNSAFE); */
+		addDerelicts(context, "legion_xiv_Elite", (int) (2 * RAT_SCALE), (int) (3 * RAT_SCALE), (int) (1 * RAT_SCALE), (int) (2 * RAT_SCALE), Tags.THEME_REMNANT);
+		addDerelicts(context, "phantom_Elite", (int) (1 * RAT_SCALE), (int) (2 * RAT_SCALE), 0, (int) (1 * RAT_SCALE), Tags.THEME_REMNANT, Tags.THEME_RUINS, Tags.THEME_DERELICT, Tags.THEME_UNSAFE);
+		addDerelicts(context, "revenant_Elite", (int) (1 * RAT_SCALE), (int) (2 * RAT_SCALE), 0, (int) (1 * RAT_SCALE), Tags.THEME_REMNANT, Tags.THEME_RUINS, Tags.THEME_DERELICT, Tags.THEME_UNSAFE);
+
+
 		if (DEBUG) System.out.println("Looking for planetary shield planet");
 		
 		PlanetAPI bestHab = null;
@@ -429,35 +442,80 @@ public class RATMiscellaneousThemeGenerator extends BaseThemeGenerator {
 	
 	public void populateNonMain(StarSystemData data) {
 		if (DEBUG) System.out.println(" Generating misc derelicts in system " + data.system.getName());
-		boolean special = data.isBlackHole() || data.isNebula() || data.isPulsar();
-		if (special) {
-			addResearchStations(data, 0.25f, 1, 1, createStringPicker(Entities.STATION_RESEARCH, 10f));
-		}
-		
-		if (random.nextFloat() < 0.5f) return;
-		
-		WeightedRandomPicker<String> factions = SalvageSpecialAssigner.getNearbyFactions(random, data.system.getCenter(),
-														15f, 10f, 10f);
-		
-		addShipGraveyard(data, 0.05f, 1, 1, factions);
-		
-		addDebrisFields(data, 0.25f, 1, 2);
 
-		addDerelictShips(data, 0.5f, 0, 3, factions);
-		
-		addCaches(data, 0.25f, 0, 2, createStringPicker( 
-				Entities.WEAPONS_CACHE, 4f,
-				Entities.WEAPONS_CACHE_SMALL, 10f,
-				Entities.WEAPONS_CACHE_HIGH, 4f,
-				Entities.WEAPONS_CACHE_SMALL_HIGH, 10f,
-				Entities.WEAPONS_CACHE_LOW, 4f,
-				Entities.WEAPONS_CACHE_SMALL_LOW, 10f,
-				Entities.SUPPLY_CACHE, 4f,
-				Entities.SUPPLY_CACHE_SMALL, 10f,
-				Entities.EQUIPMENT_CACHE, 4f,
-				Entities.EQUIPMENT_CACHE_SMALL, 10f
-				));
-		
+		//Improved Misc.
+		if (RATSettings.getProcgenImprovedMisc())
+		{
+			Global.getSector().getMemoryWithoutUpdate().set("$rat_generated_improved_misc", true);
+			boolean special = data.isBlackHole() || data.isNebula() || data.isPulsar();
+			if (special) {
+				addResearchStations(data, 0.90f, 1, 1, createStringPicker(Entities.STATION_RESEARCH, 10f));
+			}
+
+			if (!data.resourceRich.isEmpty()) {
+				addMiningStations(data, 0.75f, 1, 1, createStringPicker(Entities.STATION_MINING, 10f));
+			}
+
+			if (!data.habitable.isEmpty()) {
+				addHabCenters(data, 0.60f, 1, 1, createStringPicker(Entities.ORBITAL_HABITAT, 10f));
+			}
+
+			if (random.nextFloat() > 0.5f) return;
+
+			WeightedRandomPicker<String> factions = SalvageSpecialAssigner.getNearbyFactions(random, data.system.getCenter(),
+					15f, 10f, 10f);
+
+			addShipGraveyard(data, 0.25f, 1, 1, factions);
+
+			addDebrisFields(data, 0.50f, 1, 2);
+
+			addDerelictShips(data, 1f, 2, 5, factions);
+
+			addCaches(data, 0.60f, 1, 2, createStringPicker(
+					Entities.WEAPONS_CACHE, 4f,
+					Entities.WEAPONS_CACHE_SMALL, 10f,
+					Entities.WEAPONS_CACHE_HIGH, 4f,
+					Entities.WEAPONS_CACHE_SMALL_HIGH, 10f,
+					Entities.WEAPONS_CACHE_LOW, 4f,
+					Entities.WEAPONS_CACHE_SMALL_LOW, 10f,
+					Entities.SUPPLY_CACHE, 4f,
+					Entities.SUPPLY_CACHE_SMALL, 10f,
+					Entities.EQUIPMENT_CACHE, 4f,
+					Entities.EQUIPMENT_CACHE_SMALL, 10f
+			));
+		}
+		//Vanilla
+		else
+		{
+			boolean special = data.isBlackHole() || data.isNebula() || data.isPulsar();
+			if (special) {
+				addResearchStations(data, 0.25f, 1, 1, createStringPicker(Entities.STATION_RESEARCH, 10f));
+			}
+
+			if (random.nextFloat() > 0.5f) return;
+
+			WeightedRandomPicker<String> factions = SalvageSpecialAssigner.getNearbyFactions(random, data.system.getCenter(),
+					15f, 10f, 10f);
+
+			addShipGraveyard(data, 0.05f, 1, 1, factions);
+
+			addDebrisFields(data, 0.25f, 1, 2);
+
+			addDerelictShips(data, 0.5f, 0, 3, factions);
+
+			addCaches(data, 0.25f, 0, 2, createStringPicker(
+					Entities.WEAPONS_CACHE, 4f,
+					Entities.WEAPONS_CACHE_SMALL, 10f,
+					Entities.WEAPONS_CACHE_HIGH, 4f,
+					Entities.WEAPONS_CACHE_SMALL_HIGH, 10f,
+					Entities.WEAPONS_CACHE_LOW, 4f,
+					Entities.WEAPONS_CACHE_SMALL_LOW, 10f,
+					Entities.SUPPLY_CACHE, 4f,
+					Entities.SUPPLY_CACHE_SMALL, 10f,
+					Entities.EQUIPMENT_CACHE, 4f,
+					Entities.EQUIPMENT_CACHE_SMALL, 10f
+			));
+		}
 	}
 	
 	
@@ -590,9 +648,9 @@ public class RATMiscellaneousThemeGenerator extends BaseThemeGenerator {
 		if (tapSystems.isEmpty()) {
 			tapSystems.addAll(backup);
 		}
-		
-		int numTaps = 2 + random.nextInt(2);
-		numTaps = 2;
+
+	//	int numTaps = 2 + random.nextInt(2);
+		int numTaps = (int) (2 * RAT_SCALE);
 		int added = 0;
 		while (added < numTaps && !tapSystems.isEmpty()) {
 			StarSystemAPI pick = tapSystems.pickAndRemove();

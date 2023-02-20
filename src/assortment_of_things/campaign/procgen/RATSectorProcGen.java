@@ -135,8 +135,8 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 				scale = 2f;
 				break;
 			case 4:
-				CONSTELLATION_CELLS = 5;
-				scale = 5f;
+				CONSTELLATION_CELLS = 6;
+				scale = 2.5f;
 				break;
 		}
 
@@ -147,8 +147,10 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 		//Value 10 = 52 Constellations, 212 Systems (Vannila)
 		//CONSTELLATION_CELLS = 6;
 
-		RATMiscellaneousThemeGenerator.PROB_TO_ADD_SOMETHING = RATSettings.getProcgenEmptySkipChance();
-		RATMiscellaneousThemeGenerator.MIN_GATES = (int) (Global.getSettings().getInt("minGatesToAddOnSecondPass") * scale);
+		RATDerelictThemeGenerator.RAT_SCALE = scale;
+
+		RATMiscellaneousThemeGenerator.RAT_SCALE = scale;
+		RATMiscellaneousThemeGenerator.MIN_GATES = (int) (Global.getSettings().getInt("minNonCoreGatesInSector") * scale);
 		RATMiscellaneousThemeGenerator.MAX_GATES = (int) (Global.getSettings().getInt("maxNonCoreGatesInSector") * scale);
 		RATMiscellaneousThemeGenerator.MIN_GATES_TO_ADD = (int) (Global.getSettings().getInt("minGatesToAddOnSecondPass") * scale);
 
@@ -160,7 +162,6 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 
 		OutpostThemeGenerator.setMinOutpostConstellations( (int) (2 * scale));
 		OutpostThemeGenerator.setMaxOutpostConstellations( (int) (5 * scale));
-
 
 
 		float w = Global.getSettings().getFloat("sectorWidth");

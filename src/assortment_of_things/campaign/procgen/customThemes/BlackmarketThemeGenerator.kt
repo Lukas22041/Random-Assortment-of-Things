@@ -165,13 +165,12 @@ class BlackmarketThemeGenerator : BaseThemeGenerator() {
         //market.getMemoryWithoutUpdate().set(MEM_FLAG, true)
        // market.getMemoryWithoutUpdate().set(MemFlags.HIDDEN_BASE_MEM_FLAG, true)
 
-        market.setFactionId(Factions.PIRATES)
         market.setPrimaryEntity(planet)
         market.getTariff().modifyFlat("rat_blackmarket_increase", 4f)
 
         market.setSurveyLevel(SurveyLevel.FULL)
 
-        market.setFactionId(Factions.PIRATES)
+        market.setFactionId("spacers_gambit_pirates")
         market.addCondition(Conditions.POPULATION_5)
 
         market.addIndustry(Industries.POPULATION)
@@ -193,7 +192,7 @@ class BlackmarketThemeGenerator : BaseThemeGenerator() {
 
         Global.getSector().economy.addMarket(market, true)
         planet.market = market
-        planet.setFaction(Factions.PIRATES)
+        planet.setFaction("spacers_gambit_pirates")
     }
 
     fun generatePirateBase(data: StarSystemData, chanceToAddAny: Float, weights: LinkedHashMap<LocationType, Float>)

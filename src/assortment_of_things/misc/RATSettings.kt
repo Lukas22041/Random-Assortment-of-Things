@@ -24,18 +24,16 @@ object RATSettings : LunaSettingsListener
     @JvmStatic
     var procgenScaleModifier = LunaSettings.getInt(modID, "rat_systemScale")
     @JvmStatic
-    var procgenEmptySkipChance = LunaSettings.getFloat(modID, "rat_miscSkipMod")
-    @JvmStatic
     var procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
+    @JvmStatic
+    var procgenImprovedMisc = LunaSettings.getBoolean(modID, "rat_improvedMisc")
 
     //Parallel Construction
     var parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")
     var parallelApplyToNPCs = LunaSettings.getBoolean(modID, "rat_parallelApplyToNPCs")
 
-
     //Misc
     var disableHelp = LunaSettings.getBoolean(modID, "rat_forceDisableHelp")
-
 
     override fun settingsChanged(modID: String) {
         if (modID == RATSettings.modID)
@@ -54,7 +52,7 @@ object RATSettings : LunaSettingsListener
         enableChiral = LunaSettings.getBoolean(modID, "rat_enableChiral")
 
         procgenScaleModifier = LunaSettings.getInt(modID, "rat_systemScale")
-        procgenEmptySkipChance = LunaSettings.getFloat(modID, "rat_miscSkipMod")
+        procgenImprovedMisc = LunaSettings.getBoolean(modID, "rat_improvedMisc")
         procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
 
         parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")

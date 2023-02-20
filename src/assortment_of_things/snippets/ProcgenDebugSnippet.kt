@@ -52,7 +52,8 @@ class ProcgenDebugSnippet : LunaSnippet
         var miscCount = 0
         var miscSkipCount = 0
 
-        var derelictMainCount = 0
+        var derelictCount = 0
+        var derelictMothership = 0
 
         var outpostMainCount = 0
         var outpostSecondaryCount = 0
@@ -91,7 +92,8 @@ class ProcgenDebugSnippet : LunaSnippet
                     Tags.THEME_RUINS_MAIN -> ruinsMainCount++
                     Tags.THEME_RUINS_SECONDARY -> ruinsSecondaryCount++
 
-                    Tags.THEME_DERELICT -> derelictMainCount++
+                    Tags.THEME_DERELICT -> derelictCount++
+                    Tags.THEME_DERELICT_MOTHERSHIP -> derelictMothership++
 
                     RATStrings.THEME_OUTPOST_MAIN -> outpostMainCount++
                     RATStrings.THEME_OUTPOST_SECONDARY -> outpostSecondaryCount++
@@ -121,6 +123,10 @@ class ProcgenDebugSnippet : LunaSnippet
         var chiralEnabled = "Disabled"
         if (Global.getSector().memoryWithoutUpdate.isNotNull("\$rat_chiral_enabled")) chiralEnabled = "Enabled"
 
+        var improvedMisc = "Disabled"
+        if (Global.getSector().memoryWithoutUpdate.isNotNull("\$rat_generated_improved_misc")) improvedMisc = "Enabled"
+
+
 
         output.addPara("Sector Data: ", 0f, highlightColor, highlightColor)
         output.addPara("Constellations: ${constellations.size}", 0f, baseColor, baseColor)
@@ -133,6 +139,7 @@ class ProcgenDebugSnippet : LunaSnippet
         output.addPara("Outpost Theme: $outpostEnabled", 0f, baseColor, baseColor)
         output.addPara("Blackmarket Theme: $blackmarketEnabled", 0f, baseColor, baseColor)
         output.addPara("Chiral Theme: $chiralEnabled", 0f, baseColor, baseColor)
+        output.addPara("Improved Misc: $improvedMisc", 0f, baseColor, baseColor)
 
         output.addSpacer(5f)
 
@@ -147,7 +154,8 @@ class ProcgenDebugSnippet : LunaSnippet
 
         output.addSpacer(5f)
 
-        output.addPara("Theme Derelict Systems: $derelictMainCount", 0f, baseColor, baseColor)
+        output.addPara("Theme Derelict Systems: $derelictCount", 0f, baseColor, baseColor)
+        output.addPara("Theme Derelict-Mothership Systems: $derelictMothership", 0f, baseColor, baseColor)
 
         output.addSpacer(5f)
 

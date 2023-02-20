@@ -35,8 +35,11 @@ import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.SurveyDataSpec
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 
-
+//Modifies the amount of Motherships (and therefor derelict systems) and cryosleepers.
 public class RATDerelictThemeGenerator extends BaseThemeGenerator {
+
+	//Gets the scale from RATSectorProcGen
+	public static float RAT_SCALE = 1f;
 
 	public static final float BASE_LINK_FRACTION = 0.25f;
 	public static final float SALVAGE_SPECIAL_FRACTION = 0.5f;
@@ -70,14 +73,19 @@ public class RATDerelictThemeGenerator extends BaseThemeGenerator {
 		float perChain = 1 + avg1 + (avg1 * avg2);
 		
 		float num = total / perChain;
-		if (num < 1) num = 1;
+
+		//weirdly overcomplicated amount calculation for vannila despite basicly always generating 2
+
+		/*if (num < 1) num = 1;
 		if (num > 3) num = 3;
 		
 		if (num > 1 && num < 2) {
 			num = 2;
 		} else {
 			num = Math.round(num);
-		}
+		}*/
+
+		num = 2 * RAT_SCALE;
 		
 		List<AddedEntity> mothershipsSoFar = new ArrayList<AddedEntity>();
 		
@@ -126,7 +134,7 @@ public class RATDerelictThemeGenerator extends BaseThemeGenerator {
 			use.add(system, w);
 		}
 		
-		int numCryo = 2;
+		int numCryo = (int) (2 * RAT_SCALE);
 		if (cryoSystems.isEmpty() || cryoSystems.getItems().size() < numCryo + 1) {
 			cryoSystems.addAll(backup);
 		}
