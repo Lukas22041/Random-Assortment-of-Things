@@ -8,5 +8,8 @@ DO_NOT_USE
 .gradle
 ^gradle
 .flac$
+.iml
+.gitattributes
 ^.github/
+.md
 banner.png$
