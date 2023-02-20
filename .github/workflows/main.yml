@@ -1,0 +1,2 @@
+- name: Create/Update tag
+  uses: rickstaa/action-create-tag@v1.5.4
