@@ -38,7 +38,7 @@ jobs:
       - name: Publish Release on GitHub
         uses: "ncipollo/release-action@v1"
         with:
-          name: Random Assortment of Things ${{ env.VERSION }}
+          name: ${{ env.VERSION }}
           tag: ${{ env.VERSION }}
           bodyFile: changes.txt
           draft: false
