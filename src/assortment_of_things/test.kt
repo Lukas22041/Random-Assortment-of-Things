@@ -6,7 +6,7 @@ class test : BaseSpecialItemPlugin()
 {
     override fun performRightClickAction() {
         super.performRightClickAction()
-
+//
         stack.specialDataIfSpecial.data
     }
 
