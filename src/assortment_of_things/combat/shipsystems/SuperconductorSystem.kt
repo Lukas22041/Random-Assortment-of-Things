@@ -84,6 +84,7 @@ class SuperconductorSystem() : BaseShipSystemScript(), CombatLayeredRenderingPlu
                     600f,  // max range
                     "tachyon_lance_emp_impact", 20f,  // thickness
                     color, Color(255, 255, 255, 255))
+
                 projectile.setCustomData("already_empd", true)
             }
         }

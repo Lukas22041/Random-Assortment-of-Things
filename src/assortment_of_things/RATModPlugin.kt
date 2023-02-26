@@ -11,11 +11,15 @@ import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEventListener
 import com.fs.starfarer.api.campaign.listeners.ColonyInteractionListener
+import com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo
 import com.fs.starfarer.api.impl.campaign.ids.Entities
+import com.fs.starfarer.api.impl.campaign.procgen.StarAge
+import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaExtensions.getSystemsWithTag
+import org.lwjgl.util.vector.Vector2f
 
 
 class RATModPlugin : BaseModPlugin() {
@@ -34,6 +38,8 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
+
+
         Global.getSector().listenerManager.addListener(RATSettings, true)
         Global.getSector().registerPlugin(RATCampaignPlugin())
 
@@ -50,6 +56,14 @@ class RATModPlugin : BaseModPlugin() {
             }
         }
 
+       /* var params = StarSystemGenerator.CustomConstellationParams(StarAge.ANY)
+        params.systemTypes = listOf(StarSystemGenerator.StarSystemType.SINGLE)
+        params.minStars = 1
+        params.maxStars = 2
+        params.location = Vector2f(0f, 0f)
+        params.secondaryName = ""
+        params.name = "TestSys"
+        StarSystemGenerator(params).generate()*/
 
         /*var plugins = Global.getSector().genericPlugins
         plugins.addPlugin(RATDiscoveryPlugin(), true)*/

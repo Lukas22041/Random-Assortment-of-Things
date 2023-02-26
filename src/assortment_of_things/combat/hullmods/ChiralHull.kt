@@ -2,6 +2,9 @@ package assortment_of_things.combat.hullmods
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.impl.campaign.procgen.StarAge
+import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
+import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator.StarSystemType
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
@@ -30,15 +33,15 @@ class ChiralHull : BaseHullMod()
 
         if(stats!!.getVariant().getHullMods().contains("safetyoverrides"))
         {
-            MagicIncompatibleHullmods.removeHullmodWithWarning(stats.getVariant(),"safetyoverrides","chiral_hull");
+            MagicIncompatibleHullmods.removeHullmodWithWarning(stats.getVariant(),"safetyoverrides","rat_chiral_hull");
         }
         if(stats!!.getVariant().getHullMods().contains("targetingunit"))
         {
-            MagicIncompatibleHullmods.removeHullmodWithWarning(stats.getVariant(),"targetingunit","chiral_hull");
+            MagicIncompatibleHullmods.removeHullmodWithWarning(stats.getVariant(),"targetingunit","rat_chiral_hull");
         }
         if(stats!!.getVariant().getHullMods().contains("dedicated_targeting_core"))
         {
-            MagicIncompatibleHullmods.removeHullmodWithWarning(stats.getVariant(),"targetingunit","chiral_hull");
+            MagicIncompatibleHullmods.removeHullmodWithWarning(stats.getVariant(),"targetingunit","rat_chiral_hull");
         }
 
         stats!!.ventRateMult.modifyMult(id, 0f);

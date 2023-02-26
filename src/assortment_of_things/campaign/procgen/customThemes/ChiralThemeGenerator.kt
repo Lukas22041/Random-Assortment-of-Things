@@ -23,6 +23,7 @@ import com.fs.starfarer.api.impl.campaign.terrain.AsteroidBeltTerrainPlugin
 import com.fs.starfarer.api.impl.campaign.terrain.RingSystemTerrainPlugin
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.fleet.MutableMarketStats
+import lunalib.lunaExtensions.getSystemsWithTag
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
@@ -59,6 +60,8 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
     override fun generateForSector(context: ThemeGenContext?, allowedSectorFraction: Float) {
         val total: Float = (context!!.constellations.size - context.majorThemes.size).toFloat() * allowedSectorFraction
         if (total <= 0) return
+
+
 
         //gets available constellations that havent been used yet
         val constellations: List<Constellation?>? = ProcgenUtility.getSortedAvailableConstellations(context, false, Vector2f(), null)
@@ -150,6 +153,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         mirroredSystem.doNotShowIntelFromThisLocationOnMap = true
         mirroredSystem.backgroundTextureFilename = "graphics/backgrounds/chiral_bg.jpg"
         mirroredSystem.addTag(RATStrings.THEME_CHIRAL_COPY)
+        mirroredSystem.addTag(Tags.THEME_HIDDEN)
         mirroredSystem.addTag(Tags.THEME_UNSAFE)
         mirroredSystem.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
         mirroredSystem.isProcgen = false
