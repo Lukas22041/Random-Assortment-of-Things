@@ -35,6 +35,7 @@ object RATTags
 
     var THEME_CHIRAL_COPY = "theme_chiral_copy"
 
-    var TAG_DIMENSIONAL_TEAR = "rat_dimensional_tear"
+    var TAG_DIMENSIONAL_GATE = "rat_dimensional_gate"
+    var TAG_CHIRAL_NEBULA = "rat_chiral_nebula"
 
 }

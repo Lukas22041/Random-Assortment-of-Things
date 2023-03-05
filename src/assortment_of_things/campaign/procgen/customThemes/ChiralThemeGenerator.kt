@@ -1,19 +1,23 @@
 package assortment_of_things.campaign.procgen.customThemes
 
-import assortment_of_things.campaign.plugins.entities.DimensionalTearEntity
+import assortment_of_things.campaign.plugins.entities.DimensionalGate
 import assortment_of_things.campaign.procgen.ProcgenUtility
+import assortment_of_things.scripts.FactionBaseFleetManager
 import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.fleet.FleetMemberType
+import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.procgen.Constellation
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
+import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageEntityGeneratorOld
 import com.fs.starfarer.api.impl.campaign.procgen.themes.ThemeGenContext
 import com.fs.starfarer.api.impl.campaign.submarkets.StoragePlugin
 import com.fs.starfarer.api.impl.campaign.terrain.AsteroidBeltTerrainPlugin
@@ -230,7 +234,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
 
         }
 
-        var tear = generateTear(ogData, mirrorEntities.filter { it.originalEntity is PlanetAPI && !it.originalEntity.isStar && !(it.originalEntity as PlanetAPI).isGasGiant }.random(), 350f )
+        var tear = generateGate(ogData, mirrorEntities.filter { it.originalEntity is PlanetAPI && !it.originalEntity.isStar && !(it.originalEntity as PlanetAPI).isGasGiant }.random(), 350f )
 
         mirrorEntities.add(tear)
         ogSystem.memoryWithoutUpdate.set("\$rat_mirrored_entities", mirrorEntities)
@@ -243,7 +247,18 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         mirrorEntities.add(station)
         var mirrorStation = station.mirroredEntity
 
-        val params = FleetParamsV3(null,
+        val activeFleets = FactionBaseFleetManager(mirrorStation,
+            3f,
+            2,
+            4,
+            25f,
+            50,
+            100,
+            Factions.HEGEMONY)
+
+        mirroredSystem.addScript(activeFleets)
+
+       /* val params = FleetParamsV3(null,
             null,
             "chirality",
             3f,
@@ -259,43 +274,49 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         params.averageSMods = 1;
         params.withOfficers = true
         val defenderFleet = FleetFactoryV3.createFleet(params)
-        station.mirroredEntity.memoryWithoutUpdate.set("\$defenderFleet", defenderFleet)
+        station.mirroredEntity.memoryWithoutUpdate.set("\$defenderFleet", defenderFleet)*/
         Misc.setAbandonedStationMarket("chiral_station", mirrorStation)
 
-        var storage = Misc.getStorage(mirrorStation.market) as StoragePlugin
+        /*var storage = Misc.getStorage(mirrorStation.market) as StoragePlugin
         storage.cargo.mothballedShips.addFleetMember(Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_dune_Hull"))
         storage.cargo.mothballedShips.addFleetMember(Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_dune_Hull"))
         storage.cargo.mothballedShips.addFleetMember(Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_opera_Hull"))
-        storage.cargo.mothballedShips.addFleetMember(Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_phenix_Hull"))
+        storage.cargo.mothballedShips.addFleetMember(Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_phenix_Hull"))*/
 
         addDerelictShips(computeSystemData(mirroredSystem), 1f, 5, 9, createStringPicker("chirality", 1f))
 
         return mirroredSystem
     }
 
-    fun generateTear(data: StarSystemData, focus: MirrorEntity, orbitRadius: Float) : MirrorEntity
+    fun generateGate(data: StarSystemData, focus: MirrorEntity, orbitRadius: Float) : MirrorEntity
     {
         var system = data.system
         var angle = MathUtils.getRandomNumberInRange(0f, 360f)
-        var ogTear = data.system.addCustomEntity("${data.system.id}_tear", "Dimensional Tear", "rat_dimensional_tear", Factions.NEUTRAL)
+        var ogTear = data.system.addCustomEntity("${data.system.id}_tear", "Odd Gate", "rat_dimensional_gate", Factions.NEUTRAL)
         var ogPlugin = ogTear.customPlugin
         data.system.addEntity(ogTear)
         ogTear.setCircularOrbit(focus.originalEntity, angle, orbitRadius, 200f)
-        ogTear.addTag(RATTags.TAG_DIMENSIONAL_TEAR)
+        ogTear.addTag(RATTags.TAG_DIMENSIONAL_GATE)
 
-        var mirrorTear = focus.mirroredEntity.starSystem.addCustomEntity("${focus.mirroredEntity.starSystem.id}_tear", "Dimensional Tear", "rat_dimensional_tear", Factions.NEUTRAL)
+        var mirrorTear = focus.mirroredEntity.starSystem.addCustomEntity("${focus.mirroredEntity.starSystem.id}_tear", "Odd Gate", "rat_dimensional_gate", Factions.NEUTRAL)
         var mirrorPlugin = mirrorTear.customPlugin
         focus.mirroredEntity.starSystem.addEntity(mirrorTear)
         mirrorTear.setCircularOrbit(focus.mirroredEntity, angle, orbitRadius, 200f)
-        mirrorTear.addTag(RATTags.TAG_DIMENSIONAL_TEAR)
+        mirrorTear.addTag(RATTags.TAG_DIMENSIONAL_GATE)
 
+        var derelictNebulaParams = DerelictShipEntityPlugin.createHull("nebula", Random(), 0f)
+        val nebulaWreck: CustomCampaignEntityAPI = mirrorTear.starSystem.addCustomEntity(null, SalvageEntityGeneratorOld.getSalvageSpec(Entities.WRECK).getNameOverride()
+            , Entities.WRECK, Factions.NEUTRAL, derelictNebulaParams)
 
-        if (ogPlugin is DimensionalTearEntity)
+        nebulaWreck.setCircularOrbit(mirrorTear.orbitFocus, MathUtils.getRandomNumberInRange(0f, 360f), 300f, 100f)
+        nebulaWreck.addTag(RATTags.TAG_CHIRAL_NEBULA)
+
+        if (ogPlugin is DimensionalGate)
         {
             ogPlugin.teleportLocation = mirrorTear
         }
 
-        if (mirrorPlugin is DimensionalTearEntity)
+        if (mirrorPlugin is DimensionalGate)
         {
             mirrorPlugin.teleportLocation = ogTear
         }

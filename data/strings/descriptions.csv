@@ -9,9 +9,8 @@ rat_blackmarketPlanet,CUSTOM,"One of, if not the, largest black markets found in
 ,,,,,,
 rat_chiral_planet,PLANET,"A familiar planet, different, yet the same.",,,,
 rat_chiral_star,PLANET,"A familiar star, different, yet the same.",,,,
-rat_dimensional_tear,CUSTOM,A tear in spacetime.,,,,
-rat_chiral_station1,CUSTOM,An abandoned station floating through the system. A beacon is emitting its location to the rest of the system.,,"Your fleet arrives at an abandoned station, but the station seems already full salvaged, with not much of worth left.
-",,
+rat_dimensional_gate,CUSTOM,"An object that appears to be a gate, but seemingly one not in line with domain-built specifications.",,,,
+rat_chiral_station1,CUSTOM,An abandoned station floating through the system. ,,,,
 rat_chiral_station2,CUSTOM,A station floating through this system. It is coated in some kind of stealth material to reduce its signal emmisions,,,,
 ,,,,,,
 ,,,,,,
@@ -23,18 +22,18 @@ rat_phenix,SHIP,"A ship of unknown origins. The Phenix-Class class comes with a 
 ,,,,,,
 rat_superconductor,SHIP_SYSTEM,"Overloads the ships ""Energy"" type weapons, causing their projectiles to violently release EMPs towards nearby enemies. Does not effect beams.",,,,
 ,,,,,,
-rat_scarlet_processor,RESOURCE,"A processor recovered from chiral remains. While not fully understood by the fleets engineers, it seems compatible with technology of our own, and thus could be used with Automated Ships. The Processor shows no sign of Sentience, and seems to be less powerful than a gamma-core.
+rat_scarlet_processor,RESOURCE,"A processor recovered from chiral remains. While not fully understood by the fleets engineers, it seems compatible with technology of our own, and thus could be used with Automated Ships. The Processor shows no sign of Sentience, but seems to be comparable in terms of power to a gamma-core.
 
-This type of processor appears to make chiral ships more aggressive.
-
-",,,,
-rat_azure_processor,RESOURCE,"A processor recovered from chiral remains. While not fully understood by the fleets engineers, it seems compatible with technology of our own, and thus could be used with Automated Ships. The Processor shows no sign of Sentience, and seems to be less powerful than a gamma-core.
-
-This type of processor appears to make chiral ships more defensive.
+This type of processor appears to make chiral hulls more aggressive.
 
 ",,,,
-rat_amber_processor,RESOURCE,"A processor recovered from chiral remains. While not fully understood by the fleets engineers, it seems compatible with technology of our own, and thus could be used with Automated Ships. The Processor shows no sign of Sentience, and seems to be less powerful than a gamma-core.
+rat_azure_processor,RESOURCE,"A processor recovered from chiral remains. While not fully understood by the fleets engineers, it seems compatible with technology of our own, and thus could be used with Automated Ships. The Processor shows no sign of Sentience, but seems to be comparable in terms of power to a gamma-core.
 
-This type of processor appears to make chiral do well at offense and defense.
+This type of processor appears to make chiral hulls more defensive.
+
+",,,,
+rat_amber_processor,RESOURCE,"A processor recovered from chiral remains. While not fully understood by the fleets engineers, it seems compatible with technology of our own, and thus could be used with Automated Ships. The Processor shows no sign of Sentience, but seems to be comparable in terms of power to a gamma-core.
+
+This type of processor appears to make chiral hulls do well at offense and defense.
 
 ",,,,

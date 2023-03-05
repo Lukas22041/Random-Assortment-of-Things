@@ -23,10 +23,11 @@ class AmberProcessorCore : AICoreOfficerPlugin {
 
     override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI? {
         var core =AICoreUtil.createCorePerson(aiCoreId, factionId)
-        core.stats.level = 2
+        core.stats.level = 3
         core.setPersonality(Personalities.STEADY)
         core.setRankId(Ranks.SPACE_CAPTAIN)
 
+        core.stats.setSkillLevel(Skills.SYSTEMS_EXPERTISE, 2F)
         core.stats.setSkillLevel(Skills.ORDNANCE_EXPERTISE, 2F)
         core.stats.setSkillLevel(Skills.POLARIZED_ARMOR, 2F)
 
@@ -43,7 +44,7 @@ class AmberProcessorCore : AICoreOfficerPlugin {
 
         tooltip.addSpacer(10f)
         var img = tooltip.beginImageWithText(person.portraitSprite, 64f)
-        img.addPara("The " + spec.name + " is weaker in computational power than a gamma-core, but it causes chiral ships to excel both in offense and defense.", 0f)
+        img.addPara("The " + spec.name + " is compareable in computational power to a gamma-core, but it also causes chiral ships to excel both in offense and defense.", 0f)
         tooltip.addImageWithText(0f)
         tooltip.addSectionHeading("Personality Config", text, bg, Alignment.MID, 20f)
         tooltip.addPara("The " + spec.name + " has no personality of it's own, instead it can emulate a set of personalities. " +

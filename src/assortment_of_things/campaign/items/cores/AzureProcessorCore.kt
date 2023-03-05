@@ -23,12 +23,13 @@ class AzureProcessorCore : AICoreOfficerPlugin {
 
     override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI? {
         var core =AICoreUtil.createCorePerson(aiCoreId, factionId)
-        core.stats.level = 2
+        core.stats.level = 3
         core.setPersonality(Personalities.CAUTIOUS)
         core.setRankId(Ranks.SPACE_CAPTAIN)
 
-        core.stats.setSkillLevel(Skills.GUNNERY_IMPLANTS, 2F)
-        core.stats.setSkillLevel(Skills.ENERGY_WEAPON_MASTERY, 2F)
+        core.stats.setSkillLevel(Skills.FIELD_MODULATION, 2F)
+        core.stats.setSkillLevel(Skills.DAMAGE_CONTROL, 2F)
+        core.stats.setSkillLevel(Skills.POINT_DEFENSE, 2F)
 
         core.memoryWithoutUpdate.set(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT, automatedPointsMult)
         return core
@@ -42,7 +43,7 @@ class AzureProcessorCore : AICoreOfficerPlugin {
 
         tooltip.addSpacer(10f)
         var img = tooltip.beginImageWithText(person.portraitSprite, 64f)
-        img.addPara("The " + spec.name + " is weaker in computational power than a gamma-core, but it causes chiral ships to become more defensive.", 0f)
+        img.addPara("The " + spec.name + " is compareable in computational power to a gamma-core, but it also causes chiral ships to become more defensive.", 0f)
         tooltip.addImageWithText(0f)
         tooltip.addSectionHeading("Personality Config", text, bg, Alignment.MID, 20f)
         tooltip.addPara("The " + spec.name + " has no personality of it's own, instead it can emulate a set of personalities. " +

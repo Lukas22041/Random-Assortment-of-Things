@@ -1,9 +1,7 @@
 package assortment_of_things.campaign
 
-import assortment_of_things.campaign.intel.DimensionalTearInteraction
-import assortment_of_things.campaign.interactions.ChiralStationInteraction
-import assortment_of_things.campaign.interactions.OutpostPlanetInteraction
-import assortment_of_things.campaign.interactions.SpacersGambitInteraction
+import assortment_of_things.campaign.intel.DimensionalGateInteraction
+import assortment_of_things.campaign.interactions.*
 import assortment_of_things.campaign.items.cores.AmberProcessorCore
 import assortment_of_things.campaign.items.cores.AzureProcessorCore
 import assortment_of_things.campaign.items.cores.ScarletProcessorCore
@@ -32,15 +30,25 @@ class RATCampaignPlugin : BaseCampaignPlugin()
             return PluginPick(OutpostPlanetInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
-        if (interactionTarget.hasTag(RATTags.TAG_DIMENSIONAL_TEAR))
+        if (interactionTarget.hasTag(RATTags.TAG_DIMENSIONAL_GATE))
         {
-            return PluginPick(DimensionalTearInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            return PluginPick(DimensionalGateInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
+        if (interactionTarget.customEntityType == "rat_chiral_station1")
+        {
+            return PluginPick(NonChiralStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+        }
         if (interactionTarget.customEntityType == "rat_chiral_station2")
         {
             return PluginPick(ChiralStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
+
+        if (interactionTarget.hasTag(RATTags.TAG_CHIRAL_NEBULA))
+        {
+            return PluginPick(ChiralNebulaInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+        }
+
 
         return null
     }

@@ -17,6 +17,7 @@ This section is basicly a simplified and more idiot-proof version of Adjusted Se
 If Adjusted Sector is installed, this Section is completly ignored and Adjusted Sectors configs are used instead.",,,
 assortment_of_things,rat_systemScale,Change amount of generated Systems,Int,1,"Increases the amount of generated Systems. 
 An increase in generated systems come with a heavy performance cost.
+Vanilla Themes will scale with the amount of systems, Modded Themes will not.
 
 1 - 100%% (Vanilla).
 2 - 150%% more systems.
