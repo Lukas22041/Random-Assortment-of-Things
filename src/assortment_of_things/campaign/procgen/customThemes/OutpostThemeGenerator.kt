@@ -1,8 +1,8 @@
 package assortment_of_things.campaign.procgen.customThemes
 
 import assortment_of_things.campaign.procgen.ProcgenUtility
-import assortment_of_things.misc.RATEntities
-import assortment_of_things.misc.RATStrings
+import assortment_of_things.strings.RATEntities
+import assortment_of_things.strings.RATTags
 import assortment_of_things.scripts.FactionBaseFleetManager
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FactionAPI
@@ -47,7 +47,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
     }
 
     override fun getThemeId(): String {
-        return RATStrings.OUTPOST_THEME_ID
+        return RATTags.OUTPOST_THEME_ID
     }
 
     override fun generateForSector(context: ThemeGenContext?, allowedSectorFraction: Float) {
@@ -119,8 +119,8 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
 
     fun populateMain(data: StarSystemData, faction: FactionAPI)
     {
-        data.system.addTag(RATStrings.THEME_OUTPOST)
-        data.system.addTag(RATStrings.THEME_OUTPOST_MAIN)
+        data.system.addTag(RATTags.THEME_OUTPOST)
+        data.system.addTag(RATTags.THEME_OUTPOST_MAIN)
         data.system.addTag(Tags.THEME_UNSAFE)
 
         //required to make ARS not spawn bases in it.
@@ -128,7 +128,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
 
         var beacon = ProcgenUtility.addBeacon(RATEntities.OUTPOST_WARNING_BEACON, data.system, faction.baseUIColor, faction.brightUIColor)
         beacon!!.setFaction(faction.id)
-        beacon.addTag(RATStrings.TAG_OUTPOST_WARNING_BEACON)
+        beacon.addTag(RATTags.TAG_OUTPOST_WARNING_BEACON)
 
         generateBase(data, faction)
 
@@ -155,8 +155,8 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
 
     fun populateNonMain(data: StarSystemData, faction: FactionAPI)
     {
-        data.system.addTag(RATStrings.THEME_OUTPOST)
-        data.system.addTag(RATStrings.THEME_OUTPOST_SECONDARY)
+        data.system.addTag(RATTags.THEME_OUTPOST)
+        data.system.addTag(RATTags.THEME_OUTPOST_SECONDARY)
 
         val special = data.isBlackHole || data.isNebula || data.isPulsar
         if (special) {
@@ -242,7 +242,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
             if (location.orbit != null) {
                 fleet.orbit = location.orbit
                 location.orbit.setEntity(fleet)
-                location.orbit.focus.addTag(RATStrings.TAG_OUTPOST_PLANET)
+                location.orbit.focus.addTag(RATTags.TAG_OUTPOST_PLANET)
                 location.orbit.focus.customDescriptionId = "rat_outpost_planet"
 
                 var entity = location.orbit.focus

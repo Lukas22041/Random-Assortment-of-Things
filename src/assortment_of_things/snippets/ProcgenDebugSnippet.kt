@@ -1,7 +1,7 @@
 package assortment_of_things.snippets
 
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.misc.RATStrings
+import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.Constellation
@@ -95,14 +95,14 @@ class ProcgenDebugSnippet : LunaSnippet
                     Tags.THEME_DERELICT -> derelictCount++
                     Tags.THEME_DERELICT_MOTHERSHIP -> derelictMothership++
 
-                    RATStrings.THEME_OUTPOST_MAIN -> outpostMainCount++
-                    RATStrings.THEME_OUTPOST_SECONDARY -> outpostSecondaryCount++
+                    RATTags.THEME_OUTPOST_MAIN -> outpostMainCount++
+                    RATTags.THEME_OUTPOST_SECONDARY -> outpostSecondaryCount++
 
-                    RATStrings.THEME_BLACKMARKET_MAIN -> blackmarketMainCount++
-                    RATStrings.THEME_BLACKMARKET_SECONDARY -> blackmarketSecondaryCount++
+                    RATTags.THEME_BLACKMARKET_MAIN -> blackmarketMainCount++
+                    RATTags.THEME_BLACKMARKET_SECONDARY -> blackmarketSecondaryCount++
 
-                    RATStrings.THEME_CHIRAL_MAIN -> chiralMainCount++
-                    RATStrings.THEME_CHIRAL_SECONDARY -> chiralSecondaryCount++
+                    RATTags.THEME_CHIRAL_MAIN -> chiralMainCount++
+                    RATTags.THEME_CHIRAL_SECONDARY -> chiralSecondaryCount++
                 }
             }
         }

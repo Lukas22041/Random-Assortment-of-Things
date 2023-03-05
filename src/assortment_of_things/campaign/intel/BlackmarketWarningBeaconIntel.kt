@@ -1,17 +1,15 @@
 package assortment_of_things.campaign.intel
 
-import assortment_of_things.misc.RATEntities
+import assortment_of_things.strings.RATEntities
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
-import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin.ListInfoMode
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
 import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import java.awt.Color
 
 class BlackmarketWarningBeaconIntel(var beacon: SectorEntityToken) : BaseIntelPlugin() {
 

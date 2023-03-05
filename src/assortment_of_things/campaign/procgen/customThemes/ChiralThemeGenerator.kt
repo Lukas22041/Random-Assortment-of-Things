@@ -2,14 +2,11 @@ package assortment_of_things.campaign.procgen.customThemes
 
 import assortment_of_things.campaign.plugins.entities.DimensionalTearEntity
 import assortment_of_things.campaign.procgen.ProcgenUtility
-import assortment_of_things.misc.RATStrings
+import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.FactionAPI.ShipPickMode
-import com.fs.starfarer.api.campaign.FactionDoctrineAPI
 import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
-import com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
@@ -22,8 +19,6 @@ import com.fs.starfarer.api.impl.campaign.submarkets.StoragePlugin
 import com.fs.starfarer.api.impl.campaign.terrain.AsteroidBeltTerrainPlugin
 import com.fs.starfarer.api.impl.campaign.terrain.RingSystemTerrainPlugin
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.campaign.fleet.MutableMarketStats
-import lunalib.lunaExtensions.getSystemsWithTag
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
@@ -54,7 +49,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
     }
 
     override fun getThemeId(): String {
-        return RATStrings.CHIRAL_THEME_ID
+        return RATTags.CHIRAL_THEME_ID
     }
 
     override fun generateForSector(context: ThemeGenContext?, allowedSectorFraction: Float) {
@@ -105,8 +100,8 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
 
     fun populateMain(data: StarSystemData)
     {
-        data.system.addTag(RATStrings.THEME_CHIRAL)
-        data.system.addTag(RATStrings.THEME_CHIRAL_MAIN)
+        data.system.addTag(RATTags.THEME_CHIRAL)
+        data.system.addTag(RATTags.THEME_CHIRAL_MAIN)
         data.system.addTag(Tags.THEME_UNSAFE)
 
         //required to make ARS not spawn bases in it.
@@ -119,8 +114,8 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
 
     fun populateNonMain(data: StarSystemData)
     {
-        data.system.addTag(RATStrings.THEME_CHIRAL)
-        data.system.addTag(RATStrings.THEME_CHIRAL_SECONDARY)
+        data.system.addTag(RATTags.THEME_CHIRAL)
+        data.system.addTag(RATTags.THEME_CHIRAL_SECONDARY)
 
         val special = data.isBlackHole || data.isNebula || data.isPulsar
         if (special) {
@@ -152,7 +147,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         mirroredSystem.location.set(ogSystem.location)
         mirroredSystem.doNotShowIntelFromThisLocationOnMap = true
         mirroredSystem.backgroundTextureFilename = "graphics/backgrounds/chiral_bg.jpg"
-        mirroredSystem.addTag(RATStrings.THEME_CHIRAL_COPY)
+        mirroredSystem.addTag(RATTags.THEME_CHIRAL_COPY)
         mirroredSystem.addTag(Tags.THEME_HIDDEN)
         mirroredSystem.addTag(Tags.THEME_UNSAFE)
         mirroredSystem.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
@@ -286,13 +281,13 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         var ogPlugin = ogTear.customPlugin
         data.system.addEntity(ogTear)
         ogTear.setCircularOrbit(focus.originalEntity, angle, orbitRadius, 200f)
-        ogTear.addTag(RATStrings.TAG_DIMENSIONAL_TEAR)
+        ogTear.addTag(RATTags.TAG_DIMENSIONAL_TEAR)
 
         var mirrorTear = focus.mirroredEntity.starSystem.addCustomEntity("${focus.mirroredEntity.starSystem.id}_tear", "Dimensional Tear", "rat_dimensional_tear", Factions.NEUTRAL)
         var mirrorPlugin = mirrorTear.customPlugin
         focus.mirroredEntity.starSystem.addEntity(mirrorTear)
         mirrorTear.setCircularOrbit(focus.mirroredEntity, angle, orbitRadius, 200f)
-        mirrorTear.addTag(RATStrings.TAG_DIMENSIONAL_TEAR)
+        mirrorTear.addTag(RATTags.TAG_DIMENSIONAL_TEAR)
 
 
         if (ogPlugin is DimensionalTearEntity)

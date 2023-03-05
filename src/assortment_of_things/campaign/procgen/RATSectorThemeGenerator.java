@@ -42,6 +42,7 @@ public class RATSectorThemeGenerator {
 		generators.add(new RATRuinsThemeGenerator());
 		generators.add(new RATMiscellaneousThemeGenerator());
 
+
 		if (RATSettings.getEnableOutposts()) {
 			generators.add(new OutpostThemeGenerator());
 			Global.getSector().getMemoryWithoutUpdate().set("$rat_outposts_enabled", true);

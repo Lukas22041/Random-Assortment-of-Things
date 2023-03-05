@@ -1,8 +1,8 @@
 package assortment_of_things.campaign.procgen.customThemes
 
-import assortment_of_things.misc.RATStrings
+import assortment_of_things.strings.RATTags
 import assortment_of_things.campaign.procgen.ProcgenUtility
-import assortment_of_things.misc.RATEntities
+import assortment_of_things.strings.RATEntities
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI.SurveyLevel
@@ -44,7 +44,7 @@ class BlackmarketThemeGenerator : BaseThemeGenerator() {
     }
 
     override fun getThemeId(): String {
-        return RATStrings.THEME_BLACKMARKET
+        return RATTags.THEME_BLACKMARKET
     }
 
     override fun generateForSector(context: ThemeGenContext?, allowedSectorFraction: Float) {
@@ -83,8 +83,8 @@ class BlackmarketThemeGenerator : BaseThemeGenerator() {
 
     fun populateMain(data: StarSystemData)
     {
-        data.system.addTag(RATStrings.THEME_BLACKMARKET)
-        data.system.addTag(RATStrings.THEME_BLACKMARKET_MAIN)
+        data.system.addTag(RATTags.THEME_BLACKMARKET)
+        data.system.addTag(RATTags.THEME_BLACKMARKET_MAIN)
         data.system.addTag(Tags.THEME_UNSAFE)
         data.system.backgroundTextureFilename = "graphics/backgrounds/blackmarket_bg.jpg"
 
@@ -94,7 +94,7 @@ class BlackmarketThemeGenerator : BaseThemeGenerator() {
         var faction = Global.getSector().getFaction(Factions.PIRATES)
 
         var beacon = ProcgenUtility.addBeacon(RATEntities.BLACKMARKET_WARNING_BEACON, data.system, Color(250, 50, 50, 30), Color(250, 50, 50, 40))
-        beacon!!.addTag(RATStrings.TAG_BLACKMARKET_WARNING_BEACON)
+        beacon!!.addTag(RATTags.TAG_BLACKMARKET_WARNING_BEACON)
 
         generateBlackmarket(data)
 
@@ -124,8 +124,8 @@ class BlackmarketThemeGenerator : BaseThemeGenerator() {
 
     fun populateNonMain(data: StarSystemData)
     {
-        data.system.addTag(RATStrings.THEME_BLACKMARKET)
-        data.system.addTag(RATStrings.THEME_BLACKMARKET_SECONDARY)
+        data.system.addTag(RATTags.THEME_BLACKMARKET)
+        data.system.addTag(RATTags.THEME_BLACKMARKET_SECONDARY)
         var faction = Global.getSector().getFaction(Factions.PIRATES)
 
         /*val intel = PirateBaseIntel(data.system, Factions.PIRATES, PirateBaseIntel.PirateBaseTier.TIER_3_2MODULE)
@@ -160,7 +160,7 @@ class BlackmarketThemeGenerator : BaseThemeGenerator() {
         market.name = name
         market.setSize(5)
         market.setHidden(true)
-        market.addTag(RATStrings.TAG_BLACKMARKET_PLANET)
+        market.addTag(RATTags.TAG_BLACKMARKET_PLANET)
 
         //market.getMemoryWithoutUpdate().set(MEM_FLAG, true)
        // market.getMemoryWithoutUpdate().set(MemFlags.HIDDEN_BASE_MEM_FLAG, true)

@@ -4,10 +4,8 @@ import java.awt.Color;
 
 import assortment_of_things.campaign.intel.BlackmarketWarningBeaconIntel;
 import assortment_of_things.campaign.intel.OutpostWarningBeaconIntel;
-import assortment_of_things.misc.RATStrings;
+import assortment_of_things.strings.RATTags;
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin;
-import com.fs.starfarer.api.impl.campaign.econ.Outpost;
-import com.fs.starfarer.api.impl.campaign.intel.misc.WarningBeaconIntel;
 import com.fs.starfarer.api.ui.LabelAPI;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -20,7 +18,6 @@ import com.fs.starfarer.api.campaign.SectorEntityToken.VisibilityLevel;
 import com.fs.starfarer.api.combat.ViewportAPI;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Pings;
-import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator.RemnantSystemType;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -64,13 +61,13 @@ public class RATWarningBeaconEntityPlugin extends BaseCustomEntityPlugin {
 
 		if (!entity.isDiscoverable() && !addedIntel)
 		{
-			if (entity.hasTag(RATStrings.getTAG_BLACKMARKET_WARNING_BEACON()))
+			if (entity.hasTag(RATTags.getTAG_BLACKMARKET_WARNING_BEACON()))
 			{
 				BlackmarketWarningBeaconIntel intel = new BlackmarketWarningBeaconIntel(entity);
 				Global.getSector().getIntelManager().addIntel(intel);
 				addedIntel = true;
 			}
-			if (entity.hasTag(RATStrings.getTAG_OUTPOST_WARNING_BEACON()))
+			if (entity.hasTag(RATTags.getTAG_OUTPOST_WARNING_BEACON()))
 			{
 				OutpostWarningBeaconIntel intel = new OutpostWarningBeaconIntel(entity, entity.getFaction());
 				Global.getSector().getIntelManager().addIntel(intel);
@@ -221,7 +218,7 @@ public class RATWarningBeaconEntityPlugin extends BaseCustomEntityPlugin {
 
 		//tooltip.addPara("The beacon displays the signature of a major faction and it is likely that they will attack anyone that gets to close, no matter their standing.", 0f);
 
-		if (entity.hasTag(RATStrings.getTAG_OUTPOST_WARNING_BEACON()))
+		if (entity.hasTag(RATTags.getTAG_OUTPOST_WARNING_BEACON()))
 		{
 			LabelAPI label = tooltip.addPara("The beacon identifies the system as under " + entity.getFaction().getDisplayName() + " control and advises anyone to turn away.\n\nFleets in this system are likely hostile, even towards some of their closest allies.", 0f);
 			label.setHighlight(entity.getFaction().getDisplayName());

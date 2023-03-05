@@ -1,7 +1,7 @@
 package assortment_of_things.campaign.interactions
 
 import assortment_of_things.misc.RATInteractionPlugin
-import assortment_of_things.misc.RATStrings
+import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.combat.ShipHullSpecAPI
@@ -234,7 +234,7 @@ class OutpostPlanetInteraction : RATInteractionPlugin() {
 
             var target = dialog.interactionTarget
             target.setFaction(Factions.NEUTRAL)
-            target.removeTag(RATStrings.TAG_OUTPOST_PLANET)
+            target.removeTag(RATTags.TAG_OUTPOST_PLANET)
 
             if (target is PlanetAPI)
             {
@@ -280,7 +280,7 @@ private class LootListener(var dialog: RATInteractionPlugin) : CoreInteractionLi
         var target = dialog.interactionTarget
 
         target.setFaction(Factions.NEUTRAL)
-        target.removeTag(RATStrings.TAG_OUTPOST_PLANET)
+        target.removeTag(RATTags.TAG_OUTPOST_PLANET)
 
         if (target is PlanetAPI)
         {

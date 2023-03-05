@@ -1,6 +1,6 @@
 package assortment_of_things.campaign.intel
 
-import assortment_of_things.misc.RATEntities
+import assortment_of_things.strings.RATEntities
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken

@@ -1,5 +1,6 @@
 package assortment_of_things.combat.hullmods
 
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.impl.campaign.procgen.StarAge
@@ -44,6 +45,7 @@ class ChiralHull : BaseHullMod()
             MagicIncompatibleHullmods.removeHullmodWithWarning(stats.getVariant(),"targetingunit","rat_chiral_hull");
         }
 
+
         stats!!.ventRateMult.modifyMult(id, 0f);
         stats.getZeroFluxMinimumFluxLevel().modifyFlat(id, 2f); // set to two, meaning boost is always on
 
@@ -58,7 +60,6 @@ class ChiralHull : BaseHullMod()
         if (ship == null) return
         Global.getCombatEngine().addLayeredRenderingPlugin(ChiralHullCombat(ship, id))
 
-
     }
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
@@ -71,13 +72,25 @@ class ChiralHull : BaseHullMod()
         var label1 = tooltip.addPara(string1, 3f, Misc.getHighlightColor(), "50%", "10%")
         label1.setHighlight("highly", "optimised", "zero-flux engine boost", "flux", "dissipation", "50%", "removal", "active-venting", "reduction", "ballistic", "energy", "10%")
 
-        tooltip.addSectionHeading("In Combat", Alignment.MID, 10f);
 
-        var string2 = "Increases the ships max speed and shield efficiency up to %s based on the amount of enemy hulls nearby, with it reaching its highest strength at 5 ships.\n\n" +
-                "The effects radius is 600/650/700/800 based on the ships hull size."
 
-        var label2 = tooltip.addPara(string2, 3f, Misc.getHighlightColor(), "25%")
-        label2.setHighlight("max speed", "shield efficiency", "25%", "enemy", "hulls", "nearby", "highest", "strength", "5", "ships", "600/650/700/800", "hullsize")
+        if (ship!!.fleetMember.captain != null && ship!!.fleetMember.captain.aiCoreId == RATItems.SCARLET_PROCESSOR)
+        {
+            tooltip.addSectionHeading("Scarlet Processor ", Alignment.MID, 10f);
+            tooltip.addPara("Increases the ships max speed and shield efficiency up to 25%% based on the amount of enemy hulls nearby, with it reaching its highest strength at 5 ships.\n\n" +
+                    "The effects radius is 600/650/700/800 based on the ships hull size.", 3f, Misc.getHighlightColor()).apply {
+                setHighlight("max speed", "shield efficiency", "25%", "enemy", "hulls", "nearby", "highest", "strength", "5", "ships", "600/650/700/800", "hullsize")
+                setHighlightColors(Misc.getHighlightColor())
+            }
+        }
+        else
+        {
+            tooltip.addSectionHeading("Processor: None", Alignment.MID, 10f);
+            tooltip.addPara("No Chiral Processor Installed. Installing a Chiral Processor enables different effects.", 3f, Misc.getHighlightColor()).apply {
+                setHighlight("")
+                setHighlightColors(Misc.getHighlightColor())
+            }
+        }
 
         tooltip.addSectionHeading("Incompatibility", Alignment.MID, 10f);
 

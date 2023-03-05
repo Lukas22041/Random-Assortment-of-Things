@@ -12,7 +12,8 @@
   "shieldRadius": 61.5,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_chiral_hull"
+    "rat_chiral_hull",
+    "automated"
   ],
   "weaponSlots": [
     {

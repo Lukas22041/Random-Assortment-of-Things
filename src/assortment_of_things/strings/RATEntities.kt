@@ -1,4 +1,4 @@
-package assortment_of_things.misc
+package assortment_of_things.strings
 
 object RATEntities
 {
