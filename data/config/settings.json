@@ -6,6 +6,10 @@
 	"designTypeColors":{
 		"Chiral":[122,139,221,255],
 	},		
+	
+	"drop_prob_officer_rat_scarlet_processor":0.2,
+	"drop_prob_officer_rat_azure_processor":0.2,
+	"drop_prob_officer_rat_amber_processor":0.2,
 
 	"graphics":{
 		"intel":{

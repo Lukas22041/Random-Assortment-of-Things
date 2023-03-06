@@ -22,7 +22,7 @@ class ScarletProcessorCore : AICoreOfficerPlugin {
     var automatedPointsMult = 2f
 
     override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI? {
-        var core =AICoreUtil.createCorePerson(aiCoreId, factionId)
+        var core = AICoreUtil.createCorePerson(aiCoreId, factionId)
         core.stats.level = 3
         core.setPersonality(Personalities.RECKLESS)
         core.setRankId(Ranks.SPACE_CAPTAIN)

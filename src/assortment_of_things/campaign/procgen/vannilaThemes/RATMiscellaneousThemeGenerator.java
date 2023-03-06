@@ -449,29 +449,27 @@ public class RATMiscellaneousThemeGenerator extends BaseThemeGenerator {
 			Global.getSector().getMemoryWithoutUpdate().set("$rat_generated_improved_misc", true);
 			boolean special = data.isBlackHole() || data.isNebula() || data.isPulsar();
 			if (special) {
-				addResearchStations(data, 0.90f, 1, 1, createStringPicker(Entities.STATION_RESEARCH, 10f));
+				addResearchStations(data, 0.85f, 1, 1, createStringPicker(Entities.STATION_RESEARCH, 10f));
 			}
 
 			if (!data.resourceRich.isEmpty()) {
-				addMiningStations(data, 0.75f, 1, 1, createStringPicker(Entities.STATION_MINING, 10f));
+				addMiningStations(data, 0.50f, 1, 1, createStringPicker(Entities.STATION_MINING, 10f));
 			}
 
 			if (!data.habitable.isEmpty()) {
-				addHabCenters(data, 0.60f, 1, 1, createStringPicker(Entities.ORBITAL_HABITAT, 10f));
+				addHabCenters(data, 0.40f, 1, 1, createStringPicker(Entities.ORBITAL_HABITAT, 10f));
 			}
-
-			if (random.nextFloat() > 0.5f) return;
 
 			WeightedRandomPicker<String> factions = SalvageSpecialAssigner.getNearbyFactions(random, data.system.getCenter(),
 					15f, 10f, 10f);
 
-			addShipGraveyard(data, 0.25f, 1, 1, factions);
+			addShipGraveyard(data, 0.15f, 1, 1, factions);
 
-			addDebrisFields(data, 0.50f, 1, 2);
+			addDebrisFields(data, 0.25f, 1, 2);
 
 			addDerelictShips(data, 1f, 2, 5, factions);
 
-			addCaches(data, 0.60f, 1, 2, createStringPicker(
+			addCaches(data, 0.40f, 1, 2, createStringPicker(
 					Entities.WEAPONS_CACHE, 4f,
 					Entities.WEAPONS_CACHE_SMALL, 10f,
 					Entities.WEAPONS_CACHE_HIGH, 4f,

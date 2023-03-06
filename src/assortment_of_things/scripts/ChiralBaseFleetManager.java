@@ -1,21 +1,24 @@
 package assortment_of_things.scripts;
 
+import assortment_of_things.campaign.items.cores.AICoreUtil;
+import assortment_of_things.campaign.items.cores.ScarletProcessorCore;
+import assortment_of_things.strings.RATItems;
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.campaign.CampaignEventListener.FleetDespawnReason;
-import com.fs.starfarer.api.campaign.CampaignFleetAPI;
-import com.fs.starfarer.api.campaign.LocationAPI;
-import com.fs.starfarer.api.campaign.SectorEntityToken;
-import com.fs.starfarer.api.campaign.StarSystemAPI;
+import com.fs.starfarer.api.characters.PersonAPI;
+import com.fs.starfarer.api.fleet.FleetMemberAPI;
+import com.fs.starfarer.api.impl.campaign.FleetEncounterContext;
 import com.fs.starfarer.api.impl.campaign.enc.EncounterManager;
 import com.fs.starfarer.api.impl.campaign.enc.EncounterPoint;
 import com.fs.starfarer.api.impl.campaign.enc.EncounterPointProvider;
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3;
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3;
 import com.fs.starfarer.api.impl.campaign.fleets.SourceBasedFleetManager;
-import com.fs.starfarer.api.impl.campaign.ids.Abilities;
-import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
-import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
+import com.fs.starfarer.api.impl.campaign.ids.*;
+import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithTriggers;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantAssignmentAI;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager;
 import org.lazywizard.lazylib.MathUtils;
 
 import java.util.ArrayList;
@@ -108,9 +111,8 @@ public class ChiralBaseFleetManager extends SourceBasedFleetManager {
         );
         //params.officerNumberBonus = 10;
         params.random = random;
-        params.withOfficers = true;
-        params.averageSMods = 1;
-
+        params.withOfficers = false;
+        params.averageSMods = 0;
        // params.averageSMods = 1;
 
         CampaignFleetAPI fleet = FleetFactoryV3.createFleet(params);
@@ -121,7 +123,7 @@ public class ChiralBaseFleetManager extends SourceBasedFleetManager {
         LocationAPI location = source.getContainingLocation();
         location.addEntity(fleet);
 
-        //RemnantSeededFleetManager.initRemnantFleetProperties(random, fleet, false);
+        RemnantSeededFleetManager.initRemnantFleetProperties(random, fleet, false);
         fleet.getMemoryWithoutUpdate().set(MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE, true);
         fleet.getMemoryWithoutUpdate().set(MemFlags.MEMORY_KEY_MAKE_HOSTILE, true);
         fleet.getMemoryWithoutUpdate().set(MemFlags.MEMORY_KEY_NO_JUMP, true);
@@ -130,6 +132,58 @@ public class ChiralBaseFleetManager extends SourceBasedFleetManager {
 
         fleet.addScript(new RemnantAssignmentAI(fleet, (StarSystemAPI) source.getContainingLocation(), source));
         fleet.getMemoryWithoutUpdate().set("$sourceId", source.getId());
+
+
+        for (FleetMemberAPI member : fleet.getFleetData().getMembersInPriorityOrder())
+        {
+            int rng = MathUtils.getRandomNumberInRange(0, 2);
+
+            if (rng == 0)
+            {
+                PersonAPI core = AICoreUtil.createCorePerson(RATItems.INSTANCE.getSCARLET_PROCESSOR(), factionId);
+                core.getStats().setLevel(3);
+                core.setPersonality(Personalities.RECKLESS);
+                core.setRankId(Ranks.SPACE_CAPTAIN);
+
+                core.getStats().setSkillLevel(Skills.HELMSMANSHIP, 2F);
+                core.getStats().setSkillLevel(Skills.GUNNERY_IMPLANTS, 2F);
+                core.getStats().setSkillLevel(Skills.TARGET_ANALYSIS, 2F);
+
+                core.getMemoryWithoutUpdate().set(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT, 2f);
+
+                member.setCaptain(core);
+            }
+            if (rng == 1)
+            {
+                PersonAPI core = AICoreUtil.createCorePerson(RATItems.INSTANCE.getAZURE_PROCESSOR(), factionId);
+                core.getStats().setLevel(3);
+                core.setPersonality(Personalities.CAUTIOUS);
+                core.setRankId(Ranks.SPACE_CAPTAIN);
+
+                core.getStats().setSkillLevel(Skills.FIELD_MODULATION, 2F);
+                core.getStats().setSkillLevel(Skills.DAMAGE_CONTROL, 2F);
+                core.getStats().setSkillLevel(Skills.POINT_DEFENSE, 2F);
+
+                core.getMemoryWithoutUpdate().set(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT, 2f);
+
+                member.setCaptain(core);
+            }
+            if (rng == 2)
+            {
+                PersonAPI core = AICoreUtil.createCorePerson(RATItems.INSTANCE.getAMBER_PROCESSOR(), factionId);
+                core.getStats().setLevel(3);
+                core.setPersonality(Personalities.STEADY);
+                core.setRankId(Ranks.SPACE_CAPTAIN);
+
+                core.getStats().setSkillLevel(Skills.SYSTEMS_EXPERTISE, 2F);
+                core.getStats().setSkillLevel(Skills.ORDNANCE_EXPERTISE, 2F);
+                core.getStats().setSkillLevel(Skills.POLARIZED_ARMOR, 2F);
+
+                core.getMemoryWithoutUpdate().set(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT, 2f);
+
+                member.setCaptain(core);
+            }
+        }
 
         return fleet;
     }

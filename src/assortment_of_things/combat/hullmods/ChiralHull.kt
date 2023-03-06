@@ -60,7 +60,7 @@ class ChiralHull : BaseHullMod()
         }
         else if (stats.fleetMember != null && stats.fleetMember.captain != null && stats.fleetMember.captain.aiCoreId == RATItems.AMBER_PROCESSOR)
         {
-            stats.timeMult.modifyMult(id + "rat_processor", 100.1f)
+            stats.timeMult.modifyMult(id + "rat_processor", 1.1f)
         }
         else
         {

@@ -2,6 +2,7 @@ package assortment_of_things.campaign.procgen.customThemes
 
 import assortment_of_things.campaign.plugins.entities.DimensionalGate
 import assortment_of_things.campaign.procgen.ProcgenUtility
+import assortment_of_things.scripts.ChiralBaseFleetManager
 import assortment_of_things.scripts.FactionBaseFleetManager
 import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global
@@ -9,6 +10,7 @@ import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
@@ -198,7 +200,6 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
             mirrorEntities.add(MirrorEntity(ogMoon, mirroredMoon))
         }
 
-
         for (ogTerrain in ogSystem.terrainCopy)
         {
             var matchingFocus = mirrorEntities.find { ogTerrain.orbitFocus == it.originalEntity } ?: continue
@@ -211,11 +212,9 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
             if (plugin is AsteroidBeltTerrainPlugin)
             {
                 if (plugin.params == null) continue
-                /*var mirrorTerrain = mirroredSystem.addAsteroidBelt(matchingFocus.mirroredEntity, plugin.params.numAsteroids, plugin.params.middleRadius, plugin.params.bandWidthInEngine, plugin.params.minOrbitDays, plugin.params.maxOrbitDays)*/
                 if (plugin.ringParams == null) continue
                 mirroredSystem.addRingBand(matchingFocus.mirroredEntity,  "misc", "rings_dust0", 256f, 1, mirroredStar.lightColor, 256f, plugin.params.middleRadius, plugin.params.maxOrbitDays,
                     Terrain.RING, "Ring Band")
-                //system.addRingBand(lethia_star, "misc", "rings_asteroids0", 256f, 3, Color.gray, 256f, 3650, 220f);
             }
 
             if (plugin is RingSystemTerrainPlugin)
@@ -225,14 +224,10 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
 
                 mirroredSystem.addRingBand(matchingFocus.mirroredEntity,  "misc", "rings_dust0", 256f, 1, Color.white, 256f, plugin.ringParams.middleRadius, plugin.entity.circularOrbitPeriod,
                     Terrain.RING, "Ring Band")
-                //system.addRingBand(lethia_star, "misc", "rings_asteroids0", 256f, 3, Color.gray, 256f, 3650, 220f);
             }
         }
 
-        for (entity in ogSystem.customEntities)
-        {
 
-        }
 
         var tear = generateGate(ogData, mirrorEntities.filter { it.originalEntity is PlanetAPI && !it.originalEntity.isStar && !(it.originalEntity as PlanetAPI).isGasGiant }.random(), 350f )
 
@@ -241,47 +236,59 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
 
 
         val weights = LinkedHashMap<LocationType, Float>()
-        //weights[LocationType.GAS_GIANT_ORBIT] = 3f
-        weights[LocationType.OUTER_SYSTEM] = 10f
-        var station = generateMirroredEntity(ogData, mirrorEntities, mirroredSystem, "rat_chiral_station1", "rat_chiral_station2", weights)
-        mirrorEntities.add(station)
-        var mirrorStation = station.mirroredEntity
+        weights[LocationType.GAS_GIANT_ORBIT] = 3f
+        weights[LocationType.PLANET_ORBIT] = 10f
+        var locations = getLocations(StarSystemGenerator.random, ogData.system, ogData.alreadyUsed, 100f, weights)
+        var triResearchStation = addNonSalvageEntity(ogData.system, locations.pick(), "rat_chiral_station1", Factions.NEUTRAL)
 
-        val activeFleets = FactionBaseFleetManager(mirrorStation,
+
+        var calcData = BaseThemeGenerator.computeSystemData(mirroredSystem)
+        calcData.alreadyUsed.add(tear.mirroredEntity.orbitFocus)
+
+        val fleet = FleetFactoryV3.createEmptyFleet("chirality", FleetTypes.BATTLESTATION, null)
+        val member: FleetMemberAPI = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "station2_hightech_Standard")
+        fleet.fleetData.addFleetMember(member)
+
+        fleet.name = "Defense Station"
+        //fleet.customDescriptionId = ""
+
+        //Behaviour Memory keys
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE] = true
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_NO_JUMP] = true
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALLOW_DISENGAGE] = true
+
+        fleet.addTag(Tags.NEUTRINO_HIGH)
+        fleet.isStationMode = true
+
+        fleet.clearAbilities()
+        fleet.addAbility(Abilities.TRANSPONDER)
+        fleet.getAbility(Abilities.TRANSPONDER).activate()
+        fleet.detectedRangeMod.modifyFlat("gen", 1000f)
+
+        fleet.ai = null
+
+        member.repairTracker.cr = member.repairTracker.maxCR
+        val activeFleets = ChiralBaseFleetManager(fleet,
             3f,
-            2,
-            4,
+            3,
+            5,
             25f,
-            50,
-            100,
-            Factions.HEGEMONY)
+            70,
+            120,
+            "chirality")
+
+
+        val baseLocs = LinkedHashMap<LocationType, Float>()
+        baseLocs[LocationType.IN_ASTEROID_BELT] = 10f
+        baseLocs[LocationType.IN_ASTEROID_FIELD] = 5f
+        //weights[LocationType.PLANET_ORBIT] = 5f
+        baseLocs[LocationType.STAR_ORBIT] = 1f
+        var locs = getLocations(StarSystemGenerator.random, calcData.system, calcData.alreadyUsed, 100f, baseLocs)
+        mirroredSystem.addEntity(fleet)
+
+        fleet.orbit = locs.pick().orbit
 
         mirroredSystem.addScript(activeFleets)
-
-       /* val params = FleetParamsV3(null,
-            null,
-            "chirality",
-            3f,
-            FleetTypes.PATROL_SMALL,
-            80f,  // combatPts
-            0f,  // freighterPts
-            0f,  // tankerPts
-            0f,  // transportPts
-            0f,  // linerPts
-            0f,  // utilityPts
-            0f // qualityMod
-        )
-        params.averageSMods = 1;
-        params.withOfficers = true
-        val defenderFleet = FleetFactoryV3.createFleet(params)
-        station.mirroredEntity.memoryWithoutUpdate.set("\$defenderFleet", defenderFleet)*/
-        Misc.setAbandonedStationMarket("chiral_station", mirrorStation)
-
-        /*var storage = Misc.getStorage(mirrorStation.market) as StoragePlugin
-        storage.cargo.mothballedShips.addFleetMember(Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_dune_Hull"))
-        storage.cargo.mothballedShips.addFleetMember(Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_dune_Hull"))
-        storage.cargo.mothballedShips.addFleetMember(Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_opera_Hull"))
-        storage.cargo.mothballedShips.addFleetMember(Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_phenix_Hull"))*/
 
         addDerelictShips(computeSystemData(mirroredSystem), 1f, 5, 9, createStringPicker("chirality", 1f))
 
@@ -292,13 +299,13 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
     {
         var system = data.system
         var angle = MathUtils.getRandomNumberInRange(0f, 360f)
-        var ogTear = data.system.addCustomEntity("${data.system.id}_tear", "Odd Gate", "rat_dimensional_gate", Factions.NEUTRAL)
+        var ogTear = data.system.addCustomEntity("${data.system.id}_tear", "Strange Gate", "rat_dimensional_gate", Factions.NEUTRAL)
         var ogPlugin = ogTear.customPlugin
         data.system.addEntity(ogTear)
         ogTear.setCircularOrbit(focus.originalEntity, angle, orbitRadius, 200f)
         ogTear.addTag(RATTags.TAG_DIMENSIONAL_GATE)
 
-        var mirrorTear = focus.mirroredEntity.starSystem.addCustomEntity("${focus.mirroredEntity.starSystem.id}_tear", "Odd Gate", "rat_dimensional_gate", Factions.NEUTRAL)
+        var mirrorTear = focus.mirroredEntity.starSystem.addCustomEntity("${focus.mirroredEntity.starSystem.id}_tear", "Strange Gate", "rat_dimensional_gate", Factions.NEUTRAL)
         var mirrorPlugin = mirrorTear.customPlugin
         focus.mirroredEntity.starSystem.addEntity(mirrorTear)
         mirrorTear.setCircularOrbit(focus.mirroredEntity, angle, orbitRadius, 200f)

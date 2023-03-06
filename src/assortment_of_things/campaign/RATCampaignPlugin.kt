@@ -1,6 +1,6 @@
 package assortment_of_things.campaign
 
-import assortment_of_things.campaign.intel.DimensionalGateInteraction
+import assortment_of_things.campaign.interactions.DimensionalGateInteraction
 import assortment_of_things.campaign.interactions.*
 import assortment_of_things.campaign.items.cores.AmberProcessorCore
 import assortment_of_things.campaign.items.cores.AzureProcessorCore
@@ -39,10 +39,10 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         {
             return PluginPick(NonChiralStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
-        if (interactionTarget.customEntityType == "rat_chiral_station2")
+        /*if (interactionTarget.customEntityType == "rat_chiral_station2")
         {
             return PluginPick(ChiralStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-        }
+        }*/
 
         if (interactionTarget.hasTag(RATTags.TAG_CHIRAL_NEBULA))
         {

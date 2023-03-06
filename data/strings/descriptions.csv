@@ -15,10 +15,9 @@ rat_chiral_station2,CUSTOM,A station floating through this system. It is coated 
 ,,,,,,
 ,,,,,,
 ,,,,,,
-rat_dune,SHIP,"A ship of unknown origins. The Dune-Class is a light frigate. It Exceeds in terms of speed, making it a good fill in for any fleet that requires ships that distract from the heavier targets.
-Those Aspects are only amplified through its ""Temporal Shell"" Shipsystem, allowing it to quickly send out light-fire and retreat.",,,,
-rat_opera,SHIP,"A ship of unknown origins. The Opera-Class is a heavy frigate. The Opera-Class manages to unload as many missiles as a destroyer, without loosing the speed of a Frigate. While not as fast as the Dune-Class, its unlikely that its targets can escape from it.",,,,
-rat_phenix,SHIP,"A ship of unknown origins. The Phenix-Class class comes with a strong set of mounts for its size. Those are enhanced by its shipsystems, which allow it to do large EMP damage to its foes.",,,,
+rat_dune,SHIP,"A ship from an alternate sector. Despite being designed to be crewed by something, this hull can not support the requirements of a human crew and can only be piloted by processors or AI cores. Due to no records of this ship existing before, your engineers nicknamed it the ""Dune-Class"". The Dune-Class is a light frigate. It Exceeds in terms of speed, making it a good fill in for any fleet that requires ships that distract from the heavier targets. Those Aspects are only amplified through its ""Temporal Shell"" Shipsystem, allowing it to quickly send out light-fire and retreat.",,,,
+rat_opera,SHIP,"A ship from an alternate sector. Despite being designed to be crewed by something, this hull can not support the requirements of a human crew and can only be piloted by processors or AI cores. Due to no records of this ship existing before, your engineers nicknamed it the ""Opera-Class"". The Opera-Class is a heavy frigate. The Opera-Class manages to unload as many missiles as a destroyer, without loosing the speed of a Frigate. While not as fast as the Dune-Class, its unlikely that its targets can escape from it.",,,,
+rat_phenix,SHIP,"A ship from an alternate sector. Despite being designed to be crewed by something, this hull can not support the requirements of a human crew and can only be piloted by processors or AI cores. Due to no records of this ship existing before, your engineers nicknamed it the ""Phenix-Class"". The Phenix-Class class comes with a strong set of mounts for its size. Those are enhanced by its shipsystems, which allow it to do large EMP damage to its foes.",,,,
 ,,,,,,
 rat_superconductor,SHIP_SYSTEM,"Overloads the ships ""Energy"" type weapons, causing their projectiles to violently release EMPs towards nearby enemies. Does not effect beams.",,,,
 ,,,,,,

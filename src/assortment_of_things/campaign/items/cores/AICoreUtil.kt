@@ -14,6 +14,7 @@ import com.fs.starfarer.api.util.Misc
 object AICoreUtil
 {
 
+    @JvmStatic
     fun createCorePerson(aiCoreId: String?, factionId: String?) : PersonAPI
     {
         val spec = Global.getSettings().getCommoditySpec(aiCoreId)
@@ -31,6 +32,7 @@ object AICoreUtil
         return core
     }
 
+    @JvmStatic
     fun addPersonalityTooltip(person: PersonAPI?, tooltip: TooltipMakerAPI?)
     {
         val opad = 10f
