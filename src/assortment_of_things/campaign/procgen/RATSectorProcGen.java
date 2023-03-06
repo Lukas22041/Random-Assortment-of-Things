@@ -5,7 +5,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
-import assortment_of_things.campaign.procgen.customThemes.BlackmarketThemeGenerator;
 import assortment_of_things.campaign.procgen.customThemes.ChiralThemeGenerator;
 import assortment_of_things.misc.RATSettings;
 import assortment_of_things.campaign.procgen.customThemes.OutpostThemeGenerator;
@@ -33,7 +32,6 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 
 
 	public static OutpostThemeGenerator outpostThemeGen = new OutpostThemeGenerator();
-	public static BlackmarketThemeGenerator blackmarketThemeGen = new BlackmarketThemeGenerator();
 	public static ChiralThemeGenerator chiralThemeGen = new ChiralThemeGenerator();
 
 	public static final float CELL_SIZE = 2000;
@@ -91,16 +89,6 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 		else if (adjustedEnabled)
 		{
 			SectorThemeGenerator.generators.remove(outpostThemeGen);
-		}
-
-		if (adjustedEnabled && RATSettings.getEnableBlackmarket())
-		{
-			SectorThemeGenerator.generators.add(blackmarketThemeGen);
-			Global.getSector().getMemoryWithoutUpdate().set("$rat_blackmarket_enabled", true);
-		}
-		else if (adjustedEnabled)
-		{
-			SectorThemeGenerator.generators.remove(blackmarketThemeGen);
 		}
 
 		if (adjustedEnabled && RATSettings.getEnableChiral())

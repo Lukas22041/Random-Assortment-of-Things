@@ -14,17 +14,6 @@ object RATTags
     @JvmStatic
     var TAG_OUTPOST_WARNING_BEACON = "rat_outpost_warning_beacon"
 
-    //Blackmarket Theme
-    var BLACMARKET_THEME_ID = "blackmarket"
-
-    var THEME_BLACKMARKET = "theme_blackmarket"
-    var THEME_BLACKMARKET_MAIN = "theme_blackmarket_main"
-    var THEME_BLACKMARKET_SECONDARY = "theme_blackmarket_secondary"
-
-    var TAG_BLACKMARKET_PLANET = "rat_blackarmet_planet"
-    @JvmStatic
-    var TAG_BLACKMARKET_WARNING_BEACON = "rat_blackmarket_warning_beacon"
-
     //Chiral Theme
 
     var CHIRAL_THEME_ID = "chiral"

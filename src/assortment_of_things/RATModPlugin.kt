@@ -2,17 +2,19 @@ package assortment_of_things
 
 import ParallelConstruction
 import assortment_of_things.campaign.RATCampaignPlugin
-import assortment_of_things.misc.PirateBaseDespawner
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.campaign.procgen.customThemes.BlackmarketThemeGenerator
 import assortment_of_things.strings.RATTags
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CoreUITabId
 import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
+import com.fs.starfarer.campaign.fleet.FleetMember
+import com.fs.starfarer.ui.impl.StandardTooltipV2
 import lunalib.lunaDebug.LunaDebug
+import lunalib.lunaExtensions.addTransientScript
 import lunalib.lunaExtensions.getSystemsWithTag
 
 
@@ -48,6 +50,15 @@ class RATModPlugin : BaseModPlugin() {
             }
         }
 
+       /* Global.getSector().addTransientScript(true) {
+            Global.getSector().playerFleet.fleetData.membersInPriorityOrder.forEach {
+                if (!it.variant.hasHullMod("rat_stat_comparer")) {
+                    it.variant.addMod("rat_stat_comparer")
+                    it.variant.addPermaMod("rat_stat_comparer")
+                }
+            }
+        }*/
+
        /* var params = StarSystemGenerator.CustomConstellationParams(StarAge.ANY)
         params.systemTypes = listOf(StarSystemGenerator.StarSystemType.SINGLE)
         params.minStars = 1
@@ -67,14 +78,6 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onNewGameAfterTimePass() {
         super.onNewGameAfterTimePass()
-        //Makes sure that pirate bases added by the blackmarket theme despawn after being defeated
-        for (market in BlackmarketThemeGenerator.pirateOutposts)
-        {
-            var fleet = Misc.getStationFleet(market)
-            fleet?.addEventListener(PirateBaseDespawner(market))
-        }
-        BlackmarketThemeGenerator.pirateOutposts.clear()
-
 
         for (system in Global.getSector().getSystemsWithTag(RATTags.THEME_CHIRAL_COPY))
         {
@@ -91,7 +94,7 @@ class RATModPlugin : BaseModPlugin() {
         {
             for (entity in system.customEntities)
             {
-                if (entity.customEntityType == Entities.STABLE_LOCATION || entity.customEntityType == Entities.INACTIVE_GATE)
+                if (entity.customEntityType == Entities.INACTIVE_GATE)
                 {
                     system.removeEntity(entity)
                 }

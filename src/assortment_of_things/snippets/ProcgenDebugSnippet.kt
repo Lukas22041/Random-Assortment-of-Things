@@ -98,9 +98,6 @@ class ProcgenDebugSnippet : LunaSnippet
                     RATTags.THEME_OUTPOST_MAIN -> outpostMainCount++
                     RATTags.THEME_OUTPOST_SECONDARY -> outpostSecondaryCount++
 
-                    RATTags.THEME_BLACKMARKET_MAIN -> blackmarketMainCount++
-                    RATTags.THEME_BLACKMARKET_SECONDARY -> blackmarketSecondaryCount++
-
                     RATTags.THEME_CHIRAL_MAIN -> chiralMainCount++
                     RATTags.THEME_CHIRAL_SECONDARY -> chiralSecondaryCount++
                 }
@@ -109,7 +106,6 @@ class ProcgenDebugSnippet : LunaSnippet
 
         output.addPara("Printing Procgen Data", 0f, positiveColor, positiveColor)
         output.addSpacer(10f)
-
 
         var generatedWith = "Vannila or Adjusted Sector"
         if (Global.getSector().memoryWithoutUpdate.isNotNull("\$rat_sector_generated_with_rat")) generatedWith = "Random Assortment of Things"

@@ -8,8 +8,7 @@ assortment_of_things,rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,"If set
 assortment_of_things,rat_themeHeader,Expanded Themes,Header,Expanded Themes,,,
 assortment_of_things,rat_themeText,,Text,"Adds more Themes to the Procedual Generation of Starsector. A Theme determines what kind of things get generated in to a constellation, like [REDACTED] and derelicts for example. ",,,
 assortment_of_things,rat_enableOutposts,Outpost Theme,Boolean,false,"Adds a type of system that is closely guarded by a faction, in which they attack any fleet that is entering it, even if they are allied. Only generates them for vanilla factions.",,
-assortment_of_things,rat_enableBlackmarket,Blackmarket Theme,Boolean,false,"A once per sector, fringe-world pirate constellation that hosts a blackmarket that sells some wares not purchaseable anywhere else.",,
-assortment_of_things,rat_enableChiral,Chiral Theme,Boolean,false,"A more supernatural themed constellation with some of its own loot to find. Currently still in development, so you may find its content lacking.",,
+assortment_of_things,rat_enableChiral,Chiral Theme,Boolean,false,A more supernatural themed constellation with some of its own loot to find.,,
 ,,,,,,,
 assortment_of_things,rat_procgenHeader,Procedual Generation Tweaks,Header,Procedual Generation Config,,,
 assortment_of_things,rat_procgenText,,Text,"Changes to how starsectors procedual generation works. 

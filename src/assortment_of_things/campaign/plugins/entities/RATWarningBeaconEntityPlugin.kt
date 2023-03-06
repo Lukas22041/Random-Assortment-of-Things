@@ -1,9 +1,7 @@
 package assortment_of_things.campaign.plugins.entities
 
-import assortment_of_things.campaign.intel.BlackmarketWarningBeaconIntel
 import assortment_of_things.campaign.intel.OutpostWarningBeaconIntel
-import assortment_of_things.strings.RATTags.TAG_BLACKMARKET_WARNING_BEACON
-import assortment_of_things.strings.RATTags.TAG_OUTPOST_WARNING_BEACON
+import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -52,12 +50,7 @@ class RATWarningBeaconEntityPlugin : BaseCustomEntityPlugin() {
         phase += amount * GLOW_FREQUENCY * freqMult
         while (phase > 1) phase--
         if (!entity.isDiscoverable && !addedIntel) {
-            if (entity.hasTag(TAG_BLACKMARKET_WARNING_BEACON)) {
-                val intel = BlackmarketWarningBeaconIntel(entity)
-                Global.getSector().intelManager.addIntel(intel)
-                addedIntel = true
-            }
-            if (entity.hasTag(TAG_OUTPOST_WARNING_BEACON)) {
+            if (entity.hasTag(RATTags.TAG_OUTPOST_WARNING_BEACON)) {
                 val intel = OutpostWarningBeaconIntel(entity, entity.faction)
                 Global.getSector().intelManager.addIntel(intel)
                 addedIntel = true
@@ -147,8 +140,7 @@ class RATWarningBeaconEntityPlugin : BaseCustomEntityPlugin() {
 
     override fun appendToCampaignTooltip(tooltip: TooltipMakerAPI, level: VisibilityLevel?) {
 
-        //tooltip.addPara("The beacon displays the signature of a major faction and it is likely that they will attack anyone that gets to close, no matter their standing.", 0f);
-        if (entity.hasTag(TAG_OUTPOST_WARNING_BEACON)) {
+        if (entity.hasTag(RATTags.TAG_OUTPOST_WARNING_BEACON)) {
             val label = tooltip.addPara("The beacon identifies the system as under ${entity.faction.displayName} control and advises anyone to turn away. Fleets in this system are likely hostile, even towards some of their closest allies.", 0f)
             label.setHighlight(entity.faction.displayName)
             label.setHighlightColors(entity.faction.baseUIColor)

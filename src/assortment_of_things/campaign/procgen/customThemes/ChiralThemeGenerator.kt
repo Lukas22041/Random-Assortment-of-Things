@@ -16,6 +16,8 @@ import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.*
+import com.fs.starfarer.api.impl.campaign.intel.bar.BarEventDialogPlugin
+import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithBarEvent
 import com.fs.starfarer.api.impl.campaign.procgen.Constellation
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
@@ -25,6 +27,10 @@ import com.fs.starfarer.api.impl.campaign.submarkets.StoragePlugin
 import com.fs.starfarer.api.impl.campaign.terrain.AsteroidBeltTerrainPlugin
 import com.fs.starfarer.api.impl.campaign.terrain.RingSystemTerrainPlugin
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.campaign.BaseLocation
+import com.fs.starfarer.campaign.WarpingSpriteRenderer
+import com.fs.starfarer.ui.impl.StandardTooltipV2
+import lunalib.lunaExtensions.addScript
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
@@ -51,7 +57,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
     //2000 for Ruins
     //1000000 for Misc
     override fun getOrder(): Int {
-        return 499
+        return 1000010
     }
 
     override fun getThemeId(): String {
@@ -65,8 +71,10 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
 
 
         //gets available constellations that havent been used yet
-        val constellations: List<Constellation?>? = ProcgenUtility.getSortedAvailableConstellations(context, false, Vector2f(), null)
-        Collections.reverse(constellations)
+        //val constellations: List<Constellation?>? = ProcgenUtility.getSortedAvailableConstellations(context, false, Vector2f(), null)
+        //Collections.reverse(constellations)
+        val constellations = context.constellations
+
         for (constellation in constellations!!)
         {
             val systems: List<StarSystemData> = constellation!!.systems.map { computeSystemData(it) }
@@ -74,7 +82,8 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
             //looks for a system with blackholes, if none are found it continues to the next constellation
             var allowedStars = listOf(StarTypes.WHITE_DWARF, StarTypes.RED_DWARF, StarTypes.BROWN_DWARF, StarTypes.ORANGE, StarTypes.YELLOW)
             val mainCandidates = ProcgenUtility.getScoredSystemsByFilter(systems) {
-                it.system.center.isStar && allowedStars.contains((it.system.center as PlanetAPI).typeId)
+                it.system.hasTag(Tags.THEME_MISC)
+                && it.system.center.isStar && allowedStars.contains((it.system.center as PlanetAPI).typeId)
                 && it.system.terrainCopy.find { it.type == Terrain.ASTEROID_BELT } != null && it.planets.size >= 2
                 && it.system.planets.find { planet -> planet.typeId.equals(StarTypes.NEUTRON_STAR) } == null
                 && it.system.secondary == null
@@ -92,7 +101,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
             var main = mainCandidates.get(0)
             populateMain(main)
             secondarySystems.remove(main.system)
-
+            main.system.setBackgroundOffset(2f, 2f)
             context.majorThemes.put(constellation, themeId)
 
             for (system in secondarySystems)
@@ -110,11 +119,6 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         data.system.addTag(RATTags.THEME_CHIRAL_MAIN)
         data.system.addTag(Tags.THEME_UNSAFE)
 
-        //required to make ARS not spawn bases in it.
-        data.system.isProcgen = false
-
-        addDerelictShips(data, 1f, 3, 7, createStringPicker(Factions.HEGEMONY, 1f, Factions.TRITACHYON, 1f, Factions.PERSEAN, 1f))
-
         generateMirrorCopy(data)
     }
 
@@ -123,7 +127,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         data.system.addTag(RATTags.THEME_CHIRAL)
         data.system.addTag(RATTags.THEME_CHIRAL_SECONDARY)
 
-        val special = data.isBlackHole || data.isNebula || data.isPulsar
+        /*val special = data.isBlackHole || data.isNebula || data.isPulsar
         if (special) {
             addResearchStations(data, 0.75f, 1, 1, createStringPicker(Entities.STATION_RESEARCH, 1f))
         }
@@ -143,7 +147,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
             Entities.EQUIPMENT_CACHE_SMALL, 10f))
 
         addDerelictShips(data, 1f, 1, 5, createStringPicker(Factions.HEGEMONY, 1f, Factions.TRITACHYON, 1f, Factions.PERSEAN, 1f))
-        addShipGraveyard(data, 0.6f, 1,1, createStringPicker(Factions.HEGEMONY, 1f, Factions.TRITACHYON, 1f, Factions.PERSEAN, 1f))
+        addShipGraveyard(data, 0.6f, 1,1, createStringPicker(Factions.HEGEMONY, 1f, Factions.TRITACHYON, 1f, Factions.PERSEAN, 1f))*/
     }
 
     fun generateMirrorCopy(ogData: StarSystemData) : StarSystemAPI
@@ -227,8 +231,6 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
             }
         }
 
-
-
         var tear = generateGate(ogData, mirrorEntities.filter { it.originalEntity is PlanetAPI && !it.originalEntity.isStar && !(it.originalEntity as PlanetAPI).isGasGiant }.random(), 350f )
 
         mirrorEntities.add(tear)
@@ -245,50 +247,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         var calcData = BaseThemeGenerator.computeSystemData(mirroredSystem)
         calcData.alreadyUsed.add(tear.mirroredEntity.orbitFocus)
 
-        val fleet = FleetFactoryV3.createEmptyFleet("chirality", FleetTypes.BATTLESTATION, null)
-        val member: FleetMemberAPI = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "station2_hightech_Standard")
-        fleet.fleetData.addFleetMember(member)
-
-        fleet.name = "Defense Station"
-        //fleet.customDescriptionId = ""
-
-        //Behaviour Memory keys
-        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE] = true
-        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_NO_JUMP] = true
-        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALLOW_DISENGAGE] = true
-
-        fleet.addTag(Tags.NEUTRINO_HIGH)
-        fleet.isStationMode = true
-
-        fleet.clearAbilities()
-        fleet.addAbility(Abilities.TRANSPONDER)
-        fleet.getAbility(Abilities.TRANSPONDER).activate()
-        fleet.detectedRangeMod.modifyFlat("gen", 1000f)
-
-        fleet.ai = null
-
-        member.repairTracker.cr = member.repairTracker.maxCR
-        val activeFleets = ChiralBaseFleetManager(fleet,
-            3f,
-            3,
-            5,
-            25f,
-            70,
-            120,
-            "chirality")
-
-
-        val baseLocs = LinkedHashMap<LocationType, Float>()
-        baseLocs[LocationType.IN_ASTEROID_BELT] = 10f
-        baseLocs[LocationType.IN_ASTEROID_FIELD] = 5f
-        //weights[LocationType.PLANET_ORBIT] = 5f
-        baseLocs[LocationType.STAR_ORBIT] = 1f
-        var locs = getLocations(StarSystemGenerator.random, calcData.system, calcData.alreadyUsed, 100f, baseLocs)
-        mirroredSystem.addEntity(fleet)
-
-        fleet.orbit = locs.pick().orbit
-
-        mirroredSystem.addScript(activeFleets)
+        generateBase(mirroredSystem, calcData)
 
         addDerelictShips(computeSystemData(mirroredSystem), 1f, 5, 9, createStringPicker("chirality", 1f))
 
@@ -330,6 +289,52 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
 
         data.alreadyUsed.add(focus.originalEntity)
         return MirrorEntity(ogTear, mirrorTear)
+    }
+
+    fun generateBase(mirroredSystem: StarSystemAPI, calcData: StarSystemData)
+    {
+        val fleet = FleetFactoryV3.createEmptyFleet("chirality", FleetTypes.BATTLESTATION, null)
+        val member: FleetMemberAPI = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "station2_hightech_Standard")
+        fleet.fleetData.addFleetMember(member)
+
+        fleet.name = "Defense Station"
+        //fleet.customDescriptionId = ""
+        //Behaviour Memory keys
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE] = true
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_NO_JUMP] = true
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALLOW_DISENGAGE] = true
+
+        fleet.addTag(Tags.NEUTRINO_HIGH)
+        fleet.isStationMode = true
+
+        fleet.clearAbilities()
+        fleet.addAbility(Abilities.TRANSPONDER)
+        fleet.getAbility(Abilities.TRANSPONDER).activate()
+        fleet.detectedRangeMod.modifyFlat("gen", 1000f)
+
+        fleet.ai = null
+
+        member.repairTracker.cr = member.repairTracker.maxCR
+        val activeFleets = ChiralBaseFleetManager(fleet,
+            3f,
+            3,
+            5,
+            25f,
+            70,
+            85,
+            "chirality")
+
+        val baseLocs = LinkedHashMap<LocationType, Float>()
+        baseLocs[LocationType.IN_ASTEROID_BELT] = 10f
+        baseLocs[LocationType.IN_ASTEROID_FIELD] = 5f
+        //weights[LocationType.PLANET_ORBIT] = 5f
+        baseLocs[LocationType.STAR_ORBIT] = 1f
+        var locs = getLocations(StarSystemGenerator.random, calcData.system, calcData.alreadyUsed, 100f, baseLocs)
+        mirroredSystem.addEntity(fleet)
+
+        fleet.orbit = locs.pick().orbit
+
+        mirroredSystem.addScript(activeFleets)
     }
 
     fun generateMirroredEntity(data: StarSystemData, mirrorEntities: List<MirrorEntity>, mirrorSystem: StarSystemAPI, ogID: String, mirrorID: String, locations: LinkedHashMap<LocationType, Float>) : MirrorEntity

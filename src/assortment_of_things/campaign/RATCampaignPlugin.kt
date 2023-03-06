@@ -20,11 +20,6 @@ class RATCampaignPlugin : BaseCampaignPlugin()
     override fun pickInteractionDialogPlugin(interactionTarget: SectorEntityToken?): PluginPick<InteractionDialogPlugin>? {
         if (interactionTarget == null) return null
 
-        if (interactionTarget.market != null && interactionTarget.market.hasTag(RATTags.TAG_BLACKMARKET_PLANET) )
-        {
-            return PluginPick(SpacersGambitInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-        }
-
         if (interactionTarget.hasTag(RATTags.TAG_OUTPOST_PLANET))
         {
             return PluginPick(OutpostPlanetInteraction(), CampaignPlugin.PickPriority.HIGHEST)

@@ -27,6 +27,7 @@ class DimensionalGate : BaseCustomEntityPlugin()
     var teleportLocation: SectorEntityToken? = null
     var active = false
 
+
     @Transient
     protected var baseSprite: SpriteAPI? = null
 
@@ -174,7 +175,7 @@ class DimensionalGate : BaseCustomEntityPlugin()
     override fun createMapTooltip(tooltip: TooltipMakerAPI, expanded: Boolean) {
         val color: Color = entity.faction.baseUIColor
 
-        tooltip.addPara("Odd Gate", Misc.getGrayColor(), 3f)
+        tooltip.addPara("Strange Gate", Misc.getGrayColor(), 3f)
     }
 
     override fun hasCustomMapTooltip(): Boolean {
@@ -205,7 +206,9 @@ class DimensionalGate : BaseCustomEntityPlugin()
         }
     }
 
+
     override fun render(layer: CampaignEngineLayers, viewport: ViewportAPI) {
+
         if (layer == CampaignEngineLayers.STATIONS) {
             var alphaMult = viewport.alphaMult
             alphaMult *= entity.sensorFaderBrightness

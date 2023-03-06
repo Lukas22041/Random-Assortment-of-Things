@@ -16,8 +16,6 @@ object RATSettings : LunaSettingsListener
     @JvmStatic
     var enableOutposts = LunaSettings.getBoolean(modID, "rat_enableOutposts")
     @JvmStatic
-    var enableBlackmarket = LunaSettings.getBoolean(modID, "rat_enableBlackmarket")
-    @JvmStatic
     var enableChiral = LunaSettings.getBoolean(modID, "rat_enableChiral")
 
     //Procgen
@@ -48,7 +46,6 @@ object RATSettings : LunaSettingsListener
         //enableThemes = LunaSettings.getBoolean(modID, "rat_enableThemes"
 
         enableOutposts = LunaSettings.getBoolean(modID, "rat_enableOutposts")
-        enableBlackmarket = LunaSettings.getBoolean(modID, "rat_enableBlackmarket")
         enableChiral = LunaSettings.getBoolean(modID, "rat_enableChiral")
 
         procgenScaleModifier = LunaSettings.getInt(modID, "rat_systemScale")

@@ -8,7 +8,6 @@ import java.util.List;
 import assortment_of_things.campaign.procgen.customThemes.ChiralThemeGenerator;
 import assortment_of_things.misc.RATSettings;
 import assortment_of_things.campaign.procgen.customThemes.OutpostThemeGenerator;
-import assortment_of_things.campaign.procgen.customThemes.BlackmarketThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.RATDerelictThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.RATMiscellaneousThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.RATRemnantThemeGenerator;
@@ -46,11 +45,6 @@ public class RATSectorThemeGenerator {
 		if (RATSettings.getEnableOutposts()) {
 			generators.add(new OutpostThemeGenerator());
 			Global.getSector().getMemoryWithoutUpdate().set("$rat_outposts_enabled", true);
-		}
-
-		if (RATSettings.getEnableBlackmarket()) {
-			generators.add(new BlackmarketThemeGenerator());
-			Global.getSector().getMemoryWithoutUpdate().set("$rat_blackmarket_enabled", true);
 		}
 
 		if (RATSettings.getEnableChiral()) {
