@@ -15,6 +15,7 @@ import com.fs.starfarer.api.impl.campaign.procgen.Constellation
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.ThemeGenContext
+import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.util.*
@@ -231,7 +232,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
                 4,
                 25f,
                 50,
-                100,
+                80,
                 faction.id)
 
             data.system.addEntity(fleet)
@@ -247,7 +248,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
 
                 var entity = location.orbit.focus
 
-                val params = FleetParamsV3(null,
+               /* val params = FleetParamsV3(null,
                     null,
                     faction.id,
                     3f,
@@ -263,7 +264,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
                 params.averageSMods = 1;
                 params.withOfficers = true
                 val defenderFleet = FleetFactoryV3.createFleet(params)
-                entity.memoryWithoutUpdate.set("\$defenderFleet", defenderFleet)
+                entity.memoryWithoutUpdate.set("\$defenderFleet", defenderFleet)*/
                 entity.memoryWithoutUpdate.set("\$defenderStation", fleet)
 
                 val planet = fleet!!.orbitFocus

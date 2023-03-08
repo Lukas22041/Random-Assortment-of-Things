@@ -10,6 +10,7 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.LabelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import exerelin.world.industry.bonus.AICoreHeavyIndustry
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import java.awt.Color
@@ -38,8 +39,6 @@ class StatComparer : BaseHullMod() {
         tooltip.addSpacer(5f)
 
         tooltip.addPara("Hullsize: ${selectedHullsize.replace("_", " ")} (Hold H to Toggle)", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Hullsize", "")
-
-
         tooltip.addSpacer(5f)
 
         tooltip.addSectionHeading("Averages", Alignment.MID, 0f)

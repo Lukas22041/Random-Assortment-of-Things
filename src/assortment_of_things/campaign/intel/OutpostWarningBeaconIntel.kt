@@ -33,7 +33,7 @@ class OutpostWarningBeaconIntel(var beacon: SectorEntityToken, var faction: Fact
         val desc = Global.getSettings().getDescription(RATEntities.OUTPOST_WARNING_BEACON, Description.Type.CUSTOM)
         info!!.addPara(desc.text1FirstPara, 0f)
 
-        var label = info.addPara("The beacon identifies the system as under ${faction.displayName} control and advises anyone to turn away.\n\nFleets in this system are likely hostile, even towards some of their closest allies.", 0f);
+        var label = info.addPara("The beacon identifies the system as under ${faction.displayName} control and advises any daring captain to turn away.\n\nFleets in this system are likely hostile, even towards their closest allies.", 0f);
         label.setHighlight(faction.getDisplayName())
         label.setHighlightColors(faction.getBaseUIColor())
 

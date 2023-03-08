@@ -32,6 +32,7 @@ object RATSettings : LunaSettingsListener
 
     //Misc
     var disableHelp = LunaSettings.getBoolean(modID, "rat_forceDisableHelp")
+    var sillyContentEnabled = LunaSettings.getBoolean(modID, "rat_sillyContent")
 
     override fun settingsChanged(modID: String) {
         if (modID == RATSettings.modID)
@@ -43,8 +44,6 @@ object RATSettings : LunaSettingsListener
     @JvmStatic
     fun loadSettings()
     {
-        //enableThemes = LunaSettings.getBoolean(modID, "rat_enableThemes"
-
         enableOutposts = LunaSettings.getBoolean(modID, "rat_enableOutposts")
         enableChiral = LunaSettings.getBoolean(modID, "rat_enableChiral")
 
@@ -56,5 +55,6 @@ object RATSettings : LunaSettingsListener
         parallelApplyToNPCs = LunaSettings.getBoolean(modID, "rat_parallelApplyToNPCs")
 
         disableHelp = LunaSettings.getBoolean(modID, "rat_forceDisableHelp")
+        sillyContentEnabled = LunaSettings.getBoolean(modID, "rat_sillyContent")
     }
 }

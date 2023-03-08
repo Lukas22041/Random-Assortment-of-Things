@@ -13,7 +13,6 @@
 
 	"graphics":{
 		"intel":{
-			"beacon_blackmarket":"graphics/icons/intel/beacon_blackmarket.png",
 			"beacon_outpost":"graphics/icons/intel/beacon_outpost.png",
 		},
 		"rat": {

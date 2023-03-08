@@ -183,8 +183,9 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
      * Triggers defenders if $defenderFleet is set to a fleet in the memory of the target.
      * Once defeated, it will trigger the defeatedDefenders() method.
      */
-    final fun triggerDefenders()
+    final fun triggerDefenders(fidConfig: FIDConfig? = null)
     {
+
         if (targetMemory.getFleet("\$defenderFleet") == null) return
 
         val entity = dialog.interactionTarget
@@ -192,7 +193,9 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
 
         dialog.interactionTarget = defenders
 
-        val config = FIDConfig()
+        var config: FIDConfig? = fidConfig
+        if (config == null) config = FIDConfig()
+
         config.leaveAlwaysAvailable = true
         config.showCommLinkOption = false
         config.showEngageText = false
@@ -225,6 +228,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
 
         dialog.plugin = plugin
         plugin.init(dialog)
+
     }
 
     /**

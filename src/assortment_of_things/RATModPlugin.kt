@@ -49,27 +49,6 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getLogger(this.javaClass).error("Failed to disable Help Popups.")
             }
         }
-
-       /* Global.getSector().addTransientScript(true) {
-            Global.getSector().playerFleet.fleetData.membersInPriorityOrder.forEach {
-                if (!it.variant.hasHullMod("rat_stat_comparer")) {
-                    it.variant.addMod("rat_stat_comparer")
-                    it.variant.addPermaMod("rat_stat_comparer")
-                }
-            }
-        }*/
-
-       /* var params = StarSystemGenerator.CustomConstellationParams(StarAge.ANY)
-        params.systemTypes = listOf(StarSystemGenerator.StarSystemType.SINGLE)
-        params.minStars = 1
-        params.maxStars = 2
-        params.location = Vector2f(0f, 0f)
-        params.secondaryName = ""
-        params.name = "TestSys"
-        StarSystemGenerator(params).generate()*/
-
-        /*var plugins = Global.getSector().genericPlugins
-        plugins.addPlugin(RATDiscoveryPlugin(), true)*/
     }
 
     override fun onNewGame() {
@@ -100,8 +79,5 @@ class RATModPlugin : BaseModPlugin() {
                 }
             }
         }
-
-
     }
-
 }

@@ -6,17 +6,17 @@ assortment_of_things,rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,"If set
 ,,,,,,,
 ,,,,,,,
 assortment_of_things,rat_themeHeader,Expanded Themes,Header,Expanded Themes,,,
-assortment_of_things,rat_themeText,,Text,"Adds more Themes to the Procedual Generation of Starsector. A Theme determines what kind of things get generated in to a constellation, like [REDACTED] and derelicts for example. ",,,
+assortment_of_things,rat_themeText,,Text,"Adds more Themes to the Procedual Generation of Starsector. A Theme determines what kind of things get generated in to a constellation, like REDACTED and derelicts for example. ",,,
 assortment_of_things,rat_enableOutposts,Outpost Theme,Boolean,false,"Adds a type of system that is closely guarded by a faction, in which they attack any fleet that is entering it, even if they are allied. Only generates them for vanilla factions.",,
-assortment_of_things,rat_enableChiral,Chiral Theme,Boolean,false,A more supernatural themed constellation with some of its own loot to find.,,
+assortment_of_things,rat_enableChiral,Chiral Theme,Boolean,false,A more supernatural themed constellation about some odd starsystems.,,
 ,,,,,,,
 assortment_of_things,rat_procgenHeader,Procedual Generation Tweaks,Header,Procedual Generation Config,,,
 assortment_of_things,rat_procgenText,,Text,"Changes to how starsectors procedual generation works. 
 This section is basicly a simplified and more idiot-proof version of Adjusted Sector.
-If Adjusted Sector is installed, this Section is completly ignored and Adjusted Sectors configs are used instead.",,,
+[If Adjusted Sector is installed], this Section is completly [ignored] and Adjusted Sectors configs are used instead.",,,
 assortment_of_things,rat_systemScale,Change amount of generated Systems,Int,1,"Increases the amount of generated Systems. 
-An increase in generated systems come with a heavy performance cost.
-Vanilla Themes will scale with the amount of systems, Modded Themes will not.
+An increase in generated systems come with a [heavy performance cost].
+Vanilla Themes will scale with the amount of systems, Modded Themes may not.
 
 1 - 100%% (Vanilla).
 2 - 150%% more systems.
@@ -26,4 +26,5 @@ assortment_of_things,rat_hyperspaceCloudsMod,Hyperspace Clouds Spawn Modifier,Do
 assortment_of_things,rat_improvedMisc,Improved Miscellaneous Theme,Boolean,false,"Improves the ""Miscellaneous"" Theme. Starsector generates this theme as a filler for whatever system didnt receive anything special during procgen. In Vannila, those systems rarely give anything of worth, often spawning completely empty systems. Toggling this will prevent those from ever being empty, and gives them a lot more loot.",,
 ,,,,,,,
 assortment_of_things,rat_miscHeader,Miscellaneous,Header,Miscellaneous,,,
-assortment_of_things,rat_forceDisableHelp,Force disable help-popups,Boolean,false,"Disables help popups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, does not re-enable help-popups if disabled.",,
+assortment_of_things,rat_forceDisableHelp,Force disable help-popups,Boolean,false,"Disables help popups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, [does not re-enable] help-popups if disabled.",,
+assortment_of_things,rat_sillyContent,Enable Silly Content,Boolean,false,"If set to true, enables some silly or lore breaking content that may be added in to other aspects of the mod. As of now those arent any major things, but if you dont enjoy things breaking the lore or maybe feeling out of place, then keep this disabled.",,

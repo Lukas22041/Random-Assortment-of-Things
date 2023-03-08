@@ -141,7 +141,7 @@ class RATWarningBeaconEntityPlugin : BaseCustomEntityPlugin() {
     override fun appendToCampaignTooltip(tooltip: TooltipMakerAPI, level: VisibilityLevel?) {
 
         if (entity.hasTag(RATTags.TAG_OUTPOST_WARNING_BEACON)) {
-            val label = tooltip.addPara("The beacon identifies the system as under ${entity.faction.displayName} control and advises anyone to turn away. Fleets in this system are likely hostile, even towards some of their closest allies.", 0f)
+            val label = tooltip.addPara("\nThe beacon identifies the system as under ${entity.faction.displayName} control and advises any daring captain to turn away. Fleets in this system are likely hostile, even towards their closest allies.", 0f)
             label.setHighlight(entity.faction.displayName)
             label.setHighlightColors(entity.faction.baseUIColor)
         }

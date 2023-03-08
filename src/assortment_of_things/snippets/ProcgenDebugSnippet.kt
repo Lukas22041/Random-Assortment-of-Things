@@ -58,9 +58,6 @@ class ProcgenDebugSnippet : LunaSnippet
         var outpostMainCount = 0
         var outpostSecondaryCount = 0
 
-        var blackmarketMainCount = 0
-        var blackmarketSecondaryCount = 0
-
         var chiralMainCount = 0
         var chiralSecondaryCount = 0
 
@@ -113,9 +110,6 @@ class ProcgenDebugSnippet : LunaSnippet
         var outpostEnabled = "Disabled"
         if (Global.getSector().memoryWithoutUpdate.isNotNull("\$rat_outposts_enabled")) outpostEnabled = "Enabled"
 
-        var blackmarketEnabled = "Disabled"
-        if (Global.getSector().memoryWithoutUpdate.isNotNull("\$rat_blackmarket_enabled")) blackmarketEnabled = "Enabled"
-
         var chiralEnabled = "Disabled"
         if (Global.getSector().memoryWithoutUpdate.isNotNull("\$rat_chiral_enabled")) chiralEnabled = "Enabled"
 
@@ -133,7 +127,6 @@ class ProcgenDebugSnippet : LunaSnippet
         output.addPara("RAT Sector Data: ", 0f, highlightColor, highlightColor)
         output.addPara("Sector Generated with: $generatedWith", 0f, baseColor, baseColor)
         output.addPara("Outpost Theme: $outpostEnabled", 0f, baseColor, baseColor)
-        output.addPara("Blackmarket Theme: $blackmarketEnabled", 0f, baseColor, baseColor)
         output.addPara("Chiral Theme: $chiralEnabled", 0f, baseColor, baseColor)
         output.addPara("Improved Misc: $improvedMisc", 0f, baseColor, baseColor)
 
@@ -163,11 +156,6 @@ class ProcgenDebugSnippet : LunaSnippet
         output.addPara("RAT Theme Data: ", 0f, highlightColor, highlightColor)
         output.addPara("Theme Outpost-Main Systems: $outpostMainCount", 0f, baseColor, baseColor)
         output.addPara("Theme Outpost-Secondary Systems: $outpostSecondaryCount", 0f, baseColor, baseColor)
-
-        output.addSpacer(5f)
-
-        output.addPara("Theme Blackmarket-Main Systems: $blackmarketMainCount", 0f, baseColor, baseColor)
-        output.addPara("Theme Blackmarket-Secondary Systems: $blackmarketSecondaryCount", 0f, baseColor, baseColor)
 
         output.addSpacer(5f)
 

@@ -2,9 +2,10 @@ package assortment_of_things.campaign
 
 import assortment_of_things.campaign.interactions.DimensionalGateInteraction
 import assortment_of_things.campaign.interactions.*
-import assortment_of_things.campaign.items.cores.AmberProcessorCore
-import assortment_of_things.campaign.items.cores.AzureProcessorCore
-import assortment_of_things.campaign.items.cores.ScarletProcessorCore
+import assortment_of_things.campaign.items.cores.admin.JeffCoreAdmin
+import assortment_of_things.campaign.items.cores.officer.AmberProcessorCore
+import assortment_of_things.campaign.items.cores.officer.AzureProcessorCore
+import assortment_of_things.campaign.items.cores.officer.ScarletProcessorCore
 import assortment_of_things.strings.RATItems
 import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.PluginPick
@@ -48,12 +49,10 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         return null
     }
 
-  /*  override fun pickAICoreAdminPlugin(commodityId: String?): PluginPick<AICoreAdminPlugin>? {
-        if (commodityId == "rat_scarlet_processor") return PluginPick(TestCoreAdmin(), CampaignPlugin.PickPriority.HIGHEST)
+    override fun pickAICoreAdminPlugin(commodityId: String?): PluginPick<AICoreAdminPlugin>? {
+        if (commodityId == RATItems.JEFF) return PluginPick(JeffCoreAdmin(), CampaignPlugin.PickPriority.HIGHEST)
         return null
-
-
-    }*/
+    }
 
     override fun pickAICoreOfficerPlugin(commodityId: String?): PluginPick<AICoreOfficerPlugin>? {
         if (commodityId == RATItems.SCARLET_PROCESSOR) return PluginPick(ScarletProcessorCore(), CampaignPlugin.PickPriority.HIGHEST)

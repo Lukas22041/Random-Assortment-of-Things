@@ -5,4 +5,6 @@ object RATItems
     var SCARLET_PROCESSOR = "rat_scarlet_processor"
     var AZURE_PROCESSOR = "rat_azure_processor"
     var AMBER_PROCESSOR = "rat_amber_processor"
+
+    var JEFF = "rat_jeff_core"
 }
