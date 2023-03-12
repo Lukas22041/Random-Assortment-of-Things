@@ -2,8 +2,8 @@ package assortment_of_things.campaign.procgen.customThemes
 
 import assortment_of_things.campaign.plugins.entities.DimensionalGate
 import assortment_of_things.campaign.procgen.ProcgenUtility
+import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.scripts.ChiralBaseFleetManager
-import assortment_of_things.scripts.FactionBaseFleetManager
 import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
@@ -14,25 +14,17 @@ import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
-import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.*
-import com.fs.starfarer.api.impl.campaign.intel.bar.BarEventDialogPlugin
-import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithBarEvent
-import com.fs.starfarer.api.impl.campaign.procgen.Constellation
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageEntityGeneratorOld
 import com.fs.starfarer.api.impl.campaign.procgen.themes.ThemeGenContext
-import com.fs.starfarer.api.impl.campaign.submarkets.StoragePlugin
 import com.fs.starfarer.api.impl.campaign.terrain.AsteroidBeltTerrainPlugin
 import com.fs.starfarer.api.impl.campaign.terrain.RingSystemTerrainPlugin
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.BaseLocation
 import com.fs.starfarer.campaign.WarpingSpriteRenderer
-import com.fs.starfarer.ui.impl.StandardTooltipV2
-import lunalib.lunaExtensions.addScript
 import org.lazywizard.lazylib.MathUtils
-import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 import java.util.*
 
@@ -163,6 +155,13 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         mirroredSystem.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
         mirroredSystem.isProcgen = false
 
+       /* if (mirroredSystem is BaseLocation)
+        {
+            var background = mirroredSystem.background
+            ReflectionUtils.set("hyperspaceMode", background, true)
+            ReflectionUtils.set("warpngRenderer", background, WarpingSpriteRenderer(16, 16))
+        }*/
+
         var mirrorEntities: MutableList<MirrorEntity> = ArrayList()
 
         //Copy Star
@@ -270,12 +269,15 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         mirrorTear.setCircularOrbit(focus.mirroredEntity, angle, orbitRadius, 200f)
         mirrorTear.addTag(RATTags.TAG_DIMENSIONAL_GATE)
 
-        var derelictNebulaParams = DerelictShipEntityPlugin.createHull("nebula", Random(), 0f)
-        val nebulaWreck: CustomCampaignEntityAPI = mirrorTear.starSystem.addCustomEntity(null, SalvageEntityGeneratorOld.getSalvageSpec(Entities.WRECK).getNameOverride()
-            , Entities.WRECK, Factions.NEUTRAL, derelictNebulaParams)
+        if (Global.getSettings().allShipHullSpecs.find { it.hullId == "nebula" } != null)
+        {
+            var derelictNebulaParams = DerelictShipEntityPlugin.createHull("nebula", Random(), 0f)
+            val nebulaWreck: CustomCampaignEntityAPI = mirrorTear.starSystem.addCustomEntity(null, SalvageEntityGeneratorOld.getSalvageSpec(Entities.WRECK).getNameOverride()
+                , Entities.WRECK, Factions.NEUTRAL, derelictNebulaParams)
 
-        nebulaWreck.setCircularOrbit(mirrorTear.orbitFocus, MathUtils.getRandomNumberInRange(0f, 360f), 300f, 100f)
-        nebulaWreck.addTag(RATTags.TAG_CHIRAL_NEBULA)
+            nebulaWreck.setCircularOrbit(mirrorTear.orbitFocus, MathUtils.getRandomNumberInRange(0f, 360f), 300f, 100f)
+            nebulaWreck.addTag(RATTags.TAG_CHIRAL_NEBULA)
+        }
 
         if (ogPlugin is DimensionalGate)
         {

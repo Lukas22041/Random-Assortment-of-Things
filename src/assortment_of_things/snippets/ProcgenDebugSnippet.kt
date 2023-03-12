@@ -11,7 +11,7 @@ import lunalib.lunaDebug.LunaSnippet
 import lunalib.lunaDebug.SnippetBuilder
 import lunalib.lunaExtensions.isNotNull
 
-class ProcgenDebugSnippet : LunaSnippet
+class ProcgenDebugSnippet : LunaSnippet()
 {
     override fun getName(): String {
         return "Print Procedual Generation Data"
