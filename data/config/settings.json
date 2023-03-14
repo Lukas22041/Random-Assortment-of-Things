@@ -5,6 +5,7 @@
 
 	"designTypeColors":{
 		"Chiral":[122,139,221,255],
+		"Derelict Hullmod":[156, 146, 90,255],
 	},		
 	
 	"drop_prob_officer_rat_scarlet_processor":0.2,

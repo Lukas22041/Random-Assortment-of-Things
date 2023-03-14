@@ -23,7 +23,7 @@ class StatComparer : BaseHullMod() {
         var selectedHullsize = "Match Ship Size"
     }
 
-    override fun addPostDescriptionSection(tooltip: TooltipMakerAPI, hullSize: ShipAPI.HullSize?, ship: ShipAPI, width: Float, isForModSpec: Boolean) {
+    override fun addPostDescriptionSection(tooltip: TooltipMakerAPI, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
         if (Keyboard.isKeyDown(Keyboard.KEY_H))
         {
@@ -42,7 +42,7 @@ class StatComparer : BaseHullMod() {
         tooltip.addSpacer(5f)
 
         tooltip.addSectionHeading("Averages", Alignment.MID, 0f)
-        var spec = ship.hullSpec
+        var spec = ship!!.hullSpec
 
         var specs: List<ShipHullSpecAPI> = ArrayList()
         if (selectedHullsize == "Match Ship Size") specs = Global.getSettings().allShipHullSpecs.filter { it.hullSize == hullSize }
@@ -80,7 +80,7 @@ class StatComparer : BaseHullMod() {
         tooltip.addPara("Hull: ${format.format(hullIntegrity)} ($hullDiff%%)", 0f, tc, "Hull:", "$hullDiff%").setHighlightColors(hc, percentColor(hullDiff))
         tooltip.addPara("Armor: ${format.format(armorRating)} ($armorDiff%%)", 0f, tc, "Armor:", "$armorDiff%").setHighlightColors(hc, percentColor(armorDiff))
 
-        if (ship.shield != null)
+        if (ship!!.shield != null)
         {
             tooltip.addPara("Shield Arc: ${format.format(shieldArc)} ($shieldArcDiff%%)", 0f, tc, "Shield Arc:", "$shieldArcDiff%").setHighlightColors(hc, percentColor(shieldArcDiff))
             tooltip.addPara("Shield Upkeep: ${format.format(shieldUpkeep)} ($shieldUpDiff%%)", 0f, tc, "Shield Upkeep:", "$shieldUpDiff%").setHighlightColors(hc, percentColorReverse(shieldUpDiff))

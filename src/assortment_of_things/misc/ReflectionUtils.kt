@@ -1,6 +1,8 @@
 package assortment_of_things.misc
 
 import com.fs.starfarer.api.fleet.FleetMemberAPI
+import com.fs.starfarer.api.impl.campaign.procgen.PlanetConditionGenerator
+import com.fs.starfarer.loading.scripts.ScriptStore
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
 import java.lang.invoke.MethodType
@@ -56,7 +58,6 @@ object ReflectionUtils {
         }
         return null
     }
-
     fun getInt(fieldName: String, instanceToGetFrom: Any) = get(fieldName, instanceToGetFrom) as Int?
     fun getDouble(fieldName: String, instanceToGetFrom: Any) = get(fieldName, instanceToGetFrom) as Double?
     fun getFloat(fieldName: String, instanceToGetFrom: Any) = get(fieldName, instanceToGetFrom) as Float?

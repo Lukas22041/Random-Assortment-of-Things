@@ -2,27 +2,21 @@ package assortment_of_things
 
 import ParallelConstruction
 import assortment_of_things.campaign.RATCampaignPlugin
+import assortment_of_things.combat.hullmods.random.BaseRandomHullmodEffect
+import assortment_of_things.combat.hullmods.random.RandomHullmodUtil
+import assortment_of_things.combat.hullmods.random.random_effects.negative.DecreasePassiveShieldEffect
+import assortment_of_things.combat.hullmods.random.random_effects.positive.IncreaseBallisticRoFEffect
+import assortment_of_things.combat.hullmods.random.random_effects.positive.IncreaseShieldEffEffect
+import assortment_of_things.combat.hullmods.random.random_effects.positive.PermaZeroFluxEffect
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.strings.RATTags
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.econ.CommoditySpecAPI
 import com.fs.starfarer.api.impl.campaign.ids.Entities
-import com.fs.starfarer.api.impl.campaign.procgen.CategoryGenDataSpec
-import com.fs.starfarer.api.impl.campaign.procgen.PlanetGenDataSpec
-import com.fs.starfarer.api.impl.campaign.procgen.StarGenDataSpec
-import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
 import com.fs.starfarer.campaign.CampaignEngine
-import com.fs.starfarer.campaign.CampaignState
-import com.fs.starfarer.loading.SpecStore
-import com.fs.starfarer.loading.scripts.ScriptStore
-import com.fs.starfarer.title.TitleScreenState
 import lunalib.lunaDebug.LunaDebug
-import lunalib.lunaExtensions.addTransientScript
 import lunalib.lunaExtensions.getSystemsWithTag
-import java.lang.invoke.MethodHandle
 
 
 class RATModPlugin : BaseModPlugin() {
@@ -36,6 +30,10 @@ class RATModPlugin : BaseModPlugin() {
         }
 
         LunaDebug.addSnippet(ProcgenDebugSnippet())
+
+        var randomEffects = listOf<BaseRandomHullmodEffect>(PermaZeroFluxEffect(), IncreaseBallisticRoFEffect(), IncreaseShieldEffEffect(), DecreasePassiveShieldEffect())
+        RandomHullmodUtil.effects.addAll(randomEffects)
+
     }
 
     override fun onGameLoad(newGame: Boolean) {
@@ -44,6 +42,8 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().listenerManager.addListener(RATSettings, true)
         Global.getSector().registerPlugin(RATCampaignPlugin())
         Global.getSector().addTransientScript(ParallelConstruction())
+
+        RandomHullmodUtil.assignEffects()
 
         if (RATSettings.disableHelp!!)
         {
