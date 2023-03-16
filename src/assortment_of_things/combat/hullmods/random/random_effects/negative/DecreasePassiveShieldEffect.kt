@@ -27,9 +27,6 @@ class DecreasePassiveShieldEffect : BaseRandomHullmodEffect() {
             setHighlight("Shield Upkeep Cost", "25%")
             setHighlightColors(Misc.getHighlightColor(), Misc.getNegativeHighlightColor())
         }
-
-        Sphere
-
     }
 
     override fun applyEffectPreCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {

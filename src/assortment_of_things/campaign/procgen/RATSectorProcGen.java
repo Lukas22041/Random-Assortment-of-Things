@@ -40,7 +40,7 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 	public void prepare(CharacterCreationData data) {
 
 		RATSettings.loadSettings();
-		Integer scale = RATSettings.getProcgenScaleModifier();
+		String scale = RATSettings.getProcgenScaleModifier();
 
 		if (Global.getSettings().getModManager().isModEnabled("Adjusted Sector"))
 		{
@@ -75,7 +75,7 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 
 	public void generate(CharacterCreationData data, SectorGenProgress progress) {
 		RATSettings.loadSettings();
-		Integer scaleLevel = RATSettings.getProcgenScaleModifier();
+		String scaleLevel = RATSettings.getProcgenScaleModifier();
 
 		float scale = 1f;
 
@@ -110,19 +110,19 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 		Global.getSector().getMemoryWithoutUpdate().set("$rat_sector_generated_with_rat", true);
 
 		switch (scaleLevel) {
-			case 1:
+			case "Vanilla":
 				CONSTELLATION_CELLS = 10;
 				scale = 1f;
 				break;
-			case 2:
+			case "150%":
 				CONSTELLATION_CELLS = 8;
 				scale = 1.5f;
 				break;
-			case 3:
+			case "200%":
 				CONSTELLATION_CELLS = 7;
 				scale = 2f;
 				break;
-			case 4:
+			case "250%":
 				CONSTELLATION_CELLS = 6;
 				scale = 2.5f;
 				break;

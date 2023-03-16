@@ -20,7 +20,7 @@ object RATSettings : LunaSettingsListener
 
     //Procgen
     @JvmStatic
-    var procgenScaleModifier = LunaSettings.getInt(modID, "rat_systemScale")
+    var procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
     @JvmStatic
     var procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
     @JvmStatic
@@ -47,7 +47,7 @@ object RATSettings : LunaSettingsListener
         enableOutposts = LunaSettings.getBoolean(modID, "rat_enableOutposts")
         enableChiral = LunaSettings.getBoolean(modID, "rat_enableChiral")
 
-        procgenScaleModifier = LunaSettings.getInt(modID, "rat_systemScale")
+        procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
         procgenImprovedMisc = LunaSettings.getBoolean(modID, "rat_improvedMisc")
         procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
 
