@@ -56,15 +56,14 @@ public class RATDerelictThemeGenerator extends BaseThemeGenerator {
 		public int numSurveyShips;
 		public int numProbes;
 	}
-	
-	
+
 	public String getThemeId() {
 		return Themes.DERELICTS;
 	}
 
 	@Override
 	public void generateForSector(ThemeGenContext context, float allowedUnusedFraction) {
-		
+
 		float total = (float) (context.constellations.size() - context.majorThemes.size()) * allowedUnusedFraction;
 		if (total <= 0) return;
 		

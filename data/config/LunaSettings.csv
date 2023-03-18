@@ -8,7 +8,6 @@ assortment_of_things,rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,,"If se
 ,,,,,,,,,
 assortment_of_things,rat_miscHeader,Miscellaneous,Header,Miscellaneous,,,,,
 assortment_of_things,rat_forceDisableHelp,Force disable help-popups,Boolean,false,,"Disables help popups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, [does not re-enable] help-popups if disabled.",,,
-assortment_of_things,rat_sillyContent,Enable Silly Content,Boolean,false,,"If set to true, enables some silly or lore breaking content that may be added in to other aspects of the mod. As of now those arent any major things, but if you dont enjoy things breaking the lore or maybe feeling out of place, then keep this disabled.",,,
 ,,,,,,,,,
 ,,,,,,,,,
 ,,,,,,,,,
@@ -32,3 +31,19 @@ Vanilla Themes will scale with the amount of systems, Modded Themes may not.",1,
 assortment_of_things,rat_hyperspaceCloudsMod,Hyperspace Clouds Spawn Modifier,Double,0.8,,"Lets you modify how many hyperspace clouds spawn. Vanilla uses a value of 0.8. A lower value will spawn less of them, with a value of 0 spawning none. ",0,1.0,Procgen
 assortment_of_things,rat_improvedMisc,Improved Miscellaneous Theme,Boolean,false,,"Improves the ""Miscellaneous"" Theme. Starsector generates this theme as a filler for whatever system didnt receive anything special during procgen. In Vannila, those systems rarely give anything of worth, often spawning completely empty systems. Toggling this will prevent those from ever being empty, and gives them a lot more loot.",,,Procgen
 ,,,,,,,,,
+assortment_of_things,rat_lootHeader,Loot Tweaks,Header,Loot Tweaks,,,,,Procgen
+assortment_of_things,rat_hullmodBPLootFrequency,Hullmod BP Loot Frequency,Double,1,,"Multiplies the amount of Hullmod Blueprints being dropped from Salvaging. Useful for when you are playing with lots of mods which add their own hullmods.
+
+Can be changed mid-save.",1.0,3.0,Procgen
+assortment_of_things,rat_shipBPLootFrequency,Ship BP Loot Frequency,Double,1,,"Multiplies the amount of Ship Blueprints being dropped from Salvaging. Useful for when you are playing with lots of mods which add ships to the same loot-pool. Due to ship blueprints selling for a high price, this option can become quite overpowered if set to high.
+
+Can be changed mid-save.",1.0,3.0,Procgen
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+assortment_of_things,rat_sillyContent,Enable Joke Content,Boolean,false,,"If set to true, enables some silly or lore breaking content that may be added in to other aspects of the mod. As of now those arent any major things, but if you dont enjoy things breaking the lore or maybe feeling out of place, then keep this disabled.",,,Other

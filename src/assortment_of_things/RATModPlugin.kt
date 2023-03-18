@@ -2,12 +2,7 @@ package assortment_of_things
 
 import ParallelConstruction
 import assortment_of_things.campaign.RATCampaignPlugin
-import assortment_of_things.combat.hullmods.random.BaseRandomHullmodEffect
-import assortment_of_things.combat.hullmods.random.RandomHullmodUtil
-import assortment_of_things.combat.hullmods.random.random_effects.negative.DecreasePassiveShieldEffect
-import assortment_of_things.combat.hullmods.random.random_effects.positive.IncreaseBallisticRoFEffect
-import assortment_of_things.combat.hullmods.random.random_effects.positive.IncreaseShieldEffEffect
-import assortment_of_things.combat.hullmods.random.random_effects.positive.PermaZeroFluxEffect
+import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.strings.RATTags
 import assortment_of_things.snippets.ProcgenDebugSnippet
@@ -31,8 +26,7 @@ class RATModPlugin : BaseModPlugin() {
 
         LunaDebug.addSnippet(ProcgenDebugSnippet())
 
-        var randomEffects = listOf<BaseRandomHullmodEffect>(PermaZeroFluxEffect(), IncreaseBallisticRoFEffect(), IncreaseShieldEffEffect(), DecreasePassiveShieldEffect())
-        RandomHullmodUtil.effects.addAll(randomEffects)
+        LootModifier.saveOriginalData()
 
     }
 
@@ -43,7 +37,9 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().registerPlugin(RATCampaignPlugin())
         Global.getSector().addTransientScript(ParallelConstruction())
 
-        RandomHullmodUtil.assignEffects()
+
+        LootModifier.modifySpawns()
+
 
         if (RATSettings.disableHelp!!)
         {

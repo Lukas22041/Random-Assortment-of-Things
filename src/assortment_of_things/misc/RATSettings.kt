@@ -1,6 +1,6 @@
 package assortment_of_things.misc
 
-import com.fs.starfarer.api.Global
+import assortment_of_things.campaign.procgen.LootModifier
 import lunalib.lunaSettings.LunaSettings
 import lunalib.lunaSettings.LunaSettingsListener
 
@@ -25,6 +25,9 @@ object RATSettings : LunaSettingsListener
     var procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
     @JvmStatic
     var procgenImprovedMisc = LunaSettings.getBoolean(modID, "rat_improvedMisc")
+
+    var hullmodLootFrequency = LunaSettings.getFloat(modID, "rat_hullmodBPLootFrequency")
+    var shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")
 
     //Parallel Construction
     var parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")
@@ -56,5 +59,10 @@ object RATSettings : LunaSettingsListener
 
         disableHelp = LunaSettings.getBoolean(modID, "rat_forceDisableHelp")
         sillyContentEnabled = LunaSettings.getBoolean(modID, "rat_sillyContent")
+
+        hullmodLootFrequency = LunaSettings.getFloat(modID, "rat_hullmodBPLootFrequency")
+        shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")
+
+        LootModifier.modifySpawns()
     }
 }
