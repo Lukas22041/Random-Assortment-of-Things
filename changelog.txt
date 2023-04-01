@@ -1,0 +1,31 @@
+Version 1.0.3
+
+-> The Skeleton Appears
+-> Added more version checker data.
+
+
+
+Version 1.0.2
+
+-> added configs allow you to modify the amount of hullmods and ship blueprints being dropped from salvaging.
+-> changed the System Count Modifier to use a Radio-Button instead (The config will reset upon updating)
+-> changed the icon for the mod in the settings panel.
+
+
+
+Version 1.0.1
+
+-> Updated to the latest Lunalib version.
+-> Moved some configs to another tab.
+
+
+
+Version 1.0
+
+-> Reworked Chiral Theme and added more content towards it.
+-> Streamlined the outpost planet interaction.
+-> Removed the blackmarket theme, as it was kind of limiting by design and didnt feel like it really fit in to the procedual aspect.
+-> Chiral themes now generate over another theme instead of taking up a constellation fully to themself.
+-> Added a config options for enabling silly/joke content, which currently adds one thing if enabled.
+-> Slightly nerfed Improved-Misc.
+-> Fixed an issue that caused Improved-Misc to sometimes not work correctly.
