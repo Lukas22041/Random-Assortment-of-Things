@@ -1,7 +1,10 @@
  {
  	"plugins":{		
 		"newGameSectorProcGen":"assortment_of_things.campaign.procgen.RATSectorProcGen",
+		"RatCombatHandler":"assortment_of_things.combat.CombatHandler",
 	},	
+
+
 
 	"designTypeColors":{
 		"Chiral":[122,139,221,255],
@@ -20,6 +23,8 @@
 		  "phenix_glow": "graphics/ships/rift_phenix_glow.png",
 		  "dimensional_tear": "graphics/entities/wormhole.png",
 		  "dimensional_tear_core": "graphics/entities/wormhole_core.png",
+		  
+		  "skeleton":"graphics/jokes/skeleton.png",
 		},
 		
  	}

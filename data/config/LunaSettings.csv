@@ -45,5 +45,6 @@ Can be changed mid-save.",1.0,3.0,Procgen
 ,,,,,,,,,
 ,,,,,,,,,
 ,,,,,,,,,
-,,,,,,,,,
+assortment_of_things,rat_jokesHeader,Jokes,Header,Jokes,,,,,Other
 assortment_of_things,rat_sillyContent,Enable Joke Content,Boolean,false,,"If set to true, enables some silly or lore breaking content that may be added in to other aspects of the mod. As of now those arent any major things, but if you dont enjoy things breaking the lore or maybe feeling out of place, then keep this disabled.",,,Other
+assortment_of_things,rat_theSkeletonAppears,The Skeleton Appears,Boolean,false,,,,,Other

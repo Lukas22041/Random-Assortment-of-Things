@@ -38,6 +38,7 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(ParallelConstruction())
 
 
+
         LootModifier.modifySpawns()
 
 
@@ -59,6 +60,9 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onNewGameAfterTimePass() {
         super.onNewGameAfterTimePass()
+
+        var chirality = Global.getSector().getFaction("chirality")
+        chirality?.adjustRelationship("player", -1f)
 
         for (system in Global.getSector().getSystemsWithTag(RATTags.THEME_CHIRAL_COPY))
         {

@@ -1,10 +1,18 @@
 {
     "masterVersionFile":"https://raw.githubusercontent.com/Lukas22041/Random-Assortment-of-Things/main/RandomAssortmentOfThings.version",
     "modName":"Random Assortment of Things",
+	"modThreadId":26260,
     "modVersion":
     {
         "major":1,
         "minor":0,
         "patch":2 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
     }
+	
+	#Link towards a direct download, fetched from the online version file
+	"directDownloadURL":"https://github.com/Lukas22041/Random-Assortment-of-Things/releases/latest/download/Random-Assortment-of-Things.zip",
+	
+	#Link towards a directly accessible text file, which can be used to display a changelog ingame, is fetched from the online version file.
+	"changelogURL":"https://raw.githubusercontent.com/Lukas22041/LunaLib/main/changelog.txt",
+
 }

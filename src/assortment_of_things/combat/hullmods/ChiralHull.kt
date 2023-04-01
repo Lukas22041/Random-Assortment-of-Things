@@ -97,7 +97,7 @@ class ChiralHull : BaseHullMod()
                 setHighlightColors(Misc.getHighlightColor())
             }
         }
-        if (ship.fleetMember.captain != null && ship.fleetMember.captain.aiCoreId == RATItems.AZURE_PROCESSOR)
+        else if (ship.fleetMember.captain != null && ship.fleetMember.captain.aiCoreId == RATItems.AZURE_PROCESSOR)
         {
             tooltip.addSectionHeading("Azure Processor", Alignment.MID, 10f);
             tooltip.addPara("The connected Azure Processor causes the ship to behave more defensively in combat and reduces damage taken by the ships shields by 10%%.", 3f, Misc.getHighlightColor()).apply {
@@ -105,7 +105,7 @@ class ChiralHull : BaseHullMod()
                 setHighlightColors(Misc.getHighlightColor())
             }
         }
-        if (ship.fleetMember.captain != null && ship.fleetMember.captain.aiCoreId == RATItems.AMBER_PROCESSOR)
+        else if (ship.fleetMember.captain != null && ship.fleetMember.captain.aiCoreId == RATItems.AMBER_PROCESSOR)
         {
             tooltip.addSectionHeading("Amber Processor", Alignment.MID, 10f);
             tooltip.addPara("The connected Amber Processor increases the ships timeflow by 10%%.", 3f, Misc.getHighlightColor()).apply {
