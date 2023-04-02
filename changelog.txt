@@ -1,3 +1,9 @@
+Version 1.0.4
+
+-> The Skeleton has been nerfed
+
+
+
 Version 1.0.3
 
 -> The Skeleton Appears

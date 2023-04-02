@@ -49,7 +49,7 @@ class CombatHandler : EveryFrameCombatPlugin
         if (enabled == null)
         {
             enabled = LunaSettings.getBoolean(RATSettings.modID, "rat_theSkeletonAppears")
-            if (Random().nextFloat() < 0.5f)
+            if (MathUtils.getRandomNumberInRange(0, 100) != 1)
             {
                 enabled = false
             }
