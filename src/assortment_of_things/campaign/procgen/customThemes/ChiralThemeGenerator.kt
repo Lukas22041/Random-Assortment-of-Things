@@ -2,7 +2,6 @@ package assortment_of_things.campaign.procgen.customThemes
 
 import assortment_of_things.campaign.plugins.entities.DimensionalGate
 import assortment_of_things.campaign.procgen.ProcgenUtility
-import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.scripts.ChiralBaseFleetManager
 import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global
@@ -22,8 +21,6 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.ThemeGenContext
 import com.fs.starfarer.api.impl.campaign.terrain.AsteroidBeltTerrainPlugin
 import com.fs.starfarer.api.impl.campaign.terrain.RingSystemTerrainPlugin
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.campaign.BaseLocation
-import com.fs.starfarer.campaign.WarpingSpriteRenderer
 import org.lazywizard.lazylib.MathUtils
 import java.awt.Color
 import java.util.*
@@ -192,7 +189,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         //Copy moons using mirrorEntities here
         for (ogMoon in ogSystem.planets)
         {
-            var ogFocus = mirrorEntities.find { ogMoon.orbitFocus == it.originalEntity }
+            var ogFocus = mirrorEntities.find { ogMoon.orbitFocus == it.originalEntity && !it.originalEntity.isStar}
             if (ogFocus == null) continue
 
             var mirroredMoon = mirroredSystem.addPlanet("${ogMoon.id}-chiral", ogFocus.mirroredEntity, ogMoon.name,
@@ -241,7 +238,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         weights[LocationType.PLANET_ORBIT] = 10f
         var locations = getLocations(StarSystemGenerator.random, ogData.system, ogData.alreadyUsed, 100f, weights)
         var triResearchStation = addNonSalvageEntity(ogData.system, locations.pick(), "rat_chiral_station1", Factions.NEUTRAL)
-
+        triResearchStation.entity.addTag(RATTags.TAG_CHIRAL_STATION1)
 
         var calcData = BaseThemeGenerator.computeSystemData(mirroredSystem)
         calcData.alreadyUsed.add(tear.mirroredEntity.orbitFocus)
@@ -250,7 +247,25 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
 
         addDerelictShips(computeSystemData(mirroredSystem), 1f, 5, 9, createStringPicker("chirality", 1f))
 
+        generateHullmodStation(calcData)
+
+
         return mirroredSystem
+    }
+
+    fun generateHullmodStation(data: StarSystemData)
+    {
+        val weights = LinkedHashMap<LocationType, Float>()
+        weights[LocationType.PLANET_ORBIT] = 3f
+        weights[LocationType.IN_ASTEROID_FIELD] = 3f
+        weights[LocationType.NEAR_STAR] = 1f
+        weights[LocationType.IN_RING] = 3f
+        weights[LocationType.IN_ASTEROID_BELT] = 10f
+        var locations = getLocations(StarSystemGenerator.random, data.system, data.alreadyUsed, 100f, weights)
+        var station = addNonSalvageEntity(data.system, locations.pick(), "rat_chiral_station1", Factions.NEUTRAL)
+        station.entity.addTag(RATTags.TAG_CHIRAL_STATION2)
+        station.entity.name = "Unknown Station"
+        station.entity.customDescriptionId = "rat_chiral_station2"
     }
 
     fun generateGate(data: StarSystemData, focus: MirrorEntity, orbitRadius: Float) : MirrorEntity
@@ -262,7 +277,6 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         data.system.addEntity(ogTear)
         ogTear.setCircularOrbit(focus.originalEntity, angle, orbitRadius, 200f)
         ogTear.addTag(RATTags.TAG_DIMENSIONAL_GATE)
-
         var mirrorTear = focus.mirroredEntity.starSystem.addCustomEntity("${focus.mirroredEntity.starSystem.id}_tear", "Strange Gate", "rat_dimensional_gate", Factions.NEUTRAL)
         var mirrorPlugin = mirrorTear.customPlugin
         focus.mirroredEntity.starSystem.addEntity(mirrorTear)
@@ -271,7 +285,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
 
         if (Global.getSettings().allShipHullSpecs.find { it.hullId == "nebula" } != null)
         {
-            var derelictNebulaParams = DerelictShipEntityPlugin.createHull("nebula", Random(), 0f)
+            var derelictNebulaParams = DerelictShipEntityPlugin.createVariant("nebula_Standard", Random(), 0f)
             val nebulaWreck: CustomCampaignEntityAPI = mirrorTear.starSystem.addCustomEntity(null, SalvageEntityGeneratorOld.getSalvageSpec(Entities.WRECK).getNameOverride()
                 , Entities.WRECK, Factions.NEUTRAL, derelictNebulaParams)
 

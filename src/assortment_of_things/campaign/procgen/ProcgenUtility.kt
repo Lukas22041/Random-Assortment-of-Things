@@ -85,14 +85,14 @@ object ProcgenUtility
     }
 
     @JvmStatic
-    fun getSortedSystemsSuitedToBePopulated(systems: List<BaseThemeGenerator.StarSystemData>): List<BaseThemeGenerator.StarSystemData>? {
+    fun getSortedSystemsSuitedToBePopulated(systems: List<BaseThemeGenerator.StarSystemData>, minPlanets: Int = 4): List<BaseThemeGenerator.StarSystemData>? {
         val result: MutableList<BaseThemeGenerator.StarSystemData> = ArrayList()
         for (data in systems) {
             var hasNonGasGiant = false
             if (data.isBlackHole || data.isNebula || data.isPulsar) continue
             data.system.planets.forEach { if (!it.hasTag(Tags.GAS_GIANT)) hasNonGasGiant = true }
             if (!hasNonGasGiant) continue
-            if (data.planets.size >= 4 || data.habitable.size >= 1) {
+            if (data.planets.size >= minPlanets || data.habitable.size >= 1) {
                 result.add(data)
 
 //				Collections.sort(data.habitable, new Comparator<PlanetAPI>() {

@@ -31,9 +31,13 @@ class RATCampaignPlugin : BaseCampaignPlugin()
             return PluginPick(DimensionalGateInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
-        if (interactionTarget.customEntityType == "rat_chiral_station1")
+        if (interactionTarget.hasTag(RATTags.TAG_CHIRAL_STATION1))
         {
             return PluginPick(NonChiralStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+        }
+        if (interactionTarget.hasTag(RATTags.TAG_CHIRAL_STATION2))
+        {
+            return PluginPick(ChiralStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
         /*if (interactionTarget.customEntityType == "rat_chiral_station2")
         {

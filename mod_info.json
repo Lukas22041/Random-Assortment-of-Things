@@ -3,7 +3,7 @@
     "name": "Random Assortment of Things",
     "author": "Lukas04",
     "utility": "true",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "description": "A collection of things that that i add to whenever a random idea pops up in to my brain",
     "gameVersion": "0.95.1a-RC6",
 	"jars":["jars/RandomAssortmentofThings.jar"],
@@ -16,6 +16,10 @@
 		{
 			"id": "MagicLib",
 			"name": "MagicLib",
+		},
+		{
+			"id": "combatactivators",
+			"name": "Combat Activators",
 		},
 	]
 }

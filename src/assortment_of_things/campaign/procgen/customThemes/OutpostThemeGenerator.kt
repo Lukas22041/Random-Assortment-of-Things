@@ -44,7 +44,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
     //2000 for Ruins
     //1000000 for Misc
     override fun getOrder(): Int {
-        return 500
+        return 2500
     }
 
     override fun getThemeId(): String {
@@ -89,7 +89,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
             val systems: List<StarSystemData> = constellation!!.systems.map { computeSystemData(it) }
 
             //gets a system that doesnt have blackholes/neutron stars, and sorts them based on the amount of planets and how many habitble planets there are.
-            val mainCandidates = ProcgenUtility.getSortedSystemsSuitedToBePopulated(systems)
+            val mainCandidates = ProcgenUtility.getSortedSystemsSuitedToBePopulated(systems, minPlanets = 3)
             if (mainCandidates!!.isEmpty()) continue
 
 

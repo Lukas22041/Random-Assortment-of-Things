@@ -39,7 +39,7 @@
       "size": "SMALL",
       "type": "ENERGY",
       "mount": "HARDPOINT",
-      "arc": 0,
+      "arc": 5,
       "angle": 0,
       "locations": [55, 20]
     },
@@ -48,7 +48,7 @@
       "size": "MEDIUM",
       "type": "SYNERGY",
       "mount": "HARDPOINT",
-      "arc": 0,
+      "arc": 5,
       "angle": 0,
       "locations": [74, 0]
     },

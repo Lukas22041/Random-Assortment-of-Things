@@ -1,3 +1,21 @@
+Version 1.1.0
+
+Important: This mod now requires the "Combat Activators" Library Mod, and to avoid bugs it requires the 1.0.2 version or above
+
+-> Integrated "Combat Activators" mod.
+-> Added a new bit of exploration content for the chiral system
+-> Added a bar event that gives you the chiral systems location.
+
+-> Outposts now generate after remnants and ruins, to ensure that they will never take any space reserved to them.
+-> All chiral ships have have front-shields instead of omni shields, and have slightly reduced speeds.
+-> Fixed some wrong ship data for chiral ships.
+-> Fixed a station in the chiral system not being hostile
+-> Fixed a mistake in the chiral hull hullmod description.
+-> Might have Fixed a rare crash during the chiral system generation.
+-> Fixed some planets generating twice in the chiral system.
+
+
+
 Version 1.0.4
 
 -> The Skeleton has been nerfed

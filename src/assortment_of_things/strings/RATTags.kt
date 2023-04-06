@@ -27,4 +27,7 @@ object RATTags
     var TAG_DIMENSIONAL_GATE = "rat_dimensional_gate"
     var TAG_CHIRAL_NEBULA = "rat_chiral_nebula"
 
+    var TAG_CHIRAL_STATION1 = "rat_chiral_station1"
+    var TAG_CHIRAL_STATION2 = "rat_chiral_station2"
+
 }

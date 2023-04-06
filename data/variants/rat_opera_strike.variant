@@ -3,8 +3,8 @@
   "hullId": "rat_opera",
   "displayName": "Strike",
   "goalVariant": true,
-  "fluxCapacitors": 10,
-  "fluxVents": 10,
+  "fluxCapacitors": 7,
+  "fluxVents": 7,
   "quality": 1,
   "permaMods": [],
   "hullMods": [
@@ -21,7 +21,7 @@
       "weapons": {
         "WS0001": "ioncannon",
         "WS0002": "ioncannon",
-        "WS0003": "harpoon",
+        "WS0003": "harpoonpod",
         "WS0004": "typhoon"
       }
     },

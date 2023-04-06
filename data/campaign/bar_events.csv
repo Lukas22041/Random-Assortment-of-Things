@@ -1,0 +1,2 @@
+bar event id,tags,freq,prob,min dur,max dur,min timeout,max timeout,min accepted timeout,max accepted timeout,plugin
+chiralBar,,30,1,30,40,15,20,60,90,assortment_of_things.campaign.bar.ChiralBarEvent

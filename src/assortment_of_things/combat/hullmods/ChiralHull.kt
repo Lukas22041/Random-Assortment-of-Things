@@ -1,5 +1,7 @@
 package assortment_of_things.combat.hullmods
 
+import activators.ActivatorManager
+import assortment_of_things.combat.activators.LifelineActivator
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
@@ -14,7 +16,6 @@ import org.lazywizard.lazylib.ext.rotate
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 import java.util.*
-import javax.xml.bind.annotation.XmlElementDecl.GLOBAL
 
 
 class ChiralHull : BaseHullMod()
@@ -22,11 +23,15 @@ class ChiralHull : BaseHullMod()
     override fun advanceInCombat(ship: ShipAPI?, amount: Float)
     {
         if (ship == null) return
+
     }
 
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?)
     {
+
+        if (stats == null) return
+
 
         if(stats!!.getVariant().getHullMods().contains("safetyoverrides"))
         {
@@ -77,7 +82,6 @@ class ChiralHull : BaseHullMod()
     {
         if (ship == null) return
         Global.getCombatEngine().addLayeredRenderingPlugin(ChiralHullListener(ship, id))
-
     }
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI, hullSize: ShipAPI.HullSize?, ship: ShipAPI, width: Float, isForModSpec: Boolean) {

@@ -38,9 +38,7 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(ParallelConstruction())
 
 
-
         LootModifier.modifySpawns()
-
 
         if (RATSettings.disableHelp!!)
         {
