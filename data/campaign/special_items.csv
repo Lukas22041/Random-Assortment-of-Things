@@ -1,0 +1,2 @@
+name,id,tags,tech/manufacturer,rarity,base price,stack size,cargo space,baseRaidDanger,icon,sound id,sound id drop,plugin,plugin params,desc,order
+Skill Data,rat_skill_bp,,,,250000,1000,1,,graphics/icons/cargo/rat_blueprint_skill.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.SkillProviderItem,,Contains training data for permanently learning a new skill.,400

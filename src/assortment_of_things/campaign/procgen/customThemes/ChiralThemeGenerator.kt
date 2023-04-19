@@ -7,6 +7,7 @@ import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.PlanetAPI
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
@@ -72,8 +73,9 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
             var allowedStars = listOf(StarTypes.WHITE_DWARF, StarTypes.RED_DWARF, StarTypes.BROWN_DWARF, StarTypes.ORANGE, StarTypes.YELLOW)
             val mainCandidates = ProcgenUtility.getScoredSystemsByFilter(systems) {
                 it.system.hasTag(Tags.THEME_MISC)
+                && !it.system.hasTag(RATTags.THEME_OUTPOST)
                 && it.system.center.isStar && allowedStars.contains((it.system.center as PlanetAPI).typeId)
-                && it.system.terrainCopy.find { it.type == Terrain.ASTEROID_BELT } != null && it.planets.size >= 2
+                && it.system.terrainCopy.find { it.type == Terrain.ASTEROID_BELT } != null && it.planets.size >= 3
                 && it.system.planets.find { planet -> planet.typeId.equals(StarTypes.NEUTRON_STAR) } == null
                 && it.system.secondary == null
             }
@@ -234,11 +236,29 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
 
 
         val weights = LinkedHashMap<LocationType, Float>()
-        weights[LocationType.GAS_GIANT_ORBIT] = 3f
-        weights[LocationType.PLANET_ORBIT] = 10f
+        weights[LocationType.GAS_GIANT_ORBIT] = 30f
+        weights[LocationType.PLANET_ORBIT] = 100f
+       // weights[LocationType.NEAR_STAR] = 1f
         var locations = getLocations(StarSystemGenerator.random, ogData.system, ogData.alreadyUsed, 100f, weights)
-        var triResearchStation = addNonSalvageEntity(ogData.system, locations.pick(), "rat_chiral_station1", Factions.NEUTRAL)
-        triResearchStation.entity.addTag(RATTags.TAG_CHIRAL_STATION1)
+        if (locations == null || locations.isEmpty)
+        {
+            var locations = getLocations(StarSystemGenerator.random, ogData.system, null, 100f, weights)
+        }
+
+        var triResearchStation: AddedEntity? = null
+        if (locations != null && !locations.isEmpty)
+        {
+            triResearchStation = addNonSalvageEntity(ogData.system, locations.pick(), "rat_chiral_station1", Factions.NEUTRAL)
+            triResearchStation.entity.addTag(RATTags.TAG_CHIRAL_STATION1)
+        }
+
+        if (triResearchStation == null)
+        {
+            var plugin = tear.originalEntity.customPlugin as DimensionalGate
+            plugin.active = true
+            (plugin.teleportLocation!!.customPlugin as DimensionalGate).active = true
+
+        }
 
         var calcData = BaseThemeGenerator.computeSystemData(mirroredSystem)
         calcData.alreadyUsed.add(tear.mirroredEntity.orbitFocus)

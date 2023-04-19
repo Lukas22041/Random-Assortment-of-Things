@@ -1,6 +1,7 @@
 package assortment_of_things.misc
 
 import assortment_of_things.campaign.procgen.LootModifier
+import com.fs.starfarer.api.combat.ShipAPI
 import lunalib.lunaSettings.LunaSettings
 import lunalib.lunaSettings.LunaSettingsListener
 

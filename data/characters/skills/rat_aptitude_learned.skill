@@ -1,0 +1,12 @@
+{
+	"id":"rat_aptitude_learned",
+	"governingAptitude":"rat_learned",
+	"effectGroups":[
+		{
+			"requiredSkillLevel":0,
+			"effects":[
+				{"type":"DESCRIPTION", "script":"assortment_of_things.campaign.skills.util.MiscAptitudeDesc"},
+			]
+		},
+	],
+}

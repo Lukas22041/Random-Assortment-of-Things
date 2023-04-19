@@ -1,3 +1,20 @@
+
+Version 1.2.0
+
+A decently sized patch that should improve the feel of outpost systems and adds some fun new content to them.
+
+-> Outpost systems may now include a new station with some custom loot.
+-> Outpost systems now only take up one system instead of an entire constellation (which it previously filled with filler).
+-> Updated the config descriptions to match how chiral and outpost systems function now.
+-> Outposts may spawn with the same faction multiple times now.
+-> The Loot from outpost planets now doesnt give blueprints that the player knows by default anymore.
+-> Fighting fleets in the outpost systems now has a way lower rep impact.
+-> The secondary shipsystem hullmods can now only be applied to frigates, destroyers and cruisers.
+-> The secondary shipsystems now require a story point to be installed.
+-> Possibly fixed a rare crash.
+
+
+
 Version 1.1.0
 
 Important: This mod now requires the "Combat Activators" Library Mod, and to avoid bugs it requires the 1.0.2 version or above

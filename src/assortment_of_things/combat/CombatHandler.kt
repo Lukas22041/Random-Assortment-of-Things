@@ -1,15 +1,14 @@
 package assortment_of_things.combat
 
+import assortment_of_things.campaign.skills.util.SkillManager
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.input.InputEventAPI
-import com.fs.starfarer.api.ui.TooltipMakerAPI
 import lunalib.lunaSettings.LunaSettings
 import org.lazywizard.lazylib.MathUtils
-import java.awt.Polygon
-import java.awt.Shape
 import java.util.*
 
 
@@ -54,6 +53,12 @@ class CombatHandler : EveryFrameCombatPlugin
                 enabled = false
             }
         }
+
+        if (Global.getCurrentState() == GameState.TITLE)
+        {
+            SkillManager.updateAptitude()
+        }
+
 
         if (Global.getCurrentState() == GameState.TITLE && sprite != null && enabled != null && enabled!!)
         {

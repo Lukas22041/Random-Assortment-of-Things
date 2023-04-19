@@ -14,6 +14,9 @@ object RATTags
     @JvmStatic
     var TAG_OUTPOST_WARNING_BEACON = "rat_outpost_warning_beacon"
 
+    var TAG_OUTPOST_TRAINING = "rat_outpost_training"
+    var TAG_OUTPOST_TRAINING_FACILITY = "rat_training"
+
     //Chiral Theme
 
     var CHIRAL_THEME_ID = "chiral"

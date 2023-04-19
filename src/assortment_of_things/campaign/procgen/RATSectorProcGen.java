@@ -149,7 +149,7 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 		RATRuinsThemeGenerator.MAX_CONSTELLATIONS_WITH_RUINS = (int) (25 * scale);
 
 		OutpostThemeGenerator.setMinOutpostConstellations( (int) (2 * scale));
-		OutpostThemeGenerator.setMaxOutpostConstellations( (int) (5 * scale));
+		OutpostThemeGenerator.setMaxOutpostConstellations( (int) (3 * scale));
 
 
 		float w = Global.getSettings().getFloat("sectorWidth");

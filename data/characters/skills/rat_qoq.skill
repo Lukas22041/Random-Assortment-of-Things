@@ -1,0 +1,16 @@
+{
+	"id":"rat_qoq",
+	"governingAptitude":"rat_learned",
+	"compressHullmods":false,
+	"scope":"ALL_COMBAT_SHIPS",
+	"permanent":true,
+	"effectGroups":[
+		{
+			"requiredSkillLevel":1,
+			"effectBasedOnLevel":false,
+			"effects":[
+				{"type":"ALL_SHIPS_IN_FLEET", "script":"assortment_of_things.campaign.skills.QualityOverQuantitySkill"},
+			]
+		},
+	],
+}

@@ -1,0 +1,2 @@
+id,name,color,description,order,effect_skill_id,sound1,sound2,sound3,sound4,sound5,sound_story,elite_overlay,elite_overlay_medium,elite_overlay_small
+rat_learned,Learned,"34,240,168,255",A set of skills that can not be learned by default and instead have to be discovered within the sector.,5,rat_aptitude_learned,combat1,combat2,combat3,combat4,combat5,ui_char_spent_story_point_combat,graphics/icons/skills/elite_combat.png,graphics/icons/skills/elite_combat48.png,graphics/icons/skills/elite_combat32.png

@@ -21,9 +21,14 @@ class RATCampaignPlugin : BaseCampaignPlugin()
     override fun pickInteractionDialogPlugin(interactionTarget: SectorEntityToken?): PluginPick<InteractionDialogPlugin>? {
         if (interactionTarget == null) return null
 
+
         if (interactionTarget.hasTag(RATTags.TAG_OUTPOST_PLANET))
         {
             return PluginPick(OutpostPlanetInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+        }
+        if (interactionTarget.hasTag(RATTags.TAG_OUTPOST_TRAINING_FACILITY))
+        {
+            return PluginPick(TrainingStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
         if (interactionTarget.hasTag(RATTags.TAG_DIMENSIONAL_GATE))

@@ -6,6 +6,8 @@ import assortment_of_things.strings.RATItems
 import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
+import com.fs.starfarer.api.campaign.rules.MemKeys
+import com.fs.starfarer.api.characters.SkillSpecAPI
 import com.fs.starfarer.api.combat.ShipHullSpecAPI
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.FIDConfig
 import com.fs.starfarer.api.impl.campaign.ids.Commodities
@@ -109,10 +111,12 @@ class OutpostPlanetInteraction : RATInteractionPlugin() {
             }
         }
 
-        var ships = faction.getKnownShipSpecs().filter { !it.hints.contains(ShipHullSpecAPI.ShipTypeHints.UNBOARDABLE) && !it.hints.contains(ShipHullSpecAPI.ShipTypeHints.HIDE_IN_CODEX) }
-        var weapons = faction.getKnownWeaponSpecs().filter { it.getOrdnancePointCost(Global.getSector().playerStats) != 0f }
-        var hullmods = faction.getKnownHullmodSpecs().filter { !it.isHidden && !it.isHiddenEverywhere }
+
+        var ships = faction.getKnownShipSpecs().filter { !it.hasTag("base_bp") && !it.hints.contains(ShipHullSpecAPI.ShipTypeHints.UNBOARDABLE) && !it.hints.contains(ShipHullSpecAPI.ShipTypeHints.HIDE_IN_CODEX) }
+        var weapons = faction.getKnownWeaponSpecs().filter { !it.hasTag("base_bp") && it.getOrdnancePointCost(Global.getSector().playerStats) != 0f }
+        var hullmods = faction.getKnownHullmodSpecs().filter { !it.isAlwaysUnlocked && !it.isHidden && !it.isHiddenEverywhere }
         var fighters = faction.knownFighters
+
 
         if (ships.isNotEmpty())
         {

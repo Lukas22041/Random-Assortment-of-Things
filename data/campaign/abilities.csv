@@ -1,0 +1,2 @@
+name,id,type,tags,activationDays,activationCooldown,durationDays,deactivationDays,deactivationCooldown,unlockedAtStart,defaultForAIFleet,musicSuppression,uiOn,uiOff,uiLoop,worldOn,worldOff,worldLoop,icon,plugin,ai,desc,sortOrder
+Pocket Dimension,rat_pocket_dimension_ability,DURATION,"stealth-, burn+",0.4,,0.001,0.1,10,,,,,,,jump_point_open,,,graphics/icons/skills/rat_pocket.png,assortment_of_things.campaign.abilities.PocketDimensionAbility,,Jump in to a system in a parallel dimension that holds some abandoned structure.,801

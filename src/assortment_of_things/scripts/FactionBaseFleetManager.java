@@ -131,6 +131,9 @@ public class FactionBaseFleetManager extends SourceBasedFleetManager {
         fleet.addScript(new RemnantAssignmentAI(fleet, (StarSystemAPI) source.getContainingLocation(), source));
         fleet.getMemoryWithoutUpdate().set("$sourceId", source.getId());
 
+        fleet.getMemoryWithoutUpdate().set(MemFlags.MEMORY_KEY_LOW_REP_IMPACT, true);
+
+
         return fleet;
     }
 

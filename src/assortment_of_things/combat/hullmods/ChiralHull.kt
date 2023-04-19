@@ -82,6 +82,8 @@ class ChiralHull : BaseHullMod()
     {
         if (ship == null) return
         Global.getCombatEngine().addLayeredRenderingPlugin(ChiralHullListener(ship, id))
+
+
     }
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI, hullSize: ShipAPI.HullSize?, ship: ShipAPI, width: Float, isForModSpec: Boolean) {
@@ -142,6 +144,7 @@ class ChiralHull : BaseHullMod()
 
         var color = Color(122,139,221,255)
 
+
         init
         {
             this.ship = ship
@@ -164,6 +167,22 @@ class ChiralHull : BaseHullMod()
         var interval = IntervalUtil(0.05f, 0.05f)
         override fun advance(amount: Float)
         {
+
+
+         /*   var velocity = Vector2f(500f, -ship.velocity.y * 0.2f)
+
+            var emitter = Particles.initialize(ship.location, Global.getSettings().getSprite("rat", "particle"))
+            emitter.life(10f,10f)
+            //emitter.velocity(Vector2f(100f, -20f), Vector2f(500f, 20f))
+            emitter.color(color)
+            emitter.circleOffset(1800f, 2000f)
+            emitter.alphaShift(1f, -1f)
+            emitter.size(10f, 12f)
+            //emitter.growthRate(-1f, -2f)
+            //emitter.circleVelocity(1800f, 2000f)
+            emitter.circleAcceleration(0f, 10f)
+            Particles.burst(emitter, 10)*/
+
             var thrusterID = 1000
             interval.advance(amount)
             for (engine in ship.engineController.shipEngines)

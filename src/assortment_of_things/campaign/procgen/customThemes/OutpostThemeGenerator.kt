@@ -5,9 +5,13 @@ import assortment_of_things.strings.RATEntities
 import assortment_of_things.strings.RATTags
 import assortment_of_things.scripts.FactionBaseFleetManager
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.MusicPlayerPlugin
 import com.fs.starfarer.api.campaign.FactionAPI
+import com.fs.starfarer.api.campaign.PlanetAPI
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.fleet.FleetMemberType
+import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.*
@@ -16,6 +20,8 @@ import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.ThemeGenContext
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.campaign.Faction
+import lunalib.lunaDelegates.LunaMemory
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.util.*
@@ -26,10 +32,12 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
         @JvmStatic
         var minOutpostConstellations = 2
         @JvmStatic
-        var maxOutpostConstellations = 5
+        var maxOutpostConstellations = 3
 
         var blacklistedFactions = mutableListOf(Factions.PLAYER, Factions.PIRATES, Factions.LUDDIC_PATH, Factions.INDEPENDENT)
     }
+
+    var addedTrainingStation = false
 
     //0 for Misc
     //100 for Derelict,
@@ -44,7 +52,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
     //2000 for Ruins
     //1000000 for Misc
     override fun getOrder(): Int {
-        return 2500
+        return 1000005
     }
 
     override fun getThemeId(): String {
@@ -59,62 +67,34 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
 
         if (num > total) num = total.toInt()
 
-        //gets available constellations that havent been used yet
-        val constellations: List<Constellation?>? = ProcgenUtility.getSortedAvailableConstellations(context, false, Vector2f(), null)
-        Collections.reverse(constellations)
-
+        var constellations = context!!.constellations
         var factions: MutableList<String> = ArrayList()
-
-       /* if (Global.getSettings().modManager.isModEnabled("nexerelin"))
-        {
-            factions.addAll(Global.getSector().allFactions.filter {
-                    faction -> NexConfig.getFactionConfig(faction.id).playableFaction && NexConfig.getFactionConfig(faction.id).startingFaction
-                    && !faction.knownShips.isNullOrEmpty() && !faction.knownWeapons.isNullOrEmpty()
-                    && !blacklistedFactions.contains(faction.id)
-                    //Required to prevent crashes from mods using outdated skills
-                    && faction.doctrine.commanderSkills.none { skill -> !Global.getSettings().skillIds.contains(skill)}}
-                    .map { it.id })
-        }
-        else
-        {*/
-            factions.addAll(listOf(Factions.HEGEMONY, Factions.TRITACHYON, Factions.LUDDIC_CHURCH, Factions.DIKTAT, Factions.PERSEAN))
-       // }
+        factions.addAll(listOf(Factions.HEGEMONY, Factions.TRITACHYON, Factions.LUDDIC_CHURCH, Factions.DIKTAT, Factions.PERSEAN))
 
         var count = 0
         for (constellation in constellations!!)
         {
-            if (count > num) break
+            if (count >= num) break
             if (factions.isEmpty()) break
 
             val systems: List<StarSystemData> = constellation!!.systems.map { computeSystemData(it) }
 
-            //gets a system that doesnt have blackholes/neutron stars, and sorts them based on the amount of planets and how many habitble planets there are.
-            val mainCandidates = ProcgenUtility.getSortedSystemsSuitedToBePopulated(systems, minPlanets = 3)
+            val mainCandidates = ProcgenUtility.getScoredSystemsByFilter(systems) {
+                    it.system.hasTag(Tags.THEME_MISC)
+                    && it.planets.size >= 2
+                    && it.system.planets.find { planet -> planet.typeId.equals(StarTypes.NEUTRON_STAR) } == null
+            }
             if (mainCandidates!!.isEmpty()) continue
 
 
-
-
-            //var factions = listOf(Factions.HEGEMONY, Factions.TRITACHYON, Factions.LUDDIC_CHURCH, Factions.DIKTAT, Factions.PERSEAN)
             var faction = Global.getSector().getFaction(factions.random())
-            factions.remove(faction.id)
+            //factions.remove(faction.id)
             Global.getLogger(this::class.java).info("RAT: Creating \"Outpost\" theme with faction ${faction.id}")
 
-            //Runs the generation for the main system of the constellation
 
-            var secondarySystems = constellation.systems.toMutableList()
             var main = mainCandidates.get(0)
             populateMain(main, faction)
-            secondarySystems.remove(main.system)
-
-            context.majorThemes.put(constellation, themeId)
             count++
-
-            for (system in secondarySystems)
-            {
-                var data = computeSystemData(system)
-                populateNonMain(data, faction)
-            }
         }
     }
 
@@ -133,7 +113,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
 
         generateBase(data, faction)
 
-        addResearchStations(data, 1f, 1, 1, createStringPicker(Entities.STATION_RESEARCH, 1f))
+        addResearchStations(data, 0.85f, 1, 1, createStringPicker(Entities.STATION_RESEARCH, 1f))
         addCaches(data, 0.65f, 1,2, createStringPicker(
             Entities.SUPPLY_CACHE, 4f,
             Entities.SUPPLY_CACHE_SMALL, 10f,
@@ -141,47 +121,55 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
             Entities.EQUIPMENT_CACHE_SMALL, 10f))
 
         if (!data.resourceRich.isEmpty()) {
-            addMiningStations(data, 0.6f, 1, 1, createStringPicker(Entities.STATION_MINING, 10f))
+            addMiningStations(data, 0.3f, 1, 1, createStringPicker(Entities.STATION_MINING, 10f))
         }
 
         if (!data.habitable.isEmpty()) {
             addHabCenters(data, 0.50f, 1, 1, createStringPicker(Entities.ORBITAL_HABITAT, 10f))
         }
 
-        addDerelictShips(data, 1f, 3, 10, createStringPicker(faction.id, 1f))
-        addShipGraveyard(data, 0.7f, 1,1, createStringPicker(faction.id, 1f))
+        addDerelictShips(data, 1f, 2, 6, createStringPicker(faction.id, 1f))
+        addShipGraveyard(data, 0.5f, 1,1, createStringPicker(faction.id, 1f))
 
         addCommRelay(data, 0.8f)
+
+        if (!addedTrainingStation)
+        {
+            generateTrainingStation(data, faction)
+        }
     }
 
-    fun populateNonMain(data: StarSystemData, faction: FactionAPI)
+    fun generateTrainingStation(data: StarSystemData, faction: FactionAPI)
     {
-        data.system.addTag(RATTags.THEME_OUTPOST)
-        data.system.addTag(RATTags.THEME_OUTPOST_SECONDARY)
+        val weights = LinkedHashMap<LocationType, Float>()
+        //weights[LocationType.GAS_GIANT_ORBIT] = 3f
+        weights[LocationType.PLANET_ORBIT] = 10f
+        weights[LocationType.NEAR_STAR] = 1f
+        val locations = getLocations(StarSystemGenerator.random, data.system, data.alreadyUsed, 100f, weights)
+        val location = locations.pick()
 
-        val special = data.isBlackHole || data.isNebula || data.isPulsar
-        if (special) {
-            addResearchStations(data, 0.75f, 1, 1, createStringPicker(Entities.STATION_RESEARCH, 1f))
-        }
+        var added = addNonSalvageEntity(data.system, location, "station_side03", faction.id) ?: return
+        var station = added.entity
 
-        if (!data.resourceRich.isEmpty()) {
-            addMiningStations(data, 0.5f, 1, 1, createStringPicker(Entities.STATION_MINING, 10f))
-        }
+        addedTrainingStation = true
+        data.system.addTag(RATTags.TAG_OUTPOST_TRAINING)
+        station.addTag(RATTags.TAG_OUTPOST_TRAINING_FACILITY)
 
-        if (!special && !data.habitable.isEmpty()) {
-            addHabCenters(data, 0.40f, 1, 1, createStringPicker(Entities.ORBITAL_HABITAT, 10f))
-        }
+        station.name = "Training Facility"
+        station.customDescriptionId = "rat_training_facility"
 
-        addCaches(data, 0.35f, 0,2, createStringPicker(
-            Entities.SUPPLY_CACHE, 4f,
-            Entities.SUPPLY_CACHE_SMALL, 10f,
-            Entities.EQUIPMENT_CACHE, 4f,
-            Entities.EQUIPMENT_CACHE_SMALL, 10f))
 
-        addDerelictShips(data, 1f, 1, 5, createStringPicker(faction.id, 1f))
-        addShipGraveyard(data, 0.6f, 1,1, createStringPicker(faction.id, 1f))
+        var params = FleetParamsV3(null, station.location, Factions.DERELICT, 1f, FleetTypes.PATROL_MEDIUM,
+            MathUtils.getRandomNumberInRange(80f, 120f),
+            0f,0f,0f,0f,1f, 1f)
+        params.averageSMods = 1
+        var defenderFleet = FleetFactoryV3.createFleet(params)
+
+        station.memoryWithoutUpdate.set("\$defenderFleet", defenderFleet)
+        var seed: Long? by LunaMemory("rat_skill_seed", Misc.genRandomSeed(), station.memoryWithoutUpdate)
+        seed = Misc.genRandomSeed()
+
     }
-
 
     fun generateBase(data: StarSystemData, faction: FactionAPI)
     {
@@ -214,6 +202,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
             fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE] = true
             fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_NO_JUMP] = true
             fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALLOW_DISENGAGE] = true
+            fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_LOW_REP_IMPACT] = true
 
             fleet.addTag(Tags.NEUTRINO_HIGH)
             fleet.isStationMode = true
@@ -232,7 +221,7 @@ class OutpostThemeGenerator : BaseThemeGenerator() {
                 4,
                 25f,
                 50,
-                80,
+                70,
                 faction.id)
 
             data.system.addEntity(fleet)

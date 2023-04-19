@@ -80,7 +80,6 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
             }
         }
     }
-
     /**
      *Resets to start page and clears panels
      */

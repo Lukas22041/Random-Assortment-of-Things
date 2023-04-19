@@ -1,2 +1,3 @@
 id,age,tags,freqYOUNG,freqAVERAGE,freqOLD,minRadius,maxRadius,habZoneStart,probOrbits,minOrbits,maxOrbits,coronaMin,coronaMult,coronaVar,solarWind,minFlare,maxFlare,crLossMult,lightColorMin,lightColorMax
 chiral_star,ANY,,0,0,0,800,900,3,0.95,2,7,400,1,0.5,10,0,1,3,0 100 150,0 150 255
+rat_pocket_blackhole,ANY,,0,0,0,150,200,-20,1,2,10,1000,1,0.5,-10,0,0,25,125 90 125,125 90 125

@@ -3,18 +3,28 @@ package assortment_of_things
 import ParallelConstruction
 import assortment_of_things.campaign.RATCampaignPlugin
 import assortment_of_things.campaign.procgen.LootModifier
+import assortment_of_things.campaign.skills.util.SkillManager
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.strings.RATTags
+import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.snippets.ProcgenDebugSnippet
+import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.BaseModPlugin
+import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.impl.campaign.ids.Entities
+import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
+import lunalib.lunaExtensions.TooltipMakerExtensions.addLunaToggleButton
 import lunalib.lunaExtensions.getSystemsWithTag
 
 
+
 class RATModPlugin : BaseModPlugin() {
+
+    companion object {
+        var added = false
+    }
 
     override fun onApplicationLoad() {
         super.onApplicationLoad()
@@ -27,7 +37,6 @@ class RATModPlugin : BaseModPlugin() {
         LunaDebug.addSnippet(ProcgenDebugSnippet())
 
         LootModifier.saveOriginalData()
-
     }
 
     override fun onGameLoad(newGame: Boolean) {
@@ -36,7 +45,6 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().listenerManager.addListener(RATSettings, true)
         Global.getSector().registerPlugin(RATCampaignPlugin())
         Global.getSector().addTransientScript(ParallelConstruction())
-
 
         LootModifier.modifySpawns()
 
@@ -50,6 +58,8 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getLogger(this.javaClass).error("Failed to disable Help Popups.")
             }
         }
+
+        SkillManager.update()
     }
 
     override fun onNewGame() {
