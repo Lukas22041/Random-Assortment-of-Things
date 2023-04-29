@@ -2,6 +2,7 @@ package assortment_of_things.combat
 
 import assortment_of_things.campaign.skills.util.SkillManager
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.modular_weapons.scripts.ModularWeaponCombatHandler
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
@@ -15,10 +16,11 @@ import java.util.*
 class CombatHandler : EveryFrameCombatPlugin
 {
 
-
+    var modularHandler = ModularWeaponCombatHandler()
 
     override fun init(engine: CombatEngineAPI?)
     {
+
     }
 
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
@@ -26,7 +28,7 @@ class CombatHandler : EveryFrameCombatPlugin
 
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?)
     {
-
+        modularHandler.advance(amount)
     }
 
     override fun renderInWorldCoords(viewport: ViewportAPI?)
@@ -45,6 +47,12 @@ class CombatHandler : EveryFrameCombatPlugin
 
     override fun renderInUICoords(viewport: ViewportAPI?) {
 
+
+        if (Global.getCurrentState() == GameState.COMBAT)
+        {
+            var test = Global.getSector().memoryWithoutUpdate
+            var test2 = Global.getSector().memoryWithoutUpdate
+        }
         if (enabled == null)
         {
             enabled = LunaSettings.getBoolean(RATSettings.modID, "rat_theSkeletonAppears")

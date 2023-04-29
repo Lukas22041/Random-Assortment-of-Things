@@ -1,50 +1,58 @@
-modID,fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
-,,,,,,,,,
-assortment_of_things,rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,
-assortment_of_things,rat_parallelEnabled,Enable Parallel Construction,Boolean,false,,"Removes the queue system in Colony Construction, allowing everything to be built at the same time.",,,
-assortment_of_things,rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,,"If set to true and parallel construction is enabled, it will apply the same effect to NPC markets.",,,
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-assortment_of_things,rat_miscHeader,Miscellaneous,Header,Miscellaneous,,,,,
-assortment_of_things,rat_forceDisableHelp,Force disable help-popups,Boolean,false,,"Disables help popups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, [does not re-enable] help-popups if disabled.",,,
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-assortment_of_things,rat_themeHeader,Procedual Generation Content,Header,Procedual Generation,,,,,Procgen
-assortment_of_things,rat_themeText,,Text,Adds more types of randomly generated systems that can spawn within to the sector. Some of them come with unique content.,,,,,Procgen
-assortment_of_things,rat_enableOutposts,Outpost Systems,Boolean,false,,"Adds a type of system that is closely guarded by a faction, in which they attack any fleet that is entering it, even if they are allied. They will only spawn for vanilla factions.",,,Procgen
-assortment_of_things,rat_enableChiral,Chiral Systems,Boolean,false,,A type of system connected to a strange place.,,,Procgen
-,,,,,,,,,
-assortment_of_things,rat_procgenHeader,Procedual Generation Tweaks,Header,Procedual Generation Config,,,,,Procgen
-assortment_of_things,rat_procgenText,,Text,"Changes to how starsectors procedual generation works. 
+fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
+,,,,,,,,
+rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,
+rat_parallelEnabled,Enable Parallel Construction,Boolean,false,,"Removes the queue system in Colony Construction, allowing everything to be built at the same time.",,,
+rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,,"If set to true and parallel construction is enabled, it will apply the same effect to NPC markets.",,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+rat_modularHeader,Modular Weapons,Header,Modular Weapons (Beta),,,,,
+rat_modularEnabled,Enable Modular Weapons,Boolean,false,,"RAT adds a kind of weapon that the player can adjust the stats and functionality of. This feature is currently in beta, meaning that it is largely untested and unfinished. There is basicly zero balance in it as of now. To access it, enable it with this option, then when you load in to a save you gain a new Ability. Use this ability to open the design menu. 
+
+You have a limited amount of slots to modify, after you are done modifying a weapon, you want to finalize it, which allows you to craft the weapon (currently for no cost), but in exchange you wont be able to make any changes to the weapon again.",,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+rat_miscHeader,Miscellaneous,Header,Miscellaneous,,,,,
+rat_forceDisableHelp,Force disable help-popups,Boolean,false,,"Disables help popups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, [does not re-enable] help-popups if disabled.",,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+rat_themeHeader,Procedual Generation Content,Header,Procedual Generation,,,,,Procgen
+rat_themeText,,Text,Adds more types of randomly generated systems that can spawn within to the sector. Some of them come with unique content.,,,,,Procgen
+rat_enableOutposts,Outpost Systems,Boolean,false,,"Adds a type of system that is closely guarded by a faction, in which they attack any fleet that is entering it, even if they are allied. They will only spawn for vanilla factions.",,,Procgen
+rat_enableChiral,Chiral Systems,Boolean,false,,A type of system connected to a strange place.,,,Procgen
+,,,,,,,,
+rat_procgenHeader,Procedual Generation Tweaks,Header,Procedual Generation Config,,,,,Procgen
+rat_procgenText,,Text,"Changes to how starsectors procedual generation works. 
 This section is basicly a simplified and more idiot-proof version of Adjusted Sector.
 [If Adjusted Sector is installed], this Section is completly [ignored] and Adjusted Sectors configs are used instead.",,,,,Procgen
-assortment_of_things,rat_systemScaleV2,Change amount of generated Systems,Radio,Vanilla,"Vanilla, 150%, 200%, 250%","Changes the amount of generated Systems. 
+rat_systemScaleV2,Change amount of generated Systems,Radio,Vanilla,"Vanilla, 150%, 200%, 250%","Changes the amount of generated Systems. 
 An increase in generated systems come with a [heavy performance cost].
 
 Vanilla Themes will scale with the amount of systems, Modded Themes may not.",1,4,Procgen
-assortment_of_things,rat_hyperspaceCloudsMod,Hyperspace Clouds Spawn Modifier,Double,0.8,,"Lets you modify how many hyperspace clouds spawn. Vanilla uses a value of 0.8. A lower value will spawn less of them, with a value of 0 spawning none. ",0,1.0,Procgen
-assortment_of_things,rat_improvedMisc,Improved Miscellaneous Theme,Boolean,false,,"Improves the ""Miscellaneous"" Theme. Starsector generates this theme as a filler for whatever system didnt receive anything special during procgen. In Vannila, those systems rarely give anything of worth, often spawning completely empty systems. Toggling this will prevent those from ever being empty, and gives them a lot more loot.",,,Procgen
-,,,,,,,,,
-assortment_of_things,rat_lootHeader,Loot Tweaks,Header,Loot Tweaks,,,,,Procgen
-assortment_of_things,rat_hullmodBPLootFrequency,Hullmod BP Loot Frequency,Double,1,,"Multiplies the amount of Hullmod Blueprints being dropped from Salvaging. Useful for when you are playing with lots of mods which add their own hullmods.
+rat_hyperspaceCloudsMod,Hyperspace Clouds Spawn Modifier,Double,0.8,,"Lets you modify how many hyperspace clouds spawn. Vanilla uses a value of 0.8. A lower value will spawn less of them, with a value of 0 spawning none. ",0,1.0,Procgen
+rat_improvedMisc,Improved Miscellaneous Theme,Boolean,false,,"Improves the ""Miscellaneous"" Theme. Starsector generates this theme as a filler for whatever system didnt receive anything special during procgen. In Vannila, those systems rarely give anything of worth, often spawning completely empty systems. Toggling this will prevent those from ever being empty, and gives them a lot more loot.",,,Procgen
+,,,,,,,,
+rat_lootHeader,Loot Tweaks,Header,Loot Tweaks,,,,,Procgen
+rat_hullmodBPLootFrequency,Hullmod BP Loot Frequency,Double,1,,"Multiplies the amount of Hullmod Blueprints being dropped from Salvaging. Useful for when you are playing with lots of mods which add their own hullmods.
 
 Can be changed mid-save.",1.0,3.0,Procgen
-assortment_of_things,rat_shipBPLootFrequency,Ship BP Loot Frequency,Double,1,,"Multiplies the amount of Ship Blueprints being dropped from Salvaging. Useful for when you are playing with lots of mods which add ships to the same loot-pool. Due to ship blueprints selling for a high price, this option can become quite overpowered if set to high.
+rat_shipBPLootFrequency,Ship BP Loot Frequency,Double,1,,"Multiplies the amount of Ship Blueprints being dropped from Salvaging. Useful for when you are playing with lots of mods which add ships to the same loot-pool. Due to ship blueprints selling for a high price, this option can become quite overpowered if set to high.
 
 Can be changed mid-save.",1.0,3.0,Procgen
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-,,,,,,,,,
-assortment_of_things,rat_jokesHeader,Jokes,Header,Jokes,,,,,Other
-assortment_of_things,rat_sillyContent,Enable Joke Content,Boolean,false,,"If set to true, enables some silly or lore breaking content that may be added in to other aspects of the mod. As of now those arent any major things, but if you dont enjoy things breaking the lore or maybe feeling out of place, then keep this disabled.",,,Other
-assortment_of_things,rat_theSkeletonAppears,The Skeleton Appears,Boolean,false,,,,,Other
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+rat_jokesHeader,Jokes,Header,Jokes,,,,,Other
+rat_sillyContent,Enable Joke Content,Boolean,false,,"If set to true, enables some silly or lore breaking content that may be added in to other aspects of the mod. As of now those arent any major things, but if you dont enjoy things breaking the lore or maybe feeling out of place, then keep this disabled.",,,Other
+rat_theSkeletonAppears,The Skeleton Appears,Boolean,false,,,,,Other

@@ -153,6 +153,7 @@ class ChiralThemeGenerator : BaseThemeGenerator() {
         mirroredSystem.addTag(Tags.THEME_UNSAFE)
         mirroredSystem.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
         mirroredSystem.isProcgen = false
+        mirroredSystem.generateAnchorIfNeeded()
 
        /* if (mirroredSystem is BaseLocation)
         {

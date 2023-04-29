@@ -37,6 +37,10 @@ object RATSettings : LunaSettingsListener
     //Misc
     var disableHelp = LunaSettings.getBoolean(modID, "rat_forceDisableHelp")
 
+    //Modular
+    var enableModular = LunaSettings.getBoolean(modID, "rat_modularEnabled")
+
+
 
     //Jokes
     var sillyContentEnabled = LunaSettings.getBoolean(modID, "rat_sillyContent")

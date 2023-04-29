@@ -1,8 +1,6 @@
 package assortment_of_things.misc
 
 import com.fs.starfarer.api.fleet.FleetMemberAPI
-import com.fs.starfarer.api.impl.campaign.procgen.PlanetConditionGenerator
-import com.fs.starfarer.loading.scripts.ScriptStore
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
 import java.lang.invoke.MethodType
@@ -26,7 +24,6 @@ object ReflectionUtils {
         val setMethod = MethodHandles.lookup().findVirtual(fieldClass, "set", MethodType.methodType(Void.TYPE, Any::class.java, Any::class.java))
         val getNameMethod = MethodHandles.lookup().findVirtual(fieldClass, "getName", MethodType.methodType(String::class.java))
         val setAcessMethod = MethodHandles.lookup().findVirtual(fieldClass,"setAccessible", MethodType.methodType(Void.TYPE, Boolean::class.javaPrimitiveType))
-        var member: FleetMemberAPI
 
         val instancesOfFields: Array<out Any> = instanceToModify.javaClass.getDeclaredFields()
         for (obj in instancesOfFields)
@@ -58,6 +55,7 @@ object ReflectionUtils {
         }
         return null
     }
+
     fun getInt(fieldName: String, instanceToGetFrom: Any) = get(fieldName, instanceToGetFrom) as Int?
     fun getDouble(fieldName: String, instanceToGetFrom: Any) = get(fieldName, instanceToGetFrom) as Double?
     fun getFloat(fieldName: String, instanceToGetFrom: Any) = get(fieldName, instanceToGetFrom) as Float?
@@ -72,6 +70,24 @@ object ReflectionUtils {
         val reflectionLoader: Class<*> = ReflectionClassLoader(urls, ClassLoader.getSystemClassLoader()).loadClass(claz.name)
         var handle = MethodHandles.lookup().findConstructor(reflectionLoader, MethodType.methodType(Void.TYPE))
         return handle
+    }
+
+    fun invoke(methodName: String, instance: Any, vararg arguments: Any?) : Any?
+    {
+        val methodClass = Class.forName("java.lang.reflect.Method", false, Class::class.java.classLoader)
+        val getNameMethod = MethodHandles.lookup().findVirtual(methodClass, "getName", MethodType.methodType(String::class.java))
+        val invokeMethod = MethodHandles.lookup().findVirtual(methodClass, "invoke", MethodType.methodType(Any::class.java, Any::class.java, Array<Any>::class.java))
+
+        var foundMethod: Any? = null
+        for (method in instance::class.java.methods as Array<Any>)
+        {
+            if (getNameMethod.invoke(method) == methodName)
+            {
+                foundMethod = method
+            }
+        }
+
+        return invokeMethod.invoke(foundMethod, instance, arguments)
     }
 
     /*fun Any.reflectionGet(fieldName: String) = get(fieldName, this)

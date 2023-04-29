@@ -1,0 +1,33 @@
+{
+	"id":"modular_weapon_4",  # this id must match what's in the spreadsheet
+	"specClass":"projectile",
+	"type":"ENERGY",
+	"size":"MEDIUM",
+	"turretSprite":"graphics/weapons/modular/rat_modular_h00.png",
+	"hardpointSprite":"graphics/weapons/modular/rat_modular_t00.png",
+	"hardpointGlowSprite":"graphics/weapons/modular/rat_modular_hardpoint_glow.png",
+	"turretGlowSprite":"graphics/weapons/modular/rat_modular_turret_glow.png",
+	"turretOffsets":[22, 0],
+	"turretAngleOffsets":[0],
+	"hardpointOffsets":[33, 0],
+	"hardpointAngleOffsets":[0],
+	"barrelMode":"ALTERNATING", # or LINKED.  whether barrels fire at the same time or alternate.
+	#"animationType":"GLOW",
+	"animationType":"GLOW_AND_FLASH",
+	"muzzleFlashSpec":{"length":33.0,   # only used if animationType = MUZZLE_FLASH
+					   "spread":15.0,
+					   "particleSizeMin":15.0,
+					   "particleSizeRange":17.0,
+					   "particleDuration":0.12,
+					   "particleCount":7,
+					   "particleColor":[100,200,255,255]},
+					   
+	"autocharge":true,  # whether the weapon will continue charging and fire if the LMB is tapped instead of held
+	"everyFrameEffect":"assortment_of_things.modular_weapons.scripts.ModularEveryFrameWeaponEffect",
+	"projectileSpecId":"modular_projectile_0",  # projectile that will be fired
+	#"fireSoundOne":"thumper_spinup",
+	"fireSoundTwo":"ion_pulser_fire",
+	"glowColor":[100,150,255,225],
+	#"autocharge":true,
+	#"interruptibleBurst":true,
+}

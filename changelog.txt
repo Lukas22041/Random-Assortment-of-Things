@@ -1,4 +1,20 @@
 
+Version 1.3.0 (Requires Lunalib 1.6.0 or higher)
+
+>Added Modular Weapons (Beta)
+Modular Weapons can be enabled from the configs. They are currenlty unbalanced, untested and unfinished, so they arent quite recommended if you want a quality playthrough, but feel like messing with a fun new thing.
+
+How they work:
+Once enabled, if you enter/reload a save, you will get the "Weapon Forge" ability. Use it to open the design screen. In there you can select different stats with a budget restraint for a weapon. Once you have something that you like, you can hold the "Finalize" button to finish the design. Once created, it cant be changed anymore for the entire duration of the save. Some may not like it, but it has its reason for API limitations that i am facing (Worst case you can still reload a prior save). Now you are able to craft the weapon and equip it. 
+
+The Lunalib Debug menu also has a snippet that lets you reset all modular weapons, which would let you go around the "Modify once per save" Restriction.
+
+Other:
+-> Fixed a crash with lunalib, now requirs version 1.6.0 of it.
+-> Fixed a crash related to the chiral system having no hyperspace anchor
+
+
+
 Version 1.2.0
 
 A decently sized patch that should improve the feel of outpost systems and adds some fun new content to them.

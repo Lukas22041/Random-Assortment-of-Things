@@ -10,6 +10,7 @@
 	"designTypeColors":{
 		"Chiral":[122,139,221,255],
 		"Augmenter":[252, 227, 3,255],
+		"Modular Weapon":[158, 50, 230,255],
 	},		
 	
 	"drop_prob_officer_rat_scarlet_processor":0.2,

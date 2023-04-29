@@ -42,7 +42,7 @@ class PocketDimensionSystem {
 
         Misc.setAbandonedStationMarket("rat_pocket_market", station)
 
-        //system.generateAnchorIfNeeded()
+        system.generateAnchorIfNeeded()
 
         system.addScript(object : EveryFrameScript {
             override fun isDone(): Boolean {

@@ -15,7 +15,7 @@ import com.fs.starfarer.api.loading.HullModSpecAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaDelegates.LunaMemory
-import lunalib.lunaExtensions.TooltipMakerExtensions.addLunaElement
+import lunalib.lunaExtensions.addLunaElement
 import org.lwjgl.input.Keyboard
 
 class ChiralStationInteraction : RATInteractionPlugin(), FleetMemberPickerListener {
