@@ -5,6 +5,7 @@ Modular Weapons (Beta):
 -> All saved weapons will be wiped when updating (but hey atleast (probably) save compatible)
 
 -> Added a few new effects.
+-> Added 4 more design slots.
 -> Several balance adjustments. Not actually balanced, but there should be more options than just going for Burst now.
 -> Flux useage should now show on the refit screen.
  - It still wont be perfectly accurate and there are some issues in the way of making the refit screen show the actual values.
