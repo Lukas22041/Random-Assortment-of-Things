@@ -32,12 +32,12 @@ class StatAutoloader : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.ammoPerSecond.addFlat(getName(), 1f)
-        stats.maxAmmo.addFlat(getName(), 20)
-        stats.reloadSize.addFlat(getName(), 1f)
+        stats.ammoPerSecond.modifyFlat(getName(), 1f)
+        stats.maxAmmo.modifyFlat(getName(), 20)
+        stats.reloadSize.modifyFlat(getName(), 1f)
 
-        stats.burstDelay.addMult(getName(), 0.75f)
-        stats.chargeDown.addMult(getName(), 0.75f)
-        stats.chargeUp.addMult(getName(), 0.75f)
+        stats.burstDelay.modifyMult(getName(), 0.75f)
+        stats.chargeDown.modifyMult(getName(), 0.75f)
+        stats.chargeUp.modifyMult(getName(), 0.75f)
     }
 }

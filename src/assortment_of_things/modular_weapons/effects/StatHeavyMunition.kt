@@ -32,16 +32,16 @@ class StatHeavyMunition : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.damagePerShot.addMult(getName(), 1.5f)
-        stats.empDamage.addMult(getName(), 1.5f)
+        stats.damagePerShot.modifyMult(getName(), 1.5f)
+        stats.empDamage.modifyMult(getName(), 1.5f)
 
-        stats.projectileWidth.addMult(getName(), 2f)
-        stats.projectileLength.addMult(getName(), 2f)
+        stats.projectileWidth.modifyMult(getName(), 2f)
+        stats.projectileLength.modifyMult(getName(), 2f)
 
-        stats.energyPerShot.addMult(getName(), 1.2f)
+        stats.energyPerShot.modifyMult(getName(), 1.2f)
 
-        stats.burstDelay.addMult(getName(), 1.20f)
-        stats.chargeDown.addMult(getName(), 1.20f)
-        stats.chargeUp.addMult(getName(), 1.20f)
+        stats.burstDelay.modifyMult(getName(), 1.20f)
+        stats.chargeDown.modifyMult(getName(), 1.20f)
+        stats.chargeUp.modifyMult(getName(), 1.20f)
     }
 }

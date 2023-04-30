@@ -76,34 +76,34 @@ object ModularWeaponLoader
     fun calculateEffectStats(data: SectorWeaponData)
     {
 
-        data.range.clear()
-        data.turnrate.clear()
+        data.range.unmodify()
+        data.turnrate.unmodify()
 
-        data.projectileLength.clear()
-        data.projectileWidth.clear()
-        data.projectileSpeed.clear()
+        data.projectileLength.unmodify()
+        data.projectileWidth.unmodify()
+        data.projectileSpeed.unmodify()
 
-        data.damagePerShot.clear()
-        data.energyPerShot.clear()
-        data.empDamage.clear()
+        data.damagePerShot.unmodify()
+        data.energyPerShot.unmodify()
+        data.empDamage.unmodify()
 
         data.maxAmmo.clear()
-        data.ammoPerSecond.clear()
-        data.reloadSize.clear()
+        data.ammoPerSecond.unmodify()
+        data.reloadSize.unmodify()
 
         data.isPD = false
 
-        data.rngAttempts = 0
+        data.rngAttempts.clear()
 
-        data.chargeUp.clear()
-        data.chargeDown.clear()
+        data.chargeUp.unmodify()
+        data.chargeDown.unmodify()
         data.burstSize.clear()
-        data.burstDelay.clear()
+        data.burstDelay.unmodify()
 
-        data.minSpread.clear()
-        data.maxSpread.clear()
-        data.spreadBuildup.clear()
-        data.spreadDecay.clear()
+        data.minSpread.unmodify()
+        data.maxSpread.unmodify()
+        data.spreadBuildup.unmodify()
+        data.spreadDecay.unmodify()
 
         for (effect in data.effects)
         {
@@ -134,7 +134,7 @@ object ModularWeaponLoader
 
             modableSpec.setWeaponName(data.name)
 
-            modableSpec.setEnergyPerShot(data.energyPerShot.getValue())
+            modableSpec.setEnergyPerShot(data.energyPerShot.modifiedValue)
 
             var test = spec.tags
 
@@ -160,29 +160,31 @@ object ModularWeaponLoader
             modableSpec.setMountType(data.mountType)
             modableSpec.setDamageType(data.damageType)
 
+            modableSpec.setOrdnancePointCost(data.op.modifiedValue)
+
             modableSpec.setMaxAmmo(data.maxAmmo.getValue())
-            modableSpec.setAmmoPerSecond(data.ammoPerSecond.getValue())
-            modableSpec.setReloadSize(data.reloadSize.getValue())
+            modableSpec.setAmmoPerSecond(data.ammoPerSecond.modifiedValue)
+            modableSpec.setReloadSize(data.reloadSize.modifiedValue)
 
-            modableSpec.setChargeDown(data.chargeDown.getValue())
-            modableSpec.setChargeUp(data.chargeUp.getValue())
+            modableSpec.setChargeDown(data.chargeDown.modifiedValue)
+            modableSpec.setChargeUp(data.chargeUp.modifiedValue)
             modableSpec.setBurstSize(data.burstSize.getValue())
-            modableSpec.setBurstDelay(data.burstDelay.getValue())
+            modableSpec.setBurstDelay(data.burstDelay.modifiedValue)
 
-            modableSpec.setMinSpread(data.minSpread.getValue())
-            modableSpec.setMaxSpread(data.maxSpread.getValue())
-            modableSpec.setSpreadBuildup(data.spreadBuildup.getValue())
-            modableSpec.setSpreadDecayRate(data.spreadDecay.getValue())
+            modableSpec.setMinSpread(data.minSpread.modifiedValue)
+            modableSpec.setMaxSpread(data.maxSpread.modifiedValue)
+            modableSpec.setSpreadBuildup(data.spreadBuildup.modifiedValue)
+            modableSpec.setSpreadDecayRate(data.spreadDecay.modifiedValue)
 
-            modableSpec.setMaxRange(data.range.getValue())
-            modableSpec.setTurnRate(data.turnrate.getValue())
+            modableSpec.setMaxRange(data.range.modifiedValue)
+            modableSpec.setTurnRate(data.turnrate.modifiedValue)
 
-            modableProjectileSpec.setLength(data.projectileLength.getValue())
-            modableProjectileSpec.setWidth(data.projectileWidth.getValue())
-            modableProjectileSpec.setMoveSpeed(data.projectileSpeed.getValue())
+            modableProjectileSpec.setLength(data.projectileLength.modifiedValue)
+            modableProjectileSpec.setWidth(data.projectileWidth.modifiedValue)
+            modableProjectileSpec.setMoveSpeed(data.projectileSpeed.modifiedValue)
 
-            modableProjectileSpec.setDamage(data.damagePerShot.getValue())
-            modableProjectileSpec.setEmpDamage(data.empDamage.getValue())
+            modableProjectileSpec.setDamage(data.damagePerShot.modifiedValue)
+            modableProjectileSpec.setEmpDamage(data.empDamage.modifiedValue)
 
             modableProjectileSpec.setFringeColor(data.color)
             modableProjectileSpec.setCoreColor(Color.white)
@@ -195,7 +197,7 @@ object ModularWeaponLoader
             muzzle.particleColor = data.color.darker().darker().setAlpha(100)
 
             //need to change this value or the display is fucked up
-            modableSpec.fluxPerDamage(data.energyPerShot.getValue() / (data.damagePerShot.getValue() / data.burstSize.getValue()))
+            modableSpec.fluxPerDamage(data.energyPerShot.modifiedValue / (data.damagePerShot.modifiedValue / data.burstSize.getValue()))
         } catch (e: Throwable)
         {
             if (first)

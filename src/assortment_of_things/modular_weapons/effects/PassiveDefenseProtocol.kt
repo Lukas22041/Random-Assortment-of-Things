@@ -48,18 +48,18 @@ class PassiveDefenseProtocol : ModularWeaponEffect() {
 
         stats.isPD = true
 
-        stats.range.addMult(getName(), 0.5f)
+        stats.range.modifyMult(getName(), 0.5f)
 
-        stats.burstDelay.addMult(getName(), 0.50f)
-        stats.chargeDown.addMult(getName(), 0.50f)
-        stats.chargeUp.addMult(getName(), 0.50f)
+        stats.burstDelay.modifyMult(getName(), 0.50f)
+        stats.chargeDown.modifyMult(getName(), 0.50f)
+        stats.chargeUp.modifyMult(getName(), 0.50f)
 
-        stats.damagePerShot.addMult(getName(), 0.5f)
-        stats.empDamage.addMult(getName(), 0.5f)
+        stats.damagePerShot.modifyMult(getName(), 0.5f)
+        stats.empDamage.modifyMult(getName(), 0.5f)
 
-        stats.energyPerShot.addMult(getName(), 0.50f)
+        stats.energyPerShot.modifyMult(getName(), 0.50f)
 
-        stats.turnrate.addMult(getName(), 2f)
+        stats.turnrate.modifyMult(getName(), 2f)
 
     }
 }

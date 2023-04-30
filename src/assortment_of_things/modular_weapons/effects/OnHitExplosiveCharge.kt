@@ -41,7 +41,7 @@ class OnHitExplosiveCharge : ModularWeaponEffect() {
         if (ModularWeaponLoader.getData(projectile!!.weapon.id).rngCheck(0.25f, 0))
         {
 
-            var color = projectile!!.projectileSpec.fringeColor.darker().darker().darker().darker()
+            var color = projectile!!.projectileSpec.fringeColor.darker().darker().darker().darker().darker()
             var spec = DamagingExplosionSpec(2f, projectile.projectileSpec.width * 2, projectile.projectileSpec.width * 2.5f, projectile!!.damage.damage, 0f,
                 CollisionClass.HITS_SHIPS_AND_ASTEROIDS, CollisionClass.HITS_SHIPS_AND_ASTEROIDS, 1f, 10f, 3f, 20,
                 color, color)

@@ -37,22 +37,22 @@ class StatBurst : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.burstSize.addFlat(getName(), 3)
-        stats.burstDelay.addMult(getName(), 0.2f)
-       // stats.chargeDown.addMult(getName(), 1.5f)
+        stats.burstSize.modifyFlat(getName(), 3)
+        stats.burstDelay.modifyMult(getName(), 0.2f)
+       // stats.chargeDown.modifyMult(getName(), 1.5f)
 
-        stats.damagePerShot.addMult(getName(), 0.80f)
-        stats.empDamage.addMult(getName(), 0.80f)
+        stats.damagePerShot.modifyMult(getName(), 0.80f)
+        stats.empDamage.modifyMult(getName(), 0.80f)
 
-        stats.projectileWidth.addMult(getName(), 0.8f)
-        stats.projectileLength.addMult(getName(), 0.8f)
+        stats.projectileWidth.modifyMult(getName(), 0.8f)
+        stats.projectileLength.modifyMult(getName(), 0.8f)
 
         stats.maxAmmo.changeBase(0)
-        stats.ammoPerSecond.addFlat(getName(),1f)
-        stats.maxAmmo.addFlat(getName(), 30)
+        stats.ammoPerSecond.modifyFlat(getName(),1f)
+        stats.maxAmmo.modifyFlat(getName(), 30)
 
-        stats.minSpread.addFlat(getName(), 10f)
-        stats.maxSpread.addFlat(getName(), 15f)
+        stats.minSpread.modifyFlat(getName(), 10f)
+        stats.maxSpread.modifyFlat(getName(), 15f)
 
     }
 

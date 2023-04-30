@@ -1,3 +1,19 @@
+Version 1.3.2
+
+Modular Weapons (Beta):
+-> All saved weapons will be wiped when updating (but hey atleast (probably) save compatible). This will also most definitly be the case for most future updates for the beta.
+
+-> Added 4 new effects.
+-> Switched some calculations to how vanilla does them to make it less prone to errors.
+-> The fire-glow around the weapon now matches the selected color.
+-> Improved trail visual.
+-> Recolored the weapon to gray to be less distracting.
+-> Reduced OP from 20 to 14 (Wasnt actually supposed to be at 20 lol)
+
+Other:
+- Fixed a skill not applying to frigates.
+
+
 
 Version 1.3.1
 

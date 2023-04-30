@@ -32,7 +32,7 @@ class StatDoubleBarrel : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.burstSize.addFlat(getName(), 1)
+        stats.burstSize.modifyFlat(getName(), 1)
     }
 
 }

@@ -4,9 +4,9 @@ import assortment_of_things.modular_weapons.data.SectorWeaponData
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 
 
-class StatLauncher : ModularWeaponEffect() {
+class StatEscapeVelocity : ModularWeaponEffect() {
     override fun getName(): String {
-        return "Launcher"
+        return "Escape Velocity"
     }
 
     override fun getCost(): Int {
@@ -32,7 +32,7 @@ class StatLauncher : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.range.addFlat(getName(), 200f)
+        stats.range.modifyFlat(getName(), 200f)
     }
 
 }

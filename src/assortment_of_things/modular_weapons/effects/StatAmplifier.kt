@@ -32,7 +32,7 @@ class StatAmplifier : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.empDamage.addFlat(getName(), 50f)
+        stats.empDamage.modifyFlat(getName(), 50f)
     }
 
 }

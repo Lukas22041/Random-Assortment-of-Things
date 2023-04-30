@@ -32,7 +32,7 @@ class StatImprovedCoils : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.energyPerShot.addMult(getName(), 0.66f)
+        stats.energyPerShot.modifyMult(getName(), 0.66f)
     }
 
 }

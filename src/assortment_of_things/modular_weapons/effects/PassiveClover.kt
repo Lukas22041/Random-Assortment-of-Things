@@ -32,7 +32,7 @@ class PassiveClover : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.rngAttempts = 1
+        stats.rngAttempts.modifyFlat(getName(), 1)
     }
 
 }

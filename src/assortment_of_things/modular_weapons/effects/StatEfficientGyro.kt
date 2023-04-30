@@ -32,7 +32,7 @@ class StatEfficientGyro : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.turnrate.addMult(getName(), 2f)
+        stats.turnrate.modifyMult(getName(), 2f)
     }
 
 }

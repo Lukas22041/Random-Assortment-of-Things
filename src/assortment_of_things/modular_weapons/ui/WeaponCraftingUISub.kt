@@ -24,7 +24,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
     lateinit var modifierElement: TooltipMakerAPI
 
     var effects = listOf(OnHitExplosiveCharge(), VisualTrail(), PassiveGuidance(), OnHitOvercharged(), StatBurst(), StatDampener(),
-    StatAmplifier(), StatHeavyMunition(), StatLauncher(), StatDoubleBarrel(), StatAutoloader(), PassiveOvervolt(),
+    StatAmplifier(), StatHeavyMunition(), StatEscapeVelocity(), StatDoubleBarrel(), StatAutoloader(), PassiveOvervolt(),
     StatImprovedCoils(), StatEfficientGyro(), PassiveClover(), StatHighValueMunition(), PassiveDefenseProtocol(), PassiveAcidicPayload(),
     OnHitLifesteal())
 
@@ -413,28 +413,28 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("Ordnance Points: ${data.op.getValue()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Ordnance Points")
+        tooltip.addPara("Ordnance Points: ${data.op.modifiedValue}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Ordnance Points")
 
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("Range: ${data.range.getValue().toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Range")
+        tooltip.addPara("Range: ${data.range.modifiedValue.toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Range")
 
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("Damage/Shot: ${data.damagePerShot.getValue().toInt()}x${data.burstSize.getValue().toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Damage/Shot")
-        if (data.empDamage.getValue() > 1)
+        tooltip.addPara("Damage/Shot: ${data.damagePerShot.modifiedValue.toInt()}x${data.burstSize.getValue().toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Damage/Shot")
+        if (data.empDamage.modifiedValue > 1)
         {
-            tooltip.addPara("EMP: ${data.empDamage.getValue().toInt()}x${data.burstSize.getValue().toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "EMP")
+            tooltip.addPara("EMP: ${data.empDamage.modifiedValue.toInt()}x${data.burstSize.getValue().toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "EMP")
         }
 
         tooltip.addSpacer(5f)
-        tooltip.addPara("Energy/Shot: ${data.energyPerShot.getValue().toInt()}x${data.burstSize.getValue().toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Energy/Shot")
+        tooltip.addPara("Energy/Shot: ${data.energyPerShot.modifiedValue.toInt()}x${data.burstSize.getValue().toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Energy/Shot")
         tooltip.addSpacer(5f)
 
         if (data.maxAmmo.getValue() != Int.MAX_VALUE)
         {
             tooltip.addPara("Ammo: ${data.maxAmmo.getValue().toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Ammo")
-            tooltip.addPara("Ammo/Second: ${data.ammoPerSecond.getValue().toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Ammo/Second")
+            tooltip.addPara("Ammo/Second: ${data.ammoPerSecond.modifiedValue.toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Ammo/Second")
         }
 
         tooltip.addSpacer(5f)

@@ -25,8 +25,8 @@ class StatHighValueMunition : ModularWeaponEffect() {
         tooltip.addPara("- Doubles Ammo Capacity.", 0f)
         tooltip.addPara("- Increases Damage by a value of 25.", 0f)
         tooltip.addPara("- Increases EMP Damage by a value of 10.", 0f)
-        tooltip.addPara("- Increases Damage by 50%.", 0f)
-        tooltip.addPara("- Increases Projectile Size by 50%.", 0f)
+        tooltip.addPara("- Increases Damage by 25%.", 0f)
+        tooltip.addPara("- Increases Projectile Size by 25%.", 0f)
         tooltip.addPara("- Increases Projectile Range by 100.", 0f)
 
     }
@@ -44,20 +44,20 @@ class StatHighValueMunition : ModularWeaponEffect() {
 
         stats.maxAmmo.changeBase(0)
 
-        stats.ammoPerSecond.addMult(getName(), 0f)
-        stats.maxAmmo.addFlat(getName(), 30)
-        stats.maxAmmo.addMult(getName(), 2f)
+        stats.ammoPerSecond.modifyMult(getName(), 0f)
+        stats.maxAmmo.modifyFlat(getName(), 30)
+        stats.maxAmmo.modifyMult(getName(), 2f)
 
-        stats.damagePerShot.addFlat(getName(), 25f)
-        stats.damagePerShot.addMult(getName(), 1.5f)
+        stats.damagePerShot.modifyFlat(getName(), 25f)
+        stats.damagePerShot.modifyMult(getName(), 1.25f)
 
-        stats.empDamage.addFlat(getName(), 10f)
-        stats.empDamage.addMult(getName(), 1.5f)
+        stats.empDamage.modifyFlat(getName(), 10f)
+        stats.empDamage.modifyMult(getName(), 1.25f)
 
-        stats.projectileWidth.addMult(getName(), 1.5f)
-        stats.projectileLength.addMult(getName(), 1.5f)
+        stats.projectileWidth.modifyMult(getName(), 1.25f)
+        stats.projectileLength.modifyMult(getName(), 1.25f)
 
-        stats.range.addFlat(getName(), 100f)
+        stats.range.modifyFlat(getName(), 100f)
 
     }
 }

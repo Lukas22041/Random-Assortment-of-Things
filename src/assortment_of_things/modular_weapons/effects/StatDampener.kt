@@ -18,7 +18,7 @@ class StatDampener : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Causes the weapon to fire with almost perfect accuracy. Negates other negative projectile spread effects.", 0f)
+        tooltip.addPara("Reduces the Weapons Spread by 50%.", 0f)
     }
 
     override fun getResourceCost(): MutableMap<String, Float> {
@@ -32,8 +32,8 @@ class StatDampener : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.minSpread.addMult(getName(), 0.1f)
-        stats.maxSpread.addMult(getName(), 0.1f)
+        stats.minSpread.modifyMult(getName(), 0.5f)
+        stats.maxSpread.modifyMult(getName(), 0.5f)
 
     }
 

@@ -30,12 +30,12 @@ class ModularStatInt(private var base: Int) {
         return ((base + flat) * mult).toInt()
     }
 
-    fun addMult(id: String, value: Float)
+    fun modifyMult(id: String, value: Float)
     {
         mults.set(id, value)
     }
 
-    fun addFlat(id: String, value: Int)
+    fun modifyFlat(id: String, value: Int)
     {
         flats.set(id, value)
     }
