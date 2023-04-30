@@ -24,8 +24,8 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
     lateinit var modifierElement: TooltipMakerAPI
 
     var effects = listOf(OnHitExplosiveCharge(), VisualTrail(), PassiveGuidance(), OnHitOvercharged(), StatBurst(), StatDampener(),
-    StatQuickloader(), StatAmplifier(), StatHeavyMunition(), StatLauncher(), StatDoubleBarrel(), StatAutoloader(), PassiveOvervolt(),
-    StatImprovedCoils())
+    StatAmplifier(), StatHeavyMunition(), StatLauncher(), StatDoubleBarrel(), StatAutoloader(), PassiveOvervolt(),
+    StatImprovedCoils(), StatEfficientGyro(), PassiveClover(), StatHighValueMunition())
 
     fun init(panel: CustomPanelAPI)
     {
@@ -38,8 +38,6 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         panel.addUIElement(modifierElement)
 
         modifierElement.addSpacer(15f)
-
-
 
         if (data.finalized)
         {
@@ -247,115 +245,117 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
     {
 
         var first = true
-        for (effect in effects.sortedBy { it.getType() })
-        {
-
-            var lunaEle = element.addLunaElement(w, h * 0.2f)
-
-            lunaEle.onHoverEnter {
-                lunaEle.playScrollSound()
-                lunaEle.borderColor = Misc.getDarkPlayerColor().brighter()
-            }
-            lunaEle.onHoverExit {
-                lunaEle.borderColor = Misc.getDarkPlayerColor()
-            }
-
-            lunaEle.parentElement.addTooltipToPrevious(object : TooltipCreator {
-                override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
-                    return false
-                }
-
-                override fun getTooltipWidth(tooltipParam: Any?): Float {
-                    return w / 2
-                }
-
-
-                override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
-
-                    tooltip!!.addSectionHeading("General", Alignment.MID, 0f)
-                    tooltip.addSpacer(5f)
-                    tooltip.addPara("Effect Name: ${effect.getName()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Effect Name")
-                    tooltip.addPara("Effect Type: ${effect.getType().displayName}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Effect Type")
-                    tooltip.addPara("Budget Cost: ${effect.getCost()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Budget Cost")
-                    tooltip.addSpacer(5f)
-
-                    tooltip.addSectionHeading("Effect", Alignment.MID, 0f)
-                    tooltip.addSpacer(5f)
-                    effect.getTooltip(tooltip)
-                    tooltip.addSpacer(5f)
-
-                }
-            }, TooltipMakerAPI.TooltipLocation.RIGHT)
-
-            if (first)
+        ModularEffectType.values().forEach { currentType ->
+            for (effect in effects.filter { it.getType() == currentType }.sortedByDescending { it.getCost() })
             {
-                first = false
-                lunaEle.position.inTL(0f, 0f)
-            }
 
+                var lunaEle = element.addLunaElement(w, h * 0.15f)
 
+                lunaEle.onHoverEnter {
+                    lunaEle.playScrollSound()
+                    lunaEle.borderColor = Misc.getDarkPlayerColor().brighter()
+                }
+                lunaEle.onHoverExit {
+                    lunaEle.borderColor = Misc.getDarkPlayerColor()
+                }
 
-           // lunaEle.centerText()
-           /* var para = lunaEle.innerElement.addPara("(${effect.getType().displayName}) ${effect.getName()} (${effect.getCost()}B)", 0f)
-            para.setHighlight("(${effect.getType().displayName})", "${effect.getName()}")
-            para.setHighlightColors(effect.getType().color, Misc.getHighlightColor())
-            para!!.position.inTL(20f, lunaEle.position.height / 2 - para.computeTextHeight("") / 2)*/
-
-            var effectPara = lunaEle.innerElement.addPara("${effect.getType().displayName}", 0f, effect.getType().color, effect.getType().color)
-            effectPara!!.position.inTL(20f, lunaEle.position.height / 2 - effectPara.computeTextHeight("") / 2)
-
-            var namePara = lunaEle.innerElement.addPara("${effect.getName()}", 0f,  Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
-            namePara!!.position.inTL(w / 2 - namePara.computeTextWidth("${effect.getName()}") / 2, lunaEle.position.height / 2 - namePara.computeTextHeight("") / 2)
-
-            var budgetpara = lunaEle.innerElement.addPara("Cost: ${effect.getCost()}", 0f, Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
-            budgetpara!!.position.inTL(w - budgetpara.computeTextWidth("Cost: ${effect.getCost()}") - 20, lunaEle.position.height / 2 - budgetpara.computeTextHeight("") / 2)
-
-
-            lunaEle.selectionGroup = "own_${effect.getName()}"
-            lunaEle.enableTransparency = true
-            lunaEle.backgroundAlpha = 0.1f
-
-            if (data.effects.any {it.getName() == effect.getName()})
-            {
-                lunaEle.select()
-                data.budgetAdditions.set(effect.getName(), effect.getCost().toFloat())
-            }
-
-
-            lunaEle.onClick {
-                lunaEle.playClickSound()
-
-                if (lunaEle.isSelected())
-                {
-                    lunaEle.unselect()
-                    var eff = data.effects.find { it.getName() == effect.getName() }
-                    if (eff != null)
-                    {
-                        data.effects.remove(eff)
-                        data.budgetAdditions.set(effect.getName(), 0f)
+                lunaEle.parentElement.addTooltipToPrevious(object : TooltipCreator {
+                    override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
+                        return false
                     }
+
+                    override fun getTooltipWidth(tooltipParam: Any?): Float {
+                        return w / 2
+                    }
+
+
+                    override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
+
+                        tooltip!!.addSectionHeading("General", Alignment.MID, 0f)
+                        tooltip.addSpacer(5f)
+                        tooltip.addPara("Effect Name: ${effect.getName()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Effect Name")
+                        tooltip.addPara("Effect Type: ${effect.getType().displayName}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Effect Type")
+                        tooltip.addPara("Budget Cost: ${effect.getCost()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Budget Cost")
+                        tooltip.addSpacer(5f)
+
+                        tooltip.addSectionHeading("Effect", Alignment.MID, 0f)
+                        tooltip.addSpacer(5f)
+                        effect.getTooltip(tooltip)
+                        tooltip.addSpacer(5f)
+
+                    }
+                }, TooltipMakerAPI.TooltipLocation.RIGHT)
+
+                if (first)
+                {
+                    first = false
+                    lunaEle.position.inTL(0f, 0f)
                 }
-                else
+
+
+
+                // lunaEle.centerText()
+                /* var para = lunaEle.innerElement.addPara("(${effect.getType().displayName}) ${effect.getName()} (${effect.getCost()}B)", 0f)
+                 para.setHighlight("(${effect.getType().displayName})", "${effect.getName()}")
+                 para.setHighlightColors(effect.getType().color, Misc.getHighlightColor())
+                 para!!.position.inTL(20f, lunaEle.position.height / 2 - para.computeTextHeight("") / 2)*/
+
+                var effectPara = lunaEle.innerElement.addPara("${effect.getType().displayName}", 0f, effect.getType().color, effect.getType().color)
+                effectPara!!.position.inTL(20f, lunaEle.position.height / 2 - effectPara.computeTextHeight("") / 2)
+
+                var namePara = lunaEle.innerElement.addPara("${effect.getName()}", 0f,  Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
+                namePara!!.position.inTL(w / 2 - namePara.computeTextWidth("${effect.getName()}") / 2, lunaEle.position.height / 2 - namePara.computeTextHeight("") / 2)
+
+                var budgetpara = lunaEle.innerElement.addPara("Cost: ${effect.getCost()}", 0f, Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
+                budgetpara!!.position.inTL(w - budgetpara.computeTextWidth("Cost: ${effect.getCost()}") - 20, lunaEle.position.height / 2 - budgetpara.computeTextHeight("") / 2)
+
+
+                lunaEle.selectionGroup = "own_${effect.getName()}"
+                lunaEle.enableTransparency = true
+                lunaEle.backgroundAlpha = 0.1f
+
+                if (data.effects.any {it.getName() == effect.getName()})
                 {
                     lunaEle.select()
-
-                    var eff = data.effects.find { it.getName() == effect.getName() }
-                    if (eff == null)
-                    {
-                        data.effects.add(effect)
-                    }
                     data.budgetAdditions.set(effect.getName(), effect.getCost().toFloat())
                 }
-            }
 
-            lunaEle.advance {
-                if (lunaEle.isSelected())
-                {
-                    lunaEle.backgroundAlpha = 1f
+
+                lunaEle.onClick {
+                    lunaEle.playClickSound()
+
+                    if (lunaEle.isSelected())
+                    {
+                        lunaEle.unselect()
+                        var eff = data.effects.find { it.getName() == effect.getName() }
+                        if (eff != null)
+                        {
+                            data.effects.remove(eff)
+                            data.budgetAdditions.set(effect.getName(), 0f)
+                        }
+                    }
+                    else
+                    {
+                        lunaEle.select()
+
+                        var eff = data.effects.find { it.getName() == effect.getName() }
+                        if (eff == null)
+                        {
+                            data.effects.add(effect)
+                        }
+                        data.budgetAdditions.set(effect.getName(), effect.getCost().toFloat())
+                    }
                 }
-                else
-                {
-                    lunaEle.backgroundAlpha = 0.1f
+
+                lunaEle.advance {
+                    if (lunaEle.isSelected())
+                    {
+                        lunaEle.backgroundAlpha = 1f
+                    }
+                    else
+                    {
+                        lunaEle.backgroundAlpha = 0.1f
+                    }
                 }
             }
         }

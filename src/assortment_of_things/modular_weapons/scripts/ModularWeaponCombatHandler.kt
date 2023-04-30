@@ -33,6 +33,8 @@ class ModularWeaponCombatHandler {
         overvolt(amount)
     }
 
+
+
     fun filterOutExpired()
     {
         var overvolt = engine!!.customData.get("rat_modular_overvolt_projectiles") as MutableList<DamagingProjectileAPI>?
@@ -56,13 +58,18 @@ class ModularWeaponCombatHandler {
             engine!!.customData.set("rat_modular_trail_projectiles", trails)
         }
 
+
+
     }
+
+
 
     fun overvolt(amount: Float)
     {
         var projectiles = engine!!.customData.get("rat_modular_overvolt_projectiles") as MutableList<DamagingProjectileAPI>? ?: return
         for (projectile in projectiles)
         {
+
             var interval = projectile.customData.get("rat_modular_overvolt_interval") as IntervalUtil ?: continue
 
             var target = CombatUtils.getShipsWithinRange(projectile.location, 400f).filter { it.owner != projectile.source.owner && it.isAlive && !it.isHulk }.randomOrNull() ?: continue
@@ -70,8 +77,8 @@ class ModularWeaponCombatHandler {
             interval.advance(amount)
             if (interval.intervalElapsed())
             {
-                val emp = projectile!!.empAmount * 0.5f
-                val dam = projectile.damageAmount * 0.5f
+                val emp = projectile!!.empAmount * 0.1f
+                val dam = projectile.damageAmount * 0.1f
                 var color = projectile!!.projectileSpec.fringeColor.darker().darker()
 
                 engine!!.spawnEmpArc(projectile!!.source, projectile.location, target, target, DamageType.ENERGY, dam, emp,  // emp
@@ -91,7 +98,7 @@ class ModularWeaponCombatHandler {
         for (projectile in homingProjectiles)
         {
             var range = projectile.projectileSpec.maxRange
-            var speed = 100f
+            var speed = projectile.moveSpeed / 10
             var proj = projectile
             var targets: MutableList<ShipAPI> = ArrayList()
             var iter = CombatUtils.getShipsWithinRange(proj.location, range).filter { it.owner != proj.source.owner && it.isAlive && !it.isHulk }
@@ -157,7 +164,6 @@ class ModularWeaponCombatHandler {
         }
 
     }
-
 
 
 

@@ -4,6 +4,7 @@ import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.EveryFrameWeaponEffectPlugin
 import com.fs.starfarer.api.combat.WeaponAPI
+import java.awt.Color
 
 class ModularEveryFrameWeaponEffect : EveryFrameWeaponEffectPlugin {
 
@@ -16,5 +17,6 @@ class ModularEveryFrameWeaponEffect : EveryFrameWeaponEffectPlugin {
         {
             effect.advance(amount, engine, weapon)
         }
+
     }
 }

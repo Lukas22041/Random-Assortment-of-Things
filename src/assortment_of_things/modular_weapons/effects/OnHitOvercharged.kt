@@ -1,5 +1,6 @@
 package assortment_of_things.modular_weapons.effects
 
+import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.CombatEntityAPI
 import com.fs.starfarer.api.combat.DamageType
@@ -40,7 +41,8 @@ class OnHitOvercharged : ModularWeaponEffect() {
     override fun onHit(projectile: DamagingProjectileAPI?, target: CombatEntityAPI?, point: Vector2f?, shieldHit: Boolean, damageResult: ApplyDamageResultAPI?, engine: CombatEngineAPI?) {
         super.onHit(projectile, target, point, shieldHit, damageResult, engine)
 
-        if (Random.nextFloat() > 0.75f)
+
+        if (ModularWeaponLoader.getData(projectile!!.weapon.id).rngCheck(0.25f, 0))
         {
             val emp = projectile!!.empAmount
             val dam = projectile.damageAmount

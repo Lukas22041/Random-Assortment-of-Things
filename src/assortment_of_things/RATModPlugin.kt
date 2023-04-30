@@ -54,6 +54,8 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
+        RATSettings.loadSettings()
+
         Global.getSector().listenerManager.addListener(RATSettings, true)
         Global.getSector().registerPlugin(RATCampaignPlugin())
         Global.getSector().addTransientScript(ParallelConstruction())

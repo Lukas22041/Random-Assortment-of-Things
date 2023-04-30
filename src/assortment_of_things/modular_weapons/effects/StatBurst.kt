@@ -10,7 +10,7 @@ class StatBurst : ModularWeaponEffect() {
     }
 
     override fun getCost(): Int {
-        return 20
+        return 30
     }
 
     override fun getIcon(): String {
@@ -18,7 +18,12 @@ class StatBurst : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Causes the weapon to shoot multiple 4 at once, but it now has to recharge ammo. Also drasticly worsens the weapons accuracy. ", 0f)
+        tooltip.addPara("The weapon can shoot 3 more shots at once, at the cost of now requiring its shots to recharge over time. Additionaly, the Weapon looses 20% of its damage, the projectiles get slightly smaller" +
+                " and the weapons accuracy becomes much worse. ", 0f)
+        tooltip.addSpacer(5f)
+
+        tooltip.addPara("- Adds 30 charges to the ammo capacity.", 0f)
+
     }
 
     override fun getResourceCost(): MutableMap<String, Float> {
@@ -36,8 +41,11 @@ class StatBurst : ModularWeaponEffect() {
         stats.burstDelay.addMult(getName(), 0.2f)
        // stats.chargeDown.addMult(getName(), 1.5f)
 
-        //stats.damagePerShot.addMult(getName(), 0.50f)
-        //stats.empDamage.addMult(getName(), 0.50f)
+        stats.damagePerShot.addMult(getName(), 0.80f)
+        stats.empDamage.addMult(getName(), 0.80f)
+
+        stats.projectileWidth.addMult(getName(), 0.8f)
+        stats.projectileLength.addMult(getName(), 0.8f)
 
         stats.maxAmmo.changeBase(0)
         stats.ammoPerSecond.addFlat(getName(),1f)
@@ -46,7 +54,6 @@ class StatBurst : ModularWeaponEffect() {
         stats.minSpread.addFlat(getName(), 10f)
         stats.maxSpread.addFlat(getName(), 15f)
 
-        stats.range
     }
 
 }

@@ -10,7 +10,7 @@ class StatHeavyMunition : ModularWeaponEffect() {
     }
 
     override fun getCost(): Int {
-        return 20
+        return 30
     }
 
     override fun getIcon(): String {
@@ -18,7 +18,7 @@ class StatHeavyMunition : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Increases the weapons damage and emp damage by 25%. Also doubles the projectiles width and length.", 0f)
+        tooltip.addPara("Increases the weapons damage and emp damage by 50%. Also doubles the projectiles width and length. In turn it decreases the weapons flux efficiency and firerate by 20%", 0f)
     }
 
     override fun getResourceCost(): MutableMap<String, Float> {
@@ -32,10 +32,16 @@ class StatHeavyMunition : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.damagePerShot.addMult(getName(), 1.2f)
-        stats.empDamage.addMult(getName(), 1.2f)
+        stats.damagePerShot.addMult(getName(), 1.5f)
+        stats.empDamage.addMult(getName(), 1.5f)
 
         stats.projectileWidth.addMult(getName(), 2f)
         stats.projectileLength.addMult(getName(), 2f)
+
+        stats.energyPerShot.addMult(getName(), 1.2f)
+
+        stats.burstDelay.addMult(getName(), 1.20f)
+        stats.chargeDown.addMult(getName(), 1.20f)
+        stats.chargeUp.addMult(getName(), 1.20f)
     }
 }

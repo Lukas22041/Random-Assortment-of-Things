@@ -1,5 +1,6 @@
 package assortment_of_things.modular_weapons.effects
 
+import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
@@ -37,12 +38,12 @@ class OnHitExplosiveCharge : ModularWeaponEffect() {
     override fun onHit(projectile: DamagingProjectileAPI?, target: CombatEntityAPI?, point: Vector2f?, shieldHit: Boolean, damageResult: ApplyDamageResultAPI?, engine: CombatEngineAPI?) {
         super.onHit(projectile, target, point, shieldHit, damageResult, engine)
 
-        if (Random.nextFloat() > 0.75f)
+        if (ModularWeaponLoader.getData(projectile!!.weapon.id).rngCheck(0.25f, 0))
         {
 
             var color = projectile!!.projectileSpec.fringeColor.darker().darker().darker().darker()
-            var spec = DamagingExplosionSpec(3f, 30f, 50f, projectile!!.damage.damage, 0f,
-                CollisionClass.HITS_SHIPS_AND_ASTEROIDS, CollisionClass.HITS_SHIPS_AND_ASTEROIDS, 1f, 10f, 1f, 20,
+            var spec = DamagingExplosionSpec(2f, projectile.projectileSpec.width * 2, projectile.projectileSpec.width * 2.5f, projectile!!.damage.damage, 0f,
+                CollisionClass.HITS_SHIPS_AND_ASTEROIDS, CollisionClass.HITS_SHIPS_AND_ASTEROIDS, 1f, 10f, 3f, 20,
                 color, color)
             engine!!.spawnDamagingExplosion(spec, projectile.weapon!!.ship, projectile.location, true)
         }

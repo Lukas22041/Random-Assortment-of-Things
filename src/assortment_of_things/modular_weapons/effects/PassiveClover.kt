@@ -4,13 +4,13 @@ import assortment_of_things.modular_weapons.data.SectorWeaponData
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 
 
-class StatDampener : ModularWeaponEffect() {
+class PassiveClover : ModularWeaponEffect() {
     override fun getName(): String {
-        return "Dampener"
+        return "Clover"
     }
 
     override fun getCost(): Int {
-        return 10
+        return 20
     }
 
     override fun getIcon(): String {
@@ -18,7 +18,7 @@ class StatDampener : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Causes the weapon to fire with almost perfect accuracy. Negates other negative projectile spread effects.", 0f)
+        tooltip.addPara("Everytime a weapon effect related RNG check fails (i.e, rng chance for an EMP to spawn), it will re-attempt the check once more, basicly improving \"luck\".", 0f)
     }
 
     override fun getResourceCost(): MutableMap<String, Float> {
@@ -26,15 +26,13 @@ class StatDampener : ModularWeaponEffect() {
     }
 
     override fun getType(): ModularEffectType {
-        return ModularEffectType.Stat
+        return ModularEffectType.Passive
     }
 
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.minSpread.addMult(getName(), 0.1f)
-        stats.maxSpread.addMult(getName(), 0.1f)
-
+        stats.rngAttempts = 1
     }
 
 }

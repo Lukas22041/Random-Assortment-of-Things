@@ -16,17 +16,26 @@ class RATModifieableProjectileSpec(var spec: ProjectileSpecAPI)  {
         ReflectionUtils.invoke("setWidth", spec, width)
     }
 
+
+    fun getDamage() : Any?
+    {
+        return ReflectionUtils.invoke("getDamage", spec)
+    }
+
     fun setDamage(damage: Float)
     {
-        var damageClass = ReflectionUtils.invoke("getDamage", spec)
+        var damageClass = getDamage()
         ReflectionUtils.invoke("setDamage", damageClass!!, damage)
     }
 
     fun setEmpDamage(damage: Float)
     {
-        var damageClass = ReflectionUtils.invoke("getDamage", spec)
+        var damageClass = getDamage()
         ReflectionUtils.invoke("setFluxComponent", damageClass!!, damage)
     }
+
+
+
 
     fun setFringeColor(color: Color) {
         ReflectionUtils.invoke("setFringeColor", spec, color)
@@ -39,6 +48,7 @@ class RATModifieableProjectileSpec(var spec: ProjectileSpecAPI)  {
     fun setMoveSpeed(speed: Float) {
         ReflectionUtils.invoke("setMoveSpeed", spec, speed)
     }
+
 
 
 }

@@ -4,13 +4,13 @@ import assortment_of_things.modular_weapons.data.SectorWeaponData
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 
 
-class StatQuickloader : ModularWeaponEffect() {
+class StatEfficientGyro : ModularWeaponEffect() {
     override fun getName(): String {
-        return "Quickloader"
+        return "Efficient Gyros"
     }
 
     override fun getCost(): Int {
-        return 20
+        return 10
     }
 
     override fun getIcon(): String {
@@ -18,7 +18,7 @@ class StatQuickloader : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Increases the Weapons Firerate by 25%.", 0f)
+        tooltip.addPara("Doubles the weapons base turn rate.", 0f)
     }
 
     override fun getResourceCost(): MutableMap<String, Float> {
@@ -32,9 +32,7 @@ class StatQuickloader : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.burstDelay.addMult(getName(), 0.75f)
-        stats.chargeDown.addMult(getName(), 0.75f)
-        stats.chargeUp.addMult(getName(), 0.75f)
+        stats.turnrate.addMult(getName(), 2f)
     }
 
 }

@@ -10,7 +10,7 @@ class StatAutoloader : ModularWeaponEffect() {
     }
 
     override fun getCost(): Int {
-        return 10
+        return 20
     }
 
     override fun getIcon(): String {
@@ -18,7 +18,7 @@ class StatAutoloader : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("If the weapon uses ammo, Increases the amount of maximum ammo by 20 and increases the ammo recharge rate by 2.", 0f)
+        tooltip.addPara("Increases the weapons firerate by 25%. If the weapon uses ammo, increases the maximum ammo count by 20 and increases the ammo recharge rate by 1.", 0f)
     }
 
     override fun getResourceCost(): MutableMap<String, Float> {
@@ -32,7 +32,12 @@ class StatAutoloader : ModularWeaponEffect() {
     override fun addStats(stats: SectorWeaponData) {
         super.addStats(stats)
 
-        stats.ammoPerSecond.addFlat(getName(), 2f)
+        stats.ammoPerSecond.addFlat(getName(), 1f)
         stats.maxAmmo.addFlat(getName(), 20)
+        stats.reloadSize.addFlat(getName(), 1f)
+
+        stats.burstDelay.addMult(getName(), 0.75f)
+        stats.chargeDown.addMult(getName(), 0.75f)
+        stats.chargeUp.addMult(getName(), 0.75f)
     }
 }

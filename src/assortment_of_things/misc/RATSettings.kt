@@ -72,6 +72,8 @@ object RATSettings : LunaSettingsListener
         hullmodLootFrequency = LunaSettings.getFloat(modID, "rat_hullmodBPLootFrequency")
         shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")
 
+        enableModular = LunaSettings.getBoolean(modID, "rat_modularEnabled")
+
         LootModifier.modifySpawns()
     }
 }

@@ -46,6 +46,12 @@ class RATModifieableProjectileWeaponSpec(var spec: WeaponSpecAPI)  {
         ReflectionUtils.invoke("setSize", spec, size)
     }
 
+
+    fun fluxPerDamage(amount: Float) {
+        var derived = ReflectionUtils.invoke("getDerivedStats", spec)
+        ReflectionUtils.set("fluxPerDam", derived!!, amount)
+    }
+
     //Fire Rate Stuff
 
     fun setChargeUp(chargeup: Float) {
@@ -81,6 +87,10 @@ class RATModifieableProjectileWeaponSpec(var spec: WeaponSpecAPI)  {
         ReflectionUtils.invoke("setAmmoPerSecond", spec, amount)
     }
 
+    fun setReloadSize(amount: Float) {
+        ReflectionUtils.invoke("setReloadSize", spec, amount)
+    }
+
 
 
 
@@ -111,4 +121,7 @@ class RATModifieableProjectileWeaponSpec(var spec: WeaponSpecAPI)  {
         ReflectionUtils.invoke("setMaxRange", projSpec!!, range)
     }
 
+    fun setTurnRate(amount: Float) {
+        ReflectionUtils.invoke("setTurnRate", spec, amount)
+    }
 }

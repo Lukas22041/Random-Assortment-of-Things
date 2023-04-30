@@ -16,6 +16,7 @@ enum class ModularEffectType(var displayName: String, var color: Color) {
     Passive("Passive", Color(0, 200, 150)),
     Stat("Stat", Color(255, 200, 0)),
     Multiple("Multiple", Color(0, 150, 255)),
+    Negative("Negative", Color(255, 0, 0)),
     Visual("Visual", Color(200, 0, 255))
 }
 
