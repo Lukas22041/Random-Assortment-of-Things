@@ -2,9 +2,7 @@ package assortment_of_things.modular_weapons.scripts
 
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.DamageType
-import com.fs.starfarer.api.combat.DamagingProjectileAPI
-import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
@@ -19,7 +17,7 @@ import java.awt.Color
 class ModularWeaponCombatHandler {
 
     var engine = Global.getCombatEngine()
-    var trailsInterval = IntervalUtil(0.025f, 0.025f)
+    var trailsInterval = IntervalUtil(0.0125f, 0.0125f)
 
     fun advance(amount: Float)
     {
@@ -31,6 +29,7 @@ class ModularWeaponCombatHandler {
         doHoming(amount)
         addTrails(amount)
         overvolt(amount)
+
     }
 
 
@@ -40,21 +39,21 @@ class ModularWeaponCombatHandler {
         var overvolt = engine!!.customData.get("rat_modular_overvolt_projectiles") as MutableList<DamagingProjectileAPI>?
         if (overvolt != null)
         {
-            overvolt = overvolt.filter { !it.isExpired }.toMutableList()
+            overvolt = overvolt.filter { !it.isExpired || !it.isFading }.toMutableList()
             engine!!.customData.set("rat_modular_overvolt_projectiles", overvolt)
         }
 
         var homing = engine!!.customData.get("rat_modular_homing_projectiles") as MutableList<DamagingProjectileAPI>?
         if (homing != null)
         {
-            homing = homing.filter { !it.isExpired }.toMutableList()
+            homing = homing.filter { !it.isExpired || !it.isFading }.toMutableList()
             engine!!.customData.set("rat_modular_homing_projectiles", homing)
         }
 
         var trails = engine!!.customData.get("rat_modular_trail_projectiles") as MutableList<DamagingProjectileAPI>?
         if (trails != null)
         {
-            trails = trails.filter { !it.isExpired }.toMutableList()
+            trails = trails.filter { !it.isExpired || !it.isFading }.toMutableList()
             engine!!.customData.set("rat_modular_trail_projectiles", trails)
         }
 
@@ -72,11 +71,17 @@ class ModularWeaponCombatHandler {
 
             var interval = projectile.customData.get("rat_modular_overvolt_interval") as IntervalUtil ?: continue
 
-            var target = CombatUtils.getShipsWithinRange(projectile.location, 400f).filter { it.owner != projectile.source.owner && it.isAlive && !it.isHulk }.randomOrNull() ?: continue
-
             interval.advance(amount)
             if (interval.intervalElapsed())
             {
+
+                var targets: MutableList<CombatEntityAPI> = ArrayList()
+
+                targets.addAll(CombatUtils.getShipsWithinRange(projectile.location, 400f).filter { it.owner != projectile.source.owner && it.isAlive && !it.isHulk })
+               // targets.addAll(CombatUtils.getProjectilesWithinRange(projectile.location, 400f).filter { it.collisionClass == CollisionClass.MISSILE_FF || it.collisionClass == CollisionClass.MISSILE_NO_FF })
+
+                var target = targets.randomOrNull() ?: continue
+
                 val emp = projectile!!.empAmount * 0.1f
                 val dam = projectile.damageAmount * 0.1f
                 var color = projectile!!.projectileSpec.fringeColor.darker().darker()
@@ -97,8 +102,8 @@ class ModularWeaponCombatHandler {
 
         for (projectile in homingProjectiles)
         {
-            var range = projectile.projectileSpec.maxRange
-            var speed = projectile.moveSpeed / 10
+            var range = projectile.projectileSpec.maxRange * 0.75f
+            var speed = projectile.moveSpeed / 8
             var proj = projectile
             var targets: MutableList<ShipAPI> = ArrayList()
             var iter = CombatUtils.getShipsWithinRange(proj.location, range).filter { it.owner != proj.source.owner && it.isAlive && !it.isHulk }
@@ -109,6 +114,7 @@ class ModularWeaponCombatHandler {
                 var sizes = listOf(HullSize.FRIGATE, HullSize.DESTROYER, HullSize.CRUISER, HullSize.CAPITAL_SHIP)
                 if (target.owner == 1 && sizes.contains(target.hullSize)) targets.add(target)
             }
+
             var target: ShipAPI? = null
             var distance = 100000f
             for (tar in targets)
@@ -157,14 +163,12 @@ class ModularWeaponCombatHandler {
                     if (projectile.isFading) continue
 
                     MagicTrailPlugin.AddTrailMemberSimple(projectile, id, Global.getSettings().getSprite("fx", "base_trail_rough"),
-                        Vector2f(projectile.location.x, projectile.location.y) , 0f, projectile.facing, projectile.projectileSpec.width / 2, 2f, projectile.projectileSpec.fringeColor, 0.5f, 0.1f, 0.0f, 1f, false )
+                        Vector2f(projectile.location.x, projectile.location.y) , projectile.moveSpeed / 10, projectile.facing + MathUtils.getRandomNumberInRange(-1f, 1f), projectile.projectileSpec.width / 2, 2f, projectile.projectileSpec.fringeColor, 0.5f, 0.1f, 0.0f, 1f, false )
 
                 }
             }
         }
 
     }
-
-
 
 }

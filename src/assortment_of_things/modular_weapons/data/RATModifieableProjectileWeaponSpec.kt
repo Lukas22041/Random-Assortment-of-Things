@@ -4,8 +4,10 @@ import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.WeaponAPI.WeaponSize
 import com.fs.starfarer.api.combat.WeaponAPI.WeaponType
+import com.fs.starfarer.api.loading.MuzzleFlashSpec
 import com.fs.starfarer.api.loading.ProjectileSpecAPI
 import com.fs.starfarer.api.loading.WeaponSpecAPI
+import java.awt.Color
 
 class RATModifieableProjectileWeaponSpec(var spec: WeaponSpecAPI)  {
 
@@ -26,6 +28,14 @@ class RATModifieableProjectileWeaponSpec(var spec: WeaponSpecAPI)  {
 
     fun setOrdnancePointCost(cost: Float) {
         ReflectionUtils.invoke("setOrdnancePointCost", spec, cost)
+    }
+
+    fun setGlowColor(color: Color) {
+        ReflectionUtils.invoke("setGlowColor", spec, color)
+    }
+
+    fun getMuzzleFlashSpec() : MuzzleFlashSpec {
+        return ReflectionUtils.invoke("getMuzzleFlashSpec", spec) as MuzzleFlashSpec
     }
 
     //Type

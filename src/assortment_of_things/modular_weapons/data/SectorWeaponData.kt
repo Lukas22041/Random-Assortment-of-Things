@@ -37,6 +37,12 @@ data class SectorWeaponData(var id: String) : Cloneable {
     var mountType = WeaponType.HYBRID
     var damageType = DamageType.ENERGY
 
+    var isPD = false
+
+    var muzzleDuration = 0.5f
+    var muzzleColor = Color(100,200,255,255)
+    var muzzleParticles = 7
+
     var rngAttempts = 0
     fun rngCheck(chance: Float, attemptsDone: Int) : Boolean
     {

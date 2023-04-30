@@ -48,7 +48,7 @@ class QualityOverQuantitySkill : RATBaseShipSkill() {
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
         if (stats == null) return
-        if (hullSize == HullSize.FRIGATE || hullSize == HullSize.DEFAULT) return
+        if (hullSize == HullSize.FIGHTER || hullSize == HullSize.DEFAULT) return
 
         stats.getSuppliesToRecover().modifyFlat(modId, dp.get(hullSize)!!);
         stats.getDynamic().getMod(deploymentModID).modifyFlat(modId, dp.get(hullSize)!!);

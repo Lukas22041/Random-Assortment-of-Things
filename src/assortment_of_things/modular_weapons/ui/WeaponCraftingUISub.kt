@@ -25,7 +25,8 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
     var effects = listOf(OnHitExplosiveCharge(), VisualTrail(), PassiveGuidance(), OnHitOvercharged(), StatBurst(), StatDampener(),
     StatAmplifier(), StatHeavyMunition(), StatLauncher(), StatDoubleBarrel(), StatAutoloader(), PassiveOvervolt(),
-    StatImprovedCoils(), StatEfficientGyro(), PassiveClover(), StatHighValueMunition())
+    StatImprovedCoils(), StatEfficientGyro(), PassiveClover(), StatHighValueMunition(), PassiveDefenseProtocol(), PassiveAcidicPayload(),
+    OnHitLifesteal())
 
     fun init(panel: CustomPanelAPI)
     {

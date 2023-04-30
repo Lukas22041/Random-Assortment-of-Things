@@ -6,7 +6,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 
 class PassiveClover : ModularWeaponEffect() {
     override fun getName(): String {
-        return "Clover"
+        return "57 Leaf Clover "
     }
 
     override fun getCost(): Int {

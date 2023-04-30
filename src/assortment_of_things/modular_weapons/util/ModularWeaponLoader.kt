@@ -5,8 +5,11 @@ import assortment_of_things.modular_weapons.data.RATModifieableProjectileWeaponS
 import assortment_of_things.modular_weapons.data.SectorWeaponData
 import assortment_of_things.modular_weapons.effects.ModularWeaponEffect
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.combat.WeaponAPI
 import lunalib.lunaDelegates.LunaMemory
+import org.magiclib.kotlin.setAlpha
 import java.awt.Color
+import java.lang.Exception
 
 
 object ModularWeaponLoader
@@ -88,6 +91,8 @@ object ModularWeaponLoader
         data.ammoPerSecond.clear()
         data.reloadSize.clear()
 
+        data.isPD = false
+
         data.rngAttempts = 0
 
         data.chargeUp.clear()
@@ -106,7 +111,7 @@ object ModularWeaponLoader
         }
     }
 
-    fun applyStatsToSpec(data: SectorWeaponData)
+    fun applyStatsToSpec(data: SectorWeaponData, first: Boolean = true)
     {
         try {
             var spec = Global.getSettings().getWeaponSpec(data.id)
@@ -117,10 +122,39 @@ object ModularWeaponLoader
              desc.text1 = data.description*/
 
 
+
+
+         /*   var testStat = MutableStat(10f)
+
+            testStat.modifyMult("Test", 2.5f)
+            testStat.modifyMult("Test2", 1.1f)
+            testStat.modifyFlat("Test", 20f)
+
+            var value = testStat.modifiedValue*/
+
             modableSpec.setWeaponName(data.name)
 
             modableSpec.setEnergyPerShot(data.energyPerShot.getValue())
 
+            var test = spec.tags
+
+            if (data.isPD)
+            {
+                spec.aiHints.add(WeaponAPI.AIHints.PD)
+                spec.aiHints.add(WeaponAPI.AIHints.ANTI_FTR)
+                spec.primaryRoleStr = "Point Defense"
+            }
+            else
+            {
+                if (spec.aiHints.contains(WeaponAPI.AIHints.PD))
+                {
+                    spec.aiHints.remove(WeaponAPI.AIHints.PD)
+                    spec.aiHints.remove(WeaponAPI.AIHints.ANTI_FTR)
+                    spec.primaryRoleStr = "General"
+                }
+            }
+
+            var test2 = spec.aiHints
 
             modableSpec.setSize(data.weaponSize)
             modableSpec.setMountType(data.mountType)
@@ -153,12 +187,26 @@ object ModularWeaponLoader
             modableProjectileSpec.setFringeColor(data.color)
             modableProjectileSpec.setCoreColor(Color.white)
 
+            modableSpec.setGlowColor(data.color.darker().setAlpha(200))
+            var muzzle = modableSpec.getMuzzleFlashSpec()
+
+            muzzle.particleCount = data.muzzleParticles
+            muzzle.particleDuration = data.muzzleDuration
+            muzzle.particleColor = data.color.darker().darker().setAlpha(100)
+
             //need to change this value or the display is fucked up
             modableSpec.fluxPerDamage(data.energyPerShot.getValue() / (data.damagePerShot.getValue() / data.burstSize.getValue()))
         } catch (e: Throwable)
         {
-            resetAllData()
-            applyStatToSpecsForAll()
+            if (first)
+            {
+                resetAllData()
+                applyStatToSpecsForAll()
+            }
+            else
+            {
+                throw Exception("Failure while loading weapon data for RAT modular weapons")
+            }
         }
     }
 }

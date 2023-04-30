@@ -5,20 +5,22 @@ import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.CombatEntityAPI
 import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
+import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 import kotlin.random.Random
 
 
-class OnHitOvercharged : ModularWeaponEffect() {
+class OnHitLifesteal : ModularWeaponEffect() {
     override fun getName(): String {
-        return "Overcharged"
+        return "Lifesteal"
     }
 
     override fun getCost(): Int {
-        return 20
+        return 30
     }
 
     override fun getIcon(): String {
@@ -26,7 +28,7 @@ class OnHitOvercharged : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Adds a 30% chance for the projectile to spawn an EMP Arc on hit.", 0f)
+        tooltip.addPara("On hull-hit, 1/5 of hull damage dealt is converted in to repaired hull for the firing ship. A ship can only ever recover up to 50% of its own hull per combat session through this effect.", 0f)
     }
 
     override fun getResourceCost(): MutableMap<String, Float> {
@@ -41,19 +43,26 @@ class OnHitOvercharged : ModularWeaponEffect() {
     override fun onHit(projectile: DamagingProjectileAPI?, target: CombatEntityAPI?, point: Vector2f?, shieldHit: Boolean, damageResult: ApplyDamageResultAPI?, engine: CombatEngineAPI?) {
         super.onHit(projectile, target, point, shieldHit, damageResult, engine)
 
+        if (shieldHit) return
+        if (target !is ShipAPI) return
 
-        if (ModularWeaponLoader.getData(projectile!!.weapon.id).rngCheck(0.30f, 0))
+        var ship = projectile!!.weapon.ship
+        var recovered = ship.customData.get("rat_modular_lifesteal_recovered") as Float?
+        if (recovered == null)
         {
-            val emp = projectile!!.empAmount
-            val dam = projectile.damageAmount
-            var color = projectile!!.projectileSpec.fringeColor.darker().darker()
-
-            engine!!.spawnEmpArc(projectile!!.source, point, target, target, DamageType.ENERGY, dam, emp,  // emp
-                100000f,  // max range
-                "tachyon_lance_emp_impact", 20f,  // thickness
-                color, Color(255, 255, 255, 255))
+            recovered = 0f
         }
 
+        if (recovered < ship.maxHitpoints / 2 && ship.hitpoints < ship.maxHitpoints)
+        {
+
+            var recover = MathUtils.clamp(damageResult!!.damageToHull, 0f, ship.maxHitpoints - ship.hitpoints)
+            ship.hitpoints += recover
+
+
+            recovered+= recover
+            ship.setCustomData("rat_modular_lifesteal_recovered", recovered)
+        }
     }
 
 
