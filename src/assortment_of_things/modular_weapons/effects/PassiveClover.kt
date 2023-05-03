@@ -18,15 +18,15 @@ class PassiveClover : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Everytime a weapon effect related RNG check fails (i.e, rng chance for an EMP to spawn), it will re-attempt the check once more, basicly improving \"luck\".", 0f)
+        tooltip.addPara("Everytime a modifier related RNG check fails (i.e, rng chance for an EMP to spawn), it will re-attempt the check once more, basicly improving \"luck\".", 0f)
     }
 
     override fun getResourceCost(): MutableMap<String, Float> {
         return hashMapOf()
     }
 
-    override fun getType(): ModularEffectType {
-        return ModularEffectType.Passive
+    override fun getType(): ModularEffectModifier {
+        return ModularEffectModifier.Passive
     }
 
     override fun addStats(stats: SectorWeaponData) {

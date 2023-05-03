@@ -16,6 +16,11 @@ class RATModifieableProjectileSpec(var spec: ProjectileSpecAPI)  {
         ReflectionUtils.invoke("setWidth", spec, width)
     }
 
+    fun setFadeTime(time: Float) {
+        ReflectionUtils.invoke("setFadeTime", spec, time)
+
+    }
+
 
     fun getDamage() : Any?
     {

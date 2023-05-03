@@ -1,4 +1,4 @@
-package assortment_of_things.modular_weapons.ui
+package assortment_of_things.modular_weapons.data
 
 import com.fs.starfarer.api.combat.DamageType
 import java.awt.Color

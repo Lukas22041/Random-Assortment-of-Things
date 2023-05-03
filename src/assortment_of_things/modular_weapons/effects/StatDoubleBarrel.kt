@@ -10,7 +10,7 @@ class StatDoubleBarrel : ModularWeaponEffect() {
     }
 
     override fun getCost(): Int {
-        return 10
+        return 20
     }
 
     override fun getIcon(): String {
@@ -25,8 +25,8 @@ class StatDoubleBarrel : ModularWeaponEffect() {
         return hashMapOf()
     }
 
-    override fun getType(): ModularEffectType {
-        return ModularEffectType.Stat
+    override fun getType(): ModularEffectModifier {
+        return ModularEffectModifier.Stat
     }
 
     override fun addStats(stats: SectorWeaponData) {

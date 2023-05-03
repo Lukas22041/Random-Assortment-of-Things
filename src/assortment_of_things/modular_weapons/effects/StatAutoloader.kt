@@ -25,8 +25,8 @@ class StatAutoloader : ModularWeaponEffect() {
         return hashMapOf()
     }
 
-    override fun getType(): ModularEffectType {
-        return ModularEffectType.Stat
+    override fun getType(): ModularEffectModifier {
+        return ModularEffectModifier.Stat
     }
 
     override fun addStats(stats: SectorWeaponData) {

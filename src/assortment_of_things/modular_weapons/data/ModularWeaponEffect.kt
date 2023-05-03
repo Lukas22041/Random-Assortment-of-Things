@@ -11,7 +11,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
-enum class ModularEffectType(var displayName: String, var color: Color) {
+enum class ModularEffectModifier(var displayName: String, var color: Color) {
     Onhit("On Hit", Color(200, 50, 100)),
     Passive("Passive", Color(0, 200, 150)),
     Stat("Stat", Color(255, 200, 0)),
@@ -32,7 +32,7 @@ abstract class ModularWeaponEffect {
 
     abstract fun getResourceCost(): MutableMap<String, Float>
 
-    abstract fun getType(): ModularEffectType
+    abstract fun getType(): ModularEffectModifier
 
     open fun getOrder() = 100f
 

@@ -6,7 +6,6 @@ import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import org.lwjgl.util.vector.Vector2f
-import kotlin.random.Random
 
 
 class OnHitExplosiveCharge : ModularWeaponEffect() {
@@ -30,8 +29,8 @@ class OnHitExplosiveCharge : ModularWeaponEffect() {
         return hashMapOf()
     }
 
-    override fun getType(): ModularEffectType {
-        return ModularEffectType.Onhit
+    override fun getType(): ModularEffectModifier {
+        return ModularEffectModifier.Onhit
     }
 
 

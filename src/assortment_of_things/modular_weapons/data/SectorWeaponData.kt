@@ -1,5 +1,6 @@
 package assortment_of_things.modular_weapons.data
 
+import assortment_of_things.modular_weapons.bodies.BlasterBody
 import assortment_of_things.modular_weapons.effects.ModularWeaponEffect
 import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.MutableStat
@@ -10,19 +11,21 @@ import kotlin.random.Random
 
 data class SectorWeaponData(var id: String) : Cloneable {
 
-    fun getBudget(): Float
+    fun getCapacity(): Float
     {
-        var budget = baseBudget
-        for ((key, value) in budgetAdditions)
+        var budget = baseCapacity
+        for ((key, value) in capacityAdditions)
         {
             budget += value
         }
         return budget
     }
 
-    var maxBudget = 150f
-    var baseBudget = 0f
-    var budgetAdditions: MutableMap<String, Float> = HashMap()
+    var maxCapacity = 150f
+    var baseCapacity = 0f
+    var capacityAdditions: MutableMap<String, Float> = HashMap()
+
+    var body: ModularWeaponBody = BlasterBody()
 
     var name = "Modular Weapon"
     var description = "Custom Description"
@@ -43,6 +46,33 @@ data class SectorWeaponData(var id: String) : Cloneable {
     var muzzleDuration = 0.5f
     var muzzleColor = Color(100,200,255,255)
     var muzzleParticles = 7
+
+
+
+    var range = MutableStat(700f)
+    var turnrate = MutableStat(20f)
+
+    var projectileLength = MutableStat(25f)
+    var projectileWidth = MutableStat(20f)
+    var projectileSpeed = MutableStat(800f)
+
+    var damagePerShot = MutableStat(75f)
+    var energyPerShot = MutableStat(50f)
+    var empDamage = MutableStat(0f)
+
+    var maxAmmo = ModularStatInt(Int.MAX_VALUE)
+    var ammoPerSecond = MutableStat(1f)
+    var reloadSize = MutableStat(1f)
+
+    var chargeUp = MutableStat(0f)
+    var chargeDown = MutableStat(0.4f)
+    var burstSize = ModularStatInt(1)
+    var burstDelay = MutableStat(0.1f)
+
+    var minSpread = MutableStat(1f)
+    var maxSpread = MutableStat(4f)
+    var spreadBuildup = MutableStat(1f)
+    var spreadDecay = MutableStat(4f)
 
     var rngAttempts = ModularStatInt(0)
     fun rngCheck(chance: Float, attemptsDone: Int) : Boolean
@@ -71,7 +101,7 @@ data class SectorWeaponData(var id: String) : Cloneable {
             {
                 if (attemptsDone >= -rngAttempts.getValue())
                 {
-                        return true
+                    return true
                 }
                 else
                 {
@@ -85,30 +115,4 @@ data class SectorWeaponData(var id: String) : Cloneable {
             }
         }
     }
-
-    var range = MutableStat(700f)
-    var turnrate = MutableStat(10f)
-
-    var projectileLength = MutableStat(25f)
-    var projectileWidth = MutableStat(20f)
-    var projectileSpeed = MutableStat(1000f)
-
-    var damagePerShot = MutableStat(100f)
-    var energyPerShot = MutableStat(50f)
-    var empDamage = MutableStat(0f)
-
-    var maxAmmo = ModularStatInt(Int.MAX_VALUE)
-    var ammoPerSecond = MutableStat(1f)
-    var reloadSize = MutableStat(1f)
-
-    var chargeUp = MutableStat(0f)
-    var chargeDown = MutableStat(0.4f)
-    var burstSize = ModularStatInt(1)
-    var burstDelay = MutableStat(0.1f)
-
-    var minSpread = MutableStat(1f)
-    var maxSpread = MutableStat(4f)
-    var spreadBuildup = MutableStat(1f)
-    var spreadDecay = MutableStat(4f)
-
 }

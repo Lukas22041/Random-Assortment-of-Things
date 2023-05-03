@@ -7,6 +7,7 @@ import com.fs.starfarer.api.combat.WeaponAPI.WeaponType
 import com.fs.starfarer.api.loading.MuzzleFlashSpec
 import com.fs.starfarer.api.loading.ProjectileSpecAPI
 import com.fs.starfarer.api.loading.WeaponSpecAPI
+import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 class RATModifieableProjectileWeaponSpec(var spec: WeaponSpecAPI)  {
@@ -57,13 +58,16 @@ class RATModifieableProjectileWeaponSpec(var spec: WeaponSpecAPI)  {
     }
 
 
-    fun fluxPerDamage(amount: Float) {
+    //Required to make the flux useage on the refit screen show up correctly
+    fun correctDerivedStats(data:SectorWeaponData) {
         var derived = ReflectionUtils.invoke("getDerivedStats", spec)
-        ReflectionUtils.set("fluxPerDam", derived!!, amount)
+
+        ReflectionUtils.set("fluxPerDam", derived!!, data.energyPerShot.modifiedValue / (data.damagePerShot.modifiedValue / data.burstSize.getValue()))
+        ReflectionUtils.set("sustainedDps", derived, data.damagePerShot.modifiedValue / data.chargeDown.modifiedValue)
     }
 
-    //Fire Rate Stuff
 
+    //Fire Rate Stuff
     fun setChargeUp(chargeup: Float) {
         ReflectionUtils.invoke("setChargeTime", spec, chargeup)
     }
@@ -131,7 +135,51 @@ class RATModifieableProjectileWeaponSpec(var spec: WeaponSpecAPI)  {
         ReflectionUtils.invoke("setMaxRange", projSpec!!, range)
     }
 
+    fun setProjectileSpeed(speed: Float)
+    {
+        ReflectionUtils.invoke("setProjectileSpeed", spec, speed)
+        var proj = RATModifieableProjectileSpec(spec.projectileSpec as ProjectileSpecAPI).setMoveSpeed(speed)
+    }
+
+
     fun setTurnRate(amount: Float) {
         ReflectionUtils.invoke("setTurnRate", spec, amount)
     }
+
+
+    //offsets and sprites
+    fun getHardpointFireOffsets() :  MutableList<Vector2f> {
+        return ReflectionUtils.invoke("getHardpointFireOffsets", spec) as  MutableList<Vector2f>
+    }
+
+    fun getTurretFireOffsets() :  MutableList<Vector2f> {
+        return ReflectionUtils.invoke("getTurretFireOffsets", spec) as  MutableList<Vector2f>
+    }
+
+    /* Dont really need this, just keep the original weapon at 0.
+    fun getTurretAngleOffset()
+
+    fun getHardpointAngleOffset()
+    */
+
+    fun setHardpointSpriteName(path: String) {
+       ReflectionUtils.invoke("setHardpointSpriteName", spec, path)
+    }
+
+    fun setTurretSpriteName(path: String) {
+        ReflectionUtils.invoke("setTurretSpriteName", spec, path)
+    }
+
+    fun setTurretGlowSpriteName(path: String) {
+        ReflectionUtils.invoke("setTurretGlowSpriteName", spec, path)
+    }
+
+    fun setHardpointGlowSpriteName(path: String) {
+        ReflectionUtils.invoke("setHardpointGlowSpriteName", spec, path)
+    }
+
+
+
+
+
 }

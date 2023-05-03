@@ -17,6 +17,17 @@ object ModularWeaponLoader
 
     var sectorDataMemory: MutableMap<String, SectorWeaponData>? by LunaMemory("rat_sectorWeaponData", HashMap())
 
+    var originalWeaponNames: MutableMap<String, String> = HashMap()
+
+
+    fun setOGNames()
+    {
+        var weapons = Global.getSettings().allWeaponSpecs.filter { it.hasTag("rat_modular_weapon") }
+            .forEach {
+                originalWeaponNames.put(it.weaponId, it.weaponName)
+        }
+    }
+
     fun saveDataToSector(newData: SectorWeaponData)
     {
         var data = sectorDataMemory
@@ -33,7 +44,7 @@ object ModularWeaponLoader
             data = SectorWeaponData(specId)
             data = data as SectorWeaponData
 
-            data.name = "Modular Weapon"
+            data.name = originalWeaponNames.get(data.id)!!
 
             saveDataToSector(data)
         }
@@ -105,6 +116,9 @@ object ModularWeaponLoader
         data.spreadBuildup.unmodify()
         data.spreadDecay.unmodify()
 
+        //changes all the relevant base stats
+        data.body.addStats(data)
+
         for (effect in data.effects)
         {
             effect.addStats(data)
@@ -121,22 +135,11 @@ object ModularWeaponLoader
             /* var desc = Global.getSettings().getDescription(data.id, Description.Type.WEAPON)
              desc.text1 = data.description*/
 
-
-
-
-         /*   var testStat = MutableStat(10f)
-
-            testStat.modifyMult("Test", 2.5f)
-            testStat.modifyMult("Test2", 1.1f)
-            testStat.modifyFlat("Test", 20f)
-
-            var value = testStat.modifiedValue*/
-
             modableSpec.setWeaponName(data.name)
 
             modableSpec.setEnergyPerShot(data.energyPerShot.modifiedValue)
 
-            var test = spec.tags
+            //modableProjectileSpec.setFadeTime(0f)
 
             if (data.isPD)
             {
@@ -162,6 +165,7 @@ object ModularWeaponLoader
 
             modableSpec.setOrdnancePointCost(data.op.modifiedValue)
 
+
             modableSpec.setMaxAmmo(data.maxAmmo.getValue())
             modableSpec.setAmmoPerSecond(data.ammoPerSecond.modifiedValue)
             modableSpec.setReloadSize(data.reloadSize.modifiedValue)
@@ -181,6 +185,8 @@ object ModularWeaponLoader
 
             modableProjectileSpec.setLength(data.projectileLength.modifiedValue)
             modableProjectileSpec.setWidth(data.projectileWidth.modifiedValue)
+
+            //modableProjectileSpec.setMoveSpeed(data.projectileSpeed.modifiedValue)
             modableProjectileSpec.setMoveSpeed(data.projectileSpeed.modifiedValue)
 
             modableProjectileSpec.setDamage(data.damagePerShot.modifiedValue)
@@ -196,8 +202,21 @@ object ModularWeaponLoader
             muzzle.particleDuration = data.muzzleDuration
             muzzle.particleColor = data.color.darker().darker().setAlpha(100)
 
+
+
             //need to change this value or the display is fucked up
-            modableSpec.fluxPerDamage(data.energyPerShot.modifiedValue / (data.damagePerShot.modifiedValue / data.burstSize.getValue()))
+            //modableSpec.correctDerivedStats(data.energyPerShot.modifiedValue / (data.damagePerShot.modifiedValue / data.burstSize.getValue()))
+            modableSpec.correctDerivedStats(data)
+
+
+            if (modableSpec.spec.weaponId == "modular_weapon_0")
+            {
+                var test = modableSpec.spec
+
+                var test2 = ""
+            }
+
+            applyVisuals(data)
         } catch (e: Throwable)
         {
             if (first)
@@ -210,5 +229,37 @@ object ModularWeaponLoader
                 throw Exception("Failure while loading weapon data for RAT modular weapons")
             }
         }
+    }
+
+    fun applyBaseSpecsForSize()
+    {
+
+    }
+
+    fun applyVisuals(data: SectorWeaponData)
+    {
+        var spec = Global.getSettings().getWeaponSpec(data.id)
+        var modableSpec = RATModifieableProjectileWeaponSpec(spec)
+
+        modableSpec.getHardpointFireOffsets().clear()
+        modableSpec.getTurretFireOffsets().clear()
+
+
+
+        var settings = Global.getSettings()
+        settings.loadTexture(data.body.getHardpointSprite())
+        settings.loadTexture(data.body.getTurretSprite())
+        settings.loadTexture(data.body.getHardpointGlowSprite())
+        settings.loadTexture(data.body.getTurretGlowSprite())
+
+        modableSpec.setHardpointSpriteName(data.body.getHardpointSprite())
+        modableSpec.setTurretSpriteName(data.body.getTurretSprite())
+
+        modableSpec.setHardpointGlowSpriteName(data.body.getHardpointGlowSprite())
+        modableSpec.setTurretGlowSpriteName(data.body.getTurretGlowSprite())
+
+        modableSpec.getHardpointFireOffsets().add(data.body.hardpointOffset())
+        modableSpec.getTurretFireOffsets().add(data.body.getTurretOffset())
+
     }
 }

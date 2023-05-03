@@ -28,8 +28,8 @@ class VisualTrail : ModularWeaponEffect() {
         return hashMapOf()
     }
 
-    override fun getType(): ModularEffectType {
-        return ModularEffectType.Visual
+    override fun getType(): ModularEffectModifier {
+        return ModularEffectModifier.Visual
     }
 
 

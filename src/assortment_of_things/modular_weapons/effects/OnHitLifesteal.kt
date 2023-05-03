@@ -1,17 +1,13 @@
 package assortment_of_things.modular_weapons.effects
 
-import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.CombatEntityAPI
-import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
-import java.awt.Color
-import kotlin.random.Random
 
 
 class OnHitLifesteal : ModularWeaponEffect() {
@@ -35,8 +31,8 @@ class OnHitLifesteal : ModularWeaponEffect() {
         return hashMapOf()
     }
 
-    override fun getType(): ModularEffectType {
-        return ModularEffectType.Onhit
+    override fun getType(): ModularEffectModifier {
+        return ModularEffectModifier.Onhit
     }
 
 

@@ -44,6 +44,7 @@ class RATModPlugin : BaseModPlugin() {
 
         LootModifier.saveOriginalData()
 
+        ModularWeaponLoader.setOGNames()
 
     }
 

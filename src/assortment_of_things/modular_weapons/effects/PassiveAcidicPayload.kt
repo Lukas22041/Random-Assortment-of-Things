@@ -35,8 +35,8 @@ class PassiveAcidicPayload : ModularWeaponEffect() {
         return hashMapOf()
     }
 
-    override fun getType(): ModularEffectType {
-        return ModularEffectType.Onhit
+    override fun getType(): ModularEffectModifier {
+        return ModularEffectModifier.Onhit
     }
 
 
@@ -91,14 +91,13 @@ class PassiveAcidicPayload : ModularWeaponEffect() {
 
                 var vel = Vector2f(0f, 1f).rotate(target.facing - MathUtils.getRandomNumberInRange(130, 230))
 
-                engine.applyDamage(target, loc, damageDealt * amount / duration , DamageType.HIGH_EXPLOSIVE, 0f, true, true, projectile.weapon.ship)
+                engine.applyDamage(target, loc, (10 + damageDealt) * amount / duration , DamageType.HIGH_EXPLOSIVE, 0f, true, true, projectile.weapon.ship)
 
                 interval.advance(amount)
                 if (interval.intervalElapsed())
                 {
                     engine.addNebulaParticle(loc, vel, 10f, 2f , 0.2f, 0.2f, 1f, color.setAlpha(90));
                 }
-
             }
 
             override fun renderInWorldCoords(viewport: ViewportAPI?) {

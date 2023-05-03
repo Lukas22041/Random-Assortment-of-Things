@@ -9,7 +9,6 @@ import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
-import kotlin.random.Random
 
 
 class OnHitOvercharged : ModularWeaponEffect() {
@@ -33,8 +32,8 @@ class OnHitOvercharged : ModularWeaponEffect() {
         return hashMapOf()
     }
 
-    override fun getType(): ModularEffectType {
-        return ModularEffectType.Onhit
+    override fun getType(): ModularEffectModifier {
+        return ModularEffectModifier.Onhit
     }
 
 

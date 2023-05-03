@@ -6,7 +6,6 @@ import com.fs.starfarer.api.combat.DamagingProjectileAPI
 import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
-import kotlin.random.Random
 
 
 class PassiveOvervolt : ModularWeaponEffect() {
@@ -30,8 +29,8 @@ class PassiveOvervolt : ModularWeaponEffect() {
         return hashMapOf()
     }
 
-    override fun getType(): ModularEffectType {
-        return ModularEffectType.Passive
+    override fun getType(): ModularEffectModifier {
+        return ModularEffectModifier.Passive
     }
 
 

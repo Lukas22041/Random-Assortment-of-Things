@@ -80,6 +80,10 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
                     recreateModifierPanel()
                 }
 
+                onHoverEnter {
+                     playScrollSound()
+                }
+
                 advance {
                     if (isSelected())
                     {
@@ -94,7 +98,7 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
 
 
                         backgroundColor = Misc.getDarkPlayerColor()
-                        borderColor = Misc.getDarkPlayerColor().brighter().brighter()
+                        borderColor = Misc.getDarkPlayerColor().brighter()
                     }
                     else
                     {
@@ -102,23 +106,23 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
 
                         if (isHovering)
                         {
-                            borderColor = Misc.getDarkPlayerColor().brighter().brighter()
+                            borderColor = Misc.getDarkPlayerColor().brighter()
 
                         }
                         else
                         {
-                            borderColor = Misc.getDarkPlayerColor().brighter()
+                            borderColor = Misc.getDarkPlayerColor()
                         }
                     }
 
                 }
             }
 
-            weaponListElement!!.addPara("", 0f)
 
 
             weaponListElement!!.addSpacer(5f)
         }
+        weaponListElement!!.addPara("", 0f)
         weaponListPanel!!.addUIElement(weaponListElement)
     }
 

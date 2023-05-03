@@ -27,8 +27,8 @@ class PassiveGuidance : ModularWeaponEffect() {
         return hashMapOf()
     }
 
-    override fun getType(): ModularEffectType {
-        return ModularEffectType.Passive
+    override fun getType(): ModularEffectModifier {
+        return ModularEffectModifier.Passive
     }
 
 

@@ -1,3 +1,25 @@
+Version 1.3.3
+
+Modular Weapons (Beta):
+-> All saved weapons will be wiped when updating (but hey atleast (probably) save compatible). This will also most definitly be the case for most future updates for the beta.
+
+-> You can now select a weapon body.
+ -> Weapon Bodies Determine:
+ - Size
+ - Base Stats
+ - Max Capacity
+ - Sprite (Still just recolors)
+-> Bodies are very much not balanced at all, i really just selected values at random for the moment. They mostly exist for playtesting as of now.
+
+-> Made some slight UI improvements to make it easier to read.
+-> Renamed "Effects" to "Modifiers"
+-> Renamed "Budget" to "Capacity"
+-> Unnamed Weapons now have a number next to their name instead of all of them having the same one.
+-> The stat panels now show a lot more stats.
+-> Fixed weapon flux/sec display in the refit screen (for real this time)
+-> Removed "Defense Protocol", "High Value Munition" and "Burst" effects as they are now redundant.
+-> Changed some modifiers to make them fit in line with bodies.
+
 Version 1.3.2
 
 Modular Weapons (Beta):
@@ -11,7 +33,7 @@ Modular Weapons (Beta):
 -> Reduced OP from 20 to 14 (Wasnt actually supposed to be at 20 lol)
 
 Other:
-- Fixed a skill not applying to frigates.
+-> Fixed a skill not applying to frigates.
 
 
 

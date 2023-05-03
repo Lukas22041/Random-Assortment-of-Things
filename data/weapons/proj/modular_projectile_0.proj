@@ -8,7 +8,7 @@
 	"collisionClassByFighter":"RAY_FIGHTER",
 	"length":25.0,
 	"width":20.0,
-	"fadeTime":0.25,
+	"fadeTime":0.1,
 	"fringeColor":[25,100,175,255],
 	"coreColor":[225,225,255,200],
 	"textureType":"ROUGH",  # only needed for BEAM spawnType
