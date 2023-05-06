@@ -52,7 +52,7 @@ public class RATRuinsThemeGenerator extends BaseThemeGenerator {
 		}
 		skipProb = 0f;
 
-		List<StarSystemData> ruinSystems = new ArrayList<StarSystemData>();
+		List<BaseThemeGenerator.StarSystemData> ruinSystems = new ArrayList<StarSystemData>();
 		
 		if (DEBUG) System.out.println("\n\n\n");
 		if (DEBUG) System.out.println("Generating systems with ruins");

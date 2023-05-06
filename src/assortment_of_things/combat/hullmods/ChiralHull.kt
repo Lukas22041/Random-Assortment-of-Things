@@ -1,6 +1,5 @@
 package assortment_of_things.combat.hullmods
 
-import activators.ActivatorManager
 import assortment_of_things.combat.activators.LifelineActivator
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
@@ -9,11 +8,11 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
-import data.scripts.plugins.MagicTrailPlugin
-import data.scripts.util.MagicIncompatibleHullmods
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.rotate
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.plugins.MagicTrailPlugin
+import org.magiclib.util.MagicIncompatibleHullmods
 import java.awt.Color
 import java.util.*
 
@@ -200,7 +199,7 @@ class ChiralHull : BaseHullMod()
 
                 if (interval.intervalElapsed())
                 {
-                    MagicTrailPlugin.AddTrailMemberSimple(ship, trailID + thrusterID, Global.getSettings().getSprite("fx", "base_trail_aura"),
+                    MagicTrailPlugin.addTrailMemberSimple(ship, trailID + thrusterID, Global.getSettings().getSprite("fx", "base_trail_aura"),
                         Vector2f(engine.location.x + vector.x, engine.location.y + vector.y) , 0f, angle, 5f, 10f, color, 1f, 0.5f, 0.25f, 0.3f, true )
 
                 }

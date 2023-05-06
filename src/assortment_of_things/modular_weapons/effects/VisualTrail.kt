@@ -4,7 +4,7 @@ import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
 import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import data.scripts.plugins.MagicTrailPlugin
+import org.magiclib.plugins.MagicTrailPlugin
 
 
 class VisualTrail : ModularWeaponEffect() {

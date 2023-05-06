@@ -27,13 +27,18 @@ data class SectorWeaponData(var id: String) : Cloneable {
 
     var body: ModularWeaponBody = BlasterBody()
 
+    var effects: MutableList<ModularWeaponEffect> = ArrayList()
+
+
+    var bodyName: String = "Blaster"
+    var effectNames: MutableList<String> = ArrayList()
+
     var name = "Modular Weapon"
     var description = "Custom Description"
     var op = MutableStat(14f)
 
     var finalized = false
 
-    var effects: MutableList<ModularWeaponEffect> = ArrayList()
 
     var color = Color(0, 120, 200, 255)
 

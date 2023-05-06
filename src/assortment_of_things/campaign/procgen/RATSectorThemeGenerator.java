@@ -6,12 +6,12 @@ import java.util.Comparator;
 import java.util.List;
 
 import assortment_of_things.campaign.procgen.customThemes.ChiralThemeGenerator;
-import assortment_of_things.misc.RATSettings;
-import assortment_of_things.campaign.procgen.customThemes.OutpostThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.RATDerelictThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.RATMiscellaneousThemeGenerator;
-import assortment_of_things.campaign.procgen.vannilaThemes.RATRemnantThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.RATRuinsThemeGenerator;
+import assortment_of_things.misc.RATSettings;
+import assortment_of_things.campaign.procgen.customThemes.OutpostThemeGenerator;
+import assortment_of_things.campaign.procgen.vannilaThemes.RATRemnantThemeGenerator;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.*;
@@ -33,7 +33,7 @@ public class RATSectorThemeGenerator {
 		generators.clear();
 		for (ThemeGenerator gen : SectorThemeGenerator.generators)
 		{
-			if (gen instanceof RemnantThemeGenerator || gen instanceof RuinsThemeGenerator || gen instanceof MiscellaneousThemeGenerator || gen instanceof DerelictThemeGenerator ) continue;
+			if (gen instanceof RemnantThemeGenerator || gen instanceof RuinsThemeGenerator || gen instanceof MiscellaneousThemeGenerator || gen instanceof RATDerelictThemeGenerator) continue;
 			generators.add(gen);
 		}
 		generators.add(new RATDerelictThemeGenerator());

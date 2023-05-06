@@ -12,7 +12,7 @@ import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 enum class ModularEffectModifier(var displayName: String, var color: Color) {
-    Onhit("On Hit", Color(200, 50, 100)),
+    Onhit("On Hit", Color(230, 50, 100)),
     Passive("Passive", Color(0, 200, 150)),
     Stat("Stat", Color(255, 200, 0)),
     Multiple("Multiple", Color(0, 150, 255)),

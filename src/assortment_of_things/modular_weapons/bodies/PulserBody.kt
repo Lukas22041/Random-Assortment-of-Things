@@ -61,11 +61,11 @@ class PulserBody() : ModularWeaponBody() {
 
 
     override fun getHardpointSprite(): String {
-        return "graphics/weapons/body_pulser/rat_modular_t00.png"
+        return "graphics/weapons/body_pulser/rat_modular_h00.png"
     }
 
     override fun getTurretSprite(): String {
-        return "graphics/weapons/body_pulser/rat_modular_h00.png"
+        return "graphics/weapons/body_pulser/rat_modular_t00.png"
     }
 
 

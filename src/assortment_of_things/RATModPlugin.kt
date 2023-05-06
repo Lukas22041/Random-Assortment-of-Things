@@ -21,6 +21,7 @@ import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaExtensions.getSystemsWithTag
+import lunalib.lunaSettings.LunaSettings
 import java.awt.Color
 
 
@@ -46,6 +47,7 @@ class RATModPlugin : BaseModPlugin() {
 
         ModularWeaponLoader.setOGNames()
 
+        LunaSettings.addListener(RATSettings)
     }
 
     override fun onDevModeF8Reload() {
@@ -55,9 +57,9 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-        RATSettings.loadSettings()
+        LootModifier.modifySpawns()
 
-        Global.getSector().listenerManager.addListener(RATSettings, true)
+
         Global.getSector().registerPlugin(RATCampaignPlugin())
         Global.getSector().addTransientScript(ParallelConstruction())
 

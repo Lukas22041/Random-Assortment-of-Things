@@ -6,11 +6,11 @@ import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
-import data.scripts.plugins.MagicTrailPlugin
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.VectorUtils
 import org.lazywizard.lazylib.combat.CombatUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.plugins.MagicTrailPlugin
 import java.awt.Color
 
 
@@ -162,7 +162,7 @@ class ModularWeaponCombatHandler {
 
                     if (projectile.isFading) continue
 
-                    MagicTrailPlugin.AddTrailMemberSimple(projectile, id, Global.getSettings().getSprite("fx", "base_trail_rough"),
+                    MagicTrailPlugin.addTrailMemberSimple(projectile, id, Global.getSettings().getSprite("fx", "base_trail_rough"),
                         Vector2f(projectile.location.x, projectile.location.y) , projectile.moveSpeed / 10, projectile.facing + MathUtils.getRandomNumberInRange(-1f, 1f), projectile.projectileSpec.width / 2, 2f, projectile.projectileSpec.fringeColor, 0.5f, 0.1f, 0.0f, 1f, false )
 
                 }

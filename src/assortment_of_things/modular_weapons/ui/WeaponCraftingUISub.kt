@@ -5,6 +5,7 @@ import assortment_of_things.modular_weapons.bodies.DefenderBody
 import assortment_of_things.modular_weapons.bodies.PulserBody
 import assortment_of_things.modular_weapons.bodies.MarksmanBody
 import assortment_of_things.modular_weapons.data.AvailableDamageTypes
+import assortment_of_things.modular_weapons.data.ModularRepo
 import assortment_of_things.modular_weapons.data.SectorWeaponData
 import assortment_of_things.modular_weapons.effects.*
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
@@ -30,12 +31,11 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
     lateinit var modifierElement: TooltipMakerAPI
 
-    var bodies = listOf(BlasterBody(), DefenderBody(), PulserBody(), MarksmanBody())
 
-    var modifiers = listOf(OnHitExplosiveCharge(), VisualTrail(), PassiveGuidance(), OnHitOvercharged(),  StatDampener(),
-    StatAmplifier(), StatHeavyMunition(), StatEscapeVelocity(), StatDoubleBarrel(), StatAutoloader(), PassiveOvervolt(),
-    StatImprovedCoils(), StatEfficientGyro(), PassiveClover(), PassiveAcidicPayload(),
-    OnHitLifesteal())
+    var lastSelectedModifier: ModularWeaponEffect = ModularRepo.modifiers.first()
+    var selectedModifier: ModularWeaponEffect = lastSelectedModifier
+    var descriptionTooltip: TooltipMakerAPI? = null
+    var descriptionPanel: CustomPanelAPI? = null
 
     fun init(panel: CustomPanelAPI)
     {
@@ -110,27 +110,42 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         damageTypeSelector.elementPanel.addUIElement(damageTypeHeaderElement)
         var damageHeader = damageTypeHeaderElement.addSectionHeading("Damage Type", Alignment.MID, 0f)
 
-        var damageTypeSelectorElement = damageTypeSelector.elementPanel.createUIElement(width / 2 - 25, height * 0.20f - damageHeader.position.height, true)
+        var damageTypeSelectorElement = damageTypeSelector.elementPanel.createUIElement(width / 2 - 25, height * 0.20f - damageHeader.position.height, false)
         addDamageTypeSelector(damageTypeSelectorElement, width / 2 - 25, height * 0.20f - damageHeader.position.height)
         damageTypeSelector.elementPanel.addUIElement(damageTypeSelectorElement)
 
 
 
         //Effect Picker
-        var effectPicker = modifierElement.addLunaElement(width - 25, height * 0.40f)
+        var effectPicker = modifierElement.addLunaElement(width * 0.4f - 25, height * 0.40f)
         effectPicker.position.belowLeft(bodySelector.elementPanel, height * 0.02f)
         effectPicker.enableTransparency = true
         effectPicker.backgroundAlpha = 0.8f
 
-        var effectPickerHeaderElement = effectPicker.elementPanel.createUIElement(width - 25, height * 0.40f, false)
+        var effectPickerHeaderElement = effectPicker.elementPanel.createUIElement(width * 0.4f - 25, height * 0.40f, false)
         effectPicker.elementPanel.addUIElement(effectPickerHeaderElement)
         var effectHeader = effectPickerHeaderElement.addSectionHeading("Modifiers", Alignment.MID, 0f)
         effectPickerHeaderElement.addTooltipToPrevious(TooltipHelper("Modifiers add a variety of effects to the weapon, but each one adds to the capacity limit.", 300f), TooltipMakerAPI.TooltipLocation.ABOVE)
 
-        var effectPickerElement = effectPicker.elementPanel.createUIElement(width - 25, height * 0.40f - effectHeader.position.height, true)
-        addEffectsSelector(effectPickerElement, width - 25, height * 0.40f - effectHeader.position.height)
+
+        var effectPickerElement = effectPicker.elementPanel.createUIElement(width * 0.4f - 25, height * 0.40f - effectHeader.position.height, true)
+        addEffectsSelector(effectPickerElement, width * 0.4f - 25, height * 0.40f - effectHeader.position.height)
         effectPicker.elementPanel.addUIElement(effectPickerElement)
 
+        //Description
+        var modifierDescriptionElement = modifierElement.addLunaElement(width * 0.6f - 25 , height * 0.40f)
+        modifierDescriptionElement.position.rightOfMid(effectPicker.elementPanel, 25f)
+        modifierDescriptionElement.enableTransparency = true
+        modifierDescriptionElement.backgroundAlpha = 0.8f
+
+        var modifierDescriptionHeaderElement = modifierDescriptionElement.elementPanel.createUIElement(width * 0.6f - 25, height * 0.40f, false)
+        modifierDescriptionElement.elementPanel.addUIElement(modifierDescriptionHeaderElement)
+        var modifierDescriptionHeader = modifierDescriptionHeaderElement.addSectionHeading("Modifier Description", Alignment.MID, 0f)
+
+        descriptionTooltip = modifierDescriptionElement.elementPanel.createUIElement(width * 0.6f , height * 0.40f - modifierDescriptionHeader.position.height, false)
+        //addDescription(descriptionElement, width / 2 , height * 0.40f - modifierDescriptionHeader.position.height)
+        modifierDescriptionElement.elementPanel.addUIElement(descriptionTooltip)
+        addDescription()
 
         //Visuals
         var visuals = modifierElement.addLunaElement(width / 3 - 25, height* 0.20f)
@@ -178,7 +193,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
                 tooltip.addSpacer(5f)
                 tooltip.addPara("Weapon Name: ${data.name}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Weapon Name")
                 tooltip.addPara("Body Type: ${data.body.getName()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Body Type")
-                tooltip.addPara("Capacity Remaining: ${data.maxCapacity - data.getCapacity()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Capacity Left")
+                tooltip.addPara("Capacity Remaining: ${data.maxCapacity - data.getCapacity()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Capacity Remaining")
                 tooltip.addSpacer(5f)
 
 
@@ -225,7 +240,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
     fun addBodySelector(element: TooltipMakerAPI, w: Float, h: Float)
     {
-        var bods = bodies.sortedBy { it.getCapacity() }
+        var bods = ModularRepo.bodies.sortedBy { it.getCapacity() }
 
         var first = true
         for (body in bods)
@@ -322,7 +337,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         var first = true
         for (type in types)
         {
-            var lunaEle = element.addLunaElement(w, h * 0.4f)
+            var lunaEle = element.addLunaElement(w, h / 3)
 
             if (first)
             {
@@ -378,7 +393,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
         var first = true
         ModularEffectModifier.values().forEach { currentType ->
-            for (effect in modifiers.filter { it.getType() == currentType }.sortedByDescending { it.getCost() })
+            for (effect in ModularRepo.modifiers.filter { it.getType() == currentType }.sortedByDescending { it.getCost() })
             {
 
                 var lunaEle = element.addLunaElement(w, h * 0.15f)
@@ -386,58 +401,29 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
                 lunaEle.onHoverEnter {
                     lunaEle.playScrollSound()
                     lunaEle.borderColor = Misc.getDarkPlayerColor().brighter()
+                    selectedModifier = effect
                 }
                 lunaEle.onHoverExit {
                     lunaEle.borderColor = Misc.getDarkPlayerColor()
                 }
 
-                lunaEle.parentElement.addTooltipToPrevious(object : TooltipCreator {
-                    override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
-                        return false
-                    }
 
-                    override fun getTooltipWidth(tooltipParam: Any?): Float {
-                        return w / 2
-                    }
-
-
-                    override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
-
-                        tooltip!!.addSectionHeading("General", Alignment.MID, 0f)
-                        tooltip.addSpacer(5f)
-                        tooltip.addPara("Modifier Name: ${effect.getName()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Modifier Name")
-                        tooltip.addPara("Modifier Type: ${effect.getType().displayName}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Modifier Type")
-                        tooltip.addPara("Capacity Cost: ${effect.getCost()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Capacity Cost")
-                        tooltip.addSpacer(5f)
-
-                        tooltip.addSectionHeading("Effect", Alignment.MID, 0f)
-                        tooltip.addSpacer(5f)
-                        effect.getTooltip(tooltip)
-                        tooltip.addSpacer(5f)
-
-
-                    }
-                }, TooltipMakerAPI.TooltipLocation.RIGHT)
 
                 if (first)
                 {
                     first = false
                     lunaEle.position.inTL(0f, 0f)
+                    lastSelectedModifier = effect
+                    selectedModifier = effect
                 }
 
 
+                var prefixPara = lunaEle.innerElement.addPara("", 0f, effect.getType().color, effect.getType().color)
+                prefixPara!!.position.inTL(5f, lunaEle.position.height / 2 - prefixPara.computeTextHeight("") / 2)
 
-                // lunaEle.centerText()
-                /* var para = lunaEle.innerElement.addPara("(${effect.getType().displayName}) ${effect.getName()} (${effect.getCost()}B)", 0f)
-                 para.setHighlight("(${effect.getType().displayName})", "${effect.getName()}")
-                 para.setHighlightColors(effect.getType().color, Misc.getHighlightColor())
-                 para!!.position.inTL(20f, lunaEle.position.height / 2 - para.computeTextHeight("") / 2)*/
 
-                var effectPara = lunaEle.innerElement.addPara("${effect.getType().displayName}", 0f, effect.getType().color, effect.getType().color)
-                effectPara!!.position.inTL(20f, lunaEle.position.height / 2 - effectPara.computeTextHeight("") / 2)
-
-                var namePara = lunaEle.innerElement.addPara("${effect.getName()}", 0f,  Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
-                namePara!!.position.inTL(w / 2 - namePara.computeTextWidth("${effect.getName()}") / 2, lunaEle.position.height / 2 - namePara.computeTextHeight("") / 2)
+                var namePara = lunaEle.innerElement.addPara("${effect.getName()}", 0f, effect.getType().color, effect.getType().color)
+                namePara!!.position.inTL(20f, lunaEle.position.height / 2 - namePara.computeTextHeight("") / 2)
 
                 var budgetpara = lunaEle.innerElement.addPara("Cost: ${effect.getCost()}", 0f, Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
                 budgetpara!!.position.inTL(w - budgetpara.computeTextWidth("Cost: ${effect.getCost()}") - 20, lunaEle.position.height / 2 - budgetpara.computeTextHeight("") / 2)
@@ -489,9 +475,45 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
                     {
                         lunaEle.backgroundAlpha = 0.1f
                     }
+
+                    if (selectedModifier == effect)
+                    {
+                        prefixPara.text = ">"
+                    }
+                    else
+                    {
+                        prefixPara.text = ""
+                    }
                 }
             }
         }
+    }
+
+    fun addDescription()
+    {
+        lastSelectedModifier = selectedModifier
+
+        if (descriptionTooltip == null) return
+        if (descriptionPanel != null)
+        {
+            descriptionTooltip!!.removeComponent(descriptionPanel)
+        }
+
+        descriptionPanel = Global.getSettings().createCustom(width * 0.6f - 25 , height * 0.40f - 20f, null)
+        descriptionTooltip!!.addComponent(descriptionPanel)
+        var element = descriptionPanel!!.createUIElement(width * 0.6f - 25 , height * 0.40f - 20f, true)
+
+        element.addPara("Modifier: ${selectedModifier.getName()}", 0f, Misc.getBasePlayerColor(), Misc.getHighlightColor(), "Modifier").position.inTL(5f, 5f)
+        element.addPara("Type: ${selectedModifier.getType().displayName}", 0f, Misc.getBasePlayerColor(), Misc.getHighlightColor(), "Type")
+        element.addPara("Cost: ${selectedModifier.getCost()}", 0f, Misc.getBasePlayerColor(), Misc.getHighlightColor(), "Cost")
+
+        element.addSpacer(5f)
+        element.addPara("Description:", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        element.addSpacer(1f)
+
+        selectedModifier.getTooltip(element)
+
+        descriptionPanel!!.addUIElement(element)
     }
 
     fun addFinalizedPanel() {
@@ -593,11 +615,6 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
     }
 
-    fun calculateBudget()
-    {
-
-    }
-
     override fun positionChanged(position: PositionAPI?) {
 
     }
@@ -611,10 +628,20 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
     }
 
     override fun advance(amount: Float) {
+
+        if (lastSelectedModifier != selectedModifier)
+        {
+            addDescription()
+        }
+
         ModularWeaponLoader.calculateEffectStats(data)
     }
 
     override fun processInput(events: MutableList<InputEventAPI>?) {
+
+    }
+
+    override fun buttonPressed(buttonId: Any?) {
 
     }
 

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import assortment_of_things.misc.RATSettings;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.ThemeGenContext;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.Themes;
@@ -26,23 +27,25 @@ import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
+import com.fs.starfarer.api.impl.campaign.intel.events.ht.HTPoints;
 import com.fs.starfarer.api.impl.campaign.procgen.Constellation;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.DomainSurveyDerelictSpecial.DomainSurveyDerelictSpecialData;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.DomainSurveyDerelictSpecial.SpecialType;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.SurveyDataSpecial.SurveyDataSpecialData;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.SurveyDataSpecial.SurveyDataSpecialType;
+import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.TopographicDataSpecial.TopographicDataSpecialData;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 
-//Modifies the amount of Motherships (and therefor derelict systems) and cryosleepers.
+
 public class RATDerelictThemeGenerator extends BaseThemeGenerator {
 
-	//Gets the scale from RATSectorProcGen
 	public static float RAT_SCALE = 1f;
 
 	public static final float BASE_LINK_FRACTION = 0.25f;
 	public static final float SALVAGE_SPECIAL_FRACTION = 0.5f;
+	public static final float TOPOGRAPHIC_DATA_FRACTION = 0.1f;
 	
 	public static final int BRANCHES_PER_MOTHERSHIP_MIN = 3;
 	public static final int BRANCHES_PER_MOTHERSHIP_MAX = 4;
@@ -56,44 +59,26 @@ public class RATDerelictThemeGenerator extends BaseThemeGenerator {
 		public int numSurveyShips;
 		public int numProbes;
 	}
-
+	
+	
 	public String getThemeId() {
 		return Themes.DERELICTS;
 	}
 
 	@Override
 	public void generateForSector(ThemeGenContext context, float allowedUnusedFraction) {
-
+		
 		float total = (float) (context.constellations.size() - context.majorThemes.size()) * allowedUnusedFraction;
 		if (total <= 0) return;
 		
-		float avg1 = (BRANCHES_PER_MOTHERSHIP_MIN + BRANCHES_PER_MOTHERSHIP_MAX) / 2f;
-		float avg2 = (BRANCHES_PER_SHIP_MIN + BRANCHES_PER_SHIP_MAX) / 2f;
-		float perChain = 1 + avg1 + (avg1 * avg2);
-		
-		float num = total / perChain;
-
-		//weirdly overcomplicated amount calculation for vannila despite basicly always generating 2
-
-		/*if (num < 1) num = 1;
-		if (num > 3) num = 3;
-		
-		if (num > 1 && num < 2) {
-			num = 2;
-		} else {
-			num = Math.round(num);
-		}*/
-
-		num = 2 * RAT_SCALE;
+		float num = RAT_SCALE;
 		
 		List<AddedEntity> mothershipsSoFar = new ArrayList<AddedEntity>();
 		
 		for (int i = 0; i < num; i++) {
 			addMothershipChain(context, mothershipsSoFar);
 		}
-		
-		
-		
+
 		WeightedRandomPicker<StarSystemAPI> cryoSystems = new WeightedRandomPicker<StarSystemAPI>(StarSystemGenerator.random);
 		WeightedRandomPicker<StarSystemAPI> backup = new WeightedRandomPicker<StarSystemAPI>(StarSystemGenerator.random);
 		OUTER: for (StarSystemAPI system : Global.getSector().getStarSystems()) {
@@ -133,7 +118,7 @@ public class RATDerelictThemeGenerator extends BaseThemeGenerator {
 			use.add(system, w);
 		}
 		
-		int numCryo = (int) (2 * RAT_SCALE);
+		int numCryo = 2;
 		if (cryoSystems.isEmpty() || cryoSystems.getItems().size() < numCryo + 1) {
 			cryoSystems.addAll(backup);
 		}
@@ -363,11 +348,31 @@ public class RATDerelictThemeGenerator extends BaseThemeGenerator {
 		Set<PlanetAPI> usedPlanets = new HashSet<PlanetAPI>();
 		Set<StarSystemAPI> usedSystems = new HashSet<StarSystemAPI>();
 		
-		for(AddedEntity e : entities) {
+		for (AddedEntity e : entities) {
 			if (hasSpecial(e.entity)) continue;
 			
 			SurveyDataSpecialType type = null;
 			
+			if (StarSystemGenerator.random.nextFloat() < TOPOGRAPHIC_DATA_FRACTION) {
+				int min = 0;
+				int max = 0;
+				if (Entities.DERELICT_SURVEY_PROBE.equals(e.entityType)) {
+					min = HTPoints.LOW_MIN;
+					max = HTPoints.LOW_MAX;
+				} else if (Entities.DERELICT_SURVEY_SHIP.equals(e.entityType)) {
+					min = HTPoints.MEDIUM_MIN;
+					max = HTPoints.MEDIUM_MAX;
+				} else if (Entities.DERELICT_MOTHERSHIP.equals(e.entityType)) {
+					min = HTPoints.HIGH_MIN;
+					max = HTPoints.HIGH_MAX;
+				}
+				int points = min + StarSystemGenerator.random.nextInt(max - min + 1);
+				if (points > 0) {
+					TopographicDataSpecialData data = new TopographicDataSpecialData(points);
+					Misc.setSalvageSpecial(e.entity, data);
+					continue;
+				}
+			}
 			if (StarSystemGenerator.random.nextFloat() < SALVAGE_SPECIAL_FRACTION) {
 				float p1 = 0.33f, p2 = 0.67f;
 				if (Entities.DERELICT_SURVEY_PROBE.equals(e.entityType)) {
