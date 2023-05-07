@@ -6,10 +6,12 @@ import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.combat.entities.Ship
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.VectorUtils
 import org.lazywizard.lazylib.combat.CombatUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.getDistanceSq
 import org.magiclib.plugins.MagicTrailPlugin
 import java.awt.Color
 
@@ -105,17 +107,51 @@ class ModularWeaponCombatHandler {
             var range = projectile.projectileSpec.maxRange * 0.75f
             var speed = projectile.moveSpeed / 8
             var proj = projectile
-            var targets: MutableList<ShipAPI> = ArrayList()
-            var iter = CombatUtils.getShipsWithinRange(proj.location, range).filter { it.owner != proj.source.owner && it.isAlive && !it.isHulk }
+            var targets: MutableList<CombatEntityAPI> = ArrayList()
 
-            for (i in iter)
+
+            var pd = projectile.customData.get("rat_modular_isPD") as Boolean
+
+            if (!pd)
             {
-                var target = i
-                var sizes = listOf(HullSize.FRIGATE, HullSize.DESTROYER, HullSize.CRUISER, HullSize.CAPITAL_SHIP)
-                if (target.owner == 1 && sizes.contains(target.hullSize)) targets.add(target)
+                var iter = CombatUtils.getShipsWithinRange(proj.location, range).filter { it.owner != proj.source.owner && it.isAlive && !it.isHulk }
+
+                for (i in iter)
+                {
+                    var target = i
+                    var sizes = listOf(HullSize.FRIGATE, HullSize.DESTROYER, HullSize.CRUISER, HullSize.CAPITAL_SHIP)
+                    if (target.owner == 1 && sizes.contains(target.hullSize)) targets.add(target)
+                }
+            }
+            else
+            {
+                speed = projectile.moveSpeed / 2
+
+                var iter = engine.allObjectGrid.getCheckIterator(proj.location, range, range)
+                for (it in iter)
+                {
+                    if (it is DamagingProjectileAPI)
+                    {
+                        if (it.owner == proj.owner) continue
+                        if (it.maxHitpoints == 0f) continue
+                        if (it.hitpoints == 0f) continue
+                        targets.add(it)
+                    }
+                    if (it is ShipAPI)
+                    {
+                        if (!it.isFighter) continue
+                        if (it.owner == proj.owner) continue
+                        if (it.maxHitpoints == 0f) continue
+                        if (it.hitpoints == 0f) continue
+                        targets.add(it)
+                    }
+
+
+                }
             }
 
-            var target: ShipAPI? = null
+
+            var target: CombatEntityAPI? = null
             var distance = 100000f
             for (tar in targets)
             {

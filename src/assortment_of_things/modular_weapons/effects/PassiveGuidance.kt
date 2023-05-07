@@ -1,5 +1,6 @@
 package assortment_of_things.modular_weapons.effects
 
+import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
 import com.fs.starfarer.api.combat.WeaponAPI
@@ -42,6 +43,8 @@ class PassiveGuidance : ModularWeaponEffect() {
         }
         data.add(projectile!!)
         engine!!.customData.set("rat_modular_homing_projectiles", data)
+
+        projectile.setCustomData("rat_modular_isPD", ModularWeaponLoader.getData(projectile!!.weapon.id).isPD)
     }
 
 }

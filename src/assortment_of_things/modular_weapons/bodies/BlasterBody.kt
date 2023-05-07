@@ -2,8 +2,11 @@ package assortment_of_things.modular_weapons.bodies
 
 import assortment_of_things.modular_weapons.data.ModularWeaponBody
 import assortment_of_things.modular_weapons.data.SectorWeaponData
+import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.combat.BattleCreationContext
 import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import org.lwjgl.util.vector.Vector2f
 
 class BlasterBody() : ModularWeaponBody() {
@@ -25,37 +28,41 @@ class BlasterBody() : ModularWeaponBody() {
 
         stats.op.baseValue = 14f
 
-        stats.range.baseValue = 800f
+        stats.range.baseValue = 600f
 
-        stats.damagePerShot.baseValue = 120f
+        stats.damagePerShot.baseValue = 500f
         stats.empDamage.baseValue = 0f
 
-        stats.energyPerShot.baseValue = 145f
+        stats.energyPerShot.baseValue = 720f
 
-        stats.projectileLength.baseValue = 30f
-        stats.projectileWidth.baseValue = 25f
-        stats.projectileSpeed.baseValue = 800f
+        stats.projectileLength.baseValue = 25f
+        stats.projectileWidth.baseValue = 30f
+        stats.projectileSpeed.baseValue = 1000f
 
         stats.maxAmmo.changeBase(Int.MAX_VALUE)
         stats.ammoPerSecond.baseValue = 1f
         stats.reloadSize.baseValue = 1f
 
         stats.chargeUp.baseValue = 0.0f
-        stats.chargeDown.baseValue = 0.4f
+        stats.chargeDown.baseValue = 1f
         stats.burstSize.changeBase(1)
-        stats.burstDelay.baseValue = 0.1f
+        stats.burstDelay.baseValue = 0.0f
 
-        stats.minSpread.baseValue = 1f
-        stats.maxSpread.baseValue = 4f
-        stats.spreadBuildup.baseValue = 1f
-        stats.spreadDecay.baseValue = 4f
+        stats.minSpread.baseValue = 0f
+        stats.maxSpread.baseValue = 0f
+        stats.spreadBuildup.baseValue = 0f
+        stats.spreadDecay.baseValue = 0f
 
-        stats.turnrate.baseValue = 20f
+        stats.turnrate.baseValue = 15f
 
+        stats.fadeTime = 0.3f
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("The blaster has average stats, it doesnt particulary stand out, but can easily be formed in to a design of its own.", 0f)
+       var label = tooltip.addPara("The blaster has has stats matching that of the \"Heavy Blaster\" Weapon. It deals large damage in turn for its low fire rate.",
+           0f, Misc.getTextColor(), Misc.getHighlightColor())
+
+        label.setHighlight("blaster", "Heavy Blaster")
     }
 
 

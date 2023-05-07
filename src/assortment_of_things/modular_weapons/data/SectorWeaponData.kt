@@ -49,10 +49,9 @@ data class SectorWeaponData(var id: String) : Cloneable {
     var isPD = false
 
     var muzzleDuration = 0.5f
-    var muzzleColor = Color(100,200,255,255)
     var muzzleParticles = 7
 
-
+    var fadeTime = 0.5f
 
     var range = MutableStat(700f)
     var turnrate = MutableStat(20f)

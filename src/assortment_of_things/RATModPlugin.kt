@@ -78,6 +78,7 @@ class RATModPlugin : BaseModPlugin() {
 
         SkillManager.update()
 
+
         //ModularWeaponLoader.resetAllData()
         ModularWeaponLoader.applyStatToSpecsForAll()
 

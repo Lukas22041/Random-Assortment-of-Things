@@ -135,7 +135,7 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
         }
 
 
-        var plugin = WeaponCraftingUISub(this, selectedData!!)
+        var plugin = WeaponCraftingUISub(this, selectedData!!, dialog)
         modifierPanel = panel.createCustomPanel(width * 0.79f, height, plugin)
         panel.addComponent(modifierPanel)
         modifierPanel!!.position.inTL(width * 0.21f, 0f)

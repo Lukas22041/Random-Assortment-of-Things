@@ -56,7 +56,7 @@ object SkillManager {
             //if (skill.level > 0.1f)
             {
                 spec.reqPoints = 10000
-                spec.addTag("npc_only")
+                //spec.addTag("npc_only")
             }
             else
             {

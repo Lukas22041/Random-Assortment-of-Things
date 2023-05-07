@@ -1,9 +1,5 @@
 package assortment_of_things.modular_weapons.ui
 
-import assortment_of_things.modular_weapons.bodies.BlasterBody
-import assortment_of_things.modular_weapons.bodies.DefenderBody
-import assortment_of_things.modular_weapons.bodies.PulserBody
-import assortment_of_things.modular_weapons.bodies.MarksmanBody
 import assortment_of_things.modular_weapons.data.AvailableDamageTypes
 import assortment_of_things.modular_weapons.data.ModularRepo
 import assortment_of_things.modular_weapons.data.SectorWeaponData
@@ -11,6 +7,14 @@ import assortment_of_things.modular_weapons.effects.*
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CustomUIPanelPlugin
+import com.fs.starfarer.api.campaign.InteractionDialogAPI
+import com.fs.starfarer.api.combat.BattleCreationContext
+import com.fs.starfarer.api.combat.CombatEngineAPI
+import com.fs.starfarer.api.combat.EveryFrameCombatPlugin
+import com.fs.starfarer.api.combat.ViewportAPI
+import com.fs.starfarer.api.fleet.FleetGoal
+import com.fs.starfarer.api.fleet.FleetMemberType
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
@@ -18,12 +22,17 @@ import com.fs.starfarer.api.ui.PositionAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.combat.CombatEngine
+import com.fs.state.AppDriver
 import lunalib.backend.ui.components.util.TooltipHelper
 import lunalib.lunaExtensions.*
 import lunalib.lunaUI.elements.LunaSpriteElement
+import org.lazywizard.lazylib.ext.campaign.addShip
+import org.lwjgl.input.Keyboard
 import java.awt.Color
 
-class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: SectorWeaponData) : CustomUIPanelPlugin{
+
+class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: SectorWeaponData, var dialog: InteractionDialogAPI) : CustomUIPanelPlugin{
 
     lateinit var panel: CustomPanelAPI
     var width = 0f
@@ -74,7 +83,6 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
             inner.backgroundAlpha = 0.3f
 
             showNumber(false)
-
 
             bar.advance {
                 changeBoundaries(0f, data.maxCapacity)
@@ -152,7 +160,6 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         visuals.position.belowLeft(effectPicker.elementPanel, height * 0.02f)
         visuals.enableTransparency = true
 
-        //visuals.innerElement.addPara("Change the Weapons Visuals.", 0f, Misc.getBasePlayerColor(), Misc.getHighlightColor()).position.inTL(5f, 10f)
         visuals.innerElement.addSectionHeading("Visuals", Alignment.MID, 0f)
         visuals.innerElement.addSpacer(15f)
 
@@ -172,8 +179,29 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         }
 
 
+        //Simulation
+        var simulation = modifierElement.addLunaElement(width / 3 - 25 , height * 0.20f)
+        simulation.position.rightOfMid(visuals.elementPanel, 25f)
+        simulation.enableTransparency = true
+        simulation.addText("Simulation", baseColor = Misc.getBasePlayerColor())
+        simulation.centerText()
+        simulation.addTooltip("Starts a quick simulation. Both the player piloted ship and the enemies ship have the currently selected weapon design equipped twice." +
+                "\n\n" +
+                "WARNING: Campaign Ships can be selected for deployment, damage to them will actually damage them.", 500f, TooltipMakerAPI.TooltipLocation.ABOVE)
 
-        var finalize = modifierElement.addLunaChargeButton(width * 0.666f - 25 , height* 0.20f)
+        simulation.onHoverEnter() {
+            simulation.borderColor = Misc.getDarkPlayerColor().brighter()
+        }
+        simulation.onHoverExit {
+            simulation.borderColor = Misc.getDarkPlayerColor()
+        }
+
+        simulation.onClick {
+            ModularWeaponLoader.applyStatsToSpec(data)
+            startSimulation()
+        }
+
+        var finalize = modifierElement.addLunaChargeButton(width / 3 - 25 , height* 0.20f)
         finalize.parentElement.addTooltipToPrevious(object : TooltipCreator {
             override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
                 return false
@@ -205,7 +233,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         }, TooltipMakerAPI.TooltipLocation.ABOVE)
 
 
-        finalize.position.rightOfMid(visuals.elementPanel, 25f)
+        finalize.position.rightOfMid(simulation.elementPanel, 25f)
         finalize.enableTransparency = true
         finalize.addText("Finalize", baseColor = Misc.getBasePlayerColor())
         finalize.centerText()
@@ -529,6 +557,8 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
             Global.getSector().playerFleet.cargo.addWeapons(data.id, 1)
             Global.getSector().campaignUI.messageDisplay.addMessage("Crafted 1 " + data.name + " !")
 
+
+
         }
 
         craftButton.onHoverEnter {
@@ -645,4 +675,65 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
     }
 
+    fun startSimulation()
+    {
+        var playerFleet = Global.getFactory().createEmptyFleet(Factions.PLAYER, "Test", true)
+        Global.getSector().playerFleet.starSystem.addEntity(playerFleet)
+        playerFleet.setCircularOrbit(Global.getSector().playerFleet, 0f, 0f, 0f)
+
+        var member = playerFleet.addShip("medusa_Hull", FleetMemberType.SHIP)
+        var variant = member.variant
+
+        variant.addWeapon("WS 006", data.id)
+        variant.addWeapon("WS 007", data.id)
+        variant.numFluxVents = 30
+        variant.numFluxCapacitors = 30
+
+        var enemyFleet = Global.getFactory().createEmptyFleet(Factions.HEGEMONY, "Test", true)
+        var enemyMember = enemyFleet.addShip("medusa_Hull", FleetMemberType.SHIP)
+        var enemyVariant = enemyMember.variant
+
+        enemyVariant.addWeapon("WS 006", data.id)
+        enemyVariant.addWeapon("WS 007", data.id)
+        enemyVariant.numFluxVents = 30
+        enemyVariant.numFluxCapacitors = 30
+
+        val bcc = BattleCreationContext(playerFleet, FleetGoal.ATTACK, enemyFleet, FleetGoal.ATTACK)
+        bcc.aiRetreatAllowed = false
+        bcc.objectivesAllowed = false
+        bcc.standoffRange = 1000f
+        dialog.startBattle(bcc)
+
+
+        Global.getSector().playerFleet.starSystem.removeEntity(playerFleet)
+
+        Global.getCombatEngine().addPlugin( object : EveryFrameCombatPlugin {
+            override fun init(engine: CombatEngineAPI?) {
+            }
+
+            override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
+                events!!.forEach {
+                    if (it.isConsumed) return@forEach
+                    if (it.isKeyDownEvent && it.eventValue == Keyboard.KEY_ESCAPE)
+                    {
+                        Global.getCombatEngine().endCombat(0f)
+                    }
+                }
+            }
+
+            override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
+
+            }
+
+            override fun renderInWorldCoords(viewport: ViewportAPI?) {
+
+            }
+
+            override fun renderInUICoords(viewport: ViewportAPI?) {
+
+            }
+
+        })
+       // Global.getCombatEngine().endCombat(10f)
+    }
 }

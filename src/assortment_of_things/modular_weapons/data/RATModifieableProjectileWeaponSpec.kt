@@ -62,8 +62,21 @@ class RATModifieableProjectileWeaponSpec(var spec: WeaponSpecAPI)  {
     fun correctDerivedStats(data:SectorWeaponData) {
         var derived = ReflectionUtils.invoke("getDerivedStats", spec)
 
-        ReflectionUtils.set("fluxPerDam", derived!!, data.energyPerShot.modifiedValue / (data.damagePerShot.modifiedValue / data.burstSize.getValue()))
-        ReflectionUtils.set("sustainedDps", derived, data.damagePerShot.modifiedValue / data.chargeDown.modifiedValue)
+       // ReflectionUtils.set("fluxPerDam", derived!!, data.energyPerShot.modifiedValue / (data.damagePerShot.modifiedValue / data.burstSize.getValue()))
+        ReflectionUtils.set("fluxPerDam", derived!!, data.energyPerShot.modifiedValue / (data.damagePerShot.modifiedValue ))
+
+
+        if (data.maxAmmo.getValue() == Int.MAX_VALUE)
+        {
+
+            ReflectionUtils.set("sustainedDps", derived, (data.damagePerShot.modifiedValue / data.chargeDown.modifiedValue))
+        }
+        else
+        {
+            var sustainedDps = data.damagePerShot.modifiedValue / (1f / data.ammoPerSecond.modifiedValue);
+
+            ReflectionUtils.set("sustainedDps", derived, sustainedDps)
+        }
     }
 
 

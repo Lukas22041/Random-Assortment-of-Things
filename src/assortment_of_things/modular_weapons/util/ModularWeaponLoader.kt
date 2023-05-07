@@ -116,6 +116,11 @@ object ModularWeaponLoader
         data.spreadBuildup.unmodify()
         data.spreadDecay.unmodify()
 
+        data.muzzleDuration = 0.5f
+        data.muzzleParticles = 7
+
+        data.fadeTime = 0.5f
+
         //changes all the relevant base stats
         data.body.addStats(data)
 
@@ -137,9 +142,7 @@ object ModularWeaponLoader
 
             modableSpec.setWeaponName(data.name)
 
-            modableSpec.setEnergyPerShot(data.energyPerShot.modifiedValue)
 
-            //modableProjectileSpec.setFadeTime(0f)
 
             if (data.isPD)
             {
@@ -165,6 +168,7 @@ object ModularWeaponLoader
 
             modableSpec.setOrdnancePointCost(data.op.modifiedValue)
 
+            modableSpec.setEnergyPerShot(data.energyPerShot.modifiedValue)
 
             modableSpec.setMaxAmmo(data.maxAmmo.getValue())
             modableSpec.setAmmoPerSecond(data.ammoPerSecond.modifiedValue)
@@ -195,12 +199,14 @@ object ModularWeaponLoader
             modableProjectileSpec.setFringeColor(data.color)
             modableProjectileSpec.setCoreColor(Color.white)
 
+            modableProjectileSpec.setFadeTime(data.fadeTime)
+
             modableSpec.setGlowColor(data.color.darker().setAlpha(200))
             var muzzle = modableSpec.getMuzzleFlashSpec()
 
             muzzle.particleCount = data.muzzleParticles
             muzzle.particleDuration = data.muzzleDuration
-            muzzle.particleColor = data.color.darker().darker().setAlpha(100)
+            muzzle.particleColor = data.color.darker().darker().darker().setAlpha(100)
 
 
 

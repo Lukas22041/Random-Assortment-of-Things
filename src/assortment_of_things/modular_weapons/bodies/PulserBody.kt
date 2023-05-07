@@ -4,6 +4,7 @@ import assortment_of_things.modular_weapons.data.ModularWeaponBody
 import assortment_of_things.modular_weapons.data.SectorWeaponData
 import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import org.lwjgl.util.vector.Vector2f
 
 class PulserBody() : ModularWeaponBody() {
@@ -23,39 +24,44 @@ class PulserBody() : ModularWeaponBody() {
         stats.maxCapacity = getCapacity()
         stats.weaponSize = getSize()
 
-        stats.op.baseValue = 14f
+        stats.op.baseValue = 13f
 
-        stats.range.baseValue = 700f
+        stats.range.baseValue = 500f
 
-        stats.damagePerShot.baseValue = 40f
-        stats.empDamage.baseValue = 0f
+        stats.damagePerShot.baseValue = 120f
+        stats.empDamage.baseValue = 300f
 
-        stats.energyPerShot.baseValue = 25f
+        stats.energyPerShot.baseValue = 80f
 
-        stats.projectileLength.baseValue = 20f
-        stats.projectileWidth.baseValue = 15f
-        stats.projectileSpeed.baseValue = 800f
+        stats.projectileLength.baseValue = 75f
+        stats.projectileWidth.baseValue = 20f
+        stats.projectileSpeed.baseValue = 1000f
 
-        stats.maxAmmo.changeBase(40)
+        stats.maxAmmo.changeBase(20)
         stats.ammoPerSecond.baseValue = 2f
         stats.reloadSize.baseValue = 2f
 
-        stats.chargeUp.baseValue = 0.0f
-        stats.chargeDown.baseValue = 0.4f
-        stats.burstSize.changeBase(4)
-        stats.burstDelay.baseValue = 0.05f
+        stats.chargeUp.baseValue =  0.05f
+        stats.chargeDown.baseValue = 0.05f
+        stats.burstSize.changeBase(3)
+        stats.burstDelay.baseValue = 0.1f
 
-        stats.minSpread.baseValue = 5f
-        stats.maxSpread.baseValue = 15f
-        stats.spreadBuildup.baseValue = 2f
-        stats.spreadDecay.baseValue = 6f
+        stats.minSpread.baseValue = 3f
+        stats.maxSpread.baseValue = 20f
+        stats.spreadBuildup.baseValue = 1f
+        stats.spreadDecay.baseValue = 4f
 
         stats.turnrate.baseValue = 20f
+
+        stats.fadeTime = 0.25f
 
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("The Pulser is able to shoot 4 projectiles at once, but is limited by ammo that it has to recharge.", 0f)
+        var label = tooltip.addPara("The pulser is similar to the \"Ion Pulser\" weapon. It allows to quickly unleash a burst of shots that deal both normal and emp damage, but is limited by its recharging ammunition.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor())
+
+        label.setHighlight("pulser", "Ion Pulser", "burst of shots", "recharging ammunition")
     }
 
 
