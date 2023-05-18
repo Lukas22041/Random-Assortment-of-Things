@@ -27,6 +27,7 @@ class PocketDimensionSkill : RATBaseFleetSkill() {
     }
 
     override fun apply(stats: MutableFleetStatsAPI?, id: String?, level: Float) {
+        if (Global.getSector() == null || Global.getSector().playerFleet == null) return
         if (!Global.getSector().playerFleet.hasAbility("rat_pocket_dimension_ability"))
         {
             Global.getSector().getCharacterData().addAbility("rat_pocket_dimension_ability")

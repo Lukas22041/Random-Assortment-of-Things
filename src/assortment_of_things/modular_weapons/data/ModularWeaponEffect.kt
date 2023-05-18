@@ -17,7 +17,7 @@ enum class ModularEffectModifier(var displayName: String, var color: Color) {
     Stat("Stat", Color(255, 200, 0)),
     Multiple("Multiple", Color(0, 150, 255)),
     Negative("Negative", Color(255, 0, 0)),
-    Visual("Visual", Color(200, 0, 255))
+    Visual("Visual", Color(0, 150, 255))
 }
 
 abstract class ModularWeaponEffect {

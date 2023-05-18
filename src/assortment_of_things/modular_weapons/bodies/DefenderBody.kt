@@ -61,13 +61,13 @@ class DefenderBody() : ModularWeaponBody() {
         stats.muzzleDuration = 0.3f
         stats.muzzleParticles = 3
 
-        stats.rngAttempts.changeBase(-1)
+        stats.rngAttempts.changeBase(-2)
 
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
         var label = tooltip.addPara("The defender is a small body that causes the weapon to behave as a point-defense weapon. " +
-                "This body is very similar to a \"Vulcan\" type Weapon. It does however have a lower chance to trigger effects than other bodies.",
+                "This body is very similar to a \"Vulcan\" type Weapon. It does however have a way lower chance to trigger rng effects than other bodies.",
             0f, Misc.getTextColor(), Misc.getHighlightColor())
 
         label.setHighlight("defender", "point-defense", "Vulcan", "lower chance to trigger effects")
@@ -100,6 +100,10 @@ class DefenderBody() : ModularWeaponBody() {
 
     override fun getTurretOffset(): Vector2f {
         return Vector2f(10f, 0f)
+    }
+
+    override fun getFireTwoSound(): String {
+        return "vulcan_cannon_fire"
     }
 
 }

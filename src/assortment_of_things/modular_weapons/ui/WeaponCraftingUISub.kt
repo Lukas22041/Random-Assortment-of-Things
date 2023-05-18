@@ -248,7 +248,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
         finalize.onFinish {
             data.finalized = true
-            parentPanel.recreateModifierPanel()
+            parentPanel.reset()
             ModularWeaponLoader.applyStatsToSpec(data)
         }
 

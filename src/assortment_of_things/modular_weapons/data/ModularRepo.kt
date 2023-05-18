@@ -11,8 +11,8 @@ object ModularRepo {
     var bodies = listOf(BlasterBody(), DefenderBody(), PulserBody(), MarksmanBody())
 
     var modifiers = listOf(OnHitExplosiveCharge(), VisualTrail(), PassiveGuidance(), OnHitOvercharged(),  StatDampener(),
-        StatAmplifier(), StatHeavyMunition(), StatEscapeVelocity(), StatDoubleBarrel(), StatAutoloader(), PassiveOvervolt(),
-        StatImprovedCoils(), StatEfficientGyro(), PassiveClover(), PassiveAcidicPayload(),
-        OnHitLifesteal())
+        StatAmplifier(), StatHeavyMunition(), StatEscapeVelocity(), StatDoubleBarrel(), StatAutoloader(), RiftEmitter(),
+        StatImprovedCoils(), StatEfficientGyro(), PassiveClover(), OnHitPayload(),
+        OnHitLifesteal(), OnHitBreach(), VisualLensFlare())
 
 }

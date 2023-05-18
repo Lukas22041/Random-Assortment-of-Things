@@ -3,10 +3,13 @@ package assortment_of_things.modular_weapons.ui
 import assortment_of_things.modular_weapons.data.SectorWeaponData
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.input.InputEventAPI
+import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import lunalib.lunaExtensions.addLunaSpriteElement
+import lunalib.lunaUI.elements.LunaSpriteElement
 import lunalib.lunaUI.panel.LunaBaseCustomPanelPlugin
 import org.lwjgl.input.Keyboard
 
@@ -43,19 +46,57 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
             panel.removeComponent(weaponListPanel)
         }
 
-        weaponListPanel = panel.createCustomPanel(width * 0.2f, height, null)
+        weaponListPanel = panel.createCustomPanel(width * 0.2f, height - 15f, null)
         panel.addComponent(weaponListPanel)
-        weaponListElement = weaponListPanel!!.createUIElement(width * 0.2f, height, true)
+        weaponListPanel!!.position.inTL(0f, 0f)
 
-        weaponListElement!!.addPara("", 0f).position.inTL(7f, 0f)
+        /*var headerElement = weaponListPanel!!.createUIElement(width * 0.2f - 14, height, false)
+        weaponListPanel!!.addUIElement(headerElement)
+        var header = headerElement.addSectionHeading("Designs", Alignment.MID, 0f)*/
 
-        var weapons = ModularWeaponLoader.getAllDataAsList()
+        // header.position.inTL(7f, 0f)
+
+        weaponListElement = weaponListPanel!!.createUIElement(width * 0.2f, height - 15f, true)
+       // var space = weaponListElement!!.addLunaElement(0f, 0f).position.inTL(7f, 0f)
+
+      //  header.position.inTL(7f, 10f)
+
+
+        var firstFinalized = true
+        var firstUnfinished = true
+
+        var weapons = ModularWeaponLoader.getAllDataAsList().sortedWith(compareBy({!it.finalized}, {it.numericalID}))
+        var spacing = 0f
         for (data in weapons)
         {
+            if (firstFinalized && data.finalized)
+            {
+                firstFinalized = false
+                weaponListElement!!.addSpacer(10f)
+                spacing += 10f
+                var header = weaponListElement!!.addSectionHeading("Finished Designs", Alignment.MID, 0f)
+                header.position.setSize(width * 0.2f - 14f, 20f)
+                weaponListElement!!.addSpacer(5f)
+                spacing += header.position.height + 5
+            }
+
+            if (firstUnfinished && !data.finalized)
+            {
+                firstUnfinished = false
+                weaponListElement!!.addSpacer(10f)
+                spacing += 10f
+                var header = weaponListElement!!.addSectionHeading("Unfinished Designs", Alignment.MID, 0f)
+                // header.position.inTL(0f, 0f)
+                header.position.setSize(width * 0.2f - 14f, 20f)
+                header.position.inTL(0f, spacing)
+                weaponListElement!!.addSpacer(5f)
+                spacing += header.position.height + 5
+            }
 
             weaponListElement!!.addLunaElement(width * 0.2f - 14, 50f).apply {
                 enableTransparency = true
-
+                position.inTL(0f, spacing)
+                spacing += 55
                 addText(data.name, Misc.getBasePlayerColor())
                 centerText()
 
@@ -96,7 +137,6 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
                             }
                         }
 
-
                         backgroundColor = Misc.getDarkPlayerColor()
                         borderColor = Misc.getDarkPlayerColor().brighter()
                     }
@@ -118,13 +158,15 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
                 }
             }
 
-
-
             weaponListElement!!.addSpacer(5f)
         }
         weaponListElement!!.addPara("", 0f)
         weaponListPanel!!.addUIElement(weaponListElement)
+        weaponListElement!!.position.inTL(7f, 0f)
+
     }
+
+
 
     fun recreateModifierPanel()
     {

@@ -13,7 +13,7 @@ class PulserBody() : ModularWeaponBody() {
     }
 
     override fun getCapacity(): Float {
-        return 140f
+        return 130f
     }
 
     override fun getSize(): WeaponAPI.WeaponSize {
@@ -28,7 +28,7 @@ class PulserBody() : ModularWeaponBody() {
 
         stats.range.baseValue = 500f
 
-        stats.damagePerShot.baseValue = 120f
+        stats.damagePerShot.baseValue = 100f
         stats.empDamage.baseValue = 300f
 
         stats.energyPerShot.baseValue = 80f
@@ -91,6 +91,10 @@ class PulserBody() : ModularWeaponBody() {
 
     override fun getTurretOffset(): Vector2f {
         return Vector2f(22f, 0f)
+    }
+
+    override fun getFireTwoSound(): String {
+        return "ion_pulser_fire"
     }
 
 }

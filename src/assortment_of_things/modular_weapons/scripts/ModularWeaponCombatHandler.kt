@@ -77,6 +77,8 @@ class ModularWeaponCombatHandler {
             if (interval.intervalElapsed())
             {
 
+
+
                 var targets: MutableList<CombatEntityAPI> = ArrayList()
 
                 targets.addAll(CombatUtils.getShipsWithinRange(projectile.location, 400f).filter { it.owner != projectile.source.owner && it.isAlive && !it.isHulk })
@@ -105,7 +107,7 @@ class ModularWeaponCombatHandler {
         for (projectile in homingProjectiles)
         {
             var range = projectile.projectileSpec.maxRange * 0.75f
-            var speed = projectile.moveSpeed / 8
+            var speed = projectile.moveSpeed / 10
             var proj = projectile
             var targets: MutableList<CombatEntityAPI> = ArrayList()
 
@@ -120,7 +122,7 @@ class ModularWeaponCombatHandler {
                 {
                     var target = i
                     var sizes = listOf(HullSize.FRIGATE, HullSize.DESTROYER, HullSize.CRUISER, HullSize.CAPITAL_SHIP)
-                    if (target.owner == 1 && sizes.contains(target.hullSize)) targets.add(target)
+                    if (sizes.contains(target.hullSize)) targets.add(target)
                 }
             }
             else

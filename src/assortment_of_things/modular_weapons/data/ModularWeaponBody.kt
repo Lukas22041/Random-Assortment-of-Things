@@ -25,5 +25,7 @@ abstract class ModularWeaponBody {
     abstract fun hardpointOffset(): Vector2f
     abstract fun getTurretOffset(): Vector2f
 
+    abstract fun getFireTwoSound() : String
+
 
 }

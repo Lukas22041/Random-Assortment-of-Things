@@ -4,6 +4,7 @@ import assortment_of_things.modular_weapons.data.ModularWeaponBody
 import assortment_of_things.modular_weapons.data.SectorWeaponData
 import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import org.lwjgl.util.vector.Vector2f
 
 class MarksmanBody() : ModularWeaponBody() {
@@ -12,7 +13,7 @@ class MarksmanBody() : ModularWeaponBody() {
     }
 
     override fun getCapacity(): Float {
-        return 160f
+        return 150f
     }
 
     override fun getSize(): WeaponAPI.WeaponSize {
@@ -23,24 +24,24 @@ class MarksmanBody() : ModularWeaponBody() {
         stats.maxCapacity = getCapacity()
         stats.weaponSize = getSize()
 
-        stats.op.baseValue = 20f
+        stats.op.baseValue = 24f
 
-        stats.range.baseValue = 1000f
+        stats.range.baseValue = 1100f
 
-        stats.damagePerShot.baseValue = 350f
+        stats.damagePerShot.baseValue = 700f
         stats.empDamage.baseValue = 0f
 
-        stats.energyPerShot.baseValue = 410f
+        stats.energyPerShot.baseValue = 1200f
 
-        stats.projectileLength.baseValue = 35f
-        stats.projectileWidth.baseValue = 35f
-        stats.projectileSpeed.baseValue = 1000f
+        stats.projectileLength.baseValue = 180f
+        stats.projectileWidth.baseValue = 9.5f
+        stats.projectileSpeed.baseValue = 1200f
 
         stats.maxAmmo.changeBase(Int.MAX_VALUE)
         stats.ammoPerSecond.baseValue = 1f
         stats.reloadSize.baseValue = 1f
 
-        stats.chargeUp.baseValue = 0.0f
+        stats.chargeUp.baseValue = 1f
         stats.chargeDown.baseValue = 1f
         stats.burstSize.changeBase(1)
         stats.burstDelay.baseValue = 0.1f
@@ -50,12 +51,16 @@ class MarksmanBody() : ModularWeaponBody() {
         stats.spreadBuildup.baseValue = 1f
         stats.spreadDecay.baseValue = 4f
 
-        stats.turnrate.baseValue = 15f
+        stats.turnrate.baseValue = 3f
 
+        stats.fadeTime = 0.3f
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("The Marksman is build for long distance fire at a low fire rate.", 0f)
+        var label = tooltip.addPara("The marksman fullfills a similar role to that of a \"Gauss Cannon\". It manages to pick at targets from a safe distance, at the cost of poor flux efficency.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor())
+
+        label.setHighlight("marksman", "Gauss Cannon", "safe distance", "poor")
     }
 
 
@@ -85,6 +90,10 @@ class MarksmanBody() : ModularWeaponBody() {
 
     override fun getTurretOffset(): Vector2f {
         return Vector2f(25f, 0f)
+    }
+
+    override fun getFireTwoSound(): String {
+        return "gauss_cannon_fire"
     }
 
 }

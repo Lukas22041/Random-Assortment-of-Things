@@ -13,7 +13,7 @@ import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 
 
-class PassiveAcidicPayload : ModularWeaponEffect() {
+class OnHitPayload : ModularWeaponEffect() {
     override fun getName(): String {
         return "Acidic Payload"
     }
@@ -59,7 +59,8 @@ class PassiveAcidicPayload : ModularWeaponEffect() {
 
             var color = projectile!!.projectileSpec.fringeColor
 
-            var duration = 10f
+            var maxDuration = 10f
+            var duration = maxDuration
             var interval = IntervalUtil(0.05f, 0.05f)
 
             override fun init(engine: CombatEngineAPI?) {
@@ -91,7 +92,7 @@ class PassiveAcidicPayload : ModularWeaponEffect() {
 
                 var vel = Vector2f(0f, 1f).rotate(target.facing - MathUtils.getRandomNumberInRange(130, 230))
 
-                engine.applyDamage(target, loc, (10 + damageDealt) * amount / duration , DamageType.HIGH_EXPLOSIVE, 0f, true, true, projectile.weapon.ship)
+                engine.applyDamage(target, loc, (10 + damageDealt) * amount / maxDuration , DamageType.HIGH_EXPLOSIVE, 0f, true, true, projectile.weapon.ship)
 
                 interval.advance(amount)
                 if (interval.intervalElapsed())

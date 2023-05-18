@@ -3,6 +3,8 @@ package assortment_of_things.modular_weapons.effects
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
+import com.fs.starfarer.api.impl.combat.NegativeExplosionVisual.NEParams
+import com.fs.starfarer.api.impl.combat.RiftCascadeMineExplosion
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import org.lwjgl.util.vector.Vector2f
@@ -33,6 +35,10 @@ class OnHitExplosiveCharge : ModularWeaponEffect() {
         return ModularEffectModifier.Onhit
     }
 
+    override fun onFire(projectile: DamagingProjectileAPI?, weapon: WeaponAPI?, engine: CombatEngineAPI?) {
+        super.onFire(projectile, weapon, engine)
+
+    }
 
     override fun onHit(projectile: DamagingProjectileAPI?, target: CombatEntityAPI?, point: Vector2f?, shieldHit: Boolean, damageResult: ApplyDamageResultAPI?, engine: CombatEngineAPI?) {
         super.onHit(projectile, target, point, shieldHit, damageResult, engine)
@@ -46,9 +52,7 @@ class OnHitExplosiveCharge : ModularWeaponEffect() {
                 color, color)
             engine!!.spawnDamagingExplosion(spec, projectile.weapon!!.ship, projectile.location, true)
         }
-
     }
-
 
 
 }

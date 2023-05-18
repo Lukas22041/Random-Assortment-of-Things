@@ -15,7 +15,7 @@ class BlasterBody() : ModularWeaponBody() {
     }
 
     override fun getCapacity(): Float {
-        return 150f
+        return 140f
     }
 
     override fun getSize(): WeaponAPI.WeaponSize {
@@ -25,7 +25,7 @@ class BlasterBody() : ModularWeaponBody() {
     override fun addStats(stats: SectorWeaponData) {
         stats.maxCapacity = getCapacity()
         stats.weaponSize = getSize()
-
+        Global.getCurrentState()
         stats.op.baseValue = 14f
 
         stats.range.baseValue = 600f
@@ -92,6 +92,10 @@ class BlasterBody() : ModularWeaponBody() {
 
     override fun getTurretOffset(): Vector2f {
         return Vector2f(10f, 0f)
+    }
+
+    override fun getFireTwoSound(): String {
+        return "heavy_blaster_fire"
     }
 
 }

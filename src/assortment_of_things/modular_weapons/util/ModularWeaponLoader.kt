@@ -46,6 +46,9 @@ object ModularWeaponLoader
 
             data.name = originalWeaponNames.get(data.id)!!
 
+            val re = Regex("[^0-9]")
+            data.numericalID = re.replace(originalWeaponNames.get(data.id)!!, "").toInt()
+
             saveDataToSector(data)
         }
 
@@ -214,6 +217,7 @@ object ModularWeaponLoader
             //modableSpec.correctDerivedStats(data.energyPerShot.modifiedValue / (data.damagePerShot.modifiedValue / data.burstSize.getValue()))
             modableSpec.correctDerivedStats(data)
 
+            modableSpec.setFireSoundTwo(data.body.getFireTwoSound())
 
             if (modableSpec.spec.weaponId == "modular_weapon_0")
             {

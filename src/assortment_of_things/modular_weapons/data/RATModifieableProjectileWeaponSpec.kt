@@ -192,7 +192,10 @@ class RATModifieableProjectileWeaponSpec(var spec: WeaponSpecAPI)  {
     }
 
 
+    //Audio
 
-
+    fun setFireSoundTwo(id: String) {
+        ReflectionUtils.invoke("setFireSoundTwo", spec, id)
+    }
 
 }

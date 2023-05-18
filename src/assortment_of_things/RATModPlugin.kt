@@ -91,6 +91,8 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onNewGame() {
         super.onNewGame()
+        ModularWeaponLoader.applyStatToSpecsForAll()
+
     }
 
     override fun onNewGameAfterTimePass() {

@@ -11,6 +11,8 @@ import kotlin.random.Random
 
 data class SectorWeaponData(var id: String) : Cloneable {
 
+    var numericalID = 0
+
     fun getCapacity(): Float
     {
         var budget = baseCapacity
@@ -24,6 +26,7 @@ data class SectorWeaponData(var id: String) : Cloneable {
     var maxCapacity = 150f
     var baseCapacity = 0f
     var capacityAdditions: MutableMap<String, Float> = HashMap()
+
 
     var body: ModularWeaponBody = BlasterBody()
 
