@@ -22,8 +22,6 @@ import com.fs.starfarer.api.ui.PositionAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.combat.CombatEngine
-import com.fs.state.AppDriver
 import lunalib.backend.ui.components.util.TooltipHelper
 import lunalib.lunaExtensions.*
 import lunalib.lunaUI.elements.LunaSpriteElement
@@ -43,8 +41,12 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
     var lastSelectedModifier: ModularWeaponEffect = ModularRepo.modifiers.first()
     var selectedModifier: ModularWeaponEffect = lastSelectedModifier
+
     var descriptionTooltip: TooltipMakerAPI? = null
     var descriptionPanel: CustomPanelAPI? = null
+
+    var craftingTooltip: TooltipMakerAPI? = null
+    var craftingPanel: CustomPanelAPI? = null
 
     fun init(panel: CustomPanelAPI)
     {
@@ -178,10 +180,23 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
             data.color = colorPicker.getColor()
         }
 
+        //crafting cost
+        var craftingCostElement = modifierElement.addLunaElement(width / 3 - 25 , height * 0.20f)
+        craftingCostElement.position.rightOfMid(visuals.elementPanel, 25f)
+        craftingCostElement.enableTransparency = true
+        craftingCostElement.backgroundAlpha = 0.8f
+
+        var craftingCostHeaderElement = craftingCostElement.elementPanel.createUIElement(width / 3 - 25, height* 0.20f, false)
+        craftingCostElement.elementPanel.addUIElement(craftingCostHeaderElement)
+        var craftingCostHeader = craftingCostHeaderElement.addSectionHeading("Crafting Cost", Alignment.MID, 0f)
+
+        craftingTooltip = craftingCostElement.elementPanel.createUIElement(width * 0.6f , height * 0.40f - craftingCostHeader.position.height, false)
+        craftingCostElement.elementPanel.addUIElement(craftingTooltip)
+        addCraftingCost()
 
         //Simulation
-        var simulation = modifierElement.addLunaElement(width / 3 - 25 , height * 0.20f)
-        simulation.position.rightOfMid(visuals.elementPanel, 25f)
+        var simulation = modifierElement.addLunaElement(width / 3 - 25 , height * 0.10f - 2.5f)
+        simulation.position.rightOfTop(craftingCostElement.elementPanel, 25f)
         simulation.enableTransparency = true
         simulation.addText("Simulation", baseColor = Misc.getBasePlayerColor())
         simulation.centerText()
@@ -201,7 +216,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
             startSimulation()
         }
 
-        var finalize = modifierElement.addLunaChargeButton(width / 3 - 25 , height* 0.20f)
+        var finalize = modifierElement.addLunaChargeButton(width / 3 - 25 , height * 0.10f - 2.5f)
         finalize.parentElement.addTooltipToPrevious(object : TooltipCreator {
             override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
                 return false
@@ -233,7 +248,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         }, TooltipMakerAPI.TooltipLocation.ABOVE)
 
 
-        finalize.position.rightOfMid(simulation.elementPanel, 25f)
+        finalize.position.belowMid(simulation.elementPanel, 5f)
         finalize.enableTransparency = true
         finalize.addText("Finalize", baseColor = Misc.getBasePlayerColor())
         finalize.centerText()
@@ -492,6 +507,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
                         }
                         data.capacityAdditions.set(effect.getName(), effect.getCost().toFloat())
                     }
+                    addCraftingCost()
                 }
 
                 lunaEle.advance {
@@ -531,17 +547,43 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         descriptionTooltip!!.addComponent(descriptionPanel)
         var element = descriptionPanel!!.createUIElement(width * 0.6f - 25 , height * 0.40f - 20f, true)
 
-        element.addPara("Modifier: ${selectedModifier.getName()}", 0f, Misc.getBasePlayerColor(), Misc.getHighlightColor(), "Modifier").position.inTL(5f, 5f)
-        element.addPara("Type: ${selectedModifier.getType().displayName}", 0f, Misc.getBasePlayerColor(), Misc.getHighlightColor(), "Type")
-        element.addPara("Cost: ${selectedModifier.getCost()}", 0f, Misc.getBasePlayerColor(), Misc.getHighlightColor(), "Cost")
+        element.addPara("Modifier: ${selectedModifier.getName()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Modifier").position.inTL(5f, 5f)
+        element.addPara("Type: ${selectedModifier.getType().displayName}", 0f, selectedModifier.getType().color, Misc.getHighlightColor(), "Type")
+        element.addPara("Capacity Cost: ${selectedModifier.getCost()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Capacity Cost")
 
         element.addSpacer(5f)
         element.addPara("Description:", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         element.addSpacer(1f)
 
         selectedModifier.getTooltip(element)
-
         descriptionPanel!!.addUIElement(element)
+    }
+
+    fun addCraftingCost()
+    {
+
+        if (craftingTooltip == null) return
+        if (craftingPanel != null)
+        {
+            craftingTooltip!!.removeComponent(craftingPanel)
+        }
+
+        data.generateCraftingCosts()
+
+        craftingPanel = Global.getSettings().createCustom(width / 3 - 25 , height * 0.20f - 20f, null)
+        craftingTooltip!!.addComponent(craftingPanel)
+        var element = craftingPanel!!.createUIElement(width / 3 - 25 , height * 0.20f - 20f, true)
+        element.addSpacer(5f)
+        for (cost in data.craftingCosts.sortedByDescending { it.quantity.modifiedValue })
+        {
+            var spec = Global.getSettings().getCommoditySpec(cost.commodityId)
+            var img = element.beginImageWithText(spec.iconName, 20f)
+            img.addPara("${spec.name} x${cost.quantity.modifiedValue}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${spec.name}")
+            element.addImageWithText(0f)
+            element.addSpacer(5f)
+        }
+
+        craftingPanel!!.addUIElement(element)
     }
 
     fun addFinalizedPanel() {

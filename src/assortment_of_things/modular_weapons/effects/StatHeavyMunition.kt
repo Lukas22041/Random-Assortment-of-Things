@@ -21,8 +21,8 @@ class StatHeavyMunition : ModularWeaponEffect() {
         tooltip.addPara("Increases the weapons damage and emp damage by 30%. Also increases the projectiles width and length. In turn it decreases the weapons flux efficiency and firerate by 20%", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

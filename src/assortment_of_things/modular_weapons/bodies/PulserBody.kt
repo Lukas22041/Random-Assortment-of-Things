@@ -64,6 +64,9 @@ class PulserBody() : ModularWeaponBody() {
         label.setHighlight("pulser", "Ion Pulser", "burst of shots", "recharging ammunition")
     }
 
+    override fun addCost(data: SectorWeaponData) {
+
+    }
 
 
     override fun getHardpointSprite(): String {

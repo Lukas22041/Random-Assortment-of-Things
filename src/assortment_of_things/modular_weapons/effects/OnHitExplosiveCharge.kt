@@ -1,10 +1,10 @@
 package assortment_of_things.modular_weapons.effects
 
+import assortment_of_things.modular_weapons.data.SectorWeaponData
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
-import com.fs.starfarer.api.impl.combat.NegativeExplosionVisual.NEParams
-import com.fs.starfarer.api.impl.combat.RiftCascadeMineExplosion
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import org.lwjgl.util.vector.Vector2f
@@ -27,8 +27,8 @@ class OnHitExplosiveCharge : ModularWeaponEffect() {
         tooltip.addPara("Adds a 25% chance for the projectile to explode on hit.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+        data.addCraftingCost(Commodities.SUPPLIES, 100f, this)
     }
 
     override fun getType(): ModularEffectModifier {

@@ -7,9 +7,8 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaDelegates.LunaMemory
 import lunalib.lunaExtensions.addLunaElement
-import lunalib.lunaExtensions.addLunaSpriteElement
-import lunalib.lunaUI.elements.LunaSpriteElement
 import lunalib.lunaUI.panel.LunaBaseCustomPanelPlugin
 import org.lwjgl.input.Keyboard
 
@@ -24,6 +23,10 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
     var selectedData: SectorWeaponData? = null
 
     var modifierPanel: CustomPanelAPI? = null
+
+    companion object {
+        var firstBoot: Boolean? by LunaMemory("rat_weapon_firstBoot", true)
+    }
 
     override fun init() {
 
@@ -66,7 +69,69 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
         var firstUnfinished = true
 
         var weapons = ModularWeaponLoader.getAllDataAsList().sortedWith(compareBy({!it.finalized}, {it.numericalID}))
-        var spacing = 0f
+        var spacing = 10f
+
+        var manualButton = weaponListElement!!.addLunaElement(width * 0.2f - 14, 40f)
+        manualButton.apply {
+            enableTransparency = true
+            position.inTL(0f, spacing)
+            selectionGroup = "WeaponSelection"
+
+
+
+            addText("Manual", baseColor = Misc.getBasePlayerColor())
+            if (firstBoot!!) changeText("######")
+            centerText()
+
+            onClick {
+                playClickSound()
+                selectedData = null
+                recreateModifierPanel()
+                select()
+            }
+
+            if (selectedData == null){
+                select()
+                recreateModifierPanel()
+            }
+            onHoverEnter {
+                playScrollSound()
+            }
+
+            advance {
+                if (isSelected())
+                {
+                    backgroundColor = Misc.getDarkPlayerColor()
+                    borderColor = Misc.getDarkPlayerColor().brighter()
+                }
+                else
+                {
+                    backgroundColor = Misc.getDarkPlayerColor().darker()
+
+                    if (isHovering)
+                    {
+                        borderColor = Misc.getDarkPlayerColor().brighter()
+
+                    }
+                    else
+                    {
+                        borderColor = Misc.getDarkPlayerColor()
+                    }
+                }
+
+            }
+        }
+
+        if (firstBoot!!)
+        {
+            manualButton.position.inTL(10f, spacing)
+            weaponListPanel!!.addUIElement(weaponListElement)
+            return
+        }
+
+        spacing += manualButton.position.height
+
+
         for (data in weapons)
         {
             if (firstFinalized && data.finalized)
@@ -76,6 +141,7 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
                 spacing += 10f
                 var header = weaponListElement!!.addSectionHeading("Finished Designs", Alignment.MID, 0f)
                 header.position.setSize(width * 0.2f - 14f, 20f)
+                header.position.inTL(0f, spacing)
                 weaponListElement!!.addSpacer(5f)
                 spacing += header.position.height + 5
             }
@@ -109,11 +175,11 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
                     select()
                 }
 
-                if (selectedData == null){
+               /* if (selectedData == null){
                     selectedData = data
                     select()
                     recreateModifierPanel()
-                }
+                }*/
 
                 if (selectedData == data)
                 {
@@ -170,18 +236,27 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
 
     fun recreateModifierPanel()
     {
-        if (selectedData == null) return
         if (weaponListPanel != null)
         {
             panel.removeComponent(modifierPanel)
         }
 
-
-        var plugin = WeaponCraftingUISub(this, selectedData!!, dialog)
-        modifierPanel = panel.createCustomPanel(width * 0.79f, height, plugin)
-        panel.addComponent(modifierPanel)
-        modifierPanel!!.position.inTL(width * 0.21f, 0f)
-        plugin.init(modifierPanel!!)
+        if (selectedData != null)
+        {
+            var plugin = WeaponCraftingUISub(this, selectedData!!, dialog)
+            modifierPanel = panel.createCustomPanel(width * 0.79f, height, plugin)
+            panel.addComponent(modifierPanel)
+            modifierPanel!!.position.inTL(width * 0.21f, 0f)
+            plugin.init(modifierPanel!!)
+        }
+        else
+        {
+            var plugin = WeaponManualUI(this, dialog)
+            modifierPanel = panel.createCustomPanel(width * 0.79f, height, plugin)
+            panel.addComponent(modifierPanel)
+            modifierPanel!!.position.inTL(width * 0.21f, 0f)
+            plugin.init(modifierPanel!!)
+        }
 
 
 

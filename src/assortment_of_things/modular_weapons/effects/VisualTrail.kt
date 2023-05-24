@@ -1,5 +1,6 @@
 package assortment_of_things.modular_weapons.effects
 
+import assortment_of_things.modular_weapons.data.SectorWeaponData
 import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
 import com.fs.starfarer.api.combat.WeaponAPI
@@ -24,8 +25,8 @@ class VisualTrail : ModularWeaponEffect() {
         tooltip.addPara("Causes the projectile to leave a trail behind its path.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

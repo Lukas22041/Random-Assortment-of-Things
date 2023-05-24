@@ -56,6 +56,14 @@ modular_weapon_7,WEAPON,A modular weapon crafted according to the captains desig
 modular_weapon_8,WEAPON,A modular weapon crafted according to the captains design. Many aspects in this statcard may not be perfectly accurate.,,,,
 ,,,,,,
 ,,,,,,
+rat_weapon_salvage,RESOURCE,"Components recovered from weapons that were beyond saving. 
+
+",,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
 #Joke Content,,,,,,
 rat_jeff_core,RESOURCE,"What at first seems to be just a rat, is actually the result of Tri-Tachyon AI Core research. They seem to have managed to integrate a shrunken gamma-core in to a living being and connect it to its brain.
 This seems to have given Jeff the required intelligence to become sentient. While he lacks the required organs to talk, he is more than happy to communicate through the comm network, and is according to himself, quite skilled at administrating colonies.",,,,

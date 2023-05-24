@@ -4,7 +4,7 @@ Azure Processor,rat_azure_processor,survey_data,,,0,5,,"nonecon, no_loss_from_co
 Amber Processor,rat_amber_processor,survey_data,,,0,5,,"nonecon, no_loss_from_combat",1000,1,graphics/icons/cargo/rat_amber_processor.png,ai_core_pickup,ui_alpha_core_drop,40,,,,HIGH,,1,,
 ,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,
+Salvaged Weapon Components,rat_weapon_salvage,ship_weapons,25,,0,1,,"nonecon, meta",1000,,graphics/icons/cargo/rat_weapon_salvage.png,ui_chip_pickup,ui_modspec_drop,34,,,,HIGH,,1,,
 ,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,

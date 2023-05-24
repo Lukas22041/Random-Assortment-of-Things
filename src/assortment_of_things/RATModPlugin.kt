@@ -7,6 +7,7 @@ import assortment_of_things.campaign.skills.util.SkillManager
 import assortment_of_things.modular_weapons.data.RATModifieableProjectileWeaponSpec
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.modular_weapons.data.RATModifieableProjectileSpec
+import assortment_of_things.modular_weapons.scripts.WeaponComponentsListener
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import assortment_of_things.snippets.ResetAllModularSnippet
@@ -62,6 +63,8 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().registerPlugin(RATCampaignPlugin())
         Global.getSector().addTransientScript(ParallelConstruction())
+
+        Global.getSector().addTransientListener(WeaponComponentsListener())
 
         LootModifier.modifySpawns()
 

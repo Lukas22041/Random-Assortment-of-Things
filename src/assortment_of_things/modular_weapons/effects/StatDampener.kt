@@ -21,8 +21,8 @@ class StatDampener : ModularWeaponEffect() {
         tooltip.addPara("Reduces the Weapons Spread by 50%.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

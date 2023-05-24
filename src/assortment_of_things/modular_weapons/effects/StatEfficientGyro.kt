@@ -21,8 +21,8 @@ class StatEfficientGyro : ModularWeaponEffect() {
         tooltip.addPara("Doubles the weapons base turn rate.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

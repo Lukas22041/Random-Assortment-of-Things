@@ -21,8 +21,8 @@ class StatAmplifier : ModularWeaponEffect() {
         tooltip.addPara("Adds 50 EMP damage to the weapon.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

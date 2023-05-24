@@ -33,7 +33,7 @@ class MarksmanBody() : ModularWeaponBody() {
 
         stats.energyPerShot.baseValue = 1200f
 
-        stats.projectileLength.baseValue = 180f
+        stats.projectileLength.baseValue = 120f
         stats.projectileWidth.baseValue = 9.5f
         stats.projectileSpeed.baseValue = 1200f
 
@@ -63,6 +63,9 @@ class MarksmanBody() : ModularWeaponBody() {
         label.setHighlight("marksman", "Gauss Cannon", "safe distance", "poor")
     }
 
+    override fun addCost(data: SectorWeaponData) {
+
+    }
 
 
     override fun getHardpointSprite(): String {

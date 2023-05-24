@@ -1,5 +1,6 @@
 package assortment_of_things.modular_weapons.effects
 
+import assortment_of_things.modular_weapons.data.SectorWeaponData
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
@@ -31,8 +32,8 @@ class OnHitPayload : ModularWeaponEffect() {
                 " Does nothing if a shield is hit.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

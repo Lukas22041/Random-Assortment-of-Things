@@ -16,6 +16,8 @@ abstract class ModularWeaponBody {
 
     abstract fun addTooltip(tooltip: TooltipMakerAPI)
 
+    abstract fun addCost(data: SectorWeaponData)
+
     abstract fun getHardpointSprite(): String
     abstract fun getTurretSprite(): String
 

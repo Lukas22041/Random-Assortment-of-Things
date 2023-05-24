@@ -21,8 +21,8 @@ class StatDoubleBarrel : ModularWeaponEffect() {
         tooltip.addPara("The Weapon shoots one more projectile at a time.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

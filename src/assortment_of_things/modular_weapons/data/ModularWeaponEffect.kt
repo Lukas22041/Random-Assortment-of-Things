@@ -30,7 +30,7 @@ abstract class ModularWeaponEffect {
 
     abstract fun getTooltip(tooltip: TooltipMakerAPI)
 
-    abstract fun getResourceCost(): MutableMap<String, Float>
+    abstract fun getResourceCost(data: SectorWeaponData)
 
     abstract fun getType(): ModularEffectModifier
 

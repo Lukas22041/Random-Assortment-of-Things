@@ -2,6 +2,7 @@ package assortment_of_things.modular_weapons.data
 
 import assortment_of_things.modular_weapons.bodies.BlasterBody
 import assortment_of_things.modular_weapons.effects.ModularWeaponEffect
+import com.fs.starfarer.api.campaign.econ.MutableCommodityQuantity
 import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.MutableStat
 import com.fs.starfarer.api.combat.WeaponAPI.WeaponSize
@@ -42,7 +43,6 @@ data class SectorWeaponData(var id: String) : Cloneable {
 
     var finalized = false
 
-
     var color = Color(0, 120, 200, 255)
 
     var weaponSize = WeaponSize.MEDIUM
@@ -80,6 +80,33 @@ data class SectorWeaponData(var id: String) : Cloneable {
     var maxSpread = MutableStat(4f)
     var spreadBuildup = MutableStat(1f)
     var spreadDecay = MutableStat(4f)
+
+    var craftingCosts: MutableList<MutableCommodityQuantity> = ArrayList()
+    fun generateCraftingCosts()
+    {
+        craftingCosts.clear()
+        body.addCost(this)
+        for (effect in effects)
+        {
+            effect.getResourceCost(this)
+        }
+    }
+
+    fun addCraftingCost(id: String, amount: Float, effect: ModularWeaponEffect)
+    {
+        var stat = craftingCosts.find { it.commodityId == id}
+
+        if (stat == null)
+        {
+            stat = MutableCommodityQuantity(id)
+            (stat as MutableCommodityQuantity).quantity.modifyFlat(effect.getName(), amount)
+            craftingCosts.add(stat)
+        }
+        else
+        {
+            stat.quantity.modifyFlat(effect.getName(), amount)
+        }
+    }
 
     var rngAttempts = ModularStatInt(0)
     fun rngCheck(chance: Float, attemptsDone: Int) : Boolean

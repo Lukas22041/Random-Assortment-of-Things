@@ -1,18 +1,13 @@
 package assortment_of_things.modular_weapons.effects
 
+import assortment_of_things.modular_weapons.data.SectorWeaponData
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.combat.BreachOnHitEffect
-import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.IntervalUtil
-import com.fs.starfarer.coreui.x
-import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.combat.CombatUtils
 import org.lwjgl.util.vector.Vector2f
-import org.magiclib.util.MagicFakeBeam
-import org.magiclib.util.MagicLensFlare
 
 
 class OnHitBreach : ModularWeaponEffect() {
@@ -32,8 +27,8 @@ class OnHitBreach : ModularWeaponEffect() {
         tooltip.addPara("Deals an additional 20% of the weapons damage to armor. This damage is not reduced by armor.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+        data.addCraftingCost(Commodities.SUPPLIES, 100f, this)
     }
 
     override fun getType(): ModularEffectModifier {

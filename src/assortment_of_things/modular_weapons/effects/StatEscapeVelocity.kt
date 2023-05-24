@@ -21,8 +21,8 @@ class StatEscapeVelocity : ModularWeaponEffect() {
         tooltip.addPara("Increases the weapons range by 100 units.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

@@ -1,5 +1,6 @@
 package assortment_of_things.modular_weapons.effects
 
+import assortment_of_things.modular_weapons.data.SectorWeaponData
 import assortment_of_things.modular_weapons.effects.plugins.ModularRiftEmitterPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.CombatEngineAPI
@@ -25,8 +26,8 @@ class RiftEmitter : ModularWeaponEffect() {
         tooltip.addPara("Spawns rifts along the projectiles path that shoot EMP Arcs towards nearby enemies. The amount spawned is based on the luck stat.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

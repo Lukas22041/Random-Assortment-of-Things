@@ -127,6 +127,8 @@ object ModularWeaponLoader
         //changes all the relevant base stats
         data.body.addStats(data)
 
+        data.generateCraftingCosts()
+
         for (effect in data.effects)
         {
             effect.addStats(data)

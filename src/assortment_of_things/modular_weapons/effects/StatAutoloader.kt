@@ -21,8 +21,8 @@ class StatAutoloader : ModularWeaponEffect() {
         tooltip.addPara("Increases the weapons firerate by 25%. If the weapon uses ammo, increases the maximum ammo count by 20 and increases the ammo recharge rate by 1.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

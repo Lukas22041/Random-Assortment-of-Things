@@ -65,6 +65,9 @@ class BlasterBody() : ModularWeaponBody() {
         label.setHighlight("blaster", "Heavy Blaster")
     }
 
+    override fun addCost(data: SectorWeaponData) {
+
+    }
 
 
     override fun getHardpointSprite(): String {

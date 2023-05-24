@@ -1,10 +1,12 @@
 package assortment_of_things.modular_weapons.effects
 
+import assortment_of_things.modular_weapons.data.SectorWeaponData
 import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.CombatEntityAPI
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
@@ -27,8 +29,9 @@ class OnHitLifesteal : ModularWeaponEffect() {
         tooltip.addPara("On hull-hit, 1/5 of hull damage dealt is converted in to repaired hull for the firing ship. A ship can only ever recover up to 50% of its own hull per combat session through this effect.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+        data.addCraftingCost(Commodities.HEAVY_MACHINERY, 100f, this)
+
     }
 
     override fun getType(): ModularEffectModifier {

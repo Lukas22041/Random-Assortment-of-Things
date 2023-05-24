@@ -1,13 +1,11 @@
 package assortment_of_things.modular_weapons.effects
 
-import assortment_of_things.modular_weapons.util.ModularWeaponLoader
+import assortment_of_things.modular_weapons.data.SectorWeaponData
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
-import com.fs.starfarer.api.impl.combat.BreachOnHitEffect
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
-import org.magiclib.plugins.MagicTrailPlugin
 import org.magiclib.util.MagicLensFlare
 
 
@@ -28,8 +26,8 @@ class VisualLensFlare : ModularWeaponEffect() {
         tooltip.addPara("Creates a small lens-flare effect on projectile impact.", 0f)
     }
 
-    override fun getResourceCost(): MutableMap<String, Float> {
-        return hashMapOf()
+    override fun getResourceCost(data: SectorWeaponData) {
+
     }
 
     override fun getType(): ModularEffectModifier {

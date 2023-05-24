@@ -73,6 +73,9 @@ class DefenderBody() : ModularWeaponBody() {
         label.setHighlight("defender", "point-defense", "Vulcan", "lower chance to trigger effects")
     }
 
+    override fun addCost(data: SectorWeaponData) {
+
+    }
 
 
     override fun getHardpointSprite(): String {

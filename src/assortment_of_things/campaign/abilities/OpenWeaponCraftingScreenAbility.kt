@@ -2,9 +2,12 @@ package assortment_of_things.campaign.abilities
 
 import assortment_of_things.modular_weapons.ui.WeaponCraftingUIMain
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility
+import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaProgressBar
 import lunalib.lunaExtensions.openLunaCustomPanel
 
 class OpenWeaponCraftingScreenAbility : BaseDurationAbility() {
