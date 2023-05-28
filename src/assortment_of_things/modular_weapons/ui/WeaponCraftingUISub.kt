@@ -39,7 +39,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
     lateinit var modifierElement: TooltipMakerAPI
 
 
-    var lastSelectedModifier: ModularWeaponEffect = ModularRepo.modifiers.first()
+    var lastSelectedModifier: ModularWeaponEffect = ModularRepo.getUnlockedModifier().first()
     var selectedModifier: ModularWeaponEffect = lastSelectedModifier
 
     var descriptionTooltip: TooltipMakerAPI? = null
@@ -357,6 +357,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
                 lunaEle.select()
                 lunaEle.playClickSound()
                 data.body = body
+                addCraftingCost()
             }
 
             lunaEle.advance {
@@ -436,7 +437,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
         var first = true
         ModularEffectModifier.values().forEach { currentType ->
-            for (effect in ModularRepo.modifiers.filter { it.getType() == currentType }.sortedByDescending { it.getCost() })
+            for (effect in ModularRepo.getUnlockedModifier().filter { it.getType() == currentType }.sortedByDescending { it.getCost() })
             {
 
                 var lunaEle = element.addLunaElement(w, h * 0.15f)
@@ -578,7 +579,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         {
             var spec = Global.getSettings().getCommoditySpec(cost.commodityId)
             var img = element.beginImageWithText(spec.iconName, 20f)
-            img.addPara("${spec.name} x${cost.quantity.modifiedValue}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${spec.name}")
+            img.addPara("${spec.name}\nx${cost.quantity.modifiedValue}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${spec.name}")
             element.addImageWithText(0f)
             element.addSpacer(5f)
         }
@@ -587,7 +588,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
     }
 
     fun addFinalizedPanel() {
-        var craftButton = modifierElement.addLunaElement(width / 2 - 25, height * 0.15f)
+        var craftButton = modifierElement.addLunaElement(width / 2 - 25, height * 0.20f)
         //sizeSelector.position.belowLeft(bar.elementPanel, height * 0.02f)
         craftButton.position.inTL(0f, 15f)
         craftButton.enableTransparency = true
@@ -597,7 +598,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         craftButton.onClick {
             craftButton.playSound("ui_acquired_blueprint")
             Global.getSector().playerFleet.cargo.addWeapons(data.id, 1)
-            Global.getSector().campaignUI.messageDisplay.addMessage("Crafted 1 " + data.name + " !")
+            Global.getSector().campaignUI.messageDisplay.addMessage("Crafted ${data.name} (In Inventory: ${Global.getSector().playerFleet.cargo.getNumWeapons(data.id)}x)")
 
 
 
@@ -611,7 +612,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         }
 
 
-        var resourceCosts = modifierElement.addLunaElement(width / 2 - 25, height * 0.15f)
+        var resourceCosts = modifierElement.addLunaElement(width / 2 - 25, height * 0.20f)
         resourceCosts.position.rightOfMid(craftButton.elementPanel, 25f)
         resourceCosts.enableTransparency = true
         resourceCosts.addText("Crafting Cost (TBD)", Misc.getBasePlayerColor())

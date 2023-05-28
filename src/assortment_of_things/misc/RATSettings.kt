@@ -1,6 +1,7 @@
 package assortment_of_things.misc
 
 import assortment_of_things.campaign.procgen.LootModifier
+import assortment_of_things.campaign.ui.MinimapUI
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.ShipAPI
@@ -43,9 +44,15 @@ object RATSettings : LunaSettingsListener
     var enableModular = LunaSettings.getBoolean(modID, "rat_modularEnabled")
 
 
+    //UI
+    var enableMinimap = LunaSettings.getBoolean(modID, "rat_enableMinimap")
+    var minimapShape = LunaSettings.getString(modID, "rat_minimapShape")
+    var minimapStarscape = LunaSettings.getBoolean(modID, "rat_minimapStarscape")
+    var minimapFueloverlay = LunaSettings.getBoolean(modID, "rat_minimapFuel")
+
 
     //Jokes
-    var sillyContentEnabled = LunaSettings.getBoolean(modID, "rat_sillyContent")
+    var sillyContentEnabled = LunaSettings.getBoolean(modID, "rat_minimapCenter")
     //var skeleton = LunaSettings.getBoolean(modID, "rat_theSkeletonAppears")
 
     override fun settingsChanged(modID: String) {
@@ -75,6 +82,12 @@ object RATSettings : LunaSettingsListener
         shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")
 
         enableModular = LunaSettings.getBoolean(modID, "rat_modularEnabled")
+
+        enableMinimap = LunaSettings.getBoolean(modID, "rat_enableMinimap")
+        minimapShape = LunaSettings.getString(modID, "rat_minimapShape")
+        minimapStarscape = LunaSettings.getBoolean(modID, "rat_minimapStarscape")
+        minimapFueloverlay = LunaSettings.getBoolean(modID, "rat_minimapFuel")
+        MinimapUI.reset = true
 
         LootModifier.modifySpawns()
     }

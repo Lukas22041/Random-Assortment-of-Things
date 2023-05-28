@@ -1,26 +1,21 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
 ,,,,,,,,
+#General,,,,,,,,
 rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,
 rat_parallelEnabled,Enable Parallel Construction,Boolean,false,,"Removes the queue system in Colony Construction, allowing everything to be built at the same time.",,,
 rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,,"If set to true and parallel construction is enabled, it will apply the same effect to NPC markets.",,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-rat_modularHeader,Modular Weapons,Header,Modular Weapons (Beta),,,,,
-rat_modularEnabled,Enable Modular Weapons,Boolean,false,,"RAT adds a kind of weapon that the player can adjust the stats and functionality of. This feature is currently in beta, meaning that it is largely untested and unfinished. There is basicly zero balance in it as of now. To access it, enable it with this option, then when you load in to a save you gain a new Ability. Use this ability to open the design menu. 
-
-You have a limited amount of slots to modify, after you are done modifying a weapon, you want to finalize it, which allows you to craft the weapon (currently for no cost), but in exchange you wont be able to make any changes to the weapon again.",,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
 ,,,,,,,,
 rat_miscHeader,Miscellaneous,Header,Miscellaneous,,,,,
 rat_forceDisableHelp,Force disable help-popups,Boolean,false,,"Disables help popups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, [does not re-enable] help-popups if disabled.",,,
 ,,,,,,,,
 ,,,,,,,,
 ,,,,,,,,
-,,,,,,,,
+#Modular,,,,,,,,
+rat_modularHeader,Modular Weapons,Header,Modular Weapons (Beta),,,,,Modular Weapons
+rat_modularEnabled,Enable Modular Weapons,Boolean,false,,"RAT adds a kind of weapon that the player can adjust the stats and functionality of. This feature is currently in beta, meaning that it is largely untested and unfinished. There is basicly zero balance in it as of now. To access it, enable it with this option, then when you load in to a save you gain a new Ability. Use this ability to open the design menu. 
+
+You have a limited amount of slots to modify, after you are done modifying a weapon, you want to finalize it, which allows you to craft the weapon (currently for no cost), but in exchange you wont be able to make any changes to the weapon again.",,,Modular Weapons
+rat_modularDevmode,Enable Modular Devmode,Boolean,false,,Removes crafting costs for Modular Weapons and displays all modifiers even if they are not unlocked yet.,,,Modular Weapons
 ,,,,,,,,
 ,,,,,,,,
 rat_themeHeader,Procedual Generation Content,Header,Procedual Generation,,,,,Procgen
@@ -35,7 +30,7 @@ This section is basicly a simplified and more idiot-proof version of Adjusted Se
 rat_systemScaleV2,Change amount of generated Systems,Radio,Vanilla,"Vanilla, 150%, 200%, 250%","Changes the amount of generated Systems. 
 An increase in generated systems come with a [heavy performance cost].
 
-Vanilla Themes will scale with the amount of systems, Modded Themes may not.",1,4,Procgen
+Vanilla Themes will scale with the amount of systems, Modded Themes may not.",,,Procgen
 rat_hyperspaceCloudsMod,Hyperspace Clouds Spawn Modifier,Double,0.8,,"Lets you modify how many hyperspace clouds spawn. Vanilla uses a value of 0.8. A lower value will spawn less of them, with a value of 0 spawning none. ",0,1.0,Procgen
 #rat_improvedMisc,Improved Miscellaneous Theme,Boolean,false,,"Improves the ""Miscellaneous"" Theme. Starsector generates this theme as a filler for whatever system didnt receive anything special during procgen. In Vannila, those systems rarely give anything of worth, often spawning completely empty systems. Toggling this will prevent those from ever being empty, and gives them a lot more loot.",,,Procgen
 ,,,,,,,,
@@ -48,11 +43,22 @@ rat_shipBPLootFrequency,Ship BP Loot Frequency,Double,1,,"Multiplies the amount 
 Can be changed mid-save.",1.0,3.0,Procgen
 ,,,,,,,,
 ,,,,,,,,
+#UI,,,,,,,,
+rat_UIHeader,Minimap,Header,Minimap,,,,,UI Enhancement
+rat_enableMinimap,Enable Minimap,Boolean,false,,"Replaces the [Campaign Radar] with an interactable minimap that shows information for the current location. Requires a [save-reload] to be enabled/disabled.
+
+The view centers on the fleets location and can not be manualy moved, unless the game is currently paused.
+
+[Warning]: This is relatively performance expensive, especialy so in hyperspace if the amount of generated systems has been increased.",,,UI Enhancement
+rat_minimapShape,Minimap Shape,Radio,Wide,"Wide, Square","Sets the form-factor of the minimap.
+""Wide"" takes up more space, but should be easier to interact with, where as ""Square"" will take up around the same space as the Radar.
+",,,UI Enhancement
+rat_minimapStarscape,Starscape Mode,Boolean,false,,"Displays the minimap in ""Starscape"" mode when in Hyperspace. Looks nicer, but can not display sensor activity, slipstreams or hyperspace clouds.",,,UI Enhancement
+rat_minimapFuel,Enable Fuel Overlay,Boolean,true,,"Shows the fuel range overlay on the minimap in hyperspace. 
+",,,UI Enhancement
 ,,,,,,,,
 ,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
+#Other,,,,,,,,
 rat_jokesHeader,Jokes,Header,Jokes,,,,,Other
 rat_sillyContent,Enable Joke Content,Boolean,false,,"If set to true, enables some silly or lore breaking content that may be added in to other aspects of the mod. As of now those arent any major things, but if you dont enjoy things breaking the lore or maybe feeling out of place, then keep this disabled.",,,Other
 rat_theSkeletonAppears,The Skeleton Appears,Boolean,false,,,,,Other

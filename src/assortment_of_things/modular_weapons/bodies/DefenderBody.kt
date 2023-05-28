@@ -2,6 +2,7 @@ package assortment_of_things.modular_weapons.bodies
 
 import assortment_of_things.modular_weapons.data.ModularWeaponBody
 import assortment_of_things.modular_weapons.data.SectorWeaponData
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -74,7 +75,7 @@ class DefenderBody() : ModularWeaponBody() {
     }
 
     override fun addCost(data: SectorWeaponData) {
-
+        data.addCraftingCost(RATItems.SALVAGED_WEAPON_COMPONENTS, 5f, this)
     }
 
 

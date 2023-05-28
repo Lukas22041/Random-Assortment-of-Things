@@ -1,6 +1,7 @@
 package assortment_of_things.modular_weapons.data
 
 import assortment_of_things.modular_weapons.bodies.BlasterBody
+import assortment_of_things.modular_weapons.bodies.DefenderBody
 import assortment_of_things.modular_weapons.effects.ModularWeaponEffect
 import com.fs.starfarer.api.campaign.econ.MutableCommodityQuantity
 import com.fs.starfarer.api.combat.DamageType
@@ -24,18 +25,17 @@ data class SectorWeaponData(var id: String) : Cloneable {
         return budget
     }
 
-    var maxCapacity = 150f
     var baseCapacity = 0f
     var capacityAdditions: MutableMap<String, Float> = HashMap()
 
 
-    var body: ModularWeaponBody = BlasterBody()
+    var body: ModularWeaponBody = DefenderBody()
+    var maxCapacity = body.getCapacity()
+
 
     var effects: MutableList<ModularWeaponEffect> = ArrayList()
 
 
-    var bodyName: String = "Blaster"
-    var effectNames: MutableList<String> = ArrayList()
 
     var name = "Modular Weapon"
     var description = "Custom Description"
@@ -105,6 +105,22 @@ data class SectorWeaponData(var id: String) : Cloneable {
         else
         {
             stat.quantity.modifyFlat(effect.getName(), amount)
+        }
+    }
+
+    fun addCraftingCost(id: String, amount: Float, body: ModularWeaponBody)
+    {
+        var stat = craftingCosts.find { it.commodityId == id}
+
+        if (stat == null)
+        {
+            stat = MutableCommodityQuantity(id)
+            (stat as MutableCommodityQuantity).quantity.modifyFlat(body.getName(), amount)
+            craftingCosts.add(stat)
+        }
+        else
+        {
+            stat.quantity.modifyFlat(body.getName(), amount)
         }
     }
 
