@@ -21,7 +21,7 @@ class MinimapUI : EveryFrameScript {
     var added = false
     var panel: CustomPanelAPI? = null
     var map: UIPanelAPI? = null
-    var lastLocation: LocationAPI = Global.getSector().playerFleet.starSystem
+    var lastLocation: LocationAPI = Global.getSector().playerFleet.containingLocation
 
     companion object {
         var reset = false
