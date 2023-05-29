@@ -243,11 +243,21 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
 
         if (selectedData != null)
         {
-            var plugin = WeaponCraftingUISub(this, selectedData!!, dialog)
-            modifierPanel = panel.createCustomPanel(width * 0.79f, height, plugin)
-            panel.addComponent(modifierPanel)
-            modifierPanel!!.position.inTL(width * 0.21f, 0f)
-            plugin.init(modifierPanel!!)
+            if (!selectedData!!.finalized) {
+                var plugin = WeaponCraftingUIDesign(this, selectedData!!, dialog)
+                modifierPanel = panel.createCustomPanel(width * 0.79f, height, plugin)
+                panel.addComponent(modifierPanel)
+                modifierPanel!!.position.inTL(width * 0.21f, 0f)
+                plugin.init(modifierPanel!!)
+            }
+            else
+            {
+                var plugin = WeaponCraftingUIFinalized(this, selectedData!!, dialog)
+                modifierPanel = panel.createCustomPanel(width * 0.79f, height, plugin)
+                panel.addComponent(modifierPanel)
+                modifierPanel!!.position.inTL(width * 0.21f, 0f)
+                plugin.init(modifierPanel!!)
+            }
         }
         else
         {

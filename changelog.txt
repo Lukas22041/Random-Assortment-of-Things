@@ -1,3 +1,33 @@
+Version 1.4.0
+
+Likely not save compatible with prior versions.
+
+General
+-> Added "UI" Config Tab
+-> Moved "Modular Weapons" to its own config tab.
+-> Added "Minimap" config, which allows replacing the campaign radar with a minimap.
+
+-> Fixed Skills not appearing
+-> Fixed one of the skills breaking a save.
+
+Modular Weapons
+
+-> You can now enter a simulation from the weapon design screen, allowing you to playtest weapons before finalizing them.
+-> Weapons now have a crafting cost. 
+-> Modifiers now need to be unlocked through battles.
+-> Added a small "tutorial" screen.
+-> Added more modifiers.
+-> All Bodies have been changed to mimic the stats and looks of vanilla counterparts.
+-> Bodies now change the weapons sound.
+-> The designs selection now splits in to a "Finished Design" and "Unfinished Designs" list
+-> The "Guidance" modifier will now cause projectiles to home on to projectiles & fighters if the weapon is set as point-defense
+-> Added a devmode config which allows ignoring modifier unlocks and crafting costs.
+-> Improved modifier descriptions.
+-> Fixed refit screens flux cost being wrong for builds with limited ammo.
+-> Fixed "Acidic Payload" getting stronger over time.
+
+
+
 Version 1.3.4
 
 -> Updated to 0.96a

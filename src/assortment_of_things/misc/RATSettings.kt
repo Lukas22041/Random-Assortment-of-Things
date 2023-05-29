@@ -42,6 +42,7 @@ object RATSettings : LunaSettingsListener
 
     //Modular
     var enableModular = LunaSettings.getBoolean(modID, "rat_modularEnabled")
+    var modularDevmode = LunaSettings.getBoolean(modID, "rat_modularDevmode")
 
 
     //UI
@@ -82,6 +83,7 @@ object RATSettings : LunaSettingsListener
         shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")
 
         enableModular = LunaSettings.getBoolean(modID, "rat_modularEnabled")
+        modularDevmode = LunaSettings.getBoolean(modID, "rat_modularDevmode")
 
         enableMinimap = LunaSettings.getBoolean(modID, "rat_enableMinimap")
         minimapShape = LunaSettings.getString(modID, "rat_minimapShape")

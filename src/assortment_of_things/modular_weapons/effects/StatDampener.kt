@@ -1,7 +1,10 @@
 package assortment_of_things.modular_weapons.effects
 
 import assortment_of_things.modular_weapons.data.SectorWeaponData
+import assortment_of_things.strings.RATItems
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 
 
 class StatDampener : ModularWeaponEffect() {
@@ -18,11 +21,13 @@ class StatDampener : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Reduces the Weapons Spread by 50%.", 0f)
+        tooltip.addPara("Reduces the weapons spread by 50%%.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "spread", "50%")
     }
 
     override fun getResourceCost(data: SectorWeaponData) {
-
+        data.addCraftingCost(Commodities.SUPPLIES, 3f, this)
+        data.addCraftingCost(RATItems.SALVAGED_WEAPON_COMPONENTS, 3f, this)
     }
 
     override fun getType(): ModularEffectModifier {

@@ -4,6 +4,7 @@ import assortment_of_things.modular_weapons.data.SectorWeaponData
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
@@ -28,11 +29,13 @@ class OnHitPayload : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("25% chance for a projectile to get stuck in the enemy hull, causing its acidic payload to spill, which deals damage over a timeframe of 10 seconds equal to twice the projectiles damage." +
-                " Does nothing if a shield is hit.", 0f)
+        tooltip.addPara("25%% chance for a projectile to get stuck in the enemy hull, causing its acidic payload to spill, which deals damage over a timeframe of 10 seconds equal to twice the projectiles damage." +
+                " Does nothing if a shield is hit.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "25%", "damage over a timeframe of 10 seconds", "twice")
     }
 
     override fun getResourceCost(data: SectorWeaponData) {
+        data.addCraftingCost(Commodities.ORGANICS, 10f, this)
 
     }
 

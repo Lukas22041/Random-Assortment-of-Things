@@ -90,21 +90,22 @@ class RATModPlugin : BaseModPlugin() {
         //ModularWeaponLoader.resetAllData()
         ModularWeaponLoader.applyStatToSpecsForAll()
 
-        if (!Global.getSector().characterData.abilities.contains("rat_weapon_forge") && RATSettings.enableModular!!)
-        {
-            Global.getSector().getCharacterData().addAbility("rat_weapon_forge")
-            Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_weapon_forge", true, 0f);
-        }
+
     }
 
     override fun onNewGame() {
         super.onNewGame()
         ModularWeaponLoader.applyStatToSpecsForAll()
-
     }
 
     override fun onNewGameAfterTimePass() {
         super.onNewGameAfterTimePass()
+
+        if (RATSettings.enableModular!!)
+        {
+            Global.getSector().getCharacterData().addAbility("rat_weapon_forge")
+            Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_weapon_forge", true, 0f);
+        }
 
         var chirality = Global.getSector().getFaction("chirality")
         chirality?.adjustRelationship("player", -1f)

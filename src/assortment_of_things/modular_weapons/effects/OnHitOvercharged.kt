@@ -7,7 +7,9 @@ import com.fs.starfarer.api.combat.CombatEntityAPI
 import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
@@ -26,10 +28,12 @@ class OnHitOvercharged : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Adds a 30% chance for the projectile to spawn an EMP Arc on hit.", 0f)
+        tooltip.addPara("Adds a 30%% chance for the projectile to spawn an EMP Arc on hit.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "30%", "EMP Arc")
     }
 
     override fun getResourceCost(data: SectorWeaponData) {
+        data.addCraftingCost(Commodities.METALS, 10f, this)
 
     }
 

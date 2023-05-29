@@ -12,13 +12,13 @@ object ModularRepo {
     var bodies = listOf(DefenderBody(), BlasterBody(), PulserBody(), MarksmanBody())
 
     var modifiers = listOf(OnHitExplosiveCharge(), VisualTrail(), PassiveGuidance(), OnHitOvercharged(),  StatDampener(),
-        StatAmplifier(), StatHeavyMunition(), StatEscapeVelocity(), StatDoubleBarrel(), StatAutoloader(), RiftEmitter(),
+        StatHeavyMunition(), StatEscapeVelocity(), StatDoubleBarrel(), StatAutoloader(), RiftEmitter(),
         StatImprovedCoils(), StatEfficientGyro(), PassiveClover(), OnHitPayload(),
-        OnHitLifesteal(), OnHitBreach(), VisualLensFlare())
+        OnHitLifesteal(), OnHitBreach(), VisualLensFlare(), StatStressReductions())
 
 
     private var unlockedModifiers: MutableList<String>? by LunaMemory("rat_unlocked_modifiers",
-        mutableListOf("Overcharged", "Explosive Charges", "Heavy Munition", "Autoloader", "Trail", "Lens Flare"))
+        mutableListOf("Overcharged", "Explosive Charges", "Dampener", "Improved Coils", "Autoloader", "Efficient Gyros", "Trail", "Lens Flare"))
 
     fun getUnlockedModifier() : List<ModularWeaponEffect> {
         return modifiers.filter { unlockedModifiers!!.contains(it.getName()) }

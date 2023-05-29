@@ -1,8 +1,10 @@
 package assortment_of_things.modular_weapons.effects
 
 import assortment_of_things.modular_weapons.data.SectorWeaponData
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
@@ -27,7 +29,7 @@ class VisualLensFlare : ModularWeaponEffect() {
     }
 
     override fun getResourceCost(data: SectorWeaponData) {
-
+       
     }
 
     override fun getType(): ModularEffectModifier {

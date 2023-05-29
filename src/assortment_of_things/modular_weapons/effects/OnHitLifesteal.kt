@@ -8,6 +8,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 
@@ -26,11 +27,13 @@ class OnHitLifesteal : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("On hull-hit, 1/5 of hull damage dealt is converted in to repaired hull for the firing ship. A ship can only ever recover up to 50% of its own hull per combat session through this effect.", 0f)
+        tooltip.addPara("On hit, 1/5th of hull damage dealt is converted in to repaired hull for the firing ship. " +
+                "A ship can only ever recover up to 50%% of its own hull per combat session through this effect.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "1/5th", "repaired", "50%")
     }
 
     override fun getResourceCost(data: SectorWeaponData) {
-        data.addCraftingCost(Commodities.HEAVY_MACHINERY, 100f, this)
+        data.addCraftingCost(Commodities.ORGANICS, 10f, this)
 
     }
 

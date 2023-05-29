@@ -1,7 +1,10 @@
 package assortment_of_things.modular_weapons.effects
 
 import assortment_of_things.modular_weapons.data.SectorWeaponData
+import assortment_of_things.strings.RATItems
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 
 
 class StatAutoloader : ModularWeaponEffect() {
@@ -10,7 +13,7 @@ class StatAutoloader : ModularWeaponEffect() {
     }
 
     override fun getCost(): Int {
-        return 20
+        return 30
     }
 
     override fun getIcon(): String {
@@ -18,11 +21,14 @@ class StatAutoloader : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Increases the weapons firerate by 25%. If the weapon uses ammo, increases the maximum ammo count by 20 and increases the ammo recharge rate by 1.", 0f)
+        tooltip.addPara("Increases the weapons firerate by 25%%. If the weapon uses ammo, increases the maximum ammo count by 20 and increases the ammo recharge rate by 1.", 0f
+            ,
+            Misc.getTextColor(), Misc.getHighlightColor(), "25%", "uses ammo", "20", "1")
     }
 
     override fun getResourceCost(data: SectorWeaponData) {
-
+        data.addCraftingCost(Commodities.SUPPLIES, 3f, this)
+        data.addCraftingCost(RATItems.SALVAGED_WEAPON_COMPONENTS, 3f, this)
     }
 
     override fun getType(): ModularEffectModifier {

@@ -11,10 +11,13 @@ rat_forceDisableHelp,Force disable help-popups,Boolean,false,,"Disables help pop
 ,,,,,,,,
 ,,,,,,,,
 #Modular,,,,,,,,
-rat_modularHeader,Modular Weapons,Header,Modular Weapons (Beta),,,,,Modular Weapons
-rat_modularEnabled,Enable Modular Weapons,Boolean,false,,"RAT adds a kind of weapon that the player can adjust the stats and functionality of. This feature is currently in beta, meaning that it is largely untested and unfinished. There is basicly zero balance in it as of now. To access it, enable it with this option, then when you load in to a save you gain a new Ability. Use this ability to open the design menu. 
+rat_modularHeader,Modular Weapons,Header,Modular Weapons,,,,,Modular Weapons
+rat_modularEnabled,Enable Modular Weapons,Boolean,false,,"Adds [Modular Superweapons]. With them you can select multiple effects of your choice on to a variety of presets. Those weapons tend to be much stronger than average by design.
 
-You have a limited amount of slots to modify, after you are done modifying a weapon, you want to finalize it, which allows you to craft the weapon (currently for no cost), but in exchange you wont be able to make any changes to the weapon again.",,,Modular Weapons
+Toggling this config only has an effect for [new games]. Enabling it will give the player an ability called ""Weapon Forge"" at the beginning of the game.
+
+This feature is mostly functional, but still very much in development.
+",,,Modular Weapons
 rat_modularDevmode,Enable Modular Devmode,Boolean,false,,Removes crafting costs for Modular Weapons and displays all modifiers even if they are not unlocked yet.,,,Modular Weapons
 ,,,,,,,,
 ,,,,,,,,

@@ -7,6 +7,7 @@ import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.combat.BreachOnHitEffect
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import org.lwjgl.util.vector.Vector2f
 
 
@@ -24,11 +25,13 @@ class OnHitBreach : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Deals an additional 20% of the weapons damage to armor. This damage is not reduced by armor.", 0f)
+        tooltip.addPara("Deals an additional 20%% of the weapons damage to armor. This damage is not reduced by armor.", 0f,
+        Misc.getTextColor(), Misc.getHighlightColor(), "20%", "not reduced")
     }
 
     override fun getResourceCost(data: SectorWeaponData) {
-        data.addCraftingCost(Commodities.SUPPLIES, 100f, this)
+        data.addCraftingCost(Commodities.METALS, 10f, this)
+
     }
 
     override fun getType(): ModularEffectModifier {

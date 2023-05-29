@@ -6,7 +6,9 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
 import com.fs.starfarer.api.combat.WeaponAPI
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 
 
 class RiftEmitter : ModularWeaponEffect() {
@@ -23,11 +25,12 @@ class RiftEmitter : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Spawns rifts along the projectiles path that shoot EMP Arcs towards nearby enemies. The amount spawned is based on the luck stat.", 0f)
+        tooltip.addPara("Spawns rifts along the projectiles path that shoot EMP Arcs towards nearby enemies. The amount spawned is based on random chance.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "rifts", "EMP Arcs")
     }
 
     override fun getResourceCost(data: SectorWeaponData) {
-
+        data.addCraftingCost(Commodities.VOLATILES, 10f, this)
     }
 
     override fun getType(): ModularEffectModifier {

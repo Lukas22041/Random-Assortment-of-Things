@@ -7,6 +7,7 @@ import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import org.lwjgl.util.vector.Vector2f
 
 
@@ -24,11 +25,12 @@ class OnHitExplosiveCharge : ModularWeaponEffect() {
     }
 
     override fun getTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Adds a 25% chance for the projectile to explode on hit.", 0f)
+        tooltip.addPara("Adds a 25%% chance for the projectile to explode on hit.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "25%", "explode")
     }
 
     override fun getResourceCost(data: SectorWeaponData) {
-        data.addCraftingCost(Commodities.SUPPLIES, 100f, this)
+        data.addCraftingCost(Commodities.VOLATILES, 10f, this)
     }
 
     override fun getType(): ModularEffectModifier {

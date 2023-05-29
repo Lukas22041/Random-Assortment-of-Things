@@ -1,5 +1,6 @@
 package assortment_of_things.modular_weapons.ui
 
+import assortment_of_things.misc.RATSettings
 import assortment_of_things.modular_weapons.data.AvailableDamageTypes
 import assortment_of_things.modular_weapons.data.ModularRepo
 import assortment_of_things.modular_weapons.data.SectorWeaponData
@@ -30,7 +31,7 @@ import org.lwjgl.input.Keyboard
 import java.awt.Color
 
 
-class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: SectorWeaponData, var dialog: InteractionDialogAPI) : CustomUIPanelPlugin{
+class WeaponCraftingUIDesign(var parentPanel: WeaponCraftingUIMain, var data: SectorWeaponData, var dialog: InteractionDialogAPI) : CustomUIPanelPlugin{
 
     lateinit var panel: CustomPanelAPI
     var width = 0f
@@ -60,19 +61,12 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
         modifierElement.addSpacer(15f)
 
-        if (data.finalized)
-        {
-            addFinalizedPanel()
-        }
-        else
-        {
-            addCraftingPanel()
-        }
+        addDesignPanel()
 
     }
 
 
-    fun addCraftingPanel()
+    fun addDesignPanel()
     {
         var bar = modifierElement.addLunaProgressBar(data.getCapacity(), 0f, data.maxCapacity, width - 25, height * 0.075f, Misc.getTextColor())
         bar.enableTransparency = true
@@ -437,7 +431,12 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
 
         var first = true
         ModularEffectModifier.values().forEach { currentType ->
-            for (effect in ModularRepo.getUnlockedModifier().filter { it.getType() == currentType }.sortedByDescending { it.getCost() })
+            var modifiers = when(RATSettings.modularDevmode) {
+                true -> ModularRepo.modifiers
+                false -> ModularRepo.getUnlockedModifier()
+                else -> ModularRepo.getUnlockedModifier()
+            }
+            for (effect in modifiers.filter { it.getType() == currentType }.sortedByDescending { it.getCost() })
             {
 
                 var lunaEle = element.addLunaElement(w, h * 0.15f)
@@ -553,8 +552,8 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         element.addPara("Capacity Cost: ${selectedModifier.getCost()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Capacity Cost")
 
         element.addSpacer(5f)
-        element.addPara("Description:", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        element.addSpacer(1f)
+       /* element.addPara("Description:", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        element.addSpacer(1f)*/
 
         selectedModifier.getTooltip(element)
         descriptionPanel!!.addUIElement(element)
@@ -578,8 +577,9 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         for (cost in data.craftingCosts.sortedByDescending { it.quantity.modifiedValue })
         {
             var spec = Global.getSettings().getCommoditySpec(cost.commodityId)
-            var img = element.beginImageWithText(spec.iconName, 20f)
-            img.addPara("${spec.name}\nx${cost.quantity.modifiedValue}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${spec.name}")
+            var img = element.beginImageWithText(spec.iconName, 25f)
+
+            img.addPara("${spec.name}\nx${cost.quantity.modifiedValue.toInt()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${spec.name}")
             element.addImageWithText(0f)
             element.addSpacer(5f)
         }
@@ -587,49 +587,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         craftingPanel!!.addUIElement(element)
     }
 
-    fun addFinalizedPanel() {
-        var craftButton = modifierElement.addLunaElement(width / 2 - 25, height * 0.20f)
-        //sizeSelector.position.belowLeft(bar.elementPanel, height * 0.02f)
-        craftButton.position.inTL(0f, 15f)
-        craftButton.enableTransparency = true
-        craftButton.addText("Craft Weapon", Misc.getBasePlayerColor())
-        craftButton.centerText()
 
-        craftButton.onClick {
-            craftButton.playSound("ui_acquired_blueprint")
-            Global.getSector().playerFleet.cargo.addWeapons(data.id, 1)
-            Global.getSector().campaignUI.messageDisplay.addMessage("Crafted ${data.name} (In Inventory: ${Global.getSector().playerFleet.cargo.getNumWeapons(data.id)}x)")
-
-
-
-        }
-
-        craftButton.onHoverEnter {
-            craftButton.borderColor = Misc.getDarkPlayerColor().brighter()
-        }
-        craftButton.onHoverExit {
-            craftButton.borderColor = Misc.getDarkPlayerColor()
-        }
-
-
-        var resourceCosts = modifierElement.addLunaElement(width / 2 - 25, height * 0.20f)
-        resourceCosts.position.rightOfMid(craftButton.elementPanel, 25f)
-        resourceCosts.enableTransparency = true
-        resourceCosts.addText("Crafting Cost (TBD)", Misc.getBasePlayerColor())
-        resourceCosts.centerText()
-
-        var stats = modifierElement.addLunaElement(width - 25, height * 0.70f)
-        stats.position.belowLeft(craftButton.elementPanel, height * 0.02f)
-        stats.enableTransparency = true
-
-        var inner = stats.innerElement
-        inner.addSpacer(5f)
-        inner.addPara("Weapon Name: ${data.name}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Weapon Name")
-        inner.addPara("Body Type: ${data.body.getName()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Body Type")
-        inner.addPara("Color: color", 0f, data.color, Misc.getHighlightColor(), "Color:")
-        generateStatsTooltip(stats.innerElement)
-
-    }
 
     fun generateStatsTooltip(tooltip: TooltipMakerAPI)
     {
@@ -721,7 +679,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
     fun startSimulation()
     {
         var playerFleet = Global.getFactory().createEmptyFleet(Factions.PLAYER, "Test", true)
-        Global.getSector().playerFleet.starSystem.addEntity(playerFleet)
+        Global.getSector().playerFleet.containingLocation.addEntity(playerFleet)
         playerFleet.setCircularOrbit(Global.getSector().playerFleet, 0f, 0f, 0f)
 
         var member = playerFleet.addShip("medusa_Hull", FleetMemberType.SHIP)
@@ -748,7 +706,7 @@ class WeaponCraftingUISub(var parentPanel: WeaponCraftingUIMain, var data: Secto
         dialog.startBattle(bcc)
 
 
-        Global.getSector().playerFleet.starSystem.removeEntity(playerFleet)
+        Global.getSector().playerFleet.containingLocation.removeEntity(playerFleet)
 
         Global.getCombatEngine().addPlugin( object : EveryFrameCombatPlugin {
             override fun init(engine: CombatEngineAPI?) {

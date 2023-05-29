@@ -90,6 +90,7 @@ object ModularWeaponLoader
     fun calculateEffectStats(data: SectorWeaponData)
     {
 
+        data.op.unmodify()
         data.range.unmodify()
         data.turnrate.unmodify()
 
