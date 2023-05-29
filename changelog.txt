@@ -2,6 +2,7 @@ Version 1.4.0
 
 Likely not save compatible with prior versions.
 
+
 General
 -> Added "UI" Config Tab
 -> Moved "Modular Weapons" to its own config tab.
@@ -9,6 +10,7 @@ General
 
 -> Fixed Skills not appearing
 -> Fixed one of the skills breaking a save.
+
 
 Modular Weapons
 
