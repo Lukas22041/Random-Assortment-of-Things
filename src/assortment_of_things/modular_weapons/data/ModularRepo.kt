@@ -26,7 +26,9 @@ object ModularRepo {
 
     fun unlockRandom() : ModularWeaponEffect?
     {
-        if (unlockedModifiers!!.size == modifiers.size) {
+        var unlocked = ArrayList(unlockedModifiers)
+
+        if (unlocked!!.size == modifiers.size) {
             return null
         }
 
@@ -34,7 +36,9 @@ object ModularRepo {
         if (available.isEmpty()) return null
         var pick = available.random()
 
-        unlockedModifiers!!.add(pick.getName())
+        unlocked!!.add(pick.getName())
+
+        unlockedModifiers = unlocked
 
         return pick
     }

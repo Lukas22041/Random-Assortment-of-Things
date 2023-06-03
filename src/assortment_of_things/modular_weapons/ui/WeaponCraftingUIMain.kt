@@ -29,7 +29,7 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
     }
 
     override fun init() {
-
+        enableCloseButton = true
         width = panel.position.width
         height = panel.position.height
 
@@ -48,6 +48,8 @@ class WeaponCraftingUIMain : LunaBaseCustomPanelPlugin() {
         {
             panel.removeComponent(weaponListPanel)
         }
+
+
 
         weaponListPanel = panel.createCustomPanel(width * 0.2f, height - 15f, null)
         panel.addComponent(weaponListPanel)

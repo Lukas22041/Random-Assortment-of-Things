@@ -1,6 +1,7 @@
 package assortment_of_things.combat.hullmods
 
 import assortment_of_things.combat.activators.LifelineActivator
+import assortment_of_things.misc.getParent
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
@@ -28,7 +29,6 @@ class ChiralHull : BaseHullMod()
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?)
     {
-
         if (stats == null) return
 
 
@@ -86,6 +86,9 @@ class ChiralHull : BaseHullMod()
     }
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI, hullSize: ShipAPI.HullSize?, ship: ShipAPI, width: Float, isForModSpec: Boolean) {
+        tooltip.getParent()
+
+
         tooltip.addSectionHeading("Stats", Alignment.MID, 10f);
 
         var string1 = "This hulls flux systems are higly optimised, allowing it to always make use of the zero-flux engine boost. Additionaly it increases the passive flux dissipation by %s \n" +

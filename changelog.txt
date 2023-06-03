@@ -1,3 +1,12 @@
+Version 1.4.2
+
+-> Added close button to the Modular Weapons panel.
+-> Reduced how much time unlocking a modular weapon modifier takes.
+-> Fixed Modifiers not saving.
+-> Fixed a crash that happened when interacting with tritach outposts
+
+
+
 Version 1.4.1
 
 -> Fixed a crash that occured when loading a save in hyperspace with the minimap enabled.

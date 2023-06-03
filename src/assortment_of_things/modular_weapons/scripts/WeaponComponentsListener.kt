@@ -40,7 +40,7 @@ class WeaponComponentsListener : RATBaseCampaignEventListener() {
 
             override fun createIntelInfo(info: TooltipMakerAPI?, mode: IntelInfoPlugin.ListInfoMode?) {
 
-                if (modifierProgress!! > 50f)
+                if (modifierProgress!! > 40f)
                 {
                     info!!.addPara("Weapon Forge Report", 0f, Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
                     info.addSpacer(5f)
@@ -83,7 +83,7 @@ class WeaponComponentsListener : RATBaseCampaignEventListener() {
                 ShipAPI.HullSize.CAPITAL_SHIP -> 8f
                 else -> 0f
             }
-            if (member.isStation) amount = MathUtils.getRandomNumberInRange(10f, 16f)
+            if (member.variant.isStation || member.isStation) amount = MathUtils.getRandomNumberInRange(20f, 30f)
 
             modifierProgress = modifierProgress?.plus(amount)
 

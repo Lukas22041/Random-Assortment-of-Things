@@ -53,7 +53,7 @@ object RATSettings : LunaSettingsListener
 
 
     //Jokes
-    var sillyContentEnabled = LunaSettings.getBoolean(modID, "rat_minimapCenter")
+    var sillyContentEnabled = LunaSettings.getBoolean(modID, "rat_sillyContent")
     //var skeleton = LunaSettings.getBoolean(modID, "rat_theSkeletonAppears")
 
     override fun settingsChanged(modID: String) {
