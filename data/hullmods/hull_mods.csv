@@ -1,8 +1,9 @@
 name,id,tier,rarity,tech/manufacturer,tags,uiTags,base value,unlocked,hidden,hiddenEverywhere,cost_frigate,cost_dest,cost_cruiser,cost_capital,script,desc,short,sprite
 Chiral Hull,rat_chiral_hull,0,,Chiral,"defensive, shields, merc",Shields,3000,FALSE,TRUE,,3,6,9,15,assortment_of_things.combat.hullmods.ChiralHull,,,graphics/hullmods/rat_chiral_hull.png
 ,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,
 Lifeline,rat_lifeline,0,,Augmenter,"special, defensive",Special,3000,FALSE,TRUE,,3,6,9,15,assortment_of_things.combat.hullmods.LifelineHullmod,,,graphics/hullmods/rat_lifeline.png
 Hyperspring,rat_spring,0,,Augmenter,"special, defensive",Special,3000,FALSE,TRUE,,3,6,9,15,assortment_of_things.combat.hullmods.SpringHullmod,,,graphics/hullmods/rat_spring.png
 Phase Dive,rat_phase_hop,0,,Augmenter,"special, defensive",Special,3000,FALSE,TRUE,,3,6,9,15,assortment_of_things.combat.hullmods.PhaseDiveHullmod,,,graphics/hullmods/rat_phase_hop.png
 ,,,,,,,,,,,,,,,,,,
+Abyssal Siphon,rat_abyss_siphon,0,,Abyss,"req_spaceport, merc, standard","Logistics, Requires Dock",3000,FALSE,FALSE,FALSE,3,5,7,12,assortment_of_things.abyss.hullmods.AbyssSiphonHullmod,,,graphics/hullmods/rat_abyss_siphon.png
+Shielding Conversion,rat_abyss_shielding,0,,Abyss,"req_spaceport, merc, standard","Logistics, Requires Dock",3000,FALSE,FALSE,FALSE,3,5,7,12,assortment_of_things.abyss.hullmods.AbyssShieldingHullmod,,,graphics/hullmods/rat_abyss_shielding.png

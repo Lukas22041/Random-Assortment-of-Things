@@ -1,0 +1,27 @@
+{
+	"rat_depths":{
+		"plugin":"assortment_of_things.abyss.terrain.AbyssTerrainPlugin",
+		"musicSuppression":1,
+		
+		"loopTwo":"terrain_hyperspace_deep",
+		
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
+
+			"stormSound":"terrain_hyperspace_lightning",
+		},
+	},
+	"rat_depths_siphon":{
+		"plugin":"assortment_of_things.abyss.terrain.SuperchargedAbyssTerrainPlugin",
+		"musicSuppression":1,
+		
+		"loopTwo":"terrain_hyperspace_deep",
+		
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
+
+			"stormSound":"terrain_hyperspace_lightning",
+		},
+	},
+}
+

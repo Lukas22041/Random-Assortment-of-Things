@@ -16,8 +16,7 @@ rat_modularEnabled,Enable Modular Weapons,Boolean,false,,"Adds [Modular Superwea
 
 Toggling this config only has an effect for [new games]. Enabling it will give the player an ability called ""Weapon Forge"" at the beginning of the game.
 
-This feature is mostly functional, but still very much in development.
-",,,Modular Weapons
+This feature is mostly functional, but still very much in development. This feature will not function correctly with the [Realistic Combat] mod.",,,Modular Weapons
 rat_modularDevmode,Enable Modular Devmode,Boolean,false,,Removes crafting costs for Modular Weapons and displays all modifiers even if they are not unlocked yet.,,,Modular Weapons
 ,,,,,,,,
 ,,,,,,,,

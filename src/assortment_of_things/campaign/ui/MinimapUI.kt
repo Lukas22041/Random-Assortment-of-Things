@@ -2,6 +2,7 @@ package assortment_of_things.campaign.ui
 
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.ReflectionUtils
+import assortment_of_things.misc.getChildrenCopy
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.LocationAPI
@@ -46,7 +47,7 @@ class MinimapUI : EveryFrameScript {
         frames = MathUtils.clamp(frames, 0f, 100f)
         var state = AppDriver.getInstance().currentState
         if (state !is CampaignState) return
-        var core = state.core
+        var core = state.core as UIPanelAPI
 
         var size = when(RATSettings.minimapShape!!) {
             "Wide" -> Vector2f(350f, 200f)
@@ -80,22 +81,21 @@ class MinimapUI : EveryFrameScript {
         if ((frames > 1 && !added) || lastLocation != Global.getSector().playerFleet.containingLocation || reset)
         {
             lastLocation = Global.getSector().playerFleet.containingLocation
-            for (child in core.childrenCopy)
+            for (child in core.getChildrenCopy())
             {
                 // if (child.javaClass.name.contains("o0OoOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO") )
                 if (child.position.width == 200f && child.position.height == 200f)
                 {
-                    core.remove(child)
+                    core.removeComponent(child)
                 }
             }
+
 
             if (panel != null)
             {
                 core.removeComponent(panel)
                 panel = null
             }
-
-
 
 
             panel = Global.getSettings().createCustom(size.x, size.y, null)

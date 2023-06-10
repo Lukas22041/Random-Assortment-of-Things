@@ -166,7 +166,6 @@ object ModularWeaponLoader
                 }
             }
 
-            var test2 = spec.aiHints
 
             modableSpec.setSize(data.weaponSize)
             modableSpec.setMountType(data.mountType)

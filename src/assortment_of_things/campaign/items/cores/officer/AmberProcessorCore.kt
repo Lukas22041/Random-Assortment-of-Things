@@ -29,7 +29,6 @@ class AmberProcessorCore : AICoreOfficerPlugin {
         core.stats.setSkillLevel(Skills.ORDNANCE_EXPERTISE, 2F)
         core.stats.setSkillLevel(Skills.POLARIZED_ARMOR, 2F)
 
-
         core.memoryWithoutUpdate.set(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT, automatedPointsMult)
         return core
     }

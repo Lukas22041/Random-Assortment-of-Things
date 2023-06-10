@@ -8,6 +8,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.input.InputEventAPI
+import com.fs.starfarer.combat.CombatEngine
 import lunalib.lunaSettings.LunaSettings
 import org.lazywizard.lazylib.MathUtils
 import java.util.*
@@ -29,6 +30,9 @@ class CombatHandler : EveryFrameCombatPlugin
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?)
     {
         modularHandler.advance(amount)
+
+
+
     }
 
     override fun renderInWorldCoords(viewport: ViewportAPI?)

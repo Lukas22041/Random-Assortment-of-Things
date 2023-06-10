@@ -268,7 +268,6 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 		editor.noisePrune(RATSettings.getProcgenHyperspaceCloudMod());
 		editor.regenNoise();
 
-
 		Random random = StarSystemGenerator.random;
 		
 		// add a spiral going from the outside towards the center

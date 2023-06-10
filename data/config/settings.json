@@ -10,6 +10,7 @@
 	"designTypeColors":{
 		"Chiral":[122,139,221,255],
 		"Augmenter":[252, 227, 3,255],
+		"Abyss":[255, 0, 50, 255],
 		"Modular Weapon":[158, 50, 230,255],
 	},		
 	
@@ -28,6 +29,24 @@
 		
 		  
 		  "skeleton":"graphics/jokes/skeleton.png",
+		},
+		
+		"rat_terrain": {
+		  "wormhole_bands":"graphics/fx/abyss_portal_textures_small.png",	
+		  
+		  
+		  "depths_siphon":"graphics/terrain/rat_depths_siphon.png",
+		  "depths_siphon_glow":"graphics/terrain/rat_depths_siphon_glow.png",
+		  "depths_siphon_map":"graphics/terrain/rat_depths_siphon_map.png",
+		  
+		  "depths1":"graphics/terrain/rat_depths1.png",
+		  "depths1_glow":"graphics/terrain/rat_depths1_glow.png",
+		  "depths1_map":"graphics/terrain/rat_depths1_map.png",
+		  
+		  "depths2":"graphics/terrain/rat_depths2.png",
+		  "depths2_glow":"graphics/terrain/rat_depths2_glow.png",
+		  "depths2_map":"graphics/terrain/rat_depths2_map.png",
+		  
 		},
 		
  	}

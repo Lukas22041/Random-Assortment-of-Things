@@ -5,17 +5,18 @@ import assortment_of_things.campaign.RATCampaignPlugin
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.skills.util.SkillManager
 import assortment_of_things.campaign.ui.MinimapUI
+import assortment_of_things.abyss.MidnightCoreSystem
+import assortment_of_things.abyss.AbyssShielding
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.modular_weapons.scripts.WeaponComponentsListener
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
+import assortment_of_things.scripts.AtMarketListener
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import assortment_of_things.snippets.ResetAllModularSnippet
 import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.BaseModPlugin
-import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.impl.campaign.ids.Entities
-import com.fs.starfarer.campaign.BaseLocation
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaExtensions.getSystemsWithTag
@@ -38,7 +39,7 @@ class RATModPlugin : BaseModPlugin() {
 
         ModularWeaponLoader.setOGNames()
 
-        LunaSettings.addListener(RATSettings)
+        LunaSettings.addSettingsListener(RATSettings)
     }
 
     override fun onDevModeF8Reload() {
@@ -48,7 +49,15 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-       // Global.getSector().addTransientScript(SystemTooltipReplacer())
+
+        Global.getSector().addTransientScript(AbyssShielding())
+        MidnightCoreSystem().generate()
+        Global.getSector().getCharacterData().addAbility("rat_singularity_jump_ability")
+        Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);
+
+
+
+        // Global.getSector().addTransientScript(SystemTooltipReplacer())
 
         if (RATSettings.enableMinimap!!){
             Global.getSector().addTransientScript(MinimapUI())
@@ -62,6 +71,8 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().addTransientListener(WeaponComponentsListener())
 
         LootModifier.modifySpawns()
+
+        Global.getSector().addTransientListener(AtMarketListener())
 
         if (RATSettings.disableHelp!!)
         {
@@ -81,39 +92,8 @@ class RATModPlugin : BaseModPlugin() {
         ModularWeaponLoader.applyStatToSpecsForAll()
 
 
-        var location = BaseLocation(true)
-        location.backgroundTextureFilename = "graphics/backgrounds/pocket_bg.jpg"
 
-        location.objects.listener = CampaignEngine.getInstance()
-        location.addScript(object : EveryFrameScript {
-            override fun isDone(): Boolean {
-                return false
-            }
 
-            override fun runWhilePaused(): Boolean {
-                return true
-            }
-
-            override fun advance(amount: Float) {
-
-            }
-
-        })
-
-      /*  var token = location.createToken(0f, 0f)
-        location.addEntity(token)
-
-        location.addPlanet("Test", token, "place", Planets.PLANET_TERRAN, 300f, 300f, 0f, 200f)
-
-        Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, Global.getSector().playerFleet, JumpPointAPI.JumpDestination(token, ""))*/
-
-     /*   var system = Global.getSector().createStarSystem("Test")
-        var star = system.initStar("Test", StarTypes.ORANGE, 800f, 200f)
-
-        var planet = system.addPlanet("Test2", star, "Test Planet", Planets.PLANET_TERRAN, 0f, 700f, 2000f, 90f)
-        system.autogenerateHyperspaceJumpPoints(true, true)
-
-        ReflectionUtils.set("hyperspaceMode", system, true)*/
     }
 
     override fun onNewGame() {

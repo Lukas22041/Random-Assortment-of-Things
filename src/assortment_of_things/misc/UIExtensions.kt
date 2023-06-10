@@ -19,3 +19,8 @@ fun UIComponentAPI.getParent() : UIPanelAPI?  {
 fun TooltipMakerAPI.getParentWidget() : UIComponentAPI? {
     return ReflectionUtils.invoke("getParentWidget", this) as UIPanelAPI
 }
+
+fun UIComponentAPI.setOpacity(alpha: Float)
+{
+    ReflectionUtils.invoke("setOpacity", this, alpha)
+}

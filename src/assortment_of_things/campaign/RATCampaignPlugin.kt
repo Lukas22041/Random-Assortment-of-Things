@@ -1,5 +1,6 @@
 package assortment_of_things.campaign
 
+import assortment_of_things.abyss.AbyssalFracture
 import assortment_of_things.campaign.interactions.DimensionalGateInteraction
 import assortment_of_things.campaign.interactions.*
 import assortment_of_things.campaign.items.cores.admin.JeffCoreAdmin
@@ -8,6 +9,7 @@ import assortment_of_things.campaign.items.cores.officer.AzureProcessorCore
 import assortment_of_things.campaign.items.cores.officer.ScarletProcessorCore
 import assortment_of_things.strings.RATItems
 import assortment_of_things.strings.RATTags
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.PluginPick
 import com.fs.starfarer.api.campaign.*
 
@@ -21,6 +23,12 @@ class RATCampaignPlugin : BaseCampaignPlugin()
     override fun pickInteractionDialogPlugin(interactionTarget: SectorEntityToken?): PluginPick<InteractionDialogPlugin>? {
         if (interactionTarget == null) return null
 
+        var plugin = interactionTarget.customPlugin
+        if (plugin is AbyssalFracture)  {
+            if (plugin.connectedEntity != null) {
+                Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(plugin.connectedEntity, ""), 0.01f)
+            }
+        }
 
         if (interactionTarget.hasTag(RATTags.TAG_OUTPOST_PLANET))
         {

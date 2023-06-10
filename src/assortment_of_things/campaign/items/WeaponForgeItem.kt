@@ -1,9 +1,10 @@
 package assortment_of_things.campaign.items
 
-import assortment_of_things.modular_weapons.ui.WeaponCraftingUIMain
+import assortment_of_things.scripts.AtMarketListener
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.FleetMemberPickerListener
 import com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin
-import lunalib.lunaExtensions.openLunaCustomPanel
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 
 class WeaponForgeItem : BaseSpecialItemPlugin() {
 
@@ -17,6 +18,7 @@ class WeaponForgeItem : BaseSpecialItemPlugin() {
     }
 
     override fun performRightClickAction() {
+
 
     }
 }

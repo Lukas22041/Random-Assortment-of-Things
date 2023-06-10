@@ -1,4 +1,4 @@
 name,id,type,tags,activationDays,activationCooldown,durationDays,deactivationDays,deactivationCooldown,unlockedAtStart,defaultForAIFleet,musicSuppression,uiOn,uiOff,uiLoop,worldOn,worldOff,worldLoop,icon,plugin,ai,desc,sortOrder
 Pocket Dimension,rat_pocket_dimension_ability,DURATION,"stealth-, burn+",0.4,,0.001,0.1,10,,,,,,,jump_point_open,,,graphics/icons/skills/rat_pocket.png,assortment_of_things.campaign.abilities.PocketDimensionAbility,,Jump in to a system in a parallel dimension that holds some abandoned structure.,801
 Weapon Forge,rat_weapon_forge,DURATION,,0,,0.001,0.001,0,,,,,,,,,,graphics/icons/abilities/rat_crafting_ability.png,assortment_of_things.campaign.abilities.OpenWeaponCraftingScreenAbility,,Open the weapon crafting screen.,802
-,,,,,,,,,,,,,,,,,,,,,,
+Singularity Jump,rat_singularity_jump_ability,DURATION,"stealth-, burn+",0.4,,0.001,0.1,0.5,,,,,,,jump_point_open,,,graphics/icons/abilities/rat_singularity_jump.png,assortment_of_things.campaign.abilities.SingularityJumpAbility,,Begins a deep jump in to the abyss of hyperspace.,803

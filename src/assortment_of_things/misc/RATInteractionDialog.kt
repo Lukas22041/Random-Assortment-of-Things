@@ -15,6 +15,7 @@ import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageGenFromSeed.SDM
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageGenFromSeed.SalvageDefenderModificationPlugin
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaUI.elements.LunaElement
 import org.lwjgl.input.Keyboard
 import java.awt.Color
 
