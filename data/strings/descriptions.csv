@@ -1,50 +1,19 @@
 id,type,text1,text2,text3,text4,notes
 ,,,,,,
 ,,,,,,
-#Outpost Theme,,,,,,
-rat_outpost_warning_beacon,CUSTOM,A fully autonomous warning beacon. ,,"A fully autonomous warning beacon. The beacon displays the signature of a major faction and it is likely that they will attack anyone that gets to close, no matter their standing.",,
-rat_outpost_defense_station,CUSTOM,A defensive station for the outpost of a major Faction.,,,,
-rat_outpost_planet,CUSTOM,A uncolonized planet defended by a faction. They may be hiding something on here from the wider public.,,,,
-rat_looted_outpost_planet,CUSTOM,A planet previously used to hide illegal and expensive wares.,,,,
-rat_training_facility,CUSTOM,A small station used to conduct training according to its factions doctrine.,,,,
-,,,,,,
-,,,,,,
-#Chiral Theme,,,,,,
-rat_chiral_planet,PLANET,"A familiar planet, different, yet the same.",,,,
-rat_chiral_star,PLANET,"A familiar star, different, yet the same.",,,,
-rat_dimensional_gate,CUSTOM,"An object that appears to be a gate, but seemingly one not in line with domain-built specifications.",,,,
-rat_chiral_station1,CUSTOM,An abandoned station floating through the system. ,,,,
-rat_chiral_station2,CUSTOM,A station floating through this strange system. ,,,,
-,,,,,,
-rat_dune,SHIP,"A ship from an alternate sector. Despite being designed to be crewed by something, this hull can not support the requirements of a human crew and can only be piloted by processors or AI cores. Due to no records of this ship existing before, your engineers nicknamed it the ""Dune-Class"". The Dune-Class is a light frigate. It Exceeds in terms of speed, making it a good fill in for any fleet that requires ships that distract from the heavier targets. Those Aspects are only amplified through its ""Temporal Shell"" Shipsystem, allowing it to quickly send out light-fire and retreat.",,,,
-rat_opera,SHIP,"A ship from an alternate sector. Despite being designed to be crewed by something, this hull can not support the requirements of a human crew and can only be piloted by processors or AI cores. Due to no records of this ship existing before, your engineers nicknamed it the ""Opera-Class"". The Opera-Class is a heavy frigate. The Opera-Class manages to unload as many missiles as a destroyer, without loosing the speed of a Frigate. While not as fast as the Dune-Class, its unlikely that its targets can escape from it.",,,,
-rat_phenix,SHIP,"A ship from an alternate sector. Despite being designed to be crewed by something, this hull can not support the requirements of a human crew and can only be piloted by processors or AI cores. Due to no records of this ship existing before, your engineers nicknamed it the ""Phenix-Class"". The Phenix-Class class comes with a strong set of mounts for its size. Those are enhanced by its shipsystems, which allow it to do large EMP damage to its foes.",,,,
-,,,,,,
-rat_superconductor,SHIP_SYSTEM,"Overloads the ships ""Energy"" type weapons, causing their projectiles to violently release EMPs towards nearby enemies. Does not effect beams.",,,,
-,,,,,,
-rat_scarlet_processor,RESOURCE,"A processor recovered from chiral remains. While not fully understood by the fleets engineers, it seems compatible with technology of our own, and thus could be used with Automated Ships. The Processor shows no sign of Sentience, but seems to be comparable in terms of power to a gamma-core.
-
-This type of processor appears to make chiral hulls more aggressive.
-
-",,,,
-rat_azure_processor,RESOURCE,"A processor recovered from chiral remains. While not fully understood by the fleets engineers, it seems compatible with technology of our own, and thus could be used with Automated Ships. The Processor shows no sign of Sentience, but seems to be comparable in terms of power to a gamma-core.
-
-This type of processor appears to make chiral hulls more defensive.
-
-",,,,
-rat_amber_processor,RESOURCE,"A processor recovered from chiral remains. While not fully understood by the fleets engineers, it seems compatible with technology of our own, and thus could be used with Automated Ships. The Processor shows no sign of Sentience, but seems to be comparable in terms of power to a gamma-core.
-
-This type of processor appears to make chiral hulls do well at offense and defense.
-
-",,,,
-,,,,,,
-,,,,,,
-,,,,,,
-rat_pocket_blackhole,PLANET,"The result of the apocalyptic collapse of a massive star. No object can escape from the black hole, nor light itself. The black hole does however emit detectable Hawking radiation due to poorly-understood quantum effects. No information can be detected beyond the event horizon with any device known to exist in the Sector. The intense gravity of the black hole rips and tears nearby objects into an accretion disc which inevitably spirals into the gravitational abyss. Extremely dangerous.",,,,
-,,,,,,
 ,,,,,,
 #Abyss,,,,,,
 rat_fracture,CUSTOM,"A condensed area of hyperspace matter, its intense gravitational forces creating passage between zones. ",,,,
+,,,,,,
+rat_domain_research,CUSTOM,"An abandoned research station. Despite cycles of inoperation, due to isolation from the sector it remains relatively untouched.",,,,
+rat_abyss_beacon,CUSTOM,A small transmitter equipped with scientific instruments.,,,,
+rat_abyss_cache,CUSTOM,A lost crate of cargo.,,,,
+rat_abyss_outpost,CUSTOM,An abandoned outpost once used for reaching further in to the abyss. It may proof worthwhile as a place to dock and repair.,,,,
+,,,,,,
+rat_abyss_photosphere,CUSTOM,"This anomalyous object appears to perform active fusion with abyssal matter gathered from around its vicinity. It doesnt appear to generate much heat or radiation, but emits a steady amount of light.",,,,
+,,,,,,
+,,,,,,
+,,,,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
@@ -64,8 +33,8 @@ rat_weapon_salvage,RESOURCE,"Components recovered from weapons that were beyond 
 
 ",,,,
 ,,,,,,
-,,,,,,
-,,,,,,
+rat_chronos_core,RESOURCE,"Through countless self modifications over dozens of cycles, the Chronos Core has become an evolved form of an Alpha level AI. With its experience of the abyssal depths, it has gained a comprehension of time beyond human understanding.",,,,
+rat_cosmos_core,RESOURCE,"Through countless self modifications over dozens of cycles, the Cosmos Core has become an evolved form of an Alpha level AI. With its knowledge of the abyssal depths, it gained an awareness of its surrounding space that no human could comprehend.",,,,
 ,,,,,,
 ,,,,,,
 #Joke Content,,,,,,

@@ -1,0 +1,184 @@
+package assortment_of_things.abyss.hullmods.abyssals
+
+import assortment_of_things.strings.RATItems
+import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.graphics.SpriteAPI
+import com.fs.starfarer.api.ui.Alignment
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.FaderUtil
+import org.magiclib.kotlin.setAlpha
+import java.awt.Color
+import java.util.*
+
+class AbyssalsCoreHullmod : BaseHullMod() {
+
+    companion object {
+        fun getRenderer(ship: ShipAPI) : AbyssalCoreRenderer {
+            return ship.customData.get("abyssal_glow_renderer") as AbyssalCoreRenderer
+        }
+
+        fun getColorForCore(ship: ShipAPI) : Color
+        {
+            var color = Color(130, 27, 150,255)
+            if (ship.captain == null) return color
+
+            if (ship.captain.aiCoreId == RATItems.COSMOS_CORE)
+            {
+                color = Color(255, 0, 100)
+            }
+            if (ship.captain.aiCoreId == RATItems.CHRONOS_CORE)
+            {
+                color = Color(0, 150, 255)
+            }
+
+            return color
+        }
+
+        fun isChronosCore(ship: ShipAPI) : Boolean
+        {
+            if (ship.captain == null) return false
+            if (ship.captain.aiCoreId == RATItems.CHRONOS_CORE) return true
+            return false
+        }
+
+        fun isCosmosCore(ship: ShipAPI) : Boolean
+        {
+            if (ship.captain == null) return false
+            if (ship.captain.aiCoreId == RATItems.COSMOS_CORE) return true
+            return false
+        }
+
+    }
+
+    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
+        super.applyEffectsAfterShipCreation(ship, id)
+
+        var renderer = AbyssalCoreRenderer(ship!!)
+        ship.setCustomData("abyssal_glow_renderer", renderer)
+        Global.getCombatEngine().addLayeredRenderingPlugin(renderer)
+    }
+
+    override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  isForModSpec: Boolean): Boolean {
+        return false
+    }
+
+    override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
+        super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
+
+        tooltip!!.addSpacer(5f)
+        tooltip.addPara("Abyssal Hulls synergise well with the Chronos and Cosmos AI cores, to the point where a ship equipped without either will lack some functionality.", 0f)
+        tooltip.addSpacer(10f)
+        tooltip.addSectionHeading("AI Core Synergy", Alignment.MID, 0f)
+        tooltip.addSpacer(10f)
+
+        AbyssalsHullmodDescriptions.createDescription(tooltip, hullSize, ship, width, isForModSpec)
+
+    }
+
+    class AbyssalCoreRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin(CombatEngineLayers.ABOVE_SHIPS_LAYER) {
+
+        var fader = FaderUtil(1f, 0.3f, 0.2f, false, false)
+        var sprite: SpriteAPI? = null
+        var phaseSprite: SpriteAPI? = null
+
+        private var baseGlowAlpha = 0.5f
+        private var additiveGlowAlpha = 0.3f
+        private var blink: Boolean = false
+        private var lowest = 0.05f
+
+        init {
+            var path = ship.hullSpec.spriteName.replace(".png", "") + "_glow.png"
+
+            Global.getSettings().loadTexture(path)
+            sprite = Global.getSettings().getSprite(path)
+        }
+
+        fun enableBlink() { blink = true }
+        fun disableBlink() { blink = false }
+
+        fun configureBlink(lowest: Float, inDuration: Float, outDuration: Float)
+        {
+            this.lowest = lowest
+            fader.setDuration(inDuration, outDuration)
+        }
+
+        override fun advance(amount: Float) {
+            super.advance(amount)
+            fader.advance(amount)
+            if (fader.brightness >= 1 && blink)
+            {
+                fader.fadeOut()
+            }
+            else if (fader.brightness <= lowest)
+            {
+                fader.fadeIn()
+            }
+        }
+
+        override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
+            super.render(layer, viewport)
+
+            if (sprite == null) return
+
+            var c = getColorForCore(ship)
+
+            sprite!!.angle = ship.facing + 270
+            sprite!!.color = c
+            ship.engineController.fadeToOtherColor("rat_abyssals_enginefade", c, c.setAlpha(75), 1f, 1f)
+
+            sprite!!.alphaMult = baseGlowAlpha
+            sprite!!.setNormalBlend()
+            sprite!!.renderAtCenter(ship.location.x, ship.location.y)
+
+            if (ship.captain == null) return
+            if (ship.captain.isAICore)
+            {
+                if (ship.isPhased)
+                {
+                    if (ship.hullSpec.hullId == "rat_aboleth")
+                    {
+                        if (phaseSprite == null)
+                        {
+                            var path = ship.hullSpec.spriteName.replace(".png", "") + "_phaseglow.png"
+                            Global.getSettings().loadTexture(path)
+                            phaseSprite = Global.getSettings().getSprite(path)
+                        }
+
+                        phaseSprite!!.angle = ship.facing + 270
+                        phaseSprite!!.color = c
+
+                        phaseSprite!!.setAdditiveBlend()
+                        phaseSprite!!.alphaMult = 0.5f + (0.2f * fader.brightness)
+                        phaseSprite!!.renderAtCenter(ship.location.x, ship.location.y)
+                    }
+
+                    sprite!!.setAdditiveBlend()
+                    sprite!!.alphaMult = 1 * fader.brightness
+                    sprite!!.renderAtCenter(ship.location.x, ship.location.y)
+                }
+                else
+                {
+                    sprite!!.setAdditiveBlend()
+                    sprite!!.alphaMult = additiveGlowAlpha * fader.brightness
+                    sprite!!.renderAtCenter(ship.location.x, ship.location.y)
+                }
+            }
+
+        }
+
+        override fun isExpired(): Boolean {
+            return false
+        }
+
+        override fun getRenderRadius(): Float {
+            return 10000f
+        }
+
+        override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
+            return EnumSet.of(CombatEngineLayers.BELOW_PHASED_SHIPS_LAYER)
+        }
+
+    }
+}
+

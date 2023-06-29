@@ -1,2 +1,2 @@
 name,id,flux/second,f/s (base rate),f/s (base cap),flux/use,f/u (base rate),f/u (base cap),cr/u,max uses,regen,charge up,active,down,cooldown,toggle,noDissipation,noHardDissipation,hardFlux,noFiring,noTurning,noStrafing,noAccel,noShield,noVent,isPhaseCloak,tags,icon
-Superconductor,rat_superconductor,,,,,,,,,,1,8,1,10,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
+Causality Flow,aboleth_system,,,,,,,,,,0.5,6,0.5,15,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png

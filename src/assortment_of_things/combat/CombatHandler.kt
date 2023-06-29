@@ -1,6 +1,6 @@
 package assortment_of_things.combat
 
-import assortment_of_things.campaign.skills.util.SkillManager
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.modular_weapons.scripts.ModularWeaponCombatHandler
 import com.fs.starfarer.api.GameState
@@ -11,6 +11,7 @@ import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.combat.CombatEngine
 import lunalib.lunaSettings.LunaSettings
 import org.lazywizard.lazylib.MathUtils
+import java.awt.Color
 import java.util.*
 
 
@@ -19,8 +20,7 @@ class CombatHandler : EveryFrameCombatPlugin
 
     var modularHandler = ModularWeaponCombatHandler()
 
-    override fun init(engine: CombatEngineAPI?)
-    {
+    override fun init(engine: CombatEngineAPI?)  {
 
     }
 
@@ -29,65 +29,24 @@ class CombatHandler : EveryFrameCombatPlugin
 
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?)
     {
+        if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
+        {
+            var system = Global.getSector().playerFleet.containingLocation
+            if (system.hasTag(AbyssUtils.SYSTEM_TAG))
+            {
+                CombatEngine.getBackground().color = AbyssUtils.getSystemColor(system)
+            }
+        }
+
         modularHandler.advance(amount)
+    }
 
-
+    override fun renderInWorldCoords(viewport: ViewportAPI?) {
 
     }
 
-    override fun renderInWorldCoords(viewport: ViewportAPI?)
-    {
-
-    }
-
-    var sprite = Global.getSettings().getSprite("rat", "skeleton")
-    var timer = 160
-    var mult = 0f
-    var musicStarted = false
-
-    companion object {
-        var enabled: Boolean? = null
-    }
 
     override fun renderInUICoords(viewport: ViewportAPI?) {
 
-
-        if (Global.getCurrentState() == GameState.COMBAT)
-        {
-            var test = Global.getSector().memoryWithoutUpdate
-            var test2 = Global.getSector().memoryWithoutUpdate
-        }
-        if (enabled == null)
-        {
-            enabled = LunaSettings.getBoolean(RATSettings.modID, "rat_theSkeletonAppears")
-            if (MathUtils.getRandomNumberInRange(0, 100) != 1)
-            {
-                enabled = false
-            }
-        }
-
-        if (Global.getCurrentState() == GameState.TITLE)
-        {
-            SkillManager.updateAptitude()
-        }
-
-
-        if (Global.getCurrentState() == GameState.TITLE && sprite != null && enabled != null && enabled!!)
-        {
-            timer--
-            timer = MathUtils.clamp(timer, -1, 120)
-            if (timer < 1)
-            {
-                mult = MathUtils.clamp(mult + 0.007f, 0f, 1f)
-                sprite.alphaMult = mult
-                sprite.setSize(Global.getSettings().screenWidth * mult, Global.getSettings().screenHeight * mult)
-                sprite.renderAtCenter(Global.getSettings().screenWidth / 2,Global.getSettings().screenHeight / 2)
-            }
-            else
-            {
-                sprite.alphaMult = 0f
-                mult = 0f
-            }
-        }
     }
 }

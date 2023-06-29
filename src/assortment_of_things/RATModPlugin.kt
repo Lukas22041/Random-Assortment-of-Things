@@ -3,23 +3,21 @@ package assortment_of_things
 import ParallelConstruction
 import assortment_of_things.campaign.RATCampaignPlugin
 import assortment_of_things.campaign.procgen.LootModifier
-import assortment_of_things.campaign.skills.util.SkillManager
 import assortment_of_things.campaign.ui.MinimapUI
 import assortment_of_things.abyss.MidnightCoreSystem
 import assortment_of_things.abyss.AbyssShielding
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.modular_weapons.scripts.WeaponComponentsListener
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import assortment_of_things.scripts.AtMarketListener
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import assortment_of_things.snippets.ResetAllModularSnippet
-import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.impl.campaign.ids.Entities
+import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
-import lunalib.lunaExtensions.getSystemsWithTag
 import lunalib.lunaSettings.LunaSettings
 
 
@@ -49,13 +47,28 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
+        /*for (hullmod in Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") })
+        {
+            Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_install", hullmod.id), 5f)
+        }
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_remover", null), 5f)
 
-        Global.getSector().addTransientScript(AbyssShielding())
-        MidnightCoreSystem().generate()
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 5f)
+
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
+
         Global.getSector().getCharacterData().addAbility("rat_singularity_jump_ability")
         Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);
+        if (RATSettings.enableAbyss!! && Global.getSector().starSystems.none { it.baseName == "Midnight" })
+        {
+            MidnightCoreSystem().generate()
+        }*/
 
+        //Global.getSector().addTransientScript(AbyssShielding())
 
+        // Global.getSector().intelManager.addIntel(AbyssMap())
 
         // Global.getSector().addTransientScript(SystemTooltipReplacer())
 
@@ -85,8 +98,6 @@ class RATModPlugin : BaseModPlugin() {
             }
         }
 
-        SkillManager.update()
-
 
         //ModularWeaponLoader.resetAllData()
         ModularWeaponLoader.applyStatToSpecsForAll()
@@ -102,6 +113,24 @@ class RATModPlugin : BaseModPlugin() {
 
     }
 
+    override fun beforeGameSave() {
+        super.beforeGameSave()
+
+        for (system in AbyssUtils.getAllAbyssSystems())
+        {
+            var abyssPlugin = AbyssUtils.getAbyssTerrainPlugin(system)
+            if (abyssPlugin != null)
+            {
+                abyssPlugin.save()
+            }
+            var superchargedAbyss = AbyssUtils.getSuperchargedAbyssTerrainPlugin(system)
+            if (superchargedAbyss != null)
+            {
+                superchargedAbyss.save()
+            }
+        }
+    }
+
     override fun onNewGameAfterTimePass() {
         super.onNewGameAfterTimePass()
 
@@ -111,29 +140,5 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_weapon_forge", true, 0f);
         }
 
-        var chirality = Global.getSector().getFaction("chirality")
-        chirality?.adjustRelationship("player", -1f)
-
-        for (system in Global.getSector().getSystemsWithTag(RATTags.THEME_CHIRAL_COPY))
-        {
-            for (entity in system.customEntities)
-            {
-                if (entity.customEntityType == Entities.INACTIVE_GATE)
-                {
-                    system.removeEntity(entity)
-                }
-            }
-        }
-
-        for (system in Global.getSector().getSystemsWithTag(RATTags.THEME_CHIRAL_MAIN))
-        {
-            for (entity in system.customEntities)
-            {
-                if (entity.customEntityType == Entities.INACTIVE_GATE)
-                {
-                    system.removeEntity(entity)
-                }
-            }
-        }
     }
 }

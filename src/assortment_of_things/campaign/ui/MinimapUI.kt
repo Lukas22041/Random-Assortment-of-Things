@@ -3,6 +3,7 @@ package assortment_of_things.campaign.ui
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.misc.getChildrenCopy
+import assortment_of_things.misc.setOpacity
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.LocationAPI
@@ -86,7 +87,8 @@ class MinimapUI : EveryFrameScript {
                 // if (child.javaClass.name.contains("o0OoOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO") )
                 if (child.position.width == 200f && child.position.height == 200f)
                 {
-                    core.removeComponent(child)
+                  //  core.removeComponent(child)
+                    child.position.inTL(10000f, 10000f)
                 }
             }
 

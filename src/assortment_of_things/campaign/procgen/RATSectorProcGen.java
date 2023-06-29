@@ -5,9 +5,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
-import assortment_of_things.campaign.procgen.customThemes.ChiralThemeGenerator;
 import assortment_of_things.misc.RATSettings;
-import assortment_of_things.campaign.procgen.customThemes.OutpostThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.*;
 import com.fs.starfarer.api.impl.campaign.procgen.*;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.*;
@@ -30,9 +28,6 @@ import com.fs.starfarer.api.util.WeightedRandomPicker;
 
 public class RATSectorProcGen implements SectorProcGenPlugin {
 
-
-	public static OutpostThemeGenerator outpostThemeGen = new OutpostThemeGenerator();
-	public static ChiralThemeGenerator chiralThemeGen = new ChiralThemeGenerator();
 
 	public static final float CELL_SIZE = 2000;
 	public static int CONSTELLATION_CELLS = 10;
@@ -81,26 +76,6 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 
 		Boolean adjustedEnabled = Global.getSettings().getModManager().isModEnabled("Adjusted Sector");
 
-		if (adjustedEnabled && RATSettings.getEnableOutposts())
-		{
-			SectorThemeGenerator.generators.add(outpostThemeGen);
-			Global.getSector().getMemoryWithoutUpdate().set("$rat_outposts_enabled", true);
-		}
-		else if (adjustedEnabled)
-		{
-			SectorThemeGenerator.generators.remove(outpostThemeGen);
-		}
-
-		if (adjustedEnabled && RATSettings.getEnableChiral())
-		{
-			SectorThemeGenerator.generators.add(chiralThemeGen);
-			Global.getSector().getMemoryWithoutUpdate().set("$rat_chiral_enabled", true);
-		}
-		else if (adjustedEnabled)
-		{
-			SectorThemeGenerator.generators.remove(chiralThemeGen);
-		}
-
 
 		if (Global.getSettings().getModManager().isModEnabled("Adjusted Sector"))
 		{
@@ -147,9 +122,6 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 
 		RATRuinsThemeGenerator.MIN_CONSTELLATIONS_WITH_RUINS = (int) (15 * scale);
 		RATRuinsThemeGenerator.MAX_CONSTELLATIONS_WITH_RUINS = (int) (25 * scale);
-
-		OutpostThemeGenerator.setMinOutpostConstellations( (int) (2 * scale));
-		OutpostThemeGenerator.setMaxOutpostConstellations( (int) (3 * scale));
 
 
 		float w = Global.getSettings().getFloat("sectorWidth");

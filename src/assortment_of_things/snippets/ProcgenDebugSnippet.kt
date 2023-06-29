@@ -55,12 +55,6 @@ class ProcgenDebugSnippet : LunaSnippet()
         var derelictCount = 0
         var derelictMothership = 0
 
-        var outpostMainCount = 0
-        var outpostSecondaryCount = 0
-
-        var chiralMainCount = 0
-        var chiralSecondaryCount = 0
-
         var gates = 0
 
         for (system in systems)
@@ -91,12 +85,6 @@ class ProcgenDebugSnippet : LunaSnippet()
 
                     Tags.THEME_DERELICT -> derelictCount++
                     Tags.THEME_DERELICT_MOTHERSHIP -> derelictMothership++
-
-                    RATTags.THEME_OUTPOST_MAIN -> outpostMainCount++
-                    RATTags.THEME_OUTPOST_SECONDARY -> outpostSecondaryCount++
-
-                    RATTags.THEME_CHIRAL_MAIN -> chiralMainCount++
-                    RATTags.THEME_CHIRAL_SECONDARY -> chiralSecondaryCount++
                 }
             }
         }
@@ -150,17 +138,6 @@ class ProcgenDebugSnippet : LunaSnippet()
 
         output.addPara("Theme Remnant-Main Systems: $remnantMainCount", 0f, baseColor, baseColor)
         output.addPara("Theme Remnant-Secondary Systems: $remnantSecondarCount", 0f, baseColor, baseColor)
-
-        output.addSpacer(5f)
-
-        output.addPara("RAT Theme Data: ", 0f, highlightColor, highlightColor)
-        output.addPara("Theme Outpost-Main Systems: $outpostMainCount", 0f, baseColor, baseColor)
-        output.addPara("Theme Outpost-Secondary Systems: $outpostSecondaryCount", 0f, baseColor, baseColor)
-
-        output.addSpacer(5f)
-
-        output.addPara("Theme Chiral-Main Systems: $chiralMainCount", 0f, baseColor, baseColor)
-        output.addPara("Theme Chiral-Secondary Systems: $chiralSecondaryCount", 0f, baseColor, baseColor)
 
         output.addSpacer(10f)
 

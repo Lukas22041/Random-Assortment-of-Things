@@ -1,0 +1,207 @@
+{
+  "hullName": "Aboleth",
+  "hullId": "rat_aboleth",
+  "hullSize": "CRUISER",
+  "spriteName": "graphics/ships/aboleth.png",
+  "style": "ABYSSAL",
+  "height": 280,
+  "width": 230,
+  "center": [115, 140],
+  "collisionRadius": 175,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 162.5,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_abyssal_core",
+    "automated"
+  ],
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "MEDIUM",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": 0,
+      "locations": [26.5, -0]
+    },
+    {
+      "id": "WS0002",
+      "size": "LARGE",
+      "type": "UNIVERSAL",
+      "mount": "HARDPOINT",
+      "arc": 10,
+      "angle": 0,
+      "locations": [82, -0]
+    },
+    {
+      "id": "WS0003",
+      "size": "MEDIUM",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 150,
+      "angle": 40.5,
+      "locations": [-2.5, 34]
+    },
+    {
+      "id": "WS0004",
+      "size": "MEDIUM",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 150,
+      "angle": -40.5,
+      "locations": [-2.5, -34]
+    },
+    {
+      "id": "WS0005",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 270,
+      "angle": 180,
+      "locations": [-104.5, -0]
+    },
+    {
+      "id": "WS0006",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 150,
+      "angle": 130,
+      "locations": [-33, 38.5]
+    },
+    {
+      "id": "WS0007",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 150,
+      "angle": -130,
+      "locations": [-33, -38.5]
+    },
+    {
+      "id": "WS0008",
+      "size": "SMALL",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 150,
+      "angle": 85,
+      "locations": [8, 55.5]
+    },
+    {
+      "id": "WS0009",
+      "size": "SMALL",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 150,
+      "angle": -85,
+      "locations": [8, -55.5]
+    },
+    {
+      "id": "WS0010",
+      "size": "SMALL",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": 90,
+      "locations": [105, 40.5]
+    },
+    {
+      "id": "WS0011",
+      "size": "SMALL",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": -90,
+      "locations": [105, -40.5]
+    },
+    {
+      "id": "LB 1",
+      "size": "LARGE",
+      "type": "LAUNCH_BAY",
+      "mount": "HIDDEN",
+      "arc": 360,
+      "angle": 0,
+      "locations": [
+        24, -45,
+        36.5, -39.5,
+        47, -38
+      ]
+    },
+    {
+      "id": "LB 2",
+      "size": "LARGE",
+      "type": "LAUNCH_BAY",
+      "mount": "HIDDEN",
+      "arc": 360,
+      "angle": 0,
+      "locations": [
+        23, 45,
+        38, 39,
+        47, 37.5
+      ]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-76, -28.5],
+      "length": 60,
+      "width": 20,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL"
+    },
+    {
+      "location": [-76, 28.5],
+      "length": 60,
+      "width": 20,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL"
+    },
+    {
+      "location": [-74, -28.5],
+      "length": 30,
+      "width": 40,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL_NOTRAIL"
+    },
+    {
+      "location": [-74, 28.5],
+      "length": 30,
+      "width": 40,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL_NOTRAIL"
+    }
+  ],
+  "bounds": [
+    121, 15,
+    134, 23,
+    114.5, 59,
+    82.5, 82,
+    64.5, 54.5,
+    27.5, 55,
+    20.5, 101,
+    -1, 77,
+    -23.5, 84,
+    -41.5, 51,
+    -132.5, 3.5,
+    -132.5, -3.5,
+    -41.5, -51,
+    -23.5, -84,
+    -1, -77,
+    20.5, -101,
+    27.5, -55,
+    64.5, -54.5,
+    82.5, -82,
+    114.5, -59,
+    134, -23,
+    121, -15
+  ]
+}

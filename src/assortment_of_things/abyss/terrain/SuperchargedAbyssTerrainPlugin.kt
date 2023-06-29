@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.TerrainAIFlags
 import com.fs.starfarer.api.combat.MutableStat
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
 import com.fs.starfarer.api.ui.Alignment
@@ -20,7 +21,19 @@ class SuperchargedAbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
     var shielding: Float? by LunaMemory("rat_abyss_currentShielding", 50000f)
     var siphon: Float = 0f
 
-    init {
+    fun save()
+    {
+        params.tiles = null
+        savedTiles = encodeTiles(tiles)
+
+        for (i in activeCells.indices) {
+            for (j in activeCells[0].indices) {
+                val curr = activeCells[i][j]
+                if (curr != null && isTileVisible(i, j)) {
+                    savedActiveCells.add(curr)
+                }
+            }
+        }
     }
 
     override fun stacksWithSelf(): Boolean {
@@ -88,8 +101,8 @@ class SuperchargedAbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
             tooltip.addSpacer(5f)
             tooltip.addSectionHeading("Supercharged Abyssal Storm", Alignment.MID, 0f)
             tooltip.addSpacer(5f)
-            tooltip!!.addPara("Abyssal Storms damage the fleets ships if they are moving quickly, making it best to avoid passing through them when possible." +
-                    "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "damage")
+            tooltip!!.addPara("Abyssal Storms may damage members of the fleet if it is moving through it at high speeds."
+                , 0f, Misc.getTextColor(), Misc.getHighlightColor(), "damage")
         }
 
 
@@ -122,5 +135,15 @@ class SuperchargedAbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
     //Cant have multiple systems with the terrain without this
     override fun getTerrainId(): String {
         return super.getTerrainId() + id
+    }
+
+    override fun hasAIFlag(flag: Any?): Boolean {
+        // return super.hasAIFlag(flag)
+        return false
+    }
+
+    override fun hasAIFlag(flag: Any?, fleet: CampaignFleetAPI?): Boolean {
+        if (flag == TerrainAIFlags.MOVES_FLEETS) return true
+        return false
     }
 }

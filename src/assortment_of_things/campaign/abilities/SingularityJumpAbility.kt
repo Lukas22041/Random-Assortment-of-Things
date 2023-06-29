@@ -1,7 +1,6 @@
 package assortment_of_things.campaign.abilities
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.campaign.world.PocketDimensionSystem
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -24,6 +23,7 @@ class SingularityJumpAbility : BaseDurationAbility() {
         if (!memory.contains(key))
         {
             hyperspaceToken = Global.getSector().hyperspace.createToken(0f, 0f)
+            Global.getSector().hyperspace.addEntity(hyperspaceToken)
         }
         else
         {
@@ -36,16 +36,35 @@ class SingularityJumpAbility : BaseDurationAbility() {
             hyperspaceToken!!.location.set(player.location.x, player.location.y)
             memory.set(key, hyperspaceToken)
 
-            var token = memory.get("\$rat_abyss_midnight_token") as SectorEntityToken
+            var token = memory.get("\$rat_abyss_midnight_token") as SectorEntityToken?
 
-            token.starSystem.location.set(player.location.x, player.location.y)
+            var systems = AbyssUtils.getAllAbyssSystems()
 
-            Global.getSector().doHyperspaceTransition(player, player, JumpPointAPI.JumpDestination(token, ""), 0.2f)
+            for (system in systems)
+            {
+                system.location.set(player.location.x, player.location.y)
+            }
+
+
+            var visual = player.containingLocation.addCustomEntity("rat_fracture_visual", "", "rat_abyss_fracture_jumpvisual",Factions.NEUTRAL)
+            visual.location.set(player.location)
+            var visual2 = token!!.containingLocation.addCustomEntity("rat_fracture_visual", "", "rat_abyss_fracture_jumpvisual",Factions.NEUTRAL)
+            visual2.location.set(token.location)
+
+            Global.getSector().doHyperspaceTransition(player, visual, JumpPointAPI.JumpDestination(token, ""), 2f)
         }
         if (player.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))
         {
-            Global.getSector().doHyperspaceTransition(player, player, JumpPointAPI.JumpDestination(hyperspaceToken, ""), 0.2f)
+
+            var visual = player.containingLocation.addCustomEntity("rat_fracture_visual", "", "rat_abyss_fracture_jumpvisual",Factions.NEUTRAL)
+            visual.location.set(player.location)
+            var visual2 = hyperspaceToken!!.containingLocation.addCustomEntity("rat_fracture_visual", "", "rat_abyss_fracture_jumpvisual",Factions.NEUTRAL)
+            visual2.location.set(hyperspaceToken.location)
+
+            Global.getSector().doHyperspaceTransition(player, visual, JumpPointAPI.JumpDestination(hyperspaceToken, ""), 2f)
+
         }
+
 
     }
 
@@ -81,8 +100,8 @@ class SingularityJumpAbility : BaseDurationAbility() {
 
         tooltip.addPara("Descends in to the depths of hyperspace, the abyss.", 0f)
         tooltip.addSpacer(5f)
-        tooltip.addPara("Sustained stay is impossible without proper shielding. It is adviced to look for a source of it upon arrival, or the fleet will be ejected back in to hyperspace.", 0f)
-        tooltip.addSpacer(5f)
+        /*tooltip.addPara("Sustained stay is impossible without proper shielding. It is adviced to look for a source of it upon arrival, or the fleet will be ejected back in to hyperspace.", 0f)
+        tooltip.addSpacer(5f)*/
         tooltip.addPara("Activating it within the abyss returns the fleet back to hyperspace.", 0f)
 
         if (!Global.getSector().isPlayerInHyperspace() && !Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))

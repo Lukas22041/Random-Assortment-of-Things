@@ -1,0 +1,21 @@
+{
+
+#collapseopen MUSIC
+	
+"music":{
+		####################################
+		# "source" can also be a directory #
+		####################################
+
+		"rat_music_abyss":[
+			{"file":"rat_abyss_theme.ogg","source":"sounds/rat/music","volume":1},
+			
+		],
+		
+	
+# collapseclose
+	}
+
+
+
+}

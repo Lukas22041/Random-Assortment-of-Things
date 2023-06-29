@@ -1,0 +1,23 @@
+{
+  "hullName": "Shield Drone",
+  "hullId": "rat_shield_object",
+  "hullSize": "FIGHTER",
+  "spriteName": "graphics/ships/rat_none.png",
+  "style": "HIGH_TECH",
+  "height": 21,
+  "width": 18,
+  "center": [9, 11],
+  "collisionRadius": 74.5,
+  "shieldCenter": [1, 0],
+  "shieldRadius": 86,
+  "viewOffset": 0,
+  "weaponSlots": [],
+  "engineSlots": [],
+  "bounds": [
+    8, 8,
+    -7, -7,
+    -7, 8,
+    9, -7,
+    4, 0
+  ]
+}

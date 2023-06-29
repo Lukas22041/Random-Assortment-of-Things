@@ -2,51 +2,45 @@
  	"plugins":{		
 		"newGameSectorProcGen":"assortment_of_things.campaign.procgen.RATSectorProcGen",
 		"RatCombatHandler":"assortment_of_things.combat.CombatHandler",
-		"RatCombatSkillHandler":"assortment_of_things.combat.CombatSkillHandler",
 	},	
 
 
 
 	"designTypeColors":{
 		"Chiral":[122,139,221,255],
-		"Augmenter":[252, 227, 3,255],
+		"Hull Alteration":[252, 227, 3,255],
 		"Abyss":[255, 0, 50, 255],
+		"Abyssal":[255, 0, 50, 255],
 		"Modular Weapon":[158, 50, 230,255],
 	},		
 	
-	"drop_prob_officer_rat_scarlet_processor":0.2,
-	"drop_prob_officer_rat_azure_processor":0.2,
-	"drop_prob_officer_rat_amber_processor":0.2,
+	"drop_prob_officer_rat_chronos_core":0.1,
+	"drop_prob_officer_rat_cosmos_core":0.1,
 
 	"graphics":{
-		"intel":{
-			"beacon_outpost":"graphics/icons/intel/beacon_outpost.png",
-		},
-		"rat": {
-		  "phenix_glow": "graphics/ships/rift_phenix_glow.png",
-		  "dimensional_tear": "graphics/entities/wormhole.png",
-		  "dimensional_tear_core": "graphics/entities/wormhole_core.png",
 		
-		  
-		  "skeleton":"graphics/jokes/skeleton.png",
-		},
 		
 		"rat_terrain": {
 		  "wormhole_bands":"graphics/fx/abyss_portal_textures_small.png",	
+		  "halo":"graphics/fx/rat_halo.png",	
 		  
-		  
-		  "depths_siphon":"graphics/terrain/rat_depths_siphon.png",
-		  "depths_siphon_glow":"graphics/terrain/rat_depths_siphon_glow.png",
-		  "depths_siphon_map":"graphics/terrain/rat_depths_siphon_map.png",
+		  #"depths_siphon":"graphics/terrain/rat_depths_siphon.png",
+		  #"depths_siphon_glow":"graphics/terrain/rat_depths_siphon_glow.png",
+		  #"depths_siphon_map":"graphics/terrain/rat_depths_siphon_map.png",
 		  
 		  "depths1":"graphics/terrain/rat_depths1.png",
 		  "depths1_glow":"graphics/terrain/rat_depths1_glow.png",
 		  "depths1_map":"graphics/terrain/rat_depths1_map.png",
 		  
-		  "depths2":"graphics/terrain/rat_depths2.png",
-		  "depths2_glow":"graphics/terrain/rat_depths2_glow.png",
-		  "depths2_map":"graphics/terrain/rat_depths2_map.png",
+		  #"depths2":"graphics/terrain/rat_depths2.png",
+		  #"depths2_glow":"graphics/terrain/rat_depths2_glow.png",
+		  #"depths2_map":"graphics/terrain/rat_depths2_map.png",
 		  
+		},
+		
+		"rat_entities": { 
+		  "research_station":"graphics/stations/rat_domain_research_station.png",
+		  "research_station_glow":"graphics/stations/rat_domain_research_station_glow.png",
 		},
 		
  	}

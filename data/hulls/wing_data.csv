@@ -1,0 +1,4 @@
+id,variant,tags,tier,rarity,fleet pts,op cost,formation,range,attackRunRange,attackPositionOffset,num,role,role desc,refit,base value,,,,,,,,,,,,,number
+rat_shield_drone_wing,rat_shield_drone_variant,"no_drop, no_sell, low",1,,5,5,CLAW,4000,200,700,1,SUPPORT,Support Drone,5,6000,,,,,,,,,,,,,7
+rat_shield_object_wing,rat_shield_object_variant,"no_drop, no_sell, low",1,,5,5,CLAW,4000,200,700,1,SUPPORT,Support Drone,5,6000,,,,,,,,,,,,,7
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,9

@@ -1,20 +1,32 @@
 package assortment_of_things.abyss
 
+import assortment_of_things.abyss.entities.AbyssalFracture
+import assortment_of_things.abyss.entities.AbyssalLightsource
+import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
+import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.terrain.AbyssTerrainPlugin
+import assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin
 import assortment_of_things.abyss.terrain.SuperchargedAbyssTerrainPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
+import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTiledTerrain
+import com.fs.starfarer.api.loading.CampaignPingSpec
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
 import java.awt.Color
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 data class LinkedFracture(val fracture1: SectorEntityToken, var fracture2: SectorEntityToken)
 
@@ -23,10 +35,11 @@ object AbyssUtils {
     var ABYSS_COLOR = Color(255, 0, 50)
     var SUPERCHARGED_COLOR = Color(16, 154, 100)
 
-    var SYSTEM_NAMES = arrayListOf("Tranquil", "Serene", "Storm", "Edge", "Harmony", "Decay", "Solitude", "Sorrow", "Time", "Wave",
-        "Island", "Crises", "Knowledge", "Serpent", "Hope", "Death", "Perseverance", "Fear")
+    var SYSTEM_NAMES = arrayListOf("Tranquilility", "Serenity", "Storms", "Harmony", "Decay", "Solitude", "Sorrow", "Time", "Epidemics",
+        "Crises", "Knowledge", "Serpents", "Hope", "Death", "Perseverance", "Fear", "Cold", "Clouds", "Luxury", "Hatred", "Dreams", "Honor", "Trust", "Success", "Joy")
 
     var SYSTEM_TAG = "rat_abyss_system"
+    var DEFEND_STRUCTURE_TAG = "rat_defend_structure"
 
     var ABYSS_SYSTEMS_KEY = "\$rat_abyss_systems"
 
@@ -38,6 +51,7 @@ object AbyssUtils {
             systems = ArrayList<StarSystemAPI>()
         }
         systems.add(system)
+        Global.getSector().memoryWithoutUpdate.set(ABYSS_SYSTEMS_KEY, systems)
     }
 
     fun getAllAbyssSystems() : List<StarSystemAPI>
@@ -46,7 +60,7 @@ object AbyssUtils {
         if (systems == null) {
             systems = ArrayList<StarSystemAPI>()
         }
-        return systems
+        return ArrayList(systems)
     }
 
     //Sets up important tags, like "HIDDEN" to prevent the systems from being used by other mods.
@@ -58,6 +72,48 @@ object AbyssUtils {
         system.addTag(Tags.THEME_UNSAFE)
         system.addTag(Tags.THEME_SPECIAL)
         system.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
+        system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
+        system.isEnteredByPlayer = false
+    }
+
+    fun getNeighbouringSystems(system: StarSystemAPI) : List<StarSystemAPI> {
+        return system.memoryWithoutUpdate.get("\$rat_abyss_neighbours") as MutableList<StarSystemAPI>? ?: ArrayList()
+    }
+
+    fun setNeighbours(system1: StarSystemAPI, system2: StarSystemAPI) {
+
+        var systems1 = system1.memoryWithoutUpdate.get("\$rat_abyss_neighbours") as MutableList<StarSystemAPI>? ?: ArrayList()
+        systems1.add(system2)
+        systems1.distinct()
+        system1.memoryWithoutUpdate.set("\$rat_abyss_neighbours", systems1)
+
+        var systems2 = system2.memoryWithoutUpdate.get("\$rat_abyss_neighbours") as MutableList<StarSystemAPI>? ?: ArrayList()
+        systems2.add(system1)
+        systems2.distinct()
+        system2.memoryWithoutUpdate.set("\$rat_abyss_neighbours", systems2)
+    }
+
+    fun getFarNeighbouringSystems(system: StarSystemAPI) : List<StarSystemAPI> {
+        return system.memoryWithoutUpdate.get("\$rat_abyss_far_neighbours") as MutableList<StarSystemAPI>? ?: ArrayList()
+    }
+
+    fun setFarNeighbours(system1: StarSystemAPI, system2: StarSystemAPI) {
+
+        var systems1 = system1.memoryWithoutUpdate.get("\$rat_abyss_far_neighbours") as MutableList<StarSystemAPI>? ?: ArrayList()
+        systems1.add(system2)
+        systems1.distinct()
+        system1.memoryWithoutUpdate.set("\$rat_abyss_far_neighbours", systems1)
+
+        var systems2 = system2.memoryWithoutUpdate.get("\$rat_abyss_far_neighbours") as MutableList<StarSystemAPI>? ?: ArrayList()
+        systems2.add(system1)
+        systems2.distinct()
+        system2.memoryWithoutUpdate.set("\$rat_abyss_far_neighbours", systems2)
+    }
+
+    fun playerInNeighbourOrSystem(system: StarSystemAPI) : Boolean
+    {
+        var player = Global.getSector().playerFleet
+        return player.containingLocation == system || getNeighbouringSystems(system).any { player.containingLocation == it }
     }
 
     fun createFractures(system1: StarSystemAPI, system2: StarSystemAPI) : LinkedFracture
@@ -70,8 +126,12 @@ object AbyssUtils {
         linkFracture(fracture1, fracture2)
         linkFracture(fracture2, fracture1)
 
+        addLightsource(fracture1, 10000f)
+        addLightsource(fracture2, 10000f)
+
         return LinkedFracture(fracture1, fracture2)
     }
+
 
     fun linkFracture(fracture: SectorEntityToken, target: SectorEntityToken) {
         (fracture.customPlugin as AbyssalFracture).connectedEntity = target
@@ -81,10 +141,54 @@ object AbyssUtils {
         return (fracture.customPlugin as AbyssalFracture).connectedEntity!!
     }
 
-    fun getTexturesForSystem()
+    fun generateBaseDetails(system: StarSystemAPI, tier: AbyssProcgen.Tier)
     {
-        var pairs = mutableMapOf("Abyss1" to "depths1", "Abyss2" to "depths2")
+        var color = generateAbyssColor(system, tier)
+        var terrain = AbyssUtils.generateAbyssTerrain(system, 0.3f)
+        var darkness = generateAbyssDarkness(system)
+        terrain.color = color
+        var warper = AbyssBackgroundWarper(system, 8, 0.33f)
+        warper.overwriteColor = color
     }
+
+    fun generateAbyssDarkness(system: StarSystemAPI) : AbyssalDarknessTerrainPlugin{
+        val darkness = system.addTerrain("rat_depths_darkness", null)
+        return (darkness as CampaignTerrainAPI).plugin as AbyssalDarknessTerrainPlugin
+    }
+
+    fun generateAbyssColor(system: StarSystemAPI, tier: AbyssProcgen.Tier) : Color{
+
+        var h = MathUtils.getRandomNumberInRange(0.925f, 1f)
+        if (Random().nextFloat() > 0.75f) h = MathUtils.getRandomNumberInRange(0.0f, 0.025f)
+
+        var lightColor = Color.WHITE
+
+        var s = 1f
+        var b = 1f
+        when (tier) {
+            AbyssProcgen.Tier.Low -> {
+                lightColor = Color.WHITE
+                b = 0.8f
+            }
+            AbyssProcgen.Tier.Mid -> {
+                lightColor = Color.gray
+                b = 0.3f
+            }
+            AbyssProcgen.Tier.High -> {
+                lightColor = Color.DARK_GRAY
+                b = 0.2f
+            }
+        }
+
+        system.lightColor = lightColor
+
+        var color = Color.getHSBColor(h, s, b)
+
+        system.memoryWithoutUpdate.set("\$rat_abyss_color", color)
+        return color
+    }
+
+    fun getSystemColor(system: LocationAPI) = system.memoryWithoutUpdate.get("\$rat_abyss_color") as Color
 
     fun generateAbyssTerrain(system: StarSystemAPI, fraction: Float) : AbyssTerrainPlugin
     {
@@ -101,7 +205,7 @@ object AbyssUtils {
         var textureChoice = MathUtils.getRandomNumberInRange(1, 2)
         system.backgroundTextureFilename = "graphics/backgrounds/abyss/Abyss$textureChoice.jpg"
 
-        val nebula = system.addTerrain("rat_depths", BaseTiledTerrain.TileParams(string.toString(), w, h, "rat_terrain", "depths$textureChoice", 4, 4, null))
+        val nebula = system.addTerrain("rat_depths", BaseTiledTerrain.TileParams(string.toString(), w, h, "rat_terrain", "depths1", 4, 4, null))
         nebula.id = "rat_depths_${Misc.genUID()}"
         nebula.location[0f] = 0f
 
@@ -111,20 +215,23 @@ object AbyssUtils {
         editor.noisePrune(fraction)
         editor.regenNoise()
 
+
         return nebulaPlugin
     }
 
-    fun getAbyssTerrainPlugin(system: StarSystemAPI) : AbyssTerrainPlugin {
+    fun getAbyssTerrainPlugin(system: StarSystemAPI) : AbyssTerrainPlugin? {
 
         var plugin = system.terrainCopy.find { it.plugin is AbyssTerrainPlugin }?.plugin as AbyssTerrainPlugin?
-        if (plugin == null)
-        {
-            plugin = generateAbyssTerrain(system, 0.3f)
-        }
         return plugin
     }
 
-    fun generateRareNebula(system: StarSystemAPI, location: Vector2f, range: Int, fraction: Float, clearArea: Boolean) : SuperchargedAbyssTerrainPlugin
+    fun getSuperchargedAbyssTerrainPlugin(system: StarSystemAPI) : SuperchargedAbyssTerrainPlugin? {
+
+        var plugin = system.terrainCopy.find { it.plugin is SuperchargedAbyssTerrainPlugin }?.plugin as SuperchargedAbyssTerrainPlugin?
+        return plugin
+    }
+
+    fun generateSuperchargedTerrain(system: StarSystemAPI, location: Vector2f, range: Int, fraction: Float, clearArea: Boolean) : SuperchargedAbyssTerrainPlugin
     {
         val w = range / 100
         val h = range / 100
@@ -193,6 +300,50 @@ object AbyssUtils {
         return siphon
     }
 
+    fun createSensorIcon(entity: SectorEntityToken, maxRange: Float, color: Color)
+    {
+        var player = Global.getSector().playerFleet
+        if (player.containingLocation != entity.containingLocation) return
+        if (!entity.isDiscoverable) return
+        var distance = MathUtils.getDistance(player, entity)
+
+        if (distance > maxRange) return
+
+        var abyssPlugin = getAbyssTerrainPlugin(entity.starSystem)
+        var superchargedPlugin = getSuperchargedAbyssTerrainPlugin(entity.starSystem)
+
+
+        var inStorm = false
+
+        if (abyssPlugin != null && abyssPlugin.isInStorm(player)) inStorm = true
+        if (superchargedPlugin != null && superchargedPlugin.isInStorm(player)) inStorm = true
+
+       // if (inStorm)
+     //   {
+            if (entity.containingLocation.customEntities.any { it.id ==  "${entity.id}_icon"} ) return
+
+            var icon = entity.containingLocation.addCustomEntity("${entity.id}_icon", "Unknown Entity", "rat_abyss_icon", Factions.NEUTRAL)
+
+            icon.location.set(entity.location)
+            icon.setCircularOrbit(entity, 0f, 0f, 0f)
+
+            Global.getSoundPlayer().playUISound("ui_discovered_entity", 0.5f, 1f)
+
+            val custom = CampaignPingSpec()
+            custom.color = AbyssUtils.SUPERCHARGED_COLOR
+            custom.width = 10f
+            custom.minRange = player.radius
+            custom.range = player.radius + 300
+            custom.duration = 2f
+            custom.alphaMult = 1f
+            custom.inFraction = 0.1f
+            custom.num = 1
+            custom.isInvert = true
+
+            Global.getSector().addPing(player, custom)
+    }
+
+
     fun getMaxShielding() : Float
     {
         var membersWithShielding = Global.getSector().playerFleet.fleetData.membersListCopy.filter { it.variant.hasHullMod("rat_abyss_shielding") }
@@ -212,24 +363,102 @@ object AbyssUtils {
         return shielding
     }
 
-    fun getLossPerDay() : Float
+    fun getShieldLossPerDay() : Float
     {
         var membersWithShielding = Global.getSector().playerFleet.fleetData.membersListCopy
         var cost = 0f
 
         for (member in membersWithShielding)
         {
+            if (member.variant.hasHullMod("rat_abyssal_core")) continue
+
             cost += when(member.hullSpec.hullSize) {
                 ShipAPI.HullSize.FRIGATE -> 0.05f
                 ShipAPI.HullSize.DESTROYER -> 0.1f
-                ShipAPI.HullSize.CRUISER -> 0.3f
-                ShipAPI.HullSize.CAPITAL_SHIP -> 0.5f
+                ShipAPI.HullSize.CRUISER -> 0.2f
+                ShipAPI.HullSize.CAPITAL_SHIP -> 0.4f
                 else -> 0f
             }
+        }
+
+
+        if (AbyssalDepthsEventIntel.get()?.isStageActive(AbyssalDepthsEventIntel.Stage.COMPREHENSION) == true)
+        {
+            cost *= 0.5f
         }
 
         return cost
     }
 
+    fun restoreShielding(amount: Float) {
+        var memory = Global.getSector().memoryWithoutUpdate
+        var current = memory.get("\$rat_abyss_currentShielding") as Float?
+        if (current == null) {
+            current = 0f
+        }
+        current += amount
+        memory.set("\$rat_abyss_currentShielding", current)
+    }
+
+    fun setPreviousSystem(current: StarSystemAPI, previous: StarSystemAPI) {
+        current.memoryWithoutUpdate.set("\$rat_abyss_previous", previous)
+    }
+
+    fun getPreviousSystem(system: StarSystemAPI) : StarSystemAPI? {
+       return system.memoryWithoutUpdate.get("\$rat_abyss_previous") as StarSystemAPI?
+    }
+
+    fun setSystemLocation(system: StarSystemAPI, location: Vector2f) {
+        system.memoryWithoutUpdate.set("\$rat_abyss_location", location)
+    }
+
+    fun getSystemLocation(system: StarSystemAPI) : Vector2f {
+        var location = system.memoryWithoutUpdate.get("\$rat_abyss_location") as Vector2f?
+        if (location == null) location = Vector2f(0f, 0f)
+        return location
+    }
+
+    fun setTier(system: StarSystemAPI, tier: AbyssProcgen.Tier)  {
+        system.memoryWithoutUpdate.set("\$rat_abyss_tier", tier)
+    }
+
+    fun getTier(system: StarSystemAPI) : AbyssProcgen.Tier {
+        return system.memoryWithoutUpdate.get("\$rat_abyss_tier") as AbyssProcgen.Tier
+    }
+
+    fun anyNearbyFleetsHostileAndAware() : Boolean {
+        val playerFleet = Global.getSector().playerFleet
+
+        for (fleet in playerFleet.containingLocation.fleets) {
+            if (fleet.ai == null) continue
+            if (fleet.isStationMode) continue
+
+            if (fleet.visibilityLevelOfPlayerFleet == SectorEntityToken.VisibilityLevel.SENSOR_CONTACT ||
+                fleet.visibilityLevelOfPlayerFleet == SectorEntityToken.VisibilityLevel.COMPOSITION_DETAILS ||
+                fleet.visibilityLevelOfPlayerFleet == SectorEntityToken.VisibilityLevel.COMPOSITION_AND_FACTION_DETAILS) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    fun addLightsource(entity: SectorEntityToken, radius: Float, color: Color? = ABYSS_COLOR.setAlpha(50)) {
+        var lightsource = entity.containingLocation.addCustomEntity("rat_lightsource_${Misc.genUID()}", "", "rat_lightsource", Factions.NEUTRAL)
+        lightsource.setCircularOrbit(entity, 0f, 0f, 1000f)
+
+        var plugin = lightsource.customPlugin as AbyssalLightsource
+        plugin.radius = radius
+        plugin.color = color
+    }
+
+    fun addLightsource(system: LocationAPI, location: Vector2f, radius: Float, color: Color? = ABYSS_COLOR.setAlpha(50)) {
+        var lightsource = system.addCustomEntity("rat_lightsource_${Misc.genUID()}", "", "rat_lightsource", Factions.NEUTRAL)
+        lightsource.location.set(location)
+
+        var plugin = lightsource.customPlugin as AbyssalLightsource
+        plugin.radius = radius
+        plugin.color = color
+    }
 
 }

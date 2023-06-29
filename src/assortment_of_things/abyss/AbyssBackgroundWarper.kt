@@ -7,6 +7,7 @@ import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.campaign.BackgroundAndStars
 import com.fs.starfarer.campaign.WarpingSpriteRenderer
 import org.lwjgl.opengl.GL11
+import java.awt.Color
 import java.lang.invoke.MethodHandles
 import java.lang.invoke.MethodType
 
@@ -15,6 +16,8 @@ class AbyssBackgroundWarper(var system: LocationAPI, var chunks: Int, var speedM
     private val verticesWide = chunks
     private val verticesTall = chunks
     private val vertices = Array(verticesWide) { arrayOfNulls<Vertex>(verticesTall) }
+
+    var overwriteColor: Color? = null
 
     init {
         var background = invoke("getBackground", system) as BackgroundAndStars
@@ -45,7 +48,8 @@ class AbyssBackgroundWarper(var system: LocationAPI, var chunks: Int, var speedM
         GL11.glPushMatrix()
         spriteAPI!!.bindTexture()
 
-        val var5 = spriteAPI.color
+        var var5 = spriteAPI.color
+        if (overwriteColor != null) var5 = overwriteColor
         GL11.glColor4ub(var5.red.toByte(),
             var5.green.toByte(),
             var5.blue.toByte(),

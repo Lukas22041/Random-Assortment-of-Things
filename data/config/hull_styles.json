@@ -2,18 +2,18 @@
 	# The following hull style ids are reserved and can not be used:
 	# "sounds", "DEFAULT", "FIGHTER", "FRIGATE", "DESTROYER", "CRUISER", "CAPITAL_SHIP"
 	
-	
-	"CHIRALITY":{
-		"hyperspaceJitterColor":[0, 150, 255,255],
-		"baseCampaignExplosionColor":[0, 150, 255,255],
-		"baseCombatExplosionColor":[0, 150, 255,255],
-		"fighterRepairFlickerColor":[0, 150, 255,255],
-		"fighterChipIconColor":[0, 150, 255,255],
-		"weaponDisabledExplosionColor":[0, 150, 255,255],
-		"shieldRingColor":[0, 150, 255,255],
-		"shieldInnerColor":[0, 150, 255,150],
-		"fluxVentCoreColor":[0, 150, 255,255],
-		"fluxVentFringeColor":[0, 150, 255,255],
+	"ABYSSAL":{
+		"hyperspaceJitterColor":[16, 154, 100,255],
+		"baseCampaignExplosionColor":[16, 154, 100,255],
+		"baseCombatExplosionColor":[16, 154, 100,255], # smooth flash
+		"combatExplosionNonFlashColorOverride":[16, 154, 100,255], # the more billowy explosion
+		"fighterRepairFlickerColor":[16, 154, 100,255],
+		"fighterChipIconColor":[16, 154, 100,255],
+		"weaponDisabledExplosionColor":[16, 154, 100,255],
+		"shieldRingColor":[255,255,255,255],
+		"shieldInnerColor":[16, 154, 100,75],
+		"fluxVentCoreColor":[255,255,255,255],
+		"fluxVentFringeColor":[16, 154, 100,255],
 		"engineLoopSet":"engine_loop", 					# id of entry in sounds.json
 		"engineAccelerateSet":"engine_accelerate",		# id of entry in sounds.json
 		"empLoopSet":"emp_loop",						# id of entry in sounds.json
@@ -29,12 +29,12 @@
 		#"colorShiftCovers":true,
 		"coversColorShiftAmount":1,  # 0 to 1
 		"coversMatchShipBrightness":true,
-		"slotCoverSmallTurret":"graphics/weapons/covers/cover_turret_chirality_small.png",
-		"slotCoverSmallHardpoint":"graphics/weapons/covers/cover_hardpoint_chirality_small.png",
-		"slotCoverMediumTurret":"graphics/weapons/covers/cover_turret_chirality_medium.png",
-		"slotCoverMediumHardpoint":"graphics/weapons/covers/cover_hardpoint_chirality_medium.png",
-		"slotCoverLargeTurret":"graphics/weapons/covers/cover_turret_chirality_large.png",
-		"slotCoverLargeHardpoint":"graphics/weapons/covers/cover_hardpoint_chirality_large.png",
+		"slotCoverSmallTurret":"graphics/weapons/covers/rat_empty_cover.png",
+		"slotCoverSmallHardpoint":"graphics/weapons/covers/rat_empty_cover.png",
+		"slotCoverMediumTurret":"graphics/weapons/covers/rat_empty_cover.png",
+		"slotCoverMediumHardpoint":"graphics/weapons/covers/rat_empty_cover.png",
+		"slotCoverLargeTurret":"graphics/weapons/covers/rat_empty_cover.png",
+		"slotCoverLargeHardpoint":"graphics/weapons/covers/rat_empty_cover.png",
 		
 		"dHullOverlayLight":"graphics/damage/dmod_overlay_hightech_light.png",
 		"dHullOverlayMedium":"graphics/damage/dmod_overlay_hightech_medium.png",

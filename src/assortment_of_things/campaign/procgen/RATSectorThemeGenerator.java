@@ -5,12 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import assortment_of_things.campaign.procgen.customThemes.ChiralThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.RATDerelictThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.RATMiscellaneousThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.RATRuinsThemeGenerator;
 import assortment_of_things.misc.RATSettings;
-import assortment_of_things.campaign.procgen.customThemes.OutpostThemeGenerator;
 import assortment_of_things.campaign.procgen.vannilaThemes.RATRemnantThemeGenerator;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
@@ -42,15 +40,6 @@ public class RATSectorThemeGenerator {
 		generators.add(new RATMiscellaneousThemeGenerator());
 
 
-		if (RATSettings.getEnableOutposts()) {
-			generators.add(new OutpostThemeGenerator());
-			Global.getSector().getMemoryWithoutUpdate().set("$rat_outposts_enabled", true);
-		}
-
-		if (RATSettings.getEnableChiral()) {
-			generators.add(new ChiralThemeGenerator());
-			Global.getSector().getMemoryWithoutUpdate().set("$rat_chiral_enabled", true);
-		}
 		Collections.sort(generators, new Comparator<ThemeGenerator>() {
 			public int compare(ThemeGenerator o1, ThemeGenerator o2) {
 				int result = o1.getOrder() - o2.getOrder();

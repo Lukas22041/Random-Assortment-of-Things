@@ -1,48 +1,68 @@
 package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.AbyssalFracture
-import assortment_of_things.abyss.procgen.templates.TestSystemTemplate
+import assortment_of_things.abyss.intel.event.NewZoneReachedFactor
+import assortment_of_things.abyss.procgen.templates.AbyssGenTier1
 import assortment_of_things.misc.logger
-import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
-import kotlin.random.Random
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.system.measureTimeMillis
 
 class AbyssChainGenerator {
 
-    var maxSteps = 5
+    var maxSteps = 4
     var currentSteps = 0
 
     var reachedFinal = false
     var totalSystems = 0
 
     var latestSystems = ArrayList<StarSystemAPI>()
-    private final var FractureBoundary = Vector2f(16000f, 16000f)
+    var systemsInSameStep: HashMap<Int, MutableList<StarSystemAPI>> = HashMap()
+
+    var positionsOnMap = ArrayList<Vector2f>()
 
     var usedNames = ArrayList<String>()
+
+    var lastSystemWasPositiveOnMap = false
+    var generatedExtra = false
 
     fun startChain(baseSystem: StarSystemAPI)
     {
         latestSystems.clear()
 
-        var name = getName()
-        var root = TestSystemTemplate(name).generate()
+        var name = "Sea of " + getName()
+        var root = AbyssGenTier1(name, AbyssProcgen.Tier.Low).generate()
         AbyssUtils.setupTags(root)
         AbyssUtils.addAbyssSystemToMemory(root)
 
         var pos1 = Vector2f(750f, 750f)
-        var pos2 = findUnusedFractureLocation(root, 20000f)
+        var pos2 = getLocationForFractures(root)
 
         var fractures = AbyssUtils.createFractures(baseSystem, root)
 
         fractures.fracture1.location.set(pos1)
         fractures.fracture2.location.set(pos2)
 
+      // baseSystem.addScript(AbyssalDefendingFleetManager(fractures.fracture1, 60f, 120f))
+        AbyssUtils.generateBaseDetails(root, AbyssProcgen.Tier.Low)
         AbyssUtils.clearTerrainAroundFractures(fractures)
+
+        AbyssUtils.setNeighbours(baseSystem, root)
+        AbyssUtils.setPreviousSystem(root, baseSystem)
+        setMapLocation(baseSystem, 0)
+        setMapLocation(root, 0)
+
+        AbyssUtils.setTier(baseSystem, AbyssProcgen.Tier.Low)
+        AbyssUtils.setTier(root, AbyssProcgen.Tier.Low)
+
+        baseSystem.addScript(NewZoneReachedFactor(10, baseSystem))
+        root.addScript(NewZoneReachedFactor(10, root))
+
 
         latestSystems.add(root)
 
@@ -51,18 +71,18 @@ class AbyssChainGenerator {
         }
         this.logger().debug("Generated Abyss Chain in ${time}ms and generated $totalSystems systems")
 
-        latestSystems.clear()
+        var amount = totalSystems
 
-        var test1 = time
-        var test2 = time
+        latestSystems.clear()
     }
 
 
     fun generateChain()
     {
-        if (currentSteps > maxSteps) return
-
-
+        if (currentSteps > maxSteps) {
+            generateAfterChain()
+            return
+        }
 
         var newLatest = ArrayList<StarSystemAPI>()
         for (latest in latestSystems)
@@ -70,15 +90,28 @@ class AbyssChainGenerator {
 
             var count = getAmountOfSystems()
 
+            var step = currentSteps
+
             for (i in 0 until count)
             {
-                var name = getName()
-                var system = TestSystemTemplate(name).generate()
-                AbyssUtils.setupTags(system)
-                AbyssUtils.addAbyssSystemToMemory(system)
 
-                var pos1 = findUnusedFractureLocation(latest, 15000f)
-                var pos2 = findUnusedFractureLocation(system, 15000f)
+                var name = "Sea of " + getName()
+
+                var tier = AbyssProcgen.Tier.Low
+                if (currentSteps in 1..2) tier = AbyssProcgen.Tier.Mid
+                if (currentSteps in 3..10) tier = AbyssProcgen.Tier.High
+
+                var system = AbyssGenTier1(name, tier).generate()
+                AbyssUtils.setupTags(system)
+                AbyssUtils.generateBaseDetails(system, tier)
+                AbyssUtils.addAbyssSystemToMemory(system)
+                system.addScript(NewZoneReachedFactor(10, system))
+
+
+
+
+                var pos1 = getLocationForFractures(latest)
+                var pos2 = getLocationForFractures(system)
 
                 var fractures = AbyssUtils.createFractures(latest, system)
 
@@ -86,6 +119,20 @@ class AbyssChainGenerator {
                 fractures.fracture2.location.set(pos2)
 
                 AbyssUtils.clearTerrainAroundFractures(fractures)
+
+                if (tier == AbyssProcgen.Tier.Mid)
+                {
+                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 60f, 120f, AbyssProcgen.Tier.Low, 0.4f)
+                }
+                else if (tier == AbyssProcgen.Tier.High)
+                {
+                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 120f, 160f, AbyssProcgen.Tier.Mid, 0.7f)
+                }
+
+
+                AbyssUtils.setNeighbours(latest, system)
+                AbyssUtils.setPreviousSystem(system, latest)
+                setMapLocation(system, i)
 
                 totalSystems += 1
                 newLatest.add(system)
@@ -95,11 +142,83 @@ class AbyssChainGenerator {
             {
                 reachedFinal = true
             }
-
         }
+        systemsInSameStep.put(currentSteps, newLatest)
         currentSteps += 1
         latestSystems = newLatest
         generateChain()
+    }
+
+    fun generateAfterChain()
+    {
+
+        var maxTier2Outposts = 1
+        var maxTier3Outposts = 2
+
+        var tier2Systems = AbyssUtils.getAllAbyssSystems().filter { AbyssUtils.getTier(it) == AbyssProcgen.Tier.Mid }.toMutableList()
+        for (i in 0 until maxTier2Outposts)
+        {
+            var pick = tier2Systems.random()
+            AbyssProcgen.generateOutposts(pick)
+            tier2Systems.remove(pick)
+        }
+
+        var tier3Systems = AbyssUtils.getAllAbyssSystems().filter { AbyssUtils.getTier(it) == AbyssProcgen.Tier.High }.toMutableList()
+        for (i in 0 until maxTier3Outposts)
+        {
+            var pick = tier3Systems.random()
+            AbyssProcgen.generateOutposts(pick)
+            tier3Systems.remove(pick)
+        }
+
+        generateFarFracture(3, true)
+       // generateFarFracture(4, false)
+
+    }
+
+
+    fun generateFarFracture(step: Int, useDistance: Boolean)
+    {
+        var tier = systemsInSameStep.get(step)
+        var pick = tier!!.random()
+
+        tier.remove(pick)
+        var target: StarSystemAPI? = null
+        var currentDistance = 0f
+        var pickDis = AbyssUtils.getSystemLocation(pick)
+
+        var pickNeighbours = AbyssUtils.getNeighbouringSystems(pick)
+
+        if (!useDistance)
+        {
+            target = tier.filter { !pickNeighbours.contains(it) }.random()
+        }
+
+        if (useDistance)
+        {
+            for (system in tier.filter { !pickNeighbours.contains(it) })
+            {
+                var systemDis = AbyssUtils.getSystemLocation(system)
+                var distance = MathUtils.getDistance(pickDis, systemDis)
+                if (distance > currentDistance)
+                {
+                    currentDistance = distance
+                    target = system
+                }
+            }
+        }
+
+
+        var pos1 = getLocationForFractures(pick)
+        var pos2 = getLocationForFractures(target!!)
+
+        var fractures = AbyssUtils.createFractures(pick, target)
+
+        fractures.fracture1.location.set(pos1)
+        fractures.fracture2.location.set(pos2)
+
+        AbyssUtils.clearTerrainAroundFractures(fractures)
+        AbyssUtils.setFarNeighbours(pick, target)
     }
 
     fun getName() : String
@@ -108,7 +227,7 @@ class AbyssChainGenerator {
         var name = names.randomOrNull()
         if (name == null)
         {
-            name = "Abyss"
+            name = "the Abyss"
         }
         usedNames.add(name)
         return name
@@ -116,37 +235,122 @@ class AbyssChainGenerator {
 
     fun getAmountOfSystems() : Int {
 
-        var rng = Random.nextFloat()
+        var systems = 1
 
-        return when (currentSteps) {
-            0 -> 2
-            1 -> 1
-            2 -> 1
-            3 -> 2
-            4 -> 1
-            5 -> 1
+         when (currentSteps) {
+            0 -> systems = 2
+            1 -> systems = 1
+            2 -> systems = 1
+            3 -> systems = 2
+           /* 4 -> {
+                 if (Random().nextFloat() > 0.5f && !generatedExtra)
+                 {
+                     systems = 2
+                     generatedExtra = true
+                 }
+                 else
+                 {
+                     systems = 1
+                 }
+             }*/
+             4 -> systems = 1
+
             else -> 1
         }
 
-        var count = 1
-
+        return systems
     }
 
-    fun findUnusedFractureLocation(system: StarSystemAPI, minDistance: Float) : Vector2f
+    fun getLocationForFractures(system: StarSystemAPI) : Vector2f
     {
-        var existingFractures = system.customEntities.filter { it.customPlugin is AbyssalFracture }
-        var pos = Vector2f(MathUtils.getRandomNumberInRange(-FractureBoundary.x, FractureBoundary.x), MathUtils.getRandomNumberInRange(-FractureBoundary.y, FractureBoundary.y))
-        for (existing in existingFractures)
+        var existingEntities = system.customEntities
+      //  var pos = Vector2f(MathUtils.getRandomNumberInRange(-FractureBoundary.x, FractureBoundary.x), MathUtils.getRandomNumberInRange(-FractureBoundary.y, FractureBoundary.y))
+
+        var min = 4000f;
+        var max = 15000f;
+
+        var range = MathUtils.getRandomNumberInRange(min, max)
+        var pos = Misc.getPointAtRadius(Vector2f(0f, 0f), range)
+
+        for (existing in existingEntities)
         {
             var distance = MathUtils.getDistance(existing.location, pos)
-            if (distance < minDistance)
+            if (distance < 3000)
             {
-                if (minDistance < 250) return pos
-                findUnusedFractureLocation(system, minDistance - 200f)
+                getLocationForFractures(system)
             }
         }
 
         return pos
     }
 
+
+    fun setMapLocation(system: StarSystemAPI, currentBranch: Int, lastDistance: Float = 50f)
+    {
+        var previous = AbyssUtils.getPreviousSystem(system)
+        if (previous == null)
+        {
+            AbyssUtils.setSystemLocation(system, Vector2f(0f, 0f))
+            positionsOnMap.add(Vector2f(0f, 0f))
+            return
+        }
+
+        var prevLoc = AbyssUtils.getSystemLocation(previous)
+        if (previous.baseName == "Midnight")
+        {
+            var point = Vector2f(0f, 40f)
+            positionsOnMap.add(point)
+            AbyssUtils.setSystemLocation(system, point)
+            return
+        }
+
+        var angle = Misc.getAngleInDegrees(Vector2f(0f, 0f), prevLoc)
+
+
+        var randomDistance = 50f
+
+        var angleAddition = 0f
+
+        var wasPositive = false
+
+
+        if (currentBranch == 0)
+        {
+            angleAddition = 60f
+        }
+        if (currentBranch == 1)
+        {
+            angleAddition = -60f
+        }
+
+
+        var newAngle = angle + angleAddition
+
+
+        var point = MathUtils.getPointOnCircumference(prevLoc, randomDistance, newAngle)
+        var failed = false
+        for (existingPoint in positionsOnMap)
+        {
+            if (prevLoc == existingPoint) continue
+            var distance = MathUtils.getDistance(point, existingPoint)
+            if (distance < lastDistance)
+            {
+                if (lastDistance > 2)
+                {
+                    failed = true
+                    break
+                }
+                else
+                {
+                   var test = ""
+                }
+            }
+        }
+
+        if (failed) setMapLocation(system, currentBranch, lastDistance - 0.5f)
+
+        lastSystemWasPositiveOnMap = wasPositive
+        positionsOnMap.add(point)
+        AbyssUtils.setSystemLocation(system, point)
+    }
 }

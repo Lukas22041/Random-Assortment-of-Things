@@ -13,14 +13,8 @@ object RATSettings : LunaSettingsListener
 
     var modID = "assortment_of_things"
 
-    //Themes
-    //@JvmStatic
-    //var enableThemes = LunaSettings.getBoolean(modID, "rat_enableThemes")
-
-    @JvmStatic
-    var enableOutposts = LunaSettings.getBoolean(modID, "rat_enableOutposts")
-    @JvmStatic
-    var enableChiral = LunaSettings.getBoolean(modID, "rat_enableChiral")
+    //Abyss
+    var enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
 
     //Procgen
     @JvmStatic
@@ -52,10 +46,6 @@ object RATSettings : LunaSettingsListener
     var minimapFueloverlay = LunaSettings.getBoolean(modID, "rat_minimapFuel")
 
 
-    //Jokes
-    var sillyContentEnabled = LunaSettings.getBoolean(modID, "rat_sillyContent")
-    //var skeleton = LunaSettings.getBoolean(modID, "rat_theSkeletonAppears")
-
     override fun settingsChanged(modID: String) {
         if (modID == RATSettings.modID)
         {
@@ -66,8 +56,7 @@ object RATSettings : LunaSettingsListener
     @JvmStatic
     fun loadSettings()
     {
-        enableOutposts = LunaSettings.getBoolean(modID, "rat_enableOutposts")
-        enableChiral = LunaSettings.getBoolean(modID, "rat_enableChiral")
+        enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
 
         procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
        // procgenImprovedMisc = LunaSettings.getBoolean(modID, "rat_improvedMisc")
@@ -77,7 +66,6 @@ object RATSettings : LunaSettingsListener
         parallelApplyToNPCs = LunaSettings.getBoolean(modID, "rat_parallelApplyToNPCs")
 
         disableHelp = LunaSettings.getBoolean(modID, "rat_forceDisableHelp")
-        sillyContentEnabled = LunaSettings.getBoolean(modID, "rat_sillyContent")
 
         hullmodLootFrequency = LunaSettings.getFloat(modID, "rat_hullmodBPLootFrequency")
         shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")

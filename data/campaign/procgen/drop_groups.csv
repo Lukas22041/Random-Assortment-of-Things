@@ -1,0 +1,17 @@
+commodity,group,freq
+,,
+nothing,abyss_research_loot,80
+item_rat_instrument_discovery,abyss_research_loot,5
+item_rat_instrument_hostility,abyss_research_loot,5
+item_rat_instrument_supplies,abyss_research_loot,5
+item_rat_secondary_install,abyss_research_loot,50
+item_rat_secondary_remover,abyss_research_loot,5
+,,
+nothing,abyss_cache_loot,100
+item_rat_instrument_discovery,abyss_cache_loot,25
+item_rat_instrument_hostility,abyss_cache_loot,25
+item_rat_instrument_supplies,abyss_cache_loot,25
+item_rat_secondary_install,abyss_cache_loot,30
+item_rat_secondary_remover,abyss_cache_loot,10
+,,
+,,

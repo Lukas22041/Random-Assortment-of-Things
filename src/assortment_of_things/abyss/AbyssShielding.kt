@@ -7,7 +7,6 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
-import com.fs.starfarer.api.combat.MutableStat
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
@@ -71,7 +70,7 @@ class AbyssShielding : EveryFrameScript {
 
         siphon = AbyssUtils.getSiphonPerDay()
         maxShielding = AbyssUtils.getMaxShielding()
-        decayrate = 0.1f + AbyssUtils.getLossPerDay()
+        decayrate = 0.1f + AbyssUtils.getShieldLossPerDay()
 
         shielding = MathUtils.clamp(shielding!!, 0f, baseShielding + maxShielding)
 
@@ -99,7 +98,7 @@ class AbyssShielding : EveryFrameScript {
 
 
 
-            if (shielding!! < 1 && player.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))
+            if (shielding!! < 0.1 && player.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))
             {
 
                 var clock = Global.getSector().clock

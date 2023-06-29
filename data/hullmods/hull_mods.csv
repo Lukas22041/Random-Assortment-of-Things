@@ -1,9 +1,32 @@
 name,id,tier,rarity,tech/manufacturer,tags,uiTags,base value,unlocked,hidden,hiddenEverywhere,cost_frigate,cost_dest,cost_cruiser,cost_capital,script,desc,short,sprite
-Chiral Hull,rat_chiral_hull,0,,Chiral,"defensive, shields, merc",Shields,3000,FALSE,TRUE,,3,6,9,15,assortment_of_things.combat.hullmods.ChiralHull,,,graphics/hullmods/rat_chiral_hull.png
 ,,,,,,,,,,,,,,,,,,
-Lifeline,rat_lifeline,0,,Augmenter,"special, defensive",Special,3000,FALSE,TRUE,,3,6,9,15,assortment_of_things.combat.hullmods.LifelineHullmod,,,graphics/hullmods/rat_lifeline.png
-Hyperspring,rat_spring,0,,Augmenter,"special, defensive",Special,3000,FALSE,TRUE,,3,6,9,15,assortment_of_things.combat.hullmods.SpringHullmod,,,graphics/hullmods/rat_spring.png
-Phase Dive,rat_phase_hop,0,,Augmenter,"special, defensive",Special,3000,FALSE,TRUE,,3,6,9,15,assortment_of_things.combat.hullmods.PhaseDiveHullmod,,,graphics/hullmods/rat_phase_hop.png
+#Basic Abyss,,,,,,,,,,,,,,,,,,
+#Abyssal Siphon,rat_abyss_siphon,0,,Abyss,"req_spaceport, merc, standard","Logistics, Requires Dock",3000,FALSE,FALSE,FALSE,3,5,7,12,assortment_of_things.abyss.hullmods.AbyssSiphonHullmod,,,graphics/hullmods/rat_abyss_siphon.png
+#Shielding Conversion,rat_abyss_shielding,0,,Abyss,"req_spaceport, merc, standard","Logistics, Requires Dock",3000,FALSE,FALSE,FALSE,3,5,7,12,assortment_of_things.abyss.hullmods.AbyssShieldingHullmod,,,graphics/hullmods/rat_abyss_shielding.png
 ,,,,,,,,,,,,,,,,,,
-Abyssal Siphon,rat_abyss_siphon,0,,Abyss,"req_spaceport, merc, standard","Logistics, Requires Dock",3000,FALSE,FALSE,FALSE,3,5,7,12,assortment_of_things.abyss.hullmods.AbyssSiphonHullmod,,,graphics/hullmods/rat_abyss_siphon.png
-Shielding Conversion,rat_abyss_shielding,0,,Abyss,"req_spaceport, merc, standard","Logistics, Requires Dock",3000,FALSE,FALSE,FALSE,3,5,7,12,assortment_of_things.abyss.hullmods.AbyssShieldingHullmod,,,graphics/hullmods/rat_abyss_shielding.png
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+#Abyssals,,,,,,,,,,,,,,,,,,
+Abyssal Core,rat_abyssal_core,0,,Abyss,,"Logistics, Requires Dock",3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod,,,graphics/hullmods/rat_abyssal_core.png
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+#Abyss Installables,,,,,,,,,,,,,,,,,,
+##Secondary Shipsystems,,,,,,,,,,,,,,,,,,
+Particle Stream,rat_particle_stream,0,,Hull Alteration,"rat_alteration, shipsystem",Special,3000,FALSE,TRUE,,0,0,0,0,assortment_of_things.abyss.hullmods.shipsystem.ParticleStreamHullmod,,,graphics/hullmods/rat_spring.png
+Emergency Support,rat_emergency_support,0,,Hull Alteration,"rat_alteration, shipsystem",Special,3000,FALSE,TRUE,,0,0,0,0,assortment_of_things.abyss.hullmods.shipsystem.EmergencySupportHullmod,,,graphics/hullmods/rat_drone_support.png
+Overdrive,rat_overdrive,0,,Hull Alteration,"rat_alteration, shipsystem",Special,3000,FALSE,TRUE,,0,0,0,0,assortment_of_things.abyss.hullmods.shipsystem.OverdriveHullmod,,,graphics/hullmods/rat_overdrive.png
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+##Fightersystems,,,,,,,,,,,,,,,,,,
+Temporal Assault,rat_temporalAssault,0,,Hull Alteration,"rat_alteration, fightersystem",Special,3000,FALSE,TRUE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.TemporalAssaultHullmod,,,graphics/hullmods/rat_temporal_assault.png
+Perseverance,rat_perseverance,0,,Hull Alteration,"rat_alteration, fightersystem",Special,3000,FALSE,TRUE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.PerseveranceHullmod,,,graphics/hullmods/rat_perseverance.png
+Magnetic Storm,rat_magneticStorm,0,,Hull Alteration,"rat_alteration, fightersystem",Special,3000,FALSE,TRUE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.MagneticStormHullmod,,,graphics/hullmods/rat_magnetic_storm.png
+Plasmatic Shield,rat_plasmaticShield,0,,Hull Alteration,"rat_alteration, fightersystem",Special,3000,FALSE,TRUE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.PlasmaticShieldHullmod,,,graphics/hullmods/rat_plasmatic_shield.png
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+##Misc,,,,,,,,,,,,,,,,,,
+Quality Assurance,rat_qualityAssurance,0,,Hull Alteration,rat_alteration,Special,3000,FALSE,TRUE,,0,0,0,0,assortment_of_things.abyss.hullmods.QualityAssuranceHullmod,,,graphics/hullmods/rat_quality_assurance.png
+Efficient Procedures,rat_efficientProcedures,0,,Hull Alteration,rat_alteration,Special,3000,FALSE,TRUE,,0,0,0,0,assortment_of_things.abyss.hullmods.EfficientProceduresHullmod,,,graphics/hullmods/rat_efficient_procedures.png
+Drivefield Overwrite,rat_drivefield_overwrite,0,,Hull Alteration,rat_alteration,Special,3000,FALSE,TRUE,,0,0,0,0,assortment_of_things.abyss.hullmods.DrivefieldOverwriteHullmod,,,graphics/hullmods/rat_drivefield_overwrite.png
