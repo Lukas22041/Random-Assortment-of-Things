@@ -1,4 +1,4 @@
-package assortment_of_things.abyss
+package assortment_of_things.abyss.misc
 
 import com.fs.graphics.Sprite
 import com.fs.starfarer.api.Global

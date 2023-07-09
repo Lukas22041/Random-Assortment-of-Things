@@ -2,7 +2,7 @@
   "hullName": "Shield Drone",
   "hullId": "rat_shield_drone",
   "hullSize": "FIGHTER",
-  "spriteName": "graphics/ships/shield_drone.png",
+  "spriteName": "graphics/ships/rat_shield_drone.png",
   "style": "HIGH_TECH",
   "height": 21,
   "width": 18,

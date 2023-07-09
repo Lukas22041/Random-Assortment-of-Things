@@ -30,14 +30,14 @@ class TransmitterInteraction : RATInteractionPlugin() {
 
 
         if (interactionTarget.hasTag(AbyssTags.TRANSMITTER_UNLOOTED)) {
-            textPanel.addPara("The transmitter however seems to have lost capability to send its data back, slowly accumalating it within.")
+            textPanel.addPara("The transmitter however seems to have lost capability to send its data back, slowly accumalating the data within it.")
             createOption("Take accumalated data") {
                 clearOptions()
                 addLeaveOption()
                 interactionTarget.removeTag(AbyssTags.TRANSMITTER_UNLOOTED)
 
                 textPanel.addPara("> Take accumalated data", Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
-                textPanel.addPara("You take the data that the transmitter collected within its dozens of cycles.", Misc.getTextColor(), Misc.getHighlightColor())
+                textPanel.addPara("You take the data that the transmitter collected for dozens of cycles.", Misc.getTextColor(), Misc.getHighlightColor())
 
                 var tooltip =textPanel.beginTooltip()
 

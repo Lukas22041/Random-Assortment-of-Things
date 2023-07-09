@@ -30,7 +30,7 @@ class DomainResearchInteraction : RATInteractionPlugin() {
             return
         }
 
-        textPanel.addPara("Your fleet is docked at what appears to be a research station. There are no signs of any life having been near it for a large amount of cycles.")
+        textPanel.addPara("Your fleet is docked at what appears to be a research station. There are no signs life having been anywhere close to it for a long time.")
 
         //chance for additional interactions, i.e picking a alteration
 
@@ -72,7 +72,7 @@ class DomainResearchInteraction : RATInteractionPlugin() {
             when (tier) {
                 AbyssProcgen.Tier.Low ->
                     textPanel.addPara("After a short exploration of their surroundings, it seems that this station isnt particuarly loaded with items of interest, but that some things may be " +
-                            "worth the cargo load.")
+                            "worth taking.")
                 AbyssProcgen.Tier.Mid ->
                     textPanel.addPara("After some time, the crew reports that they suspect a decent sum of valueables to be within this station. It may contain some components that you wouldnt find anywhere within the sector.")
                 AbyssProcgen.Tier.High ->
@@ -147,27 +147,11 @@ class DomainResearchInteraction : RATInteractionPlugin() {
                 var mult = when(tier) {
                     AbyssProcgen.Tier.Low -> 1f
                     AbyssProcgen.Tier.Mid -> 2f
-                    AbyssProcgen.Tier.High -> 4f
+                    AbyssProcgen.Tier.High -> 2.5f
                     else -> 1f
                 }
 
                 var salvage = SalvageEntity.generateSalvage(random.asJavaRandom(), mult, mult, 1f, 1f, dropValue, dropRandom)
-
-                /*var alterationAttempts = when(tier)
-                {
-                    AbyssProcgen.Tier.Low -> 2
-                    AbyssProcgen.Tier.Mid -> 5
-                    AbyssProcgen.Tier.High -> 7
-                }
-
-                for (attempt in 0 until alterationAttempts)
-                {
-                    if (random.nextFloat() < 0.33f)
-                    {
-                        var randomAlteration = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") }.random(random)
-                        salvage.addSpecial(SpecialItemData("rat_secondary_install", randomAlteration!!.id), 1f)
-                    }
-                }*/
 
                 visualPanel.showLoot("Loot", salvage, true) {
 

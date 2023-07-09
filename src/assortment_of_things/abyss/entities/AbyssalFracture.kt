@@ -17,6 +17,7 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
 
     var connectedEntity: SectorEntityToken? = null
     val radius = 100.0f
+    var colorOverride: Color? = null
 
     @Transient
     var center: SpriteAPI? = null
@@ -88,10 +89,11 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
             /* band1!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(100)
              band2!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(200)*/
 
-            var systemColor = AbyssUtils.getSystemColor(entity.containingLocation).darker()
+            var color = AbyssUtils.getSystemColor(entity.containingLocation).darker()
+            if (colorOverride != null) color = colorOverride
 
-            band1!!.color = systemColor.setAlpha(100)
-            band2!!.color = systemColor.setAlpha(200)
+            band1!!.color = color.setAlpha(100)
+            band2!!.color = color.setAlpha(200)
 
             band1!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)
             band2!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)

@@ -1,17 +1,17 @@
 {
-	"id":"chull_system",
+	"id":"morkoth_system",
 	"type":"STAT_MOD",
 	"aiType":"CUSTOM",
-	"aiScript":"assortment_of_things.abyss.shipsystem.ai.AbolethSystemAI",
+	"aiScript":"assortment_of_things.abyss.shipsystem.ai.MorkothSystemAI",
 	
-	"statsScript":"assortment_of_things.abyss.shipsystem.AbolethShipsystem",
+	"statsScript":"assortment_of_things.abyss.shipsystem.MorkothShipsystem",
 	"runScriptWhilePaused":true, # only for the player's ship
-	"runScriptWhileIdle":true,  # this means unapply() never gets called
+	"runScriptWhileIdle":false,  # this means unapply() never gets called
 	"blockActionsWhileChargingDown":false,
 	
 	"canNotCauseOverload":true,
 	
-	"useSound":"system_targeting_feed",
+	"useSound":"system_ammo_feeder",
 	#"deactivateSound":"system_phase_cloak_deactivate",
 	"deactivateSound":"system_phase_cloak_deactivate",
 	"outOfUsesSound":"system_phase_cloak_collision",

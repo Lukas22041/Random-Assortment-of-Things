@@ -47,7 +47,7 @@ class AbyssalHostilityInstrument : BaseSpecialItemPlugin() {
         b = Misc.getPositiveHighlightColor()
 
         tooltip.addSpacer(5f)
-        tooltip.addPara("An autonomous device that if deployed, scans the system for hostile fleets. Using it reveals hostile fleets on the map and radar. After a few days it will lose contact of its targets", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+        tooltip.addPara("An autonomous device that, when deployed, reveals hostile fleets in the system for a few days.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "deployed", "reveals")
         tooltip.addSpacer(5f)
 
@@ -58,7 +58,7 @@ class AbyssalHostilityInstrument : BaseSpecialItemPlugin() {
         }
         else
         {
-            tooltip.addPara("Rightclick to use", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+            tooltip.addPara("Rightclick to deploy", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         }
 
 

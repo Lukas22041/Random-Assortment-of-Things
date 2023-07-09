@@ -1,0 +1,275 @@
+{
+  "hullName": "Morkoth",
+  "hullId": "rat_morkoth",
+  "hullSize": "CAPITAL_SHIP",
+  "spriteName": "graphics/ships/rat_morkoth.png",
+  "style": "ABYSSAL",
+  "height": 400,
+  "width": 320,
+  "center": [160, 200],
+  "collisionRadius": 236.5,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 208,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_abyssal_core"
+  ],
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "LARGE",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": 35,
+      "locations": [-0.5, 52]
+    },
+    {
+      "id": "WS0002",
+      "size": "LARGE",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": -35,
+      "locations": [-0.5, -52]
+    },
+    {
+      "id": "WS0003",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": -135,
+      "locations": [-27, -76]
+    },
+    {
+      "id": "WS0004",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": 135,
+      "locations": [-27, 76]
+    },
+    {
+      "id": "WS0005",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": 90,
+      "locations": [-10, 84]
+    },
+    {
+      "id": "WS0006",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": -90,
+      "locations": [-10, -84]
+    },
+    {
+      "id": "WS0007",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": 70,
+      "locations": [54, 30.5]
+    },
+    {
+      "id": "WS0008",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": -70,
+      "locations": [54, -30.5]
+    },
+    {
+      "id": "WS0009",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 140,
+      "angle": 90,
+      "locations": [37, 21.5]
+    },
+    {
+      "id": "WS0010",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 140,
+      "angle": -90,
+      "locations": [37, -21.5]
+    },
+    {
+      "id": "WS0011",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": 50,
+      "locations": [124, 63.5]
+    },
+    {
+      "id": "WS0012",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": -50,
+      "locations": [124, -63.5]
+    },
+    {
+      "id": "WS0013",
+      "size": "MEDIUM",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": -50.5,
+      "locations": [99, -26]
+    },
+    {
+      "id": "WS0014",
+      "size": "MEDIUM",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 220,
+      "angle": 50.5,
+      "locations": [99, 26]
+    },
+    {
+      "id": "WS0015",
+      "size": "MEDIUM",
+      "type": "HYBRID",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": 0,
+      "locations": [72.5, -0]
+    },
+    {
+      "id": "WS0016",
+      "size": "LARGE",
+      "type": "UNIVERSAL",
+      "mount": "HARDPOINT",
+      "arc": 10,
+      "angle": 0,
+      "locations": [137, -0]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-113, 52.5],
+      "length": 30,
+      "width": 20,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL"
+    },
+    {
+      "location": [-113, -52.5],
+      "length": 30,
+      "width": 20,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL"
+    },
+    {
+      "location": [-102, 63.5],
+      "length": 30,
+      "width": 20,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL"
+    },
+    {
+      "location": [-102, -63.5],
+      "length": 30,
+      "width": 20,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL"
+    },
+    {
+      "location": [-92, 72.5],
+      "length": 30,
+      "width": 20,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL"
+    },
+    {
+      "location": [-92, -72.5],
+      "length": 30,
+      "width": 20,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL"
+    }
+  ],
+  "bounds": [
+    -185.5, 1.5,
+    -173, 12.5,
+    -188, 14,
+    -169.5, 19,
+    -115, 38.5,
+    -121, 54.5,
+    -88.5, 76.5,
+    -71.5, 78,
+    -47, 100.5,
+    -57, 110,
+    -40.5, 107.5,
+    -16, 141,
+    4, 128,
+    22, 153.5,
+    35.5, 138.5,
+    14, 97.5,
+    27, 93.5,
+    63, 117.5,
+    43, 88,
+    43, 64,
+    59.5, 57.5,
+    68.5, 76,
+    79.5, 69.5,
+    81, 53.5,
+    107.5, 76.5,
+    128.5, 85,
+    168.5, 35.5,
+    168.5, -35.5,
+    128.5, -85,
+    107.5, -76.5,
+    81, -53.5,
+    79.5, -69.5,
+    68.5, -76,
+    59.5, -57.5,
+    43, -64,
+    43, -88,
+    63, -117.5,
+    27, -93.5,
+    14, -97.5,
+    35.5, -138.5,
+    22, -153.5,
+    4, -128,
+    -16, -141,
+    -40.5, -107.5,
+    -57, -110,
+    -47, -100.5,
+    -71.5, -78,
+    -88.5, -76.5,
+    -121, -54.5,
+    -115, -38.5,
+    -169.5, -19,
+    -188, -14,
+    -173, -12.5,
+    -185.5, -1.5
+  ]
+}

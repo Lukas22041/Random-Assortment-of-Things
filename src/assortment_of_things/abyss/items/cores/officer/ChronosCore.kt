@@ -32,7 +32,7 @@ class ChronosCore : AICoreOfficerPlugin {
 
         core.stats.setSkillLevel(Skills.HELMSMANSHIP, 2F)
         core.stats.setSkillLevel(Skills.COMBAT_ENDURANCE, 2F)
-        core.stats.setSkillLevel(Skills.IMPACT_MITIGATION, 2F)
+        core.stats.setSkillLevel(Skills.FIELD_MODULATION, 2F)
         core.stats.setSkillLevel(Skills.TARGET_ANALYSIS, 2F)
         core.stats.setSkillLevel(Skills.GUNNERY_IMPLANTS, 2F)
         core.stats.setSkillLevel("rat_core_time", 2f)

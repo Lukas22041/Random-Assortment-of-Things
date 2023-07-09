@@ -163,8 +163,6 @@ class EmergencySupportActivator(ship: ShipAPI?) : CombatActivator(ship) {
             angle += angleIncrease
 
         }
-
-
     }
 
     override fun onFinished() {

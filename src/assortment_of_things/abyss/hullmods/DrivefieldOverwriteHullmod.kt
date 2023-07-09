@@ -23,16 +23,7 @@ class DrivefieldOverwriteHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
-        if (hullSize == ShipAPI.HullSize.CAPITAL_SHIP)
-        {
-            stats!!.maxCombatReadiness.modifyFlat(modID, -0.10f)
-        }
-        else
-        {
-            stats!!.maxCombatReadiness.modifyFlat(modID, -0.05f)
-        }
-
-        stats.maxBurnLevel.modifyFlat(id, 1f)
+        stats!!.maxBurnLevel.modifyFlat(id, 1f)
 
 
     }
@@ -52,9 +43,13 @@ class DrivefieldOverwriteHullmod : BaseHullMod() {
         tooltip.addPara("Increases the ships maximum burn level by 1.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "maximum burn", "1")
 
-        tooltip.addSpacer(10f)
 
-        tooltip.addPara("Hull Alterations decrease the ships maximum CR by 5%%/5%%/5%%/10%% based on its hullsize.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+    }
 
+    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
+        return false
+    }
+    override fun getUnapplicableReason(ship: ShipAPI?): String {
+        return "Alterations can only be installed through the associated item."
     }
 }

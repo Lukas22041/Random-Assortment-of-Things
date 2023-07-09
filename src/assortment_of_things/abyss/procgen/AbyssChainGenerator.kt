@@ -1,14 +1,16 @@
 package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.intel.event.NewZoneReachedFactor
-import assortment_of_things.abyss.procgen.templates.AbyssGenTier1
+import assortment_of_things.abyss.intel.event.NewDepthReachedFactor
+import assortment_of_things.abyss.procgen.templates.AbyssSystemHigh
+import assortment_of_things.abyss.procgen.templates.AbyssSystemLow
+import assortment_of_things.abyss.procgen.templates.AbyssSystemMid
 import assortment_of_things.misc.logger
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.system.measureTimeMillis
@@ -36,12 +38,12 @@ class AbyssChainGenerator {
         latestSystems.clear()
 
         var name = "Sea of " + getName()
-        var root = AbyssGenTier1(name, AbyssProcgen.Tier.Low).generate()
+        var root = AbyssSystemLow(name, AbyssProcgen.Tier.Low).generate()
         AbyssUtils.setupTags(root)
         AbyssUtils.addAbyssSystemToMemory(root)
 
         var pos1 = Vector2f(750f, 750f)
-        var pos2 = getLocationForFractures(root)
+        var pos2 = AbyssProcgen.takeEmptySlot(root)
 
         var fractures = AbyssUtils.createFractures(baseSystem, root)
 
@@ -49,7 +51,7 @@ class AbyssChainGenerator {
         fractures.fracture2.location.set(pos2)
 
       // baseSystem.addScript(AbyssalDefendingFleetManager(fractures.fracture1, 60f, 120f))
-        AbyssUtils.generateBaseDetails(root, AbyssProcgen.Tier.Low)
+        //AbyssUtils.generateBaseDetails(root, AbyssProcgen.Tier.Low)
         AbyssUtils.clearTerrainAroundFractures(fractures)
 
         AbyssUtils.setNeighbours(baseSystem, root)
@@ -60,8 +62,8 @@ class AbyssChainGenerator {
         AbyssUtils.setTier(baseSystem, AbyssProcgen.Tier.Low)
         AbyssUtils.setTier(root, AbyssProcgen.Tier.Low)
 
-        baseSystem.addScript(NewZoneReachedFactor(10, baseSystem))
-        root.addScript(NewZoneReachedFactor(10, root))
+        baseSystem.addScript(NewDepthReachedFactor(baseSystem))
+        root.addScript(NewDepthReachedFactor(root))
 
 
         latestSystems.add(root)
@@ -101,17 +103,19 @@ class AbyssChainGenerator {
                 if (currentSteps in 1..2) tier = AbyssProcgen.Tier.Mid
                 if (currentSteps in 3..10) tier = AbyssProcgen.Tier.High
 
-                var system = AbyssGenTier1(name, tier).generate()
+                var system = when(tier) {
+                    AbyssProcgen.Tier.Low -> AbyssSystemLow(name, tier).generate()
+                    AbyssProcgen.Tier.Mid -> AbyssSystemMid(name, tier).generate()
+                    AbyssProcgen.Tier.High -> AbyssSystemHigh(name, tier).generate()
+                }
                 AbyssUtils.setupTags(system)
-                AbyssUtils.generateBaseDetails(system, tier)
+                //AbyssUtils.generateBaseDetails(system, tier)
                 AbyssUtils.addAbyssSystemToMemory(system)
-                system.addScript(NewZoneReachedFactor(10, system))
+                system.addScript(NewDepthReachedFactor(system))
 
 
-
-
-                var pos1 = getLocationForFractures(latest)
-                var pos2 = getLocationForFractures(system)
+                var pos1 = AbyssProcgen.takeEmptySlot(latest)
+                var pos2 = AbyssProcgen.takeEmptySlot(system)
 
                 var fractures = AbyssUtils.createFractures(latest, system)
 
@@ -120,13 +124,17 @@ class AbyssChainGenerator {
 
                 AbyssUtils.clearTerrainAroundFractures(fractures)
 
+                if (tier == AbyssProcgen.Tier.Low)
+                {
+                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_SMALL, 0.4f)
+                }
                 if (tier == AbyssProcgen.Tier.Mid)
                 {
-                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 60f, 120f, AbyssProcgen.Tier.Low, 0.4f)
+                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_SMALL, 0.5f)
                 }
                 else if (tier == AbyssProcgen.Tier.High)
                 {
-                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 120f, 160f, AbyssProcgen.Tier.Mid, 0.7f)
+                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_MEDIUM, 0.70f)
                 }
 
 
@@ -179,10 +187,10 @@ class AbyssChainGenerator {
 
     fun generateFarFracture(step: Int, useDistance: Boolean)
     {
-        var tier = systemsInSameStep.get(step)
-        var pick = tier!!.random()
-
+        var tier = systemsInSameStep.get(step)!!.filter { AbyssProcgen.hasEmptySlots(it) }.toMutableList()
+        var pick = tier.random()
         tier.remove(pick)
+
         var target: StarSystemAPI? = null
         var currentDistance = 0f
         var pickDis = AbyssUtils.getSystemLocation(pick)
@@ -208,9 +216,10 @@ class AbyssChainGenerator {
             }
         }
 
+        if (target == null) return
 
-        var pos1 = getLocationForFractures(pick)
-        var pos2 = getLocationForFractures(target!!)
+        var pos1 = AbyssProcgen.takeEmptySlot(pick)
+        var pos2 = AbyssProcgen.takeEmptySlot(target)
 
         var fractures = AbyssUtils.createFractures(pick, target)
 
@@ -261,7 +270,7 @@ class AbyssChainGenerator {
         return systems
     }
 
-    fun getLocationForFractures(system: StarSystemAPI) : Vector2f
+    /*fun getLocationForFractures(system: StarSystemAPI) : Vector2f
     {
         var existingEntities = system.customEntities
       //  var pos = Vector2f(MathUtils.getRandomNumberInRange(-FractureBoundary.x, FractureBoundary.x), MathUtils.getRandomNumberInRange(-FractureBoundary.y, FractureBoundary.y))
@@ -282,7 +291,7 @@ class AbyssChainGenerator {
         }
 
         return pos
-    }
+    }*/
 
 
     fun setMapLocation(system: StarSystemAPI, currentBranch: Int, lastDistance: Float = 50f)

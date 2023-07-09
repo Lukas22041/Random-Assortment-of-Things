@@ -105,7 +105,7 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
         {
 
             halo!!.alphaMult = 1f
-            halo!!.color = color.setAlpha(100)
+            halo!!.color = color.setAlpha(75)
             halo!!.setSize(radius / 20, radius / 20)
             halo!!.setAdditiveBlend()
             halo!!.renderAtCenter(entity.location.x, entity.location.y)

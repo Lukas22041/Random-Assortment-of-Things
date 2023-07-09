@@ -1,22 +1,35 @@
 package assortment_of_things.abyss.scripts
 
+import assortment_of_things.abyss.AbyssDifficulty
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
+import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
+import assortment_of_things.abyss.items.cores.officer.ChronosCore
+import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.CampaignEventListener.FleetDespawnReason
 import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI
+import com.fs.starfarer.api.characters.PersonAPI
+import com.fs.starfarer.api.combat.ShipAPI.HullSize
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.fleets.SourceBasedFleetManager
 import com.fs.starfarer.api.impl.campaign.ids.Abilities
-import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
+import com.fs.starfarer.api.impl.campaign.intel.events.BaseEventIntel
+import com.fs.starfarer.api.impl.campaign.intel.events.BaseFactorTooltip
+import com.fs.starfarer.api.impl.campaign.intel.events.BaseOneTimeFactor
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantAssignmentAI
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import java.util.*
 import kotlin.collections.ArrayList
@@ -29,8 +42,7 @@ import kotlin.collections.ArrayList
 
 //Its set to not to long pursuits, so once it looses the player it should go back to its spawn relatively soon.
 
-class AbyssalDefendingFleetManager(source: SectorEntityToken, var minPoints: Float, var maxPoints: Float, quality: AbyssProcgen.Tier) : SourceBasedFleetManager(source, 1f, 0, 1, 999f) {
-
+class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssProcgen.Tier, var type: String) : SourceBasedFleetManager(source, 1f, 0, 1, 999f) {
 
 
 
@@ -50,23 +62,120 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var minPoints: Flo
         }
     }
 
+
+    /*Remnant Fleet Points
+    *
+    * Remnant Medium Seeded Points (Randomly spawn in to the system)
+    * Min: 32
+    * Max: 96
+    *
+    * Remnant Medium Station Points (Spawned From Station)
+    * Min: 48
+    * Max: 96
+    *
+    * Remnant High Station Points (Spawned From Station)
+    * Min: 64
+    * Max: 192
+    *
+    * */
+
     override fun spawnFleet(): CampaignFleetAPI? {
 
         //Prevents the game spawning fleets when the player isnt in the system or a neighbour
         if (!AbyssUtils.playerInNeighbourOrSystem(source.starSystem)) return null
 
+        var difficulty = AbyssUtils.getDifficulty()
         val random = Random(randomSeed)
+
+        var minPoints = 0f
+        var maxPoints = 0f
+
+        when(tier) {
+            AbyssProcgen.Tier.Low -> {
+                when(type) {
+                    FleetTypes.PATROL_SMALL -> {
+                        minPoints = 32f
+                        maxPoints = 48f
+                    }
+                    FleetTypes.PATROL_MEDIUM -> {
+                        minPoints = 48f
+                        maxPoints = 64f
+                    }
+                    FleetTypes.PATROL_LARGE -> {
+                        minPoints = 64f
+                        maxPoints = 96f
+                    }
+                }
+            }
+
+            AbyssProcgen.Tier.Mid -> {
+                when(type) {
+                    FleetTypes.PATROL_SMALL -> {
+                        minPoints = 48f
+                        maxPoints = 64f
+                    }
+                    FleetTypes.PATROL_MEDIUM -> {
+                        minPoints = 64f
+                        maxPoints = 96f
+                    }
+                    FleetTypes.PATROL_LARGE -> {
+                        minPoints = 96f
+                        maxPoints = 160f
+                    }
+                }
+            }
+
+            AbyssProcgen.Tier.High -> {
+                when(type) {
+                    FleetTypes.PATROL_SMALL -> {
+                        minPoints = 48f
+                        maxPoints = 64f
+                    }
+                    FleetTypes.PATROL_MEDIUM -> {
+                        minPoints = 96f
+                        maxPoints = 128f
+                    }
+                    FleetTypes.PATROL_LARGE -> {
+                        minPoints = 128f
+                        maxPoints = 196f
+                    }
+                }
+            }
+        }
+
+        if (difficulty == AbyssDifficulty.Hard)
+        {
+            minPoints += 20f
+            maxPoints += 30f
+        }
+
 
         var points = MathUtils.getRandomNumberInRange(minPoints, maxPoints)
 
-        var type = FleetTypes.PATROL_SMALL
-        if (points > 60) type = FleetTypes.PATROL_MEDIUM
-        if (points > 120) type = FleetTypes.PATROL_LARGE
+        /*var type = FleetTypes.PATROL_SMALL
+        if (points > 64) type = FleetTypes.PATROL_MEDIUM
+        if (points > 128) type = FleetTypes.PATROL_LARGE*/
+
+
+        var qualityOverride = when(tier) {
+            AbyssProcgen.Tier.Low -> 2f
+            AbyssProcgen.Tier.Mid -> 3f
+            AbyssProcgen.Tier.High -> 4f
+        }
+
+        if (difficulty == AbyssDifficulty.Hard)
+        {
+             qualityOverride = when(tier) {
+                AbyssProcgen.Tier.Low -> 3f
+                AbyssProcgen.Tier.Mid -> 4f
+                AbyssProcgen.Tier.High -> 5f
+            }
+        }
 
         val params = FleetParamsV3(null,
             source.locationInHyperspace,
-            Factions.REMNANTS,
-            1f,
+            AbyssUtils.FACTION_ID,
+            qualityOverride,
             type,
             points,  // combatPts
             0f,  // freighterPts
@@ -77,8 +186,11 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var minPoints: Flo
             0f // qualityMod
         )
         params.random = random
+        params.withOfficers = false
 
         val fleet = FleetFactoryV3.createFleet(params)
+
+        addAICores(fleet, type, difficulty, random)
 
         val location = source.containingLocation
         location.addEntity(fleet)
@@ -98,6 +210,79 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var minPoints: Flo
         addFollowThroughFractureScript(fleet)
 
         return fleet
+    }
+
+    fun addAICores(fleet: CampaignFleetAPI, type: String, difficulty: AbyssDifficulty, random: Random)
+    {
+
+        var corePercentage = 0f
+        var bonus = 0f
+
+        if (tier != AbyssProcgen.Tier.Low)
+        {
+            if (type == FleetTypes.PATROL_MEDIUM) bonus = 0.1f
+            if (type == FleetTypes.PATROL_LARGE) bonus = 0.2f
+        }
+
+        if (tier == AbyssProcgen.Tier.Mid) corePercentage = 0.2f
+        if (tier == AbyssProcgen.Tier.High) corePercentage = 0.4f
+
+        corePercentage += bonus
+        if (difficulty == AbyssDifficulty.Hard) corePercentage += 0.2f
+
+        var members = fleet.fleetData.membersListCopy
+
+        corePercentage = MathUtils.clamp(corePercentage, 0f, 1f)
+
+        var picker = WeightedRandomPicker<FleetMemberAPI>()
+        picker.random = random
+        for (member in members)
+        {
+            var weight = when(member.hullSpec.hullSize) {
+                HullSize.FRIGATE -> 1f
+                HullSize.DESTROYER -> 3f
+                HullSize.CRUISER -> 6f
+                HullSize.CAPITAL_SHIP -> 15f
+                else -> 0f
+            }
+            picker.add(member, weight)
+        }
+
+        var count = (members.size * corePercentage).toInt()
+        for (i in 0 until count)
+        {
+            var pick = picker.pickAndRemove()
+
+            var chronos = ChronosCore()
+            var cosmos = CosmosCore()
+
+            var core: PersonAPI? = null
+
+            var variantID = pick.variant.hullVariantId.lowercase()
+
+            if (variantID.contains("temporal"))
+            {
+                core = chronos.createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, random)
+            }
+            else if (variantID.contains("cosmal"))
+            {
+                core = cosmos.createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, random)
+            }
+            else if (random.nextFloat() > 0.5f)
+            {
+                core = chronos.createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, random)
+            }
+            else
+            {
+                core = cosmos.createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, random)
+            }
+
+            if (core != null)
+            {
+                pick.captain = core
+            }
+        }
+
     }
 
     fun initAbyssalBehaviour(fleet: CampaignFleetAPI, random: Random)
@@ -134,6 +319,28 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var minPoints: Flo
                 {
                     if (sid == source.id)
                     {
+                        if (param is BattleAPI)
+                        {
+                            if (param.isPlayerInvolved)
+                            {
+                                AbyssalDepthsEventIntel.addFactorCreateIfNecessary(object: BaseOneTimeFactor(5) {
+                                    override fun getDesc(intel: BaseEventIntel?): String {
+                                        return "Defeated a defending fleet"
+                                    }
+
+                                    override fun getMainRowTooltip(): TooltipMakerAPI.TooltipCreator {
+                                        return object : BaseFactorTooltip() {
+                                            override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean, tooltipParam: Any) {
+                                                tooltip.addPara("The fleet defeated a fleet that was defending a location within the abyss.",
+                                                    0f,
+                                                    Misc.getHighlightColor(),
+                                                    "")
+                                            }
+                                        }
+                                    }
+                                }, null)
+                            }
+                        }
                         source.starSystem.removeScript(this)
                     }
                 }

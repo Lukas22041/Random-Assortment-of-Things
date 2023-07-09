@@ -50,7 +50,7 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
         interval.advance(amount)
         var player = Global.getSector().playerFleet
         if (interval.intervalElapsed())  {
-            AbyssUtils.createSensorIcon(entity, 10000f, AbyssUtils.SUPERCHARGED_COLOR.brighter())
+            AbyssUtils.createSensorIcon(entity, 7500f, AbyssUtils.SUPERCHARGED_COLOR.brighter())
         }
 
         if (entity.isInCurrentLocation) {

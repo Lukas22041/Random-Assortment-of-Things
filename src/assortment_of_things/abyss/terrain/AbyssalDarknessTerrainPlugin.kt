@@ -30,8 +30,13 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         return "rat_abyss_darkness"
     }
 
+
     override fun getModId(): String {
         return super.getModId() + id
+    }
+
+    override fun getTerrainId(): String {
+        return super.getTerrainId() + id
     }
 
     override fun containsPoint(point: Vector2f?, radius: Float): Boolean {
@@ -44,7 +49,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         for (source in lightsources)
         {
             var plugin = source.customPlugin as AbyssalLightsource
-            if (MathUtils.getDistance(source.location, point) < (plugin.radius / 10) + 100)
+            if (MathUtils.getDistance(source.location, point) < (plugin.radius / 10) - 10)
             {
                 withinLight = true
                 break
@@ -55,7 +60,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         for (source in photospheres)
         {
             var plugin = source.customPlugin as AbyssalPhotosphere
-            if (MathUtils.getDistance(source.location, point) < (plugin.radius / 10) + 100)
+            if (MathUtils.getDistance(source.location, point) < (plugin.radius / 10) - 10)
             {
                 withinLight = true
                 break

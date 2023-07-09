@@ -1,6 +1,7 @@
 package assortment_of_things.campaign.abilities
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -9,6 +10,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.isPlayerInHyperspace
+import org.lwjgl.input.Keyboard
 
 class SingularityJumpAbility : BaseDurationAbility() {
 
@@ -17,6 +19,7 @@ class SingularityJumpAbility : BaseDurationAbility() {
     override fun activateImpl() {
 
         var key = "\$rat_abyss_token"
+        var lastAbyssKey = "\$rat_last_abyss_location"
         var memory = Global.getSector().memoryWithoutUpdate
 
         var hyperspaceToken: SectorEntityToken? = null
@@ -28,6 +31,18 @@ class SingularityJumpAbility : BaseDurationAbility() {
         else
         {
             hyperspaceToken = memory.get(key) as SectorEntityToken
+        }
+
+        var lastAbyssToken: SectorEntityToken? = null
+        if (!memory.contains(lastAbyssKey))
+        {
+            lastAbyssToken =  AbyssUtils.getAllAbyssSystems().find { it.baseName == "Midnight" }!!.createToken(0f, 0f)
+            AbyssUtils.getAllAbyssSystems().find { it.baseName == "Midnight" }!!.addEntity(lastAbyssToken)
+            memory.set(lastAbyssKey, lastAbyssToken)
+        }
+        else
+        {
+            lastAbyssToken = memory.get(lastAbyssKey) as SectorEntityToken
         }
 
         var player = Global.getSector().playerFleet
@@ -45,16 +60,31 @@ class SingularityJumpAbility : BaseDurationAbility() {
                 system.location.set(player.location.x, player.location.y)
             }
 
-
             var visual = player.containingLocation.addCustomEntity("rat_fracture_visual", "", "rat_abyss_fracture_jumpvisual",Factions.NEUTRAL)
             visual.location.set(player.location)
-            var visual2 = token!!.containingLocation.addCustomEntity("rat_fracture_visual", "", "rat_abyss_fracture_jumpvisual",Factions.NEUTRAL)
-            visual2.location.set(token.location)
 
-            Global.getSector().doHyperspaceTransition(player, visual, JumpPointAPI.JumpDestination(token, ""), 2f)
+            if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && AbyssalDepthsEventIntel.get()!!.isStageActive(AbyssalDepthsEventIntel.Stage.RETURNAL))
+            {
+                var visual2 = lastAbyssToken!!.containingLocation.addCustomEntity("rat_fracture_visual", "", "rat_abyss_fracture_jumpvisual",Factions.NEUTRAL)
+                visual2.location.set(lastAbyssToken!!.location)
+                Global.getSector().doHyperspaceTransition(player, visual, JumpPointAPI.JumpDestination(lastAbyssToken, ""), 2f)
+            }
+            else
+            {
+                var visual2 = token!!.containingLocation.addCustomEntity("rat_fracture_visual", "", "rat_abyss_fracture_jumpvisual",Factions.NEUTRAL)
+                visual2.location.set(token.location)
+                Global.getSector().doHyperspaceTransition(player, visual, JumpPointAPI.JumpDestination(token, ""), 2f)
+            }
         }
         if (player.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))
         {
+            var lastSystem = lastAbyssToken!!.containingLocation
+            lastSystem.removeEntity(lastAbyssToken)
+
+            lastAbyssToken = player.containingLocation.createToken(0f, 0f)
+            player.containingLocation.addEntity(lastAbyssToken)
+            lastAbyssToken.location.set(player.location.x, player.location.y)
+            memory.set(lastAbyssKey, lastAbyssToken)
 
             var visual = player.containingLocation.addCustomEntity("rat_fracture_visual", "", "rat_abyss_fracture_jumpvisual",Factions.NEUTRAL)
             visual.location.set(player.location)
@@ -64,8 +94,20 @@ class SingularityJumpAbility : BaseDurationAbility() {
             Global.getSector().doHyperspaceTransition(player, visual, JumpPointAPI.JumpDestination(hyperspaceToken, ""), 2f)
 
         }
+    }
 
+    override fun advance(amount: Float) {
+        super.advance(amount)
+    }
 
+    override fun getSpriteName(): String {
+        var path = "graphics/icons/abilities/rat_singularity_jump.png"
+        if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && AbyssalDepthsEventIntel.get() != null && AbyssalDepthsEventIntel.get()!!.isStageActive(AbyssalDepthsEventIntel.Stage.RETURNAL)) {
+            path = "graphics/icons/abilities/rat_singularity_jump_returnal.png"
+        }
+        Global.getSettings().loadTexture(path)
+
+        return path
     }
 
     override fun applyEffect(amount: Float, level: Float) {
@@ -92,6 +134,8 @@ class SingularityJumpAbility : BaseDurationAbility() {
         return Global.getSector().isPlayerInHyperspace() || Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)
     }
 
+
+
     override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
         super.createTooltip(tooltip, expanded)
 
@@ -100,9 +144,15 @@ class SingularityJumpAbility : BaseDurationAbility() {
 
         tooltip.addPara("Descends in to the depths of hyperspace, the abyss.", 0f)
         tooltip.addSpacer(5f)
-        /*tooltip.addPara("Sustained stay is impossible without proper shielding. It is adviced to look for a source of it upon arrival, or the fleet will be ejected back in to hyperspace.", 0f)
-        tooltip.addSpacer(5f)*/
+
         tooltip.addPara("Activating it within the abyss returns the fleet back to hyperspace.", 0f)
+        tooltip.addSpacer(5f)
+
+        if (AbyssalDepthsEventIntel.get() != null && AbyssalDepthsEventIntel.get()!!.isStageActive(AbyssalDepthsEventIntel.Stage.RETURNAL))
+        {
+            tooltip.addPara("Holding L-CTRL while in hyperspace instead moves the fleet back to the location it last left the abyss from.", 0f,
+                Misc.getTextColor(), Misc.getHighlightColor(), "L-CTRL")
+        }
 
         if (!Global.getSector().isPlayerInHyperspace() && !Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))
         {

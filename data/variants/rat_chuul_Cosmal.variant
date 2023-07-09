@@ -1,0 +1,48 @@
+{
+    "displayName": "Cosmal",
+    "fluxCapacitors": 11,
+    "fluxVents": 20,
+    "goalVariant": false,
+    "hullId": "rat_chuul",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "missleracks",
+        "targetingunit",
+    ],
+    "permaMods": [],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_chuul_Cosmal",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "ionpulser",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0006": "harpoonpod",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "amblaster",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "amblaster",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

@@ -12,3 +12,12 @@ Modular Weapon 10,modular_weapon_9,2,,100,800,,100,,0,20,20,,1,,ENERGY,100,,0,0.
 Modular Weapon 11,modular_weapon_10,2,,100,800,,100,,0,20,20,,1,,ENERGY,100,,0,0.4,1,0.1,0,0,1,4,,1000,,,,,,,"rat_modular_weapon, restricted",,Modular Weapon,,General,,,,,,,,,TRUE,22.25
 Modular Weapon 12,modular_weapon_11,2,,100,800,,100,,0,20,20,,1,,ENERGY,100,,0,0.4,1,0.1,0,0,1,4,,1000,,,,,,,"rat_modular_weapon, restricted",,Modular Weapon,,General,,,,,,,,,TRUE,22.25
 Modular Weapon 13,modular_weapon_12,2,,100,800,,100,,0,20,20,,1,,ENERGY,100,,0,0.4,1,0.1,0,0,1,4,,1000,,,,,,,"rat_modular_weapon, restricted",,Modular Weapon,,General,,,,,,,,,TRUE,22.25
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Aboleth Cover Left,aboleth_cover_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
+Aboleth Cover Right,aboleth_cover_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
+Aboleth Mount Left,aboleth_mount_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
+Aboleth Mount Right,aboleth_mount_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43

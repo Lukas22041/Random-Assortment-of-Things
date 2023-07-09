@@ -135,6 +135,12 @@ class AbyssMap : BaseIntelPlugin() {
                         tooltip!!.addPara("There $prefix $unidentified unidentified structure$plural in this zone.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(2f)
                     }
+
+                    if (Global.getSettings().isDevMode)
+                    {
+                        tooltip!!.addPara("[DevMode] Click to teleport towards system", 0f, Misc.getBasePlayerColor(), Misc.getBasePlayerColor(), "")
+                        tooltip.addSpacer(2f)
+                    }
                 }
 
             }, TooltipMakerAPI.TooltipLocation.BELOW)

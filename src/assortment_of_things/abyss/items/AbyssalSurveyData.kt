@@ -46,12 +46,12 @@ class AbyssalSurveyData : BaseSpecialItemPlugin() {
         b = Misc.getPositiveHighlightColor()
 
         tooltip.addSpacer(5f)
-        tooltip.addPara("A piece of survey data collected from within the abyss. Any scientist in the sector would crave for a glimpse in to this places ongoing, making it sell well at most markets. \n\n" +
-                "It can also instead be used to receive 25 units of progress for the \"Abyssal Exploration\" Event.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "sell", "25", "Abyssal Exploration")
+        tooltip.addPara("A piece of survey data collected from within the abyss. Any scientist in the sector would crave for a glimpse in the abyss, making it sell well at most markets. \n\n" +
+                "It can also be studied to receive 20 units of progress for the \"Abyssal Exploration\" Intel.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "sell", "20", "Abyssal Exploration")
 
         tooltip.addSpacer(5f)
-        tooltip.addPara("Rightclick to use", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Rightclick to study", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)
 
@@ -67,7 +67,7 @@ class AbyssalSurveyData : BaseSpecialItemPlugin() {
 
     override fun performRightClickAction() {
 
-        var factor = object : BaseOneTimeFactor(25) {
+        var factor = object : BaseOneTimeFactor(20) {
 
             override fun getDesc(intel: BaseEventIntel?): String {
                 return "Studied Survey Data"

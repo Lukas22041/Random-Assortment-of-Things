@@ -2,18 +2,17 @@
   "hullName": "Chuul",
   "hullId": "rat_chuul",
   "hullSize": "DESTROYER",
-  "spriteName": "graphics/ships/chuul.png",
+  "spriteName": "graphics/ships/rat_chuul.png",
   "style": "ABYSSAL",
   "height": 190,
   "width": 170,
   "center": [85, 95],
-  "collisionRadius": 112,
+  "collisionRadius": 130,
   "shieldCenter": [0, 0],
-  "shieldRadius": 104,
+  "shieldRadius": 119,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_abyssal_core",
-    "automated"
+    "rat_abyssal_core"
   ],
   "weaponSlots": [
     {
@@ -22,7 +21,7 @@
       "type": "ENERGY",
       "mount": "TURRET",
       "arc": 150,
-      "angle": 90,
+      "angle": 50,
       "locations": [15, 22]
     },
     {
@@ -31,7 +30,7 @@
       "type": "ENERGY",
       "mount": "TURRET",
       "arc": 150,
-      "angle": -90,
+      "angle": -50,
       "locations": [15, -22]
     },
     {
@@ -100,7 +99,7 @@
       "styleId": "ABYSSAL"
     },
     {
-      "location": [-70.5, -0],
+      "location": [-71.5, -0],
       "length": 30,
       "width": 30,
       "angle": 180,
@@ -125,6 +124,24 @@
       "contrailSize": 30,
       "style": "CUSTOM",
       "styleId": "ABYSSAL"
+    },
+    {
+      "location": [-71, 6],
+      "length": 15,
+      "width": 15,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL_NOGLOW"
+    },
+    {
+      "location": [-71, -6],
+      "length": 15,
+      "width": 15,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL_NOGLOW"
     }
   ],
   "bounds": [

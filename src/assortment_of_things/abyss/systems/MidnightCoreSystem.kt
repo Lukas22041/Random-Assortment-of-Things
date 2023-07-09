@@ -1,7 +1,7 @@
-package assortment_of_things.abyss
+package assortment_of_things.abyss.systems
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.intel.AbyssMap
-import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.procgen.AbyssChainGenerator
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import com.fs.starfarer.api.EveryFrameScript
@@ -9,9 +9,6 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.util.Misc
-import org.lwjgl.util.vector.Vector2f
 
 class MidnightCoreSystem {
 
@@ -24,6 +21,7 @@ class MidnightCoreSystem {
     {
         system.generateAnchorIfNeeded()
         AbyssUtils.setupTags(system)
+        AbyssUtils.setTier(system, AbyssProcgen.Tier.Low)
         AbyssUtils.addAbyssSystemToMemory(system)
 
         //var star = system.initStar("Test", StarTypes.ORANGE, 800f, 200f)
@@ -46,7 +44,7 @@ class MidnightCoreSystem {
 
         //AbyssUtils.generateSuperchargedTerrain(system, Vector2f(600f, -400f), 300, 0.8f, false)
 
-        var station = system.addCustomEntity("rat_domain_research_${Misc.genUID()}", "Domain Research Station", "rat_abyss_research", Factions.NEUTRAL)
+        /*var station = system.addCustomEntity("rat_domain_research_${Misc.genUID()}", "Domain Research Station", "rat_abyss_research", Factions.NEUTRAL)
         station.location.set(5000f, 0f)
         station.addTag(AbyssTags.DOMAIN_RESEARCH)
         station.addTag(AbyssTags.LOOTABLE)
@@ -55,11 +53,14 @@ class MidnightCoreSystem {
 
         var cache = system.addCustomEntity("rat_abyss_cache_${Misc.genUID()}", "Lost Crate", "rat_abyss_cache", Factions.NEUTRAL)
         cache.location.set(3000f, 0f)
-        cache.addTag(AbyssTags.LOST_CRATE)
+        cache.addTag(AbyssTags.LOST_CRATE)*/
 
 
         var generator = AbyssChainGenerator()
         generator.startChain(system)
+
+        AbyssProcgen.generateCaches(system, 3, 0.8f)
+        AbyssProcgen.generateTransmitters(system, 1, 0.8f)
 
       /*  var fractures = AbyssUtils.createFractures(system, system)
         fractures.fracture2.location.set(1000f, 1000f)
@@ -67,9 +68,7 @@ class MidnightCoreSystem {
         AbyssUtils.clearTerrainAroundFractures(fractures)*/
 
        addMapIntel()
-       teleport(token)
-
-        AbyssProcgen.generatePhotospheres(system, 3, 1f)
+      // teleport(token)
     }
 
 

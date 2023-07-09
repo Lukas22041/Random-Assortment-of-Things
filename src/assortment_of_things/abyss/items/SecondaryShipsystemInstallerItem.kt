@@ -12,10 +12,14 @@ import com.fs.starfarer.api.campaign.econ.SubmarketAPI
 import com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
+import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.loading.HullModSpecAPI
+import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.magiclib.kotlin.getCurrSpecialMods
 import java.awt.Color
 
 class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
@@ -140,20 +144,22 @@ class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
                 {
                     var choice = members.get(0)
 
-                    choice.variant.addMod(hullmodSpec!!.id)
-                    choice.variant.addPermaMod(hullmodSpec!!.id)
+                    if (choice.variant.source != VariantSource.REFIT)
+                    {
+                        var variant = choice.variant.clone();
+                        variant.originalVariant = null;
+                        variant.hullVariantId = Misc.genUID()
+                        variant.source = VariantSource.REFIT
+                        choice.setVariant(variant, false, true)
+                    }
+                    choice.variant.addPermaMod(hullmodSpec!!.id, true)
+                    choice.updateStats()
 
                     Global.getSoundPlayer().playUISound("ui_acquired_blueprint", 1f, 1f)
                     Global.getSector().campaignUI.messageDisplay.addMessage("Installed ${hullmodSpec!!.displayName} in to ${choice.hullSpec.hullName}")
 
                     var cargo = Global.getSector().playerFleet.cargo
-                   // stack.subtract(1f)
 
-
-                   /* if (stack.cargoSpace == 0f)
-                    {
-                        Global.getSector().playerFleet.cargo.removeStack(stack)
-                    }*/
                 }
                 else
                 {
@@ -176,6 +182,9 @@ class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
 
                 var choices = Global.getSector().playerFleet.fleetData.membersListCopy.filter { it.variant.hullMods.none { Global.getSettings().getHullModSpec(it).hasTag("rat_alteration") } }
 
+                var maxSmods = Global.getSettings().settingsJSON.get("maxPermanentHullmods") as Int
+                choices = choices.filter { it.variant.sMods.size < it.stats.dynamic.getValue(Stats.MAX_PERMANENT_HULLMODS_MOD, maxSmods.toFloat())}
+
                 Global.getSector().campaignUI.currentInteractionDialog.showFleetMemberPickerDialog("Choose a ship", "Confirm", "Cancel", 10, 10, 64f,
                     true, false, choices, listener)
 
@@ -184,4 +193,7 @@ class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
         }
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_install", hullmodSpec!!.id), 1f)
     }
+
+
+
 }

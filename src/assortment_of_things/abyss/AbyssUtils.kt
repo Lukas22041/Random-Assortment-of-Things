@@ -3,10 +3,12 @@ package assortment_of_things.abyss
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.entities.AbyssalLightsource
 import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
+import assortment_of_things.abyss.misc.AbyssBackgroundWarper
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.terrain.AbyssTerrainPlugin
 import assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin
 import assortment_of_things.abyss.terrain.SuperchargedAbyssTerrainPlugin
+import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.LocationAPI
@@ -28,12 +30,17 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
+enum class AbyssDifficulty {
+    Normal, Hard
+}
+
 data class LinkedFracture(val fracture1: SectorEntityToken, var fracture2: SectorEntityToken)
 
 object AbyssUtils {
 
     var ABYSS_COLOR = Color(255, 0, 50)
     var SUPERCHARGED_COLOR = Color(16, 154, 100)
+    var FACTION_ID = "rat_abyssals"
 
     var SYSTEM_NAMES = arrayListOf("Tranquilility", "Serenity", "Storms", "Harmony", "Decay", "Solitude", "Sorrow", "Time", "Epidemics",
         "Crises", "Knowledge", "Serpents", "Hope", "Death", "Perseverance", "Fear", "Cold", "Clouds", "Luxury", "Hatred", "Dreams", "Honor", "Trust", "Success", "Joy")
@@ -144,7 +151,14 @@ object AbyssUtils {
     fun generateBaseDetails(system: StarSystemAPI, tier: AbyssProcgen.Tier)
     {
         var color = generateAbyssColor(system, tier)
-        var terrain = AbyssUtils.generateAbyssTerrain(system, 0.3f)
+
+        var fraction = when(tier) {
+            AbyssProcgen.Tier.Low -> 0.3f
+            AbyssProcgen.Tier.Mid -> 0.35f
+            AbyssProcgen.Tier.High -> 0.4f
+        }
+
+        var terrain = AbyssUtils.generateAbyssTerrain(system, fraction)
         var darkness = generateAbyssDarkness(system)
         terrain.color = color
         var warper = AbyssBackgroundWarper(system, 8, 0.33f)
@@ -158,7 +172,7 @@ object AbyssUtils {
 
     fun generateAbyssColor(system: StarSystemAPI, tier: AbyssProcgen.Tier) : Color{
 
-        var h = MathUtils.getRandomNumberInRange(0.925f, 1f)
+        var h = MathUtils.getRandomNumberInRange(0.935f, 1f)
         if (Random().nextFloat() > 0.75f) h = MathUtils.getRandomNumberInRange(0.0f, 0.025f)
 
         var lightColor = Color.WHITE
@@ -382,7 +396,7 @@ object AbyssUtils {
         }
 
 
-        if (AbyssalDepthsEventIntel.get()?.isStageActive(AbyssalDepthsEventIntel.Stage.COMPREHENSION) == true)
+        if (AbyssalDepthsEventIntel.get()?.isStageActive(AbyssalDepthsEventIntel.Stage.RESOURCEFULNESS) == true)
         {
             cost *= 0.5f
         }
@@ -422,7 +436,7 @@ object AbyssUtils {
         system.memoryWithoutUpdate.set("\$rat_abyss_tier", tier)
     }
 
-    fun getTier(system: StarSystemAPI) : AbyssProcgen.Tier {
+    fun getTier(system: LocationAPI) : AbyssProcgen.Tier {
         return system.memoryWithoutUpdate.get("\$rat_abyss_tier") as AbyssProcgen.Tier
     }
 
@@ -459,6 +473,11 @@ object AbyssUtils {
         var plugin = lightsource.customPlugin as AbyssalLightsource
         plugin.radius = radius
         plugin.color = color
+    }
+
+    fun getDifficulty() : AbyssDifficulty {
+        if (RATSettings.abyssDifficulty == "Hard") return AbyssDifficulty.Hard
+        return AbyssDifficulty.Normal
     }
 
 }

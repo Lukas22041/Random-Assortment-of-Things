@@ -32,7 +32,7 @@ class AbyssOutpost : BaseCustomEntityPlugin() {
         var player = Global.getSector().playerFleet
 
         if (interval.intervalElapsed())  {
-            AbyssUtils.createSensorIcon(entity, 20000f, AbyssUtils.SUPERCHARGED_COLOR)
+            AbyssUtils.createSensorIcon(entity, 15000f, AbyssUtils.SUPERCHARGED_COLOR)
         }
     }
 }

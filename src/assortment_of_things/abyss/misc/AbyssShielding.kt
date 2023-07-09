@@ -1,5 +1,6 @@
-package assortment_of_things.abyss
+package assortment_of_things.abyss.misc
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.misc.setOpacity
 import com.fs.starfarer.api.EveryFrameScript

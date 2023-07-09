@@ -44,8 +44,8 @@ class AbyssalExplorationInstrument : BaseSpecialItemPlugin() {
         b = Misc.getPositiveHighlightColor()
 
         tooltip.addSpacer(5f)
-        tooltip.addPara("An autonomous device that if deployed, scans the system for points of interests. Using it reveals most structures. ", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "deployed", "reveals")
+        tooltip.addPara("An autonomous device that, when deployed, scans and reveals points of interests within the system. ", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "deployed", "scans", "reveals")
         tooltip.addSpacer(5f)
 
 
@@ -59,7 +59,7 @@ class AbyssalExplorationInstrument : BaseSpecialItemPlugin() {
         }
         else
         {
-            tooltip.addPara("Rightclick to use", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+            tooltip.addPara("Rightclick to deploy", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         }
 
 

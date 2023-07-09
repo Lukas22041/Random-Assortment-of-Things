@@ -32,7 +32,7 @@ class AbyssCache : BaseCustomEntityPlugin() {
         var player = Global.getSector().playerFleet
 
         if (interval.intervalElapsed())  {
-            AbyssUtils.createSensorIcon(entity, 10000f, AbyssUtils.SUPERCHARGED_COLOR)
+            AbyssUtils.createSensorIcon(entity, 7500f, AbyssUtils.SUPERCHARGED_COLOR)
         }
     }
 }

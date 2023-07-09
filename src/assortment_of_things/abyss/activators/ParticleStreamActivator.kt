@@ -17,7 +17,7 @@ class ParticleStreamActivator(ship: ShipAPI?) : CombatActivator(ship) {
     }
 
     override fun getBaseCooldownDuration(): Float {
-        return  10f
+        return  20f
     }
 
     override fun shouldActivateAI(p0: Float): Boolean {

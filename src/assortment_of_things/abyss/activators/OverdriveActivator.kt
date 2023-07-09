@@ -15,7 +15,7 @@ class OverdriveActivator(ship: ShipAPI?) : CombatActivator(ship) {
     var interval = IntervalUtil(0.1f, 0.1f)
 
     override fun getBaseActiveDuration(): Float {
-       return  6f
+       return  4f
     }
 
     override fun getBaseCooldownDuration(): Float {
@@ -54,8 +54,6 @@ class OverdriveActivator(ship: ShipAPI?) : CombatActivator(ship) {
     override fun advance(amount: Float) {
         if (state == State.ACTIVE || state == State.IN || state == State.OUT)
         {
-            ship.mutableStats.maxSpeed.modifyMult(id, 1.0f + (0.2f * effectLevel))
-
             ship.mutableStats.ballisticRoFMult.modifyMult(id, 1.0f + (0.3f * effectLevel))
             ship.mutableStats.ballisticWeaponFluxCostMod.modifyMult(id, 1.0f - (0.3f * effectLevel))
 
@@ -71,7 +69,6 @@ class OverdriveActivator(ship: ShipAPI?) : CombatActivator(ship) {
     override fun onFinished() {
         super.onFinished()
 
-        ship.mutableStats.maxSpeed.unmodify(id)
 
         ship.mutableStats.ballisticRoFMult.unmodify(id)
         ship.mutableStats.ballisticWeaponFluxCostMod.unmodify(id)

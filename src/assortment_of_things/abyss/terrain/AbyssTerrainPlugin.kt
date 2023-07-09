@@ -24,6 +24,8 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
         return color
     }
 
+
+
     fun save()
     {
         params.tiles = null
@@ -55,7 +57,7 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
                 cell = activeCells[tile[0]][tile[1]]
             }
 
-            fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Abyss", 1.5f, fleet.stats.sensorRangeMod)
+           // fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Abyss", 1.5f, fleet.stats.sensorRangeMod)
 
             if (isInClouds(fleet))
             {
@@ -90,13 +92,17 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
                 "", 0f, Misc.getTextColor(), Misc.getHighlightColor())
         tooltip.addSpacer(5f)*/
 
-        tooltip!!.addPara("The abyssal matter appears to strengthen radio waves emitted by the fleet, increasing the Sensor Range by 25%%" +
+        /*tooltip!!.addPara("The abyssal matter appears to strengthen radio waves emitted by the fleet, increasing the Sensor Range by 25%%" +
                 "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Range", "50%")
         tooltip.addSpacer(5f)
 
         tooltip!!.addPara("A similar effect makes it possible to detect structures at further distances than usual, but without any identifiable data. Larger structures can be detected " +
                 "from longer distances." +
-                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "detect", "structures", "longer")
+                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "detect", "structures", "longer")*/
+
+        tooltip!!.addPara("Due to a unique interaction between the fleets sensors and the abyssal matter, it is possible to detect structures at further distances than usual, but without any identifying data. " +
+                "The detectable distance depends on the total mass of the structure." +
+                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "detect", "structures", "mass")
 
         if (isInClouds(player))
         {

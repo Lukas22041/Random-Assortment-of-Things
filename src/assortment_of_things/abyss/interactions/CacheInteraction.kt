@@ -29,7 +29,7 @@ class CacheInteraction : RATInteractionPlugin() {
         }
 
         textPanel.addPara("Your fleet approaches a crate of cargo.")
-        textPanel.addPara("It seems to have been located here for ages. There may be some treasures yet to be seen in it.")
+        textPanel.addPara("It seems to have been located here untouched for ages. There may be some treasures yet to be taken in it.")
 
 
         createOption("Loot the crate") {
@@ -56,13 +56,13 @@ class CacheInteraction : RATInteractionPlugin() {
             else
             {
                 drop = DropData()
-                drop.chances = 3
+                drop.chances = 2
                 drop.group = "abyss_cache_loot"
                 dropRandom.add(drop)
 
                 drop = DropData()
                 drop.group = "basic"
-                drop.value = 5000
+                drop.value = 3000
                 dropValue.add(drop)
             }
 

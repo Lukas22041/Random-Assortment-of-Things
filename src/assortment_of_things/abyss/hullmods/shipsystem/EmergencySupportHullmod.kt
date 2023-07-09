@@ -23,14 +23,6 @@ class EmergencySupportHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
-        if (hullSize == ShipAPI.HullSize.CAPITAL_SHIP)
-        {
-            stats!!.maxCombatReadiness.modifyFlat(modID, -0.10f)
-        }
-        else
-        {
-            stats!!.maxCombatReadiness.modifyFlat(modID, -0.05f)
-        }
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?, isForModSpec: Boolean): Boolean {
@@ -47,9 +39,14 @@ class EmergencySupportHullmod : BaseHullMod() {
         tooltip.addSpacer(5f)
         tooltip.addPara("Creates 3/4/6/8 small omni shielded support drones equipped with a LR PD Laser that position around the ship. After 20 seconds they are destroyed, requiring another 20 seconds to become ready again.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "3/4/6/8", "omni shielded support drones", "LR PD Laser", "20 seconds", "20 seconds")
-        tooltip.addSpacer(10f)
 
-        tooltip.addPara("Hull Alterations decrease the ships maximum CR by 5%%/5%%/5%%/10%% based on its hullsize.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
 
+    }
+
+    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
+        return false
+    }
+    override fun getUnapplicableReason(ship: ShipAPI?): String {
+        return "Alterations can only be installed through the associated item."
     }
 }

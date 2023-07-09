@@ -1,19 +1,16 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
 ,,,,,,,,
 #Expansion,,,,,,,,
-rat_abyssHeader,The Abyss,Header,The Abyss,,,,,Expansion
-rat_abyssEnabled,Enable The Abyss,Boolean,false,,"The abyss is a new area focused on [Exploration]. It adds a variety of new loot to find. Watch out for a bar mission to gain access to it.
+rat_abyssHeader,The Abyss (Beta),Header,The Abyss (Beta),,,,,Expansion
+rat_abyssEnabled,Enable The Abyss,Boolean,false,,"The abyss is a new area focused on [Exploration]. It adds a variety of new loot to find.
 
-Scope wise, the abyss tries to be a part of the exploration loop in the same way as Remnants.
+For the [Beta], the player starts with the [Singularity Jump] ability, which allows entry in to the abyss from the start of the game.
 
-Only generates on [a new save] and toggling the option has no effect on existing ones.
-
-[Credits:]
+Only generates on [a new save] and toggling the option has no effect on existing ones.",,,Expansion
+rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard",Changes the difficulty curve of the abyss and changes the strength of encounters. Changes only apply to newly spawned fleets.,,,Expansion
+rat_abyssCredits,,Text,"[Credits:]
 [SnazzyPantsMcGee] - Spritework
-[Haplogynae] - Music
-[Ruddygreat] - Drone related code.",,,Expansion
-,,,,,,,,
-,,,,,,,,
+[Haplogynae] - Music",,,,,Expansion
 ,,,,,,,,
 #Enhancements,,,,,,,,
 rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,Enhancement
@@ -66,6 +63,6 @@ Adds [Modular Superweapons]. With them you can select multiple effects of your c
 
 Toggling this config only has an effect for [new games]. Enabling it will give the player an ability called ""Weapon Forge"" at the beginning of the game.
 
-This feature is mostly functional, but still very much in development. This feature will not function correctly with the [Realistic Combat] mod.",,,Legacy
+",,,Legacy
 rat_modularDevmode,Enable Modular Devmode,Boolean,false,,Removes crafting costs for Modular Weapons and displays all modifiers even if they are not unlocked yet.,,,Legacy
 ,,,,,,,,

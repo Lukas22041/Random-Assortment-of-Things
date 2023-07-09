@@ -42,6 +42,8 @@ class AbolethShipsystem : BaseShipSystemScript() {
 
     }
 
+    var ship: ShipAPI? = null
+
 
     fun maintainStatus(playerShip: ShipAPI?, state: ShipSystemStatsScript.State?, effectLevel: Float) {
         val f = VULNERABLE_FRACTION
@@ -64,29 +66,39 @@ class AbolethShipsystem : BaseShipSystemScript() {
         return false
     }
 
-
-
-
     override fun apply(stats: MutableShipStatsAPI?,  id: String?,state: ShipSystemStatsScript.State?, effectLevel: Float) {
-        var ship = stats!!.entity as ShipAPI
+        ship = stats!!.entity as ShipAPI
 
         if (state == ShipSystemStatsScript.State.ACTIVE)
         {
-            AbyssalsCoreHullmod.getRenderer(ship).enableBlink()
+            AbyssalsCoreHullmod.getRenderer(ship!!).enableBlink()
         }
         else
         {
-            AbyssalsCoreHullmod.getRenderer(ship).disableBlink()
+            AbyssalsCoreHullmod.getRenderer(ship!!).disableBlink()
         }
 
-        if (AbyssalsCoreHullmod.isCosmosCore(ship))
+        if (AbyssalsCoreHullmod.isCosmosCore(ship!!))
         {
             applyCosmos(stats, id!!, state!!, effectLevel)
         }
-        else if ( AbyssalsCoreHullmod.isChronosCore(ship))
+        else if ( AbyssalsCoreHullmod.isChronosCore(ship!!))
         {
             applyChronos(stats, id!!, state!!, effectLevel)
         }
+    }
+
+    override fun getDisplayNameOverride(state: ShipSystemStatsScript.State?, effectLevel: Float): String {
+        if (ship == null) return "Inactive Shipsystem"
+        if (AbyssalsCoreHullmod.isChronosCore(ship!!))
+        {
+            return "Temporal Dive"
+        }
+        else if (AbyssalsCoreHullmod.isCosmosCore(ship!!))
+        {
+            return "Phase Dive"
+        }
+        return "Inactive Shipsystem"
     }
 
 

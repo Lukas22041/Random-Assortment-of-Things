@@ -18,17 +18,10 @@ import java.awt.Color
 class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
 
     enum class Stage(var progress: Int) {
-        START(0), INTO_THE_DEPTHS(100), COMPREHENSION(250), STARE_IN_TO(500)
+        START(0), INTO_THE_DEPTHS(200), RESOURCEFULNESS(350), RETURNAL(550), LIFETIME_EXPERIENCE(750), STARE_IN_TO(900)
     }
 
     companion object {
-
-
-      /*  var PROGRESS_MAX = 500
-        var PROGRESS_1 = 100
-        var PROGRESS_2 = 250
-        var PROGRESS_3 = PROGRESS_MAX*/
-
         @JvmStatic
         var KEY = "\$abyss_event_ref"
 
@@ -54,18 +47,18 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
         setMaxProgress(Stage.STARE_IN_TO.progress);
 
         addStage(Stage.START, 0);
-        addStage(Stage.INTO_THE_DEPTHS, Stage.INTO_THE_DEPTHS.progress, StageIconSize.MEDIUM);
-        addStage(Stage.COMPREHENSION, Stage.COMPREHENSION.progress, StageIconSize.MEDIUM);
+        addStage(Stage.INTO_THE_DEPTHS, Stage.INTO_THE_DEPTHS.progress, StageIconSize.SMALL);
+        addStage(Stage.RESOURCEFULNESS, Stage.RESOURCEFULNESS.progress, StageIconSize.SMALL);
+        addStage(Stage.RETURNAL, Stage.RETURNAL.progress, StageIconSize.MEDIUM);
+        addStage(Stage.LIFETIME_EXPERIENCE, Stage.LIFETIME_EXPERIENCE.progress, StageIconSize.MEDIUM);
         addStage(Stage.STARE_IN_TO, Stage.STARE_IN_TO.progress, StageIconSize.SMALL);
 
-        //setRandomized(Stage.TOPOGRAPHIC_DATA, RandomizedStageType.BAD, 400, 450, false);
         getDataFor(Stage.INTO_THE_DEPTHS).keepIconBrightWhenLaterStageReached = true;
-        getDataFor(Stage.COMPREHENSION).keepIconBrightWhenLaterStageReached = true;
+        getDataFor(Stage.RESOURCEFULNESS).keepIconBrightWhenLaterStageReached = true;
+        getDataFor(Stage.RETURNAL).keepIconBrightWhenLaterStageReached = true;
+        getDataFor(Stage.LIFETIME_EXPERIENCE).keepIconBrightWhenLaterStageReached = true;
         getDataFor(Stage.STARE_IN_TO).keepIconBrightWhenLaterStageReached = true;
-
-
-//		addFactor(new HADefensiveMeasuresFactor());
-//		addFactor(new HAShipsDestroyedFactorHint());
+        getDataFor(Stage.STARE_IN_TO).isRepeatable = true
 
         // now that the event is fully constructed, add it and send notification
         Global.getSector().getIntelManager().addIntel(this, true);
@@ -79,8 +72,10 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
         var spritePath = when(stageId) {
             Stage.START -> "graphics/icons/intel/events/abyssal1.png"
             Stage.INTO_THE_DEPTHS -> "graphics/icons/intel/events/abyssal2.png"
-            Stage.COMPREHENSION -> "graphics/icons/intel/events/abyssal3.png"
-            Stage.STARE_IN_TO -> "graphics/icons/intel/events/abyssal4.png"
+            Stage.RESOURCEFULNESS -> "graphics/icons/intel/events/abyssal3.png"
+            Stage.RETURNAL -> "graphics/icons/intel/events/abyssal4.png"
+            Stage.LIFETIME_EXPERIENCE -> "graphics/icons/intel/events/abyssal5.png"
+            Stage.STARE_IN_TO -> "graphics/icons/intel/events/abyssal6.png"
             else -> "graphics/icons/intel/events/abyssal1.png"
         }
 
@@ -125,7 +120,9 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
                 when (stageId) {
                     Stage.START -> tooltip!!.addTitle("Abyssal Exploration")
                     Stage.INTO_THE_DEPTHS -> tooltip!!.addTitle("Into the Depths")
-                    Stage.COMPREHENSION -> tooltip!!.addTitle("Abyssal Comprehension")
+                    Stage.RESOURCEFULNESS -> tooltip!!.addTitle("Resourcefulness")
+                    Stage.RETURNAL -> tooltip!!.addTitle("Returnal")
+                    Stage.LIFETIME_EXPERIENCE -> tooltip!!.addTitle("Lifetime Experience")
                     Stage.STARE_IN_TO -> tooltip!!.addTitle("Stare in to the abyss")
                 }
 
@@ -141,17 +138,26 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
     {
         if (stageId == Stage.START)
         {
-            info.addPara("As you dive in to the abyss, your met with a landscape untouched by man for hundreds of cycles. Further exploration may improve your understanding of this strange space.", 0f)
+            info.addPara("As you dive in to the abyss, you are met with a landscape untouched by man for hundreds of cycles. Further exploration may improve your understanding of this strange space.", 0f)
         }
         if (stageId == Stage.INTO_THE_DEPTHS)
         {
             info.addPara("Getting accustomed to the unique terrain of the abyss, navigating through it becomes more manageable, increasing the fleets maximum burn by 1", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "unique terrain", "maximum burn", "1")
         }
-        if (stageId == Stage.COMPREHENSION)
+        if (stageId == Stage.RESOURCEFULNESS)
         {
-            info.addPara("With increased comprehension of the enviroment, the fleet is able to avoid particularly dense areas of abyssal matter, reducing the shielding useage by " +
-                    "50%%", 0f,  Misc.getTextColor(), Misc.getHighlightColor(), "shielding useage", "50%")
+            info.addPara("Extended stay in the abyss requires the fleet to make careful decisions on the useage of resources, decreasing the amount of supplies used per day by 25%% within it.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(), "supplies", "25%")
+        }
+        if (stageId == Stage.RETURNAL)
+        {
+            info.addPara("Through mapping out the abyss, the fleet is now capable of adjusting the destination of the \"Singularity Jump\" Ability. While Holding L-CTRL in Hyperspace and then activating the ability, the fleet now returns to the last point it left the abyss from.", 0f,
+                Misc.getTextColor(), Misc.getHighlightColor(), "Singularity Jump", "returns the fleet to the last location", "L-CTRL")
+        }
+        if (stageId == Stage.LIFETIME_EXPERIENCE)
+        {
+            info.addPara("The experience aquirred from exploring the abyss gains the fleets captain an additional skill point.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),
+                "skill point")
         }
         if (stageId == Stage.STARE_IN_TO)
         {
@@ -188,11 +194,35 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
             if (isStageActive(Stage.INTO_THE_DEPTHS)) {
                 fleet.stats.fleetwideMaxBurnMod.modifyFlat(id, 1f,"Abyssal Exploration")
             }
+
+
+        }
+
+        if (isStageActive(Stage.RESOURCEFULNESS))  {
+            if (fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))
+            {
+                for (member in fleet.fleetData.membersListCopy)
+                {
+                    member.stats.suppliesPerMonth.modifyMult(id, 0.75f)
+                }
+            }
+            else
+            {
+                for (member in fleet.fleetData.membersListCopy)
+                {
+                    member.stats.suppliesPerMonth.unmodify(id)
+                }
+            }
         }
     }
 
     override fun notifyStageReached(stage: EventStageData?) {
         super.notifyStageReached(stage)
+
+        if (stage!!.id == Stage.LIFETIME_EXPERIENCE)
+        {
+            Global.getSector().playerFleet.commanderStats.addPoints(1)
+        }
 
         if (stage!!.id == Stage.STARE_IN_TO)
         {
@@ -212,7 +242,7 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
     }
 
     fun getTopoResetMin(): Int {
-        val stage = getDataFor(Stage.COMPREHENSION)
+        val stage = getDataFor(Stage.LIFETIME_EXPERIENCE)
         return stage.progress
     }
 

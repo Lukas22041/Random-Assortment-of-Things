@@ -15,14 +15,13 @@ object RATSettings : LunaSettingsListener
 
     //Abyss
     var enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
+    var abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
 
     //Procgen
     @JvmStatic
     var procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
     @JvmStatic
     var procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
-    @JvmStatic
-    //var procgenImprovedMisc = LunaSettings.getBoolean(modID, "rat_improvedMisc")
 
     var hullmodLootFrequency = LunaSettings.getFloat(modID, "rat_hullmodBPLootFrequency")
     var shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")
@@ -57,9 +56,9 @@ object RATSettings : LunaSettingsListener
     fun loadSettings()
     {
         enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
+        abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
 
         procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
-       // procgenImprovedMisc = LunaSettings.getBoolean(modID, "rat_improvedMisc")
         procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
 
         parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")

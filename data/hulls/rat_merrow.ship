@@ -2,7 +2,7 @@
   "hullName": "Merrow",
   "hullId": "rat_merrow",
   "hullSize": "FRIGATE",
-  "spriteName": "graphics/ships/merrow.png",
+  "spriteName": "graphics/ships/rat_merrow.png",
   "style": "ABYSSAL",
   "height": 120,
   "width": 130,
@@ -12,8 +12,7 @@
   "shieldRadius": 73.5,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_abyssal_core",
-    "automated"
+    "rat_abyssal_core"
   ],
   "weaponSlots": [
     {

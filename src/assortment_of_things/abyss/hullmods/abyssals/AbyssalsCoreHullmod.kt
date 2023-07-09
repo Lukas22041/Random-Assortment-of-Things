@@ -1,9 +1,12 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
+import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.graphics.SpriteAPI
+import com.fs.starfarer.api.impl.campaign.ids.HullMods
+import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.FaderUtil
@@ -21,13 +24,12 @@ class AbyssalsCoreHullmod : BaseHullMod() {
         fun getColorForCore(ship: ShipAPI) : Color
         {
             var color = Color(130, 27, 150,255)
-            if (ship.captain == null) return color
 
-            if (ship.captain.aiCoreId == RATItems.COSMOS_CORE)
+            if (isCosmosCore(ship))
             {
                 color = Color(255, 0, 100)
             }
-            if (ship.captain.aiCoreId == RATItems.CHRONOS_CORE)
+            if (isChronosCore(ship))
             {
                 color = Color(0, 150, 255)
             }
@@ -37,6 +39,7 @@ class AbyssalsCoreHullmod : BaseHullMod() {
 
         fun isChronosCore(ship: ShipAPI) : Boolean
         {
+            if (ship.variant.hasHullMod("rat_chronos_conversion")) return true
             if (ship.captain == null) return false
             if (ship.captain.aiCoreId == RATItems.CHRONOS_CORE) return true
             return false
@@ -44,15 +47,34 @@ class AbyssalsCoreHullmod : BaseHullMod() {
 
         fun isCosmosCore(ship: ShipAPI) : Boolean
         {
+            if (ship.variant.hasHullMod("rat_cosmos_conversion")) return true
             if (ship.captain == null) return false
             if (ship.captain.aiCoreId == RATItems.COSMOS_CORE) return true
             return false
         }
 
+        fun isHullmodIntegration(ship: ShipAPI) : Boolean {
+            if (ship.variant.hasHullMod("rat_chronos_conversion")) return true
+            if (ship.variant.hasHullMod("rat_cosmos_conversion")) return true
+            return false
+        }
+
+    }
+
+    override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
+        super.applyEffectsBeforeShipCreation(hullSize, stats, id)
+
+        if (!stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats.variant.hasHullMod(HullMods.AUTOMATED))
+        {
+            stats.variant.addPermaMod(HullMods.AUTOMATED)
+        }
+
+        stats!!.getDynamic().getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0f);
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)
+
 
         var renderer = AbyssalCoreRenderer(ship!!)
         ship.setCustomData("abyssal_glow_renderer", renderer)
@@ -73,6 +95,14 @@ class AbyssalsCoreHullmod : BaseHullMod() {
         tooltip.addSpacer(10f)
 
         AbyssalsHullmodDescriptions.createDescription(tooltip, hullSize, ship, width, isForModSpec)
+
+        tooltip.addSpacer(10f)
+        tooltip.addSectionHeading("Enviroment", Alignment.MID, 0f)
+        tooltip.addSpacer(10f)
+
+        tooltip.addPara("Abyssal hulls are immune to damage from Abyssal Storms, but also from similar hazards" +
+                " in other enviroments.", 0f)
+
 
     }
 
@@ -130,13 +160,12 @@ class AbyssalsCoreHullmod : BaseHullMod() {
             sprite!!.alphaMult = baseGlowAlpha
             sprite!!.setNormalBlend()
             sprite!!.renderAtCenter(ship.location.x, ship.location.y)
-
-            if (ship.captain == null) return
-            if (ship.captain.isAICore)
+            if (ship.captain == null && !isHullmodIntegration(ship)) return
+            if (ship.captain.isAICore || isHullmodIntegration(ship))
             {
                 if (ship.isPhased)
                 {
-                    if (ship.hullSpec.hullId == "rat_aboleth")
+                    if (ship.hullSpec.hullId == "rat_aboleth" || ship.hullSpec.hullId == "rat_aboleth_m")
                     {
                         if (phaseSprite == null)
                         {

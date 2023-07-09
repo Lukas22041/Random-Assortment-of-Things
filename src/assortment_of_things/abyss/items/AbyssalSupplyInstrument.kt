@@ -43,15 +43,15 @@ class AbyssalSupplyInstrument : BaseSpecialItemPlugin() {
         b = Misc.getPositiveHighlightColor()
 
         tooltip.addSpacer(5f)
-        tooltip.addPara("An autonomous device that when used, activates a miniature nanoforge that creates a one-time stock of supplies. Included in it is: \n\n" +
-                "100x Supplies\n" +
-                "250x Fuel\n" +
+        tooltip.addPara("An autonomous device that, when used, activates a miniature nanoforge that creates a one-time stock of supplies. Included in it is: \n\n" +
+                "50x Supplies\n" +
+                "50x Fuel\n" +
                 "\n" +
                 "Does not go over the fleets cargo limits, any excess is wasted.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "used", "stock of supplies.", "100x Supplies", "250x Fuel")
+            "used", "stock of supplies.", "50x Supplies", "50x Fuel")
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("Rightclick to use", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Rightclick to activate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)
@@ -70,8 +70,8 @@ class AbyssalSupplyInstrument : BaseSpecialItemPlugin() {
         var fleet = Global.getSector().playerFleet
 
         var cargo = fleet.cargo
-        var supplies = 100f
-        var fuel = 250f
+        var supplies = 50f
+        var fuel = 50f
 
         if (supplies > cargo.spaceLeft)
         {

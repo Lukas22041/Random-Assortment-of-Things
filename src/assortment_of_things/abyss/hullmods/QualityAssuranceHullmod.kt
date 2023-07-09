@@ -31,16 +31,8 @@ class QualityAssuranceHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
-        if (hullSize == ShipAPI.HullSize.CAPITAL_SHIP)
-        {
-            stats!!.maxCombatReadiness.modifyFlat(modID, -0.10f)
-        }
-        else
-        {
-            stats!!.maxCombatReadiness.modifyFlat(modID, -0.05f)
-        }
 
-        stats.getSuppliesToRecover().modifyFlat(modID, dp.get(hullSize)!!);
+        stats!!.getSuppliesToRecover().modifyFlat(modID, dp.get(hullSize)!!);
         stats.getDynamic().getMod(deploymentModID).modifyFlat(modID, dp.get(hullSize)!!);
 
         stats.armorBonus.modifyFlat(modID, armor.get(hullSize)!!)
@@ -70,9 +62,13 @@ class QualityAssuranceHullmod : BaseHullMod() {
         label.setHighlight("deployment cost", "2/3/4/6", "100/200/300/450", "armor", "max speed", "25/20/15/10","flux dissipation","50/100/150/250")
         label.setHighlightColors(nc, nc, hc,hc,hc,hc,hc,hc,hc,hc, )
 
-        tooltip.addSpacer(10f)
 
-        tooltip.addPara("Hull Alterations decrease the ships maximum CR by 5%%/5%%/5%%/10%% based on its hullsize.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+    }
 
+    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
+        return false
+    }
+    override fun getUnapplicableReason(ship: ShipAPI?): String {
+        return "Alterations can only be installed through the associated item."
     }
 }

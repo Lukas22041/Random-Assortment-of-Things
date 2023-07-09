@@ -22,7 +22,7 @@ class TimeCoreSkill : RATBaseShipSkill() {
         info.addSpacer(2f)
         info!!.addPara("+10%% timeflow", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("+20%% maneuverability", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info!!.addPara("+10 su/second to zero flux speed boost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("+5 su/second to zero flux speed boost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
@@ -30,7 +30,7 @@ class TimeCoreSkill : RATBaseShipSkill() {
         stats.acceleration.modifyMult(modID, 1.20f)
         stats.deceleration.modifyMult(modID, 1.20f)
         stats.turnAcceleration.modifyMult(modID, 1.20f)
-        stats.zeroFluxSpeedBoost.modifyFlat(modID, 10f)
+        stats.zeroFluxSpeedBoost.modifyFlat(modID, 5f)
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {

@@ -2,7 +2,7 @@
   "hullName": "Aboleth",
   "hullId": "rat_aboleth",
   "hullSize": "CRUISER",
-  "spriteName": "graphics/ships/aboleth.png",
+  "spriteName": "graphics/ships/rat_aboleth.png",
   "style": "ABYSSAL",
   "height": 280,
   "width": 230,
@@ -12,9 +12,12 @@
   "shieldRadius": 162.5,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_abyssal_core",
-    "automated"
+    "rat_abyssal_core"
   ],
+  "builtInWeapons": {
+    "WS0012": "aboleth_mount_right",
+    "WS0013": "aboleth_mount_left"
+  },
   "weaponSlots": [
     {
       "id": "WS0001",
@@ -103,7 +106,7 @@
       "type": "HYBRID",
       "mount": "TURRET",
       "arc": 220,
-      "angle": 90,
+      "angle": 55,
       "locations": [105, 40.5]
     },
     {
@@ -112,7 +115,7 @@
       "type": "HYBRID",
       "mount": "TURRET",
       "arc": 220,
-      "angle": -90,
+      "angle": -55,
       "locations": [105, -40.5]
     },
     {
@@ -140,6 +143,26 @@
         38, 39,
         47, 37.5
       ]
+    },
+    {
+      "id": "WS0012",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 0,
+      "angle": 0,
+      "locations": [95.5, -22],
+      "renderOrderMod": 10
+    },
+    {
+      "id": "WS0013",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 0,
+      "angle": -0,
+      "locations": [95.5, 22],
+      "renderOrderMod": 10
     }
   ],
   "engineSlots": [
@@ -162,7 +185,7 @@
       "styleId": "ABYSSAL"
     },
     {
-      "location": [-74, -28.5],
+      "location": [-74.5, -28.5],
       "length": 30,
       "width": 40,
       "angle": 180,
