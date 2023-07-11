@@ -137,6 +137,8 @@ class AbyssalConversionChronos : BaseSpecialItemPlugin() {
     override fun performRightClickAction() {
         var stats = Global.getSector().playerPerson.stats
 
+        Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
+
         var listener = object : FleetMemberPickerListener {
             override fun pickedFleetMembers(members: MutableList<FleetMemberAPI>?) {
                 if (!members.isNullOrEmpty())

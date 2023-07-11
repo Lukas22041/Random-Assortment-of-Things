@@ -6,9 +6,11 @@ import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.campaign.listeners.FleetEventListener
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseEventIntel
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseFactorTooltip
 import com.fs.starfarer.api.impl.campaign.intel.events.EventFactor
+import com.fs.starfarer.api.impl.campaign.intel.events.ht.HyperspaceTopographyEventIntel
 import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -85,7 +87,7 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
     }
 
     override fun getIntelTags(map: SectorMapAPI?): MutableSet<String> {
-        return mutableSetOf("Abyss")
+        return mutableSetOf("Abyss", Tags.INTEL_MAJOR_EVENT)
     }
 
 
@@ -93,6 +95,27 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
     override fun addBulletPoints(info: TooltipMakerAPI?,  mode: IntelInfoPlugin.ListInfoMode?,isUpdate: Boolean, tc: Color?,initPad: Float) {
 
         if (addEventFactorBulletPoints(info, mode, isUpdate, tc, initPad)) {
+            return
+        }
+
+        val h = Misc.getHighlightColor()
+        if (isUpdate && getListInfoParam() is EventStageData) {
+            val esd = getListInfoParam() as EventStageData
+            if (esd.id == Stage.INTO_THE_DEPTHS) {
+                info!!.addPara("+1 Burn Speed within the abyss.", initPad, tc, h, "+1")
+            }
+            if (esd.id == Stage.RESOURCEFULNESS) {
+                info!!.addPara("25%% reduced supply useage in the abyss.", initPad, tc, h, "25%")
+            }
+            if (esd.id == Stage.RETURNAL) {
+                info!!.addPara("Able to return back to last position within the abyss.", initPad, tc, h, "25%")
+            }
+            if (esd.id == Stage.LIFETIME_EXPERIENCE) {
+                info!!.addPara("Gained a skill point.", initPad, tc, h, "")
+            }
+            if (esd.id == Stage.STARE_IN_TO) {
+                info!!.addPara("Aqquired an additional hull alteration.", initPad, tc, h, "")
+            }
             return
         }
     }
@@ -230,7 +253,7 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
             var randomAlteration = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") }.random()
 
             val cargo = Global.getSector().playerFleet.cargo
-            cargo.addSpecial(SpecialItemData("rat_secondary_install", randomAlteration!!.id), 1f)
+            cargo.addSpecial(SpecialItemData("rat_alteration_install", randomAlteration!!.id), 1f)
             Global.getSector().campaignUI.messageDisplay.addMessage("Aquirred ${randomAlteration.displayName} from Abyssal Exploration")
         }
     }

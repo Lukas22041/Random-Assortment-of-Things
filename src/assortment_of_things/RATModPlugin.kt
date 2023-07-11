@@ -53,11 +53,11 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-      /*  for (hullmod in Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") })
+        for (hullmod in Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") })
         {
-            Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_install", hullmod.id), 5f)
+            Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmod.id), 5f)
         }
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_remover", null), 5f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 5f)
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_automation_converter", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_chronos_integration", null), 5f)
@@ -67,7 +67,7 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
 
       /*  Global.getSector().getCharacterData().addAbility("rat_singularity_jump_ability")
         Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);

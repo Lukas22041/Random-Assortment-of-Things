@@ -32,15 +32,9 @@ class EmergencySupportHullmod : BaseHullMod() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
         tooltip!!.addSpacer(5f)
-        tooltip!!.addPara("Installs a secondary shipsystem in to the hull that can be used independently of the original system.", 0f)
+        tooltip!!.addPara("Installs the \"Emergency Support\" system in to the hull. This exists in addition to the ships current system. When used, it deploys small shielded drones that are equipped with Vulcan cannons.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "Particle Stream", "momentum")
         tooltip!!.addSpacer(5f)
-
-        tooltip.addSectionHeading("Shipsystem: Emergency Support", Alignment.MID, 0f)
-        tooltip.addSpacer(5f)
-        tooltip.addPara("Creates 3/4/6/8 small omni shielded support drones equipped with a LR PD Laser that position around the ship. After 20 seconds they are destroyed, requiring another 20 seconds to become ready again.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "3/4/6/8", "omni shielded support drones", "LR PD Laser", "20 seconds", "20 seconds")
-
-
     }
 
     override fun isApplicableToShip(ship: ShipAPI?): Boolean {

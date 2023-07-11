@@ -4,16 +4,18 @@ import activators.ActivatorManager
 import assortment_of_things.abyss.activators.MagneticStormActivator
 import assortment_of_things.abyss.activators.PlasmaticShieldActivator
 import assortment_of_things.abyss.activators.TemporalAssaultActivator
+import assortment_of_things.abyss.hullmods.BaseAlteration
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.combat.CombatUtils
 
-class PlasmaticShieldHullmod : BaseHullMod() {
+class PlasmaticShieldHullmod : BaseAlteration() {
 
     var modID = "rat_plasmatic_shield"
 
@@ -35,22 +37,23 @@ class PlasmaticShieldHullmod : BaseHullMod() {
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
-        tooltip!!.addSpacer(5f)
-        tooltip!!.addPara("Every fighter deployed by the ship gains the \"Plasmatic Shield\" fighter-system. This is in addition to their existing system, if they have one.", 0f)
-        tooltip!!.addSpacer(5f)
 
-        tooltip.addSectionHeading("Fightersystem: Plasmatic Shield", Alignment.MID, 0f)
+        tooltip!!.addSpacer(5f)
+        tooltip!!.addPara("Every fighter deployed by the ship gains the \"Plasmatic Shield\" system. This is in addition to their existing system, if they have one.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(),
+            "Plasmatic Shield")
+
         tooltip.addSpacer(5f)
-        tooltip.addPara("Generates a temporary shield around the fighter. After activation it enters a 15 second cooldown.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "temporary shield", "15 second")
-
+        tooltip.addPara("Upon activation, the fighter gains a temporariy shield that will last for the active duration or until it is destroyed.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "temporariy shield")
     }
 
-    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
-        return false
+    override fun addItemPostDescription(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
+        tooltip!!.addPara("Can only be installed in to hulls that have atleast 1 fighter bay, bays from modifications are not accounted for.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
     }
-    override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Alterations can only be installed through the associated item."
+
+    override fun alterationInstallFilter(fleet: List<FleetMemberAPI>): List<FleetMemberAPI> {
+        return fleet.filter { it.hullSpec.fighterBays != 0 }
     }
 
 }

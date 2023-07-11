@@ -140,6 +140,8 @@ class AICoreConversionItem : BaseSpecialItemPlugin() {
     override fun performRightClickAction() {
         var stats = Global.getSector().playerPerson.stats
 
+        Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
+
         var listener = object : FleetMemberPickerListener {
             override fun pickedFleetMembers(members: MutableList<FleetMemberAPI>?) {
                 if (!members.isNullOrEmpty())
@@ -188,7 +190,8 @@ class AICoreConversionItem : BaseSpecialItemPlugin() {
                 choices = choices.filter { !Misc.isUnremovable(it.captain) }
                 choices = choices.filter { !it.isCapital }
                 choices = choices.filter { !it.hullSpec.hasTag("rat_abyssals") }
-
+                choices = choices.filter { it.hullSpec.hullId != "sotf_pledge" && it.hullSpec.hullId != "sotf_vow" && it.hullSpec.hullId != "sotf_covenant" }
+                
                 Global.getSector().campaignUI.currentInteractionDialog.showFleetMemberPickerDialog("Choose a ship", "Confirm", "Cancel", 10, 10, 64f,
                     true, false, choices, listener)
 

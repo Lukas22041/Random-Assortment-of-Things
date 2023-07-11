@@ -1,32 +1,29 @@
-package assortment_of_things.abyss.hullmods
+package assortment_of_things.abyss.hullmods.basic
 
 import activators.ActivatorManager
 import assortment_of_things.abyss.activators.ParticleStreamActivator
+import assortment_of_things.abyss.hullmods.BaseAlteration
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 
-class EfficientProceduresHullmod : BaseHullMod() {
+class DrivefieldOverwriteHullmod : BaseAlteration() {
 
 
-    var modID = "rat_efficient_procedures"
+    var modID = "rat_drivefield_overwrite"
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)
 
         if (ship == null) return
-        ActivatorManager.addActivator(ship, ParticleStreamActivator(ship))
     }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
-
-
-        stats!!.suppliesPerMonth.modifyMult(modID, 0.75f);
-        stats.fuelUseMod.modifyMult(modID, 0.75f);
+        stats!!.maxBurnLevel.modifyFlat(id, 1f)
 
 
     }
@@ -43,16 +40,9 @@ class EfficientProceduresHullmod : BaseHullMod() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Decreases the monthly supply and hyperspace fuel useage by 25%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "supply", "fuel", "useage", "25%")
-
+        tooltip.addPara("Increases the ships maximum burn level by 1.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "maximum burn", "1")
 
     }
 
-    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
-        return false
-    }
-    override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Alterations can only be installed through the associated item."
-    }
 }

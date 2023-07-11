@@ -188,7 +188,7 @@ class DomainResearchInteraction : RATInteractionPlugin() {
                     Misc.getTextColor(), Misc.getHighlightColor(), "")
 
                 textPanel.addPara("> Aquirred ${randomAlteration.displayName} Hull Alteration", Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor())
-                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_install", randomAlteration!!.id), 1f)
+                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", randomAlteration!!.id), 1f)
 
                 createOption("Return to Dock") {
                     reset()
@@ -206,7 +206,7 @@ class DomainResearchInteraction : RATInteractionPlugin() {
                     Misc.getTextColor(), Misc.getHighlightColor(), "")
 
                 textPanel.addPara("> Aquirred ${randomAlteration.displayName} Hull Alteration", Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor())
-                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_install", randomAlteration!!.id), 1f)
+                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", randomAlteration!!.id), 1f)
 
                 createOption("Return to Dock") {
                     reset()

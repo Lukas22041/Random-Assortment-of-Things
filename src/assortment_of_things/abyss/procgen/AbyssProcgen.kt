@@ -80,19 +80,12 @@ object AbyssProcgen {
             var tier = AbyssUtils.getTier(system)
 
 
-
             var defenseChance = when(tier) {
-                Tier.Low -> 0.50f
+                Tier.Low -> 0.75f
                 Tier.Mid -> 0.60f
                 Tier.High -> 0.80f
             }
 
-            var minP = 40f
-            var maxP = 60f
-            if (tier == Tier.Mid) minP = 60f
-            if (tier == Tier.Mid) maxP = 120f
-            if (tier == Tier.High) minP = 80f
-            if (tier == Tier.High) maxP = 160f
             addDefenseFleetManager(station, 1, tier, FleetTypes.PATROL_MEDIUM, defenseChance)
             AbyssUtils.addLightsource(station, 4000f, AbyssUtils.SUPERCHARGED_COLOR.setAlpha(30))
         }
@@ -280,7 +273,7 @@ object AbyssProcgen {
                 entity.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(300f, 1000f), 90f)
             }
 
-            var defenseChance = 0.5f
+            var defenseChance = 0.6f
             if (tier == Tier.High) defenseChance = 0.75f
 
 

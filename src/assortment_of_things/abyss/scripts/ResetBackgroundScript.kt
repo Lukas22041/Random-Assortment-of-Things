@@ -18,7 +18,7 @@ class ResetBackgroundScript : EveryFrameScript {
     }
 
     override fun advance(amount: Float) {
-       if (resetBackground && Global.getCombatEngine().isInCampaign) {
+       if (resetBackground && Global.getCombatEngine() != null && Global.getCombatEngine().isInCampaign) {
            CombatEngine.getBackground().color = Color.white
            resetBackground = false
        }

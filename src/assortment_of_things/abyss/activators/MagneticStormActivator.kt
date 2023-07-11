@@ -17,7 +17,7 @@ class MagneticStormActivator(ship: ShipAPI?) : CombatActivator(ship) {
     val jitterColor = Color(200, 0, 50, 150)
     val jitterUnderColor = Color(200, 0, 50, 200)
 
-    val interval = IntervalUtil(0.25f, 0.75f)
+    val interval = IntervalUtil(0.15f, 0.3f)
 
 
     override fun getBaseInDuration(): Float {
@@ -76,7 +76,7 @@ class MagneticStormActivator(ship: ShipAPI?) : CombatActivator(ship) {
                 {
                     if (it.hitpoints != 0f && it.maxHitpoints != 0f && it.owner != ship.owner)
                     {
-                        Global.getCombatEngine().spawnEmpArc(ship, ship.location, ship, it, DamageType.ENERGY, 5f, 10f, 250f,   // max range
+                        Global.getCombatEngine().spawnEmpArc(ship, ship.location, ship, it, DamageType.ENERGY, 10f, 10f, 250f,   // max range
                             "tachyon_lance_emp_impact", 1f, jitterColor, jitterUnderColor)
                         break;
                     }
@@ -85,7 +85,7 @@ class MagneticStormActivator(ship: ShipAPI?) : CombatActivator(ship) {
                 {
                     if (it.isAlive && !it.isHulk && it.owner != ship.owner)
                     {
-                        Global.getCombatEngine().spawnEmpArc(ship, ship.location, ship, it, DamageType.ENERGY, 5f, 10f, 250f,   // max range
+                        Global.getCombatEngine().spawnEmpArc(ship, ship.location, ship, it, DamageType.ENERGY, 10f, 10f, 250f,   // max range
                             "tachyon_lance_emp_impact", 1f, jitterColor, jitterUnderColor)
                         break;
                     }

@@ -2,14 +2,16 @@ package assortment_of_things.abyss.hullmods.fightersystems
 
 import activators.ActivatorManager
 import assortment_of_things.abyss.activators.PerseveranceActivator
+import assortment_of_things.abyss.hullmods.BaseAlteration
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 
-class PerseveranceHullmod : BaseHullMod() {
+class PerseveranceHullmod : BaseAlteration() {
 
 
     var modID = "rat_perseverance"
@@ -33,22 +35,23 @@ class PerseveranceHullmod : BaseHullMod() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
         tooltip!!.addSpacer(5f)
-        tooltip!!.addPara("Every fighter deployed by the ship gains the \"Perseverance\" fighter-system. This is in addition to their existing system, if they have one.", 0f)
-        tooltip!!.addSpacer(5f)
+        tooltip!!.addPara("Every fighter deployed by the ship gains the \"Perseverance\" system. This is in addition to their existing system, if they have one.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(),
+            "Perseverance")
 
-        tooltip.addSectionHeading("Fightersystem: Perseverance", Alignment.MID, 0f)
         tooltip.addSpacer(5f)
-        tooltip.addPara("Decreases all damage received by the fighter by 70%% for 8 seconds, afterwards this system goes on a 15 second cooldown.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "damage received", "70%", "8 seconds", "15 second")
-
+        tooltip.addPara("Upon activation, the fighter temporarily receives less damage from all sources.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "receives less damage")
 
     }
 
-    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
-        return false
+    override fun addItemPostDescription(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
+        tooltip!!.addPara("Can only be installed in to hulls that have atleast 1 fighter bay, bays from modifications are not accounted for.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
     }
-    override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Alterations can only be installed through the associated item."
+
+    override fun alterationInstallFilter(fleet: List<FleetMemberAPI>): List<FleetMemberAPI> {
+        return fleet.filter { it.hullSpec.fighterBays != 0 }
     }
+
 
 }

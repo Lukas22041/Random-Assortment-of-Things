@@ -7,6 +7,7 @@ import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipCommand
+import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.mission.FleetSide
 import com.fs.starfarer.api.util.IntervalUtil
@@ -44,7 +45,6 @@ class PlasmaticShieldActivator(ship: ShipAPI?) : CombatActivator(ship) {
 
     override fun advance(amount: Float) {
         super.advance(amount)
-
 
         if (!ship.isAlive || ship.isHulk)
         {
@@ -123,6 +123,20 @@ class PlasmaticShieldActivator(ship: ShipAPI?) : CombatActivator(ship) {
         fighter!!.shipAI = null
         fighter!!.giveCommand(ShipCommand.SELECT_GROUP, null, 99);
         fighter!!.spriteAPI.alphaMult = 0f
+
+        fighter!!.addListener(object : AdvanceableListener {
+            override fun advance(amount: Float) {
+               if (ship == null || !Global.getCombatEngine().ships.contains(ship)
+               )
+               {
+                   if (fighter != null)
+                   {
+                       fighter!!.hitpoints = 0f
+                   }
+               }
+            }
+        })
+
 
         Global.getCombatEngine().getFleetManager(ship.owner).isSuppressDeploymentMessages = false
 

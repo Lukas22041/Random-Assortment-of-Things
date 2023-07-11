@@ -1,7 +1,6 @@
-package assortment_of_things.abyss.hullmods
+package assortment_of_things.abyss.hullmods.basic
 
-import activators.ActivatorManager
-import assortment_of_things.abyss.activators.ParticleStreamActivator
+import assortment_of_things.abyss.hullmods.BaseAlteration
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -9,7 +8,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
 
-class QualityAssuranceHullmod : BaseHullMod() {
+class QualityAssuranceHullmod : BaseAlteration() {
 
 
     var modID = "rat_quality_assurance"
@@ -25,17 +24,16 @@ class QualityAssuranceHullmod : BaseHullMod() {
         super.applyEffectsAfterShipCreation(ship, id)
 
         if (ship == null) return
-        ActivatorManager.addActivator(ship, ParticleStreamActivator(ship))
     }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
 
-        stats!!.getSuppliesToRecover().modifyFlat(modID, dp.get(hullSize)!!);
-        stats.getDynamic().getMod(deploymentModID).modifyFlat(modID, dp.get(hullSize)!!);
+        /*stats!!.getSuppliesToRecover().modifyFlat(modID, dp.get(hullSize)!!);
+        stats.getDynamic().getMod(deploymentModID).modifyFlat(modID, dp.get(hullSize)!!);*/
 
-        stats.armorBonus.modifyFlat(modID, armor.get(hullSize)!!)
+        stats!!.armorBonus.modifyFlat(modID, armor.get(hullSize)!!)
         stats.maxSpeed.modifyFlat(modID, speed.get(hullSize)!!)
         stats.fluxDissipation.modifyFlat(modID, diss.get(hullSize)!!)
 
@@ -56,19 +54,12 @@ class QualityAssuranceHullmod : BaseHullMod() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        var label = tooltip.addPara("The ship receives improved maintenance and uses better performing components, increasing the ships deployment cost by 2/3/4/6. \n\n" +
-                "In turn, the ship performs better within combat. The ship gains an additional 100/200/300/450 units of armor. Its max speed is increased by 25/20/15/10 and " +
+        var label = tooltip.addPara("The ship receives improved maintenance and uses better performing components.This causes the the ship to performs better within combat.\n\n" +
+                "The ship gains an additional 100/200/300/450 units of armor. Its max speed is increased by 25/20/15/10 and " +
                 "it receives an increase in flux dissipation by 50/100/150/250.", 0f, Misc.getTextColor(), Misc.getHighlightColor())
         label.setHighlight("deployment cost", "2/3/4/6", "100/200/300/450", "armor", "max speed", "25/20/15/10","flux dissipation","50/100/150/250")
         label.setHighlightColors(nc, nc, hc,hc,hc,hc,hc,hc,hc,hc, )
 
-
     }
 
-    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
-        return false
-    }
-    override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Alterations can only be installed through the associated item."
-    }
 }

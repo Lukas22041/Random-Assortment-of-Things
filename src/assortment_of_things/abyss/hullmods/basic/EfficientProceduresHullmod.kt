@@ -1,27 +1,33 @@
-package assortment_of_things.abyss.hullmods.shipsystem
+package assortment_of_things.abyss.hullmods.basic
 
 import activators.ActivatorManager
 import assortment_of_things.abyss.activators.ParticleStreamActivator
+import assortment_of_things.abyss.hullmods.BaseAlteration
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 
-class ParticleStreamHullmod : BaseHullMod() {
+class EfficientProceduresHullmod : BaseAlteration() {
 
-    var modID = "rat_stream"
+
+    var modID = "rat_efficient_procedures"
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)
 
         if (ship == null) return
-        ActivatorManager.addActivator(ship, ParticleStreamActivator(ship))
     }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
+
+
+
+        stats!!.suppliesPerMonth.modifyMult(modID, 0.75f);
+        stats.fuelUseMod.modifyMult(modID, 0.75f);
+
 
     }
 
@@ -31,16 +37,15 @@ class ParticleStreamHullmod : BaseHullMod() {
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
+
+
+        var hc = Misc.getHighlightColor()
+        var nc = Misc.getNegativeHighlightColor()
+
         tooltip!!.addSpacer(5f)
-        tooltip!!.addPara("Installs the \"Particle Stream\" system in to the hull. This exists in addition to the ships current system. It allows the ship to temporarily modify its momentum with ease.", 0f,
-        Misc.getTextColor(), Misc.getHighlightColor(), "Particle Stream", "momentum")
-        tooltip!!.addSpacer(5f)
+        tooltip.addPara("Decreases the monthly supply and hyperspace fuel useage by 25%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "supply", "fuel", "useage", "25%")
+
     }
 
-    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
-        return false
-    }
-    override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Alterations can only be installed through the associated item."
-    }
 }

@@ -15,7 +15,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import java.awt.Color
 
-class SecondaryShipsystemRemoverItem : BaseSpecialItemPlugin() {
+class AlterationRemoverItem : BaseSpecialItemPlugin() {
 
 
     override fun init(stack: CargoStackAPI) {
@@ -95,6 +95,8 @@ class SecondaryShipsystemRemoverItem : BaseSpecialItemPlugin() {
     override fun performRightClickAction() {
         var stats = Global.getSector().playerPerson.stats
 
+        Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
+
         var listener = object : FleetMemberPickerListener {
             override fun pickedFleetMembers(members: MutableList<FleetMemberAPI>?) {
                 if (!members.isNullOrEmpty())
@@ -127,12 +129,12 @@ class SecondaryShipsystemRemoverItem : BaseSpecialItemPlugin() {
                 }
                 else
                 {
-                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_remover", null), 1f)
+                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 1f)
                 }
             }
 
             override fun cancelledFleetMemberPicking() {
-                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_remover", null), 1f)
+                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 1f)
             }
 
         }
@@ -152,6 +154,6 @@ class SecondaryShipsystemRemoverItem : BaseSpecialItemPlugin() {
                 return
             }
         }
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_remover", null), 1f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 1f)
     }
 }

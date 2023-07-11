@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.items
 
+import assortment_of_things.abyss.hullmods.BaseAlteration
 import assortment_of_things.scripts.AtMarketListener
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoStackAPI
@@ -12,20 +13,18 @@ import com.fs.starfarer.api.campaign.econ.SubmarketAPI
 import com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.loading.HullModSpecAPI
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.magiclib.kotlin.getCurrSpecialMods
 import java.awt.Color
 
-class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
+class AlterationInstallerItem : BaseSpecialItemPlugin() {
 
     var hullmodSpec: HullModSpecAPI? = null
-    var hullmod: BaseHullMod? = null
+    var hullmod: BaseAlteration? = null
 
     override fun init(stack: CargoStackAPI) {
         super.init(stack)
@@ -44,7 +43,7 @@ class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
 
         var loader =  Global.getSettings().scriptClassLoader
         var claz = loader.loadClass(hullmodSpec!!.effectClass)
-        hullmod = claz.newInstance() as BaseHullMod
+        hullmod = claz.newInstance() as BaseAlteration
     }
 
     override fun render(x: Float, y: Float, w: Float, h: Float, alphaMult: Float, glowMult: Float, renderer: SpecialItemRendererAPI) {
@@ -107,7 +106,7 @@ class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
     override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean, transferHandler: CargoTransferHandlerAPI?, stackSource: Any?) {
         super.createTooltip(tooltip, expanded, transferHandler, stackSource)
         val pad = 3f
-        val opad = 10f
+        val opad = 5f
         val small = 5f
         val h: Color = Misc.getHighlightColor()
         val g: Color = Misc.getGrayColor()
@@ -116,10 +115,12 @@ class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
 
         hullmod!!.addPostDescriptionSection(tooltip, ShipAPI.HullSize.FRIGATE, null, tooltipWidth, false)
         tooltip.addSpacer(5f)
+        hullmod!!.addItemPostDescription(tooltip, ShipAPI.HullSize.FRIGATE, null, tooltipWidth, false)
 
         var marketListener = Global.getSector().allListeners.find { it::class.java == AtMarketListener::class.java } as AtMarketListener?
         if (marketListener != null && !marketListener.atMarket)
         {
+            tooltip.addSpacer(5f)
             tooltip.addPara("Can only be installed while docked at a colony", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
 
@@ -137,6 +138,8 @@ class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
 
     override fun performRightClickAction() {
         var stats = Global.getSector().playerPerson.stats
+
+        Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
 
         var listener = object : FleetMemberPickerListener {
             override fun pickedFleetMembers(members: MutableList<FleetMemberAPI>?) {
@@ -163,12 +166,12 @@ class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
                 }
                 else
                 {
-                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_install", hullmodSpec!!.id), 1f)
+                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmodSpec!!.id), 1f)
                 }
             }
 
             override fun cancelledFleetMemberPicking() {
-                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_install", hullmodSpec!!.id), 1f)
+                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmodSpec!!.id), 1f)
             }
 
         }
@@ -179,10 +182,10 @@ class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
             if (marketListener.atMarket)
             {
                 if (Global.getSector().campaignUI.currentInteractionDialog == null) return
+                var maxSmods = Global.getSettings().settingsJSON.get("maxPermanentHullmods") as Int
 
                 var choices = Global.getSector().playerFleet.fleetData.membersListCopy.filter { it.variant.hullMods.none { Global.getSettings().getHullModSpec(it).hasTag("rat_alteration") } }
-
-                var maxSmods = Global.getSettings().settingsJSON.get("maxPermanentHullmods") as Int
+                choices = hullmod!!.alterationInstallFilter(choices)
                 choices = choices.filter { it.variant.sMods.size < it.stats.dynamic.getValue(Stats.MAX_PERMANENT_HULLMODS_MOD, maxSmods.toFloat())}
 
                 Global.getSector().campaignUI.currentInteractionDialog.showFleetMemberPickerDialog("Choose a ship", "Confirm", "Cancel", 10, 10, 64f,
@@ -191,7 +194,7 @@ class SecondaryShipsystemInstallerItem : BaseSpecialItemPlugin() {
                 return
             }
         }
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_secondary_install", hullmodSpec!!.id), 1f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmodSpec!!.id), 1f)
     }
 
 

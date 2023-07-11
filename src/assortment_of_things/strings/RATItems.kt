@@ -10,8 +10,8 @@ object RATItems
     var ABYSS_HOSTILITY_INSTRUMENT = "rat_instrument_hostility"
     var ABYSS_SUPPLIES_INSTRUMENT = "rat_instrument_supplies"
 
-    var ALTERATION_INSTALLER = "rat_secondary_install"
-    var ALTERATION_REMOVER = "rat_secondary_remover"
+    var ALTERATION_INSTALLER = "rat_alteration_install"
+    var ALTERATION_REMOVER = "rat_alteration_remover"
 
     var SALVAGED_WEAPON_COMPONENTS = "rat_weapon_salvage"
 

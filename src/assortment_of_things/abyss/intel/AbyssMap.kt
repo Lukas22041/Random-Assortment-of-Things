@@ -36,9 +36,11 @@ class AbyssMap : BaseIntelPlugin() {
        // super.createLargeDescription(panel, width, height)
 
         var element = panel!!.createUIElement(width, height, false)
+        panel.position.inTL(0f, 0f)
         panel.addUIElement(element)
 
-        var sprite = element.addLunaSpriteElement("graphics/backgrounds/abyss/Abyss2ForMap.jpg", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, width * 0.8f, height)
+        var sprite = element.addLunaSpriteElement("graphics/backgrounds/abyss/Abyss2ForMap.jpg", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, width * 0.8f, height )
+        sprite.position.inTL(0f, 0f)
 
         sprite.getSprite().alphaMult = 0.5f
 
@@ -149,7 +151,8 @@ class AbyssMap : BaseIntelPlugin() {
             // para.position.inTL(locOnMap.x, locOnMap.y)
         }
 
-        MapLine(panel, positions, element, width, height)
+        var line = MapLine(panel, positions, element, width, height)
+        line.position.inTL(0f, 0f)
         for (icon in icons)
         {
             element.bringComponentToTop(icon.elementPanel)

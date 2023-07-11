@@ -128,16 +128,16 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
             AbyssProcgen.Tier.High -> {
                 when(type) {
                     FleetTypes.PATROL_SMALL -> {
-                        minPoints = 48f
-                        maxPoints = 64f
+                        minPoints = 64f
+                        maxPoints = 96f
                     }
                     FleetTypes.PATROL_MEDIUM -> {
-                        minPoints = 96f
-                        maxPoints = 128f
+                        minPoints = 112f
+                        maxPoints = 144f
                     }
                     FleetTypes.PATROL_LARGE -> {
-                        minPoints = 128f
-                        maxPoints = 196f
+                        minPoints = 144f
+                        maxPoints = 228f
                     }
                 }
             }
@@ -147,8 +147,12 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         {
             minPoints += 20f
             maxPoints += 30f
+
         }
 
+        var totalBonus = 10
+        minPoints += totalBonus
+        maxPoints += totalBonus
 
         var points = MathUtils.getRandomNumberInRange(minPoints, maxPoints)
 
@@ -187,6 +191,13 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         )
         params.random = random
         params.withOfficers = false
+
+        if (difficulty == AbyssDifficulty.Hard ) {
+            if (tier == AbyssProcgen.Tier.High || tier == AbyssProcgen.Tier.Mid)
+            {
+                params.averageSMods = 1
+            }
+        }
 
         val fleet = FleetFactoryV3.createFleet(params)
 

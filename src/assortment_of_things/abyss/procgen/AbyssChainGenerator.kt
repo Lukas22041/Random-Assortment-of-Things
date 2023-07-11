@@ -126,15 +126,15 @@ class AbyssChainGenerator {
 
                 if (tier == AbyssProcgen.Tier.Low)
                 {
-                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_SMALL, 0.4f)
+                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_SMALL, 0.75f)
                 }
                 if (tier == AbyssProcgen.Tier.Mid)
                 {
-                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_SMALL, 0.5f)
+                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_MEDIUM, 0.6f)
                 }
                 else if (tier == AbyssProcgen.Tier.High)
                 {
-                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_MEDIUM, 0.70f)
+                    AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_MEDIUM, 0.75f)
                 }
 
 

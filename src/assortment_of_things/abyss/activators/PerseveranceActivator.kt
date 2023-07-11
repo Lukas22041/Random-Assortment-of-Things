@@ -10,7 +10,6 @@ import java.awt.Color
 class PerseveranceActivator(ship: ShipAPI?) : CombatActivator(ship) {
 
     var id = "rat_perseverance"
-    var maxMult = 1.5f
 
     val jitterColor = Color(255, 150, 0, 150)
     val jitterUnderColor = Color(255, 150, 0, 255)
@@ -66,9 +65,9 @@ class PerseveranceActivator(ship: ShipAPI?) : CombatActivator(ship) {
         ship.engineController.fadeToOtherColor(this, jitterColor, Color(0, 0, 0, 0), effectLevel, 0.5f)
         ship.engineController.extendFlame(this, -0.25f, -0.25f, -0.25f)
 
-        stats.hullDamageTakenMult.modifyMult(id, 1f - (1f - 0.30f) * effectLevel)
-        stats.armorDamageTakenMult.modifyMult(id, 1f - (1f - 0.30f) * effectLevel)
-        stats.empDamageTakenMult.modifyMult(id, 1f - (1f - 0.30f) * effectLevel)
+        stats.hullDamageTakenMult.modifyMult(id, 1f - (1f - 0.40f) * effectLevel)
+        stats.armorDamageTakenMult.modifyMult(id, 1f - (1f - 0.40f) * effectLevel)
+        stats.empDamageTakenMult.modifyMult(id, 1f - (1f - 0.40f) * effectLevel)
     }
 
 

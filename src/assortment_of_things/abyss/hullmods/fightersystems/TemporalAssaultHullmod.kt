@@ -2,14 +2,16 @@ package assortment_of_things.abyss.hullmods.fightersystems
 
 import activators.ActivatorManager
 import assortment_of_things.abyss.activators.*
+import assortment_of_things.abyss.hullmods.BaseAlteration
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 
-class TemporalAssaultHullmod : BaseHullMod() {
+class TemporalAssaultHullmod : BaseAlteration() {
 
 
     var modID = "rat_temporal_assault"
@@ -33,22 +35,21 @@ class TemporalAssaultHullmod : BaseHullMod() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
         tooltip!!.addSpacer(5f)
-        tooltip!!.addPara("Every fighter deployed by the ship gains the \"Temporal Assault\" fighter-system. This is in addition to their existing system, if they have one.", 0f)
-        tooltip!!.addSpacer(5f)
+        tooltip!!.addPara("Every fighter deployed by the ship gains the \"Temporal Assault\" system. This is in addition to their existing system, if they have one.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(),
+            "Temporal Assault")
 
-        tooltip.addSectionHeading("Fightersystem: Temporal Assault", Alignment.MID, 0f)
         tooltip.addSpacer(5f)
-        tooltip.addPara("Speeds up the fighters time flow by 50%% for 7 seconds, afterwards this system goes on a 15 second cooldown.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "time flow", "50%", "7 seconds", "15 second")
-
-
+        tooltip.addPara("Upon activation, the fighter experience a short-term increase in its perceived timeflow.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "perceived timeflow")
     }
 
-    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
-        return false
+    override fun addItemPostDescription(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
+        tooltip!!.addPara("Can only be installed in to hulls that have atleast 1 fighter bay, bays from modifications are not accounted for.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
     }
-    override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Alterations can only be installed through the associated item."
+
+    override fun alterationInstallFilter(fleet: List<FleetMemberAPI>): List<FleetMemberAPI> {
+        return fleet.filter { it.hullSpec.fighterBays != 0 }
     }
 
 }
