@@ -1,11 +1,11 @@
 name,id,tags,tech/manufacturer,rarity,base price,stack size,cargo space,baseRaidDanger,icon,sound id,sound id drop,plugin,plugin params,desc,order
 #Abyss,,,,,,,,,,,,,,,
-Hullmod installer,rat_alteration_install,,,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,"Installs a hull modification in to a ship. It is considered as an smod and only ships that have space for additional built-ins can can install one, additionaly only one alteration can be on a ship at a time. Rightclick to choose a ship.",400
+Hullmod installer,rat_alteration_install,,,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,"Installs a hull modification in to a ship. It is considered as an smod and only ships that have space for additional built-ins can can install one, only one alteration can be on a ship at a time. ",400
 Hullmod remover,rat_alteration_remover,,,,25000,1000,1,,graphics/icons/cargo/rat_alteration_remover.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationRemoverItem,,,401
 ,,,,,,,,,,,,,,,
 Automation Alteration,rat_automation_converter,,,,50000,1000,1,,graphics/icons/cargo/rat_alteration_installer_special.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AICoreConversionItem,,A unique single useage alteration that is able to convert a crewed ship in to an automated one.,420
-Abyssal Conversion (Chronos),rat_chronos_integration,,,,50000,1000,1,,graphics/icons/cargo/rat_alteration_installer_special.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalConversionChronos,,"Converts an abyssal hull in to a crewed one, while also integrating a chronos core to keep the shipsystem working.",420
-Abyssal Conversion (Cosmos),rat_cosmos_integration,,,,50000,1000,1,,graphics/icons/cargo/rat_alteration_installer_special.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalConversionCosmos,,"Converts an abyssal hull in to a crewed one, while also integrating a chronos core to keep the shipsystem working.",420
+Abyssal Conversion (Chronos),rat_chronos_integration,,,,50000,1000,1,,graphics/icons/cargo/rat_alteration_installer_special.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalConversionChronos,,"Converts an abyssal hull in to a crewed one, while also integrating a chronos core to keep the shipsystem functional.",420
+Abyssal Conversion (Cosmos),rat_cosmos_integration,,,,50000,1000,1,,graphics/icons/cargo/rat_alteration_installer_special.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalConversionCosmos,,"Converts an abyssal hull in to a crewed one, while also integrating a cosmos core to keep the shipsystem functional.",420
 ,,,,,,,,,,,,,,,
 Abyssal Survey Data,rat_abyss_survey,,,,20000,1000,1,,graphics/icons/cargo/rat_abyss_survey.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalSurveyData,,,402
 ,,,,,,,,,,,,,,,
@@ -16,5 +16,8 @@ Abyssal Supply Instrument,rat_instrument_supplies,abyss_drop,,,5000,1000,1,,grap
 #Other,,,,,,,,,,,,,,,
 Weapon Forge,rat_weapon_forge,mission_item,,,100000,1000,1,,graphics/icons/cargo/rat_weapon_forge.png,ui_cargo_special_ultratech_pickup,ui_cargo_special_ultratech_drop,assortment_of_things.campaign.items.WeaponForgeItem,,,0
 ,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+Artifact,rat_artifact,,Artifact,,50000,1000,1,,graphics/icons/rat_empty.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ArtifactItem,,"An ancient device that can be integrated in to the fleet and provide benefits for it. Only one can be active at a time. Integrating the first artifact opens the ""Artifacts"" intel tab in the ""Personal"" section, providing more information.",5000
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,

@@ -112,7 +112,7 @@ class AICoreConversionItem : BaseSpecialItemPlugin() {
                 "from automated hulls is not applied to ships with this conversion.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("This change is permanent and can not be reverted.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
+        tooltip.addPara("This change is permanent and cannot be reverted.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
         tooltip.addSpacer(5f)
 
         var marketListener = Global.getSector().allListeners.find { it::class.java == AtMarketListener::class.java } as AtMarketListener?

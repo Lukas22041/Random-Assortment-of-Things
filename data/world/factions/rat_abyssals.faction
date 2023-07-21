@@ -170,14 +170,14 @@
 	#"internalComms":"hegemony_internal",
 	"portraits":{
 		"standard_male":[
-			"graphics/portraits/portrait_ai1b.png",
-			"graphics/portraits/portrait_ai2b.png",
-			"graphics/portraits/portrait_ai3b.png",
+			"graphics/portraits/cores/rat_chronos_core.png",
+			"graphics/portraits/cores/rat_cosmos_core.png",
+
 		],
 		"standard_female":[
-			"graphics/portraits/portrait_ai1b.png",
-			"graphics/portraits/portrait_ai2b.png",
-			"graphics/portraits/portrait_ai3b.png",
+			"graphics/portraits/cores/rat_chronos_core.png",
+			"graphics/portraits/cores/rat_cosmos_core.png",
+
 		],
 	},
 	"ranks":{

@@ -19,7 +19,9 @@ import com.fs.starfarer.api.loading.HullModSpecAPI
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.util.WeightedRandomPicker
 import java.awt.Color
+import java.util.*
 
 class AlterationInstallerItem : BaseSpecialItemPlugin() {
 
@@ -35,7 +37,31 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
 
         if (data == null || !mods.map { it.id }.contains(data) )
         {
-            var mod = mods.random().id
+            var key = "\$rat_alteration_random"
+            var random = Random(Misc.genRandomSeed())
+            if (Global.getSector().memoryWithoutUpdate.contains(key))
+            {
+                random = Global.getSector().memoryWithoutUpdate.get(key) as Random
+            }
+            else
+            {
+                Global.getSector().memoryWithoutUpdate.set(key, random)
+            }
+
+            var modSelection = WeightedRandomPicker<HullModSpecAPI>()
+            modSelection.random = random
+
+            for (mod in mods)
+            {
+                when (mod.tier) {
+                    0 -> modSelection.add(mod, 2f)
+                    1 -> modSelection.add(mod, 1.5f)
+                    2 -> modSelection.add(mod, 1f)
+                    else -> modSelection.add(mod, 1f)
+                }
+            }
+
+            var mod = modSelection.pick().id
             stack.specialDataIfSpecial.data = mod
             data = mod
         }
@@ -122,6 +148,11 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
         {
             tooltip.addSpacer(5f)
             tooltip.addPara("Can only be installed while docked at a colony", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        }
+        else
+        {
+            tooltip.addSpacer(5f)
+            tooltip.addPara("Rightclick to choose a hull for installation.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         }
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)

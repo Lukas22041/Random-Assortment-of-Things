@@ -11,8 +11,6 @@
 	
 	"canNotCauseOverload":true,
 	
-	"useSound":"system_ammo_feeder",
-	#"deactivateSound":"system_phase_cloak_deactivate",
-	"deactivateSound":"system_phase_cloak_deactivate",
-	"outOfUsesSound":"system_phase_cloak_collision",
+	"loopSound":"system_fortress_shield_loop",
+	"outOfUsesSound":"gun_out_of_ammo",	
 }

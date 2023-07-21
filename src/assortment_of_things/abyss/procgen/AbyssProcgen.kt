@@ -6,6 +6,7 @@ import assortment_of_things.abyss.intel.event.DiscoveredPhotosphere
 import assortment_of_things.abyss.intel.event.SignificantEntityDiscoveredFactor
 import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.scripts.AbyssalDefendingFleetManager
+import assortment_of_things.artifacts.ArtifactUtils
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
@@ -20,6 +21,7 @@ import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.getStorageCargo
 import org.magiclib.kotlin.setAlpha
 import java.util.*
+import kotlin.random.asJavaRandom
 
 object AbyssProcgen {
 
@@ -87,7 +89,10 @@ object AbyssProcgen {
             }
 
             addDefenseFleetManager(station, 1, tier, FleetTypes.PATROL_MEDIUM, defenseChance)
-            AbyssUtils.addLightsource(station, 4000f, AbyssUtils.SUPERCHARGED_COLOR.setAlpha(30))
+
+            if (tier != Tier.Low) {
+                AbyssUtils.addLightsource(station, 4000f, AbyssUtils.SUPERCHARGED_COLOR.setAlpha(30))
+            }
         }
     }
 
@@ -212,6 +217,7 @@ object AbyssProcgen {
 
         var salvage = SalvageEntity.generateSalvage(Random(), 1f, 1f, 1f, 1f, dropValue, dropRandom)
         cargo.addAll(salvage)
+        ArtifactUtils.generateArtifactLoot(salvage, "abyss", 0.1f, 1, Random())
 
         return outpost
     }

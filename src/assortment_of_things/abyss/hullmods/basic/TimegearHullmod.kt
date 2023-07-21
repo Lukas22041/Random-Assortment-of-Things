@@ -19,7 +19,7 @@ class TimegearHullmod : BaseAlteration() {
 
         if (ship == Global.getCombatEngine().playerShip)
         {
-            Global.getCombatEngine().timeMult.modifyMult(modID, 0.85f)
+            Global.getCombatEngine().timeMult.modifyMult(modID, 0.90f)
         }
         else
         {
@@ -34,8 +34,7 @@ class TimegearHullmod : BaseAlteration() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
-
-        stats!!.timeMult.modifyMult(modID, 1.15f);
+        stats!!.timeMult.modifyMult(modID, 1.10f);
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?, isForModSpec: Boolean): Boolean {
@@ -48,8 +47,8 @@ class TimegearHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Installs experimental components in to the ships generators. When they are active, they increases the ships perceived timeflow by 15%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "timeflow", "15%")
+        tooltip.addPara("Installs experimental components in to the ships generators. When active, it increases the ships perceived timeflow by 10%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "timeflow", "10%")
 
     }
 }

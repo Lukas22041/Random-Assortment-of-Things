@@ -18,18 +18,12 @@ class AIConvertedShip : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
-
         if (!stats!!.variant.hasHullMod(HullMods.AUTOMATED))
         {
             stats.variant.addPermaMod(HullMods.AUTOMATED)
             stats.variant.addTag("no_auto_penalty")
             stats.fleetMember.captain = null
         }
-    }
-
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
-        super.applyEffectsAfterShipCreation(ship, id)
-
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  isForModSpec: Boolean): Boolean {
@@ -40,7 +34,7 @@ class AIConvertedShip : BaseHullMod() {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
         tooltip!!.addPara("This ship was previously crewed by humans, but has now been converted in to a hull exclusively controlled by AI. \n\n" +
-                "This specific conversion is able to negate the combat readiness penality from the \"Automated Ship\" Hullmod.", 0f)
+                "This specific conversion is able to negate the combat readiness penalty from the \"Automated Ship\" Hullmod.", 0f)
 
     }
 }

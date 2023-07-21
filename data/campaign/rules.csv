@@ -1,0 +1,3 @@
+id,trigger,conditions,script,text,options,notes
+greetingRATAbyssalsHostile,OpenCommLink,"$faction.id == rat_abyssals score:1000
+",$entity.ignorePlayerCommRequests = true 1,The opposing fleet does not respond to the comm-request,cutCommLink:Cut the comm link,

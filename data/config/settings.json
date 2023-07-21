@@ -2,6 +2,7 @@
  	"plugins":{		
 		"newGameSectorProcGen":"assortment_of_things.campaign.procgen.RATSectorProcGen",
 		"RatCombatHandler":"assortment_of_things.combat.CombatHandler",
+		"RatAfterImageRenderer":"assortment_of_things.combat.AfterImageRenderer",
 	},	
 
 
@@ -13,6 +14,7 @@
 		"Abyss":[255, 0, 50, 255],
 		"Abyssal":[255, 0, 50, 255],
 		"Modular Weapon":[158, 50, 230,255],
+		"Artifact":[97, 21, 212, 255],
 	},		
 	
 	"drop_prob_officer_rat_chronos_core":0.1,

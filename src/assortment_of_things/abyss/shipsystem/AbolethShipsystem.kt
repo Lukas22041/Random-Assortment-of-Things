@@ -2,6 +2,7 @@ package assortment_of_things.abyss.shipsystem
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
+import assortment_of_things.combat.AfterImageRenderer
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -29,6 +30,8 @@ class AbolethShipsystem : BaseShipSystemScript() {
     protected fun isDisruptable(cloak: ShipSystemAPI): Boolean {
         return cloak.specAPI.hasTag(Tags.DISRUPTABLE)
     }
+
+    var afterimageInterval = IntervalUtil(0.2f, 0.2f)
 
     companion object {
         var JITTER_COLOR = Color(255, 175, 255, 255)
@@ -125,6 +128,14 @@ class AbolethShipsystem : BaseShipSystemScript() {
             Global.getCombatEngine().timeMult.unmodify(id)
         }
 
+        if (ship.system.isActive) {
+            afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
+            if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
+            {
+                AfterImageRenderer.addAfterimage(ship!!, AbyssalsCoreHullmod.getColorForCore(ship!!).setAlpha(75), Color(150, 0 ,255).setAlpha(75), 2f, 2f, Vector2f().plus(ship!!.location))
+            }
+        }
+
         ship!!.engineController.extendFlame(this, 0.25f * effectLevel, 0.25f * effectLevel, 0.25f * effectLevel)
     }
 
@@ -190,7 +201,7 @@ class AbolethShipsystem : BaseShipSystemScript() {
                 thrusterID += 1000
                 var color = AbyssalsCoreHullmod.getColorForCore(ship).setAlpha(50)
 
-                if (interval.intervalElapsed())
+                if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
                 {
                     MagicTrailPlugin.addTrailMemberSimple(ship, trailID + thrusterID, Global.getSettings().getSprite("fx", "base_trail_aura"),
                         Vector2f(point.x, point.y) , 50f, ship.facing - 180, 1f, 1f, color, 1f, 0.2f, 0.25f, 0.3f, true )
@@ -208,6 +219,14 @@ class AbolethShipsystem : BaseShipSystemScript() {
             Global.getCombatEngine().timeMult.modifyMult(id, 1f / shipTimeMult)
         } else {
             Global.getCombatEngine().timeMult.unmodify(id)
+        }
+
+        if (ship.system.isActive) {
+            afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
+            if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
+            {
+                AfterImageRenderer.addAfterimage(ship!!, AbyssalsCoreHullmod.getColorForCore(ship!!).setAlpha(15), Color(150, 0 ,255).setAlpha(15), 2f, 2f, Vector2f().plus(ship!!.location))
+            }
         }
     }
 

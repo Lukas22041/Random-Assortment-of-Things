@@ -16,12 +16,14 @@ import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI
 import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.fleet.FleetMemberAPI
+import com.fs.starfarer.api.impl.campaign.fleets.DefaultFleetInflater
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.fleets.SourceBasedFleetManager
 import com.fs.starfarer.api.impl.campaign.ids.Abilities
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseEventIntel
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseFactorTooltip
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseOneTimeFactor
@@ -162,18 +164,13 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
 
 
         var qualityOverride = when(tier) {
-            AbyssProcgen.Tier.Low -> 2f
-            AbyssProcgen.Tier.Mid -> 3f
-            AbyssProcgen.Tier.High -> 4f
+            AbyssProcgen.Tier.Low -> 3f
+            AbyssProcgen.Tier.Mid -> 4f
+            AbyssProcgen.Tier.High -> 5f
         }
 
-        if (difficulty == AbyssDifficulty.Hard)
-        {
-             qualityOverride = when(tier) {
-                AbyssProcgen.Tier.Low -> 3f
-                AbyssProcgen.Tier.Mid -> 4f
-                AbyssProcgen.Tier.High -> 5f
-            }
+        if (difficulty == AbyssDifficulty.Hard) {
+             qualityOverride = 5f
         }
 
         val params = FleetParamsV3(null,
@@ -192,14 +189,12 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         params.random = random
         params.withOfficers = false
 
-        if (difficulty == AbyssDifficulty.Hard ) {
-            if (tier == AbyssProcgen.Tier.High || tier == AbyssProcgen.Tier.Mid)
-            {
-                params.averageSMods = 1
-            }
+        val fleet = FleetFactoryV3.createFleet(params)
+
+        for (member in fleet.fleetData.membersListCopy) {
+            member.variant.addTag(Tags.TAG_NO_AUTOFIT)
         }
 
-        val fleet = FleetFactoryV3.createFleet(params)
 
         addAICores(fleet, type, difficulty, random)
 
@@ -220,6 +215,14 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
 
         addFollowThroughFractureScript(fleet)
 
+        var alterationChancePerShip = 0.0f
+        if (difficulty == AbyssDifficulty.Hard) alterationChancePerShip += 0.4f
+        if (tier == AbyssProcgen.Tier.Low) alterationChancePerShip += 0.2f
+        if (tier == AbyssProcgen.Tier.Mid) alterationChancePerShip += 0.4f
+        if (tier == AbyssProcgen.Tier.High) alterationChancePerShip += 0.5f
+
+        AbyssUtils.addAlterationsToFleet(fleet, alterationChancePerShip, random)
+
         return fleet
     }
 
@@ -239,7 +242,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         if (tier == AbyssProcgen.Tier.High) corePercentage = 0.4f
 
         corePercentage += bonus
-        if (difficulty == AbyssDifficulty.Hard) corePercentage += 0.2f
+        if (difficulty == AbyssDifficulty.Hard) corePercentage += 0.3f
 
         var members = fleet.fleetData.membersListCopy
 
@@ -262,7 +265,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         var count = (members.size * corePercentage).toInt()
         for (i in 0 until count)
         {
-            var pick = picker.pickAndRemove()
+            var pick = picker.pickAndRemove() ?: continue
 
             var chronos = ChronosCore()
             var cosmos = CosmosCore()

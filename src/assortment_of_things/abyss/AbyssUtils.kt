@@ -10,18 +10,22 @@ import assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin
 import assortment_of_things.abyss.terrain.SuperchargedAbyssTerrainPlugin
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTiledTerrain
 import com.fs.starfarer.api.loading.CampaignPingSpec
+import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
@@ -73,6 +77,7 @@ object AbyssUtils {
     //Sets up important tags, like "HIDDEN" to prevent the systems from being used by other mods.
     fun setupTags(system: StarSystemAPI)
     {
+        system.generateAnchorIfNeeded()
         system.addTag(SYSTEM_TAG)
         system.isProcgen = false
         system.addTag(Tags.THEME_HIDDEN)
@@ -480,4 +485,52 @@ object AbyssUtils {
         return AbyssDifficulty.Normal
     }
 
+    fun addAlterationsToFleet(fleet: CampaignFleetAPI, chancePerShip: Float, random: Random) {
+
+        var members = fleet.fleetData.membersListCopy
+
+        fleet.inflateIfNeeded()
+        for (member in members)
+        {
+            if (random.nextFloat() > chancePerShip) continue
+
+            var alterations = mutableMapOf("rat_qualityAssurance" to 1f, "rat_timegear" to 1f, "rat_overloaded_systems" to 1f, "rat_preperation" to 1f)
+
+            var hasBay = member.variant.fittedWings.size != 0
+
+            var hasBallistic = false
+            var hasEnergy = false
+            var hasMissile = false
+
+            var weapons = member.variant.fittedWeaponSlots.map { member.variant.getWeaponSpec(it) }
+            if (weapons.any { it.mountType == WeaponAPI.WeaponType.BALLISTIC }) hasBallistic = true
+            if (weapons.any { it.mountType == WeaponAPI.WeaponType.ENERGY }) hasEnergy = true
+            if (weapons.any { it.mountType == WeaponAPI.WeaponType.MISSILE }) hasMissile = true
+
+            if (hasBay) alterations.putAll(mapOf("rat_temporalAssault" to 2f, "rat_perseverance" to 4f, "rat_magneticStorm" to 4f, "rat_plasmaticShield" to 4f))
+
+            if (hasBallistic) alterations.putAll(mapOf("rat_ballistic_focus" to 1.5f))
+            if (hasEnergy) alterations.putAll(mapOf("rat_energy_focus" to 1.5f))
+            if (hasMissile) alterations.putAll(mapOf("rat_missile_reserve" to 1.5f))
+
+            var picker = WeightedRandomPicker<String>()
+            alterations.forEach { picker.add(it.key, it.value) }
+
+            var pick = picker.pick()
+
+            if (member.variant.source != VariantSource.REFIT)
+            {
+                var variant = member.variant.clone();
+                variant.originalVariant = null;
+                variant.hullVariantId = Misc.genUID()
+                variant.source = VariantSource.REFIT
+                member.setVariant(variant, false, true)
+            }
+            member.variant.addPermaMod(pick, true)
+            member.updateStats()
+
+        }
+        fleet.inflateIfNeeded()
+
+    }
 }

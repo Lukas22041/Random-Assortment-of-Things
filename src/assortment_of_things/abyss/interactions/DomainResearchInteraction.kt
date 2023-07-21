@@ -3,6 +3,7 @@ package assortment_of_things.abyss.interactions
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
@@ -41,14 +42,15 @@ class DomainResearchInteraction : RATInteractionPlugin() {
             addLootOption()
         }
 
-        if (interactionTarget.hasTag(AbyssTags.DOMAIN_RESEARCH_PRODUCTION)) {
+        /*if (interactionTarget.hasTag(AbyssTags.DOMAIN_RESEARCH_PRODUCTION)) {
             textPanel.addPara("The station seems to have some kind of production line within it.")
             addProductionOption()
-        }
-        else if (interactionTarget.hasTag(AbyssTags.DOMAIN_RESEARCH_SURVEY)) {
+        }*/
+
+       /* else if (interactionTarget.hasTag(AbyssTags.DOMAIN_RESEARCH_SURVEY)) {
             textPanel.addPara("Some transponders appear to have send data to this station.")
             addSurveyOption()
-        }
+        }*/
 
        /* textPanel.addPara("The station generates a constant amount of shielding for itself through some unknown process, we could likely take some of it for our own.")
         addSiphonOption()*/
@@ -100,7 +102,7 @@ class DomainResearchInteraction : RATInteractionPlugin() {
                     drop = DropData()
                     drop.chances = 1
                     drop.group = "rare_tech_low"
-                    drop.valueMult = 0.1f
+                    drop.valueMult = 1f
                     dropRandom.add(drop)
 
                     drop = DropData()
@@ -120,7 +122,7 @@ class DomainResearchInteraction : RATInteractionPlugin() {
                     drop = DropData()
                     drop.chances = 1
                     drop.group = "rare_tech"
-                    drop.valueMult = 0.1f
+                    drop.valueMult = 0.5f
                     dropRandom.add(drop)
 
                     drop = DropData()
@@ -146,12 +148,15 @@ class DomainResearchInteraction : RATInteractionPlugin() {
 
                 var mult = when(tier) {
                     AbyssProcgen.Tier.Low -> 1f
-                    AbyssProcgen.Tier.Mid -> 2f
-                    AbyssProcgen.Tier.High -> 2.5f
+                    AbyssProcgen.Tier.Mid -> 1.5f
+                    AbyssProcgen.Tier.High -> 2f
                     else -> 1f
                 }
 
                 var salvage = SalvageEntity.generateSalvage(random.asJavaRandom(), mult, mult, 1f, 1f, dropValue, dropRandom)
+
+
+                ArtifactUtils.generateArtifactLoot(salvage, "abyss", 0.1f, 1, random.asJavaRandom())
 
                 visualPanel.showLoot("Loot", salvage, true) {
 

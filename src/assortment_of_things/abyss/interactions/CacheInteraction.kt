@@ -71,6 +71,16 @@ class CacheInteraction : RATInteractionPlugin() {
             drop.group = "weapons2"
             dropRandom.add(drop)
 
+            drop = DropData()
+            drop.chances = 1
+            drop.group = "any_hullmod_medium"
+            dropRandom.add(drop)
+
+            drop = DropData()
+            drop.chances = 1
+            drop.group = "rare_tech_low"
+            dropRandom.add(drop)
+
             var salvage = SalvageEntity.generateSalvage(random.asJavaRandom(), 1f, 1f, 1f, 1f, dropValue, dropRandom)
 
             visualPanel.showLoot("Loot", salvage, true) {

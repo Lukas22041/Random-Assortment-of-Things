@@ -9,7 +9,7 @@ For the [Beta], the player starts with the [Singularity Jump] ability, which all
 Only generates on [a new save] and toggling the option has no effect on existing ones.",,,Expansion
 rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the abyss.
 
-Hard: Increases the strength of fleets by increasing the average size and improving the quality of the ships within them.",,,Expansion
+Hard-mode severely increases the strength of encountered fleets within the abyss.",,,Expansion
 rat_abyssCredits,,Text,"[Credits:]
 [SnazzyPantsMcGee] - Spritework
 [Haplogynae] - Music",,,,,Expansion

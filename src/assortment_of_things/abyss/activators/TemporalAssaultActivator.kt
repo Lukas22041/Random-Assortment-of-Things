@@ -1,6 +1,8 @@
 package assortment_of_things.abyss.activators
 
 import activators.CombatActivator
+import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
+import assortment_of_things.combat.AfterImageRenderer
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
@@ -8,7 +10,9 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.combat.CombatUtils
+import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
 class TemporalAssaultActivator(ship: ShipAPI?) : CombatActivator(ship) {
@@ -20,7 +24,7 @@ class TemporalAssaultActivator(ship: ShipAPI?) : CombatActivator(ship) {
     val jitterUnderColor = Color(0, 255, 155, 155)
 
     val interval = IntervalUtil(0.5f, 1f)
-    var interval2 = IntervalUtil(0.05f, 0.05f)
+    var afterimageInterval = IntervalUtil(0.05f, 0.05f)
 
     override fun getBaseInDuration(): Float {
         return 1f
@@ -68,7 +72,13 @@ class TemporalAssaultActivator(ship: ShipAPI?) : CombatActivator(ship) {
         ship.setJitter(id, jitterColor, jitterLevel, 3, 0f, 0 + jitterRangeBonus)
         ship.setJitterUnder(id, jitterUnderColor, jitterLevel, 10, 0f, 5f + jitterRangeBonus)
 
-
+        if (state == State.IN || state == State.ACTIVE) {
+            afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
+            if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
+            {
+                AfterImageRenderer.addAfterimage(ship!!, jitterUnderColor.setAlpha(75), jitterColor.setAlpha(75), 0.5f, 0f, Vector2f().plus(ship!!.location))
+            }
+        }
 
         val shipTimeMult = 1f + (maxMult - 1f) * effectLevel
         stats.timeMult.modifyMult(id, shipTimeMult)

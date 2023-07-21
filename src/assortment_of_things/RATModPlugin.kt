@@ -6,9 +6,14 @@ import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.MinimapUI
 import assortment_of_things.abyss.systems.MidnightCoreSystem
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.misc.AbyssBackgroundWarper
+import assortment_of_things.abyss.procgen.AbyssalSmodInflationListener
 import assortment_of_things.abyss.scripts.DisableTransverseScript
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
+import assortment_of_things.artifacts.ArtifactIntel
+import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.modular_weapons.scripts.WeaponComponentsListener
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import assortment_of_things.scripts.AtMarketListener
@@ -24,6 +29,9 @@ import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaSettings.LunaSettings
+import java.util.*
+import kotlin.system.measureTimeMillis
+import kotlin.time.measureTime
 
 
 class RATModPlugin : BaseModPlugin() {
@@ -44,6 +52,15 @@ class RATModPlugin : BaseModPlugin() {
         ModularWeaponLoader.setOGNames()
 
         LunaSettings.addSettingsListener(RATSettings)
+
+        ArtifactUtils.loadArtifactsFromCSV()
+
+
+
+
+
+
+
     }
 
     override fun onDevModeF8Reload() {
@@ -52,6 +69,11 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
+
+     /*   for (artifact in ArtifactUtils.artifacts)
+        {
+            Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 5f)
+        }
 
         for (hullmod in Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") })
         {
@@ -67,43 +89,9 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
 
-      /*  Global.getSector().getCharacterData().addAbility("rat_singularity_jump_ability")
-        Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);
-        if (RATSettings.enableAbyss!! && Global.getSector().starSystems.none { it.baseName == "Midnight" })
-        {
-            MidnightCoreSystem().generate()
-        }
-        //Global.getSector().addTransientScript(DisableTransverseScript())
-        Global.getSector().addScript(DisableTransverseScript())
-        for (faction in Global.getSector().allFactions)
-        {
-            if (faction.id == AbyssUtils.FACTION_ID) continue
-            faction.adjustRelationship(AbyssUtils.FACTION_ID, -100f)
-        }*/
-
-        /*var fleet = Global.getSector().playerFleet
-        for (member in fleet.fleetData.membersListCopy)
-        {
-            if (member.variant.source != VariantSource.REFIT)
-            {
-                var variant = member.variant.clone()
-                variant.originalVariant = null;
-                variant.hullVariantId = Misc.genUID()
-                variant.source = VariantSource.REFIT
-                member.setVariant(variant, false, true)
-            }
-            member.variant.addPermaMod(HullMods.ADVANCED_TARGETING_CORE, true)
-            member.updateStats()
-        }
-*/
-
-        //Global.getSector().addTransientScript(AbyssShielding())
-
-        // Global.getSector().intelManager.addIntel(AbyssMap())
-
-        // Global.getSector().addTransientScript(SystemTooltipReplacer())
+        Global.getSector().listenerManager.addListener(AbyssalSmodInflationListener(), true)
 
         if (RATSettings.enableMinimap!!){
             Global.getSector().addTransientScript(MinimapUI())
@@ -115,8 +103,6 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(ParallelConstruction())
 
         Global.getSector().addTransientListener(WeaponComponentsListener())
-
-        LootModifier.modifySpawns()
 
         Global.getSector().addTransientListener(AtMarketListener())
 
@@ -133,18 +119,21 @@ class RATModPlugin : BaseModPlugin() {
 
 
         //ModularWeaponLoader.resetAllData()
-        ModularWeaponLoader.applyStatToSpecsForAll()
+        if (RATSettings.enableModular!!) {
+            ModularWeaponLoader.applyStatToSpecsForAll()
+        }
+
 
     }
 
     override fun onNewGame() {
         super.onNewGame()
         ModularWeaponLoader.applyStatToSpecsForAll()
+
     }
 
     override fun onNewGameAfterEconomyLoad() {
         super.onNewGameAfterEconomyLoad()
-
 
     }
 
@@ -190,6 +179,10 @@ class RATModPlugin : BaseModPlugin() {
                 if (faction.id == AbyssUtils.FACTION_ID) continue
                 faction.adjustRelationship(AbyssUtils.FACTION_ID, -100f)
             }
+
+            var random = Random(Misc.genRandomSeed())
+            Global.getSector().memoryWithoutUpdate.set("\$rat_alteration_random", random)
+
         }
     }
 }

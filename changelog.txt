@@ -1,3 +1,17 @@
+Version 1.5.0-DiscordBeta
+Only available on the unofficial starsector discord server until its in a more polished state.
+
+-> Added "The Abyss" (Beta)
+--> The Abyss is a new and large-scale area to explore. It comes with a variety of unique loot and fleet encounters.
+--> The Beta is still missing relatively much content, and feedback for anything in it is appreciated.
+
+-> Removed Chiral and Outpost systems.
+-> Removed Joke options before they become to stale.
+-> Fixed bug that made slipstreams not show up on any map if the minimap was enabled.
+-> Improved performance of the minimap.
+
+
+
 Version 1.4.2
 
 -> Added close button to the Modular Weapons panel.

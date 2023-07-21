@@ -3,7 +3,6 @@
     "corvusCompatible":true,
     "dropPrisoners":false,
     "hostileToAll":2,
-    "startRelationships":{ "tritachyon": 0 },
     "noRandomizeRelations":true,
     "noSyncRelations":true,
     "raidsFromBases":false,

@@ -43,8 +43,8 @@ class EfficientProceduresHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Decreases the monthly supply and hyperspace fuel useage by 25%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "supply", "fuel", "useage", "25%")
+        tooltip.addPara("Decreases the monthly supply and fuel usage by 25%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "supply", "fuel", "usage", "25%")
 
     }
 
