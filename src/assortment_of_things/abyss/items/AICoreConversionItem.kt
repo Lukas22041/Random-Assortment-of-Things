@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.items
 
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.scripts.AtMarketListener
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoStackAPI
@@ -189,8 +190,8 @@ class AICoreConversionItem : BaseSpecialItemPlugin() {
                 choices = choices.filter { it.captain != Global.getSector().playerPerson}
                 choices = choices.filter { !Misc.isUnremovable(it.captain) }
                 choices = choices.filter { !it.isCapital }
-                choices = choices.filter { !it.hullSpec.hasTag("rat_abyssals") }
-                choices = choices.filter { it.hullSpec.hullId != "sotf_pledge" && it.hullSpec.hullId != "sotf_vow" && it.hullSpec.hullId != "sotf_covenant" }
+                choices = choices.filter { !it.baseOrModSpec().hasTag("rat_abyssals")}
+                choices = choices.filter { it.baseOrModSpec().hullId != "sotf_pledge" && it.baseOrModSpec().hullId != "sotf_vow" && it.baseOrModSpec().hullId != "sotf_covenant" }
                 
                 Global.getSector().campaignUI.currentInteractionDialog.showFleetMemberPickerDialog("Choose a ship", "Confirm", "Cancel", 10, 10, 64f,
                     true, false, choices, listener)

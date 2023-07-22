@@ -196,7 +196,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         }
 
 
-        addAICores(fleet, type, difficulty, random)
+       // addAICores(fleet, type, difficulty, random)
 
         val location = source.containingLocation
         location.addEntity(fleet)
@@ -226,76 +226,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         return fleet
     }
 
-    fun addAICores(fleet: CampaignFleetAPI, type: String, difficulty: AbyssDifficulty, random: Random)
-    {
 
-        var corePercentage = 0f
-        var bonus = 0f
-
-        if (type == FleetTypes.PATROL_SMALL) bonus = 0.1f
-        if (type == FleetTypes.PATROL_MEDIUM) bonus = 0.2f
-        if (type == FleetTypes.PATROL_LARGE) bonus = 0.3f
-
-        if (tier == AbyssProcgen.Tier.Mid) corePercentage = 0.2f
-        if (tier == AbyssProcgen.Tier.High) corePercentage = 0.4f
-
-        corePercentage += bonus
-        if (difficulty == AbyssDifficulty.Hard) corePercentage += 0.3f
-
-        var members = fleet.fleetData.membersListCopy
-
-        corePercentage = MathUtils.clamp(corePercentage, 0f, 1f)
-
-        var picker = WeightedRandomPicker<FleetMemberAPI>()
-        picker.random = random
-        for (member in members)
-        {
-            var weight = when(member.hullSpec.hullSize) {
-                HullSize.FRIGATE -> 1f
-                HullSize.DESTROYER -> 3f
-                HullSize.CRUISER -> 6f
-                HullSize.CAPITAL_SHIP -> 15f
-                else -> 0f
-            }
-            picker.add(member, weight)
-        }
-
-        var count = (members.size * corePercentage).toInt()
-        for (i in 0 until count)
-        {
-            var pick = picker.pickAndRemove() ?: continue
-
-            var chronos = ChronosCore()
-            var cosmos = CosmosCore()
-
-            var core: PersonAPI? = null
-
-            var variantID = pick.variant.hullVariantId.lowercase()
-
-            if (variantID.contains("temporal"))
-            {
-                core = chronos.createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, random)
-            }
-            else if (variantID.contains("cosmal"))
-            {
-                core = cosmos.createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, random)
-            }
-            else if (random.nextFloat() > 0.5f)
-            {
-                core = chronos.createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, random)
-            }
-            else
-            {
-                core = cosmos.createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, random)
-            }
-
-            if (core != null)
-            {
-                pick.captain = core
-            }
-        }
-
-    }
 
     fun initAbyssalBehaviour(fleet: CampaignFleetAPI, random: Random)
     {

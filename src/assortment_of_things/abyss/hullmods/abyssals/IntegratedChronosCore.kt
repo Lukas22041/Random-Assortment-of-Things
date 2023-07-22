@@ -66,5 +66,9 @@ class IntegratedChronosCore : BaseHullMod() {
         tooltip!!.addPara("A ship previously AI controlled, is now merely AI assisted. The integration of the chronos core allows the ship to retain function of its shipsystem.", 0f)
 
     }
+
+    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
+        return false
+    }
 }
 

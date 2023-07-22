@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
@@ -58,7 +59,6 @@ class AbyssalsCoreHullmod : BaseHullMod() {
             if (ship.variant.hasHullMod("rat_cosmos_conversion")) return true
             return false
         }
-
     }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
@@ -82,6 +82,10 @@ class AbyssalsCoreHullmod : BaseHullMod() {
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  isForModSpec: Boolean): Boolean {
+        return false
+    }
+
+    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
         return false
     }
 
@@ -161,11 +165,11 @@ class AbyssalsCoreHullmod : BaseHullMod() {
             sprite!!.setNormalBlend()
             sprite!!.renderAtCenter(ship.location.x, ship.location.y)
             if (ship.captain == null && !isHullmodIntegration(ship)) return
-            if (ship.captain.isAICore || isHullmodIntegration(ship))
+            if ((ship.captain != null && ship.captain.isAICore) || isHullmodIntegration(ship))
             {
                 if (ship.isPhased)
                 {
-                    if (ship.hullSpec.hullId == "rat_aboleth" || ship.hullSpec.hullId == "rat_aboleth_m")
+                    if (ship.baseOrModSpec().hullId == "rat_aboleth" || ship.hullSpec.baseHull.hullId == "rat_aboleth_m")
                     {
                         if (phaseSprite == null)
                         {

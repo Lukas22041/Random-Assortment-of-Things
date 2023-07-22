@@ -1,3 +1,14 @@
+Version 1.5.0 DiscordBeta3
+Only available on the unofficial starsector discord server until its in a more polished state. 
+
+- fixed a crash with certain hullmods
+- fixed some items to not work correctly if the ship they are used on has dmods.
+- fixed some descriptions showing up where they shouldnt
+- fixed nex config not applying
+- adjusted amount of officers in fleets a bit more.
+
+
+
 Version 1.5.0 DiscordBeta2
 Only available on the unofficial starsector discord server until its in a more polished state. 
 

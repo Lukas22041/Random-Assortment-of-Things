@@ -37,5 +37,10 @@ class AIConvertedShip : BaseHullMod() {
                 "This specific conversion is able to negate the combat readiness penalty from the \"Automated Ship\" Hullmod.", 0f)
 
     }
+
+    override fun isApplicableToShip(ship: ShipAPI?): Boolean {
+        return false
+    }
+
 }
 

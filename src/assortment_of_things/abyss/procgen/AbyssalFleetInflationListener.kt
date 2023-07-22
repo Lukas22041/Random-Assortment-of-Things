@@ -2,7 +2,10 @@ package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssDifficulty
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.items.cores.officer.ChronosCore
+import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.misc.fixVariant
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.FleetInflater
@@ -12,11 +15,13 @@ import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
+import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.loading.HullModSpecAPI
 import com.fs.starfarer.api.plugins.impl.CoreAutofitPlugin
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
+import java.util.*
 
 class AbyssalFleetInflationListener : FleetInflationListener {
 
@@ -40,52 +45,55 @@ class AbyssalFleetInflationListener : FleetInflationListener {
         if (fleet == null) return
         if (fleet.faction.id == "rat_abyssals")
         {
-            if (fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))
+
+            var tier = AbyssProcgen.Tier.High
+            if (fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))    {
+                tier = AbyssUtils.getTier(fleet.containingLocation)
+            }
+
+            var difficulty = AbyssUtils.getDifficulty()
+            var chance = WeightedRandomPicker<Int>()
+
+
+            if (tier == AbyssProcgen.Tier.Low) {
+                chance.add(0, 100f)
+            }
+
+            if (difficulty == AbyssDifficulty.Hard) {
+                if (tier == AbyssProcgen.Tier.Mid) {
+                    chance.add(0, 0.2f)
+                    chance.add(1, 0.4f)
+                    chance.add(2, 0.2f)
+
+                }
+                else if (tier == AbyssProcgen.Tier.High) {
+                    chance.add(0, 0.2f)
+                    chance.add(1, 0.5f)
+                    chance.add(2, 0.3f)
+                }
+            }
+            else {
+
+                if (tier == AbyssProcgen.Tier.Mid) {
+                    chance.add(0, 0.7f)
+                    chance.add(1, 0.2f)
+                }
+                else if (tier == AbyssProcgen.Tier.High) {
+                    chance.add(0, 0.5f)
+                    chance.add(1, 0.2f)
+                }
+            }
+
+            addAICores(fleet, tier, AbyssUtils.getDifficulty(), Random())
+
+            for (member in fleet.fleetData.membersListCopy)
             {
-                var difficulty = AbyssUtils.getDifficulty()
-                var tier = AbyssUtils.getTier(fleet.containingLocation)
-
-                var chance = WeightedRandomPicker<Int>()
-
-
-                if (tier == AbyssProcgen.Tier.Low) {
-                    chance.add(0, 100f)
-                }
-
-                if (difficulty == AbyssDifficulty.Hard) {
-                    if (tier == AbyssProcgen.Tier.Mid) {
-                        chance.add(0, 0.2f)
-                        chance.add(1, 0.4f)
-                        chance.add(2, 0.2f)
-
-                    }
-                    else if (tier == AbyssProcgen.Tier.High) {
-                        chance.add(0, 0.2f)
-                        chance.add(1, 0.5f)
-                        chance.add(2, 0.3f)
-                    }
-                }
-                else {
-
-                    if (tier == AbyssProcgen.Tier.Mid) {
-                        chance.add(0, 0.7f)
-                        chance.add(1, 0.2f)
-                    }
-                    else if (tier == AbyssProcgen.Tier.High) {
-                        chance.add(0, 0.5f)
-                        chance.add(1, 0.2f)
-                    }
-                }
-
-                for (member in fleet.fleetData.membersListCopy)
-                {
-                    addSmods(member, fleet.commander, chance)
-                }
+                inflate(member, fleet.commander, chance)
             }
         }
     }
 
-    private fun addSmods(member: FleetMemberAPI, commander: PersonAPI, chance: WeightedRandomPicker<Int>)
+    private fun inflate(member: FleetMemberAPI, commander: PersonAPI, chance: WeightedRandomPicker<Int>)
     {
         var smods = chance.pick()
         member.fixVariant()
@@ -112,6 +120,74 @@ class AbyssalFleetInflationListener : FleetInflationListener {
         addCaps(variant, stats)
 
     }
+
+    fun addAICores(fleet: CampaignFleetAPI, tier: AbyssProcgen.Tier, difficulty: AbyssDifficulty, random: Random)
+    {
+
+        var corePercentage = 0f
+
+        if (tier == AbyssProcgen.Tier.Low) corePercentage = 0.4f
+        if (tier == AbyssProcgen.Tier.Mid) corePercentage = 0.5f
+        if (tier == AbyssProcgen.Tier.High) corePercentage = 0.7f
+
+        if (difficulty == AbyssDifficulty.Hard) corePercentage += 0.3f
+
+        var members = fleet.fleetData.membersListCopy
+
+        corePercentage = MathUtils.clamp(corePercentage, 0f, 1f)
+
+        var picker = WeightedRandomPicker<FleetMemberAPI>()
+        picker.random = random
+        for (member in members)
+        {
+            var weight = when(member.hullSpec.hullSize) {
+                HullSize.FRIGATE -> 1f
+                HullSize.DESTROYER -> 3f
+                HullSize.CRUISER -> 6f
+                HullSize.CAPITAL_SHIP -> 15f
+                else -> 0f
+            }
+            picker.add(member, weight)
+        }
+
+        var count = (members.size * corePercentage).toInt()
+        for (i in 0 until count)
+        {
+            var pick = picker.pickAndRemove() ?: continue
+
+            var chronos = ChronosCore()
+            var cosmos = CosmosCore()
+
+            var core: PersonAPI? = null
+
+            var variantID = pick.variant.hullVariantId.lowercase()
+
+            if (variantID.contains("temporal"))
+            {
+                core = chronos.createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, random)
+            }
+            else if (variantID.contains("cosmal"))
+            {
+                core = cosmos.createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, random)
+            }
+            else if (random.nextFloat() > 0.5f)
+            {
+                core = chronos.createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, random)
+            }
+            else
+            {
+                core = cosmos.createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, random)
+            }
+
+            if (core != null)
+            {
+                pick.captain = core
+            }
+        }
+
+    }
+
+
 
     private fun getRemainingOP(variant: ShipVariantAPI, stats: MutableCharacterStatsAPI) : Int {
         var opCost = variant.computeOPCost(stats)

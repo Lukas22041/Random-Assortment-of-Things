@@ -511,7 +511,7 @@ object AbyssUtils {
 
             if (hasBallistic) alterations.putAll(mapOf("rat_ballistic_focus" to 1.5f))
             if (hasEnergy) alterations.putAll(mapOf("rat_energy_focus" to 1.5f))
-            if (hasMissile) alterations.putAll(mapOf("rat_missile_reserve" to 1.5f))
+            if (hasMissile) alterations.putAll(mapOf("rat_missile_reserve" to 0.5f))
 
             var picker = WeightedRandomPicker<String>()
             alterations.forEach { picker.add(it.key, it.value) }

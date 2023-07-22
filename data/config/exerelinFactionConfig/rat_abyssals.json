@@ -8,4 +8,9 @@
     "raidsFromBases":false,
     
     "invasionSupportFleetName":"Legion",
+	
+	"maxRelationships":{ 
+		"default":-1, 
+		"remnant":-1
+	},
 }
