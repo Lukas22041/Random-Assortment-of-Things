@@ -18,7 +18,7 @@ import com.fs.starfarer.api.plugins.impl.CoreAutofitPlugin
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 
-class AbyssalSmodInflationListener : FleetInflationListener {
+class AbyssalFleetInflationListener : FleetInflationListener {
 
     private val availableMods = listOf(
         HullMods.HEAVYARMOR,
@@ -87,12 +87,8 @@ class AbyssalSmodInflationListener : FleetInflationListener {
 
     private fun addSmods(member: FleetMemberAPI, commander: PersonAPI, chance: WeightedRandomPicker<Int>)
     {
-
-
         var smods = chance.pick()
         member.fixVariant()
-
-        if (smods == 0) return
 
         var stats = commander.stats
         var variant = member.variant

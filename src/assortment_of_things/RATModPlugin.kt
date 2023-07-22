@@ -6,14 +6,11 @@ import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.MinimapUI
 import assortment_of_things.abyss.systems.MidnightCoreSystem
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.misc.AbyssBackgroundWarper
-import assortment_of_things.abyss.procgen.AbyssalSmodInflationListener
+import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
 import assortment_of_things.abyss.scripts.DisableTransverseScript
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
-import assortment_of_things.artifacts.ArtifactIntel
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.modular_weapons.scripts.WeaponComponentsListener
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import assortment_of_things.scripts.AtMarketListener
@@ -22,16 +19,11 @@ import assortment_of_things.snippets.ProcgenDebugSnippet
 import assortment_of_things.snippets.ResetAllModularSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.SpecialItemData
-import com.fs.starfarer.api.impl.campaign.ids.HullMods
-import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaSettings.LunaSettings
 import java.util.*
-import kotlin.system.measureTimeMillis
-import kotlin.time.measureTime
 
 
 class RATModPlugin : BaseModPlugin() {
@@ -91,7 +83,10 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
 
-        Global.getSector().listenerManager.addListener(AbyssalSmodInflationListener(), true)
+
+
+
+        Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
 
         if (RATSettings.enableMinimap!!){
             Global.getSector().addTransientScript(MinimapUI())

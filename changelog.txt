@@ -1,5 +1,5 @@
 Version 1.5.0-DiscordBeta
-Only available on the unofficial starsector discord server until its in a more polished state.
+Only available on the unofficial starsector discord server until its in a more polished state. Please send any feedback.
 
 -> Added "The Abyss" (Beta)
 --> The Abyss is a new and large-scale area to explore. It comes with a variety of unique loot and fleet encounters.

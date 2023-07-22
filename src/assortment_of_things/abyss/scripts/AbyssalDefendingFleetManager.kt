@@ -89,8 +89,8 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         var difficulty = AbyssUtils.getDifficulty()
         val random = Random(randomSeed)
 
-        var minPoints = 0f
-        var maxPoints = 0f
+        var minPoints = 10f
+        var maxPoints = 10f
 
         when(tier) {
             AbyssProcgen.Tier.Low -> {
@@ -232,11 +232,9 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         var corePercentage = 0f
         var bonus = 0f
 
-        if (tier != AbyssProcgen.Tier.Low)
-        {
-            if (type == FleetTypes.PATROL_MEDIUM) bonus = 0.1f
-            if (type == FleetTypes.PATROL_LARGE) bonus = 0.2f
-        }
+        if (type == FleetTypes.PATROL_SMALL) bonus = 0.1f
+        if (type == FleetTypes.PATROL_MEDIUM) bonus = 0.2f
+        if (type == FleetTypes.PATROL_LARGE) bonus = 0.3f
 
         if (tier == AbyssProcgen.Tier.Mid) corePercentage = 0.2f
         if (tier == AbyssProcgen.Tier.High) corePercentage = 0.4f
