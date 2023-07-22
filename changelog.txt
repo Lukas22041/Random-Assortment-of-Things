@@ -1,4 +1,14 @@
-Version 1.5.0-DiscordBeta
+Version 1.5.0 DiscordBeta2
+Only available on the unofficial starsector discord server until its in a more polished state. Please send any feedback.
+
+- Abyss can now generate on existing saves when loading in to one with the abyss setting active.
+- slightly increased fleet sizes and amount of officers per fleet.
+- changed aboleth OP from 150 to 160
+- fixed sellprice of some items.
+
+
+
+Version 1.5.0-DiscordBeta1
 Only available on the unofficial starsector discord server until its in a more polished state. Please send any feedback.
 
 -> Added "The Abyss" (Beta)

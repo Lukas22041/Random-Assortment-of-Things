@@ -6,7 +6,7 @@ rat_abyssEnabled,Enable The Abyss,Boolean,false,,"The abyss is a new area focuse
 
 For the [Beta], the player starts with the [Singularity Jump] ability, which allows entry in to the abyss from the start of the game.
 
-Only generates on [a new save] and toggling the option has no effect on existing ones.",,,Expansion
+Enabling it generates it in a [new save], or any existing save that is [loaded with this config enabled].",,,Expansion
 rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the abyss.
 
 Hard-mode severely increases the strength of encountered fleets within the abyss.",,,Expansion

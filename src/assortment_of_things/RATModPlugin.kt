@@ -84,7 +84,25 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
 
 
+        if (RATSettings.enableAbyss!!)
+        {
+            if (AbyssUtils.getAllAbyssSystems().isEmpty()) {
+                MidnightCoreSystem().generate()
+                Global.getSector().getCharacterData().addAbility("rat_singularity_jump_ability")
+                Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);
 
+                Global.getSector().addScript(DisableTransverseScript())
+                Global.getSector().addScript(ResetBackgroundScript())
+                for (faction in Global.getSector().allFactions)
+                {
+                    if (faction.id == AbyssUtils.FACTION_ID) continue
+                    faction.adjustRelationship(AbyssUtils.FACTION_ID, -100f)
+                }
+
+                var random = Random(Misc.genRandomSeed())
+                Global.getSector().memoryWithoutUpdate.set("\$rat_alteration_random", random)
+            }
+        }
 
         Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
 
@@ -161,23 +179,6 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_weapon_forge", true, 0f);
         }
 
-        if (RATSettings.enableAbyss!!)
-        {
-            MidnightCoreSystem().generate()
-            Global.getSector().getCharacterData().addAbility("rat_singularity_jump_ability")
-            Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);
 
-            Global.getSector().addScript(DisableTransverseScript())
-            Global.getSector().addScript(ResetBackgroundScript())
-            for (faction in Global.getSector().allFactions)
-            {
-                if (faction.id == AbyssUtils.FACTION_ID) continue
-                faction.adjustRelationship(AbyssUtils.FACTION_ID, -100f)
-            }
-
-            var random = Random(Misc.genRandomSeed())
-            Global.getSector().memoryWithoutUpdate.set("\$rat_alteration_random", random)
-
-        }
     }
 }
