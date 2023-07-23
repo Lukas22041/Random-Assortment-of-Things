@@ -40,9 +40,6 @@ class AbyssCombatHueApplier(var color: Color, var tier: AbyssProcgen.Tier) : Bas
 
         sprite.setSize(viewport!!.visibleWidth + 200f, viewport.visibleHeight + 200f)
         sprite.setNormalBlend()
-        //sprite.setAdditiveBlend()
-        //sprite.color = Color(0, 0, 0, 50)
-       //sprite.color = AbyssUtils.ABYSS_COLOR.setAlpha(25)
         sprite.color = color.setAlpha(alpha)
         sprite.render(viewport.llx - 100f, viewport.lly - 100f)
 

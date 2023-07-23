@@ -169,7 +169,7 @@ class AbyssalsCoreHullmod : BaseHullMod() {
             {
                 if (ship.isPhased)
                 {
-                    if (ship.baseOrModSpec().hullId == "rat_aboleth" || ship.hullSpec.baseHull.hullId == "rat_aboleth_m")
+                    if (ship.baseOrModSpec().hullId == "rat_aboleth" || ship.baseOrModSpec().hullId == "rat_aboleth_m")
                     {
                         if (phaseSprite == null)
                         {
