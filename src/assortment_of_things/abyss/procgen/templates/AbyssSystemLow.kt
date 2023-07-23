@@ -7,6 +7,8 @@ class AbyssSystemLow(name: String, tier: AbyssProcgen.Tier) : BaseAbyssSystem(na
 
     override fun generate(): StarSystemAPI {
 
+        AbyssProcgen.generatePhotospheres(system, 1, 0.9f)
+
         AbyssProcgen.generateDomainResearchStations(system, 1, 0.7f)
         AbyssProcgen.generateTransmitters(system, 2, 0.5f)
         AbyssProcgen.generateCaches(system, 4,0.75f)

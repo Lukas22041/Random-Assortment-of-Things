@@ -8,6 +8,7 @@ import assortment_of_things.abyss.systems.MidnightCoreSystem
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
 import assortment_of_things.abyss.scripts.DisableTransverseScript
+import assortment_of_things.abyss.scripts.HullmodRemoverListener
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATSettings
@@ -93,7 +94,7 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);
 
                 Global.getSector().addScript(DisableTransverseScript())
-                Global.getSector().addScript(ResetBackgroundScript())
+                //Global.getSector().addScript(ResetBackgroundScript())
                 for (faction in Global.getSector().allFactions)
                 {
                     if (faction.id == AbyssUtils.FACTION_ID) continue
@@ -106,6 +107,8 @@ class RATModPlugin : BaseModPlugin() {
         }
 
         Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
+
+        Global.getSector().addTransientListener(HullmodRemoverListener())
 
         if (RATSettings.enableMinimap!!){
             Global.getSector().addTransientScript(MinimapUI())

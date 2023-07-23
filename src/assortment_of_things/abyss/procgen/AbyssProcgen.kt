@@ -279,11 +279,11 @@ object AbyssProcgen {
                 entity.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(300f, 1000f), 90f)
             }
 
-            var defenseChance = 0.6f
-            if (tier == Tier.High) defenseChance = 0.75f
+            var defenseChance = 0.75f
 
-
-            addDefenseFleetManager(photosphere, 2, tier, FleetTypes.PATROL_LARGE, defenseChance)
+            var type = FleetTypes.PATROL_LARGE
+            if (tier == Tier.Low) type = FleetTypes.PATROL_MEDIUM
+            addDefenseFleetManager(photosphere, 2, tier, type, defenseChance)
 
         }
     }

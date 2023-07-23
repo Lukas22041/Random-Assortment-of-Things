@@ -158,7 +158,7 @@ object AbyssUtils {
         var color = generateAbyssColor(system, tier)
 
         var fraction = when(tier) {
-            AbyssProcgen.Tier.Low -> 0.3f
+            AbyssProcgen.Tier.Low -> 0.35f
             AbyssProcgen.Tier.Mid -> 0.35f
             AbyssProcgen.Tier.High -> 0.4f
         }
@@ -173,6 +173,12 @@ object AbyssUtils {
     fun generateAbyssDarkness(system: StarSystemAPI) : AbyssalDarknessTerrainPlugin{
         val darkness = system.addTerrain("rat_depths_darkness", null)
         return (darkness as CampaignTerrainAPI).plugin as AbyssalDarknessTerrainPlugin
+    }
+
+    fun getAbyssDarknessTerrainPlugin(system: LocationAPI) : AbyssalDarknessTerrainPlugin? {
+
+        var plugin = system.terrainCopy.find { it.plugin is AbyssalDarknessTerrainPlugin }?.plugin as AbyssalDarknessTerrainPlugin?
+        return plugin
     }
 
     fun generateAbyssColor(system: StarSystemAPI, tier: AbyssProcgen.Tier) : Color{
@@ -221,8 +227,8 @@ object AbyssUtils {
             }
         }
 
-        var textureChoice = MathUtils.getRandomNumberInRange(1, 2)
-        system.backgroundTextureFilename = "graphics/backgrounds/abyss/Abyss$textureChoice.jpg"
+        //var textureChoice = MathUtils.getRandomNumberInRange(1, 2)
+        system.backgroundTextureFilename = "graphics/backgrounds/abyss/Abyss2.jpg"
 
         val nebula = system.addTerrain("rat_depths", BaseTiledTerrain.TileParams(string.toString(), w, h, "rat_terrain", "depths1", 4, 4, null))
         nebula.id = "rat_depths_${Misc.genUID()}"

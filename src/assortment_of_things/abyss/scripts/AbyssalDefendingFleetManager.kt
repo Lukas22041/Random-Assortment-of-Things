@@ -93,7 +93,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         var maxPoints = 10f
 
         when(tier) {
-            AbyssProcgen.Tier.Low -> {
+            /*AbyssProcgen.Tier.Low -> {
                 when(type) {
                     FleetTypes.PATROL_SMALL -> {
                         minPoints = 32f
@@ -106,6 +106,23 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
                     FleetTypes.PATROL_LARGE -> {
                         minPoints = 64f
                         maxPoints = 96f
+                    }
+                }
+            }*/
+
+            AbyssProcgen.Tier.Low -> {
+                when(type) {
+                    FleetTypes.PATROL_SMALL -> {
+                        minPoints = 48f
+                        maxPoints = 64f
+                    }
+                    FleetTypes.PATROL_MEDIUM -> {
+                        minPoints = 64f
+                        maxPoints = 96f
+                    }
+                    FleetTypes.PATROL_LARGE -> {
+                        minPoints = 96f
+                        maxPoints = 112f
                     }
                 }
             }

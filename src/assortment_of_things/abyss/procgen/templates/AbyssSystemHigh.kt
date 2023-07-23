@@ -9,9 +9,9 @@ class AbyssSystemHigh(name: String, tier: AbyssProcgen.Tier) : BaseAbyssSystem(n
 
         AbyssProcgen.generatePhotospheres(system, 3, 0.9f)
 
-        AbyssProcgen.generateDomainResearchStations(system, 2, 0.7f)
+        AbyssProcgen.generateDomainResearchStations(system, 1, 0.7f)
         AbyssProcgen.generateTransmitters(system, 2, 0.5f)
-        AbyssProcgen.generateCaches(system, 4,0.75f)
+        AbyssProcgen.generateCaches(system, 3,0.75f)
 
         return system
     }

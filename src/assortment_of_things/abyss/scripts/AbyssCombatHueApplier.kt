@@ -1,6 +1,8 @@
 package assortment_of_things.abyss.scripts
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin
 import assortment_of_things.misc.*
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin
@@ -11,7 +13,7 @@ import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
 
-class AbyssCombatHueApplier(var color: Color, var tier: AbyssProcgen.Tier) : BaseCombatLayeredRenderingPlugin() {
+class AbyssCombatHueApplier(var color: Color, var tier: AbyssProcgen.Tier, var darkness: AbyssalDarknessTerrainPlugin) : BaseCombatLayeredRenderingPlugin() {
 
 
     var sprite: SpriteAPI
@@ -19,6 +21,9 @@ class AbyssCombatHueApplier(var color: Color, var tier: AbyssProcgen.Tier) : Bas
     init {
         sprite = Global.getSettings().getAndLoadSprite("graphics/fx/rat_darkener.png")
     }
+
+
+
 
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
         return EnumSet.of(CombatEngineLayers.ABOVE_PARTICLES)
@@ -36,6 +41,14 @@ class AbyssCombatHueApplier(var color: Color, var tier: AbyssProcgen.Tier) : Bas
             AbyssProcgen.Tier.Low -> 25
             AbyssProcgen.Tier.Mid -> 70
             AbyssProcgen.Tier.High -> 75
+        }
+
+        if (!darkness.containsEntity(Global.getSector().playerFleet)) {
+            alpha = when(tier) {
+                AbyssProcgen.Tier.Low -> 30
+                AbyssProcgen.Tier.Mid -> 80
+                AbyssProcgen.Tier.High -> 85
+            }
         }
 
         sprite.setSize(viewport!!.visibleWidth + 200f, viewport.visibleHeight + 200f)
