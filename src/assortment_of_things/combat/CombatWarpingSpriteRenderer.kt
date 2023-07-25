@@ -43,16 +43,19 @@ class CombatWarpingSpriteRenderer(var chunks: Int, var speedMod: Float) : Warpin
     override fun advance(amount: Float) {
         super.advance(amount)
 
-        for (var2 in 0 until this.verticesWide) {
-            for (var3 in 0 until this.verticesTall) {
-                this.vertices[var2][var3]!!.advance(amount * speedMod)
-            }
-        }
+
     }
 
     fun render(sprite: Sprite, disableBlend: Boolean, viewport: ViewportAPI) {
         var spritePath = get("textureId", sprite) as String
         var spriteAPI: SpriteAPI? = Global.getSettings().getSprite(spritePath) ?: return
+
+
+        for (var2 in 0 until this.verticesWide) {
+            for (var3 in 0 until this.verticesTall) {
+                this.vertices[var2][var3]!!.advance(0.05f * speedMod)
+            }
+        }
 
         var width = viewport!!.visibleWidth
         var heigth = viewport!!.visibleHeight

@@ -1,3 +1,17 @@
+Version 1.5.0 DiscordBeta6
+Only available on the unofficial starsector discord server until its in a more polished state. 
+
+NOW REQUIRES LUNALIB 1.8.1
+
+- reworked hull alterations, they can now be added through the refit menu instead of rightclicking the item.
+- alterations that previously did not require an smod-slot now do.
+- slight alteration balance changes.
+- made combat photospheres less bright in combat and in low level systems.
+- reverted the combat background change, as it had some issues.
+- changed front the hardpoints on the merrow to be universal now.
+
+
+
 Version 1.5.0 DiscordBeta5
 Only available on the unofficial starsector discord server until its in a more polished state. 
 

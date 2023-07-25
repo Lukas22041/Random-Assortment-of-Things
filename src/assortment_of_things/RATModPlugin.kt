@@ -11,6 +11,7 @@ import assortment_of_things.abyss.scripts.DisableTransverseScript
 import assortment_of_things.abyss.scripts.HullmodRemoverListener
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.artifacts.ArtifactUtils
+import assortment_of_things.campaign.ui.AlterationRefitButton
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.modular_weapons.scripts.WeaponComponentsListener
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
@@ -24,6 +25,7 @@ import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
+import lunalib.lunaRefit.LunaRefitManager
 import lunalib.lunaSettings.LunaSettings
 import java.util.*
 
@@ -50,10 +52,7 @@ class RATModPlugin : BaseModPlugin() {
         ArtifactUtils.loadArtifactsFromCSV()
 
 
-
-
-
-
+        LunaRefitManager.addRefitButton(AlterationRefitButton())
 
     }
 
@@ -64,7 +63,7 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-        /*for (artifact in ArtifactUtils.artifacts)
+      /*  for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 5f)
         }
@@ -94,7 +93,6 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);
 
                 Global.getSector().addScript(DisableTransverseScript())
-                //Global.getSector().addScript(ResetBackgroundScript())
                 for (faction in Global.getSector().allFactions)
                 {
                     if (faction.id == AbyssUtils.FACTION_ID) continue
@@ -105,7 +103,9 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getSector().memoryWithoutUpdate.set("\$rat_alteration_random", random)
             }
         }
-
+        if (!Global.getSector().hasScript(ResetBackgroundScript::class.java)) {
+            Global.getSector().addTransientScript(ResetBackgroundScript())
+        }
         Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
 
         Global.getSector().addTransientListener(HullmodRemoverListener())
@@ -139,7 +139,6 @@ class RATModPlugin : BaseModPlugin() {
         if (RATSettings.enableModular!!) {
             ModularWeaponLoader.applyStatToSpecsForAll()
         }
-
 
     }
 

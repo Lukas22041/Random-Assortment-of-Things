@@ -24,6 +24,7 @@ class DrivefieldOverwriteHullmod : BaseAlteration() {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
         stats!!.maxBurnLevel.modifyFlat(id, 1f)
+        stats.maxSpeed.modifyFlat(id, 10f)
 
 
     }
@@ -40,8 +41,8 @@ class DrivefieldOverwriteHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Increases the ships maximum burn level by 1.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "maximum burn", "1")
+        tooltip.addPara("Increases the ships maximum burn level by 1 and improves its max speed in combat by 10 units.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "maximum burn", "1", "max speed", "10")
 
     }
 

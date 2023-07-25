@@ -52,27 +52,27 @@ class CombatHandler : EveryFrameCombatPlugin
 
                 Global.getCombatEngine().addLayeredRenderingPlugin(AbyssCombatHueApplier(color, tier, darkness!!))
 
-              //  ResetBackgroundScript.resetBackground = true
+                ResetBackgroundScript.resetBackground = true
 
 
 
-               /* if (darkness!!.containsEntity(Global.getSector().playerFleet) || tier == AbyssProcgen.Tier.Low) {
+                if (darkness!!.containsEntity(Global.getSector().playerFleet) || tier == AbyssProcgen.Tier.Low) {
                     CombatEngine.getBackground().color = color.darker()
                 }
                 else {
                     if (tier == AbyssProcgen.Tier.Mid) CombatEngine.getBackground().color = color.brighter()
                     if (tier == AbyssProcgen.Tier.High) CombatEngine.getBackground().color = color.brighter().brighter().brighter()
 
-                }*/
+                }
 
-                if (darkness!!.containsEntity(Global.getSector().playerFleet) || tier == AbyssProcgen.Tier.Low) {
+               /* if (darkness!!.containsEntity(Global.getSector().playerFleet) || tier == AbyssProcgen.Tier.Low) {
                     color = color.darker()
                 }
                 else {
                     if (tier == AbyssProcgen.Tier.Mid) color = color.brighter()
                     if (tier == AbyssProcgen.Tier.High) color = color.brighter().brighter().brighter()
 
-                }
+                }*/
 
 
                 var withinPhotosphere = false
@@ -87,7 +87,7 @@ class CombatHandler : EveryFrameCombatPlugin
                     }
                 }
 
-                engine!!.addLayeredRenderingPlugin(CombatWarpingBackgroundRenderer(background, color))
+                //engine!!.addLayeredRenderingPlugin(CombatWarpingBackgroundRenderer(background, color))
 
                 if (withinPhotosphere) {
                     engine!!.addLayeredRenderingPlugin(CombatPhotosphereRenderer(150f))

@@ -14,9 +14,9 @@ import com.fs.starfarer.api.util.Misc
 class ComputationalMatrix : BaseArtifactPlugin() {
 
     override fun addDescription(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("All automated ships that are affected by the combat readiness penality get an additional 15%% to their maximum CR.", 0f,
+        tooltip.addPara("All automated ships that are affected by the combat readiness penalty get an additional 15%% to their maximum CR.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(),
-        "automated ships", "combat readiness penality", "15%")
+        "automated ships", "combat readiness penalty", "15%")
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String) {

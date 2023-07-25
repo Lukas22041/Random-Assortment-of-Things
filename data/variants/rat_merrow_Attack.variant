@@ -1,46 +1,44 @@
 {
-    "displayName": "Attack",
-    "fluxCapacitors": 6,
-    "fluxVents": 10,
-    "goalVariant": false,
-    "hullId": "rat_merrow",
-    "hullMods": [
-        "fluxdistributor",
-    ],
-    "permaMods": [],
-    "sMods": [],
-    "suppressedMods": [],
-    "variantId": "rat_merrow_Attack",
-    "weaponGroups": [
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0004": "lightdualac",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0003": "lightdualac",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0002": "lightag",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0001": "lightag",
-            }
-        },
-    ],
-    "wings": [],
-    "modules": [],
+  "variantId": "rat_merrow_Attack",
+  "hullId": "rat_merrow",
+  "displayName": "Attack",
+  "goalVariant": false,
+  "fluxCapacitors": 6,
+  "fluxVents": 10,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [
+    "fluxdistributor"
+  ],
+  "weaponGroups": [
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0003": "lightdualac",
+        "WS0004": "lightdualac"
+      }
+    },
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {}
+    },
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0002": "lightag"
+      }
+    },
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0001": "lightag"
+      }
+    }
+  ],
+  "modules": [],
+  "wings": []
 }

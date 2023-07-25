@@ -94,6 +94,7 @@ class AICoreConversionItem : BaseSpecialItemPlugin() {
     override fun getTooltipWidth(): Float {
         return super.getTooltipWidth()
     }
+
     override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean, transferHandler: CargoTransferHandlerAPI?, stackSource: Any?) {
         super.createTooltip(tooltip, expanded, transferHandler, stackSource)
         val pad = 3f
@@ -104,104 +105,18 @@ class AICoreConversionItem : BaseSpecialItemPlugin() {
         var b: Color? = Misc.getButtonTextColor()
         b = Misc.getPositiveHighlightColor()
 
-        tooltip.addSpacer(5f)
-        tooltip.addPara("Converts a ship in to an automated hull. This is only applicable to ships that are not currently player piloted, arent already automated, dont have a permanent " +
-                "officer assigned to them, and are not a capital ship.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "automated hull")
-        tooltip.addSpacer(5f)
-
-        tooltip.addPara("Automated hulls can no longer be piloted by the player or other officers, and can only be commanded by AI cores. However, the combat readiness penality " +
-                "from automated hulls is not applied to ships with this conversion.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
-        tooltip.addSpacer(5f)
-
-        tooltip.addPara("This change is permanent and cannot be reverted.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
-        tooltip.addSpacer(5f)
-
-        var marketListener = Global.getSector().allListeners.find { it::class.java == AtMarketListener::class.java } as AtMarketListener?
-        if (marketListener != null && !marketListener.atMarket)
-        {
-            tooltip.addPara("Can only be used while docked at a colony", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
-        }
-        else
-        {
-            tooltip.addPara("Rightclick to use.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        }
+        tooltip.addPara("Legacy Item that has been removed.", 0f)
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)
 
     }
 
     override fun hasRightClickAction(): Boolean {
-        return true
+        return false
     }
 
     override fun shouldRemoveOnRightClickAction(): Boolean {
-        return true
+        return false
     }
-
-    override fun performRightClickAction() {
-        var stats = Global.getSector().playerPerson.stats
-
-        Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
-
-        var listener = object : FleetMemberPickerListener {
-            override fun pickedFleetMembers(members: MutableList<FleetMemberAPI>?) {
-                if (!members.isNullOrEmpty())
-                {
-                    var choice = members.get(0)
-
-                    if (choice.variant.source != VariantSource.REFIT)
-                    {
-                        var variant = choice.variant.clone();
-                        variant.originalVariant = null;
-                        variant.hullVariantId = Misc.genUID()
-                        variant.source = VariantSource.REFIT
-                        choice.setVariant(variant, false, true)
-                    }
-                    choice.variant.addPermaMod(hullmodSpec!!.id)
-                    choice.updateStats()
-
-                    Global.getSoundPlayer().playUISound("ui_acquired_blueprint", 1f, 1f)
-                    Global.getSector().campaignUI.messageDisplay.addMessage("Installed ${hullmodSpec!!.displayName} in to ${choice.hullSpec.hullName}")
-
-                    var cargo = Global.getSector().playerFleet.cargo
-
-                }
-                else
-                {
-                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_automation_converter", null), 1f)
-                }
-            }
-
-            override fun cancelledFleetMemberPicking() {
-                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_automation_converter", null), 1f)
-            }
-
-        }
-        var marketListener = Global.getSector().allListeners.find { it::class.java == AtMarketListener::class.java } as AtMarketListener?
-
-        if (marketListener != null)
-        {
-            if (marketListener.atMarket)
-            {
-                if (Global.getSector().campaignUI.currentInteractionDialog == null) return
-
-                var choices = Global.getSector().playerFleet.fleetData.membersListCopy.filter { it.variant.hullMods.none { it == HullMods.AUTOMATED } }
-
-                choices = choices.filter { it.captain != Global.getSector().playerPerson}
-                choices = choices.filter { !Misc.isUnremovable(it.captain) }
-                choices = choices.filter { !it.isCapital }
-                choices = choices.filter { !it.baseOrModSpec().hasTag("rat_abyssals")}
-                choices = choices.filter { it.baseOrModSpec().hullId != "sotf_pledge" && it.baseOrModSpec().hullId != "sotf_vow" && it.baseOrModSpec().hullId != "sotf_covenant" }
-                
-                Global.getSector().campaignUI.currentInteractionDialog.showFleetMemberPickerDialog("Choose a ship", "Confirm", "Cancel", 10, 10, 64f,
-                    true, false, choices, listener)
-
-                return
-            }
-        }
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_automation_converter", null), 1f)
-    }
-
-
 
 }

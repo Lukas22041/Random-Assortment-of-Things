@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.entities
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.AbyssProcgen
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -90,28 +91,43 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
         var posX = entity.location.x
         var posY = entity.location.y
 
+        var tier = AbyssUtils.getTier(entity.containingLocation)
+
         if (layer == CampaignEngineLayers.TERRAIN_7A)
         {
 
+            if (tier == AbyssProcgen.Tier.Low) {
+                band1!!.color = color.setAlpha(75)
+                center!!.color = color.setAlpha(200)
+            }
+            else {
+                band1!!.color = color.setAlpha(125)
+                center!!.color = color.setAlpha(255)
+            }
+
             center!!.setSize(entity.radius * 1.8f , entity.radius  * 1.8f)
-            center!!.color = color.setAlpha(255)
             center!!.renderAtCenter(entity.location.x, entity.location.y)
 
-            band1!!.color = color.setAlpha(125)
             band1!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)
         }
 
         if (layer == CampaignEngineLayers.ABOVE)
         {
 
+
+
             halo!!.alphaMult = 1f
             halo!!.color = color.setAlpha(75)
+            if (tier == AbyssProcgen.Tier.Low) halo!!.color = color.setAlpha(50)
+
             halo!!.setSize(radius / 20, radius / 20)
             halo!!.setAdditiveBlend()
             halo!!.renderAtCenter(entity.location.x, entity.location.y)
 
             halo!!.alphaMult = 1f
-            halo!!.color = color.setAlpha(50)
+            halo!!.color = color.setAlpha(55)
+            if (tier == AbyssProcgen.Tier.Low) halo!!.color = color.setAlpha(40)
+
             halo!!.setSize(radius / 2, radius / 2)
             halo!!.setAdditiveBlend()
             halo!!.renderAtCenter(entity.location.x, entity.location.y)

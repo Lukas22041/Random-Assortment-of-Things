@@ -73,87 +73,17 @@ class AlterationRemoverItem : BaseSpecialItemPlugin() {
         tooltip.addSpacer(5f)
         tooltip.addPara("Can be used to remove a hull alteration from a ship. The removed alteration is destroyed and is not recovered in the process.", 0f, Misc.getTextColor(), Misc.getHighlightColor())
 
-        var marketListener = Global.getSector().allListeners.find { it::class.java == AtMarketListener::class.java } as AtMarketListener?
-        if (marketListener != null && !marketListener.atMarket)
-        {
-            tooltip.addSpacer(5f)
-            tooltip.addPara("Can only be used while docked at a colony", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
-        }
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)
 
     }
 
     override fun hasRightClickAction(): Boolean {
-        return true
+        return false
     }
 
     override fun shouldRemoveOnRightClickAction(): Boolean {
-        return true
+        return false
     }
 
-    override fun performRightClickAction() {
-        var stats = Global.getSector().playerPerson.stats
-
-        Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
-
-        var listener = object : FleetMemberPickerListener {
-            override fun pickedFleetMembers(members: MutableList<FleetMemberAPI>?) {
-                if (!members.isNullOrEmpty())
-                {
-                    var choice = members.get(0)
-
-
-                    var mods = choice.variant.hullMods.map { Global.getSettings().getHullModSpec(it) }.filter { it.hasTag("rat_alteration") }
-
-                    for (mod in mods)
-                    {
-                        choice.variant.removeMod(mod!!.id)
-                        choice.variant.removePermaMod(mod!!.id)
-
-                        Global.getSector().campaignUI.messageDisplay.addMessage("Removed ${mod!!.displayName} from ${choice.hullSpec.hullName}")
-
-                    }
-
-
-                    Global.getSoundPlayer().playUISound("ui_acquired_blueprint", 1f, 1f)
-
-                    var cargo = Global.getSector().playerFleet.cargo
-                   // stack.subtract(1f)
-
-
-                   /* if (stack.cargoSpace == 0f)
-                    {
-                        Global.getSector().playerFleet.cargo.removeStack(stack)
-                    }*/
-                }
-                else
-                {
-                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 1f)
-                }
-            }
-
-            override fun cancelledFleetMemberPicking() {
-                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 1f)
-            }
-
-        }
-        var marketListener = Global.getSector().allListeners.find { it::class.java == AtMarketListener::class.java } as AtMarketListener?
-
-        if (marketListener != null)
-        {
-            if (marketListener.atMarket)
-            {
-                if (Global.getSector().campaignUI.currentInteractionDialog == null) return
-
-                var choices = Global.getSector().playerFleet.fleetData.membersListCopy.filter { it.variant.hullMods.any { Global.getSettings().getHullModSpec(it).hasTag("rat_alteration") } }
-
-                Global.getSector().campaignUI.currentInteractionDialog.showFleetMemberPickerDialog("Choose a ship", "Confirm", "Cancel", 10, 10, 64f,
-                    true, false, choices, listener)
-
-                return
-            }
-        }
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 1f)
-    }
 }

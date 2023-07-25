@@ -27,6 +27,7 @@ class MiniatureForgeArtifact : BaseArtifactPlugin() {
     override fun applyEffectsBeforeShipCreation(size: ShipAPI.HullSize, stats: MutableShipStatsAPI, id: String) {
         if (size == ShipAPI.HullSize.FRIGATE)
         {
+
             stats.getSuppliesToRecover().modifyFlat(id, -1f);
             stats.getDynamic().getMod(deploymentModID).modifyFlat(id, -1f);
         }

@@ -43,7 +43,7 @@ class CombatWarpingBackgroundRenderer(var background: String, var color: Color) 
 
         if (layer == CombatEngineLayers.BELOW_PLANETS) {
 
-            renderer.advance(0.033f)
+            //renderer.advance(0.05f)
             renderer.overwriteColor = color
             renderer.render(sprite, true, viewport!!)
         }

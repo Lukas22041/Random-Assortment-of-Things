@@ -6,9 +6,9 @@ item_rat_instrument_hostility,abyss_research_loot,5
 item_rat_instrument_supplies,abyss_research_loot,5
 item_rat_alteration_install,abyss_research_loot,45
 item_rat_alteration_remover,abyss_research_loot,4
-item_rat_automation_converter,abyss_research_loot,1.5
-item_rat_chronos_integration,abyss_research_loot,0.75
-item_rat_cosmos_integration,abyss_research_loot,0.75
+#item_rat_automation_converter,abyss_research_loot,1.5
+#item_rat_chronos_integration,abyss_research_loot,0.75
+#item_rat_cosmos_integration,abyss_research_loot,0.75
 ,,
 nothing,abyss_cache_loot,100
 item_rat_instrument_discovery,abyss_cache_loot,20

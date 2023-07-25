@@ -5,18 +5,12 @@ import assortment_of_things.scripts.AtMarketListener
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoStackAPI
 import com.fs.starfarer.api.campaign.CargoTransferHandlerAPI
-import com.fs.starfarer.api.campaign.FleetMemberPickerListener
-import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.campaign.SpecialItemPlugin.SpecialItemRendererAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.campaign.econ.SubmarketAPI
 import com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin
-import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.fleet.FleetMemberAPI
-import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.loading.HullModSpecAPI
-import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
@@ -53,12 +47,7 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
 
             for (mod in mods)
             {
-                when (mod.tier) {
-                    0 -> modSelection.add(mod, 2f)
-                    1 -> modSelection.add(mod, 1.5f)
-                    2 -> modSelection.add(mod, 1f)
-                    else -> modSelection.add(mod, 1f)
-                }
+                modSelection.add(mod, mod.rarity)
             }
 
             var mod = modSelection.pick().id
@@ -139,95 +128,19 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
         var b: Color? = Misc.getButtonTextColor()
         b = Misc.getPositiveHighlightColor()
 
+        tooltip.addSpacer(5f)
         hullmod!!.addPostDescriptionSection(tooltip, ShipAPI.HullSize.FRIGATE, null, tooltipWidth, false)
         tooltip.addSpacer(5f)
-        hullmod!!.addItemPostDescription(tooltip, ShipAPI.HullSize.FRIGATE, null, tooltipWidth, false)
-
-        var marketListener = Global.getSector().allListeners.find { it::class.java == AtMarketListener::class.java } as AtMarketListener?
-        if (marketListener != null && !marketListener.atMarket)
-        {
-            tooltip.addSpacer(5f)
-            tooltip.addPara("Can only be installed while docked at a colony", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
-        }
-        else
-        {
-            tooltip.addSpacer(5f)
-            tooltip.addPara("Rightclick to choose a hull for installation.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        }
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)
 
     }
 
     override fun hasRightClickAction(): Boolean {
-        return true
+        return false
     }
 
     override fun shouldRemoveOnRightClickAction(): Boolean {
-        return true
+        return false
     }
-
-    override fun performRightClickAction() {
-        var stats = Global.getSector().playerPerson.stats
-
-        Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
-
-        var listener = object : FleetMemberPickerListener {
-            override fun pickedFleetMembers(members: MutableList<FleetMemberAPI>?) {
-                if (!members.isNullOrEmpty())
-                {
-                    var choice = members.get(0)
-
-                    if (choice.variant.source != VariantSource.REFIT)
-                    {
-                        var variant = choice.variant.clone();
-                        variant.originalVariant = null;
-                        variant.hullVariantId = Misc.genUID()
-                        variant.source = VariantSource.REFIT
-                        choice.setVariant(variant, false, true)
-                    }
-                    choice.variant.addPermaMod(hullmodSpec!!.id, true)
-                    choice.updateStats()
-
-                    Global.getSoundPlayer().playUISound("ui_acquired_blueprint", 1f, 1f)
-                    Global.getSector().campaignUI.messageDisplay.addMessage("Installed ${hullmodSpec!!.displayName} in to ${choice.hullSpec.hullName}")
-
-                    var cargo = Global.getSector().playerFleet.cargo
-
-                }
-                else
-                {
-                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmodSpec!!.id), 1f)
-                }
-            }
-
-            override fun cancelledFleetMemberPicking() {
-                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmodSpec!!.id), 1f)
-            }
-
-        }
-        var marketListener = Global.getSector().allListeners.find { it::class.java == AtMarketListener::class.java } as AtMarketListener?
-
-        if (marketListener != null)
-        {
-            if (marketListener.atMarket)
-            {
-                if (Global.getSector().campaignUI.currentInteractionDialog == null) return
-                var maxSmods = Global.getSettings().settingsJSON.get("maxPermanentHullmods") as Int
-
-                var choices = Global.getSector().playerFleet.fleetData.membersListCopy.filter { it.variant.hullMods.none { Global.getSettings().getHullModSpec(it).hasTag("rat_alteration") } }
-                choices = hullmod!!.alterationInstallFilter(choices)
-                choices = choices.filter { it.variant.sMods.size < it.stats.dynamic.getValue(Stats.MAX_PERMANENT_HULLMODS_MOD, maxSmods.toFloat())}
-
-                Global.getSector().campaignUI.currentInteractionDialog.showFleetMemberPickerDialog("Choose a ship", "Confirm", "Cancel", 10, 10, 64f,
-                    true, false, choices, listener)
-
-                return
-            }
-        }
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmodSpec!!.id), 1f)
-    }
-
-
-
 }

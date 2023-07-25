@@ -19,6 +19,7 @@ import java.util.*
 class CombatPhotosphereRenderer(var radius: Float) : BaseCombatLayeredRenderingPlugin() {
 
     var color = AbyssUtils.ABYSS_COLOR.setAlpha(255)
+    //var color = Color(0, 120, 255)
 
     @Transient
     var halo: SpriteAPI? = null
@@ -119,15 +120,15 @@ class CombatPhotosphereRenderer(var radius: Float) : BaseCombatLayeredRenderingP
 
 
         center!!.setSize(radius * 1.8f , radius  * 1.8f)
-        center!!.color = color.setAlpha(255)
+        center!!.color = color.setAlpha(130)
         center!!.renderAtCenter(location.x, location.y)
 
-        band1!!.color = color.setAlpha(125)
+        band1!!.color = color.setAlpha(45)
         band1!!.render(location.x, location.y, viewport!!.alphaMult)
 
 
         halo!!.alphaMult = 1f
-        halo!!.color = color.setAlpha(25)
+        halo!!.color = color.setAlpha(30)
         halo!!.setSize(radius * 15, radius * 15 )
         halo!!.setAdditiveBlend()
         halo!!.renderAtCenter(location.x, location.y)
