@@ -3,6 +3,7 @@ package assortment_of_things.abyss.shipsystem.ai
 import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
+import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.combat.AIUtils
 import org.lazywizard.lazylib.combat.CombatUtils
@@ -21,28 +22,42 @@ class ChuulSystemAI : ShipSystemAIScript {
         var flags = ship!!.aiFlags
         var system = ship!!.system
 
-        if (target == null) return
 
-        if (!AbyssalsCoreHullmod.isChronosCore(ship!!) && !AbyssalsCoreHullmod.isCosmosCore(ship!!)) return
-        if (system.isCoolingDown) return
-        if (system.isActive)  return
-        if (!ship!!.areAnyEnemiesInRange()) return
-        if (ship!!.fluxLevel > 0.9f) return
+        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
 
-        var range = 0f
-        for (weapon in ship!!.allWeapons) {
-            if (weapon.range > range)
-            {
-                range = weapon.range
+            if (ship!!.velocity.length() < 40f) return
+            if ((flags.hasFlag(AIFlags.BACKING_OFF) )) {
+
+                ship!!.useSystem()
+            }
+
+            if (system.ammo <= 1) return
+            if (flags.hasFlag(AIFlags.PURSUING) || flags.hasFlag(AIFlags.RUN_QUICKLY)) {
+                ship!!.useSystem()
             }
         }
-        if (MathUtils.getDistance(ship!!, target) > range + 50) return
 
-        if (flags.hasFlag(AIFlags.BACKING_OFF)) return
-        if (flags.hasFlag(AIFlags.BACK_OFF)) return
-        if (!flags.hasFlag(AIFlags.MANEUVER_TARGET)) return
+        if (!AbyssalsCoreHullmod.isCosmosCore(ship!!)) {
+            if (target == null) return
+            if (system.isCoolingDown) return
+            if (system.isActive)  return
+            if (!ship!!.areAnyEnemiesInRange()) return
+            if (ship!!.fluxLevel > 0.9f) return
 
-        ship!!.useSystem()
+            var range = 0f
+            for (weapon in ship!!.allWeapons) {
+                if (weapon.range > range)
+                {
+                    range = weapon.range
+                }
+            }
+            if (MathUtils.getDistance(ship!!, target) > range + 50) return
 
+            if (flags.hasFlag(AIFlags.BACKING_OFF)) return
+            if (flags.hasFlag(AIFlags.BACK_OFF)) return
+            if (!flags.hasFlag(AIFlags.MANEUVER_TARGET)) return
+
+            ship!!.useSystem()
+        }
     }
 }

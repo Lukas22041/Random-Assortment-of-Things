@@ -1,3 +1,16 @@
+Version 1.5.0 DiscordBeta7
+Only available on the unofficial starsector discord server until its in a more polished state. 
+
+This patch mostly reworks & rebalances most shipsystems for the abyssal ships. They should now provide a bit more variety and have a stronger presence.
+
+- reworked shipsystems.
+- fixed an ui element being off by like 10 pixels.
+- improved some alteration descriptions.
+- fixed one of aboleths hardpoint mounts being set as a turret.
+- tweaked drop chances a bit.
+
+
+
 Version 1.5.0 DiscordBeta6
 Only available on the unofficial starsector discord server until its in a more polished state. 
 

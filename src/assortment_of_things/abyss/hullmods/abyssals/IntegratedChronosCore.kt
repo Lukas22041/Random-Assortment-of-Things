@@ -69,7 +69,8 @@ class IntegratedChronosCore : BaseAlteration() {
 
         tooltip!!.addSpacer(5f)
         tooltip!!.addPara("Replaces the ships AI-Components with a miniature bridge and integrates a chronos core in to the ships subsystem. " +
-                "This allows humans to crew the ship, while enabling the chronos-core related shipsystem.", 0f)
+                "This allows humans to crew the ship, while enabling the chronos-core related shipsystem.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "chronos-core", "shipsystem")
 
     }
 
@@ -79,10 +80,10 @@ class IntegratedChronosCore : BaseAlteration() {
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?,  member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
         if (!member!!.baseOrModSpec().hasTag("rat_abyssals")) {
-            tooltip!!.addPara("Can only be installed in to abyssal hulls.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+            tooltip!!.addPara("Can only be installed on abyssal hulls.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
         else {
-            tooltip!!.addPara("Can only be installed when no AI core is assigned to the ship.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+            tooltip!!.addPara("Can not be installed while an AI core is assigned to the ship.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
     }
 
@@ -91,7 +92,7 @@ class IntegratedChronosCore : BaseAlteration() {
     }
 
     override fun cannotUninstallAlterationTooltip(tooltip: TooltipMakerAPI?,member: FleetMemberAPI?, variant: ShipVariantAPI?,width: Float) {
-        tooltip!!.addPara("Can only be removed if no Officer is assigned to the ship.", 0f,
+        tooltip!!.addPara("Can not be removed while an officer is assigned to the ship.", 0f,
             Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
     }
 

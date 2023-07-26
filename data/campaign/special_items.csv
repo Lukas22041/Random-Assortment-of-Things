@@ -1,7 +1,7 @@
 name,id,tags,tech/manufacturer,rarity,base price,stack size,cargo space,baseRaidDanger,icon,sound id,sound id drop,plugin,plugin params,desc,order
 #Abyss,,,,,,,,,,,,,,,
-Hullmod installer,rat_alteration_install,,,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,"A hull alteration is a special, consumeable hull modification, that can be installed through the top-mid button in the refit screen.",400
-Hullmod remover,rat_alteration_remover,,,,25000,1000,1,,graphics/icons/cargo/rat_alteration_remover.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationRemoverItem,,,401
+Hullmod installer,rat_alteration_install,,Hull Alteration,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,"A hull alteration is a special, consumeable hull modification, that can be installed through the top-mid button in the refit screen.",400
+Hullmod remover,rat_alteration_remover,,Hull Alteration,,25000,1000,1,,graphics/icons/cargo/rat_alteration_remover.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationRemoverItem,,,401
 ,,,,,,,,,,,,,,,
 LEGACY,rat_automation_converter,,,,50000,1000,1,,graphics/icons/cargo/rat_alteration_installer_special.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AICoreConversionItem,,,420
 LEGACY,rat_chronos_integration,,,,50000,1000,1,,graphics/icons/cargo/rat_alteration_installer_special.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalConversionChronos,,,420

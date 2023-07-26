@@ -10,26 +10,26 @@ Abyssal Core,rat_abyssal_core,0,,Abyss,,"Logistics, Requires Dock",3000,FALSE,TR
 ,,,,,,,,,,,,,,,,,,
 #Abyss Special Alterations,,,,,,,,,,,,,,,,,,
 AI Conversion,rat_automated_conversion,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.AIConvertedShip,,,graphics/hullmods/rat_ai_conversion.png
-Integrated Chronos Core,rat_chronos_conversion,3,0.75,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedChronosCore,,,graphics/hullmods/rat_chronos_conversion.png
-Integrated Cosmos Core,rat_cosmos_conversion,3,0.75,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedCosmosCore,,,graphics/hullmods/rat_chosmos_conversion.png
+Abyssal Conversion (Chronos),rat_chronos_conversion,3,0.75,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedChronosCore,,,graphics/hullmods/rat_chronos_conversion.png
+Abyssal Conversion (Cosmos),rat_cosmos_conversion,3,0.75,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedCosmosCore,,,graphics/hullmods/rat_chosmos_conversion.png
 ,,,,,,,,,,,,,,,,,,
 ##Misc,,,,,,,,,,,,,,,,,,
-Quality Assurance,rat_qualityAssurance,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.basic.QualityAssuranceHullmod,,,graphics/hullmods/rat_quality_assurance.png
-Temporal Gear,rat_timegear,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.basic.TimegearHullmod,,,graphics/hullmods/rat_timegear.png
-Efficient Procedures,rat_efficientProcedures,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.basic.EfficientProceduresHullmod,,,graphics/hullmods/rat_efficient_procedures.png
-Overloaded Systems,rat_overloaded_systems,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.basic.OverloadedSystemsHullmod,,,graphics/hullmods/rat_overloaded_systems.png
-Ballistic Focus,rat_ballistic_focus,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.basic.BallisticFocusHullmod,,,graphics/hullmods/rat_ballistic_focus.png
-Energy Focus,rat_energy_focus,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.basic.EnergyFocusHullmod,,,graphics/hullmods/rat_energy_focus.png
-Missile Reserves,rat_missile_reserve,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.basic.MissileReserveHullmod,,,graphics/hullmods/rat_missile_reserves.png
-Deployment Preperation,rat_preperation,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.basic.DeploymentPreperation,,,graphics/hullmods/rat_deployment.png
-Drivefield Overwrite,rat_drivefield_overwrite,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.basic.DrivefieldOverwriteHullmod,,,graphics/hullmods/rat_drivefield_overwrite.png
+Quality Assurance,rat_qualityAssurance,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.QualityAssuranceHullmod,,,graphics/hullmods/rat_quality_assurance.png
+Temporal Gear,rat_timegear,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.TimegearHullmod,,,graphics/hullmods/rat_timegear.png
+Efficient Procedures,rat_efficientProcedures,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.EfficientProceduresHullmod,,,graphics/hullmods/rat_efficient_procedures.png
+Overloaded Systems,rat_overloaded_systems,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.OverloadedSystemsHullmod,,,graphics/hullmods/rat_overloaded_systems.png
+Ballistic Focus,rat_ballistic_focus,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.BallisticFocusHullmod,,,graphics/hullmods/rat_ballistic_focus.png
+Energy Focus,rat_energy_focus,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.EnergyFocusHullmod,,,graphics/hullmods/rat_energy_focus.png
+Missile Reserves,rat_missile_reserve,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.MissileReserveHullmod,,,graphics/hullmods/rat_missile_reserves.png
+Deployment Preperation,rat_preperation,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.DeploymentPreperation,,,graphics/hullmods/rat_deployment.png
+Drivefield Overwrite,rat_drivefield_overwrite,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.DrivefieldOverwriteHullmod,,,graphics/hullmods/rat_drivefield_overwrite.png
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ##Fightersystems,,,,,,,,,,,,,,,,,,
-Temporal Assault,rat_temporalAssault,3,2.5,Hull Alteration,"rat_alteration, fightersystem, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.fightersystems.TemporalAssaultHullmod,,,graphics/hullmods/rat_temporal_assault.png
-Perseverance,rat_perseverance,3,2.5,Hull Alteration,"rat_alteration, fightersystem, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.fightersystems.PerseveranceHullmod,,,graphics/hullmods/rat_perseverance.png
-Magnetic Storm,rat_magneticStorm,3,2.5,Hull Alteration,"rat_alteration, fightersystem, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.fightersystems.MagneticStormHullmod,,,graphics/hullmods/rat_magnetic_storm.png
-Plasmatic Shield,rat_plasmaticShield,3,2.5,Hull Alteration,"rat_alteration, fightersystem, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,999,999,999,999,assortment_of_things.abyss.hullmods.fightersystems.PlasmaticShieldHullmod,,,graphics/hullmods/rat_plasmatic_shield.png
+Temporal Assault,rat_temporalAssault,3,2.5,Hull Alteration,"rat_alteration, fightersystem, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.TemporalAssaultHullmod,,,graphics/hullmods/rat_temporal_assault.png
+Perseverance,rat_perseverance,3,2.5,Hull Alteration,"rat_alteration, fightersystem, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.PerseveranceHullmod,,,graphics/hullmods/rat_perseverance.png
+Magnetic Storm,rat_magneticStorm,3,2.5,Hull Alteration,"rat_alteration, fightersystem, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.MagneticStormHullmod,,,graphics/hullmods/rat_magnetic_storm.png
+Plasmatic Shield,rat_plasmaticShield,3,2.5,Hull Alteration,"rat_alteration, fightersystem, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.PlasmaticShieldHullmod,,,graphics/hullmods/rat_plasmatic_shield.png
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,

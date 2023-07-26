@@ -3,13 +3,17 @@ package assortment_of_things.abyss.shipsystem
 import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.combat.CombatWarpingSpriteRenderer
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.graphics.Sprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
+import com.fs.starfarer.api.loading.ProjectileSpecAPI
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
+import com.fs.starfarer.combat.CombatEngine
+import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
@@ -20,80 +24,44 @@ class ChuulShipsystem : BaseShipSystemScript() {
 
     var ship: ShipAPI? = null
 
-    var added = false
+    var activated = false
+    var init = false
 
+    var afterimageInterval = IntervalUtil(0.05f, 0.05f)
 
-    class TestRender(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
-
-        //var sprite = Global.getSettings().getAndLoadSprite("graphics/backgrounds/abyss/Abyss2.jpg")
-        var sprite2 = Global.getSettings().getAndLoadSprite("graphics/fx/rat_darkener.png")
-
-        var sprite: Sprite
-
-        init {
-            Global.getSettings().loadTexture("graphics/backgrounds/abyss/Abyss2.jpg")
-            sprite = Sprite("graphics/backgrounds/abyss/Abyss2.jpg")
-        }
-
-        var renderer = CombatWarpingSpriteRenderer(16, 1f)
-
-        override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
-            return EnumSet.of(CombatEngineLayers.UNDER_SHIPS_LAYER, CombatEngineLayers.ABOVE_PARTICLES)
-        }
-
-        override fun getRenderRadius(): Float {
-            return 10000000f
-        }
-
-        override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
-            super.render(layer, viewport)
-
-            var level = ship.system.effectLevel
-
-            var mult = ship.mutableStats.timeMult.modified
-
-            if (layer == CombatEngineLayers.UNDER_SHIPS_LAYER) {
-
-
-                renderer.advance(Global.getCombatEngine().elapsedInLastFrame * mult)
-                renderer.overwriteColor = Color(0, 120, 255).setAlpha((230 * level).toInt())
-                renderer.render(sprite, false, viewport!!)
-
-                /*sprite.alphaMult = 0.9f * level
-                sprite.color = Color(0, 120, 255)
-                sprite.setSize(viewport!!.visibleWidth , viewport.visibleHeight)
-                sprite.render(viewport!!.llx , viewport.lly )*/
-            }
-
-            if (layer == CombatEngineLayers.ABOVE_PARTICLES) {
-                sprite2.setSize(viewport!!.visibleWidth + 200f, viewport.visibleHeight + 200f)
-                sprite2.setNormalBlend()
-                sprite2.alphaMult = 0.1f * level
-                sprite2.color =  Color(0, 120, 255, 155)
-                sprite2.render(viewport.llx - 100f, viewport.lly - 100f)
-            }
-
-           // sprite.setAdditiveBlend()
-
-
-
-
-        }
-    }
-
-    var afterimageInterval = IntervalUtil(0.2f, 0.2f)
-
+    var targetLocation = Vector2f()
 
     override fun apply(stats: MutableShipStatsAPI?, id: String?, state: ShipSystemStatsScript.State?, effectLevel: Float) {
         super.apply(stats, id, state, effectLevel)
 
         ship = stats!!.entity as ShipAPI
 
-       /* if (!added) {
-            Global.getCombatEngine().addLayeredRenderingPlugin(TestRender(ship!!))
+        if (state == ShipSystemStatsScript.State.IN && !init) {
+            onInit(ship!!)
 
-            added = true
-        }*/
+            if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
+                Global.getSoundPlayer().playSound("system_phase_skimmer", 1f, 1f, ship!!.location, ship!!.velocity)
+            }
+            if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) {
+                Global.getSoundPlayer().playSound("system_ammo_feeder", 1f, 1f, ship!!.location, ship!!.velocity)
+            }
+
+            init = true
+        }
+        if (state == ShipSystemStatsScript.State.IDLE) {
+            init = false
+        }
+
+        if (state == ShipSystemStatsScript.State.ACTIVE && !activated) {
+            if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
+                ship!!.location.set(targetLocation)
+            }
+            activated = true
+        }
+        if (state == ShipSystemStatsScript.State.IDLE) {
+            activated = false
+        }
+
 
         if (ship!!.system.isActive)
         {
@@ -104,22 +72,41 @@ class ChuulShipsystem : BaseShipSystemScript() {
             AbyssalsCoreHullmod.getRenderer(ship!!).disableBlink()
         }
 
+        var color = AbyssalsCoreHullmod.getColorForCore(ship!!).setAlpha(100)
+
         if (AbyssalsCoreHullmod.isChronosCore(ship!!))
         {
 
+            if (state == ShipSystemStatsScript.State.IN) {
+                ship!!.isPhased = true
+            }
+            if (state == ShipSystemStatsScript.State.OUT || state == ShipSystemStatsScript.State.IDLE) {
+                ship!!.isPhased = false
+            }
 
-/*
-            val shipTimeMult = 1f + (100f) * effectLevel
+            if (ship!!.system.isActive) {
+
+                afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
+                if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
+                {
+                    if (state == ShipSystemStatsScript.State.IN) {
+                        AfterImageRenderer.addAfterimage(ship!!, color, color, 0.65f, 25f, targetLocation)
+                    }
+                }
+
+                ship!!.setJitter(this, color, 1f * effectLevel , 3, 0f, 15f)
+                ship!!.setJitterUnder(this, color, 1f * effectLevel, 25, 0f, 15f)
+
+            }
+
+            stats.timeMult.modifyMult(id, 1 + (3f * effectLevel))
+            val shipTimeMult = 1f + (10f - 1f) * effectLevel
             stats.timeMult.modifyMult(id, shipTimeMult)
-            Global.getCombatEngine().timeMult.modifyMult(id, 1f / shipTimeMult)*/
-
-            stats.ballisticRoFMult.modifyMult(id, 1f + (0.33f * effectLevel))
-            stats.energyRoFMult.modifyMult(id, 1f + (0.33f * effectLevel))
-            stats.missileRoFMult.modifyMult(id, 1f + (0.33f * effectLevel))
-
-            stats.energyWeaponFluxCostMod.modifyMult(id, 1f - (0.33f * effectLevel));
-            stats.ballisticWeaponFluxCostMod.modifyMult(id, 1f - (0.33f * effectLevel))
-            stats.missileWeaponFluxCostMod.modifyMult(id, 1f - (0.33f * effectLevel))
+            if (Global.getCombatEngine().playerShip == ship) {
+                Global.getCombatEngine().timeMult.modifyMult(id, 1f / shipTimeMult)
+            } else {
+                Global.getCombatEngine().timeMult.unmodify(id)
+            }
         }
 
         if (AbyssalsCoreHullmod.isCosmosCore(ship!!))
@@ -127,7 +114,79 @@ class ChuulShipsystem : BaseShipSystemScript() {
             stats.ballisticWeaponDamageMult.modifyMult(id, 1f + (0.40f * effectLevel))
             stats.energyWeaponDamageMult.modifyMult(id, 1f + (0.40f * effectLevel))
             stats.missileWeaponDamageMult.modifyMult(id, 1f + (0.40f * effectLevel))
+
+
+
+            if (ship!!.system.isActive) {
+                ship!!.allWeapons.forEach {
+                    it.setGlowAmount(2f * effectLevel, color.setAlpha(50))
+                }
+            }
+            else {
+                ship!!.allWeapons.forEach {
+                    it.setGlowAmount(0f, color)
+                }
+            }
+
         }
+    }
+
+    fun onInit(ship: ShipAPI) {
+        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
+            targetLocation = findTargetLocation(ship, 5f)
+        }
+    }
+
+    fun findTargetLocation(ship: ShipAPI, mult: Float) : Vector2f {
+        var iter = Global.getCombatEngine().allObjectGrid.getCheckIterator(ship.location, 1000f, 1000f)
+
+        var velocity = Vector2f(ship.velocity.x * mult, ship.velocity.y * mult)
+        var velX = MathUtils.clamp(velocity.x, -200f, 200f)
+        var velY = MathUtils.clamp(velocity.y, -200f, 200f)
+        velocity = Vector2f(velX, velY)
+
+        var location = Vector2f(ship.location.x + velocity.x, ship.location.y + velocity.y)
+
+        if (mult < 0.1f) return location
+
+        for (it in iter) {
+            if (it == ship) continue
+            if (it !is CombatEntityAPI) continue
+            if (it is DamagingProjectileAPI) continue
+            var colRadius = (it.collisionRadius / 2 + ship.collisionRadius / 2) * 1.5f
+
+            if (MathUtils.getDistance(location, it.location) < colRadius) {
+                return findTargetLocation(ship, mult - 0.2f)
+            }
+        }
+
+        return location
+    }
+
+
+    override fun getInOverride(ship: ShipAPI?): Float {
+        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return 0.25f
+        return 0.5f
+    }
+
+    override fun getOutOverride(ship: ShipAPI?): Float {
+        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return 0.75f
+        return 0.5f
+    }
+
+    override fun getActiveOverride(ship: ShipAPI?): Float {
+        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return 0.1f
+        return 6f
+    }
+
+    override fun getUsesOverride(ship: ShipAPI?): Int {
+        if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) return 1
+        return 3
+    }
+
+    override fun getRegenOverride(ship: ShipAPI?): Float {
+        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return 0.1f
+        return 0.05f
     }
 
     override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
@@ -140,11 +199,11 @@ class ChuulShipsystem : BaseShipSystemScript() {
         if (ship == null) return "Inactive Shipsystem"
         if (AbyssalsCoreHullmod.isChronosCore(ship!!))
         {
-            return "Temporal Burst"
+            return "Temporal Skimmer"
         }
         else if ( AbyssalsCoreHullmod.isCosmosCore(ship!!))
         {
-            return "Cosmal Burst"
+            return "Singularity"
         }
         return "Inactive Shipsystem"
     }

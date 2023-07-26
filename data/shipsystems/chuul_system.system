@@ -11,8 +11,8 @@
 	
 	"canNotCauseOverload":true,
 	
-	"useSound":"system_ammo_feeder",
+	#"useSound":"system_ammo_feeder",
 	#"deactivateSound":"system_phase_cloak_deactivate",
-	"deactivateSound":"system_phase_cloak_deactivate",
+	#"deactivateSound":"system_phase_cloak_deactivate",
 	"outOfUsesSound":"system_phase_cloak_collision",
 }

@@ -102,14 +102,13 @@ class DomainResearchInteraction : RATInteractionPlugin() {
                     drop = DropData()
                     drop.chances = 1
                     drop.group = "rare_tech_low"
-                    drop.valueMult = 1f
+                    drop.valueMult = 0.33f
                     dropRandom.add(drop)
 
                     drop = DropData()
                     drop.chances = 1
                     drop.group = "any_hullmod_low"
                     dropRandom.add(drop)
-
                 }
                 else
                 {
@@ -122,7 +121,7 @@ class DomainResearchInteraction : RATInteractionPlugin() {
                     drop = DropData()
                     drop.chances = 1
                     drop.group = "rare_tech"
-                    drop.valueMult = 0.5f
+                    drop.valueMult = 0.25f
                     dropRandom.add(drop)
 
                     drop = DropData()

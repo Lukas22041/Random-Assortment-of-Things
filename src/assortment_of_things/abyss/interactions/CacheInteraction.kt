@@ -78,10 +78,19 @@ class CacheInteraction : RATInteractionPlugin() {
 
             drop = DropData()
             drop.chances = 1
+            drop.valueMult = 0.2f
             drop.group = "rare_tech_low"
             dropRandom.add(drop)
 
-            var salvage = SalvageEntity.generateSalvage(random.asJavaRandom(), 1f, 1f, 1f, 1f, dropValue, dropRandom)
+            var mult = when(tier) {
+                AbyssProcgen.Tier.Low -> 1f
+                AbyssProcgen.Tier.Mid -> 1.5f
+                AbyssProcgen.Tier.High -> 2f
+                else -> 1f
+            }
+
+
+            var salvage = SalvageEntity.generateSalvage(random.asJavaRandom(), mult, mult, 1f, 1f, dropValue, dropRandom)
 
             visualPanel.showLoot("Loot", salvage, true) {
                 closeDialog()

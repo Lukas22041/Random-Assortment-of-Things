@@ -59,12 +59,12 @@ class MorkothSystemAI : ShipSystemAIScript {
         if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) {
             if (ship!!.shield == null || ship!!.shield.isOff) return
             if (!flags.hasFlag(AIFlags.HAS_INCOMING_DAMAGE)) return
-            if (ship!!.fluxLevel > 0.6f) {
+          /*  if (ship!!.fluxLevel > 0.6f) {
                 ship!!.useSystem()
                 wasActivated = true
             }
 
-            if (ship!!.system.ammo <= 1f) return
+            if (ship!!.system.ammo <= 1f) return*/
 
             var projectiles = Global.getCombatEngine().allObjectGrid.getCheckIterator(ship!!.location, 1000f, 1000f)
 

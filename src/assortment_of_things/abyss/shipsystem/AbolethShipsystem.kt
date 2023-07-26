@@ -95,7 +95,7 @@ class AbolethShipsystem : BaseShipSystemScript() {
         if (ship == null) return "Inactive Shipsystem"
         if (AbyssalsCoreHullmod.isChronosCore(ship!!))
         {
-            return "Temporal Dive"
+            return "Temporal Grid"
         }
         else if (AbyssalsCoreHullmod.isCosmosCore(ship!!))
         {
@@ -214,7 +214,8 @@ class AbolethShipsystem : BaseShipSystemScript() {
         val extra = 0f
         val shipTimeMult = 1f + (MAX_TIME_MULT - 1f) * levelForAlpha * (1f - extra)
         stats.timeMult.modifyMult(id, shipTimeMult)
-        stats.fluxDissipation.modifyMult(id, 0f)
+        stats.fluxDissipation.modifyMult(id, 0.5f)
+        stats.hardFluxDissipationFraction.modifyMult(id, 0f)
         if (player) {
             Global.getCombatEngine().timeMult.modifyMult(id, 1f / shipTimeMult)
         } else {
@@ -240,6 +241,8 @@ class AbolethShipsystem : BaseShipSystemScript() {
         Global.getCombatEngine().timeMult.unmodify(id)
         stats.timeMult.unmodify(id)
         stats.fluxDissipation.unmodify(id)
+        stats.hardFluxDissipationFraction.unmodify(id)
+
         ship!!.isPhased = false
         ship.extraAlphaMult = 1f
 

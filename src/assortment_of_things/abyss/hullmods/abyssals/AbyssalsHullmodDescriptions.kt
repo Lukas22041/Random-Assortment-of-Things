@@ -32,7 +32,7 @@ object AbyssalsHullmodDescriptions {
 
         var chronosImage = tooltip.beginImageWithText(getChronosImage(ship), 64f)
         chronosImage.addPara("Chronos Core\n" +
-                "Enables the \"Temporal Flow\" Shipsystem, which increases the flux dissipation of the ship.", 0f,
+                "Enables the \"Accelerated Barrels\" Shipsystem, which increases the firerate of all ballistic and energy weapons without increasing flux useage. If a weapon uses ammunition, it also recharges much quicker.", 0f,
             chronosColor, Misc.getHighlightColor(), "Chronos Core")
         tooltip.addImageWithText(0f)
 
@@ -40,7 +40,7 @@ object AbyssalsHullmodDescriptions {
 
         var cosmosImage = tooltip.beginImageWithText(getCosmosImage(ship), 64f)
         cosmosImage.addPara("Cosmos Core\n" +
-                "Enables the \"Cosmal Flow\" Shipsystem, which allows the ship to vent hardflux without taking down its shields.", 0f,
+                "Enables the \"Abyssal Rift\" Shipsystem, which increases the ships flux dissipation and allows the ship to vent hardflux without taking down its shields.", 0f,
             cosmosColor, Misc.getHighlightColor(), "Cosmos Core")
         tooltip.addImageWithText(0f)
     }
@@ -58,7 +58,7 @@ object AbyssalsHullmodDescriptions {
 
         var chronosImage = tooltip.beginImageWithText(getChronosImage(ship), 64f)
         chronosImage.addPara("Chronos Core\n" +
-                "Enables the \"Temporal Burst\" Shipsystem, which increases all weapon fire rates without increasing flux consumption.", 0f,
+                "Enables the \"Temporal Skimmer\" Shipsystem, allowing the ship to teleport in the direction it is travelling. During the teleport the time perceived by the ship is accelerated.", 0f,
             chronosColor, Misc.getHighlightColor(), "Chronos Core")
         tooltip.addImageWithText(0f)
 
@@ -66,7 +66,7 @@ object AbyssalsHullmodDescriptions {
 
         var cosmosImage = tooltip.beginImageWithText(getCosmosImage(ship), 64f)
         cosmosImage.addPara("Cosmos Core\n" +
-                "Enables the \"Cosmal Burst\" Shipsystem, which increases the damage dealt by all weapons.", 0f,
+                "Enables the \"Singularity\" Shipsystem, which for a short time increases the damage dealt by all weapons .", 0f,
             cosmosColor, Misc.getHighlightColor(), "Cosmos Core")
         tooltip.addImageWithText(0f)
     }
@@ -83,7 +83,7 @@ object AbyssalsHullmodDescriptions {
 
         var chronosImage = tooltip.beginImageWithText(getChronosImage(ship), 64f)
         chronosImage.addPara("Chronos Core\n" +
-                "Enables the \"Temporal Dive\" Shipsystem, which temporarily increases the timeflow of the ship.", 0f,
+                "Enables the \"Temporal Grid\" Shipsystem, which temporarily increases the timeflow of the ship.", 0f,
             chronosColor, Misc.getHighlightColor(), "Chronos Core")
         tooltip.addImageWithText(0f)
 
@@ -91,7 +91,7 @@ object AbyssalsHullmodDescriptions {
 
         var cosmosImage = tooltip.beginImageWithText(getCosmosImage(ship), 64f)
         cosmosImage.addPara("Cosmos Core\n" +
-                "Enables the \"Phase Dive\" Shipsystem, which temporarily dives the ship in to p-space.", 0f,
+                "Enables the \"Phase Dive\" Shipsystem, which temporarily dives the ship in to p-space. The ship is able to dissipate a small amounts of soft-flux while phased.", 0f,
             cosmosColor, Misc.getHighlightColor(), "Cosmos Core")
         tooltip.addImageWithText(0f)
     }
@@ -108,7 +108,7 @@ object AbyssalsHullmodDescriptions {
 
         var chronosImage = tooltip.beginImageWithText(getChronosImage(ship), 64f)
         chronosImage.addPara("Chronos Core\n" +
-                "Enables the \"Temporal Matrix\" Shipsystem, which provides a brief but extreme boost to top speed and maneuverability.", 0f,
+                "Enables the \"Temporal Jets\" Shipsystem, which provides a brief but extreme boost to top speed and maneuverability.", 0f,
             chronosColor, Misc.getHighlightColor(), "Chronos Core")
         tooltip.addImageWithText(0f)
 
@@ -116,7 +116,7 @@ object AbyssalsHullmodDescriptions {
 
         var cosmosImage = tooltip.beginImageWithText(getCosmosImage(ship), 64f)
         cosmosImage.addPara("Cosmos Core\n" +
-                "Enables the \"Cosmal Matrix\" Shipsystem, which greatly decreases the damage taken by shields for a short period of time.", 0f,
+                "Enables the \"Event Horizon\" Shipsystem, which converts any shield damage taken in to buffs for weapon, flux and shield stats.", 0f,
             cosmosColor, Misc.getHighlightColor(), "Cosmos Core")
         tooltip.addImageWithText(0f)
     }

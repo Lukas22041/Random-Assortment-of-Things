@@ -254,7 +254,9 @@ class AlterationRefitButton : BaseRefitButton() {
         alterationsPanel.position.rightOfTop(aboutPanel, 20f)
 
         var alterationsElement = alterationsPanel.createUIElement(440f, 420f, true)
-        alterationsElement.addSectionHeading("Alterations in Storage", Alignment.MID, 0f)
+        alterationsElement.addSectionHeading("Alterations in Storage", Alignment.MID, 0f).apply {
+            position.setSize(position.width + 10f, position.height)
+        }
         alterationsElement.addSpacer(5f)
 
         var lastPanel: CustomPanelAPI? = null
