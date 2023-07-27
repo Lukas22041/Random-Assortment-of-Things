@@ -27,7 +27,7 @@ class DeploymentPreperation : BaseAlteration() {
 
         stats!!.getSuppliesToRecover().modifyFlat(modID, dp.get(hullSize)!!);
         stats.getDynamic().getMod(deploymentModID).modifyFlat(modID, dp.get(hullSize)!!);
-        stats.suppliesPerMonth.modifyMult(modID, 1.5f)
+        stats.suppliesPerMonth.modifyMult(modID, 1.25f)
 
     }
 
@@ -41,9 +41,9 @@ class DeploymentPreperation : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        var label = tooltip.addPara("The hull receives more preperation for future deployment, decreasing the deployment cost by 1/2/3/3 points, but increasing the monthly supply useage by 50%%"
+        var label = tooltip.addPara("The hull receives more preperation for future deployment, decreasing the deployment cost by 1/2/3/3 points, but increasing the monthly supply useage by 25%%"
             , 0f, Misc.getTextColor(), Misc.getHighlightColor())
-        label.setHighlight("deployment cost", "1/2/3/3", "50%")
+        label.setHighlight("deployment cost", "1/2/3/3", "25%")
         label.setHighlightColors(hc, hc, nc)
 
     }

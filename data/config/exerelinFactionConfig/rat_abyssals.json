@@ -11,6 +11,5 @@
 	
 	"maxRelationships":{ 
 		"default":-1, 
-		"remnant":-1
 	},
 }

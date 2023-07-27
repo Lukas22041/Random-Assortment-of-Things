@@ -1,15 +1,10 @@
 package assortment_of_things.abyss.interactions
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.misc.RATInteractionPlugin
-import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.DropData
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
-import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.Misc
 import org.magiclib.kotlin.fadeAndExpire
 import org.magiclib.kotlin.getSalvageSeed
 import java.util.*
@@ -21,7 +16,7 @@ class CacheInteraction : RATInteractionPlugin() {
 
     override fun init() {
 
-        if (AbyssUtils.anyNearbyFleetsHostileAndAware())
+        if (AbyssUtils.isAnyFleetTargetingPlayer())
         {
             textPanel.addPara("As there are currently hostile targets following the fleets steps, safe docking at the station seems impossible.")
             addLeaveOption()

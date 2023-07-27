@@ -11,7 +11,6 @@ import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.DropD
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.getSalvageSeed
 import java.util.*
 import kotlin.random.Random
@@ -24,7 +23,7 @@ class DomainResearchInteraction : RATInteractionPlugin() {
 
     override fun init() {
 
-        if (AbyssUtils.anyNearbyFleetsHostileAndAware())
+        if (AbyssUtils.isAnyFleetTargetingPlayer())
         {
             textPanel.addPara("As there are currently hostile targets following the fleets steps, safe docking at the station seems impossible.")
             addLeaveOption()

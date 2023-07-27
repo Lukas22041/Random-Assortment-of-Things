@@ -15,10 +15,14 @@ import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI
+import com.fs.starfarer.api.campaign.ai.TacticalModulePlugin
+import com.fs.starfarer.api.campaign.rules.MemKeys
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTiledTerrain
@@ -451,18 +455,26 @@ object AbyssUtils {
         return system.memoryWithoutUpdate.get("\$rat_abyss_tier") as AbyssProcgen.Tier
     }
 
-    fun anyNearbyFleetsHostileAndAware() : Boolean {
+    fun isAnyFleetTargetingPlayer() : Boolean {
         val playerFleet = Global.getSector().playerFleet
 
         for (fleet in playerFleet.containingLocation.fleets) {
             if (fleet.ai == null) continue
             if (fleet.isStationMode) continue
 
-            if (fleet.visibilityLevelOfPlayerFleet == SectorEntityToken.VisibilityLevel.SENSOR_CONTACT ||
-                fleet.visibilityLevelOfPlayerFleet == SectorEntityToken.VisibilityLevel.COMPOSITION_DETAILS ||
-                fleet.visibilityLevelOfPlayerFleet == SectorEntityToken.VisibilityLevel.COMPOSITION_AND_FACTION_DETAILS) {
+            var ai = fleet.ai
+            if (ai is ModularFleetAIAPI) {
+                var tactical= ai.tacticalModule ?: continue
+                var target = tactical.target ?: continue
+
+                if (tactical.isFleeing) continue
+                if (fleet.visibilityLevelOfPlayerFleet == SectorEntityToken.VisibilityLevel.NONE) continue
+                if (playerFleet.fleetPoints >= fleet.fleetPoints * 2) continue
+
                 return true
             }
+
+
         }
 
         return false

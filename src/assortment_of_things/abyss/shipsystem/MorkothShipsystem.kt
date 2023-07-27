@@ -80,7 +80,7 @@ class MorkothShipsystem : BaseShipSystemScript(), DamageListener {
                 stats.maxTurnRate.unmodify(id)
             } else {
                // stats.maxSpeed.modifyMult(id, 3f)
-                stats.maxSpeed.modifyFlat(id, 50f)
+                stats.maxSpeed.modifyFlat(id, 75f)
                 stats.acceleration.modifyMult(id, 4f * effectLevel)
                 stats.deceleration.modifyMult(id, 4f * effectLevel)
                 stats.turnAcceleration.modifyMult(id, 2f * effectLevel)

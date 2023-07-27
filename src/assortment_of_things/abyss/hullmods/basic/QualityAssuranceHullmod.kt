@@ -16,7 +16,7 @@ class QualityAssuranceHullmod : BaseAlteration() {
     var deploymentModID = "deployment_points_mod"
 
     var dp = mapOf(HullSize.FRIGATE to 2f, HullSize.DESTROYER to 3f, HullSize.CRUISER to 4f, HullSize.CAPITAL_SHIP to 6f)
-    var armor = mapOf(HullSize.FRIGATE to 100f, HullSize.DESTROYER to 200f, HullSize.CRUISER to 300f, HullSize.CAPITAL_SHIP to 450f)
+    var armor = mapOf(HullSize.FRIGATE to 100f, HullSize.DESTROYER to 150f, HullSize.CRUISER to 250f, HullSize.CAPITAL_SHIP to 350f)
     var speed = mapOf(HullSize.FRIGATE to 25f, HullSize.DESTROYER to 20f, HullSize.CRUISER to 15f, HullSize.CAPITAL_SHIP to 10f)
     //var diss = mapOf(HullSize.FRIGATE to 50f, HullSize.DESTROYER to 100f, HullSize.CRUISER to 150f, HullSize.CAPITAL_SHIP to 250f)
 
@@ -55,9 +55,9 @@ class QualityAssuranceHullmod : BaseAlteration() {
 
         tooltip!!.addSpacer(5f)
         var label = tooltip.addPara("The ship receives improved maintenance and uses better performing components.This causes the ship to perform better in combat.\n\n" +
-                "The ship gains an additional 100/200/300/450 units of armor. Its max speed is increased by 25/20/15/10 and " +
+                "The ship gains an additional 100/150/250/350 units of armor. Its max speed is increased by 25/20/15/10 and " +
                 "it receives an increase in flux dissipation of 5%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor())
-        label.setHighlight("deployment cost", "2/3/4/6", "100/200/300/450", "armor", "max speed", "25/20/15/10","flux dissipation","5%")
+        label.setHighlight("deployment cost", "2/3/4/6", "100/150/250/350", "armor", "max speed", "25/20/15/10","flux dissipation","5%")
         label.setHighlightColors(nc, nc, hc,hc,hc,hc,hc,hc,hc,hc, )
 
     }

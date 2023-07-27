@@ -30,6 +30,7 @@ import com.fs.starfarer.api.impl.campaign.intel.events.BaseOneTimeFactor
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantAssignmentAI
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
@@ -222,7 +223,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         initAbyssalBehaviour(fleet, random)
 
 
-        fleet.addScript(RemnantAssignmentAI(fleet, source.containingLocation as StarSystemAPI, source))
+        //fleet.addScript(RemnantAssignmentAI(fleet, source.containingLocation as StarSystemAPI, source))
         fleet.memoryWithoutUpdate["\$sourceId"] = source.id
 
         fleet.clearAssignments()
@@ -231,6 +232,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         fleet.facing = random.nextFloat() * 360f
 
         addFollowThroughFractureScript(fleet)
+        addMemKeyApplierScript(fleet)
 
         var alterationChancePerShip = 0.0f
         if (difficulty == AbyssDifficulty.Hard) alterationChancePerShip += 0.4f
@@ -258,7 +260,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         //fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_PATROL_FLEET] = true
        // fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_ALLOW_LONG_PURSUIT] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER] = true
-
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOSTILE] = true
 
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_NO_JUMP] = true
 
@@ -385,6 +387,27 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
                 }
             }
 
+        }
+        fleet.addScript(script)
+    }
+
+    fun addMemKeyApplierScript(fleet: CampaignFleetAPI) {
+        var script = object : EveryFrameScript {
+
+
+            override fun isDone(): Boolean {
+                return fleet.isDespawning
+            }
+
+            override fun runWhilePaused(): Boolean {
+                return false
+            }
+
+            override fun advance(amount: Float) {
+                fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_SAW_PLAYER_WITH_TRANSPONDER_ON] = true
+                fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER] = true
+                fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOSTILE] = true
+            }
         }
         fleet.addScript(script)
     }

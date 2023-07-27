@@ -8,6 +8,7 @@ import assortment_of_things.abyss.systems.MidnightCoreSystem
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
 import assortment_of_things.abyss.scripts.DisableTransverseScript
+import assortment_of_things.abyss.scripts.ForceNegAbyssalRep
 import assortment_of_things.abyss.scripts.HullmodRemoverListener
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.artifacts.ArtifactUtils
@@ -107,8 +108,10 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().addTransientScript(ResetBackgroundScript())
         }
         Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
-
+        Global.getSector().addTransientScript(ForceNegAbyssalRep())
         Global.getSector().addTransientListener(HullmodRemoverListener())
+
+
 
         if (RATSettings.enableMinimap!!){
             Global.getSector().addTransientScript(MinimapUI())

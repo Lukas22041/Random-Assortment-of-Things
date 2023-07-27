@@ -9,7 +9,7 @@ Abyssal Core,rat_abyssal_core,0,,Abyss,,"Logistics, Requires Dock",3000,FALSE,TR
 #Abyss Installables,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 #Abyss Special Alterations,,,,,,,,,,,,,,,,,,
-AI Conversion,rat_automated_conversion,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.AIConvertedShip,,,graphics/hullmods/rat_ai_conversion.png
+AI Conversion,rat_automated_conversion,3,1,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.AIConvertedShip,,,graphics/hullmods/rat_ai_conversion.png
 Abyssal Conversion (Chronos),rat_chronos_conversion,3,0.75,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedChronosCore,,,graphics/hullmods/rat_chronos_conversion.png
 Abyssal Conversion (Cosmos),rat_cosmos_conversion,3,0.75,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedCosmosCore,,,graphics/hullmods/rat_chosmos_conversion.png
 ,,,,,,,,,,,,,,,,,,

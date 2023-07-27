@@ -13,6 +13,9 @@ class ChuulSystemAI : ShipSystemAIScript {
 
     var ship: ShipAPI? = null
 
+    var wasActivated = false
+    var cooldownInterval = IntervalUtil(2f, 2f)
+
     override fun init(ship: ShipAPI?, system: ShipSystemAPI?, flags: ShipwideAIFlags?, engine: CombatEngineAPI?) {
         this.ship = ship
     }
@@ -25,23 +28,36 @@ class ChuulSystemAI : ShipSystemAIScript {
 
         if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
 
+            if (wasActivated) {
+
+                cooldownInterval.advance(amount)
+                if (cooldownInterval.intervalElapsed()) {
+                    wasActivated = false
+                }
+                else
+                {
+                    return
+                }
+            }
+
             if (ship!!.velocity.length() < 40f) return
             if ((flags.hasFlag(AIFlags.BACKING_OFF) )) {
 
+                wasActivated = true
                 ship!!.useSystem()
             }
 
             if (system.ammo <= 1) return
             if (flags.hasFlag(AIFlags.PURSUING) || flags.hasFlag(AIFlags.RUN_QUICKLY)) {
+                wasActivated = true
                 ship!!.useSystem()
             }
         }
 
-        if (!AbyssalsCoreHullmod.isCosmosCore(ship!!)) {
+        if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) {
             if (target == null) return
             if (system.isCoolingDown) return
             if (system.isActive)  return
-            if (!ship!!.areAnyEnemiesInRange()) return
             if (ship!!.fluxLevel > 0.9f) return
 
             var range = 0f
@@ -53,8 +69,6 @@ class ChuulSystemAI : ShipSystemAIScript {
             }
             if (MathUtils.getDistance(ship!!, target) > range + 50) return
 
-            if (flags.hasFlag(AIFlags.BACKING_OFF)) return
-            if (flags.hasFlag(AIFlags.BACK_OFF)) return
             if (!flags.hasFlag(AIFlags.MANEUVER_TARGET)) return
 
             ship!!.useSystem()

@@ -1,3 +1,14 @@
+Version 1.5.0 DiscordBeta8
+Only available on the unofficial starsector discord server until its in a more polished state. 
+
+- improved the trigger that checks if your currently being targeted by a fleet when your salvaging things.
+- might have fixed some odd fleet behaviour.
+- some hullmod balance changes.
+- fixed some shipsystem ai bugs.
+- fixed a bug that made abyssal fleets able to be positive in rep.
+
+
+
 Version 1.5.0 DiscordBeta7
 Only available on the unofficial starsector discord server until its in a more polished state. 
 
