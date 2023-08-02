@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.ShipAPI
@@ -10,7 +11,7 @@ object AbyssalsHullmodDescriptions {
 
     fun createDescription(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean)
     {
-        when (ship!!.hullSpec.hullId) {
+        when (ship!!.baseOrModSpec().hullId) {
             "rat_merrow" -> merrowDescription(tooltip!!, ship)
             "rat_chuul" -> chullDescription(tooltip!!, ship)
             "rat_aboleth" -> abolethDescription(tooltip!!, ship)

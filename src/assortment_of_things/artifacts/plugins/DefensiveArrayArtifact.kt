@@ -12,7 +12,7 @@ import com.fs.starfarer.api.util.Misc
 class DefensiveArrayArtifact : BaseArtifactPlugin() {
 
     override fun addDescription(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Increases the range of all point-defense weapons in the fleet by 100 units and ensures the best possible target leading for them.", 0f,
+        tooltip.addPara("Increases the range of all point-defense weapons in the fleet by 50 units and ensures the best possible target leading for them.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(),
         "point-defense", "100", "target leading")
     }
@@ -23,8 +23,8 @@ class DefensiveArrayArtifact : BaseArtifactPlugin() {
 
 
     override fun applyEffectsBeforeShipCreation(size: ShipAPI.HullSize, stats: MutableShipStatsAPI, id: String) {
-        stats.beamPDWeaponRangeBonus.modifyFlat(id, 100f)
-        stats.nonBeamPDWeaponRangeBonus.modifyFlat(id, 100f)
+        stats.beamPDWeaponRangeBonus.modifyFlat(id, 50f)
+        stats.nonBeamPDWeaponRangeBonus.modifyFlat(id, 50f)
         stats.dynamic.getMod(Stats.PD_IGNORES_FLARES).modifyFlat(id, 1f)
         stats.dynamic.getMod(Stats.PD_BEST_TARGET_LEADING).modifyFlat(id, 1f)
     }

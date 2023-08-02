@@ -1,0 +1,27 @@
+{
+	"id":"rat_haddock",  # this id must match what's in the spreadsheet
+	"specClass":"projectile",
+	"type":"ENERGY",
+	"size":"LARGE",
+	#"displayArcRadius":300,
+	
+	"turretSprite":"graphics/weapons/abyss/rat_haddock_turret.png",
+	"turretGlowSprite":"graphics/weapons/abyss/rat_haddock_turret_glow.png",
+
+	"hardpointSprite":"graphics/weapons/abyss/rat_haddock_hardpoint.png",
+	"hardpointGlowSprite":"graphics/weapons/abyss/rat_haddock_hardpoint_glow.png",
+	
+	"turretOffsets":[30, 0],
+	"turretAngleOffsets":[0],
+	"hardpointOffsets":[45, 0],
+	"hardpointAngleOffsets":[0],
+	"specialWeaponGlowWidth":15,
+	"specialWeaponGlowHeight":25,
+	"barrelMode":"ALTERNATING_BURST", # or LINKED.  whether barrels fire at the same time or alternate.
+	"animationType":"GLOW",
+	"projectileSpecId":"rat_haddock_shot",  # projectile that will be fired
+	"stopPreviousFireSound":false,
+	#"fireSoundOne":"heavy_machinegun_intro",
+	"fireSoundTwo":"abyss_haddock",
+	#"fireSoundTwo":"plasma_cannon_fire",
+}

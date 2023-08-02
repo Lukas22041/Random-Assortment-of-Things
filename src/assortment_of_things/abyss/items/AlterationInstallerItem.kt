@@ -27,7 +27,7 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
 
         var data = stack.specialDataIfSpecial.data
 
-        var mods = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") }
+        var mods = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") && !it.hasTag("rat alteration_no_drop") }
 
         if (data == null || !mods.map { it.id }.contains(data) )
         {

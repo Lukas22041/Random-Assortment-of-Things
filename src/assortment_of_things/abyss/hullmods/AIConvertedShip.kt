@@ -1,11 +1,19 @@
 package assortment_of_things.abyss.hullmods
 
+import assortment_of_things.misc.ReflectionUtils
+import com.fs.graphics.Sprite
+import com.fs.starfarer.BaseGameState
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.econ.MarketAPI
-import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.MutableShipStatsAPI
+import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.loading.ResourceLoaderState
+import com.fs.state.AppDriver
 
 class AIConvertedShip : BaseAlteration() {
 

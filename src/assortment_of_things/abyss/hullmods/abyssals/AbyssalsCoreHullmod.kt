@@ -75,7 +75,7 @@ class AbyssalsCoreHullmod : BaseHullMod() {
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)
 
-
+        if (Global.getCombatEngine() == null) return
         var renderer = AbyssalCoreRenderer(ship!!)
         ship.setCustomData("abyssal_glow_renderer", renderer)
         Global.getCombatEngine().addLayeredRenderingPlugin(renderer)
@@ -154,6 +154,7 @@ class AbyssalsCoreHullmod : BaseHullMod() {
             super.render(layer, viewport)
 
             if (sprite == null) return
+            if (!ship.isAlive || ship.isHulk) return
 
             var c = getColorForCore(ship)
 

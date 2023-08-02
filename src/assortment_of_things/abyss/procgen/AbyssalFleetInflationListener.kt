@@ -41,10 +41,13 @@ class AbyssalFleetInflationListener : FleetInflationListener {
         HullMods.TURRETGYROS
     )
 
+
     override fun reportFleetInflated(fleet: CampaignFleetAPI?, inflater: FleetInflater?) {
         if (fleet == null) return
         if (fleet.faction.id == "rat_abyssals")
         {
+
+            fleet.stats.sensorRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 0.90f)
 
             var tier = AbyssProcgen.Tier.High
             if (fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))    {
@@ -63,13 +66,14 @@ class AbyssalFleetInflationListener : FleetInflationListener {
                 if (tier == AbyssProcgen.Tier.Mid) {
                     chance.add(0, 0.2f)
                     chance.add(1, 0.4f)
-                    chance.add(2, 0.2f)
+                    chance.add(2, 0.4f)
 
                 }
                 else if (tier == AbyssProcgen.Tier.High) {
                     chance.add(0, 0.2f)
                     chance.add(1, 0.5f)
-                    chance.add(2, 0.3f)
+                    chance.add(2, 0.5f)
+
                 }
             }
             else {
@@ -147,6 +151,11 @@ class AbyssalFleetInflationListener : FleetInflationListener {
                 HullSize.CAPITAL_SHIP -> 15f
                 else -> 0f
             }
+
+            var variantID = member.variant.hullVariantId.lowercase()
+            if (member.variant.hasHullMod(HullMods.SAFETYOVERRIDES)) weight *= 4f
+            if (variantID.contains("chronos") || variantID.contains("cosmos")) weight *= 1.5f
+
             picker.add(member, weight)
         }
 
@@ -162,11 +171,11 @@ class AbyssalFleetInflationListener : FleetInflationListener {
 
             var variantID = pick.variant.hullVariantId.lowercase()
 
-            if (variantID.contains("temporal"))
+            if (variantID.contains("temporal") || variantID.contains("chronos"))
             {
                 core = chronos.createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, random)
             }
-            else if (variantID.contains("cosmal"))
+            else if (variantID.contains("cosmal") || variantID.contains("cosmos"))
             {
                 core = cosmos.createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, random)
             }

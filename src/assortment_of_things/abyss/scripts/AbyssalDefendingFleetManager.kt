@@ -163,12 +163,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
             }
         }
 
-        if (difficulty == AbyssDifficulty.Hard)
-        {
-            minPoints += 20f
-            maxPoints += 30f
 
-        }
 
         var totalBonus = 10
         minPoints += totalBonus
@@ -176,10 +171,30 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
 
         var points = MathUtils.getRandomNumberInRange(minPoints, maxPoints)
 
-        /*var type = FleetTypes.PATROL_SMALL
-        if (points > 64) type = FleetTypes.PATROL_MEDIUM
-        if (points > 128) type = FleetTypes.PATROL_LARGE*/
+        //Mild Fleet scaling
+        if (difficulty == AbyssDifficulty.Hard)
+        {
+            var playerFleet = Global.getSector().playerFleet
+            var playerFP = playerFleet.fleetPoints.toFloat()
+            var scalingPointsCap = 250
 
+            if (points < playerFP) {
+
+                var difference = playerFP - points
+
+                var scalingMult = when(tier) {
+                    AbyssProcgen.Tier.Low -> 0.5f
+                    AbyssProcgen.Tier.Mid -> 0.5f
+                    AbyssProcgen.Tier.High -> 0.5f
+                }
+
+                var pointsForScaling = difference * scalingMult
+                pointsForScaling = MathUtils.clamp(pointsForScaling, 0f, playerFP)
+                pointsForScaling = MathUtils.clamp(pointsForScaling, 0f, 200f)
+
+                points += pointsForScaling
+            }
+        }
 
         var qualityOverride = when(tier) {
             AbyssProcgen.Tier.Low -> 3f

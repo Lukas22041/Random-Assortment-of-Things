@@ -1,0 +1,33 @@
+{
+	"specClass":"beam",
+	#"beamEffect":"com.fs.starfarer.api.impl.combat.IonBeamEffect",
+	"id":"rat_asterina",
+	"type":"ENERGY",
+	"size":"SMALL",
+	
+	"turretSprite":"graphics/weapons/abyss/rat_asterina_turret.png",
+	"turretGlowSprite":"graphics/weapons/abyss/rat_asterina_turret_glow.png",
+
+	"hardpointSprite":"graphics/weapons/abyss/rat_asterina_hardpoint.png",
+	"hardpointGlowSprite":"graphics/weapons/abyss/rat_asterina_hardpoint_glow.png",
+
+	"turretOffsets":[10, 0],
+	"turretAngleOffsets":[0],
+	"hardpointOffsets":[15, 0],
+	"hardpointAngleOffsets":[0],
+	"fringeColor":[242, 12, 81,225],
+	"coreColor":[255,180,180,255],
+	"glowColor":[242, 12, 81,255],
+	#"fringeColor":[155,0,0,255],
+	#"coreColor":[255,255,255,255],
+	#"glowColor":[255,100,100,255],	
+	"width":7.5,
+	"textureType":ROUGH,
+	#"textureType":["graphics/fx/beam_chunky_fringe.png","graphics/fx/beam_chunky_core.png"],
+	"textureScrollSpeed":72.0,
+	"pixelsPerTexel":5.0,
+	"fireSoundOne":"laser_intro",
+	"fireSoundTwo":"laser_loop",
+	"beamEffect":"assortment_of_things.abyss.weapons.BeamFluxAdjuster",
+	"pierceSet":[PROJECTILE_FF,PROJECTILE_NO_FF,PROJECTILE_FIGHTER,MISSILE_FF,MISSILE_NO_FF],
+}

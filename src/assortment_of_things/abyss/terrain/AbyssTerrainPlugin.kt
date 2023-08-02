@@ -8,6 +8,8 @@ import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.apache.log4j.Level
+import org.apache.log4j.Priority
 import java.awt.Color
 
 class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
@@ -66,6 +68,14 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
             }
 
             if (cell != null && cell.isStorming && !Misc.isSlowMoving(fleet)) {
+
+                var logger = Global.getLogger(this::class.java)
+                var movingSlowly = Misc.isSlowMoving(fleet)
+                var movingSlowlyBurnSpeed = Misc.getGoSlowBurnLevel(fleet)
+                var sneakBurnMult = Misc.SNEAK_BURN_MULT
+
+                logger.level = Level.ALL
+                logger.debug("RAT_STORM: $movingSlowly | $movingSlowlyBurnSpeed | $sneakBurnMult")
 
                 applyStormStrikes(cell, fleet, days)
             }

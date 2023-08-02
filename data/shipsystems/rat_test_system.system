@@ -1,0 +1,18 @@
+{
+	"id":"rat_test_system",
+	"type":"STAT_MOD",
+	"aiType":"CUSTOM",
+	"aiScript":"assortment_of_things.abyss.shipsystem.ai.TestShipSystemAI",
+	
+	"statsScript":"assortment_of_things.abyss.shipsystem.TestShipSystem",
+	"runScriptWhilePaused":true, # only for the player's ship
+	"runScriptWhileIdle":true,  # this means unapply() never gets called
+	"blockActionsWhileChargingDown":false,
+	
+	"canNotCauseOverload":true,
+	
+	#"useSound":"system_ammo_feeder",
+	#"deactivateSound":"system_phase_cloak_deactivate",
+	#"deactivateSound":"system_phase_cloak_deactivate",
+	"outOfUsesSound":"system_phase_cloak_collision",
+}

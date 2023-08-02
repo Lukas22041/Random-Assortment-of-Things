@@ -1,0 +1,11 @@
+id,type,size,intensity,fadeout,color,offset,hit size,hit intensity,hit fadeout,hit color,flash size,flash intensity,flash fadeout,flash color,flash offset,chance,fighter dim
+rat_shortfin_shot,projectile,,,,,,,,,,50,0.5,0.15,"[129,10,199]",,0.4,TRUE
+rat_humpback_shot,projectile,150,0.16,0.25,"[38,82,171]",,175,0.25,0.7,"[38,82,171]",150,0.16,0.5,"[38,82,171]",,0.8,TRUE
+rat_haddock_shot,projectile,150,0.25,0.25,"[129,10,199]",,175,0.45,0.7,"[129,10,199]",150,0.25,0.5,"[100,100,255]",,0.8,TRUE
+rat_leviathan_shot,projectile,150,0.8,0.5,"[207,6,73]",,150,0.75,1.25,"[207,6,73]",200,0.8,2,"[230,16,87]",,1,TRUE
+,,,,,,,,,,,,,,,,,
+rat_seadragon_missile,projectile,150,0.25,0.5,"[128,235,52]",13,650,0.4,1.25,"[128,235,52]",,,,,,1,FALSE
+,,,,,,,,,,,,,,,,,
+rat_asterina,beam,45,0.25,,"[242,12,81]",,130,0.25,,"[242,12,81]",65,0.15,,"[242,12,81]",,1,TRUE
+rat_asterias,beam,65,0.3,,"[135,17,1]",,200,0.25,,"[135,17,1]",100,0.2,,"[135,17,1]",,1,TRUE
+rat_seabream,beam,70,0.7,,"[190,130,205]",,210,0.5,,"[190,130,205]",105,0.4,,"[125,10,155]",,1,TRUE

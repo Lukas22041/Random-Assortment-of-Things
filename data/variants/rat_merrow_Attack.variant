@@ -1,44 +1,37 @@
 {
-  "variantId": "rat_merrow_Attack",
-  "hullId": "rat_merrow",
-  "displayName": "Attack",
-  "goalVariant": false,
-  "fluxCapacitors": 6,
-  "fluxVents": 10,
-  "quality": 1,
-  "permaMods": [],
-  "hullMods": [
-    "fluxdistributor"
-  ],
-  "weaponGroups": [
-    {
-      "autofire": false,
-      "mode": "LINKED",
-      "weapons": {
-        "WS0003": "lightdualac",
-        "WS0004": "lightdualac"
-      }
-    },
-    {
-      "autofire": false,
-      "mode": "LINKED",
-      "weapons": {}
-    },
-    {
-      "autofire": false,
-      "mode": "LINKED",
-      "weapons": {
-        "WS0002": "lightag"
-      }
-    },
-    {
-      "autofire": false,
-      "mode": "LINKED",
-      "weapons": {
-        "WS0001": "lightag"
-      }
-    }
-  ],
-  "modules": [],
-  "wings": []
+    "displayName": "Attack",
+    "fluxCapacitors": 4,
+    "fluxVents": 10,
+    "goalVariant": false,
+    "hullId": "rat_merrow",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "targetingunit",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_merrow_Attack",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "railgun",
+                "WS0004": "railgun",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_shortfin",
+                "WS0002": "rat_shortfin",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
 }

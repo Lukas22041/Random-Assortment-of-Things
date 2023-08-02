@@ -28,6 +28,8 @@ fun SettingsAPI.getAndLoadSprite(filename: String) : SpriteAPI{
 
 fun TooltipMakerAPI.addPara(str: String) = this.addPara(str, 0f)
 
+fun TooltipMakerAPI.addNegativePara(str: String) = this.addPara(str, 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+
 fun FleetMemberAPI.fixVariant() {
     if (this.variant.source != VariantSource.REFIT)
     {

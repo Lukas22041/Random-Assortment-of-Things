@@ -4,6 +4,7 @@ object RATItems
 {
     var CHRONOS_CORE = "rat_chronos_core"
     var COSMOS_CORE = "rat_cosmos_core"
+    var PRIMORDIAL = "rat_primordial_core"
 
     var ABYSS_SURVEY = "rat_abyss_survey"
     var ABYSS_DISCOVERY_INSTRUMENT = "rat_instrument_discovery"

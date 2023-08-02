@@ -1,0 +1,29 @@
+{
+	"specClass":"beam",
+	"id":"rat_asterias",
+	"type":"ENERGY",
+	"size":"MEDIUM",
+	#"displayArcRadius":550,
+
+	"turretSprite":"graphics/weapons/abyss/rat_asterias_turret.png",
+	"turretGlowSprite":"graphics/weapons/abyss/rat_asterias_turret_glow.png",
+
+	"hardpointSprite":"graphics/weapons/abyss/rat_asterias_hardpoint.png",
+	"hardpointGlowSprite":"graphics/weapons/abyss/rat_asterias_hardpoint_glow.png",
+
+	"turretOffsets":[15, 0],
+	"turretAngleOffsets":[0],
+	"hardpointOffsets":[23, 0],
+	"hardpointAngleOffsets":[0],
+	"fringeColor":[135, 17, 1,255],
+	"coreColor":[255,150,150,255],
+	"glowColor":[135, 17, 1,255],
+	"width":15.0,
+	"textureType":ROUGH,
+	"textureScrollSpeed":260.0,
+	"pixelsPerTexel":5.0,
+	#"fireSoundOne":"graviton_beam_intro",
+	"fireSoundTwo":"graviton_beam_loop",
+	"beamEffect":"assortment_of_things.abyss.weapons.BeamFluxAdjuster",
+	"pierceSet":[PROJECTILE_FF,PROJECTILE_NO_FF,PROJECTILE_FIGHTER,MISSILE_FF,MISSILE_NO_FF],
+}

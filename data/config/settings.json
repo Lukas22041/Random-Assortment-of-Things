@@ -19,6 +19,7 @@
 	
 	"drop_prob_officer_rat_chronos_core":0.1,
 	"drop_prob_officer_rat_cosmos_core":0.1,
+	"drop_prob_officer_rat_primordial_core":0,
 
 	"graphics":{
 		
@@ -49,6 +50,7 @@
 		"rat_cores": {
 		  "chronos":"graphics/portraits/cores/rat_chronos_core.png",
 		  "cosmos":"graphics/portraits/cores/rat_cosmos_core.png",
+		  "primordial":"graphics/portraits/cores/rat_primordial_core.png",
 		},
 		
  	}

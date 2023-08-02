@@ -22,4 +22,6 @@ object AbyssTags {
 
     var HOSTILE_ICON = "rat_hostile_icon"
 
+    var ABYSS_WRECK = "rat_abyss_wreck"
+
 }

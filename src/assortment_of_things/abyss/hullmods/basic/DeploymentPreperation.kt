@@ -1,12 +1,15 @@
 package assortment_of_things.abyss.hullmods.basic
 
 import assortment_of_things.abyss.hullmods.BaseAlteration
+import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
+import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 
 class DeploymentPreperation : BaseAlteration() {
 
@@ -14,7 +17,7 @@ class DeploymentPreperation : BaseAlteration() {
     var modID = "rat_preperation"
     var deploymentModID = "deployment_points_mod"
 
-    var dp = mapOf(HullSize.FRIGATE to -1f, HullSize.DESTROYER to -2f, HullSize.CRUISER to -3f, HullSize.CAPITAL_SHIP to -3f)
+    var dp = mapOf(HullSize.FIGHTER to 0f, HullSize.FRIGATE to 0f, HullSize.DESTROYER to -2f, HullSize.CRUISER to -3f, HullSize.CAPITAL_SHIP to -3f)
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)
@@ -41,11 +44,21 @@ class DeploymentPreperation : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        var label = tooltip.addPara("The hull receives more preperation for future deployment, decreasing the deployment cost by 1/2/3/3 points, but increasing the monthly supply useage by 25%%"
+        var label = tooltip.addPara("The hull receives more preperation for future deployment, decreasing the deployment cost by 2/3/3 points, but increasing the monthly supply useage by 25%%"
             , 0f, Misc.getTextColor(), Misc.getHighlightColor())
-        label.setHighlight("deployment cost", "1/2/3/3", "25%")
+        label.setHighlight("deployment cost", "2/3/3", "25%")
         label.setHighlightColors(hc, hc, nc)
 
+    }
+
+    override fun canInstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
+        return !member!!.isFrigate
+    }
+
+    override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?,  member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
+        if (member!!.isFrigate) {
+            tooltip!!.addPara("Can not be installed on frigates.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        }
     }
 
 }

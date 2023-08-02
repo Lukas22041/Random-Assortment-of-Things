@@ -41,14 +41,6 @@ class IntegratedChronosCore : BaseAlteration() {
         if (stats!!.variant.hasHullMod(HullMods.AUTOMATED))
         {
             stats!!.variant.removePermaMod(HullMods.AUTOMATED)
-            if (stats.fleetMember.captain != null)
-            {
-                if (stats.fleetMember.captain.isAICore)
-                {
-                    Global.getSector().playerFleet.cargo.addCommodity(stats.fleetMember.captain.aiCoreId, 1f)
-                }
-                stats.fleetMember.captain = null
-            }
         }
 
         stats.minCrewMod.modifyFlat("rat_core_conversion", minCrew.get(hullSize)!!)
@@ -75,12 +67,12 @@ class IntegratedChronosCore : BaseAlteration() {
     }
 
     override fun canInstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return member!!.baseOrModSpec().hasTag("rat_abyssals") && (member!!.captain == null || member!!.captain.nameString == "")
+        return variant!!.hasHullMod("rat_abyssal_core") && (member!!.captain == null || member!!.captain.nameString == "")
     }
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?,  member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
         if (!member!!.baseOrModSpec().hasTag("rat_abyssals")) {
-            tooltip!!.addPara("Can only be installed on abyssal hulls.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+            tooltip!!.addPara("Can only be installed on hulls with the \"Abyssal Core\" hullmod.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
         else {
             tooltip!!.addPara("Can not be installed while an AI core is assigned to the ship.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())

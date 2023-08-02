@@ -7,12 +7,18 @@ import assortment_of_things.abyss.intel.event.SignificantEntityDiscoveredFactor
 import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.scripts.AbyssalDefendingFleetManager
 import assortment_of_things.artifacts.ArtifactUtils
+import assortment_of_things.strings.RATTags
+import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
+import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.AddedEntity
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
@@ -21,7 +27,6 @@ import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.getStorageCargo
 import org.magiclib.kotlin.setAlpha
 import java.util.*
-import kotlin.random.asJavaRandom
 
 object AbyssProcgen {
 
@@ -29,7 +34,7 @@ object AbyssProcgen {
         Low, Mid, High
     }
 
-    fun getLocationToPlaceAt(system: StarSystemAPI) : Vector2f
+    fun getLocationToPlaceAt(system: StarSystemAPI, minDistance: Float = 1000f) : Vector2f
     {
         var min = 3000f;
         var max = 16000f;
@@ -45,7 +50,7 @@ object AbyssProcgen {
         for (existing in existingEntities)
         {
             var distance = MathUtils.getDistance(existing.location, pos)
-            if (distance < 1000)
+            if (distance < minDistance)
             {
                 getLocationToPlaceAt(system)
             }
@@ -301,5 +306,23 @@ object AbyssProcgen {
             defenseTarget.containingLocation.addScript(AbyssalDefendingFleetManager(defenseTarget, tier, type))
         }
 
+    }
+
+    fun addDerelictAbyssalShips(system: StarSystemAPI, max: Int, chanceToAddPer: Float) {
+        for (i in 0 until max) {
+            if (Random().nextFloat() >= chanceToAddPer) continue
+
+            val faction: String = "rat_abyssals"
+            val params = DerelictShipEntityPlugin.createRandom(faction, null, Random(), DerelictShipEntityPlugin.getDefaultSModProb())
+
+            if (params != null) {
+                val entity = BaseThemeGenerator.addSalvageEntity(Random(), system, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
+                entity.setDiscoverable(true)
+
+                var loc = getLocationToPlaceAt(system, 250f)
+                entity.location.set(loc)
+                entity.addTag(AbyssTags.ABYSS_WRECK)
+            }
+        }
     }
 }

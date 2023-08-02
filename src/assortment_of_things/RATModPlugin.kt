@@ -3,7 +3,6 @@ package assortment_of_things
 import ParallelConstruction
 import assortment_of_things.campaign.RATCampaignPlugin
 import assortment_of_things.campaign.procgen.LootModifier
-import assortment_of_things.campaign.ui.MinimapUI
 import assortment_of_things.abyss.systems.MidnightCoreSystem
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
@@ -11,8 +10,9 @@ import assortment_of_things.abyss.scripts.DisableTransverseScript
 import assortment_of_things.abyss.scripts.ForceNegAbyssalRep
 import assortment_of_things.abyss.scripts.HullmodRemoverListener
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
+import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
-import assortment_of_things.campaign.ui.AlterationRefitButton
+import assortment_of_things.campaign.ui.*
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.modular_weapons.scripts.WeaponComponentsListener
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
@@ -28,6 +28,7 @@ import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaRefit.LunaRefitManager
 import lunalib.lunaSettings.LunaSettings
+import org.dark.shaders.light.LightData
 import java.util.*
 
 
@@ -52,9 +53,18 @@ class RATModPlugin : BaseModPlugin() {
 
         ArtifactUtils.loadArtifactsFromCSV()
 
-
         LunaRefitManager.addRefitButton(AlterationRefitButton())
+        LunaRefitManager.addRefitButton(CrewConversionChronosRefitButton())
+        LunaRefitManager.addRefitButton(CrewConversionCosmosRefitButton())
+        LunaRefitManager.addRefitButton(CrewConversionRemoveIntegratedRefitButton())
 
+        if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
+            //RATNexManager.addStartingFleets()
+        }
+
+        if (Global.getSettings().modManager.isModEnabled("shaderLib")) {
+            LightData.readLightDataCSV("data/config/rat_lights_data.csv");
+        }
     }
 
     override fun onDevModeF8Reload() {
@@ -64,26 +74,22 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-      /*  for (artifact in ArtifactUtils.artifacts)
+        for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 5f)
         }
 
-        for (hullmod in Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") })
+        for (hullmod in Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") && !it.hasTag("rat alteration_no_drop") })
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmod.id), 5f)
         }
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 5f)
 
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_automation_converter", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_chronos_integration", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_cosmos_integration", null), 5f)
-
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 10f)
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
 
 
         if (RATSettings.enableAbyss!!)
@@ -111,7 +117,7 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(ForceNegAbyssalRep())
         Global.getSector().addTransientListener(HullmodRemoverListener())
 
-
+        Global.getSector().addTransientScript(AddArtifactHullmod())
 
         if (RATSettings.enableMinimap!!){
             Global.getSector().addTransientScript(MinimapUI())

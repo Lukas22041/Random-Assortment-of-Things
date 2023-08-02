@@ -22,6 +22,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
@@ -530,6 +531,8 @@ object AbyssUtils {
             if (hasBallistic) alterations.putAll(mapOf("rat_ballistic_focus" to 1.5f))
             if (hasEnergy) alterations.putAll(mapOf("rat_energy_focus" to 1.5f))
             if (hasMissile) alterations.putAll(mapOf("rat_missile_reserve" to 0.5f))
+
+            if (member.variant.hasHullMod(HullMods.SAFETYOVERRIDES)) alterations.putAll(mapOf("rat_overloaded_systems" to 3f))
 
             var picker = WeightedRandomPicker<String>()
             alterations.forEach { picker.add(it.key, it.value) }

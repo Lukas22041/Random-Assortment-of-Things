@@ -21,24 +21,6 @@ class CombatHandler : EveryFrameCombatPlugin
     var modularHandler = ModularWeaponCombatHandler()
 
     override fun init(engine: CombatEngineAPI?)  {
-/*
-        if (ArtifactUtils.getActiveArtifact() != null)
-        {
-            var plugin =  ArtifactUtils.getActivePlugin()!!
-            plugin.onCombatStart(Global.getSector().playerFleet, ArtifactUtils.STAT_MOD_ID)
-            plugin.onInstall(Global.getSector().playerFleet, ArtifactUtils.STAT_MOD_ID)
-
-            Global.getCombatEngine().listenerManager.addListener( object : FleetMemberDeploymentListener {
-                override fun reportFleetMemberDeployed(member: DeployedFleetMemberAPI?) {
-
-                    if (Global.getSector().playerFleet.fleetData.membersListCopy.contains(member!!.member))
-                    {
-                        plugin.applyToMembers(member.member, ArtifactUtils.STAT_MOD_ID)
-                    }
-                }
-            })
-        }*/
-
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {

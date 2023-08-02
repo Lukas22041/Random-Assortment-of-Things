@@ -1,0 +1,63 @@
+{
+    "displayName": "Strike_Cosmos",
+    "fluxCapacitors": 0,
+    "fluxVents": 11,
+    "goalVariant": false,
+    "hullId": "rat_aboleth_m",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "missleracks",
+        "targetingunit",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_aboleth_m_Strike_Cosmos",
+    "weaponGroups": [
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "cyclone",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0012": "rat_seadragon",
+                "WS0013": "rat_seadragon",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_asterias",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "rat_humpback",
+                "WS0004": "rat_humpback",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0011": "rat_shortfin",
+                "WS0010": "rat_shortfin",
+                "WS0005": "rat_shortfin",
+                "WS0007": "rat_shortfin",
+                "WS0006": "rat_shortfin",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

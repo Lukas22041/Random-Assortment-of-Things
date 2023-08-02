@@ -13,6 +13,9 @@ class AbyssSystemHigh(name: String, tier: AbyssProcgen.Tier) : BaseAbyssSystem(n
         AbyssProcgen.generateTransmitters(system, 2, 0.5f)
         AbyssProcgen.generateCaches(system, 3,0.75f)
 
+        AbyssProcgen.addDerelictAbyssalShips(system, 5, 0.75f)
+
+
         return system
     }
 }

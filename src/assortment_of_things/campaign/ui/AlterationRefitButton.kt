@@ -202,6 +202,7 @@ class AlterationRefitButton : BaseRefitButton() {
                     plugin.onAlterationRemove(member, variant, market)
 
                     refreshVariant()
+                    refreshButtonList()
                     recreatePanel(member, variant, market)
                 }
             }
@@ -352,6 +353,7 @@ class AlterationRefitButton : BaseRefitButton() {
 
                             Global.getSoundPlayer().playUISound("ui_acquired_blueprint", 1f, 1f)
                             refreshVariant()
+                            refreshButtonList()
                             recreatePanel(member, variant, market)
                         }
                     }

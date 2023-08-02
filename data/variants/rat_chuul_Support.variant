@@ -1,46 +1,44 @@
 {
-    "displayName": "Temporal",
-    "fluxCapacitors": 20,
+    "displayName": "Support",
+    "fluxCapacitors": 12,
     "fluxVents": 20,
     "goalVariant": false,
     "hullId": "rat_chuul",
     "hullMods": [
+        "advancedoptics",
+        "fluxdistributor",
         "hardenedshieldemitter",
         "targetingunit",
     ],
-    "permaMods": [],
+    "permaMods": [
+        "automated",
+    ],
     "sMods": [],
     "suppressedMods": [],
-    "variantId": "rat_chuul_Temporal",
+    "variantId": "rat_chuul_Support",
     "weaponGroups": [
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0001": "ioncannon",
-                "WS0002": "ioncannon",
+                "WS0005": "rat_asterias",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0006": "rat_seadragon",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0004": "pdlaser",
-                "WS0003": "pdlaser",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0005": "heavyneedler",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0006": "heavymortar",
+                "WS0001": "rat_asterina",
+                "WS0003": "rat_asterina",
+                "WS0002": "rat_asterina",
+                "WS0004": "rat_asterina",
             }
         },
     ],

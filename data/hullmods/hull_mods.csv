@@ -1,6 +1,6 @@
 name,id,tier,rarity,tech/manufacturer,tags,uiTags,base value,unlocked,hidden,hiddenEverywhere,cost_frigate,cost_dest,cost_cruiser,cost_capital,script,desc,short,sprite
 ,,,,,,,,,,,,,,,,,,
-Artifact Controller,rat_artifact_controller,0,,,,,3000,FALSE,TRUE,TRUE,0,0,0,0,assortment_of_things.artifacts.ArtifactControllerHullmod,,,graphics/hullmods/rat_abyssal_core.png
+Artifact Controller,rat_artifact_controller,0,,,"no_drop_salvage, restricted",,3000,FALSE,TRUE,TRUE,0,0,0,0,assortment_of_things.artifacts.ArtifactControllerHullmod,,,graphics/hullmods/rat_abyssal_core.png
 ,,,,,,,,,,,,,,,,,,
 #Abyssals,,,,,,,,,,,,,,,,,,
 Abyssal Core,rat_abyssal_core,0,,Abyss,,"Logistics, Requires Dock",3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod,,,graphics/hullmods/rat_abyssal_core.png
@@ -10,8 +10,9 @@ Abyssal Core,rat_abyssal_core,0,,Abyss,,"Logistics, Requires Dock",3000,FALSE,TR
 ,,,,,,,,,,,,,,,,,,
 #Abyss Special Alterations,,,,,,,,,,,,,,,,,,
 AI Conversion,rat_automated_conversion,3,1,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.AIConvertedShip,,,graphics/hullmods/rat_ai_conversion.png
-Abyssal Conversion (Chronos),rat_chronos_conversion,3,0.75,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedChronosCore,,,graphics/hullmods/rat_chronos_conversion.png
-Abyssal Conversion (Cosmos),rat_cosmos_conversion,3,0.75,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedCosmosCore,,,graphics/hullmods/rat_chosmos_conversion.png
+Abyssal Crew Conversion,rat_abyssal_conversion,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalCrewConversion,,,graphics/hullmods/rat_crew_conversion.png
+Abyssal Crew Conversion (Chronos),rat_chronos_conversion,3,0.75,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedChronosCore,,,graphics/hullmods/rat_chronos_conversion.png
+Abyssal Crew Conversion (Cosmos),rat_cosmos_conversion,3,0.75,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedCosmosCore,,,graphics/hullmods/rat_chosmos_conversion.png
 ,,,,,,,,,,,,,,,,,,
 ##Misc,,,,,,,,,,,,,,,,,,
 Quality Assurance,rat_qualityAssurance,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.QualityAssuranceHullmod,,,graphics/hullmods/rat_quality_assurance.png

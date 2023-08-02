@@ -1,0 +1,57 @@
+{
+    "displayName": "Support_Cosmos",
+    "fluxCapacitors": 0,
+    "fluxVents": 19,
+    "goalVariant": false,
+    "hullId": "rat_aboleth_m",
+    "hullMods": [
+        "advancedoptics",
+        "hardenedshieldemitter",
+        "targetingunit",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_aboleth_m_Support_Cosmos",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "rat_leviathan",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0012": "rat_seadragon",
+                "WS0013": "rat_seadragon",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_asterias",
+                "WS0011": "rat_asterina",
+                "WS0003": "rat_asterias",
+                "WS0010": "rat_asterina",
+                "WS0004": "rat_asterias",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0009": "rat_shortfin",
+                "WS0008": "rat_shortfin",
+                "WS0005": "rat_shortfin",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

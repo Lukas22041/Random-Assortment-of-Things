@@ -1,0 +1,37 @@
+{
+    "displayName": "Support",
+    "fluxCapacitors": 6,
+    "fluxVents": 10,
+    "goalVariant": false,
+    "hullId": "rat_merrow",
+    "hullMods": [
+        "targetingunit",
+        "unstable_injector",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_merrow_Support",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "rat_asterina",
+                "WS0004": "rat_asterina",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_asterina",
+                "WS0002": "rat_asterina",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

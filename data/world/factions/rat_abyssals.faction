@@ -58,7 +58,7 @@
 		],
 	},
 	"knownFighters":{
-		"tags":["remnant"],
+		"tags":["rat_abyssals"],
 		"fighters":[
 		],
 	},
@@ -68,7 +68,7 @@
 		],
 	},
 	"knownWeapons":{
-		"tags":["base_bp", "lowtech_bp", "midline_bp", "hightech_bp", "missile_bp", "remnant"],
+		"tags":["base_bp", "lowtech_bp", "midline_bp", "hightech_bp", "missile_bp", "rat_abyssals"],
 		"weapons":[
 			"lightneedler",
 			"railgun",

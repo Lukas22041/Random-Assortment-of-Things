@@ -9,10 +9,11 @@ For the [Beta], the player starts with the [Singularity Jump] ability, which all
 Enabling it generates it in a [new save], or any existing save that is [loaded with this config enabled].",,,Expansion
 rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the abyss.
 
-Hard-mode severely increases the strength of encountered fleets within the abyss.",,,Expansion
+Hard-mode severely increases the strength of encountered fleets within the abyss. Also adds slight player fleet scaling, if the player over powers them a lot.",,,Expansion
 rat_abyssCredits,,Text,"[Credits:]
 [SnazzyPantsMcGee] - Spritework
-[Haplogynae] - Music",,,,,Expansion
+[Haplogynae] - Music
+[Niatahl] & [Ruddygreat] - Helped with some VFX",,,,,Expansion
 ,,,,,,,,
 #Enhancements,,,,,,,,
 rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,Enhancement
