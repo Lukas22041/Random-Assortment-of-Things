@@ -16,6 +16,8 @@ class SingularityJumpAbility : BaseDurationAbility() {
 
     var lastPosition: SectorEntityToken? = null
 
+
+
     override fun activateImpl() {
 
         var key = "\$rat_abyss_token"
@@ -105,7 +107,6 @@ class SingularityJumpAbility : BaseDurationAbility() {
         if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && AbyssalDepthsEventIntel.get() != null && AbyssalDepthsEventIntel.get()!!.isStageActive(AbyssalDepthsEventIntel.Stage.RETURNAL)) {
             path = "graphics/icons/abilities/rat_singularity_jump_returnal.png"
         }
-        Global.getSettings().loadTexture(path)
 
         return path
     }

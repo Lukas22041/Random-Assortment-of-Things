@@ -53,5 +53,9 @@
 		  "primordial":"graphics/portraits/cores/rat_primordial_core.png",
 		},
 		
+		"rat_preload": {
+		  "1":"graphics/icons/abilities/rat_singularity_jump_returnal.png",
+		},
+		
  	}
  }

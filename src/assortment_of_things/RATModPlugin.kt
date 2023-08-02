@@ -14,6 +14,7 @@ import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.modular_weapons.scripts.WeaponComponentsListener
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import assortment_of_things.scripts.AtMarketListener
@@ -29,6 +30,7 @@ import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaRefit.LunaRefitManager
 import lunalib.lunaSettings.LunaSettings
 import org.dark.shaders.light.LightData
+import java.io.File
 import java.util.*
 
 
@@ -40,6 +42,10 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onApplicationLoad() {
         super.onApplicationLoad()
+
+        var test = ReflectionUtils.instantiate(Class.forName("java.io.File"))
+
+
 
         LunaDebug.addSnippet(ProcgenDebugSnippet())
         LunaDebug.addSnippet(ResetAllModularSnippet())
@@ -74,7 +80,10 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-        for (artifact in ArtifactUtils.artifacts)
+
+
+
+     /*   for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 5f)
         }
@@ -90,7 +99,7 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
-
+*/
 
         if (RATSettings.enableAbyss!!)
         {
