@@ -24,7 +24,7 @@ Energy Focus,rat_energy_focus,3,5,Hull Alteration,"rat_alteration, no_drop_salva
 Missile Reserves,rat_missile_reserve,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.MissileReserveHullmod,,,graphics/hullmods/rat_missile_reserves.png
 Deployment Preperation,rat_preperation,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.DeploymentPreperation,,,graphics/hullmods/rat_deployment.png
 Drivefield Overwrite,rat_drivefield_overwrite,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.DrivefieldOverwriteHullmod,,,graphics/hullmods/rat_drivefield_overwrite.png
-,,,,,,,,,,,,,,,,,,
+Unaffected Deployment,rat_unaffected,3,1,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.UnaffectedDeploymentHullmod,,,graphics/hullmods/rat_unaffected.png
 ,,,,,,,,,,,,,,,,,,
 ##Fightersystems,,,,,,,,,,,,,,,,,,
 Temporal Assault,rat_temporalAssault,3,2.5,Hull Alteration,"rat_alteration, fightersystem, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.TemporalAssaultHullmod,,,graphics/hullmods/rat_temporal_assault.png

@@ -1,9 +1,10 @@
 package assortment_of_things.misc
 
-import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.ShipAPI
+import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
 import java.lang.invoke.MethodType
+import java.net.URL
+import java.net.URLClassLoader
 
 object ReflectionUtils {
 
@@ -109,6 +110,16 @@ object ReflectionUtils {
 
         if (method == null) return null
         return ReflectedMethod(method)
+    }
+
+    fun createClassThroughCustomLoader(claz: Class<*>) : MethodHandle
+    {
+        var loader = this::class.java.classLoader
+        val urls: Array<URL> = (loader as URLClassLoader).urLs
+        val reflectionLoader: Class<*> = object : URLClassLoader(urls, ClassLoader.getSystemClassLoader()) {
+        }.loadClass(claz.name)
+        var handle = MethodHandles.lookup().findConstructor(reflectionLoader, MethodType.methodType(Void.TYPE))
+        return handle
     }
 
     class ReflectedField(private val field: Any) {

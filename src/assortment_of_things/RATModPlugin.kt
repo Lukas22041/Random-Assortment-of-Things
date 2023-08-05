@@ -43,10 +43,6 @@ class RATModPlugin : BaseModPlugin() {
     override fun onApplicationLoad() {
         super.onApplicationLoad()
 
-        var test = ReflectionUtils.instantiate(Class.forName("java.io.File"))
-
-
-
         LunaDebug.addSnippet(ProcgenDebugSnippet())
         LunaDebug.addSnippet(ResetAllModularSnippet())
         LunaDebug.addSnippet(DropgroupTestSnippet())
@@ -59,10 +55,14 @@ class RATModPlugin : BaseModPlugin() {
 
         ArtifactUtils.loadArtifactsFromCSV()
 
+
+
         LunaRefitManager.addRefitButton(AlterationRefitButton())
+
         LunaRefitManager.addRefitButton(CrewConversionChronosRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionCosmosRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionRemoveIntegratedRefitButton())
+
 
         if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
             //RATNexManager.addStartingFleets()
@@ -83,7 +83,7 @@ class RATModPlugin : BaseModPlugin() {
 
 
 
-     /*   for (artifact in ArtifactUtils.artifacts)
+        for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 5f)
         }
@@ -99,7 +99,6 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
-*/
 
         if (RATSettings.enableAbyss!!)
         {

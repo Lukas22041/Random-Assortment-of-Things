@@ -9,6 +9,9 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.campaign.Faction
 
 class MidnightCoreSystem {
 
@@ -67,8 +70,14 @@ class MidnightCoreSystem {
 
         AbyssUtils.clearTerrainAroundFractures(fractures)*/
 
-       addMapIntel()
-      // teleport(token)
+
+       /* var entity = system.addCustomEntity("test_${Misc.genUID()}", "Test", "rat_abyss_jumpvisual", Factions.NEUTRAL)
+        entity.location.set(-2000f, 0f)
+
+        AbyssUtils.clearTerrainAround(entity, 5000f)*/
+
+        addMapIntel()
+     //   teleport(token)
     }
 
 

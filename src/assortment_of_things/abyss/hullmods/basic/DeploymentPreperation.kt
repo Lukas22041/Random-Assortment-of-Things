@@ -49,6 +49,9 @@ class DeploymentPreperation : BaseAlteration() {
         label.setHighlight("deployment cost", "2/3/3", "25%")
         label.setHighlightColors(hc, hc, nc)
 
+        tooltip.addSpacer(5f)
+        tooltip.addPara("Not applicable to frigates.", 0f)
+
     }
 
     override fun canInstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {

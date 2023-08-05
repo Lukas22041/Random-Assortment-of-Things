@@ -18,11 +18,11 @@ class SpaceCoreSkill : RATBaseShipSkill() {
     }
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?,  skill: SkillSpecAPI?, info: TooltipMakerAPI?,  width: Float) {
-        info!!.addPara("Changes the behaviour of abyssal hulls", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info.addSpacer(2f)
+        info!!.addSpacer(2f)
         info!!.addPara("+10%% damage to ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("+15%% ballistic and energy weapon range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("-10%% shield, armor & hull damage taken.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info.addSpacer(2f)
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {

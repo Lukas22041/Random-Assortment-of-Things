@@ -16,6 +16,8 @@ import com.fs.starfarer.api.impl.campaign.FleetEncounterContext
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Tags
+import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec
+import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.PerShipData
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.ShipCondition
 import com.fs.starfarer.api.util.Misc
@@ -23,6 +25,7 @@ import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.magiclib.kotlin.getSalvageSeed
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.random.asJavaRandom
 
 class AbyssalWreckInteraction : RATInteractionPlugin() {
 
@@ -54,6 +57,42 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
 
         textPanel.addPara("After a short inspection, it is determined that the ship seems to be automated, recovery of it wont be possible through normal means.")
 
+        createOption("Salvage") {
+            var dropRandom = ArrayList<SalvageEntityGenDataSpec.DropData>()
+            var dropValue = ArrayList<SalvageEntityGenDataSpec.DropData>()
+            var drop = SalvageEntityGenDataSpec.DropData()
+
+            drop = SalvageEntityGenDataSpec.DropData()
+            drop.chances = 1
+            drop.group = "weapons2"
+            dropRandom.add(drop)
+
+            drop = SalvageEntityGenDataSpec.DropData()
+            drop.chances = 1
+            drop.valueMult = 0.1f
+            drop.group = "any_hullmod_medium"
+            dropRandom.add(drop)
+
+            drop = SalvageEntityGenDataSpec.DropData()
+            drop.group = "basic"
+            drop.value = 500
+            dropValue.add(drop)
+
+            var mult = when(member.hullSpec.hullSize) {
+                HullSize.FRIGATE -> 1f
+                HullSize.DESTROYER -> 1.5f
+                HullSize.CRUISER -> 2f
+                HullSize.CAPITAL_SHIP -> 3f
+                else -> 1f
+            }
+
+            var salvage = SalvageEntity.generateSalvage(random, mult, mult, 1f, 1f, dropValue, dropRandom)
+
+            visualPanel.showLoot("Loot", salvage, true) {
+                closeDialog()
+                Misc.fadeAndExpire(interactionTarget)
+            }
+        }
 
         var hasCrewed = getCrewConversion() != null
 

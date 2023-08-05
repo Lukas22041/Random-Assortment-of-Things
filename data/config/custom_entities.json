@@ -215,6 +215,22 @@
 		"renderCircleIndicator":false,
 		"renderCircleIndicatorSelectionFlash":false,
 	},
+	
+	
+	"rat_abyss_jumpvisual":{
+		"defaultName":"Test", # used if name=null in addCustomEntity()
+		"defaultRadius":30, # used if radius<0 in addCustomEntity()
+		
+		
+		"showInCampaign":true,
+		"showIconOnMap":true,
+		"scaleIconWithZoom":true,
+		"customDescriptionId":"test",
+		
+		
+		"layers":[TERRAIN_1], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"pluginClass":"assortment_of_things.abyss.entities.JumpVisualEntity",
+	},
 }
 
 

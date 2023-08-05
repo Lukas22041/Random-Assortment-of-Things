@@ -30,7 +30,6 @@ class TestShipSystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin {
     var wormhole = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
     var wormhole2 = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
 
-
     var rangeMod = 1f
 
     var empInterval = IntervalUtil(0.2f, 0.2f)

@@ -20,6 +20,10 @@ class CrewConversionChronosRefitButton : BaseRefitButton() {
         return "Chronos Core Integration"
     }
 
+    override fun getOrder(member: FleetMemberAPI?, variant: ShipVariantAPI?): Int {
+        return 90
+    }
+
     override fun getIconName(member: FleetMemberAPI?, variant: ShipVariantAPI?): String {
         return "graphics/hullmods/rat_chronos_conversion.png"
     }

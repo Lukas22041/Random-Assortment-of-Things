@@ -1,6 +1,6 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
-import assortment_of_things.abyss.items.cores.officer.CosmosCore
+import assortment_of_things.abyss.hullmods.HullmodUtils
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
@@ -70,7 +70,15 @@ class AbyssalsCoreHullmod : BaseHullMod() {
         }
 
         stats!!.getDynamic().getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0f);
+
     }
+
+    override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
+
+
+    }
+
+
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)
@@ -79,6 +87,8 @@ class AbyssalsCoreHullmod : BaseHullMod() {
         var renderer = AbyssalCoreRenderer(ship!!)
         ship.setCustomData("abyssal_glow_renderer", renderer)
         Global.getCombatEngine().addLayeredRenderingPlugin(renderer)
+
+
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  isForModSpec: Boolean): Boolean {

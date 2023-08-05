@@ -23,6 +23,10 @@ class CrewConversionRemoveIntegratedRefitButton : BaseRefitButton() {
         return "graphics/hullmods/rat_crew_conversion.png"
     }
 
+    override fun getOrder(member: FleetMemberAPI?, variant: ShipVariantAPI?): Int {
+        return 90
+    }
+
     override fun shouldShow(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
         return !variant!!.hasHullMod("rat_abyssal_conversion") && (variant.hasHullMod("rat_chronos_conversion") || variant.hasHullMod("rat_cosmos_conversion"))
     }

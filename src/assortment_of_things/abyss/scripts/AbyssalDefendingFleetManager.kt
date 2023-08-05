@@ -163,7 +163,10 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
             }
         }
 
-
+        if (difficulty == AbyssDifficulty.Hard) {
+            minPoints += 30
+            maxPoints += 40
+        }
 
         var totalBonus = 10
         minPoints += totalBonus
@@ -183,8 +186,8 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
                 var difference = playerFP - points
 
                 var scalingMult = when(tier) {
-                    AbyssProcgen.Tier.Low -> 0.5f
-                    AbyssProcgen.Tier.Mid -> 0.5f
+                    AbyssProcgen.Tier.Low -> 0.4f
+                    AbyssProcgen.Tier.Mid -> 0.45f
                     AbyssProcgen.Tier.High -> 0.5f
                 }
 

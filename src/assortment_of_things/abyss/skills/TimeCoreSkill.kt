@@ -18,11 +18,11 @@ class TimeCoreSkill : RATBaseShipSkill() {
     }
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?,  skill: SkillSpecAPI?, info: TooltipMakerAPI?,  width: Float) {
-        info!!.addPara("Changes the behaviour of abyssal hulls", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info.addSpacer(2f)
+        info!!.addSpacer(2f)
         info!!.addPara("+10%% timeflow", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("+20%% maneuverability", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("+5 su/second to zero flux speed boost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info.addSpacer(2f)
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
