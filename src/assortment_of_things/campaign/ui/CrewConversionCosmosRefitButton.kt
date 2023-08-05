@@ -19,13 +19,12 @@ class CrewConversionCosmosRefitButton : BaseRefitButton() {
         return "Cosmos Core Integration"
     }
 
+    override fun getIconName(member: FleetMemberAPI?, variant: ShipVariantAPI?): String {
+        return "graphics/hullmods/rat_chosmos_conversion.png"
+    }
 
     override fun getOrder(member: FleetMemberAPI?, variant: ShipVariantAPI?): Int {
         return 91
-    }
-
-    override fun getIconName(member: FleetMemberAPI?, variant: ShipVariantAPI?): String {
-        return "graphics/hullmods/rat_chosmos_conversion.png"
     }
 
     override fun shouldShow(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {

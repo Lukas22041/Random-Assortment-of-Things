@@ -193,7 +193,7 @@ class AbyssalsCoreHullmod : BaseHullMod() {
                         phaseSprite!!.color = c
 
                         phaseSprite!!.setAdditiveBlend()
-                        phaseSprite!!.alphaMult = 0.5f + (0.2f * fader.brightness)
+                        phaseSprite!!.alphaMult = 0.7f + (0.3f * fader.brightness)
                         phaseSprite!!.renderAtCenter(ship.location.x, ship.location.y)
                     }
 

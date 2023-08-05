@@ -11,8 +11,8 @@
 	"length":20.0,
 	"width":4.5,
 	"fadeTime":0.3,
-	"fringeColor":[129, 10, 199,200],
-	"coreColor":[129, 10, 199,80],
+	"fringeColor":[136, 210, 169, 200],
+	"coreColor":[136, 210, 169, 80],
 	"textureScrollSpeed":64.0,
 	"pixelsPerTexel":5.0,
 	"bulletSprite":"graphics/missiles/shell_small_yellow.png"

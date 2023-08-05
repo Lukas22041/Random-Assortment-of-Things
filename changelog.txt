@@ -1,6 +1,31 @@
 Version 1.5.0 DiscordBeta8
 Only available on the unofficial starsector discord server until its in a more polished state. 
 
+- added 8 weapons to the abyssal faction
+- remade all ship loadouts and added some more variety (no more reaper spam)
+- probably completely unbalanced so make sure to ping me for dumb stuff.
+
+- revamped the "Abyssal Crew Conversion" Alterations to now be just one hullmod, with the core integration being a seperate option that now requires you to use either core.
+- derelict abyssal ship wrecks now spawn in the abyss.
+- wrecks from the abyssal faction can be recovered with the Abysal Crew Conversion Alteration if the player doesnt have the automated ships skill.
+
+- added two more hull alteration.
+- improved a few sprites, notably replacing the aboleths phase glow with an revamped version.
+- hardmode now has slight player fleet scaling, which should make fighting them with overleveled fleets slightly more fun. The scaling however is rather limited.
+
+- several balance changes.
+- abyssal fleets have a slightly lower sensor range now.
+- reduced the drop rates of instrument items and slightly reduced the drop rates of alterations.
+- fixed artifacts not applying to ships added to the fleet after the artifact has been activated.
+- fixed the mod accidentaly overwriting the radiant description.
+- fixed abyssal core hullmod description missing on ships with dmods.
+- possibly fixed some of the ship glows appearing in combat if the ship isnt deployed.
+
+
+
+Version 1.5.0 DiscordBeta8
+Only available on the unofficial starsector discord server until its in a more polished state. 
+
 - improved the trigger that checks if your currently being targeted by a fleet when your salvaging things.
 - might have fixed some odd fleet behaviour.
 - some hullmod balance changes.
