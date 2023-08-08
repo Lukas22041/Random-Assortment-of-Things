@@ -119,11 +119,11 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
                     }
                     FleetTypes.PATROL_MEDIUM -> {
                         minPoints = 64f
-                        maxPoints = 96f
+                        maxPoints = 80f
                     }
                     FleetTypes.PATROL_LARGE -> {
-                        minPoints = 96f
-                        maxPoints = 112f
+                        minPoints = 80f
+                        maxPoints = 90f
                     }
                 }
             }

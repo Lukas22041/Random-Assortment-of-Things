@@ -2,7 +2,7 @@
   "variantId": "rat_chuul_Attack",
   "hullId": "rat_chuul",
   "displayName": "Attack",
-  "goalVariant": false,
+  "goalVariant": true,
   "fluxCapacitors": 18,
   "fluxVents": 20,
   "quality": 1,

@@ -51,7 +51,7 @@ class AbyssalSurveyData : BaseSpecialItemPlugin() {
             "sell", "20", "Abyssal Exploration")
 
         tooltip.addSpacer(5f)
-        tooltip.addPara("Rightclick to study", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Right Click to study", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)
 

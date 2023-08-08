@@ -32,6 +32,10 @@ class AbyssMap : BaseIntelPlugin() {
         return true
     }
 
+    override fun createSmallDescription(info: TooltipMakerAPI?, width: Float, height: Float) {
+
+    }
+
     override fun createLargeDescription(panel: CustomPanelAPI?, width: Float, height: Float) {
        // super.createLargeDescription(panel, width, height)
 

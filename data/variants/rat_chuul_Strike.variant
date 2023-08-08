@@ -2,7 +2,7 @@
   "variantId": "rat_chuul_Strike",
   "hullId": "rat_chuul",
   "displayName": "Strike",
-  "goalVariant": false,
+  "goalVariant": true,
   "fluxCapacitors": 16,
   "fluxVents": 20,
   "quality": 1,

@@ -1,35 +1,51 @@
 {
-	"id":"rat_leviathan",  # this id must match what's in the spreadsheet
-	"specClass":"projectile",
-	"type":"ENERGY",
-	"size":"LARGE",
-	#"displayArcRadius":300,
-
-	"turretSprite":"graphics/weapons/abyss/rat_leviathan_turret.png",
-	"turretGlowSprite":"graphics/weapons/abyss/rat_leviathan_turret_glow.png",
-
-	"hardpointSprite":"graphics/weapons/abyss/rat_leviathan_hardpoint.png",
-	"hardpointGlowSprite":"graphics/weapons/abyss/rat_leviathan_hardpoint_glow.png",
-
-	"turretOffsets":[35, 0],
-	"turretAngleOffsets":[0],
-	"hardpointOffsets":[45, 0],
-	"hardpointAngleOffsets":[0],
-	"specialWeaponGlowWidth":15,
-	"specialWeaponGlowHeight":25,
-	"barrelMode":"ALTERNATING_BURST", # or LINKED.  whether barrels fire at the same time or alternate.
-	"animationType":"GLOW_AND_FLASH",
-	"muzzleFlashSpec":{"length":50.0,   # only used if animationType = MUZZLE_FLASH
-					   "spread":20.0,
-					   "particleSizeMin":15.0,
-					   "particleSizeRange":20.0,
-					   "particleDuration":1,
-					   "particleCount":20,
-					   "particleColor":[230, 16, 87,100]},
-	"projectileSpecId":"rat_leviathan_shot",  # projectile that will be fired
-	"autocharge":true,
-	"stopPreviousFireSound":false,
-	#"fireSoundOne":"heavy_machinegun_intro",
-	"fireSoundTwo":"abyss_leviathan",
-	#"fireSoundTwo":"plasma_cannon_fire",
+  "id": "rat_leviathan",
+  "specClass": "projectile",
+  "projectileSpecId": "rat_leviathan_shot",
+  "type": "ENERGY",
+  "size": "LARGE",
+  "turretSprite": "graphics/weapons/abyss/rat_leviathan_turret.png",
+  "turretGlowSprite": "graphics/weapons/abyss/rat_leviathan_turret_glow.png",
+  "hardpointSprite": "graphics/weapons/abyss/rat_leviathan_hardpoint.png",
+  "hardpointGlowSprite": "graphics/weapons/abyss/rat_leviathan_hardpoint_glow.png",
+  "glowColor": [
+    255,
+    255,
+    255,
+    255
+  ],
+  "specialWeaponGlowHeight": 25,
+  "specialWeaponGlowWidth": 15,
+  "turretOffsets": [
+    33,
+    0
+  ],
+  "turretAngleOffsets": [
+    0
+  ],
+  "hardpointOffsets": [
+    41,
+    0
+  ],
+  "hardpointAngleOffsets": [
+    0
+  ],
+  "barrelMode": "ALTERNATING_BURST",
+  "animationType": "GLOW_AND_FLASH",
+  "autocharge": true,
+  "muzzleFlashSpec": {
+    "length": 50,
+    "spread": 20,
+    "particleSizeMin": 15,
+    "particleSizeRange": 20,
+    "particleDuration": 0.5,
+    "particleCount": 20,
+    "particleColor": [
+      230,
+      16,
+      87,
+      100
+    ]
+  },
+  "fireSoundTwo": "abyss_leviathan"
 }

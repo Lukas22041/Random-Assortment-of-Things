@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.shipsystem
 
-import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
 import assortment_of_things.combat.AfterImageRenderer
 import com.fs.starfarer.api.Global
@@ -10,7 +9,6 @@ import com.fs.starfarer.api.combat.ShipCommand
 import com.fs.starfarer.api.combat.ShipSystemAPI
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
-import com.fs.starfarer.api.impl.combat.TemporalShellStats
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript.StatusData
 import com.fs.starfarer.api.util.IntervalUtil
@@ -109,6 +107,7 @@ class AbolethShipsystem : BaseShipSystemScript() {
     {
         var ship = stats.entity as ShipAPI
         var player = ship == Global.getCombatEngine().getPlayerShip();
+        var id = id + "_" + ship!!.id
 
         var jitterColor = AbyssalsCoreHullmod.getColorForCore(ship).setAlpha(55)
         var jitterUnderColor = AbyssalsCoreHullmod.getColorForCore(ship).setAlpha(150)

@@ -2,7 +2,7 @@
 	
 	"combatSmallForSmallFleet":{
 		"rat_merrow_Attack":10,
-		"rat_merrow_Support":3,
+		"rat_merrow_Support":6,
 		
 		"rat_chuul_Attack":2,
 		"rat_chuul_Strike":2,
@@ -12,7 +12,7 @@
 	
 	"combatSmall":{
 		"rat_merrow_Attack":10,
-		"rat_merrow_Support":3,
+		"rat_merrow_Support":6,
 		
 		"rat_chuul_Attack":2,
 		"rat_chuul_Strike":2,
@@ -23,7 +23,7 @@
 		"rat_chuul_Attack":10,
 		"rat_chuul_Strike":10,
 		"rat_chuul_Support":2,
-		"rat_chuul_Override_Chronos":1,
+		"rat_chuul_Override_Chronos":0.5,
 	},
 	"combatLarge":{
 		

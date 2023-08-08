@@ -61,7 +61,7 @@
       "mount": "TURRET",
       "arc": 260,
       "angle": 0,
-      "locations": [25.5, -0]
+      "locations": [25, -0]
     },
     {
       "id": "WS0006",

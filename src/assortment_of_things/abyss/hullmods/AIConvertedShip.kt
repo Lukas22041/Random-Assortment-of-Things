@@ -26,6 +26,10 @@ class AIConvertedShip : BaseAlteration() {
             stats.variant.addTag("no_auto_penalty")
             stats.fleetMember.captain = null
         }
+
+        if (hullSize == ShipAPI.HullSize.CAPITAL_SHIP) {
+            stats.suppliesPerMonth.modifyMult(id, 1.5f)
+        }
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  isForModSpec: Boolean): Boolean {
@@ -35,22 +39,22 @@ class AIConvertedShip : BaseAlteration() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
-        tooltip!!.addPara("Replaces the internals of the ships bridge with systems for AI control, turning the ship in to an automated hull. \n\n" +
-                "This specific conversion is able to negate the combat readiness penalty from the \"Automated\" Hullmod.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "automated hull", "negate the combat readiness penalty", "Automated")
+        var label =tooltip!!.addPara("Replaces the internals of the ships bridge with systems for AI control, turning the ship in to an automated hull. \n\n" +
+                "This specific conversion is able to negate the combat readiness penalty from the \"Automated\" Hullmod.\n\n" +
+                "If installed in to a capital hull, it will increase the maintenance cost by 50%%", 0f)
+
+        var h = Misc.getHighlightColor()
+
+        label.setHighlight("automated hull", "negate the combat readiness penalty", "Automated", "maintenance cost", "50%")
+        label.setHighlightColors(h, h, h, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
 
     }
 
     override fun canInstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return !member!!.isCapital && (member!!.captain == null || member!!.captain.nameString == "") && !variant!!.hasHullMod(HullMods.AUTOMATED)
+        return (member!!.captain == null || member!!.captain.nameString == "") && !variant!!.hasHullMod(HullMods.AUTOMATED)
     }
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?,  member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
-        if (member!!.isCapital) {
-            tooltip!!.addPara("Can not be installed on capital ships.", 0f,
-                Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
-            tooltip.addSpacer(5f)
-        }
 
         if (variant!!.hasHullMod(HullMods.AUTOMATED)) {
             tooltip!!.addPara("Can not be installed on automated ships.", 0f,

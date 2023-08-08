@@ -30,7 +30,7 @@ class OverloadedSystemsHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Overcharges the capacitators of the ships system, decreasing the cooldown between useages by 33%%. If the system has charges, the regeneration of charges " +
+        tooltip.addPara("Overcharges the capacitors of the ships system, decreasing the cooldown between usages by 33%%. If the system has charges, the regeneration of charges " +
                 "is also increased by that amount.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "system", "cooldown" ,"33%", "charges")
 

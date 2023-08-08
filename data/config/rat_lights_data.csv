@@ -1,5 +1,5 @@
 id,type,size,intensity,fadeout,color,offset,hit size,hit intensity,hit fadeout,hit color,flash size,flash intensity,flash fadeout,flash color,flash offset,chance,fighter dim
-rat_shortfin_shot,projectile,,,,,,,,,,50,0.5,0.15,"[129,10,199]",,0.4,TRUE
+rat_shortfin_shot,projectile,,,,,,,,,,50,0.35,0.15,"[136,210,169]",,0.35,TRUE
 rat_humpback_shot,projectile,150,0.16,0.25,"[38,82,171]",,175,0.25,0.7,"[38,82,171]",150,0.16,0.5,"[38,82,171]",,0.8,TRUE
 rat_haddock_shot,projectile,150,0.25,0.25,"[129,10,199]",,175,0.45,0.7,"[129,10,199]",150,0.25,0.5,"[100,100,255]",,0.8,TRUE
 rat_leviathan_shot,projectile,150,0.8,0.5,"[207,6,73]",,150,0.75,1.25,"[207,6,73]",200,0.8,2,"[230,16,87]",,1,TRUE

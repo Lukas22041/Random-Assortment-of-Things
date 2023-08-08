@@ -44,7 +44,7 @@ class DeploymentPreperation : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        var label = tooltip.addPara("The hull receives more preperation for future deployment, decreasing the deployment cost by 2/3/3 points, but increasing the monthly supply useage by 25%%"
+        var label = tooltip.addPara("The hull receives more preperation for future deployment, decreasing the deployment cost by 2/3/3 points, but increasing the monthly supply usage by 25%%"
             , 0f, Misc.getTextColor(), Misc.getHighlightColor())
         label.setHighlight("deployment cost", "2/3/3", "25%")
         label.setHighlightColors(hc, hc, nc)

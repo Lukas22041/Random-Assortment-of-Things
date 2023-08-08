@@ -42,7 +42,7 @@ class PlasmaticShieldHullmod : BaseAlteration() {
             "Plasmatic Shield")
 
         tooltip.addSpacer(5f)
-        tooltip.addPara("Upon activation, the fighter gains a temporariy shield that will last for the active duration or until it is destroyed.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+        tooltip.addPara("Upon activation, the fighter gains a temporary shield that will last for the active duration or until it is destroyed.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "temporariy shield")
     }
 

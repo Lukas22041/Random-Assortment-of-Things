@@ -30,6 +30,7 @@ import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaRefit.LunaRefitManager
 import lunalib.lunaSettings.LunaSettings
 import org.dark.shaders.light.LightData
+import org.dark.shaders.util.TextureData
 import java.io.File
 import java.util.*
 
@@ -55,8 +56,6 @@ class RATModPlugin : BaseModPlugin() {
 
         ArtifactUtils.loadArtifactsFromCSV()
 
-
-
         LunaRefitManager.addRefitButton(AlterationRefitButton())
 
         LunaRefitManager.addRefitButton(CrewConversionChronosRefitButton())
@@ -72,6 +71,7 @@ class RATModPlugin : BaseModPlugin() {
 
         if (Global.getSettings().modManager.isModEnabled("shaderLib")) {
             LightData.readLightDataCSV("data/config/rat_lights_data.csv");
+            TextureData.readTextureDataCSV("data/config/rat_texture_data.csv")
         }
     }
 
@@ -83,9 +83,7 @@ class RATModPlugin : BaseModPlugin() {
         super.onGameLoad(newGame)
 
 
-
-
-      /*  for (artifact in ArtifactUtils.artifacts)
+        for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 5f)
         }
@@ -100,7 +98,7 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
 
         if (RATSettings.enableAbyss!!)
         {

@@ -51,7 +51,7 @@ class JumpVisualEntity : BaseCustomEntityPlugin() {
         if (entity == null) return
 
 
-        var color = Color(250, 0, 100)
+        var color = Color(200, 0, 50)
 
         var width = viewport!!.visibleWidth
         var height = viewport.visibleHeight
@@ -130,7 +130,10 @@ class JumpVisualEntity : BaseCustomEntityPlugin() {
         GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP); // Make sure you will no longer (over)write stencil values, even if any test succeeds
         GL11.glColorMask(true, true, true, true); // Make sure we draw on the backbuffer again.
 
-        GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF); // Now we will only draw pixels where the corresponding stencil buffer value equals 1
+
+
+
+        GL11.glStencilFunc(GL11.GL_EQUAL, 0, 0xFF); // Now we will only draw pixels where the corresponding stencil buffer value equals 1
         //Ref 0 causes the content to not display in the specified area, 1 causes the content to only display in that area.
 
         // <draw the lines>

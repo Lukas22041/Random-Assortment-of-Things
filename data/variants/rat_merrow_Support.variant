@@ -2,7 +2,7 @@
     "displayName": "Support",
     "fluxCapacitors": 6,
     "fluxVents": 10,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_merrow",
     "hullMods": [
         "targetingunit",

@@ -105,7 +105,7 @@ class AbyssalFleetInflationListener : FleetInflationListener {
         var stats = commander.stats
         var variant = member.variant
 
-        var modsOnShip = variant.nonBuiltInHullmods.map { Global.getSettings().getHullModSpec(it) }
+        var modsOnShip = variant.nonBuiltInHullmods.map { Global.getSettings().getHullModSpec(it) }.filter { it.id !=  HullMods.SAFETYOVERRIDES }
         var potentialSmods = WeightedRandomPicker<HullModSpecAPI>()
         for (mod in modsOnShip) {
             potentialSmods.add(mod, mod.getCostFor(variant.hullSize).toFloat())
@@ -113,6 +113,7 @@ class AbyssalFleetInflationListener : FleetInflationListener {
 
         for (i in 0 until smods) {
             if (potentialSmods.isEmpty) break
+
 
             variant.addPermaMod(potentialSmods.pickAndRemove().id, true)
 
