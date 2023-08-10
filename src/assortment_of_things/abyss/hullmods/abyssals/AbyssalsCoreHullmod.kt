@@ -69,7 +69,7 @@ class AbyssalsCoreHullmod : BaseHullMod() {
             stats.variant.addPermaMod(HullMods.AUTOMATED)
         }
 
-        stats!!.getDynamic().getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0f);
+        //stats!!.getDynamic().getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0f);
 
     }
 
@@ -103,20 +103,20 @@ class AbyssalsCoreHullmod : BaseHullMod() {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Abyssal Hulls synergise well with the Chronos and Cosmos AI cores, to the point whereas a ship equipped without either will lack some functionality.", 0f)
+        tooltip.addPara("Abyssal hulls synergise well with the Chronos and Cosmos AI cores, and are required for the shipsystem to function. The installed core influences the effect of it.", 0f)
         tooltip.addSpacer(10f)
-        tooltip.addSectionHeading("AI Core Synergy", Alignment.MID, 0f)
-        tooltip.addSpacer(10f)
+      /*  tooltip.addSectionHeading("AI Core Synergy", Alignment.MID, 0f)
+        tooltip.addSpacer(10f)*/
 
         AbyssalsHullmodDescriptions.createDescription(tooltip, hullSize, ship, width, isForModSpec)
 
-        tooltip.addSpacer(10f)
-        tooltip.addSectionHeading("Enviroment", Alignment.MID, 0f)
+        tooltip.addSpacer(5f)
+       /* tooltip.addSectionHeading("Enviroment", Alignment.MID, 0f)
         tooltip.addSpacer(10f)
 
         tooltip.addPara("Abyssal hulls are immune to damage from Abyssal Storms, but also from similar hazards" +
                 " in other enviroments.", 0f)
-
+*/
 
     }
 

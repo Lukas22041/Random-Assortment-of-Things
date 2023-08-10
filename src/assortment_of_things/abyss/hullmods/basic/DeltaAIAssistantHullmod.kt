@@ -81,7 +81,7 @@ class DeltaAIAssistantHullmod : BaseAlteration() {
             tooltip.addSpacer(20f)
         }
 
-        tooltip!!.addPara("The skill can be choosen from the top-center button in the refit screen if this alteration is installed.",0f,
+        tooltip!!.addPara("The skill can be choosen from the \"Additional Options\" button at the top of the refit screen if this alteration is installed.",0f,
             Misc.getGrayColor(), Misc.getGrayColor(), "")
 
 

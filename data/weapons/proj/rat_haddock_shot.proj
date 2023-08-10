@@ -17,4 +17,5 @@
 	"textureScrollSpeed":-256,
 	"pixelsPerTexel":5.0,
 	#"bulletSprite":"graphics/weapons/abyss/proj/burst_energy_projectile.png"
+	"onHitEffect":"assortment_of_things.abyss.weapons.SpatialInstabilityOnHit",
 }

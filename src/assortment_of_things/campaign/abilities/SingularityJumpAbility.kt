@@ -55,9 +55,8 @@ class SingularityJumpAbility : BaseDurationAbility() {
 
             var token = memory.get("\$rat_abyss_midnight_token") as SectorEntityToken?
 
-            var systems = AbyssUtils.getAllAbyssSystems()
 
-            for (system in systems)
+            for (system in Global.getSector().starSystems.filter { it.hasTag(AbyssUtils.SYSTEM_TAG) })
             {
                 system.location.set(player.location.x, player.location.y)
             }

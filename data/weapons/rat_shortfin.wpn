@@ -3,7 +3,7 @@
 	"specClass":"projectile",
 	"type":"ENERGY",
 	"size":"SMALL",
-	"displayArcRadius":250,
+	"displayArcRadius":300,
 	"turretSprite":"graphics/weapons/abyss/rat_shortfin_turret.png",
 	"hardpointSprite":"graphics/weapons/abyss/rat_shortfin_hardpoint.png",
 	"turretOffsets":[15, 0],

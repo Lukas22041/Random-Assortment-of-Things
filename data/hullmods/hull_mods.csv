@@ -3,8 +3,8 @@ name,id,tier,rarity,tech/manufacturer,tags,uiTags,base value,unlocked,hidden,hid
 Artifact Controller,rat_artifact_controller,0,,,"no_drop_salvage, restricted",,3000,FALSE,TRUE,TRUE,0,0,0,0,assortment_of_things.artifacts.ArtifactControllerHullmod,,,graphics/hullmods/rat_abyssal_core.png
 ,,,,,,,,,,,,,,,,,,
 #Abyssals,,,,,,,,,,,,,,,,,,
-Abyssal Core,rat_abyssal_core,0,,Abyss,,"Logistics, Requires Dock",3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod,,,graphics/hullmods/rat_abyssal_core.png
-,,,,,,,,,,,,,,,,,,
+Abyssal Synergy,rat_abyssal_core,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod,,,graphics/hullmods/rat_abyssal_core.png
+Abyssal Grid,rat_abyssal_grid,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalGrid,,,graphics/hullmods/rat_abyssal_grid.png
 ,,,,,,,,,,,,,,,,,,
 #Abyss Installables,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
@@ -18,6 +18,7 @@ Abyssal Crew Conversion (Cosmos),rat_cosmos_conversion,3,0,Hull Alteration,"rat_
 ,,,,,,,,,,,,,,,,,,
 Delta Assistant,rat_delta_assistant,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.DeltaAIAssistantHullmod,,,graphics/hullmods/rat_delta_ai.png
 Unaffected Deployment,rat_unaffected,3,1,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.UnaffectedDeploymentHullmod,,,graphics/hullmods/rat_unaffected.png
+Phase Stabiliser,rat_phase_stabiliser,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.PhaseStabiliserHullmod,,,graphics/hullmods/rat_phase_stabiliser.png
 Quality Assurance,rat_qualityAssurance,3,3,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.QualityAssuranceHullmod,,,graphics/hullmods/rat_quality_assurance.png
 Efficient Procedures,rat_efficientProcedures,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.EfficientProceduresHullmod,,,graphics/hullmods/rat_efficient_procedures.png
 Overloaded Systems,rat_overloaded_systems,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.OverloadedSystemsHullmod,,,graphics/hullmods/rat_overloaded_systems.png

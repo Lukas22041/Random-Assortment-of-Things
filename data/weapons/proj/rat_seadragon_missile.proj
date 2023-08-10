@@ -9,7 +9,7 @@
 		"triggerDistance":[500,550],
 		#"preferredMinFireDistance":[700,750],
 		#"preferredMinFireDistance":[600,650],
-		"preferredMinFireDistance":250,
+		"preferredMinFireDistance":300,
 		"preferredMaxFireDistance":400,
 		"angledApproachDist":[500,700],
 		"turnRateBoost":150,
@@ -102,7 +102,7 @@
 						"glowAlternateColor":[128, 235, 52,255],
 						"type":"GLOW" # GLOW or SMOKE; additive or regular blend mode
 					},
-				    "width":4.0,
+				    "width":5.0,
 				    "length":20.0,
 				    "angle":180.0},
 				    ]

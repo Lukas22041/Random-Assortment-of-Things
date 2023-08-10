@@ -87,11 +87,13 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
 
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
         super.render(layer, viewport)
+        if (band1 == null) return
 
         var posX = entity.location.x
         var posY = entity.location.y
 
         var tier = AbyssUtils.getTier(entity.containingLocation)
+
 
         if (layer == CampaignEngineLayers.TERRAIN_7A)
         {

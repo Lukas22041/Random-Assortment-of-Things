@@ -1,13 +1,13 @@
 {
     "displayName": "Support",
-    "fluxCapacitors": 12,
+    "fluxCapacitors": 8,
     "fluxVents": 20,
-    "goalVariant": true,
+    "goalVariant": false,
     "hullId": "rat_chuul",
     "hullMods": [
         "advancedoptics",
-        "fluxdistributor",
         "hardenedshieldemitter",
+        "missleracks",
         "targetingunit",
     ],
     "permaMods": [
@@ -32,13 +32,31 @@
             }
         },
         {
-            "autofire": true,
+            "autofire": false,
             "mode": "LINKED",
             "weapons": {
-                "WS0001": "rat_asterina",
-                "WS0003": "rat_asterina",
-                "WS0002": "rat_asterina",
                 "WS0004": "rat_asterina",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "rat_asterina",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "irpulse",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "irpulse",
             }
         },
     ],

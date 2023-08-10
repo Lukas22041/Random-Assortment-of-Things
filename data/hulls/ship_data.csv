@@ -3,8 +3,8 @@ Shield Drone,rat_shield_drone,,High Tech,,,100,10,1000,,100,0,,325,200,150,180,3
 Shield,rat_shield_object,,High Tech,,,100,10,1000,,100,0,,325,200,150,180,360,10,OMNI,,360,0,0.4,,,0,0,,,,,,,,,,,,,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX",,,0,,,,103
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Abyssals,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Merrow,rat_merrow,Droneship,Abyssal,merrow_system,8,1250,250,2500,2500,300,45,,120,180,170,75,230,150,OMNI,,200,0.3,0.55,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,5,5,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX","auto_rec, rat_abyssals",,0.5,2,2,,3101
-Chuul,rat_chuul,Droneship,Abyssal,chuul_system,12,5000,450,5000,3750,350,110,,85,75,50,30,50,500,OMNI,,190,0.3,0.6,,,0,0,80,60,2,30,10,50000,5,15,420,0.25,11,11,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX","auto_rec, rat_abyssals",,0.5,2,3,,3102
+Merrow,rat_merrow,Droneship,Abyssal,merrow_system,8,1250,250,2500,2500,300,45,,130,180,170,75,230,150,OMNI,,200,0.3,0.55,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,5,5,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX","auto_rec, rat_abyssals",,0.5,2,2,,3101
+Chuul,rat_chuul,Droneship,Abyssal,chuul_system,12,5000,450,5000,3750,400,110,,90,75,50,30,50,500,OMNI,,190,0.3,0.6,,,0,0,80,60,2,30,10,50000,5,15,420,0.25,11,11,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX","auto_rec, rat_abyssals",,0.5,2,3,,3102
 Aboleth,rat_aboleth,Droneship Cruiser,Abyssal,aboleth_system,20,8000,900,10000,12500,700,165,2,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX","auto_rec, rat_abyssals",,0.5,2,3,,3103
 Aboleth M,rat_aboleth_m,Droneship Cruiser,Abyssal,aboleth_system,20,8000,900,10000,12500,700,165,,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX","auto_rec, rat_abyssals",,0.5,2,3,,3103
 Morkoth,rat_morkoth,Drone Battleship,Abyssal,morkoth_system,30,20000,1500,25000,37500,1500,320,,40,30,20,10,15,3500,OMNI,,270,0.3,0.65,,,0,0,250,400,10,40,8,500000,3,15,720,0.25,55,55,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX","auto_rec, rat_abyssals",,0.4,2,4,,3104

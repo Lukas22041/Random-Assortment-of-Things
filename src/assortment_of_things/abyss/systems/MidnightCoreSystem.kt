@@ -12,6 +12,8 @@ import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.Faction
+import com.fs.starfarer.campaign.fleet.CampaignFleet
+import org.lwjgl.util.vector.Vector2f
 
 class MidnightCoreSystem {
 
@@ -71,13 +73,20 @@ class MidnightCoreSystem {
         AbyssUtils.clearTerrainAroundFractures(fractures)*/
 
 
-       /* var entity = system.addCustomEntity("test_${Misc.genUID()}", "Test", "rat_abyss_jumpvisual", Factions.NEUTRAL)
-        entity.location.set(-2000f, 0f)
+       // AbyssProcgen.createRift(system, Vector2f(-1000f, 0f))
+        //AbyssUtils.clearTerrainAround(system, Vector2f(-1000f, 0f), 5000f)
+/*
 
-        AbyssUtils.clearTerrainAround(entity, 5000f)*/
+        var playerFleet = Global.getSector().playerFleet
+        var currentLocation = playerFleet.containingLocation
+
+        currentLocation.removeEntity(playerFleet)
+        system.addEntity(playerFleet)
+        Global.getSector().setCurrentLocation(system)
+*/
 
         addMapIntel()
-     //   teleport(token)
+      //  teleport(token)
     }
 
 
@@ -125,7 +134,7 @@ class MidnightCoreSystem {
                 if (!frame) {
                     frame = true
                 }
-                Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, Global.getSector().playerFleet, JumpPointAPI.JumpDestination(destination , ""))
+                Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, Global.getSector().playerFleet, JumpPointAPI.JumpDestination(destination , ""), 0f)
                 done = true
             }
         })

@@ -26,7 +26,7 @@ class TestShipSystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin {
 
     var activated = false
 
-    var sprite = Global.getSettings().getAndLoadSprite("graphics/backgrounds/abyss/Abyss2.jpg")
+    var sprite = Global.getSettings().getAndLoadSprite("graphics/backgrounds/abyss/Abyss2ForRift.jpg")
     var wormhole = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
     var wormhole2 = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
 

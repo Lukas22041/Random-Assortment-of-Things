@@ -12,7 +12,8 @@
   "shieldRadius": 162.5,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_abyssal_core"
+    "rat_abyssal_core",
+    "rat_abyssal_grid",
   ],
   "builtInWeapons": {
     "WS0012": "aboleth_mount_right",

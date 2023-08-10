@@ -1,20 +1,19 @@
 package assortment_of_things
 
 import ParallelConstruction
-import assortment_of_things.campaign.RATCampaignPlugin
-import assortment_of_things.campaign.procgen.LootModifier
-import assortment_of_things.abyss.systems.MidnightCoreSystem
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
 import assortment_of_things.abyss.scripts.DisableTransverseScript
 import assortment_of_things.abyss.scripts.ForceNegAbyssalRep
 import assortment_of_things.abyss.scripts.HullmodRemoverListener
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
+import assortment_of_things.abyss.systems.MidnightCoreSystem
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
+import assortment_of_things.campaign.RATCampaignPlugin
+import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.modular_weapons.scripts.WeaponComponentsListener
 import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import assortment_of_things.scripts.AtMarketListener
@@ -24,6 +23,8 @@ import assortment_of_things.snippets.ResetAllModularSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
+import com.fs.starfarer.api.characters.FullName
+import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -31,7 +32,6 @@ import lunalib.lunaRefit.LunaRefitManager
 import lunalib.lunaSettings.LunaSettings
 import org.dark.shaders.light.LightData
 import org.dark.shaders.util.TextureData
-import java.io.File
 import java.util.*
 
 
@@ -39,6 +39,9 @@ class RATModPlugin : BaseModPlugin() {
 
     companion object {
         var added = false
+
+        init {
+        }
     }
 
     override fun onApplicationLoad() {
@@ -83,7 +86,7 @@ class RATModPlugin : BaseModPlugin() {
         super.onGameLoad(newGame)
 
 
-        for (artifact in ArtifactUtils.artifacts)
+      /*  for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 5f)
         }
@@ -98,7 +101,7 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
 
         if (RATSettings.enableAbyss!!)
         {
@@ -157,6 +160,8 @@ class RATModPlugin : BaseModPlugin() {
             ModularWeaponLoader.applyStatToSpecsForAll()
         }
 
+       // Global.getSector().listenerManager.addListener(TestListener())
+
     }
 
     override fun onNewGame() {
@@ -175,7 +180,7 @@ class RATModPlugin : BaseModPlugin() {
     override fun beforeGameSave() {
         super.beforeGameSave()
 
-        for (system in AbyssUtils.getAllAbyssSystems())
+        for (system in Global.getSector().starSystems.filter { it.hasTag(AbyssUtils.SYSTEM_TAG) })
         {
             var abyssPlugin = AbyssUtils.getAbyssTerrainPlugin(system)
             if (abyssPlugin != null)

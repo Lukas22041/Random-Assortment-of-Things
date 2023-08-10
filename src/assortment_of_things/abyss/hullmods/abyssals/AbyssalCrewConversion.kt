@@ -65,7 +65,7 @@ class AbyssalCrewConversion : BaseAlteration() {
 
         tooltip.addSpacer(10f)
 
-        tooltip!!.addPara("Cores can be integrated from the top-center button in the refit screen if this alteration is installed.",0f,
+        tooltip!!.addPara("Cores can be integrated from the \"Additional Options\" button at the top of the refit screen if this alteration is installed.",0f,
             Misc.getGrayColor(), Misc.getGrayColor(), "")
 
     }

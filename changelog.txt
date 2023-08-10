@@ -1,3 +1,34 @@
+Version 1.5.0 DiscordBeta10
+Only available on the unofficial starsector discord server until its in a more polished state. 
+
+- Abyssal ships now have a new hullmod that buffs energy weapons.
+
+- "Abyssal Exploration" event is no longer repeatable.
+- Reduced the points required for the "Abyssal Exploration" Event.
+- "Into the Depths" event stage now adds +1 to the burn speed at which the fleet is considered moving slowly while in the abyss.
+- "Ressourcefullnes" has been replaced with "Persistance", which reduces damage taken from abyssal storms.
+- The last two milestones have been combined in to one instead.
+
+- Added descriptions to all weapons.
+- Added "Seadragon DEM Rack" weapon.
+- Gave haddock and humpack blasters their own weapon effects.
+- Recolored Asterias and Asterina to give off a more "Kinetic" feel.
+- Added missing tags to weapons, should prevent them from appearing in the wrong places and makes autofit possible.
+- lots of other weapon fixes & balance changes i am to lazy to list.
+
+- added another hull alteration.
+
+- Improved morkoth sprite.
+- Added graphics-lib normal maps for ships.
+- If progressive s-mods is installed, alterations now ignore the max-smod limit.
+- The unique AI cores can now be turned in to colony officials.
+- AI Conversion can be used on Capitals now, but requires 50% more supplies a month.
+- Fixed aboleths system breaking if the player pilots one and another aboleth is deployed as well.
+- Fixed abyssal ships being able to spawn with smodded Safety Overrides.
+- Fixed some spelling.
+
+
+
 Version 1.5.0 DiscordBeta9
 Only available on the unofficial starsector discord server until its in a more polished state. 
 

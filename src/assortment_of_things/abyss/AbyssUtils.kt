@@ -52,6 +52,7 @@ object AbyssUtils {
         "Crises", "Knowledge", "Serpents", "Hope", "Death", "Perseverance", "Fear", "Cold", "Clouds", "Luxury", "Hatred", "Dreams", "Honor", "Trust", "Success", "Joy")
 
     var SYSTEM_TAG = "rat_abyss_system"
+    var RIFT_TAG = "rat_abyss_rift"
     var DEFEND_STRUCTURE_TAG = "rat_defend_structure"
 
     var ABYSS_SYSTEMS_KEY = "\$rat_abyss_systems"
@@ -89,6 +90,7 @@ object AbyssUtils {
         system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
         system.isEnteredByPlayer = false
     }
+
 
     fun getNeighbouringSystems(system: StarSystemAPI) : List<StarSystemAPI> {
         return system.memoryWithoutUpdate.get("\$rat_abyss_neighbours") as MutableList<StarSystemAPI>? ?: ArrayList()
@@ -246,7 +248,7 @@ object AbyssUtils {
         return nebulaPlugin
     }
 
-    fun getAbyssTerrainPlugin(system: StarSystemAPI) : AbyssTerrainPlugin? {
+    fun getAbyssTerrainPlugin(system: LocationAPI) : AbyssTerrainPlugin? {
 
         var plugin = system.terrainCopy.find { it.plugin is AbyssTerrainPlugin }?.plugin as AbyssTerrainPlugin?
         return plugin
@@ -306,6 +308,15 @@ object AbyssUtils {
 
         editor.clearArc(entity.location.x, entity.location.y, 0f, radius, 0f, 360f)
         editor.clearArc(entity.location.x, entity.location.y, 0f, radius, 0f, 360f, 0.25f)
+    }
+
+    fun clearTerrainAround(system: LocationAPI, location: Vector2f, radius: Float)
+    {
+        var nebulaPlugin = getAbyssTerrainPlugin(system)
+        val editor = NebulaEditor(nebulaPlugin)
+
+        editor.clearArc(location.x, location.y, 0f, radius, 0f, 360f)
+        editor.clearArc(location.x, location.y, 0f, radius, 0f, 360f, 0.25f)
     }
 
     fun getSiphonPerDay() : Float
@@ -439,7 +450,7 @@ object AbyssUtils {
         system.memoryWithoutUpdate.set("\$rat_abyss_location", location)
     }
 
-    fun getSystemLocation(system: StarSystemAPI) : Vector2f {
+    fun getSystemLocation(system: StarSystemAPI) : Vector2f? {
         var location = system.memoryWithoutUpdate.get("\$rat_abyss_location") as Vector2f?
         if (location == null) location = Vector2f(0f, 0f)
         return location

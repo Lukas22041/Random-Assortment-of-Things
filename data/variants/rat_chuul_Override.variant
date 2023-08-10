@@ -1,0 +1,45 @@
+{
+    "displayName": "Override",
+    "fluxCapacitors": 0,
+    "fluxVents": 20,
+    "goalVariant": false,
+    "hullId": "rat_chuul",
+    "hullMods": [
+        "hardened_subsystems",
+        "hardenedshieldemitter",
+        "magazines",
+        "safetyoverrides",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_chuul_Override",
+    "weaponGroups": [
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0006": "rat_seabream",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "rat_humpback",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "irpulse",
+                "WS0002": "irpulse",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

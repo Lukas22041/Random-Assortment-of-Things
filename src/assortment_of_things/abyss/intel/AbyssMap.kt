@@ -67,6 +67,7 @@ class AbyssMap : BaseIntelPlugin() {
             }
 
             var loc = AbyssUtils.getSystemLocation(system)
+            if (loc == null) continue
 
             var locOnMap = center.plus(loc)
 

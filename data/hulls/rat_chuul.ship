@@ -12,7 +12,8 @@
   "shieldRadius": 119,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_abyssal_core"
+    "rat_abyssal_core",
+    "rat_abyssal_grid",
   ],
   "builtInWeapons": {
     "WS0007": "chuul_cover"

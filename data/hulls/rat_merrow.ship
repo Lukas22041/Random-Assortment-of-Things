@@ -12,7 +12,8 @@
   "shieldRadius": 73.5,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_abyssal_core"
+    "rat_abyssal_core",
+    "rat_abyssal_grid",
   ],
   "weaponSlots": [
     {

@@ -12,7 +12,8 @@
   "shieldRadius": 208,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_abyssal_core"
+    "rat_abyssal_core",
+    "rat_abyssal_grid",
   ],
   "builtInWeapons": {
     "WS0017": "morkoth_cover"

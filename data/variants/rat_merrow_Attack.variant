@@ -1,12 +1,13 @@
 {
     "displayName": "Attack",
-    "fluxCapacitors": 4,
-    "fluxVents": 10,
+    "fluxCapacitors": 0,
+    "fluxVents": 9,
     "goalVariant": false,
     "hullId": "rat_merrow",
     "hullMods": [
         "hardenedshieldemitter",
         "targetingunit",
+        "unstable_injector",
     ],
     "permaMods": [
         "automated",
@@ -19,16 +20,22 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0003": "railgun",
-                "WS0004": "railgun",
+                "WS0001": "lightag",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0003": "rat_seadragon_rack",
+                "WS0004": "rat_seadragon_rack",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0001": "rat_shortfin",
-                "WS0002": "rat_shortfin",
+                "WS0002": "railgun",
             }
         },
     ],

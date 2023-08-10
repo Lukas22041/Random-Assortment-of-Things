@@ -6,7 +6,9 @@ import assortment_of_things.abyss.procgen.templates.AbyssSystemHigh
 import assortment_of_things.abyss.procgen.templates.AbyssSystemLow
 import assortment_of_things.abyss.procgen.templates.AbyssSystemMid
 import assortment_of_things.misc.logger
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
@@ -179,9 +181,37 @@ class AbyssChainGenerator {
             tier3Systems.remove(pick)
         }
 
+
+        //generateRift()
+
         generateFarFracture(3, true)
        // generateFarFracture(4, false)
 
+    }
+
+    fun generateRift() {
+        var systems = AbyssUtils.getAllAbyssSystems().filter { !it.hasTag(AbyssUtils.RIFT_TAG) }
+        systems = systems.filter { AbyssUtils.getTier(it) == AbyssProcgen.Tier.High }
+        systems = systems.filter { AbyssProcgen.hasEmptySlots(it) }
+
+        if (systems.isEmpty()) return
+
+        var pick = systems.random()
+        var location = AbyssProcgen.takeEmptySlot(pick)
+
+        var riftSystem = AbyssProcgen.createRift(pick, location)
+        var station = riftSystem.addCustomEntity("rift_station${Misc.genUID()}", "Rift Station", "rat_abyss_rift_station", "rat_abyssals")
+        station.setLocation(0f, 0f)
+
+
+
+
+        var playerFleet = Global.getSector().playerFleet
+        var currentLocation = playerFleet.containingLocation
+
+        currentLocation.removeEntity(playerFleet)
+        pick.addEntity(playerFleet)
+        Global.getSector().setCurrentLocation(pick)
     }
 
 

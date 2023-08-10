@@ -32,5 +32,5 @@
 	"pixelsPerTexel":5.0,
 	"pierceSet":[PROJECTILE_FF,PROJECTILE_NO_FF,PROJECTILE_FIGHTER,MISSILE_FF,MISSILE_NO_FF,FIGHTER,ASTEROID],
 	"playFullFireSoundOne":true,
-	"fireSoundOne":"dragonfire_payload_fire",
+	"fireSoundOne":"seadragon_payload_fire",
 }
