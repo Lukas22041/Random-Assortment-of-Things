@@ -19,7 +19,7 @@ class SpatialInstabilityOnHit : OnHitEffectPlugin {
         var listener = target.getListeners(SpatialInstabilityScript::class.java).firstOrNull()
         if (listener !is SpatialInstabilityScript) return
 
-        if (listener.stacks.size < 15) {
+        if (listener.stacks.size < 30) {
             listener.stacks.add(SpatialInstabilityScript.InstabilityStack(3f))
         }
     }

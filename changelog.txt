@@ -1,3 +1,12 @@
+Version 1.5.0 DiscordBeta11
+
+- Humpback/Haddock have been decreased to 600/700 range.
+- Humpback/Haddock effects now take longer/more weapons to build up, but their total effectiveness remains the same.
+- Increased humpbacks projectile speed and turn rate a bit.
+- Improved weapon descriptions a little.
+
+
+
 Version 1.5.0 DiscordBeta10
 Only available on the unofficial starsector discord server until its in a more polished state. 
 

@@ -29,12 +29,12 @@ class AbyssalGrid : BaseHullMod() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  width: Float, isForModSpec: Boolean) {
         tooltip!!.addSpacer(5f)
         tooltip.addPara("This ships flux grid is highly optimised for the use of energy weapons. " +
-                "This allows them to operate at a 10%% lower flux cost than normal and increases their range by 100 units. " +
+                "This allows them to operate at a 10%% lower flux cost than normal and increases their base range by 100 units. " +
                 "\n\n" +
                 "This unique grid can also absorb the impact of abyssal storms and similar hazards, providing the ship full immunity against those." +
                 "",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "energy weapons", "10%", "flux cost", "range", "100", "abyssal storms", "hazards")
+            "energy weapons", "10%", "100", "abyssal storms")
     }
 
 

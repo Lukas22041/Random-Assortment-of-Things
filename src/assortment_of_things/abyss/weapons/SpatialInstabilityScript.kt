@@ -19,7 +19,8 @@ class SpatialInstabilityScript(var ship: ShipAPI) : AdvanceableListener {
             }
         }
 
-        var mult = 0.01f
+        //var mult = 0.01f
+        var mult = 0.005f
         mult *= stacks.size
 
         ship.mutableStats.hullDamageTakenMult.modifyMult("rat_spatial_instability", 1f + mult)
