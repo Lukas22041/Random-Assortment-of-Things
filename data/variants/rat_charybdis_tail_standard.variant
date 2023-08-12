@@ -1,0 +1,14 @@
+{
+  "variantId": "rat_charybdis_tail_standard",
+  "hullId": "rat_charybdis_tail",
+  "displayName": "New Variant",
+  "goalVariant": false,
+  "fluxCapacitors": 0,
+  "fluxVents": 0,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [],
+  "weaponGroups": [],
+  "modules": [],
+  "wings": []
+}

@@ -6,6 +6,9 @@ Artifact Controller,rat_artifact_controller,0,,,"no_drop_salvage, restricted",,3
 Abyssal Synergy,rat_abyssal_core,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod,,,graphics/hullmods/rat_abyssal_core.png
 Abyssal Grid,rat_abyssal_grid,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalGrid,,,graphics/hullmods/rat_abyssal_grid.png
 ,,,,,,,,,,,,,,,,,,
+Dimensional Worm,rat_charybdis_hullmod,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.CharybdisHullmod,,,graphics/hullmods/rat_abyssal_core.png
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
 #Abyss Installables,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 #Abyss Special Alterations,,,,,,,,,,,,,,,,,,

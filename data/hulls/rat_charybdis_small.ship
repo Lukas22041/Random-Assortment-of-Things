@@ -1,0 +1,63 @@
+{
+  "hullName": "Charybdis Segment",
+  "hullId": "rat_charybdis_small",
+  "hullSize": "CRUISER",
+  "spriteName": "graphics/ships/special/rat_charybdis_small.png",
+  "style": "ABYSSAL",
+  "height": 100,
+  "width": 120,
+  "center": [60, 50],
+  "collisionRadius": 77,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 69,
+  "viewOffset": 0,
+  "weaponSlots": [
+    {
+      "id": "SEGMENT",
+      "size": "LARGE",
+      "type": "STATION_MODULE",
+      "mount": "HARDPOINT",
+      "arc": 90,
+      "angle": 0,
+      "locations": [-80, 1]
+    },
+    {
+      "id": "WS0001",
+      "size": "LARGE",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": 0,
+      "locations": [2.5, 1]
+    }
+  ],
+  "engineSlots": [],
+  "bounds": [
+    36.5, -2.5,
+    42, -9.5,
+    46, -17.5,
+    46.5, -30.5,
+    32, -22,
+    38, -40.5,
+    33, -49.5,
+    15.5, -43,
+    1.5, -46.5,
+    -6.5, -33,
+    -12.5, -31.5,
+    -23.5, -17,
+    -46, -5,
+    -46, 5,
+    -23.5, 17,
+    -12.5, 31.5,
+    -6.5, 33,
+    1.5, 46.5,
+    15.5, 43,
+    33, 49.5,
+    38, 40.5,
+    32, 22,
+    46.5, 30.5,
+    46, 17.5,
+    42, 9.5,
+    36.5, 2.5
+  ]
+}
