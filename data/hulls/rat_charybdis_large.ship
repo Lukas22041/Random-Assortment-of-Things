@@ -7,10 +7,15 @@
   "height": 160,
   "width": 180,
   "center": [90, 80],
-  "collisionRadius": 120,
+  "collisionRadius": 178.5,
   "shieldCenter": [0, 0],
   "shieldRadius": 105.5,
   "viewOffset": 0,
+  "builtInMods": [
+    "automated",
+    "reduced_explosion",
+    "always_detaches"
+  ],
   "weaponSlots": [
     {
       "id": "SEGMENT",

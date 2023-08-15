@@ -30,7 +30,7 @@ class MorkothShipsystem : BaseShipSystemScript(), DamageListener {
 
     var addedDamageListener = false
     var min = 0f
-    var max = 10000f
+    var max = 7500f
 
     var damageTaken = 0f
     var activated = false
@@ -202,7 +202,7 @@ class MorkothShipsystem : BaseShipSystemScript(), DamageListener {
 
     override fun getActiveOverride(ship: ShipAPI): Float {
         if (AbyssalsCoreHullmod.isChronosCore(ship)) return 2f
-        if (AbyssalsCoreHullmod.isCosmosCore(ship)) return 10f
+        if (AbyssalsCoreHullmod.isCosmosCore(ship)) return 12f
 
         return super.getActiveOverride(ship)
     }

@@ -103,7 +103,7 @@ class AbyssalsCoreHullmod : BaseHullMod() {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Abyssal hulls synergise well with the Chronos and Cosmos AI cores, and are required for the shipsystem to function. The installed core influences the effect of it.", 0f)
+        tooltip.addPara("This hull synergises well with the Chronos and Cosmos AI cores, and are required for the shipsystem to function. The installed core influences the effect of it.", 0f)
         tooltip.addSpacer(10f)
       /*  tooltip.addSectionHeading("AI Core Synergy", Alignment.MID, 0f)
         tooltip.addSpacer(10f)*/

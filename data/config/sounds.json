@@ -12,6 +12,15 @@
 			
 		],
 		
+		"rat_abyss_encounter":[
+			{
+				"file":"rat_abyss_encounter.ogg",
+				"source":"sounds/rat/music",
+				"volume":1,
+				"randomStart":true, 
+			},
+		],
+		
 	
 # collapseclose
 	},

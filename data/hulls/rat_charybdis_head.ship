@@ -7,12 +7,13 @@
   "height": 240,
   "width": 280,
   "center": [140, 120],
-  "collisionRadius": 170,
+  "collisionRadius": 215.5,
   "shieldCenter": [0, 0],
-  "shieldRadius": 150,
+  "shieldRadius": 143,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_charybdis_hullmod"
+    "rat_charybdis_hullmod",
+    "automated"
   ],
   "weaponSlots": [
     {
@@ -22,7 +23,7 @@
       "mount": "HARDPOINT",
       "arc": 90,
       "angle": 0,
-      "locations": [-113.5, 1]
+      "locations": [-135, 1.5]
     },
     {
       "id": "SEGMENT2",
