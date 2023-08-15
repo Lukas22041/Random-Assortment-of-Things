@@ -68,10 +68,10 @@ class CharybdisHeadSystemAI : ShipSystemAIScript {
             secondaryToggle = true
             activate = true
         }
-        if (!secondaryToggle && !flags.hasFlag(AIFlags.SAFE_FROM_DANGER_TIME)) {
+       /* if (!secondaryToggle && !flags.hasFlag(AIFlags.SAFE_FROM_DANGER_TIME)) {
             secondaryToggle = true
             activate = true
-        }
+        }*/
         if (!secondaryToggle && flags.hasFlag(AIFlags.MANEUVER_TARGET) && ship!!.fluxLevel < 0.2f)  {
             secondaryToggle = true
             activate = true

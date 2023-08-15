@@ -5,7 +5,6 @@ import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
-import assortment_of_things.modular_weapons.scripts.ModularWeaponCombatHandler
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
@@ -18,7 +17,6 @@ import org.lwjgl.util.vector.Vector2f
 class CombatHandler : EveryFrameCombatPlugin
 {
 
-    var modularHandler = ModularWeaponCombatHandler()
 
     override fun init(engine: CombatEngineAPI?)  {
 
@@ -136,10 +134,6 @@ class CombatHandler : EveryFrameCombatPlugin
                 }
             }
         }
-
-
-
-        modularHandler.advance(amount)
     }
 
     override fun renderInWorldCoords(viewport: ViewportAPI?) {

@@ -2,17 +2,22 @@ package assortment_of_things.abyss.hullmods.abyssals
 
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.BaseHullMod
-import com.fs.starfarer.api.combat.MutableShipStatsAPI
-import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.listeners.*
+import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lwjgl.util.vector.Vector2f
 
 class AbyssalSeraphsGrace : BaseHullMod() {
 
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
+
+        if (!stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats.variant.hasHullMod(HullMods.AUTOMATED)) {
+            stats.variant.addPermaMod(HullMods.AUTOMATED)
+        }
 
         var isInAbyss = false
         if (Global.getSector() != null && Global.getSector().playerFleet != null) {
@@ -27,8 +32,11 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
         if (isInAbyss) {
             stats!!.maxSpeed.modifyFlat(id, 15f)
+            stats!!.armorBonus.modifyFlat(id, 100f)
             stats!!.fluxDissipation.modifyFlat(id, 100f)
             stats!!.fluxCapacity.modifyFlat(id, 500f)
+            stats!!.combatWeaponRepairTimeMult.modifyMult(id, 0.5f)
+            stats.weaponHealthBonus.modifyPercent(id, 50f)
         }
         else {
             stats!!.maxSpeed.modifyFlat(id, 5f)
@@ -69,7 +77,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
         tooltip.addSpacer(10f)
 
-        val col1W = 150f
+        val col1W = 160f
         val colW = ((width - col1W - 12f) / 2f).toInt().toFloat()
 
         var entries = arrayOf<Any>("Stat", col1W, "In Sector", colW, "In Abyss", colW)
@@ -81,7 +89,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
         tooltip.addRow(
             Alignment.MID, Misc.getTextColor(), "Saving Grace Stacks",
             Alignment.MID, sectorColor, "10",
-            Alignment.MID, abyssColor, "25",
+            Alignment.MID, abyssColor, "30",
         )
 
         tooltip.addRow(
@@ -89,6 +97,12 @@ class AbyssalSeraphsGrace : BaseHullMod() {
             Alignment.MID, sectorColor, "+5",
             Alignment.MID, abyssColor, "+15",
             )
+
+        tooltip.addRow(
+            Alignment.MID, Misc.getTextColor(), "Armor",
+            Alignment.MID, sectorColor, "+0",
+            Alignment.MID, abyssColor, "+100",
+        )
 
         tooltip.addRow(
             Alignment.MID, Misc.getTextColor(), "Flux Dissipation",
@@ -102,6 +116,18 @@ class AbyssalSeraphsGrace : BaseHullMod() {
             Alignment.MID, abyssColor, "+500",
         )
 
+        tooltip.addRow(
+            Alignment.MID, Misc.getTextColor(), "Weapon Durability",
+            Alignment.MID, sectorColor, "+0%",
+            Alignment.MID, abyssColor, "+50%",
+        )
+
+        tooltip.addRow(
+            Alignment.MID, Misc.getTextColor(), "Weapon Repair Time",
+            Alignment.MID, sectorColor, "+0%",
+            Alignment.MID, abyssColor, "-50%",
+        )
+
         tooltip.addTable("", 0, 0f)
 
         tooltip.addSpacer(15f)
@@ -110,11 +136,29 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("Every 100 units of armor or hull damage taken grant the ship a stack of Saving Grace. The amount of stacks cant exceed the maximum mentioned in the stat grid above. " +
+        tooltip.addPara("Every 100 units of armor or hull damage taken grant the ship a stack of Saving Grace. The amount of stacks can't exceed the maximum mentioned in the stat grid above. " +
                 "\n\n" +
-                "Each stack provides the ship with a 1%% increase in weapon rate of fire/flux dissipation/damage reduction and will dissipate after 10 seconds.",
+                "Each stack provides the ship with a 1%% increase in max speed/rate of fire/flux dissipation/damage reduction and will dissipate after 15 seconds or if it gets replaced by a new stack.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
-        "100", "armor or hull", "Saving Grace", "1%", "rate of fire", "flux dissipation", "damage reduction", "10")
+        "100", "armor or hull", "Saving Grace", "1%", "max speed", "rate of fire", "flux dissipation", "damage reduction", "15")
+
+        tooltip.addSpacer(5f)
+        tooltip.addPara("While in the abyss, whenever a stack dissipates it vents 10 flux with it.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10")
+    }
+
+    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
+
+        var isInAbyss = false
+        if (Global.getSector() != null && Global.getSector().playerFleet != null) {
+            if (Global.getSector().playerFleet.containingLocation != null)
+            {
+                if (Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) {
+                    isInAbyss = true
+                }
+            }
+        }
+
+        ship!!.addListener(SeraphsGraceListener(ship, isInAbyss))
     }
 
     override fun isApplicableToShip(ship: ShipAPI?): Boolean {
@@ -123,5 +167,96 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
     override fun getUnapplicableReason(ship: ShipAPI?): String {
         return "Can only be prebuilt in to abyssal hulls."
+    }
+
+    class SeraphsGraceListener(var ship: ShipAPI, var isInAbyss: Boolean) : AdvanceableListener, DamageListener {
+
+        class SeraphsGraceStack(var duration: Float)
+
+        var damagePerStack = 100f
+        var stackDuration = 15f
+        var damageSoFar = 0f
+        var stacks = ArrayList<SeraphsGraceStack>()
+
+        var maxStacks = 10
+
+        init {
+            if (isInAbyss) maxStacks = 30
+            else maxStacks = 10
+        }
+
+        override fun advance(amount: Float) {
+
+            for (stack in ArrayList(stacks)) {
+                stack.duration -= 1 * amount
+                if (stack.duration < 0) {
+                    stacks.remove(stack)
+
+                    if (isInAbyss) {
+                        ship.fluxTracker.decreaseFlux(10f)
+                    }
+                }
+            }
+
+            if (ship == Global.getCombatEngine().playerShip) {
+                Global.getCombatEngine().maintainStatusForPlayerShip(
+                    "rat_seraphs_grace_status", "graphics/icons/hullsys/high_energy_focus.png", "Seraphs Grace", "Stacks: ${stacks.size}", false)
+
+            }
+
+            var mod = 0.01f * stacks.size
+
+            ship.mutableStats.maxSpeed.modifyMult("rat_saving_grace_stack", 1f + mod)
+
+            ship.mutableStats.fluxDissipation.modifyMult("rat_saving_grace_stack", 1f + mod)
+
+            ship.mutableStats.energyRoFMult.modifyMult("rat_saving_grace_stack", 1f + mod)
+            ship.mutableStats.ballisticRoFMult.modifyMult("rat_saving_grace_stack", 1f + mod)
+            ship.mutableStats.missileRoFMult.modifyMult("rat_saving_grace_stack", 1f + mod)
+
+            ship.mutableStats.energyWeaponFluxCostMod.modifyMult("rat_saving_grace_stack", 1f - mod)
+            ship.mutableStats.ballisticWeaponFluxCostMod.modifyMult("rat_saving_grace_stack", 1f - mod)
+            ship.mutableStats.missileWeaponFluxCostMod.modifyMult("rat_saving_grace_stack", 1f - mod)
+
+
+            ship.mutableStats.armorDamageTakenMult.modifyMult("rat_saving_grace_stack", 1f - mod)
+            ship.mutableStats.hullDamageTakenMult.modifyMult("rat_saving_grace_stack", 1f - mod)
+            ship.mutableStats.shieldDamageTakenMult.modifyMult("rat_saving_grace_stack", 1f - mod)
+
+        }
+
+        override fun reportDamageApplied(source: Any?, target: CombatEntityAPI?, result: ApplyDamageResultAPI?) {
+
+            var hull = result!!.damageToHull
+            var armor = result.totalDamageToArmor
+
+            var total = hull + armor
+
+            damageSoFar += total
+
+            var divided = damageSoFar / damagePerStack
+            if (divided < 1f) return
+
+            var dividedInt = divided.toInt()
+            for (i in 0 until dividedInt) {
+
+                if (stacks.size < maxStacks) {
+                    stacks.add(SeraphsGraceStack(stackDuration))
+                }
+                else if (stacks.isNotEmpty()) {
+                    var stack = stacks.sortedBy { it.duration }.first()
+
+                    stacks.remove(stack)
+
+                    if (isInAbyss) {
+                        ship.fluxTracker.decreaseFlux(10f)
+                    }
+
+                    stacks.add(SeraphsGraceStack(stackDuration))
+                }
+            }
+
+            damageSoFar = 0f
+        }
     }
 }

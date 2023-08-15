@@ -9,7 +9,7 @@
 	"collisionClass":"MISSILE_NO_FF",
 	"explosionColor":[242, 48, 65,150],  # purely visual, will get a white additively blended core on top of this color
 	"explosionRadius":40, # purely visual
-	#"alwaysAccelerate":true,
+	"alwaysAccelerate":true,
 #	"engineSpec":{"turnAcc":140,
 #				  "turnRate":35,
 #				  "acc":1000,

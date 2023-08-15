@@ -14,7 +14,6 @@ Abyssal Hostility Instrument,rat_instrument_hostility,abyss_drop,,,5000,1000,1,,
 Abyssal Supply Instrument,rat_instrument_supplies,abyss_drop,,,5000,1000,1,,graphics/icons/cargo/rat_instrument_supply.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalSupplyInstrument,,,412
 ,,,,,,,,,,,,,,,
 #Other,,,,,,,,,,,,,,,
-Weapon Forge,rat_weapon_forge,mission_item,,,100000,1000,1,,graphics/icons/cargo/rat_weapon_forge.png,ui_cargo_special_ultratech_pickup,ui_cargo_special_ultratech_drop,assortment_of_things.campaign.items.WeaponForgeItem,,,0
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,

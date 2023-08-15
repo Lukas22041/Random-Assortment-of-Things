@@ -14,17 +14,12 @@ import assortment_of_things.campaign.RATCampaignPlugin
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.modular_weapons.scripts.WeaponComponentsListener
-import assortment_of_things.modular_weapons.util.ModularWeaponLoader
 import assortment_of_things.scripts.AtMarketListener
 import assortment_of_things.snippets.DropgroupTestSnippet
 import assortment_of_things.snippets.ProcgenDebugSnippet
-import assortment_of_things.snippets.ResetAllModularSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
-import com.fs.starfarer.api.characters.FullName
-import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -49,12 +44,9 @@ class RATModPlugin : BaseModPlugin() {
         super.onApplicationLoad()
 
         LunaDebug.addSnippet(ProcgenDebugSnippet())
-        LunaDebug.addSnippet(ResetAllModularSnippet())
         LunaDebug.addSnippet(DropgroupTestSnippet())
 
         LootModifier.saveOriginalData()
-
-        ModularWeaponLoader.setOGNames()
 
         LunaSettings.addSettingsListener(RATSettings)
 
@@ -140,8 +132,6 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().registerPlugin(RATCampaignPlugin())
         Global.getSector().addTransientScript(ParallelConstruction())
 
-        Global.getSector().addTransientListener(WeaponComponentsListener())
-
         Global.getSector().addTransientListener(AtMarketListener())
 
         if (RATSettings.disableHelp!!)
@@ -156,19 +146,10 @@ class RATModPlugin : BaseModPlugin() {
         }
 
 
-        //ModularWeaponLoader.resetAllData()
-        if (RATSettings.enableModular!!) {
-            ModularWeaponLoader.applyStatToSpecsForAll()
-        }
-
-       // Global.getSector().listenerManager.addListener(TestListener())
-
     }
 
     override fun onNewGame() {
         super.onNewGame()
-        ModularWeaponLoader.applyStatToSpecsForAll()
-
     }
 
     override fun onNewGameAfterEconomyLoad() {
@@ -198,13 +179,6 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onNewGameAfterTimePass() {
         super.onNewGameAfterTimePass()
-
-        if (RATSettings.enableModular!!)
-        {
-            Global.getSector().getCharacterData().addAbility("rat_weapon_forge")
-            Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_weapon_forge", true, 0f);
-        }
-
 
     }
 }

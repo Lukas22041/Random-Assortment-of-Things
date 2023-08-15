@@ -16,20 +16,23 @@ import org.lwjgl.util.vector.Vector2f
 class SarielLauncherListener(var ship: ShipAPI) : DamageDealtModifier {
 
 
-    var requiredDamage = 7500
+    var requiredDamage = 5000
     var damageSoFar = 0f
 
 
     override fun modifyDamageDealt(param: Any?, target: CombatEntityAPI?, damage: DamageAPI?,  point: Vector2f?, shieldHit: Boolean): String? {
+
+        if (target is ShipAPI && !target.isAlive) return null
+
         if (param is DamagingProjectileAPI) {
-            if (param.weapon.id.contains("sariel_launcher"))   {
+            if (param.weapon != null && param.weapon.id.contains("sariel_launcher"))   {
                 return null
             }
         }
 
 
         if (param is MissileAPI) {
-            if (param.weapon.id.contains("sariel_launcher")) {
+            if (param.weapon != null && param.weapon.id.contains("sariel_launcher")) {
                 return null
             }
         }
