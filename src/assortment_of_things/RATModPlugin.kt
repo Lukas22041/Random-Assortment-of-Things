@@ -8,6 +8,7 @@ import assortment_of_things.abyss.scripts.ForceNegAbyssalRep
 import assortment_of_things.abyss.scripts.HullmodRemoverListener
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.abyss.systems.MidnightCoreSystem
+import assortment_of_things.abyss.systems.SingularityCrateGeneration
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.RATCampaignPlugin
@@ -20,12 +21,14 @@ import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
+import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaRefit.LunaRefitManager
 import lunalib.lunaSettings.LunaSettings
 import org.dark.shaders.light.LightData
+import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import java.util.*
 
@@ -66,6 +69,7 @@ class RATModPlugin : BaseModPlugin() {
         }
 
         if (Global.getSettings().modManager.isModEnabled("shaderLib")) {
+            ShaderLib.init()
             LightData.readLightDataCSV("data/config/rat_lights_data.csv");
             TextureData.readTextureDataCSV("data/config/rat_texture_data.csv")
         }
@@ -78,7 +82,7 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-
+        /*Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
         for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 5f)
@@ -94,14 +98,18 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
 
         if (RATSettings.enableAbyss!!)
         {
             if (AbyssUtils.getAllAbyssSystems().isEmpty()) {
+
+                var cache = SingularityCrateGeneration.generate()
+
                 MidnightCoreSystem().generate()
-                Global.getSector().getCharacterData().addAbility("rat_singularity_jump_ability")
-                Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);
+
+               /* Global.getSector().getCharacterData().addAbility("rat_singularity_jump_ability")
+                Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);*/
 
                 Global.getSector().addScript(DisableTransverseScript())
                 for (faction in Global.getSector().allFactions)

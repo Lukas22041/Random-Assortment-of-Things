@@ -13,11 +13,15 @@
   "viewOffset": 0,
   "builtInMods": [
     "rat_abyssal_grid",
-    "rat_seraphs_grace",
+    "rat_seraphs_grace"
   ],
   "builtInWeapons": {
     "WS0004": "rat_sariel_launcher_left",
-    "WS0005": "rat_sariel_launcher_right"
+    "WS0005": "rat_sariel_launcher_right",
+    "WS0006": "rat_sariel_cover_left",
+    "WS0007": "rat_sariel_cover_right",
+    "WS0008": "rat_sariel_cover_right_middle",
+    "WS0009": "rat_seraph_lensflare"
   },
   "weaponSlots": [
     {
@@ -43,7 +47,7 @@
       "size": "LARGE",
       "type": "UNIVERSAL",
       "mount": "HARDPOINT",
-      "arc": 10,
+      "arc": 5,
       "angle": 0,
       "locations": [47.5, -0]
     },
@@ -64,6 +68,42 @@
       "arc": 0,
       "angle": -90,
       "locations": [-0.5, -41]
+    },
+    {
+      "id": "WS0006",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 10,
+      "angle": 0,
+      "locations": [81, 15.5]
+    },
+    {
+      "id": "WS0007",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 10,
+      "angle": -0,
+      "locations": [81, -15.5]
+    },
+    {
+      "id": "WS0008",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 10,
+      "angle": 0,
+      "locations": [44, -0]
+    },
+    {
+      "id": "WS0009",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 10,
+      "angle": 0,
+      "locations": [11, -0]
     }
   ],
   "engineSlots": [

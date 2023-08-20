@@ -1,0 +1,46 @@
+{
+    "displayName": "Strike",
+    "fluxCapacitors": 8,
+    "fluxVents": 10,
+    "goalVariant": false,
+    "hullId": "rat_sariel",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "heavyarmor",
+        "missleracks",
+        "targetingunit",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_sariel_Strike",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "cyclone",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "rat_sariel_launcher_right",
+                "WS0004": "rat_sariel_launcher_left",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_humpback",
+                "WS0002": "rat_humpback",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

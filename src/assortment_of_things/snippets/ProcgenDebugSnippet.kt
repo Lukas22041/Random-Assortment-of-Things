@@ -95,17 +95,6 @@ class ProcgenDebugSnippet : LunaSnippet()
         var generatedWith = "Vannila or Adjusted Sector"
         if (Global.getSector().memoryWithoutUpdate.isNotNull("\$rat_sector_generated_with_rat")) generatedWith = "Random Assortment of Things"
 
-        var outpostEnabled = "Disabled"
-        if (Global.getSector().memoryWithoutUpdate.isNotNull("\$rat_outposts_enabled")) outpostEnabled = "Enabled"
-
-        var chiralEnabled = "Disabled"
-        if (Global.getSector().memoryWithoutUpdate.isNotNull("\$rat_chiral_enabled")) chiralEnabled = "Enabled"
-
-        var improvedMisc = "Disabled"
-        if (Global.getSector().memoryWithoutUpdate.isNotNull("\$rat_generated_improved_misc")) improvedMisc = "Enabled"
-
-
-
         output.addPara("Sector Data: ", 0f, highlightColor, highlightColor)
         output.addPara("Constellations: ${constellations.size}", 0f, baseColor, baseColor)
         output.addPara("Systems: ${systems.size}", 0f, baseColor, baseColor)
@@ -114,9 +103,6 @@ class ProcgenDebugSnippet : LunaSnippet()
 
         output.addPara("RAT Sector Data: ", 0f, highlightColor, highlightColor)
         output.addPara("Sector Generated with: $generatedWith", 0f, baseColor, baseColor)
-        output.addPara("Outpost Theme: $outpostEnabled", 0f, baseColor, baseColor)
-        output.addPara("Chiral Theme: $chiralEnabled", 0f, baseColor, baseColor)
-        output.addPara("Improved Misc: $improvedMisc", 0f, baseColor, baseColor)
 
         output.addSpacer(5f)
 

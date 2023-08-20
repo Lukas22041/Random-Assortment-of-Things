@@ -1,10 +1,7 @@
 package assortment_of_things.campaign
 
-import assortment_of_things.abyss.interactions.DomainResearchInteraction
 import assortment_of_things.abyss.entities.AbyssalFracture
-import assortment_of_things.abyss.interactions.AbyssalWreckInteraction
-import assortment_of_things.abyss.interactions.CacheInteraction
-import assortment_of_things.abyss.interactions.TransmitterInteraction
+import assortment_of_things.abyss.interactions.*
 import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
@@ -30,6 +27,15 @@ class RATCampaignPlugin : BaseCampaignPlugin()
             if (plugin.connectedEntity != null) {
                 Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(plugin.connectedEntity, ""), 0.01f)
             }
+        }
+
+
+        if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_abyss_rift_station") {
+            return PluginPick(RiftStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+        }
+
+        if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_abyss_cache_singularity") {
+            return PluginPick(SingularityCrateInteration(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
         if (interactionTarget.hasTag(AbyssTags.ABYSS_WRECK)) {

@@ -91,7 +91,6 @@ class CacheInteraction : RATInteractionPlugin() {
                 closeDialog()
 
                 interactionTarget.fadeAndExpire(3f)
-                interactionTarget.isExpired = true
             }
         }
 

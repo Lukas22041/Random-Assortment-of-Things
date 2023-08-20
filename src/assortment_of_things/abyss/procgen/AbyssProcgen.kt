@@ -360,8 +360,6 @@ object AbyssProcgen {
 
         var riftExitPlugin = riftExit.customPlugin as RiftExit
 
-
-
         riftEntrance.addScript(object: EveryFrameScript {
 
             var playSound = false
@@ -454,6 +452,7 @@ object AbyssProcgen {
                 }
             }
         })
+
 
 
 

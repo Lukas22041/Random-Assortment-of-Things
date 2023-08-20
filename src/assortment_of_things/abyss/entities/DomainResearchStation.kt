@@ -1,10 +1,12 @@
 package assortment_of_things.abyss.entities
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.misc.AbyssTags
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.IntervalUtil
 import java.util.*
@@ -74,6 +76,20 @@ class DomainResearchStation : BaseCustomEntityPlugin() {
         stationGlow.renderAtCenter(entity.location.x, entity.location.y)
     }
 
+    override fun createMapTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
+        if (!entity.hasTag(AbyssTags.LOOTABLE)) {
+            tooltip!!.addPara("Research Station (Looted)", 0f)
+        }
+        else
+        {
+            tooltip!!.addPara("Research Station", 0f)
+        }
+        super.createMapTooltip(tooltip, expanded)
+    }
+
+    override fun hasCustomMapTooltip(): Boolean {
+        return true
+    }
 
 
 }

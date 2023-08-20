@@ -15,7 +15,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
 
-        if (!stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats.variant.hasHullMod(HullMods.AUTOMATED)) {
+        if (!stats!!.variant.hasHullMod("rat_abyssal_conversion") && !stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats.variant.hasHullMod(HullMods.AUTOMATED)) {
             stats.variant.addPermaMod(HullMods.AUTOMATED)
         }
 
@@ -35,13 +35,14 @@ class AbyssalSeraphsGrace : BaseHullMod() {
             stats!!.armorBonus.modifyFlat(id, 100f)
             stats!!.fluxDissipation.modifyFlat(id, 100f)
             stats!!.fluxCapacity.modifyFlat(id, 500f)
+
             stats!!.combatWeaponRepairTimeMult.modifyMult(id, 0.5f)
             stats.weaponHealthBonus.modifyPercent(id, 50f)
         }
         else {
-            stats!!.maxSpeed.modifyFlat(id, 5f)
-            stats!!.fluxDissipation.modifyFlat(id, 25f)
-            stats!!.fluxCapacity.modifyFlat(id, 100f)
+
+            stats!!.combatWeaponRepairTimeMult.modifyMult(id, 0.8f)
+            stats.weaponHealthBonus.modifyPercent(id, 20f)
         }
 
     }
@@ -88,13 +89,13 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
         tooltip.addRow(
             Alignment.MID, Misc.getTextColor(), "Saving Grace Stacks",
-            Alignment.MID, sectorColor, "10",
+            Alignment.MID, sectorColor, "15",
             Alignment.MID, abyssColor, "30",
         )
 
         tooltip.addRow(
             Alignment.MID, Misc.getTextColor(), "Max Speed",
-            Alignment.MID, sectorColor, "+5",
+            Alignment.MID, sectorColor, "+0",
             Alignment.MID, abyssColor, "+15",
             )
 
@@ -106,25 +107,25 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
         tooltip.addRow(
             Alignment.MID, Misc.getTextColor(), "Flux Dissipation",
-            Alignment.MID, sectorColor, "+25",
+            Alignment.MID, sectorColor, "+0",
             Alignment.MID, abyssColor, "+100",
         )
 
         tooltip.addRow(
             Alignment.MID, Misc.getTextColor(), "Flux Capacity",
-            Alignment.MID, sectorColor, "+100",
+            Alignment.MID, sectorColor, "+0",
             Alignment.MID, abyssColor, "+500",
         )
 
         tooltip.addRow(
             Alignment.MID, Misc.getTextColor(), "Weapon Durability",
-            Alignment.MID, sectorColor, "+0%",
+            Alignment.MID, sectorColor, "+20%",
             Alignment.MID, abyssColor, "+50%",
         )
 
         tooltip.addRow(
             Alignment.MID, Misc.getTextColor(), "Weapon Repair Time",
-            Alignment.MID, sectorColor, "+0%",
+            Alignment.MID, sectorColor, "-20%",
             Alignment.MID, abyssColor, "-50%",
         )
 
@@ -147,6 +148,10 @@ class AbyssalSeraphsGrace : BaseHullMod() {
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
+
+        if (Global.getCombatEngine() != null) {
+            Global.getCombatEngine().addLayeredRenderingPlugin(SeraphRenderer(ship!!))
+        }
 
         var isInAbyss = false
         if (Global.getSector() != null && Global.getSector().playerFleet != null) {
@@ -182,7 +187,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
         init {
             if (isInAbyss) maxStacks = 30
-            else maxStacks = 10
+            else maxStacks = 15
         }
 
         override fun advance(amount: Float) {
@@ -200,7 +205,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
             if (ship == Global.getCombatEngine().playerShip) {
                 Global.getCombatEngine().maintainStatusForPlayerShip(
-                    "rat_seraphs_grace_status", "graphics/icons/hullsys/high_energy_focus.png", "Seraphs Grace", "Stacks: ${stacks.size}", false)
+                    "rat_seraphs_grace_status", "graphics/icons/hullsys/high_energy_focus.png", "Saving Grace", "Stacks: ${stacks.size}", false)
 
             }
 

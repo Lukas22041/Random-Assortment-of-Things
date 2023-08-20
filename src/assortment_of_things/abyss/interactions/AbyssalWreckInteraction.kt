@@ -114,7 +114,6 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
 
         tooltip.addImageWithText(0f)
 
-
         textPanel.addTooltip()
 
         var hasAutomated = !Misc.isUnboardable(member)

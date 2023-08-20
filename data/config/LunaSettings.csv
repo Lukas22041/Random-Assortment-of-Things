@@ -1,10 +1,10 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
 ,,,,,,,,
 #Expansion,,,,,,,,
-rat_abyssHeader,The Abyss (Beta),Header,The Abyss (Beta),,,,,Expansion
-rat_abyssEnabled,Enable The Abyss,Boolean,false,,"The abyss is a new area focused on [Exploration]. It adds a variety of new loot to find.
+rat_abyssHeader,The Abyss,Header,The Abyss,,,,,Expansion
+rat_abyssEnabled,Enable The Abyss,Boolean,true,,"The abyss is a new area focused on [Exploration]. It adds a variety of ships, weapons and unique loot to find.
 
-For the [Beta], the player starts with the [Singularity Jump] ability, which allows entry in to the abyss from the start of the game.
+It can be accessed through the ""[A lost shipment]"" event that commonly appears in bars.
 
 Enabling it generates it in a [new save], or any existing save that is [loaded with this config enabled].",,,Expansion
 rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the abyss.

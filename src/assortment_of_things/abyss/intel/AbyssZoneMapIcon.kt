@@ -47,7 +47,15 @@ class AbyssZoneMapIcon(var system: StarSystemAPI, var color: Color, tooltip: Too
             if (Global.getSettings().isDevMode)
             {
                 Global.getSector().campaignUI.messageDisplay.addMessage("Devmode: Jumping to ${system.baseName}")
-                Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, Global.getSector().playerFleet, JumpPointAPI.JumpDestination(system.createToken(0f, 0f), ""), 0.1f)
+               // Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, Global.getSector().playerFleet, JumpPointAPI.JumpDestination(system.createToken(0f, 0f), ""), 0.1f)
+
+                var playerFleet = Global.getSector().playerFleet
+                var currentLocation = playerFleet.containingLocation
+
+                currentLocation.removeEntity(playerFleet)
+                system.addEntity(playerFleet)
+                Global.getSector().setCurrentLocation(system)
+                playerFleet.location.set(Vector2f(0f, 0f))
             }
         }
     }

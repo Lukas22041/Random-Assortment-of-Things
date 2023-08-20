@@ -3,8 +3,12 @@
 		"newGameSectorProcGen":"assortment_of_things.campaign.procgen.RATSectorProcGen",
 		"RatCombatHandler":"assortment_of_things.combat.CombatHandler",
 		"RatAfterImageRenderer":"assortment_of_things.combat.AfterImageRenderer",
+		#"RatParallaxParticleRenderer":"assortment_of_things.combat.ParallaxParticleRenderer",
 	},	
 
+	"ruleCommandPackages":[
+		"assortment_of_things.campaign.rulecmd",
+	],
 
 
 	"designTypeColors":{
@@ -16,6 +20,8 @@
 		"Modular Weapon":[158, 50, 230,255],
 		"Artifact":[97, 21, 212, 255],
 	},		
+	
+	"rat_abyssColor":[255, 0, 50,255],
 	
 	"drop_prob_officer_rat_chronos_core":0.1,
 	"drop_prob_officer_rat_cosmos_core":0.1,

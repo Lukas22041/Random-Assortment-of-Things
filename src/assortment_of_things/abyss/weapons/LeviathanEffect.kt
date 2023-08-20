@@ -1,49 +1,20 @@
 package assortment_of_things.abyss.weapons
 
+import assortment_of_things.combat.ParallaxParticleRenderer
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
-class LeviathanOnHit : OnHitEffectPlugin {
-    /* override fun onFire(projectile: DamagingProjectileAPI?, weapon: WeaponAPI?, engine: CombatEngineAPI?) {
-        var script = object : BaseEveryFrameCombatPlugin() {
+class LeviathanEffect : OnHitEffectPlugin, OnFireEffectPlugin {
 
-            var interval = IntervalUtil(0.2f, 0.2f)
-
-            override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
-                super.advance(amount, events)
-
-                if (projectile == null || projectile.isExpired) {
-                    Global.getCombatEngine().removePlugin(this)
-                }
-
-                if (engine!!.isPaused) return
-
-                *//* Global.getCombatEngine().addNebulaParticle(projectile!!.location, Vector2f(), 20f, 0f, 1f, 1f, 1f,
-                     Color(255, 0, 100))*//*
-
-                var point = MathUtils.getRandomPointInCircle(projectile!!.location, 200f)
-
-                interval.advance(amount)
-                if (interval.intervalElapsed()) {
-                    Global.getCombatEngine().spawnEmpArc(projectile!!.source, Vector2f(projectile.location), projectile, SimpleEntity(point), DamageType.ENERGY,
-                        10f, 10f, 200f, "tachyon_lance_emp_impact", 20f,
-                        Color(255, 0, 100), Color(255, 0, 100))
-                }
-            }
-        }
-
-        Global.getCombatEngine().addPlugin(script)
-    }*/
     override fun onHit(projectile: DamagingProjectileAPI?, target: CombatEntityAPI?,point: Vector2f?, shieldHit: Boolean,damageResult: ApplyDamageResultAPI?,engine: CombatEngineAPI?) {
         if (target !is ShipAPI) return
-
-
 
         var max = MathUtils.getRandomNumberInRange(3,5)
 
@@ -70,5 +41,28 @@ class LeviathanOnHit : OnHitEffectPlugin {
 
             Global.getCombatEngine().spawnDamagingExplosion(exploSpec, projectile.source, projectile.location, true)
         }
+
+
+
+
+
+
+      /*  for (i in 0..100) {
+
+            var x = MathUtils.getRandomNumberInRange(point!!.x + -25f, point.x + 25f)
+            var y = MathUtils.getRandomNumberInRange(point!!.y + -25f, point.y + 25f)
+
+            var velocity = MathUtils.getRandomPointInCircle(Vector2f(), 50f)
+
+            ParallaxParticleRenderer.createParticle(MathUtils.getRandomNumberInRange(3f, 6f), Vector2f(x, y), velocity, MathUtils.getRandomNumberInRange(3f, 25f), 1f, 15)
+        }*/
+
+
+    }
+
+    override fun onFire(projectile: DamagingProjectileAPI?, weapon: WeaponAPI?, engine: CombatEngineAPI?) {
+        engine!!.spawnExplosion(projectile!!.location, weapon!!.ship.velocity, Color(255, 0, 100), 35f, 0.8f)
+
+
     }
 }

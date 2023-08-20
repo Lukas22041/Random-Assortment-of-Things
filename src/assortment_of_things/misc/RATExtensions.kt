@@ -2,6 +2,9 @@ package assortment_of_things.misc
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.SettingsAPI
+import com.fs.starfarer.api.campaign.LocationAPI
+import com.fs.starfarer.api.campaign.SectorAPI
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.MutableStat
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipHullSpecAPI
@@ -61,4 +64,14 @@ fun ShipAPI.baseOrModSpec() : ShipHullSpecAPI{
         return this.hullSpec.baseHull
     }
     return this.hullSpec
+}
+
+fun SectorAPI.instantTeleport(destination: SectorEntityToken) {
+    var playerFleet = Global.getSector().playerFleet
+    var currentLocation = playerFleet.containingLocation
+
+    currentLocation.removeEntity(playerFleet)
+    destination.containingLocation.addEntity(playerFleet)
+    Global.getSector().setCurrentLocation(destination.containingLocation)
+    playerFleet.setLocation(destination.location.x, destination.location.y)
 }

@@ -34,11 +34,20 @@ class CharybdisHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: HullSize, stats: MutableShipStatsAPI, id: String) {
         var member = stats.fleetMember
 
-        if (member != null && (member.captain == null || member?.captain.isDefault)) {
+        if (!stats!!.variant.hasHullMod("rat_abyssal_conversion") && !stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats.variant.hasHullMod(HullMods.AUTOMATED))      {
+            stats.variant.addPermaMod(HullMods.AUTOMATED)
+
+            for (moduleString in stats.variant.moduleSlots) {
+                var module = stats.variant.getModuleVariant(moduleString)
+                module.addPermaMod(HullMods.AUTOMATED)
+            }
+        }
+
+        /*if (member != null && (member.captain == null || member?.captain.isDefault)) {
             var core = PrimordialCore().createPerson(RATItems.PRIMORDIAL, AbyssUtils.FACTION_ID , Random())
             member.captain = core
-            Misc.setUnremovable(core, true)
-        }
+            //Misc.setUnremovable(core, true)
+        }*/
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String) {

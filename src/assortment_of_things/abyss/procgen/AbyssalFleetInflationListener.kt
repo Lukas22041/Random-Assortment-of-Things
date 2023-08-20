@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssDifficulty
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.fixVariant
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
@@ -50,7 +51,7 @@ class AbyssalFleetInflationListener : FleetInflationListener {
             fleet.stats.sensorRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 0.90f)
 
             var tier = AbyssProcgen.Tier.High
-            if (fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))    {
+            if (fleet.containingLocation != null && fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))    {
                 tier = AbyssUtils.getTier(fleet.containingLocation)
             }
 
@@ -137,7 +138,7 @@ class AbyssalFleetInflationListener : FleetInflationListener {
 
         if (difficulty == AbyssDifficulty.Hard) corePercentage += 0.3f
 
-        var members = fleet.fleetData.membersListCopy
+        var members = fleet.fleetData.membersListCopy.filter { it.captain == null || !it.captain.isAICore }
 
         corePercentage = MathUtils.clamp(corePercentage, 0f, 1f)
 
@@ -152,6 +153,8 @@ class AbyssalFleetInflationListener : FleetInflationListener {
                 HullSize.CAPITAL_SHIP -> 15f
                 else -> 0f
             }
+
+            if (member.variant.baseOrModSpec().hasTag("rat_seraph")) weight*=5
 
             var variantID = member.variant.hullVariantId.lowercase()
             if (member.variant.hasHullMod(HullMods.SAFETYOVERRIDES)) weight *= 4f

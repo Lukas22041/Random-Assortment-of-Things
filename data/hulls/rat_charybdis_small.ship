@@ -12,7 +12,6 @@
   "shieldRadius": 69,
   "viewOffset": 0,
   "builtInMods": [
-    "automated",
     "reduced_explosion",
     "always_detaches"
   ],

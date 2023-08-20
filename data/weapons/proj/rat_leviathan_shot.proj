@@ -18,7 +18,8 @@
     "pixelsPerTexel":5.0,
 	#"bulletSprite":"graphics/weapons/abyss/proj/minisun.png",
 	#"onFireEffect":"assortment_of_things.abyss.weapons.AbyssRailgun",
-	"onHitEffect":"assortment_of_things.abyss.weapons.LeviathanOnHit",
+	"onHitEffect":"assortment_of_things.abyss.weapons.LeviathanEffect",
+	"onFireEffect":"assortment_of_things.abyss.weapons.LeviathanEffect",
 	"bulletSprite":"graphics/missiles/shell_gauss_cannon.png",
 	"passThroughMissiles":true,
 }

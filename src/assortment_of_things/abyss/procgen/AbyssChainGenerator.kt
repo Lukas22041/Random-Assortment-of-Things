@@ -2,17 +2,23 @@ package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.intel.event.NewDepthReachedFactor
+import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.procgen.templates.AbyssSystemHigh
 import assortment_of_things.abyss.procgen.templates.AbyssSystemLow
 import assortment_of_things.abyss.procgen.templates.AbyssSystemMid
 import assortment_of_things.misc.logger
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.fleet.FleetMemberType
+import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
+import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.system.measureTimeMillis
@@ -182,7 +188,7 @@ class AbyssChainGenerator {
         }
 
 
-        //generateRift()
+        generateRift()
 
         generateFarFracture(3, true)
        // generateFarFracture(4, false)
@@ -203,15 +209,59 @@ class AbyssChainGenerator {
         var station = riftSystem.addCustomEntity("rift_station${Misc.genUID()}", "Rift Station", "rat_abyss_rift_station", "rat_abyssals")
         station.setLocation(0f, 0f)
 
+        addWormBoss(station)
 
-
-
-        var playerFleet = Global.getSector().playerFleet
+       /* var playerFleet = Global.getSector().playerFleet
         var currentLocation = playerFleet.containingLocation
 
         currentLocation.removeEntity(playerFleet)
-        pick.addEntity(playerFleet)
-        Global.getSector().setCurrentLocation(pick)
+        riftSystem.addEntity(playerFleet)
+        Global.getSector().setCurrentLocation(riftSystem)
+        playerFleet.location.set(Vector2f(0f, 0f))*/
+    }
+
+    fun addWormBoss(station: SectorEntityToken) {
+
+        val params = FleetParamsV3(null,
+            station.containingLocation.location,
+            AbyssUtils.FACTION_ID,
+            5f,
+            FleetTypes.PATROL_MEDIUM,
+            200f,  // combatPts
+            0f,  // freighterPts
+            0f,  // tankerPts
+            0f,  // transportPts
+            0f,  // linerPts
+            0f,  // utilityPts
+            5f // qualityMod
+        )
+        params.withOfficers = false
+
+        val fleet = FleetFactoryV3.createFleet(params)
+
+        for (i in 0 until 3) {
+            var member = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_charybdis_head_standard")
+
+            var core = PrimordialCore().createPerson("rat_primordial_core", AbyssUtils.FACTION_ID, Random())
+            member.captain = core
+
+            member.repairTracker.cr = member.repairTracker.maxCR
+            fleet.fleetData.addFleetMember(member)
+        }
+
+        fleet.fleetData.sort()
+
+        var member = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_charybdis_head_standard")
+
+        var core = PrimordialCore().createPerson("rat_primordial_core", AbyssUtils.FACTION_ID, Random())
+        member.captain = core
+
+        member.repairTracker.cr = member.repairTracker.maxCR
+        station.memoryWithoutUpdate.set("\$rewardShip", member)
+
+       
+
+        station.memoryWithoutUpdate.set("\$defenderFleet", fleet)
     }
 
 

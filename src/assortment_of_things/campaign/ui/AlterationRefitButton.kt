@@ -108,9 +108,9 @@ class AlterationRefitButton : BaseRefitButton() {
         panel!!.addComponent(alterationDisplayPanel)
         alterationDisplayPanel.position.belowLeft(aboutPanel, 20f)
 
-        var displayElement = alterationDisplayPanel.createUIElement(400f, 200f, false)
-        alterationDisplayPanel.addUIElement(displayElement)
-        displayElement.addSectionHeading("Installed Alteration", Alignment.MID, 0f)
+        var displayElement = alterationDisplayPanel.createUIElement(400f, 200f, true)
+        var head = displayElement.addSectionHeading("Installed Alteration", Alignment.MID, 0f)
+        head.position.setSize(head.position.width + 10, head.position.height)
 
 
         if (installedAlteration == null) {
@@ -136,6 +136,8 @@ class AlterationRefitButton : BaseRefitButton() {
 
             displayElement.addImageWithText(0f)
         }
+
+        alterationDisplayPanel.addUIElement(displayElement)
 
 
         var removerStacks = Global.getSector().playerFleet.cargo.stacksCopy

@@ -142,7 +142,7 @@ class SingularityJumpAbility : BaseDurationAbility() {
         tooltip!!.addPara("Singularity Jump", 0f, Misc.getBrightPlayerColor(), Misc.getBrightPlayerColor())
         tooltip.addSpacer(8f)
 
-        tooltip.addPara("Descends in to the depths of hyperspace, the abyss.", 0f)
+        tooltip.addPara("Destabilizes the surrounding Hyperspace, opening a rift towards the \"Abyss\".", 0f)
         tooltip.addSpacer(5f)
 
         tooltip.addPara("Activating it within the abyss returns the fleet back to hyperspace.", 0f)

@@ -8,6 +8,7 @@ import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.util.Misc
+import org.magiclib.kotlin.fadeAndExpire
 import org.magiclib.kotlin.getSalvageSeed
 
 class TransmitterInteraction : RATInteractionPlugin() {
@@ -51,7 +52,7 @@ class TransmitterInteraction : RATInteractionPlugin() {
                 interactionTarget.removeTag(AbyssTags.TRANSMITTER_UNLOOTED)
 
                 clearOptions()
-                addOptions()
+               // addOptions()
 
                 textPanel.addPara("> Take accumalated data", Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
                 textPanel.addPara("You take the data that the transmitter collected for dozens of cycles.", Misc.getTextColor(), Misc.getHighlightColor())
@@ -65,6 +66,12 @@ class TransmitterInteraction : RATInteractionPlugin() {
                 textPanel.addTooltip()
 
                 Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 1f)
+
+
+                createOption("Leave") {
+                    closeDialog()
+                    interactionTarget.fadeAndExpire(2f)
+                }
             }
         }
 

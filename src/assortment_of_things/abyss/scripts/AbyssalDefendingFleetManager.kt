@@ -7,6 +7,7 @@ import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.abyss.procgen.AbyssalSeraphSpawner
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
@@ -83,6 +84,8 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
     * */
 
     override fun spawnFleet(): CampaignFleetAPI? {
+
+        if (source.isExpired) return null
 
         //Prevents the game spawning fleets when the player isnt in the system or a neighbour
         if (!AbyssUtils.playerInNeighbourOrSystem(source.starSystem)) return null
@@ -225,7 +228,16 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         params.random = random
         params.withOfficers = false
 
+
         val fleet = FleetFactoryV3.createFleet(params)
+
+
+        var maxSeraphs = 0
+        if (tier == AbyssProcgen.Tier.High) maxSeraphs += 2
+        if (difficulty == AbyssDifficulty.Hard) maxSeraphs += 1
+
+        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, random, maxSeraphs, 0.5f)
+        fleet.fleetData.sort()
 
         for (member in fleet.fleetData.membersListCopy) {
             member.variant.addTag(Tags.TAG_NO_AUTOFIT)

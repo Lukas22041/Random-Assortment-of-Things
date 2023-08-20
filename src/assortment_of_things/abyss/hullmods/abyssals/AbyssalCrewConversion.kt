@@ -40,6 +40,11 @@ class AbyssalCrewConversion : BaseAlteration() {
         if (stats!!.variant.hasHullMod(HullMods.AUTOMATED))
         {
             stats!!.variant.removePermaMod(HullMods.AUTOMATED)
+
+            for (moduleString in stats.variant.moduleSlots) {
+                var module = stats.variant.getModuleVariant(moduleString)
+                module.removePermaMod(HullMods.AUTOMATED)
+            }
         }
 
         stats.minCrewMod.modifyFlat("rat_core_conversion", minCrew.get(hullSize)!!)
@@ -60,7 +65,7 @@ class AbyssalCrewConversion : BaseAlteration() {
 
         tooltip!!.addSpacer(5f)
         tooltip!!.addPara("Replaces the AI-Components in abyssal hulls with a miniature bridge and leaves a subterminal for the integration of either a chronos or cosmos core, allowing humans to crew the ship. \n\n" +
-                "The subterminal allows an integrated core to restore the functionality of the shipsystem.", 0f,
+                "The subterminal allows an integrated core to restore the functionality of the shipsystem on ships with the \"Abyssal Synergy\" hullmod.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "subterminal", "chronos", "cosmos", "humans to crew the ship", "subterminal", "shipsystem")
 
         tooltip.addSpacer(10f)
@@ -71,12 +76,12 @@ class AbyssalCrewConversion : BaseAlteration() {
     }
 
     override fun canInstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return variant!!.hasHullMod("rat_abyssal_core") && (member!!.captain == null || member!!.captain.nameString == "")
+        return (variant!!.hasHullMod("rat_abyssal_core") || variant!!.hasHullMod("rat_seraphs_grace") ||  variant!!.hasHullMod("rat_charybdis_hullmod")) && (member!!.captain == null || member!!.captain.nameString == "")
     }
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?,  member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
         if (!member!!.baseOrModSpec().hasTag("rat_abyssals")) {
-            tooltip!!.addPara("Can only be installed on hulls with the \"Abyssal Core\" hullmod.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+            tooltip!!.addPara("Can only be installed on abyssal hulls.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
         else {
             tooltip!!.addPara("Can not be installed while an AI core is assigned to the ship.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
@@ -94,6 +99,11 @@ class AbyssalCrewConversion : BaseAlteration() {
 
     override fun onAlterationRemove(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?) {
         variant!!.addPermaMod(HullMods.AUTOMATED)
+
+        for (moduleString in variant.moduleSlots) {
+            var module = variant.getModuleVariant(moduleString)
+            module.addPermaMod(HullMods.AUTOMATED)
+        }
     }
 }
 

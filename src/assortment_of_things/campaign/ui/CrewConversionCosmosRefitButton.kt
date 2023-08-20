@@ -28,7 +28,7 @@ class CrewConversionCosmosRefitButton : BaseRefitButton() {
     }
 
     override fun shouldShow(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
-        return variant!!.hasHullMod("rat_abyssal_conversion")
+        return variant!!.hasHullMod("rat_abyssal_conversion") && variant!!.hasHullMod("rat_abyssal_core")
     }
 
     override fun hasTooltip(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
