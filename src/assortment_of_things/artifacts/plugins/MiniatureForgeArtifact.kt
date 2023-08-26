@@ -14,9 +14,9 @@ class MiniatureForgeArtifact : BaseArtifactPlugin() {
     var deploymentModID = "deployment_points_mod"
 
     override fun addDescription(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Decreases the deployment cost of all frigates by 1.", 0f,
+        tooltip.addPara("Decreases the deployment cost of all frigates and destroyers by 1.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(),
-        "deployment", "frigates", "1")
+        "deployment", "frigates", "destroyers", "1")
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String) {
@@ -25,7 +25,7 @@ class MiniatureForgeArtifact : BaseArtifactPlugin() {
 
 
     override fun applyEffectsBeforeShipCreation(size: ShipAPI.HullSize, stats: MutableShipStatsAPI, id: String) {
-        if (size == ShipAPI.HullSize.FRIGATE)
+        if (size == ShipAPI.HullSize.FRIGATE || size == ShipAPI.HullSize.DESTROYER)
         {
 
             stats.getSuppliesToRecover().modifyFlat(id, -1f);

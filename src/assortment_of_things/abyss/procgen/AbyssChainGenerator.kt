@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.procgen
 
+import assortment_of_things.abyss.AbyssDifficulty
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.intel.event.NewDepthReachedFactor
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
@@ -15,9 +16,11 @@ import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.getSalvageSeed
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -208,6 +211,7 @@ class AbyssChainGenerator {
         var riftSystem = AbyssProcgen.createRift(pick, location)
         var station = riftSystem.addCustomEntity("rift_station${Misc.genUID()}", "Rift Station", "rat_abyss_rift_station", "rat_abyssals")
         station.setLocation(0f, 0f)
+        station.getSalvageSeed()
 
         addWormBoss(station)
 
@@ -222,12 +226,18 @@ class AbyssChainGenerator {
 
     fun addWormBoss(station: SectorEntityToken) {
 
+
+        var points = 350f
+        if (AbyssUtils.getDifficulty() == AbyssDifficulty.Hard) {
+            points += 50f
+        }
+
         val params = FleetParamsV3(null,
             station.containingLocation.location,
             AbyssUtils.FACTION_ID,
             5f,
             FleetTypes.PATROL_MEDIUM,
-            200f,  // combatPts
+            points,  // combatPts
             0f,  // freighterPts
             0f,  // tankerPts
             0f,  // transportPts
@@ -238,8 +248,16 @@ class AbyssChainGenerator {
         params.withOfficers = false
 
         val fleet = FleetFactoryV3.createFleet(params)
+        fleet.addTag("rat_boss_fleet")
+        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, Random(), 4, 1f)
 
-        for (i in 0 until 3) {
+        for (member in fleet.fleetData.membersListCopy) {
+            member.variant.addTag(Tags.TAG_NO_AUTOFIT)
+        }
+        AbyssUtils.addAlterationsToFleet(fleet, 0.8f, Random())
+        fleet.fleetData.sort()
+
+      /*  for (i in 0 until 3) {
             var member = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_charybdis_head_standard")
 
             var core = PrimordialCore().createPerson("rat_primordial_core", AbyssUtils.FACTION_ID, Random())
@@ -257,7 +275,7 @@ class AbyssChainGenerator {
         member.captain = core
 
         member.repairTracker.cr = member.repairTracker.maxCR
-        station.memoryWithoutUpdate.set("\$rewardShip", member)
+        station.memoryWithoutUpdate.set("\$rewardShip", member)*/
 
        
 

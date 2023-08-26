@@ -6,6 +6,8 @@ Artifact Controller,rat_artifact_controller,0,,,"no_drop_salvage, restricted",,3
 Abyssal Synergy,rat_abyssal_core,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod,,,graphics/hullmods/rat_abyssal_core.png
 Abyssal Grid,rat_abyssal_grid,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalGrid,,,graphics/hullmods/rat_abyssal_grid.png
 Seraphs Grace,rat_seraphs_grace,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSeraphsGrace,,,graphics/hullmods/rat_seraphs_grace.png
+Sarakiels Blessing,rat_sarakiels_blessing,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSarakielsBlessing,,,graphics/hullmods/rat_sarakiels_blessing.png
+,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 Primordial Serpent,rat_charybdis_hullmod,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.CharybdisHullmod,,,graphics/hullmods/rat_abyssal_core.png
 ,,,,,,,,,,,,,,,,,,
@@ -16,13 +18,14 @@ Primordial Serpent,rat_charybdis_hullmod,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,
 Abyssal Crew Conversion,rat_abyssal_conversion,3,2,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalCrewConversion,,,graphics/hullmods/rat_crew_conversion.png
 Abyssal Crew Conversion (Chronos),rat_chronos_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedChronosCore,,,graphics/hullmods/rat_chronos_conversion.png
 Abyssal Crew Conversion (Cosmos),rat_cosmos_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedCosmosCore,,,graphics/hullmods/rat_chosmos_conversion.png
+Primordial Stream,rat_primordial_stream,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.PrimordialStreamHullmod,,,graphics/hullmods/rat_primordial_stream.png
 ,,,,,,,,,,,,,,,,,,
 ##Misc,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 AI Conversion,rat_automated_conversion,3,1,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.AIConvertedShip,,,graphics/hullmods/rat_ai_conversion.png
-Delta Assistant,rat_delta_assistant,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.DeltaAIAssistantHullmod,,,graphics/hullmods/rat_delta_ai.png
+Delta Assistant,rat_delta_assistant,3,1,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.DeltaAIAssistantHullmod,,,graphics/hullmods/rat_delta_ai.png
 Unaffected Deployment,rat_unaffected,3,1,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.UnaffectedDeploymentHullmod,,,graphics/hullmods/rat_unaffected.png
-Phase Stabiliser,rat_phase_stabiliser,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.PhaseStabiliserHullmod,,,graphics/hullmods/rat_phase_stabiliser.png
+Phase Stabiliser,rat_phase_stabiliser,3,1,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.PhaseStabiliserHullmod,,,graphics/hullmods/rat_phase_stabiliser.png
 Quality Assurance,rat_qualityAssurance,3,3,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.QualityAssuranceHullmod,,,graphics/hullmods/rat_quality_assurance.png
 Efficient Procedures,rat_efficientProcedures,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.EfficientProceduresHullmod,,,graphics/hullmods/rat_efficient_procedures.png
 Overloaded Systems,rat_overloaded_systems,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.OverloadedSystemsHullmod,,,graphics/hullmods/rat_overloaded_systems.png

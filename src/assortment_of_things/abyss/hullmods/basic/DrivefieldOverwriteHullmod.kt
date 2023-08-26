@@ -23,7 +23,7 @@ class DrivefieldOverwriteHullmod : BaseAlteration() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
-        stats!!.maxBurnLevel.modifyFlat(id, 1f)
+        stats!!.maxBurnLevel.modifyFlat(id, 2f)
         stats.maxSpeed.modifyFlat(id, 10f)
 
 
@@ -36,13 +36,12 @@ class DrivefieldOverwriteHullmod : BaseAlteration() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
 
-
         var hc = Misc.getHighlightColor()
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Increases the ships maximum burn level by 1 and improves its max speed in combat by 10 units.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "maximum burn", "1", "max speed", "10")
+        tooltip.addPara("Increases the ships maximum burn level by 2 and improves its max speed in combat by 10 units.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "maximum burn", "2", "max speed", "10")
 
     }
 

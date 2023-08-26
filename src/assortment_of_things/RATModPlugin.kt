@@ -76,22 +76,28 @@ class RATModPlugin : BaseModPlugin() {
     }
 
     override fun onDevModeF8Reload() {
-        super.onDevModeF8Reload()
+
+        if (Global.getSettings().modManager.isModEnabled("shaderLib")) {
+            LightData.readLightDataCSV("data/config/rat_lights_data.csv");
+        }
     }
+
 
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-        /*Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
+      /*  Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
         for (artifact in ArtifactUtils.artifacts)
         {
-            Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 5f)
+            Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)
         }
 
         for (hullmod in Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") && !it.hasTag("rat alteration_no_drop") })
         {
-            Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmod.id), 5f)
+            Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmod.id), 3f)
         }
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_primordial_stream"), 3f)
+
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 5f)
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 10f)
@@ -104,7 +110,11 @@ class RATModPlugin : BaseModPlugin() {
         {
             if (AbyssUtils.getAllAbyssSystems().isEmpty()) {
 
-                var cache = SingularityCrateGeneration.generate()
+                var data = Global.getSector().characterData
+
+                if (data.memoryWithoutUpdate.get("\$rat_abyssWithCustomStart") == null) {
+                    var cache = SingularityCrateGeneration.generate()
+                }
 
                 MidnightCoreSystem().generate()
 

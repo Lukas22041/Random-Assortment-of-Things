@@ -7,6 +7,7 @@ import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.combat.CombatEngine
@@ -56,6 +57,7 @@ class CombatHandler : EveryFrameCombatPlugin
 
 
                 var withinPhotosphere = false
+                var photosphere: SectorEntityToken? = null
                 var photospheres = Global.getSector().playerFleet.containingLocation.customEntities.filter { it.customPlugin is AbyssalPhotosphere }
                 for (source in photospheres)
                 {
@@ -63,14 +65,15 @@ class CombatHandler : EveryFrameCombatPlugin
                     if (MathUtils.getDistance(source.location, Global.getSector().playerFleet.location) < (plugin.radius / 10) - 10)
                     {
                         withinPhotosphere = true
+                        photosphere = source
                         break
                     }
                 }
 
                 //engine!!.addLayeredRenderingPlugin(CombatWarpingBackgroundRenderer(background, color))
 
-                if (withinPhotosphere) {
-                    engine!!.addLayeredRenderingPlugin(CombatPhotosphereRenderer(150f))
+                if (withinPhotosphere && photosphere != null) {
+                    engine!!.addLayeredRenderingPlugin(CombatPhotosphereRenderer(150f, photosphere))
                 }
 
 

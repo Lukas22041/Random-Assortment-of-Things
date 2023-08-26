@@ -20,7 +20,7 @@
     "WS0005": "rat_sariel_launcher_right",
     "WS0006": "rat_sariel_cover_left",
     "WS0007": "rat_sariel_cover_right",
-    "WS0008": "rat_sariel_cover_right_middle",
+    "WS0008": "rat_sariel_cover_middle",
     "WS0009": "rat_seraph_lensflare"
   },
   "weaponSlots": [

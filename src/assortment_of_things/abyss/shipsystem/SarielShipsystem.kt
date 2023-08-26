@@ -67,7 +67,7 @@ class SarielShipsystem : BaseShipSystemScript() {
         stats.shieldDamageTakenMult.modifyMult(id, 1 - (0.4f * effectLevel))
         stats.armorDamageTakenMult.modifyMult(id, 1 - (0.4f * effectLevel))
         stats.hullDamageTakenMult.modifyMult(id, 1 - (0.4f * effectLevel))
-
+        ship.mutableStats.empDamageTakenMult.modifyMult(id, 1 - (0.4f * effectLevel))
 
         stats.ballisticRoFMult.modifyMult(id, 1 + (0.33f * effectLevel))
         stats.energyRoFMult.modifyMult(id, 1 + (0.33f * effectLevel))
@@ -80,6 +80,7 @@ class SarielShipsystem : BaseShipSystemScript() {
         stats.ballisticWeaponDamageMult.modifyMult(id, 1 + (0.10f * effectLevel))
         stats.energyWeaponDamageMult.modifyMult(id, 1 + (0.10f * effectLevel))
         stats.missileWeaponDamageMult.modifyMult(id, 1 + (0.10f * effectLevel))
+
 
 
     }

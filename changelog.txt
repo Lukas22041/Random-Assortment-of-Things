@@ -1,3 +1,15 @@
+Version 1.5.0
+
+-> Added "The Abyss" (Beta)
+The Abyss is a new and large-scale area to explore. It comes with a variety of unique ships, weapons and loot.
+
+-> Removed Chiral and Outpost systems.
+-> Removed Modular Weapons.
+-> Minimap configs were moved to a new tab.
+-> Removed some joke options.
+
+
+
 Version 1.5.0 DiscordBeta11
 
 - Humpback/Haddock have been decreased to 600/700 range.

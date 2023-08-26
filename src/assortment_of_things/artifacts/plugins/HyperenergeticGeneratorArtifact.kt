@@ -13,9 +13,9 @@ class HyperenergeticGeneratorArtifact : BaseArtifactPlugin() {
 
 
     override fun addDescription(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Increases the flux dissipation of all ships within the fleet by 5%%.", 0f,
+        tooltip.addPara("Increases the flux dissipation of all ships within the fleet by 10%%.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(),
-        "flux dissipation", "5%")
+        "flux dissipation", "10%")
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String) {
@@ -24,7 +24,7 @@ class HyperenergeticGeneratorArtifact : BaseArtifactPlugin() {
 
 
     override fun applyEffectsBeforeShipCreation(size: ShipAPI.HullSize, stats: MutableShipStatsAPI, id: String) {
-        stats.fluxDissipation.modifyMult(id, 1.05f)
+        stats.fluxDissipation.modifyMult(id, 1.1f)
     }
 
 

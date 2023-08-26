@@ -135,7 +135,12 @@ class DomainResearchInteraction : RATInteractionPlugin() {
                 }
 
                 drop = DropData()
-                drop.chances = 5
+                drop.chances = 3
+                drop.group = "rat_abyss_weapons"
+                dropRandom.add(drop)
+
+                drop = DropData()
+                drop.chances = 4
                 drop.group = "weapons2"
                 dropRandom.add(drop)
 
@@ -154,7 +159,7 @@ class DomainResearchInteraction : RATInteractionPlugin() {
                 var salvage = SalvageEntity.generateSalvage(random.asJavaRandom(), mult, mult, 1f, 1f, dropValue, dropRandom)
 
 
-                ArtifactUtils.generateArtifactLoot(salvage, "abyss", 0.1f, 1, random.asJavaRandom())
+                ArtifactUtils.generateArtifactLoot(salvage, "abyss", 0.15f, 1, random.asJavaRandom())
 
                 visualPanel.showLoot("Loot", salvage, true) {
 

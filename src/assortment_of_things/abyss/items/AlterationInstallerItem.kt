@@ -27,9 +27,10 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
 
         var data = stack.specialDataIfSpecial.data
 
+        var allAlterations =  Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") }
         var mods = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") && !it.hasTag("rat alteration_no_drop") }
 
-        if (data == null || !mods.map { it.id }.contains(data) )
+        if (data == null || !allAlterations.map { it.id }.contains(data) )
         {
             var key = "\$rat_alteration_random"
             var random = Random(Misc.genRandomSeed())

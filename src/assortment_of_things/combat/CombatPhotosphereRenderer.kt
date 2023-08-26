@@ -1,7 +1,9 @@
 package assortment_of_things.combat
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin
 import com.fs.starfarer.api.combat.CombatEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
@@ -16,7 +18,7 @@ import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
 
-class CombatPhotosphereRenderer(var radius: Float) : BaseCombatLayeredRenderingPlugin() {
+class CombatPhotosphereRenderer(var radius: Float, var photosphere: SectorEntityToken) : BaseCombatLayeredRenderingPlugin() {
 
     var color = AbyssUtils.ABYSS_COLOR.setAlpha(255)
     //var color = Color(0, 120, 255)
@@ -35,9 +37,17 @@ class CombatPhotosphereRenderer(var radius: Float) : BaseCombatLayeredRenderingP
 
     init {
 
-        var point = Vector2f(MathUtils.getRandomNumberInRange(-350f, 350f), MathUtils.getRandomNumberInRange(-350f, 350f))
-        offset = point
+        var playerfleet = Global.getSector().playerFleet
+        var distance = MathUtils.getDistance(playerfleet, photosphere)
+        var angle = Misc.getAngleInDegrees(playerfleet.location, photosphere.location)
+        var plugin = photosphere.customPlugin as AbyssalPhotosphere
 
+        var min = 0f
+        var max = plugin.radius / 10
+
+        var level = (distance - min) / (max - min)
+
+        offset = MathUtils.getPointOnCircumference(Vector2f(0f , 0f), 600f * level, angle)
 
         halo = Global.getSettings().getSprite("rat_terrain", "halo")
 
@@ -81,8 +91,7 @@ class CombatPhotosphereRenderer(var radius: Float) : BaseCombatLayeredRenderingP
 
     override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
 
-        var adjustedOffset = Vector2f(offset.x * viewport!!.viewMult, offset.x * viewport.viewMult)
-
+        var adjustedOffset = Vector2f(offset.x * viewport!!.viewMult, offset.y * viewport.viewMult)
         var location = Vector2f()
         location = Vector2f((viewport!!.llx + viewport!!.visibleWidth / 2), (viewport!!.lly + viewport!!.visibleHeight / 2)).plus(adjustedOffset)
 

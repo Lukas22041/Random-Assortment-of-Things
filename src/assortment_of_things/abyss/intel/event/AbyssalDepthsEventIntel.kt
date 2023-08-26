@@ -240,11 +240,11 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
         if (stage!!.id == Stage.STARE_IN_TO)
         {
            // resetEvent()
-            var randomAlteration = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") }.random()
+           /* var randomAlteration = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") }.random()
 
             val cargo = Global.getSector().playerFleet.cargo
             cargo.addSpecial(SpecialItemData("rat_alteration_install", randomAlteration!!.id), 1f)
-            Global.getSector().campaignUI.messageDisplay.addMessage("Aquirred ${randomAlteration.displayName} from Abyssal Exploration")
+            Global.getSector().campaignUI.messageDisplay.addMessage("Aquirred ${randomAlteration.displayName} from Abyssal Exploration")*/
         }
     }
 

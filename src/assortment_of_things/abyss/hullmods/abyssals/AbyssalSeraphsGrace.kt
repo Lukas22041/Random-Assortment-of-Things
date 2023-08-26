@@ -29,6 +29,8 @@ class AbyssalSeraphsGrace : BaseHullMod() {
             }
         }
 
+        if (!isInAbyss) isInAbyss = stats.variant.hasHullMod("rat_sarakiels_blessing")
+
 
         if (isInAbyss) {
             stats!!.maxSpeed.modifyFlat(id, 15f)
@@ -62,6 +64,8 @@ class AbyssalSeraphsGrace : BaseHullMod() {
                 }
             }
         }
+
+        if (!isInAbyss) isInAbyss = ship!!.variant.hasHullMod("rat_sarakiels_blessing")
 
         var abyssColor = Misc.getGrayColor()
         var sectorColor = Misc.getHighlightColor()
@@ -163,6 +167,8 @@ class AbyssalSeraphsGrace : BaseHullMod() {
             }
         }
 
+        if (!isInAbyss) isInAbyss = ship!!.variant.hasHullMod("rat_sarakiels_blessing")
+
         ship!!.addListener(SeraphsGraceListener(ship, isInAbyss))
     }
 
@@ -227,6 +233,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
             ship.mutableStats.armorDamageTakenMult.modifyMult("rat_saving_grace_stack", 1f - mod)
             ship.mutableStats.hullDamageTakenMult.modifyMult("rat_saving_grace_stack", 1f - mod)
             ship.mutableStats.shieldDamageTakenMult.modifyMult("rat_saving_grace_stack", 1f - mod)
+            ship.mutableStats.empDamageTakenMult.modifyMult("rat_saving_grace_stack", 1f - mod)
 
         }
 

@@ -2,11 +2,13 @@ package assortment_of_things.abyss.hullmods.abyssals
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
+import assortment_of_things.misc.addNegativePara
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.util.IntervalTracker
 import org.lazywizard.lazylib.MathUtils
@@ -52,6 +54,12 @@ class CharybdisHullmod : BaseHullMod() {
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String) {
 
+    }
+
+    override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
+        super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
+
+        tooltip!!.addNegativePara("Unfinished Content, it will not work correctly, if at all.")
     }
 
     override fun isApplicableToShip(ship: ShipAPI): Boolean {

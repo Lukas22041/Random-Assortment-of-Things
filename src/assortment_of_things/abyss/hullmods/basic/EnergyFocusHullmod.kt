@@ -13,9 +13,13 @@ class EnergyFocusHullmod : BaseAlteration() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
-        stats!!.energyRoFMult.modifyMult(modID, 1.2f)
+       /* stats!!.energyRoFMult.modifyMult(modID, 1.2f)
         stats!!.energyWeaponFluxCostMod.modifyMult(modID, 0.8f)
         stats!!.energyAmmoRegenMult.modifyMult(modID, 1.25f)
+        stats!!.energyWeaponDamageMult.modifyMult(modID, 1.05f)*/
+
+        stats!!.energyWeaponRangeBonus.modifyFlat(modID, 100f)
+        stats!!.energyWeaponFluxCostMod.modifyMult(modID, 0.85f)
         stats!!.energyWeaponDamageMult.modifyMult(modID, 1.05f)
     }
 
@@ -28,10 +32,15 @@ class EnergyFocusHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Transfigures the hulls internal configuration in to a state that benefits the standard operation of energy weapons.\n\n" +
+        /*tooltip.addPara("Transfigures the hulls internal configuration in to a state that benefits the standard operation of energy weapons.\n\n" +
                 "" +
                 "Increases the rate of fire by 20%% without increasing flux usage, ammunition recharges 25%% faster and all energy weapons deal 5%% more damage.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "energy weapons", "20%", "25%", "5%")
+            "energy weapons", "20%", "25%", "5%")*/
+
+        tooltip.addPara("Transfigures the hulls internal configuration in to a state that benefits the standard operation of energy weapons.\n\n" +
+                "" +
+                "All energy weapons see an increase in range of 100, reduced flux usage by 15%% and deal 5%% more damage.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "energy weapons", "100", "15%", "5%")
 
     }
 }

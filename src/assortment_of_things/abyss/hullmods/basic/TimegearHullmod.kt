@@ -17,9 +17,14 @@ class TimegearHullmod : BaseAlteration() {
         super.advanceInCombat(ship, amount)
         if (ship == null) return
 
+        var level = (ship.fluxLevel - 0) / (1f - 0)
+
+        var mod = 1 + (0.25f * level)
+
+        ship.mutableStats!!.timeMult.modifyMult(modID, mod);
         if (ship == Global.getCombatEngine().playerShip)
         {
-            Global.getCombatEngine().timeMult.modifyMult(modID, 0.90f)
+            Global.getCombatEngine().timeMult.modifyMult(modID, 1 / mod)
         }
         else
         {
@@ -34,7 +39,6 @@ class TimegearHullmod : BaseAlteration() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
-        stats!!.timeMult.modifyMult(modID, 1.10f);
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?, isForModSpec: Boolean): Boolean {
@@ -47,8 +51,8 @@ class TimegearHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Installs experimental components in to the ships generators. When active, it increases the ships perceived timeflow by 10%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "timeflow", "10%")
+        tooltip.addPara("Installs experimental components in to the ships flux grid. This increases the ships perceived timeflow by up to a maximum of 25%% depending on the ships current flux level.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "timeflow", "25%", "flux level")
 
     }
 }

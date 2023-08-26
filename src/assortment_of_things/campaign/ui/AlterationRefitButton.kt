@@ -135,6 +135,7 @@ class AlterationRefitButton : BaseRefitButton() {
             //img.addPara("Test Description")
 
             displayElement.addImageWithText(0f)
+            displayElement.addSpacer(10f)
         }
 
         alterationDisplayPanel.addUIElement(displayElement)

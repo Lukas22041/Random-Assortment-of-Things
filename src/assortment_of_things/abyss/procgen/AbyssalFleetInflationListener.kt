@@ -45,9 +45,10 @@ class AbyssalFleetInflationListener : FleetInflationListener {
 
     override fun reportFleetInflated(fleet: CampaignFleetAPI?, inflater: FleetInflater?) {
         if (fleet == null) return
+        if (fleet.hasTag("rat_isInflated")) return
         if (fleet.faction.id == "rat_abyssals")
         {
-
+            fleet.addTag("rat_isInflated")
             fleet.stats.sensorRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 0.90f)
 
             var tier = AbyssProcgen.Tier.High
@@ -86,6 +87,15 @@ class AbyssalFleetInflationListener : FleetInflationListener {
                 else if (tier == AbyssProcgen.Tier.High) {
                     chance.add(0, 0.5f)
                     chance.add(1, 0.2f)
+                }
+            }
+
+            if (fleet.hasTag("rat_boss_fleet")) {
+                chance.add(1, 4f)
+                chance.add(2, 3f)
+
+                if (difficulty == AbyssDifficulty.Hard) {
+                    chance.add(2, 3f)
                 }
             }
 
@@ -139,6 +149,8 @@ class AbyssalFleetInflationListener : FleetInflationListener {
         if (difficulty == AbyssDifficulty.Hard) corePercentage += 0.3f
 
         var members = fleet.fleetData.membersListCopy.filter { it.captain == null || !it.captain.isAICore }
+
+        if (fleet.hasTag("rat_boss_fleet")) corePercentage += 0.2f
 
         corePercentage = MathUtils.clamp(corePercentage, 0f, 1f)
 

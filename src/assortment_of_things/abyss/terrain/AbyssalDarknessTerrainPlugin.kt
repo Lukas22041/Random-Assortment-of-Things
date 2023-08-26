@@ -39,6 +39,20 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         return super.getTerrainId() + id
     }
 
+    fun containingPhotosphere(other: SectorEntityToken): SectorEntityToken? {
+        var photospheres = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalPhotosphere }
+        for (source in photospheres)
+        {
+            var plugin = source.customPlugin as AbyssalPhotosphere
+            if (MathUtils.getDistance(source.location, other.location) < (plugin.radius / 10) - 10)
+            {
+                return source
+            }
+        }
+
+        return null
+    }
+
     override fun containsPoint(point: Vector2f?, radius: Float): Boolean {
         var system = entity.starSystem
         var tier = AbyssUtils.getTier(system)

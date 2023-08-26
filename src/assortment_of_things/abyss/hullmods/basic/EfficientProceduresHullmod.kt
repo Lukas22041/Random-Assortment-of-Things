@@ -25,8 +25,8 @@ class EfficientProceduresHullmod : BaseAlteration() {
 
 
 
-        stats!!.suppliesPerMonth.modifyMult(modID, 0.75f);
-        stats.fuelUseMod.modifyMult(modID, 0.75f);
+        stats!!.suppliesPerMonth.modifyMult(modID, 0.666f);
+        stats.fuelUseMod.modifyMult(modID, 0.666f);
 
 
     }
@@ -38,13 +38,12 @@ class EfficientProceduresHullmod : BaseAlteration() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
 
-
         var hc = Misc.getHighlightColor()
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Decreases the monthly supply and fuel usage by 25%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "supply", "fuel", "usage", "25%")
+        tooltip.addPara("Decreases the monthly supply and fuel usage by 33%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "supply", "fuel", "usage", "33%")
 
     }
 

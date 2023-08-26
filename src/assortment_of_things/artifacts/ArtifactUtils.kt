@@ -101,7 +101,6 @@ object ArtifactUtils {
 
     fun generateArtifactLoot(cargo: CargoAPI, dropGroup: String, chance: Float, attempts: Int, random: Random)
     {
-
         var picker = WeightedRandomPicker<ArtifactSpec>()
         picker.random = random
 
@@ -117,6 +116,29 @@ object ArtifactUtils {
             var pick = picker.pick()
             cargo.addSpecial(SpecialItemData("rat_artifact", pick.id), 1f)
         }
+    }
 
+    fun generateArtifactNoDupe(cargo: CargoAPI, dropGroup: String, random: Random)
+    {
+
+        var artifactsInFleet = ArtifactUtils.getArtifactsInFleet()
+
+        var picker = WeightedRandomPicker<ArtifactSpec>()
+        picker.random = random
+
+        for (artifact in artifacts)
+        {
+            if (artifact.dropGroup != dropGroup) continue
+            if (artifactsInFleet.any { it.id == artifact.id }) continue
+            picker.add(artifact, artifact.dropWeight)
+        }
+
+        if (picker.isEmpty) {
+            generateArtifactLoot(cargo, dropGroup, 1f, 1, random)
+            return
+        }
+
+        var pick = picker.pick()
+        cargo.addSpecial(SpecialItemData("rat_artifact", pick.id), 1f)
     }
 }

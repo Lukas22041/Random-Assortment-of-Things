@@ -67,6 +67,11 @@ class CacheInteraction : RATInteractionPlugin() {
             dropRandom.add(drop)
 
             drop = DropData()
+            drop.chances = 3
+            drop.group = "rat_abyss_weapons"
+            dropRandom.add(drop)
+
+            drop = DropData()
             drop.chances = 1
             drop.group = "any_hullmod_medium"
             dropRandom.add(drop)
