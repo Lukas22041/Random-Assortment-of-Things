@@ -80,6 +80,7 @@ object AbyssUtils {
     //Sets up important tags, like "HIDDEN" to prevent the systems from being used by other mods.
     fun setupTags(system: StarSystemAPI)
     {
+        system.initNonStarCenter()
         system.generateAnchorIfNeeded()
         system.addTag(SYSTEM_TAG)
         system.isProcgen = false
@@ -89,6 +90,7 @@ object AbyssUtils {
         system.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
         system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
         system.isEnteredByPlayer = false
+        Tags.THEME_HIDDEN
     }
 
 

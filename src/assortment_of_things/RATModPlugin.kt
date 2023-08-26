@@ -22,6 +22,8 @@ import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
+import com.fs.starfarer.api.impl.campaign.ids.Items
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -63,6 +65,8 @@ class RATModPlugin : BaseModPlugin() {
 
         LunaRefitManager.addRefitButton(DeltaAIRefitButton())
 
+        LunaRefitManager.addRefitButton(AugmentedRefitButton())
+
 
         if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
             //RATNexManager.addStartingFleets()
@@ -86,7 +90,11 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-      /*  Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
+        //Global.getSector().characterData.person.stats.setSkillLevel("rat_augmented", 1f)
+      //  Global.getSector().playerFleet.fleetData.officersCopy.random().person.stats.setSkillLevel("rat_augmented", 1f)
+
+
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
         for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)
@@ -104,7 +112,7 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
 
         if (RATSettings.enableAbyss!!)
         {
