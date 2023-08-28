@@ -25,7 +25,7 @@ rat_enableMinimap,Enable Mini-map,Boolean,false,,"Replaces the [Campaign Radar] 
 
 The view centers on your fleet's location, and can't be manually moved unless the game is paused.
 
-[Warning]: This can be performance intensive; this is especially pronounced when in hyperspace if you have increased the the size of Sector generation.",,,Enhancement
+[Warning]: This can be performance intensive; this is especially pronounced when in hyperspace if you have increased Sector generation size.",,,Enhancement
 rat_minimapShape,Mini-map Shape,Radio,Wide,"Wide, Square","Configures the shape of the mini-map.
 ""Wide"" takes up more space, but should be easier to interact with. ""Square"" is the same size as the vanilla radar.
 ",,,Enhancement
