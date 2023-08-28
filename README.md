@@ -1,2 +1,3 @@
 # Random-Assortment-of-Things
-Repository for RAT, a Starsector Mod 
+
+Repository for RAT, a Starsector mod

@@ -1,6 +1,6 @@
 name,id,tags,tech/manufacturer,rarity,base price,stack size,cargo space,baseRaidDanger,icon,sound id,sound id drop,plugin,plugin params,desc,order
 #Abyss,,,,,,,,,,,,,,,
-Hullmod installer,rat_alteration_install,,Hull Alteration,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,"A hull alteration is a special, consumeable hull modification, that can be installed through the ""Additional Options"" section at the top of the refit screen.",400
+Hullmod installer,rat_alteration_install,,Hull Alteration,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,"A hull alteration is a special, consumable hull modification that can be installed through the ""Additional Options"" section at the top of the refit screen.",400
 Hullmod remover,rat_alteration_remover,,Hull Alteration,,25000,1000,1,,graphics/icons/cargo/rat_alteration_remover.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationRemoverItem,,,401
 ,,,,,,,,,,,,,,,
 Abyssal Survey Data,rat_abyss_survey,,,,20000,1000,1,,graphics/icons/cargo/rat_abyss_survey.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalSurveyData,,,402
@@ -11,13 +11,13 @@ Abyssal Supply Instrument,rat_instrument_supplies,abyss_drop,,,5000,1000,1,,grap
 ,,,,,,,,,,,,,,,
 Gravitational Destabilizer,rat_destabilizer,mission_item,,,100000,1000,1,,graphics/icons/cargo/rat_singularity_device.png,ui_cargo_special_ultratech_pickup,ui_cargo_special_ultratech_drop,assortment_of_things.abyss.items.GravitationalDestabilizer,,"A device that discharges a small pellet of antimatter at intense gravitational pressure. Activating it creates a rift in hyperspace.
 
-Integrating it in to the fleet unlocks access to the ""Singularity Jump"" ability.",0
+Integrating it into your fleet unlocks access to the ""Singularity Jump"" ability.",0
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
 #Other,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
-Artifact,rat_artifact,,Artifact,,50000,1000,1,,graphics/icons/rat_empty.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ArtifactItem,,"An ancient device that can be integrated in to the fleet and provide benefits for it. Only one can be active at a time. Integrating the first artifact opens the ""Artifacts"" intel tab in the ""Personal"" section, providing more information.",5000
+Artifact,rat_artifact,,Artifact,,50000,1000,1,,graphics/icons/rat_empty.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ArtifactItem,,"An ancient device that can be integrated into a fleet to provide additional benefits. Only one can be active at a time. More information will be provided via the ""Artifacts"" intel tab (located in the ""Personal"" section) when integrating for the first time.",5000
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,

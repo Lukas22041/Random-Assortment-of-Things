@@ -173,7 +173,7 @@ class RATModPlugin : BaseModPlugin() {
             }
             catch (e: Throwable)
             {
-                Global.getLogger(this.javaClass).error("Failed to disable Help Popups.")
+                Global.getLogger(this.javaClass).error("Failed to disable help pop-ups.")
             }
         }
 

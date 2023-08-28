@@ -2,14 +2,14 @@ fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValu
 ,,,,,,,,
 #Expansion,,,,,,,,
 rat_abyssHeader,The Abyss,Header,The Abyss,,,,,Expansion
-rat_abyssEnabled,Enable The Abyss,Boolean,true,,"The abyss is a new area focused on [Exploration]. It adds a variety of ships, weapons and unique loot to find.
+rat_abyssEnabled,Enable The Abyss,Boolean,true,,"The Abyss is a new area focused on [Exploration]. It adds a variety of ships, weapons, and unique loot to find.
 
 It can be accessed through the ""[A lost shipment]"" event that commonly appears in bars.
 
-Enabling it generates it in a [new save], or any existing save that is [loaded with this config enabled].",,,Expansion
-rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the abyss.
+Enabling the Abyss generates content for both new and existing saves upon game load.",,,Expansion
+rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the Abyss.
 
-Hard-mode severely increases the strength of encountered fleets within the abyss. Also adds slight player fleet scaling, if the player over powers them a lot.",,,Expansion
+Hard mode greatly increases the strength of fleets found within the Abyss. Also adds slight player fleet scaling.",,,Expansion
 rat_abyssCredits,,Text,"[Credits:]
 [SnazzyPantsMcGee] - Spritework
 [Haplogynae] - Music
@@ -18,42 +18,42 @@ rat_abyssCredits,,Text,"[Credits:]
 #Enhancements,,,,,,,,
 rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,Enhancement
 rat_parallelEnabled,Enable Parallel Construction,Boolean,false,,"Removes the queue system in Colony Construction, allowing everything to be built at the same time.",,,Enhancement
-rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,,"If set to true and parallel construction is enabled, it will apply the same effect to NPC markets.",,,Enhancement
+rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,,"If set to true and parallel construction is enabled, NPC markets will benefit from the same effect.",,,Enhancement
 ,,,,,,,,
-rat_UIHeader,Minimap,Header,Minimap,,,,,Enhancement
-rat_enableMinimap,Enable Minimap,Boolean,false,,"Replaces the [Campaign Radar] with an interactable minimap that shows information for the current location. Requires a [save-reload] to be enabled/disabled.
+rat_UIHeader,Mini-map,Header,Mini-map,,,,,Enhancement
+rat_enableMinimap,Enable Mini-map,Boolean,false,,"Replaces the [Campaign Radar] with an interactive mini-map. Requires a [save/reload] to toggle.
 
-The view centers on the fleets location and can not be manualy moved, unless the game is currently paused.
+The view centers on your fleet's location, and can't be manually moved unless the game is paused.
 
-[Warning]: This is relatively performance expensive, especialy so in hyperspace if the amount of generated systems has been increased.",,,Enhancement
-rat_minimapShape,Minimap Shape,Radio,Wide,"Wide, Square","Sets the form-factor of the minimap.
-""Wide"" takes up more space, but should be easier to interact with, where as ""Square"" will take up around the same space as the Radar.
+[Warning]: This can be performance intensive; this is especially pronounced when in hyperspace if you have increased Sector generation size.",,,Enhancement
+rat_minimapShape,Mini-map Shape,Radio,Wide,"Wide, Square","Configures the shape of the mini-map.
+""Wide"" takes up more space, but should be easier to interact with. ""Square"" is the same size as the vanilla radar.
 ",,,Enhancement
-rat_minimapStarscape,Starscape Mode,Boolean,false,,"Displays the minimap in ""Starscape"" mode when in Hyperspace. Looks nicer, but can not display sensor activity, slipstreams or hyperspace clouds.",,,Enhancement
-rat_minimapFuel,Enable Fuel Overlay,Boolean,true,,"Shows the fuel range overlay on the minimap in hyperspace. 
+rat_minimapStarscape,Starscape Mode,Boolean,false,,"Displays the mini-map in ""Starscape"" mode when in Hyperspace. Looks nicer, but can't display sensor activity, slipstreams or hyperspace clouds.",,,Enhancement
+rat_minimapFuel,Enable Fuel Overlay,Boolean,true,,"Shows the fuel range overlay on the mini-map in hyperspace. 
 ",,,Enhancement
 ,,,,,,,,
 rat_miscHeader,Miscellaneous,Header,Miscellaneous,,,,,Enhancement
-rat_forceDisableHelp,Force disable help-popups,Boolean,false,,"Disables help popups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, [does not re-enable] help-popups if disabled.",,,Enhancement
+rat_forceDisableHelp,Force disable help pop-ups,Boolean,false,,"Disables help pop-ups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, [does not re-enable] help pop-ups if disabled.",,,Enhancement
 ,,,,,,,,
 ,,,,,,,,
 #Procgen,,,,,,,,
 rat_procgenHeader,Procedual Generation Tweaks,Header,Procedual Generation Config,,,,,Procgen
-rat_procgenText,,Text,"Changes to how starsectors procedual generation works. 
-This section is basicly a simplified and more idiot-proof version of Adjusted Sector.
-[If Adjusted Sector is installed], this Section is completly [ignored] and Adjusted Sectors configs are used instead.",,,,,Procgen
-rat_systemScaleV2,Change amount of generated Systems,Radio,Vanilla,"Vanilla, 150%, 200%, 250%","Changes the amount of generated Systems. 
-An increase in generated systems come with a [heavy performance cost].
+rat_procgenText,,Text,"Changes to how Starsector's procedural generation works. 
+This section is a simplified and more idiot-proof version of Adjusted Sector.
+[If Adjusted Sector is installed], this section is [ignored] and Adjusted Sector's configs are used instead.",,,,,Procgen
+rat_systemScaleV2,Change amount of generated star systems,Radio,Vanilla,"Vanilla, 150%, 200%, 250%","Changes the amount of generated star systems. 
+Increasing generated systems incurs a [heavy performance cost].
 
-Vanilla Themes will scale with the amount of systems, Modded Themes may not.",,,Procgen
-rat_hyperspaceCloudsMod,Hyperspace Clouds Spawn Modifier,Double,0.8,,"Lets you modify how many hyperspace clouds spawn. Vanilla uses a value of 0.8. A lower value will spawn less of them, with a value of 0 spawning none. ",0,1.0,Procgen
-#rat_improvedMisc,Improved Miscellaneous Theme,Boolean,false,,"Improves the ""Miscellaneous"" Theme. Starsector generates this theme as a filler for whatever system didnt receive anything special during procgen. In Vannila, those systems rarely give anything of worth, often spawning completely empty systems. Toggling this will prevent those from ever being empty, and gives them a lot more loot.",,,Procgen
+Vanilla themes will scale with the amount of systems, modded themes may not.",,,Procgen
+rat_hyperspaceCloudsMod,Hyperspace Clouds Spawn Modifier,Double,0.8,,"Adjusts the amount of hyperspace clouds spawned during sector generation. Vanilla uses a value of 0.8. A lower value will spawn fewer, a value of 0 spawns none.",0,1.0,Procgen
+#rat_improvedMisc,Improved Miscellaneous Theme,Boolean,false,,"Improves the ""Miscellaneous"" Theme. Starsector generates this theme as a filler for systems that didn't receive anything special during procgen. In vanilla, those systems rarely give anything of worth, often spawning completely empty systems. Toggling this will prevent those from ever being empty, and gives them a lot more loot.",,,Procgen
 ,,,,,,,,
 rat_lootHeader,Loot Tweaks,Header,Loot Tweaks,,,,,Procgen
-rat_hullmodBPLootFrequency,Hullmod BP Loot Frequency,Double,1,,"Multiplies the amount of Hullmod Blueprints being dropped from Salvaging. Useful for when you are playing with lots of mods which add their own hullmods.
+rat_hullmodBPLootFrequency,Hullmod BP Loot Frequency,Double,1,,"Multiplies the amount of hullmod blueprints received via salvaging. Useful when playing with mods that add their own hullmods.
 
 Can be changed mid-save.",1.0,3.0,Procgen
-rat_shipBPLootFrequency,Ship BP Loot Frequency,Double,1,,"Multiplies the amount of Ship Blueprints being dropped from Salvaging. Useful for when you are playing with lots of mods which add ships to the same loot-pool. Due to ship blueprints selling for a high price, this option can become quite overpowered if set to high.
+rat_shipBPLootFrequency,Ship BP Loot Frequency,Double,1,,"Multiplies the amount of ship blueprints received via salvaging. Useful when playing with lots of mods that add ships to the loot pool. Since ship blueprints sell for a high price, this option can become quite overpowered if set too high.
 
 Can be changed mid-save.",1.0,3.0,Procgen
 ,,,,,,,,
