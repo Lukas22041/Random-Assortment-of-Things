@@ -41,7 +41,7 @@ rat_forceDisableHelp,Force disable help pop-ups,Boolean,false,,"Disables help po
 rat_procgenHeader,Procedual Generation Tweaks,Header,Procedual Generation Config,,,,,Procgen
 rat_procgenText,,Text,"Changes to how Starsector's procedural generation works. 
 This section is a simplified and more idiot-proof version of Adjusted Sector.
-[If Adjusted Sector is installed], this Section is [ignored] and Adjusted Sector's configs are used instead.",,,,,Procgen
+[If Adjusted Sector is installed], this section is [ignored] and Adjusted Sector's configs are used instead.",,,,,Procgen
 rat_systemScaleV2,Change amount of generated star systems,Radio,Vanilla,"Vanilla, 150%, 200%, 250%","Changes the amount of generated star systems. 
 Increasing generated systems incurs a [heavy performance cost].
 
