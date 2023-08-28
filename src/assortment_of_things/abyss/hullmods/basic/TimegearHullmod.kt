@@ -24,11 +24,11 @@ class TimegearHullmod : BaseAlteration() {
         ship.mutableStats!!.timeMult.modifyMult(modID, mod);
         if (ship == Global.getCombatEngine().playerShip)
         {
-            Global.getCombatEngine().timeMult.modifyMult(modID, 1 / mod)
+            Global.getCombatEngine().timeMult.modifyMult(modID + ship.id, 1 / mod)
         }
         else
         {
-            Global.getCombatEngine().timeMult.unmodify(modID)
+            Global.getCombatEngine().timeMult.unmodify(modID + ship.id)
         }
 
     }

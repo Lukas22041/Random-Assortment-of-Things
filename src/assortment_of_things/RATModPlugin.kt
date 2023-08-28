@@ -15,6 +15,7 @@ import assortment_of_things.campaign.RATCampaignPlugin
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
 import assortment_of_things.snippets.DropgroupTestSnippet
 import assortment_of_things.snippets.ProcgenDebugSnippet
@@ -90,8 +91,8 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-        //Global.getSector().characterData.person.stats.setSkillLevel("rat_augmented", 1f)
-      //  Global.getSector().playerFleet.fleetData.officersCopy.random().person.stats.setSkillLevel("rat_augmented", 1f)
+        /*Global.getSector().characterData.person.stats.setSkillLevel("rat_augmented", 1f)
+        Global.getSector().playerFleet.fleetData.officersCopy.forEach { it.person.stats.setSkillLevel("rat_augmented", 1f) }*/
 
 
       /*  Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
@@ -140,6 +141,11 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getSector().memoryWithoutUpdate.set("\$rat_alteration_random", random)
             }
         }
+
+        if (Global.getSector().memoryWithoutUpdate.get("\$rat_relics_generated") == null) {
+            RelicsGenerator().generate()
+        }
+
         if (!Global.getSector().hasScript(ResetBackgroundScript::class.java)) {
             Global.getSector().addTransientScript(ResetBackgroundScript())
         }

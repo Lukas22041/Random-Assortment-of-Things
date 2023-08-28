@@ -37,7 +37,7 @@ class DomainResearchInteraction : RATInteractionPlugin() {
         //Transfer a bit of shielind material, can do it once a month
 
         if (interactionTarget.hasTag(AbyssTags.LOOTABLE)) {
-            textPanel.addPara("As the stations has been untouched by salvagers, it is likely that there are some valueables to be found within this station.")
+            textPanel.addPara("As the stations has been untouched by salvagers, it is likely that there are some valuables to be found within this station.")
             addLootOption()
         }
 
@@ -66,8 +66,6 @@ class DomainResearchInteraction : RATInteractionPlugin() {
         createOption("Survey the station for valueables") {
             clear()
             var tier = AbyssUtils.getTier(interactionTarget.starSystem)
-
-            textPanel.addPara("> Survey the station for valueables", Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
 
             textPanel.addPara("The crew explores the station in search for anything of value.")
             when (tier) {
@@ -175,7 +173,6 @@ class DomainResearchInteraction : RATInteractionPlugin() {
         createOption("Investigate assembly line") {
             interactionTarget.removeTag(AbyssTags.DOMAIN_RESEARCH_PRODUCTION)
             clear()
-            textPanel.addPara("> Investigate assembly Line", Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
             textPanel.addPara("You come across some form of assembly line. As you further investigate it, it seems that its been in the middle of assembling something with its last batch of resources" +
                     ", but requires some further confirmation to complete it. Close by there is a terminal that reads.")
 
@@ -187,7 +184,6 @@ class DomainResearchInteraction : RATInteractionPlugin() {
 
             createOption("Select Shipsystem") {
                 clearOptions()
-                textPanel.addPara("> Select Shipsystem", Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
 
                 var randomAlteration = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") && it.hasTag("shipsystem") }
                     .random(Random(interactionTarget.getSalvageSeed()))
@@ -205,7 +201,6 @@ class DomainResearchInteraction : RATInteractionPlugin() {
 
             createOption("Select Fightersystem") {
                 clearOptions()
-                textPanel.addPara("> Select Shipsystem", Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
 
                 var randomAlteration = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") && it.hasTag("fightersystem") }
                     .random(Random(interactionTarget.getSalvageSeed()))
@@ -228,7 +223,6 @@ class DomainResearchInteraction : RATInteractionPlugin() {
         createOption("Collect research data") {
             interactionTarget.removeTag(AbyssTags.DOMAIN_RESEARCH_SURVEY)
             reset()
-            textPanel.addPara("> Collect research data", Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
 
             textPanel.addPara("A long time ago local research transmitters send local terrain data towards this station, piling up its databanks. With nobody" +
                     "there to pick them up, those are now yours.")

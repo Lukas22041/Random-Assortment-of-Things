@@ -71,7 +71,7 @@ public class RATDerelictThemeGenerator extends BaseThemeGenerator {
 		float total = (float) (context.constellations.size() - context.majorThemes.size()) * allowedUnusedFraction;
 		if (total <= 0) return;
 		
-		float num = RAT_SCALE;
+		float num = (2 * RAT_SCALE);
 		
 		List<AddedEntity> mothershipsSoFar = new ArrayList<AddedEntity>();
 		
@@ -118,7 +118,7 @@ public class RATDerelictThemeGenerator extends BaseThemeGenerator {
 			use.add(system, w);
 		}
 		
-		int numCryo = 2;
+		int numCryo = (int) (2 * RAT_SCALE) ;
 		if (cryoSystems.isEmpty() || cryoSystems.getItems().size() < numCryo + 1) {
 			cryoSystems.addAll(backup);
 		}

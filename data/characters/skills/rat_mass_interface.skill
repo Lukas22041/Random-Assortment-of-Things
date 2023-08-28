@@ -1,0 +1,15 @@
+{
+	"id":"rat_mass_interface",
+	"governingAptitude":"technology",
+	"elite":true,
+	"scope":"SHIP_FIGHTERS", 
+	"effectGroups":[
+		{
+			"requiredSkillLevel":1,
+			"effectBasedOnLevel":false,
+			"effects":[
+				{"type":"SHIP_FIGHTERS", "script":"assortment_of_things.relics.skills.MassInterfaceSkill"},
+			]
+		},
+	],
+}

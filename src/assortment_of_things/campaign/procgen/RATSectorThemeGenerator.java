@@ -31,7 +31,7 @@ public class RATSectorThemeGenerator {
 		generators.clear();
 		for (ThemeGenerator gen : SectorThemeGenerator.generators)
 		{
-			if (gen instanceof RemnantThemeGenerator || gen instanceof RuinsThemeGenerator || gen instanceof MiscellaneousThemeGenerator || gen instanceof RATDerelictThemeGenerator) continue;
+			if (gen instanceof RemnantThemeGenerator || gen instanceof RuinsThemeGenerator || gen instanceof MiscellaneousThemeGenerator || gen instanceof DerelictThemeGenerator) continue;
 			generators.add(gen);
 		}
 		generators.add(new RATDerelictThemeGenerator());

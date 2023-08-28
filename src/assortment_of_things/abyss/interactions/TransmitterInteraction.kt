@@ -54,7 +54,6 @@ class TransmitterInteraction : RATInteractionPlugin() {
                 clearOptions()
                // addOptions()
 
-                textPanel.addPara("> Take accumalated data", Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
                 textPanel.addPara("You take the data that the transmitter collected for dozens of cycles.", Misc.getTextColor(), Misc.getHighlightColor())
 
                 var tooltip =textPanel.beginTooltip()

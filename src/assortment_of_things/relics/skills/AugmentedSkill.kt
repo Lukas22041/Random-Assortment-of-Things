@@ -21,7 +21,7 @@ class AugmentedSkill : RATBaseShipSkill() {
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
         info!!.addSpacer(2f)
         info!!.addPara("Allows this person to command Automated Ships. Negates the \"Automated Ships\" skill points cost on the ship. \n\n" +
-                "The button for moving this person in to an automated ship can be found in the \"Additional Options\" section in the refit screen for any elligable automated ship.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+                "Can not be assigned to automated ships through the usual way, it is instead done through a button in \"Additional Options\" section in the refit screen for any elligable automated ship.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
     }
 

@@ -77,6 +77,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
         {
             if (key == optionText)
             {
+                textPanel.addPara(key, Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
                 value()
             }
         }

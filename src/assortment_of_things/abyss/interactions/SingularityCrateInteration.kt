@@ -48,7 +48,6 @@ class SingularityCrateInteration : RATInteractionPlugin() {
             clearOptions()
 
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
-            textPanel.addPara("> Read the log", Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
 
             var log = textPanel.beginTooltip()
 
