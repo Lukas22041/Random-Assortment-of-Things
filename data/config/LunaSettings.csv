@@ -47,7 +47,7 @@ Increasing generated systems incurs a [heavy performance cost].
 
 Vanilla themes will scale with the amount of systems, modded themes may not.",,,Procgen
 rat_hyperspaceCloudsMod,Hyperspace Clouds Spawn Modifier,Double,0.8,,"Adjusts the amount of hyperspace clouds spawned during sector generation. Vanilla uses a value of 0.8. A lower value will spawn fewer, a value of 0 spawns none.",0,1.0,Procgen
-#rat_improvedMisc,Improved Miscellaneous Theme,Boolean,false,,"Improves the ""Miscellaneous"" Theme. Starsector generates this theme as a filler for systems that didn't receive anything special during procgen. In Vanilla, those systems rarely give anything of worth, often spawning completely empty systems. Toggling this will prevent those from ever being empty, and gives them a lot more loot.",,,Procgen
+#rat_improvedMisc,Improved Miscellaneous Theme,Boolean,false,,"Improves the ""Miscellaneous"" Theme. Starsector generates this theme as a filler for systems that didn't receive anything special during procgen. In vanilla, those systems rarely give anything of worth, often spawning completely empty systems. Toggling this will prevent those from ever being empty, and gives them a lot more loot.",,,Procgen
 ,,,,,,,,
 rat_lootHeader,Loot Tweaks,Header,Loot Tweaks,,,,,Procgen
 rat_hullmodBPLootFrequency,Hullmod BP Loot Frequency,Double,1,,"Multiplies the amount of hullmod blueprints received via salvaging. Useful when playing with mods that add their own hullmods.
