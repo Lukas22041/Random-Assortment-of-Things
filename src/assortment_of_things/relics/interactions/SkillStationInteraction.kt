@@ -98,7 +98,7 @@ class SkillStationInteraction : RATInteractionPlugin() {
             }
 
             img.addLunaElement(280f, 40f).apply {
-                addText("Choose ${officer.nameString}", Misc.getBasePlayerColor())
+                addText("Choose \"${officer.nameString}\"", Misc.getBasePlayerColor())
                 centerText()
 
                 borderAlpha = 0.6f

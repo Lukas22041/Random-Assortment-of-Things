@@ -25,7 +25,7 @@ class RelicsGenerator {
         for (i in 0 until max) {
             var pick = relicStations.pickAndRemove()
 
-            var systems = Global.getSector().starSystems.filter { it.hasTag(Tags.THEME_RUINS) && !it.hasTag(RelicsUtils.RELICS_SYSTEM_TAG) }
+            var systems = Global.getSector().starSystems.filter { it.hasTag(Tags.THEME_RUINS) && !it.hasTag(RelicsUtils.RELICS_SYSTEM_TAG) && !it.hasPulsar() }
             if (systems.isEmpty()) continue
 
             systems = systems.filter { pick.systemFilter(it) }
