@@ -1,26 +1,25 @@
 {
-    "id": "assortment_of_things",
-    "name": "Random Assortment of Things",
-    "author": "Lukas04",
-    "utility": "false",
-    "version": "1.5.2",
-    "description": "A collection of things that that i add to whenever a random idea pops up in to my brain",
-    "gameVersion": "0.96a-RC9",
-	"jars":["jars/RandomAssortmentofThings.jar"],
-	"modPlugin":"assortment_of_things.RATModPlugin",
-	"dependencies": [
-		{
-			"id": "lunalib",
-			"name": "LunaLib",
-		},
-		{
-			"id": "MagicLib",
-			"name": "MagicLib",
-		},
-		{
-			"id": "combatactivators",
-			"name": "Combat Activators",
-		},
-	]
+  "id": "assortment_of_things",
+  "name": "Random Assortment of Things",
+  "author": "Lukas04",
+  "utility": "false",
+  "version": "1.5.2",
+  "description": "A collection of things I create whenever a random idea pops up into my head.",
+  "gameVersion": "0.96a-RC10",
+  "jars": ["jars/RandomAssortmentofThings.jar"],
+  "modPlugin": "assortment_of_things.RATModPlugin",
+  "dependencies": [
+    {
+      "id": "lunalib",
+      "name": "LunaLib"
+    },
+    {
+      "id": "MagicLib",
+      "name": "MagicLib"
+    },
+    {
+      "id": "combatactivators",
+      "name": "Combat Activators"
+    }
+  ]
 }
-
