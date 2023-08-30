@@ -31,8 +31,10 @@ class RelicStations {
 
         RelicStation("rat_refurbishment_station").apply {
             systemFilter = { system -> true }
-            systemFilter = { system -> system.planets.size >= 3 }
-            locations = linkedMapOf(LocationType.PLANET_ORBIT to 100f)
+        },
+
+        RelicStation("rat_cryochamber").apply {
+            systemFilter = { system -> true }
         },
     )
 }

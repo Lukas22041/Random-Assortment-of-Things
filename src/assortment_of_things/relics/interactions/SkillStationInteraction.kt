@@ -36,28 +36,37 @@ class SkillStationInteraction : RATInteractionPlugin() {
         createOption("Explore") {
             clearOptions()
 
-            textPanel.addPara("Exploring the facility reveals dozens of scientific instruments, laboratories, and more. But most are decayed beyond any use for us. " +
-                    "As the crew extends their search, they are shocked at their final discovery.")
+            textPanel.addPara("Your salvage team works through the facility, shifting through offices oppressed with inert and burnt out personal computers, stalking through laboratories littered with fine but broken scientific equipment, and passing through patient rooms rotted with mold and dust.\n\n" +
+                    "Suddenly there's a ripple through the comms, first one salvor, then another chirping loudly in amazement at their discovery. You watch as the telemetry feed is put onto the main screen and...there it is.\n\n" +
+                    " A bio-reconstructor. ", Misc.getTextColor(), Misc.getHighlightColor(), "bio-reconstructor")
 
-            textPanel.addPara("A fully functioning bio-reconstructor, a device allowing adjustments to a persons physiology. " +
-                    "Even during the era of the domain those were less than a common sight, so it was destined for those devices to become a thing of myths and legends for sector-folk.")
+            createOption("Continue") {
+                clearOptions()
 
-            textPanel.addPara("This specific device can perform the following change.")
+                textPanel.addPara("You scarcely believe that you have stumbled upon it - these miraculous devices were nothing more than myth during the time of the Domain, and after its fall these devices were consigned firmly to drunken rumor and magical cure-alls used in movie-holos.\n\n" +
+                        "But here one sits, active and functional on your telemetry feed.\n\n" +
+                        "You consider your options as the salvors gawk at the device, and your Sensor Officer records every detail they can of the device under the badgering of your head Engineer.",
+                    Misc.getTextColor(), Misc.getHighlightColor(), "active and functional")
 
-            var tooltip = textPanel.beginTooltip()
+                textPanel.addPara("This specific device can perform the following change.")
 
-            tooltip.setParaFont(Fonts.ORBITRON_12)
-            tooltip.addPara("(Hover over the icon for a detailed description)", 0f, Misc.getGrayColor(), Misc.getGrayColor())
-            var fake = Global.getFactory().createPerson()
-            fake.stats.setSkillLevel(skillSpec.id, 1f)
-            tooltip.addSkillPanel(fake, 0f)
+                var tooltip = textPanel.beginTooltip()
 
-            textPanel.addTooltip()
+                tooltip.setParaFont(Fonts.ORBITRON_12)
+                tooltip.addPara("(Hover over the icon for a detailed description)", 0f, Misc.getGrayColor(), Misc.getGrayColor())
+                var fake = Global.getFactory().createPerson()
+                fake.stats.setSkillLevel(skillSpec.id, 1f)
+                tooltip.addSkillPanel(fake, 0f)
 
-            textPanel.addPara("Any officer can be selected for the procedure. This change is permanent and can only applied to a single person.")
+                textPanel.addTooltip()
 
-            addOfficers(skillSpec)
-            addLeaveOption()
+                textPanel.addPara("Any officer can be selected for the procedure. This change is permanent and can only applied to a single person.")
+
+                addOfficers(skillSpec)
+                addLeaveOption()
+            }
+
+
 
         }
 

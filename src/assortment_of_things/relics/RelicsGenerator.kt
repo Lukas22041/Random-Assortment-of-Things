@@ -33,7 +33,7 @@ class RelicsGenerator {
 
             var system = systems.random()
 
-            var locations = BaseThemeGenerator.getLocations(Random(), system, 0f, pick.locations)
+            var locations = BaseThemeGenerator.getLocations(Random(), system, 100f, pick.locations)
             if (locations.isEmpty) continue
             var location = locations.pick()
 

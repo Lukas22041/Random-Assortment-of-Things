@@ -8,12 +8,16 @@ import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.AssemblyStationInteraction
+import assortment_of_things.relics.interactions.CryochamberInteraction
 import assortment_of_things.relics.interactions.RefurbishmentStationInteraction
 import assortment_of_things.relics.interactions.SkillStationInteraction
+import assortment_of_things.relics.items.cores.TacticalCore
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.PluginPick
 import com.fs.starfarer.api.campaign.*
+import com.fs.starfarer.api.impl.campaign.procgen.NameGenData
+import com.fs.starfarer.loading.PersonNameStore
 
 class RATCampaignPlugin : BaseCampaignPlugin()
 {
@@ -32,24 +36,18 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         if (interactionTarget.hasTag(RelicsUtils.RELICS_ENTITY_TAG)) {
 
             var id = interactionTarget.customEntitySpec.id
+
+            when(id) {
+                "rat_orbital_construction_station" -> return PluginPick(AssemblyStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_refurbishment_station" -> return PluginPick(RefurbishmentStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_cryochamber" -> return PluginPick(CryochamberInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+
+            }
+
             if (id == "rat_bioengineering_station" || id == "rat_augmentation_station" || id == "rat_neural_laboratory") {
                 return PluginPick(SkillStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
-
-            if (id == "rat_orbital_construction_station") {
-                return PluginPick(AssemblyStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-            }
-
-            if (id == "rat_refurbishment_station") {
-                return PluginPick(RefurbishmentStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-            }
         }
-
-
-
-
-
-
 
 
         //Abyss
@@ -97,6 +95,8 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         if (commodityId == RATItems.COSMOS_CORE) return PluginPick(CosmosCore(), CampaignPlugin.PickPriority.HIGHEST)
         if (commodityId == RATItems.CHRONOS_CORE) return PluginPick(ChronosCore(), CampaignPlugin.PickPriority.HIGHEST)
         if (commodityId == RATItems.PRIMORDIAL) return PluginPick(PrimordialCore(), CampaignPlugin.PickPriority.HIGHEST)
+
+        if (commodityId == "rat_tactical_core") return PluginPick(TacticalCore(), CampaignPlugin.PickPriority.HIGHEST)
 
         return null
     }
