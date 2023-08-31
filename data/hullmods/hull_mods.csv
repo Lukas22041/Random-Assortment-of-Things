@@ -50,4 +50,4 @@ Plasmatic Shield,rat_plasmaticShield,3,2.5,Hull Alteration,"rat_alteration, figh
 ,,,,,,,,,,,,,,,,,,
 #Relics,,,,,,,,,,,,,,,,,,
 Exceptional Construction,rat_exceptional_construction,0,,,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.relics.hullmods.ExceptionalConstructionHullmod,,,graphics/hullmods/rat_exceptional_construction.png
-Refurbished Hull,rat_refurbished_hull,0,,,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.relics.hullmods.RefurbishedHullHullmod,,,graphics/hullmods/rat_refurbished_hull.png
+Refurbished,rat_refurbished_hull,0,,,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.relics.hullmods.RefurbishedHullHullmod,,,graphics/hullmods/rat_refurbished_hull.png

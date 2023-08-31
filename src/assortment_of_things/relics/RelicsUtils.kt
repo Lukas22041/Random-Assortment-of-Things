@@ -5,7 +5,7 @@ import com.fs.starfarer.api.campaign.SectorEntityToken
 
 object RelicsUtils {
 
-    var RELICS_STATION_KEY = "\$rat_abyss_systems"
+    var RELICS_STATION_KEY = "\$rat_relic_stations"
     var RELICS_SYSTEM_TAG = "rat_has_relic"
     var RELICS_ENTITY_TAG = "rat_relic_station"
 

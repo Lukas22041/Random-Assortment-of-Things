@@ -17,6 +17,10 @@ object RATSettings : LunaSettingsListener
     var enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
     var abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
 
+    //Relics
+    var relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
+
+
     //Procgen
     @JvmStatic
     var procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
@@ -53,6 +57,8 @@ object RATSettings : LunaSettingsListener
     {
         enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
         abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
+
+        relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
 
         procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
         procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")

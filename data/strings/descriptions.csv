@@ -68,9 +68,9 @@ rat_bioengineering_station,CUSTOM,"An abandoned research station, built to study
 rat_augmentation_station,CUSTOM,"An abandoned research station, built to study human augmentation, far away from inhabited worlds. A cursory scan indicates that it has been cold and dead for tens of cycles at the very least, possibly hundreds. ",,,,
 rat_neural_laboratory,CUSTOM,"An abandoned research station, built to study neural integration, far away from inhabited worlds. A cursory scan indicates that it has been cold and dead for tens of cycles at the very least, possibly hundreds. ",,,,
 ,,,,,,
-rat_orbital_construction_station,CUSTOM,"An abandonend assembly station. This type of station was known for its rapid speed of construction and high quality results. Many of those stations are now defunct without the materials to keep them afloat, however it seems that this one still has some spark left.",,,,
-rat_refurbishment_station,CUSTOM,A small abandoned spaceyard that sends out automated advertisements about their supreme quality through the local systems comm-network.,,,,
-rat_cryochamber,CUSTOM,"An abandoned cryochamber station. Those types of places ended up being the last resort to many peoples dreams, hoping to awake in better times.",,,,
+rat_orbital_construction_station,CUSTOM,"Often used by less-reputable ship dealers pre-collapse, these stations can be used to construct craft at a rapid rate and with high efficiency. Notorious for using dubious feedstocks, such as 'lost' scrap or 'rebel' colonial buildings.",,,,
+rat_refurbishment_station,CUSTOM,"Used by the Domain to maintain patrols, this semi-autonomous station can be used to 'repair' ships up to minimal Domain specifications- something that is noticeably better than what is allowed with current construction methods.",,,,
+rat_cryochamber,CUSTOM,"A station used to keep select useful but dangerous individuals in proverbial storage until they are needed by the Domain. Self-destruct protocols ensure that only the Domain can retrieve them, but the defences may have degraded from lack of dutiful upkeep.",,,,
 ,,,,,,
 #Joke Content,,,,,,
 rat_jeff_core,RESOURCE,"What at first seems to be just a rat, is actually the result of Tri-Tachyon AI Core research. They seem to have managed to integrate a shrunken gamma-core in to a living being and connect it to its brain.

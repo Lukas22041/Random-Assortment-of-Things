@@ -1,3 +1,19 @@
+Version 1.5.4
+
+-> Fixed a crash happening with the abyss + relics of the past being loaded at the same time. If you loaded a save with both, opening the abyss map would crash.
+
+
+
+Version 1.5.3
+
+Added "Relics of the Past" expansion to the configs (active by default)
+Adds more procgen content to ruined systems, as of now it does not have a lot of content yet.
+
+-> Fixed an issue where certain objects like cryosleepers and motherships may have generated twice in a system.
+-> Fixed some things not scaling correctly during procgen.
+
+
+
 Version 1.5.2
 
 -> Fixed an issue that caused some debug code to be active.

@@ -18,43 +18,55 @@ class RefurbishmentStationInteraction : RATInteractionPlugin() {
 
         textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
 
-        textPanel.addPara("Despite its age, it appears that some of the machines are still functional. They do however look as if they will fall appart just after one use.")
-        textPanel.addPara("Selecting a ship for refurbishment will allow it to install an additional s-mod", Misc.getTextColor(), Misc.getHighlightColor(), "s-mod")
+
+        createOption("Continue") {
+            clearOptions()
+
+            textPanel.addPara("On approach the station goes into lockdown. Bulkheads close, doorways seal, and the radio pings for the nearest Domain patrol. While this may have worked back in the day when such a patrol would be a short jump away, now its merely an annoyance. Your salvors are easily able to cut into the craft, and you watch mildly disinterested as they steadily move through the command structure, stripping away the defensive systems until you're able to directly integrate with the repair system. The dockspace opens up with a mildly shuddering motion, revealing warming up repair drones.\n\n" +
+                    "There is enough remaining feedstock in the system to improve one ship. This improvement won't change the combat performance of the ship, but will allow the installation of an additional s-mod.",
+            Misc.getTextColor(), Misc.getHighlightColor(),
+            "improve one ship", "allow the installation of an additional s-mod")
+
+            createOption("Select a ship") {
+
+                dialog.showFleetMemberPickerDialog("Select a ship", "Confirm", "Cancel", 8, 12, 64f, true, false,
+                    Global.getSector().playerFleet.fleetData.membersListCopy, object : FleetMemberPickerListener {
+                        override fun pickedFleetMembers(members: MutableList<FleetMemberAPI>?) {
+                            if (members!!.isEmpty()) return
+
+                            Global.getSoundPlayer().playUISound(Sounds.STORY_POINT_SPEND, 1f, 1f)
+
+                            clearOptions()
+
+                            var member = members.first()
+                            member.fixVariant()
+
+                            member.variant.addPermaMod("rat_refurbished_hull")
 
 
-        createOption("Select a ship") {
-            dialog.showFleetMemberPickerDialog("Select a ship", "Confirm", "Cancel", 8, 12, 64f, true, false,
-            Global.getSector().playerFleet.fleetData.membersListCopy, object : FleetMemberPickerListener {
-                    override fun pickedFleetMembers(members: MutableList<FleetMemberAPI>?) {
-                        if (members!!.isEmpty()) return
+                            textPanel.addPara("Your Salvors escape from the station, and from a safe distance activate the repair protocol. You watch as the station devours itself - apparently the 'remaining feedstock' was the station itself. Soon your ship the ${member.shipName} emerges, looking sparkling new as the station disappears into a cloud of useless junk.")
 
-                        Global.getSoundPlayer().playUISound(Sounds.STORY_POINT_SPEND, 1f, 1f)
+                            textPanel.addPara("> The ${member.shipName} gained the \"Refurbished\" hullmod.", Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor())
 
-                        clearOptions()
-
-                        var member = members.first()
-                        member.fixVariant()
-
-                        member.variant.addPermaMod("rat_refurbished_hull")
-
-
-                        textPanel.addPara("The station begins the process, and in the end it the ${member.shipName} comes out just as if it were new. Just as it finished, the terminal stops functioning.")
-
-                        textPanel.addPara("> The ${member.shipName} gained the \"Refurbished Hull\" hullmod.", Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor())
-
-                        createOption("Leave") {
-                            closeDialog()
-                            Misc.fadeAndExpire(interactionTarget)
+                            createOption("Leave") {
+                                closeDialog()
+                                Misc.fadeAndExpire(interactionTarget)
+                            }
+                            optionPanel.setShortcut("Leave", Keyboard.KEY_ESCAPE, false, false, false, true);
                         }
-                        optionPanel.setShortcut("Leave", Keyboard.KEY_ESCAPE, false, false, false, true);
-                    }
 
-                    override fun cancelledFleetMemberPicking() {
+                        override fun cancelledFleetMemberPicking() {
 
-                    }
+                        }
 
-                })
+                    })
+            }
+
+            addLeaveOption()
+
+
         }
+
 
         addLeaveOption()
     }

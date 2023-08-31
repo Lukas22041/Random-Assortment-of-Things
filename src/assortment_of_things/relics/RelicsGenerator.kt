@@ -31,6 +31,7 @@ class RelicsGenerator {
             systems = systems.filter { pick.systemFilter(it) }
             if (systems.isEmpty()) continue
 
+            systems = systems.sortedBy { it.hasTag(Tags.THEME_RUINS_MAIN) }
             var system = systems.random()
 
             var locations = BaseThemeGenerator.getLocations(Random(), system, 100f, pick.locations)

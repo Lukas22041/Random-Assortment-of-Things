@@ -26,7 +26,7 @@ class RefurbishedHullHullmod : BaseHullMod() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Allows the installation of an additional s-mod in to the hull", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+        tooltip.addPara("Allows the installation of an additional s-mod", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "s-mod")
 
     }

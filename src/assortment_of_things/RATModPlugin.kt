@@ -143,13 +143,20 @@ class RATModPlugin : BaseModPlugin() {
             }
         }
 
-        if (Global.getSector().memoryWithoutUpdate.get("\$rat_relics_generated") == null) {
+
+
+
+        if (RATSettings.relicsEnabled!! && Global.getSector().memoryWithoutUpdate.get("\$rat_relics_generated") == null) {
             RelicsGenerator().generate()
         }
+
+
+
 
         if (!Global.getSector().hasScript(ResetBackgroundScript::class.java)) {
             Global.getSector().addTransientScript(ResetBackgroundScript())
         }
+
         Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
         Global.getSector().addTransientScript(ForceNegAbyssalRep())
         Global.getSector().addTransientListener(HullmodRemoverListener())
