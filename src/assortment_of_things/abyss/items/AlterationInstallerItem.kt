@@ -28,7 +28,34 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
         var data = stack.specialDataIfSpecial.data
 
         var allAlterations =  Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") }
-        var mods = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") && !it.hasTag("rat alteration_no_drop") }
+
+
+        if (data != null && !allAlterations.map { it.id }.contains(data) ) {
+            var alterationsWithTag = allAlterations.filter { it.hasTag(data) }
+
+            var key = "\$rat_alteration_random"
+            var random = Random(Misc.genRandomSeed())
+            if (Global.getSector().memoryWithoutUpdate.contains(key))
+            {
+                random = Global.getSector().memoryWithoutUpdate.get(key) as Random
+            }
+            else
+            {
+                Global.getSector().memoryWithoutUpdate.set(key, random)
+            }
+
+            var modSelection = WeightedRandomPicker<HullModSpecAPI>()
+            modSelection.random = random
+
+            for (mod in alterationsWithTag)
+            {
+                modSelection.add(mod, mod.rarity)
+            }
+
+            var mod = modSelection.pick().id
+            stack.specialDataIfSpecial.data = mod
+            data = mod
+        }
 
         if (data == null || !allAlterations.map { it.id }.contains(data) )
         {
@@ -45,6 +72,8 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
 
             var modSelection = WeightedRandomPicker<HullModSpecAPI>()
             modSelection.random = random
+
+            var mods = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") && !it.hasTag("rat alteration_no_drop") }
 
             for (mod in mods)
             {

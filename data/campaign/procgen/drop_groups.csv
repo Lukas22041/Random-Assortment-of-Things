@@ -4,7 +4,7 @@ nothing,abyss_research_loot,85
 item_rat_instrument_discovery,abyss_research_loot,2
 item_rat_instrument_hostility,abyss_research_loot,3
 item_rat_instrument_supplies,abyss_research_loot,3
-item_rat_alteration_install,abyss_research_loot,50
+item_rat_alteration_install:abyss,abyss_research_loot,50
 item_rat_alteration_remover,abyss_research_loot,6
 #item_rat_automation_converter,abyss_research_loot,1.5
 #item_rat_chronos_integration,abyss_research_loot,0.75
@@ -14,7 +14,7 @@ nothing,abyss_cache_loot,85
 item_rat_instrument_discovery,abyss_cache_loot,4
 item_rat_instrument_hostility,abyss_cache_loot,6
 item_rat_instrument_supplies,abyss_cache_loot,6
-item_rat_alteration_install,abyss_cache_loot,40
+item_rat_alteration_install:abyss,abyss_cache_loot,40
 item_rat_alteration_remover,abyss_cache_loot,8
 rat_chronos_core,abyss_cache_loot,3
 rat_cosmos_core,abyss_cache_loot,3
@@ -25,3 +25,10 @@ rat_cosmos_core,abyss_cache_loot,3
 "wpn_:{weaponSize:LARGE, tags:[rat_abyssals, !no_drop, !no_drop_salvage]}",rat_abyss_weapons,20
 ,,
 ,,
+,,
+,,
+,,
+item_rat_alteration_install:relics,relics_guaranteed_alt,100
+,,
+nothing,relics_alteration,50
+item_rat_alteration_install:relics,relics_alteration,50

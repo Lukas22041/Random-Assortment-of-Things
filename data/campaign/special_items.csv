@@ -18,6 +18,6 @@ Integrating it into your fleet unlocks access to the ""Singularity Jump"" abilit
 ,,,,,,,,,,,,,,,
 #Other,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
-Artifact,rat_artifact,,Artifact,,50000,1000,1,,graphics/icons/rat_empty.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ArtifactItem,,"An ancient device that can be integrated into a fleet to provide additional benefits. Only one can be active at a time. More information will be provided via the ""Artifacts"" intel tab (located in the ""Personal"" section) when integrating for the first time.",5000
+Artifact,rat_artifact,,Artifact,,50000,1000,1,,graphics/icons/rat_empty.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ArtifactItem,,"An ancient artifact that can be integrated into a fleet to provide additional benefits. Only one can be active at a time. More information will be provided via the ""Artifacts"" intel tab (located in the ""Personal"" section) when integrating for the first time.",5000
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,

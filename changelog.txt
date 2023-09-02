@@ -1,3 +1,11 @@
+Version 1.5.5
+
+-> Added 3 new exploration stations to "Relics of the Past"
+-> Added 3 new alterations
+-> Added 2 new artifacts
+
+
+
 Version 1.5.4
 
 -> Fixed a crash happening with the abyss + relics of the past being loaded at the same time. If you loaded a save with both, opening the abyss map would crash.

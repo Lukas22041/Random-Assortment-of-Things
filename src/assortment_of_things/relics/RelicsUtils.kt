@@ -17,6 +17,7 @@ object RelicsUtils {
         }
         entities.add(entity)
         Global.getSector().memoryWithoutUpdate.set(RELICS_STATION_KEY, entities)
+
     }
 
     fun getAllRelicStations() : List<SectorEntityToken>

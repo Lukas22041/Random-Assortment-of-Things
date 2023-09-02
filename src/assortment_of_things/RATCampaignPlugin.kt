@@ -1,4 +1,4 @@
-package assortment_of_things.campaign
+package assortment_of_things
 
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.interactions.*
@@ -7,10 +7,7 @@ import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.relics.RelicsUtils
-import assortment_of_things.relics.interactions.AssemblyStationInteraction
-import assortment_of_things.relics.interactions.CryochamberInteraction
-import assortment_of_things.relics.interactions.RefurbishmentStationInteraction
-import assortment_of_things.relics.interactions.SkillStationInteraction
+import assortment_of_things.relics.interactions.*
 import assortment_of_things.relics.items.cores.TacticalCore
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
@@ -30,18 +27,18 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         if (interactionTarget == null) return null
 
 
-
-
         //Relics
         if (interactionTarget.hasTag(RelicsUtils.RELICS_ENTITY_TAG)) {
 
             var id = interactionTarget.customEntitySpec.id
 
             when(id) {
+                "rat_development_station" -> return PluginPick(DevelopmentStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_orbital_construction_station" -> return PluginPick(AssemblyStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_refurbishment_station" -> return PluginPick(RefurbishmentStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_cryochamber" -> return PluginPick(CryochamberInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-
+                "rat_spatial_laboratory" -> return PluginPick(SpatialLaboratoryInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_medical_laboratory" -> return PluginPick(MedicalLaboratoryInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
             if (id == "rat_bioengineering_station" || id == "rat_augmentation_station" || id == "rat_neural_laboratory") {

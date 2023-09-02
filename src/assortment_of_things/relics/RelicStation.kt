@@ -7,9 +7,9 @@ import com.fs.starfarer.api.util.WeightedRandomPicker
 
 data class RelicStation(val entityID: String) {
 
-
-
     var weight = 10f
+
+    var amount = 1
 
     var systemFilter: (system: StarSystemAPI) -> Boolean = { system -> true }
 

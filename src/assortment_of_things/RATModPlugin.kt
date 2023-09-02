@@ -11,7 +11,6 @@ import assortment_of_things.abyss.systems.MidnightCoreSystem
 import assortment_of_things.abyss.systems.SingularityCrateGeneration
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
-import assortment_of_things.campaign.RATCampaignPlugin
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.misc.RATSettings
@@ -22,9 +21,6 @@ import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
-import com.fs.starfarer.api.campaign.econ.MarketAPI
-import com.fs.starfarer.api.impl.campaign.ids.Commodities
-import com.fs.starfarer.api.impl.campaign.ids.Items
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -95,8 +91,7 @@ class RATModPlugin : BaseModPlugin() {
         /*Global.getSector().characterData.person.stats.setSkillLevel("rat_augmented", 1f)
         Global.getSector().playerFleet.fleetData.officersCopy.forEach { it.person.stats.setSkillLevel("rat_augmented", 1f) }*/
 
-/*
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
+     /*   Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
         for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)
@@ -115,6 +110,8 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
+
+
 
         if (RATSettings.enableAbyss!!)
         {

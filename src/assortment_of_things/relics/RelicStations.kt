@@ -7,11 +7,18 @@ import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.LocationType
+import org.lazywizard.lazylib.MathUtils
 
 class RelicStations {
 
     //Default weight is 10f
     var stations = listOf<RelicStation>(
+
+        RelicStation("rat_development_station").apply {
+            systemFilter = { system -> true}
+            amount = MathUtils.getRandomNumberInRange(3,4)
+            weight = 1000f
+        },
 
         //Skill Stations
         RelicStation("rat_bioengineering_station").apply {
@@ -41,9 +48,19 @@ class RelicStations {
             systemFilter = { system -> true }
         },
 
+        RelicStation("rat_spatial_laboratory").apply {
+            systemFilter = { system -> system.jumpPoints.isNotEmpty() }
+            locations = linkedMapOf(LocationType.JUMP_ORBIT to 10f)
+        },
+
+        RelicStation("rat_medical_laboratory").apply {
+            systemFilter = { system -> system.planets.any { !it.isStar }}
+            locations = linkedMapOf(LocationType.PLANET_ORBIT to 10f)
+        },
+
         RelicStation("rat_cryochamber").apply {
             systemFilter = { system -> true }
-
+            weight = 100f
             postGeneration = {
                 var people = ArrayList<PersonAPI>()
 
