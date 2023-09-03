@@ -1,3 +1,13 @@
+Version 1.5.6
+
+-> Downscaled the FP of abyssal fleets and made them have more randomness in fleet size.
+-> Certain relic stations now spawn more than once.
+-> "Augmented" skill no longer completely negates the Automated Points cost of a ship.
+-> Fixed an issue where Fleets defending an abyssal fracture were stronger than they should have been.
+-> Fixed a crash with a skill when transfering between ships.
+
+
+
 Version 1.5.5
 
 -> Added 3 new exploration stations to "Relics of the Past"

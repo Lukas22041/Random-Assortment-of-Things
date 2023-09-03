@@ -93,71 +93,28 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         var difficulty = AbyssUtils.getDifficulty()
         val random = Random(randomSeed)
 
-        var minPoints = 10f
-        var maxPoints = 10f
+        var minPoints = 0f
+        var maxPoints = 0f
 
         when(tier) {
-
             AbyssProcgen.Tier.Low -> {
-                when(type) {
-                    FleetTypes.PATROL_SMALL -> {
-                        minPoints = 48f
-                        maxPoints = 64f
-                    }
-                    FleetTypes.PATROL_MEDIUM -> {
-                        minPoints = 64f
-                        maxPoints = 80f
-                    }
-                    FleetTypes.PATROL_LARGE -> {
-                        minPoints = 80f
-                        maxPoints = 90f
-                    }
-                }
+                minPoints += 48f
+                maxPoints += 84f
             }
-
             AbyssProcgen.Tier.Mid -> {
-                when(type) {
-                    FleetTypes.PATROL_SMALL -> {
-                        minPoints = 48f
-                        maxPoints = 64f
-                    }
-                    FleetTypes.PATROL_MEDIUM -> {
-                        minPoints = 64f
-                        maxPoints = 96f
-                    }
-                    FleetTypes.PATROL_LARGE -> {
-                        minPoints = 96f
-                        maxPoints = 160f
-                    }
-                }
+                minPoints += 84f
+                maxPoints += 128f
             }
-
             AbyssProcgen.Tier.High -> {
-                when(type) {
-                    FleetTypes.PATROL_SMALL -> {
-                        minPoints = 64f
-                        maxPoints = 96f
-                    }
-                    FleetTypes.PATROL_MEDIUM -> {
-                        minPoints = 112f
-                        maxPoints = 144f
-                    }
-                    FleetTypes.PATROL_LARGE -> {
-                        minPoints = 144f
-                        maxPoints = 228f
-                    }
-                }
+                minPoints += 128f
+                maxPoints += 192f
             }
         }
 
         if (difficulty == AbyssDifficulty.Hard) {
-            minPoints += 30
-            maxPoints += 40
+            minPoints += 50
+            maxPoints += 70
         }
-
-        var totalBonus = 10
-        minPoints += totalBonus
-        maxPoints += totalBonus
 
         var points = MathUtils.getRandomNumberInRange(minPoints, maxPoints)
 
@@ -166,7 +123,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         {
             var playerFleet = Global.getSector().playerFleet
             var playerFP = playerFleet.fleetPoints.toFloat()
-            var scalingPointsCap = 250
+            var scalingPointsCap = 250f
 
             if (points < playerFP) {
 
@@ -180,7 +137,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
 
                 var pointsForScaling = difference * scalingMult
                 pointsForScaling = MathUtils.clamp(pointsForScaling, 0f, playerFP)
-                pointsForScaling = MathUtils.clamp(pointsForScaling, 0f, 200f)
+                pointsForScaling = MathUtils.clamp(pointsForScaling, 0f, scalingPointsCap)
 
                 points += pointsForScaling
             }
@@ -200,7 +157,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
             source.locationInHyperspace,
             AbyssUtils.FACTION_ID,
             qualityOverride,
-            type,
+            FleetTypes.PATROL_MEDIUM,
             points,  // combatPts
             0f,  // freighterPts
             0f,  // tankerPts
@@ -220,7 +177,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         if (tier == AbyssProcgen.Tier.High) maxSeraphs += 2
         if (difficulty == AbyssDifficulty.Hard) maxSeraphs += 1
 
-        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, random, maxSeraphs, 0.5f)
+        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, random, maxSeraphs, 0.4f)
         fleet.fleetData.sort()
 
         for (member in fleet.fleetData.membersListCopy) {

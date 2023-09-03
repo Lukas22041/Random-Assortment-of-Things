@@ -23,7 +23,7 @@ class BiomutantSkill : RATBaseShipSkill() {
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
         info!!.addSpacer(2f)
-        info!!.addPara("This officer has been bioengineered in to a new form, improving his reflexes and decision making. However his decisions appear to always be of the reckless kind. \n\n" +
+        info!!.addPara("This officer has been bioengineered in to a new form, improving reflexes and decision making. However their decisions appear to always be of the reckless kind. \n\n" +
                 "This officer will always be of \"Reckless\" personality, any attempts at changing it will be reverted \n\n" +
                 "+5%% timeflow\n" +
                 "+10 max speed\n" +
@@ -61,7 +61,10 @@ class BiomutantSkill : RATBaseShipSkill() {
             })
         }
 
-        stats.fleetMember.captain.setPersonality(Personalities.RECKLESS)
+
+        if (stats.fleetMember != null && stats.fleetMember.captain != null && stats.fleetMember.captain.stats.hasSkill("rat_biomutant")) {
+            stats.fleetMember.captain.setPersonality(Personalities.RECKLESS)
+        }
 
         stats.maxSpeed.modifyFlat(id, 10f)
         stats.acceleration.modifyMult(id, 1.25f)

@@ -135,15 +135,16 @@ class AbyssChainGenerator {
 
                 AbyssUtils.clearTerrainAroundFractures(fractures)
 
-                if (tier == AbyssProcgen.Tier.Low)
+                var latestTier = AbyssUtils.getTier(latest)
+                if (latestTier == AbyssProcgen.Tier.Low)
                 {
                     AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_SMALL, 0.75f)
                 }
-                if (tier == AbyssProcgen.Tier.Mid)
+                if (latestTier == AbyssProcgen.Tier.Mid)
                 {
                     AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_MEDIUM, 0.6f)
                 }
-                else if (tier == AbyssProcgen.Tier.High)
+                else if (latestTier == AbyssProcgen.Tier.High)
                 {
                     AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, tier, FleetTypes.PATROL_MEDIUM, 0.75f)
                 }
@@ -227,7 +228,7 @@ class AbyssChainGenerator {
     fun addWormBoss(station: SectorEntityToken) {
 
 
-        var points = 350f
+        var points = 300f
         if (AbyssUtils.getDifficulty() == AbyssDifficulty.Hard) {
             points += 50f
         }

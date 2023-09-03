@@ -57,7 +57,7 @@ class SingularityCrateInteration : RATInteractionPlugin() {
             log.addPara("Destination : Abyss Expedition Fleet", 0f)
             log.addSpacer(10f)
             log.addPara("This shipment is is being send towards the current main expedition force in the abyss. It contains an additional Gravitational Destabiliser. \n\n" +
-                    "The additional destabilizer is being send to act as a backup in case of failure in the curent device, as without one there is no method available to enter or exit the abyss with." +
+                    "The additional destabilizer is being send to act as a backup in case of failure in the current device, as without one there is no method available to enter or exit the abyss with." +
                     "It is adviced to only use the device in hyperspace with a safe distance from any nearby fleet.", 0f)
             log.addSpacer(5f)
 

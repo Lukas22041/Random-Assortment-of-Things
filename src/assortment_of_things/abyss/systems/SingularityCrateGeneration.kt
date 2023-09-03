@@ -59,7 +59,7 @@ object SingularityCrateGeneration {
             Factions.REMNANTS,
             5f,
             FleetTypes.PATROL_MEDIUM,
-            90f,  // combatPts
+            70f,  // combatPts
             0f,  // freighterPts
             0f,  // tankerPts
             0f,  // transportPts

@@ -20,7 +20,7 @@ class AugmentedSkill : RATBaseShipSkill() {
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
         info!!.addSpacer(2f)
-        info!!.addPara("Allows this person to command Automated Ships. Negates the \"Automated Ships\" skill points cost on the ship. \n\n" +
+        info!!.addPara("Allows this person to command Automated Ships. Does not apply a multipler to the \"Automated Ships\" skill points cost on the ship. \n\n" +
                 "Can not be assigned to automated ships through the usual way, it is instead done through a button in \"Additional Options\" section in the refit screen for any elligable automated ship.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
     }
@@ -33,8 +33,8 @@ class AugmentedSkill : RATBaseShipSkill() {
         if (member!!.variant.hasHullMod(HullMods.AUTOMATED)) Misc.setUnremovable(person, true)
         else Misc.setUnremovable(person, false)
 
-        var deployCost = member.deploymentPointsCost
-        person.memoryWithoutUpdate.set(AICoreOfficerPlugin.AUTOMATED_POINTS_VALUE, -deployCost)
+        /*var deployCost = member.deploymentPointsCost
+        person.memoryWithoutUpdate.set(AICoreOfficerPlugin.AUTOMATED_POINTS_VALUE, -deployCost)*/
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {

@@ -38,7 +38,7 @@ class BoostRedirectorHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("The zero flux engine boost is reduced to only 20%% of its original value. The rest of the energy is redirected to increase the ships ballistic and energy ammunition recharge by 100%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+        tooltip.addPara("The zero flux engine boost is reduced to only 20%% of its original value. The rest of the energy is redirected to increase the ships ballistic and energy ammunition recharge rate by 100%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "zero flux engine boost", "20%", "100%")
 
     }

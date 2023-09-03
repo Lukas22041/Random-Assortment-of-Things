@@ -64,7 +64,6 @@ class RATModPlugin : BaseModPlugin() {
 
         LunaRefitManager.addRefitButton(AugmentedRefitButton())
 
-
         if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
             //RATNexManager.addStartingFleets()
         }
@@ -88,10 +87,10 @@ class RATModPlugin : BaseModPlugin() {
         super.onGameLoad(newGame)
 
 
-        /*Global.getSector().characterData.person.stats.setSkillLevel("rat_augmented", 1f)
-        Global.getSector().playerFleet.fleetData.officersCopy.forEach { it.person.stats.setSkillLevel("rat_augmented", 1f) }*/
+     /*   Global.getSector().characterData.person.stats.setSkillLevel("rat_augmented", 1f)
+        Global.getSector().playerFleet.fleetData.officersCopy.forEach { it.person.stats.setSkillLevel("rat_augmented", 1f) }
 
-     /*   Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
         for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)

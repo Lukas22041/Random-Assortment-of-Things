@@ -40,11 +40,13 @@ class RelicStations {
         //Misc
         RelicStation("rat_orbital_construction_station").apply {
             systemFilter = { system -> system.planets.size >= 3 }
+            amount = 2
             locations = linkedMapOf(LocationType.PLANET_ORBIT to 100f)
             weight = 20f
         },
 
         RelicStation("rat_refurbishment_station").apply {
+            amount = 2
             systemFilter = { system -> true }
         },
 
