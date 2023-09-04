@@ -23,7 +23,7 @@ class MaintainingMomentumSkill : RATBaseShipSkill() {
         info!!.addSpacer(2f)
         info!!.addPara("Whenever the ship destroys or disables an opponent, it gains a stack of \"Momentum\". \nA stack of momentum lasts for 60 seconds and gives the following benefits:" , 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(5f)
-        info.addPara("+20%% damage dealt per stack", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info.addPara("+10%% damage dealt per stack", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addPara("+10%% flux dissipation per stack", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addPara("+10%% max speed per stack", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
@@ -65,6 +65,8 @@ class MaintaningMomentumListener(var pilotedShip: ShipAPI) : HullDamageAboutToBe
 
         if (param is ShipAPI) {
             if (param != pilotedShip) return false
+            if (ship!!.isFighter) return false
+            if (ship.owner == pilotedShip.owner) return false
             if (ship!!.hitpoints <= 0 && !ship.hasTag("rat_maverick_counted")) {
                 ship.addTag("rat_maverick_counted")
                 stacks.add(MomentumStacks(duration))
@@ -88,10 +90,10 @@ class MaintaningMomentumListener(var pilotedShip: ShipAPI) : HullDamageAboutToBe
         var stats = pilotedShip.mutableStats
         var count = stacks.count()
 
-        stats.damageToCapital.modifyMult(id, 1f + (0.2f * count))
-        stats.damageToCruisers.modifyMult(id, 1f + (0.2f * count))
-        stats.damageToDestroyers.modifyMult(id, 1f + (0.2f * count))
-        stats.damageToFrigates.modifyMult(id, 1f + (0.2f * count))
+        stats.damageToCapital.modifyMult(id, 1f + (0.1f * count))
+        stats.damageToCruisers.modifyMult(id, 1f + (0.1f * count))
+        stats.damageToDestroyers.modifyMult(id, 1f + (0.1f * count))
+        stats.damageToFrigates.modifyMult(id, 1f + (0.1f * count))
 
         stats.fluxDissipation.modifyMult(id, 1 + (0.1f * count))
 

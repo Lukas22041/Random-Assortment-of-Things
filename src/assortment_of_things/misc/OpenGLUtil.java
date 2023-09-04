@@ -57,6 +57,7 @@ public class OpenGLUtil {
         //do caps
         glEnable(GL_TEXTURE_2D);
         glEnable(GL_BLEND);
+
         Misc.setColor(tex.getColor());
         tex.bindTexture();
 
@@ -69,5 +70,7 @@ public class OpenGLUtil {
         glDrawArrays(GL_QUAD_STRIP, 0, points.length / 2);
         glPopClientAttrib();
     }
+
+
 
 }

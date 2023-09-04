@@ -23,8 +23,6 @@ class AssemblyStationInteraction : RATInteractionPlugin() {
 
         textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
 
-
-
         createOption("Explore") {
             clearOptions()
 
@@ -48,12 +46,12 @@ class AssemblyStationInteraction : RATInteractionPlugin() {
                             return Global.getSector().playerFaction.knownShips
                         }
 
-                        override fun getAvailableWeapons(): MutableSet<String>? {
-                            return null
+                        override fun getAvailableWeapons(): MutableSet<String> {
+                            return mutableSetOf<String>()
                         }
 
                         override fun getAvailableFighters(): MutableSet<String>? {
-                            return null
+                            return mutableSetOf<String>()
                         }
 
                         override fun getCostMult(): Float {

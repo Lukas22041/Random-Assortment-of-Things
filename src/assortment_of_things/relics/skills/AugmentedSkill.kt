@@ -11,6 +11,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lwjgl.opengl.GL11
 
 class AugmentedSkill : RATBaseShipSkill() {
 
@@ -27,7 +28,7 @@ class AugmentedSkill : RATBaseShipSkill() {
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
         var fleet = Global.getSector().playerFleet
-        var person = fleet.fleetData.officersCopy.map { it.person }.plus(Global.getSector().playerPerson).find { it.stats.hasSkill("rat_augmented") }?: return
+        var person = fleet?.fleetData?.officersCopy?.map { it.person }?.plus(Global.getSector().playerPerson)?.find { it.stats.hasSkill("rat_augmented") }?: return
 
         var member = Global.getSector().playerFleet.fleetData.membersListCopy.find { it.captain == person } ?: return
         if (member!!.variant.hasHullMod(HullMods.AUTOMATED)) Misc.setUnremovable(person, true)

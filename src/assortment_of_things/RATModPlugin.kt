@@ -2,6 +2,7 @@ package assortment_of_things
 
 import ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.misc.AbyssBackgroundWarper
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
 import assortment_of_things.abyss.scripts.DisableTransverseScript
 import assortment_of_things.abyss.scripts.ForceNegAbyssalRep
@@ -20,7 +21,9 @@ import assortment_of_things.snippets.DropgroupTestSnippet
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.SpecialItemData
+import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.LocationType
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -186,10 +189,25 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onNewGame() {
         super.onNewGame()
+
     }
 
     override fun onNewGameAfterEconomyLoad() {
         super.onNewGameAfterEconomyLoad()
+
+        //Exoship test
+        var exoshipSystem = Global.getSector().starSystems.filter { it.planets.any { planet -> !planet.isStar } }.random()
+        var location = BaseThemeGenerator.getLocations(Random(), exoshipSystem, 100f, linkedMapOf(LocationType.PLANET_ORBIT to 100f)).pick()
+        var ship = exoshipSystem.addCustomEntity("exoship_${Misc.genUID()}", "Exoship", "rat_exoship", Factions.NEUTRAL)
+        ship.orbit = location.orbit
+
+        //Exospace
+        var system = Global.getSector().createStarSystem("Exospace")
+        system.backgroundTextureFilename = "graphics/backgrounds/exo/exospace.jpg"
+        system.initNonStarCenter()
+        system.generateAnchorIfNeeded()
+        AbyssBackgroundWarper(system, 16, 1f)
+
 
     }
 

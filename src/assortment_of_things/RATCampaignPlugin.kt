@@ -6,6 +6,7 @@ import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
+import assortment_of_things.exonova.interactions.exoship.ExoshipInteractions
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
 import assortment_of_things.relics.items.cores.TacticalCore
@@ -13,8 +14,6 @@ import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.PluginPick
 import com.fs.starfarer.api.campaign.*
-import com.fs.starfarer.api.impl.campaign.procgen.NameGenData
-import com.fs.starfarer.loading.PersonNameStore
 
 class RATCampaignPlugin : BaseCampaignPlugin()
 {
@@ -25,6 +24,10 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
     override fun pickInteractionDialogPlugin(interactionTarget: SectorEntityToken?): PluginPick<InteractionDialogPlugin>? {
         if (interactionTarget == null) return null
+
+        if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship") {
+            return PluginPick(ExoshipInteractions(), CampaignPlugin.PickPriority.HIGHEST)
+        }
 
 
         //Relics

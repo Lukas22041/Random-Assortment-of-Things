@@ -23,6 +23,7 @@ import org.magiclib.kotlin.addOfficerGainText
 import org.magiclib.kotlin.getPersonalityName
 
 class CryochamberInteraction : RATInteractionPlugin() {
+
     override fun init() {
         textPanel.addPara("Your fleet approaches the cryochamber station.")
 
