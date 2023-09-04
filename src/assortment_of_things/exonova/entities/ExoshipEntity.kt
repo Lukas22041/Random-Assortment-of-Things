@@ -1,94 +1,119 @@
 package assortment_of_things.exonova.entities
 
+import assortment_of_things.exonova.interactions.exoship.ExoshipMoveScript
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
-import org.lwjgl.opengl.GL11
+import com.fs.starfarer.api.util.IntervalUtil
+import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 class ExoshipEntity : BaseCustomEntityPlugin() {
 
+    class ExoshipThrusterParticle(var duration: Float, var color: Color, var size: Float, var location: Vector2f, var velocity: Vector2f) {
+        var maxDuration = duration
+    }
 
     @Transient
-    var sprite: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/backgrounds/exo/exospace.jpg")
+    var particleSprite: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/fx/explosion3.png")
 
-    var speed = 0f
+    var particles = ArrayList<ExoshipThrusterParticle>()
+    var particleInterval = IntervalUtil(0.05f, 0.05f)
+
+
+    var thrusterLevel = 0f
 
     override fun getRenderRange(): Float {
         return 100000000f
     }
 
+    override fun advance(amount: Float) {
+        particleInterval.advance(amount)
+
+        for (particle in ArrayList(particles)) {
+            particle.duration -= 1 * amount
+
+            if (particle.duration < 0) {
+                particles.remove(particle)
+                continue
+            }
+
+
+            var x = particle.velocity.x * amount
+            var y = particle.velocity.y * amount
+            var velocity = Vector2f(x, y)
+            particle.location = particle.location.plus(velocity)
+
+        }
+
+
+        var state = ExoshipMoveScript.ExoshipState.Arrived
+        if (entity.memoryWithoutUpdate.get("\$exoship_state") != null) {
+            state = entity.memoryWithoutUpdate.get("\$exoship_state") as ExoshipMoveScript.ExoshipState
+        }
+
+        if (state == ExoshipMoveScript.ExoshipState.Arrived) {
+           thrusterLevel = 0f
+        }
+
+        if (state == ExoshipMoveScript.ExoshipState.Travelling) {
+            thrusterLevel += 0.3f * amount
+        }
+
+        if (state == ExoshipMoveScript.ExoshipState.Arriving) {
+            thrusterLevel -= 0.3f * amount
+        }
+
+        thrusterLevel = MathUtils.clamp(thrusterLevel, 0f, 1f)
+
+        if (state != ExoshipMoveScript.ExoshipState.Arrived) {
+            particleInterval.advance(amount)
+            if (particleInterval.intervalElapsed()) {
+                var velocity = Vector2f(0f, 0f)
+
+                velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), 200f * thrusterLevel, entity.facing + 180))
+
+
+
+                for (i in 0..40) {
+
+                    var spawnLocation = MathUtils.getPointOnCircumference(Vector2f(), 45f, entity.facing + 180)
+
+                    var randomX = MathUtils.getRandomNumberInRange(-10f, 10f)
+                    var randomY = MathUtils.getRandomNumberInRange(-10f, 10f)
+                    particles.add(ExoshipThrusterParticle(1f * thrusterLevel, Color(255, 155, 0), MathUtils.getRandomNumberInRange(5f * thrusterLevel, 25f * thrusterLevel), Vector2f(spawnLocation.x + randomX, spawnLocation.y + randomY), velocity))
+                }
+            }
+        }
+    }
+
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
-        if (sprite == null) {
-            sprite = Global.getSettings().getAndLoadSprite("graphics/backgrounds/exo/exospace.jpg")
+        if (particleSprite == null) {
+            particleSprite = Global.getSettings().getAndLoadSprite("graphics/fx/explosion3.png")
         }
 
-        if (speed > 100000f) {
-            speed = 0f
-        }
+        particleSprite!!.setAdditiveBlend()
 
-       // renderScrollingTexture(sprite!!, entity.location, Vector2f(500f, 500f))
+        for (particle in particles) {
+            var level = (particle.duration - 0f) / (particle.maxDuration - 0f)
+            particleSprite!!.alphaMult = 0 + (0.3f * level )
+            var location = particle.location.plus(entity.location)
+
+            particleSprite!!.color = particle.color
+
+
+            particleSprite!!.setSize(particle.size, particle.size)
+
+            particleSprite!!.renderAtCenter(location.x, location.y)
+        }
 
     }
 
-    fun renderScrollingTexture(sprite: SpriteAPI, location: Vector2f, size: Vector2f) {
 
-        if (!Global.getSector().isPaused) {
-            speed += 0.01f
-        }
-
-        var color = Color(255, 255, 255)
-        var alphaMult = 1f
-
-        var posX = location.x
-        var posY = location.y
-
-        var width = size.x
-        var height = size.y
-        var angle = 0f
-
-        var texX = 0f
-        var texY = 0f
-
-        GL11.glPushMatrix()
-        sprite!!.bindTexture()
-        GL11.glColor4ub(color.getRed().toByte(),
-            color.getGreen().toByte(),
-            color.getBlue().toByte(),
-            (color.getAlpha().toFloat() * alphaMult).toInt().toByte())
-        GL11.glTranslatef(posX + 0, posY + 0, 0.0f)
-        if (sprite!!.centerX != -1.0f && sprite!!.centerY != -1.0f) {
-            GL11.glTranslatef(width / 2.0f, height / 2.0f, 0.0f)
-            GL11.glRotatef(angle, 0.0f, 0.0f, 1.0f)
-            GL11.glTranslatef(-sprite!!.centerX, -sprite!!.centerY, 0.0f)
-        } else {
-            GL11.glTranslatef(width / 2.0f, height / 2.0f, 0.0f)
-            GL11.glRotatef(angle, 0.0f, 0.0f, 1.0f)
-            GL11.glTranslatef(-width / 2.0f, -height / 2.0f, 0.0f)
-        }
-
-        GL11.glEnable(3553)
-        GL11.glEnable(3042)
-        GL11.glEnable(GL11.GL_TEXTURE_WRAP_T)
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-        var var3 = 0.001f
-        var3 = 0.0f
-        GL11.glBegin(7)
-        GL11.glTexCoord2f(texX + var3, texY + var3 + speed)
-        GL11.glVertex2f(0.0f, 0.0f)
-        GL11.glTexCoord2f(texX + var3, texY + sprite!!.textureHeight - var3 + speed)
-        GL11.glVertex2f(0.0f, height)
-        GL11.glTexCoord2f(texX + sprite!!.textureWidth - var3, texY + sprite!!.textureHeight - var3 + speed)
-        GL11.glVertex2f(width, height)
-        GL11.glTexCoord2f(texX + sprite!!.textureWidth - var3, texY + var3 + speed)
-        GL11.glVertex2f(width, 0.0f)
-        GL11.glEnd()
-        GL11.glDisable(3042)
-        GL11.glPopMatrix()
-    }
 
 }

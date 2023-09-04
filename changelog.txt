@@ -1,3 +1,11 @@
+Version 1.5.7
+
+-> Fixed a bug with "Keeping Momentum" and nerfed it a slight bit.
+-> Fixed Assembly Station having more options than just ships.
+-> Fixed a crash with the augmented skill
+
+
+
 Version 1.5.6
 
 -> Downscaled the FP of abyssal fleets and made them have more randomness in fleet size.

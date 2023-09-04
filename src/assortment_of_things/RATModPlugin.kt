@@ -195,7 +195,7 @@ class RATModPlugin : BaseModPlugin() {
     override fun onNewGameAfterEconomyLoad() {
         super.onNewGameAfterEconomyLoad()
 
-        //Exoship test
+       /* //Exoship test
         var exoshipSystem = Global.getSector().starSystems.filter { it.planets.any { planet -> !planet.isStar } }.random()
         var location = BaseThemeGenerator.getLocations(Random(), exoshipSystem, 100f, linkedMapOf(LocationType.PLANET_ORBIT to 100f)).pick()
         var ship = exoshipSystem.addCustomEntity("exoship_${Misc.genUID()}", "Exoship", "rat_exoship", Factions.NEUTRAL)
@@ -206,7 +206,7 @@ class RATModPlugin : BaseModPlugin() {
         system.backgroundTextureFilename = "graphics/backgrounds/exo/exospace.jpg"
         system.initNonStarCenter()
         system.generateAnchorIfNeeded()
-        AbyssBackgroundWarper(system, 16, 1f)
+        AbyssBackgroundWarper(system, 16, 1f)*/
 
 
     }

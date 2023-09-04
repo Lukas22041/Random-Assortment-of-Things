@@ -45,8 +45,12 @@ class ExoshipMoveScript(var exoship: SectorEntityToken, var destination: SectorE
     override fun advance(amount: Float) {
         daysSince = Global.getSector().clock.getElapsedDaysSince(timestamp)
 
+        exoship.memoryWithoutUpdate.set("\$exoship_state", state)
         if (state == ExoshipState.Travelling) {
             travelling(amount)
+        }
+        if (state == ExoshipState.Exospace) {
+            exospace(amount)
         }
         if (state == ExoshipState.Arriving) {
             arriving(amount)
@@ -59,7 +63,7 @@ class ExoshipMoveScript(var exoship: SectorEntityToken, var destination: SectorE
 
         var playerFleet = Global.getSector().playerFleet
 
-        var direction = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 200 * amount, exoship.facing)
+        var direction = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 500 * amount, exoship.facing)
         exoship.velocity.set(exoship.velocity.plus(direction))
 
         playerFleet.setLocation(exoship.location.x, exoship.location.y)
@@ -70,9 +74,42 @@ class ExoshipMoveScript(var exoship: SectorEntityToken, var destination: SectorE
 
         playerFleet.stats.addTemporaryModMult(0.05f, "", "", 0f, playerFleet.stats.fleetwideMaxBurnMod)
 
+        if (daysSince > 0.75) {
+            state = ExoshipState.Exospace
+            CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
+
+            var destinationSystem = Global.getSector().getStarSystem("Exospace")
+            var currentLocation = playerFleet.containingLocation
+
+            currentLocation.removeEntity(exoship)
+            destinationSystem.addEntity(exoship)
+            exoship.setLocation(0f, 0f)
+
+            previousVelocity = Vector2f(exoship.velocity)
+
+            currentLocation.removeEntity(playerFleet)
+            destinationSystem.addEntity(playerFleet)
+            Global.getSector().setCurrentLocation(destinationSystem)
+            playerFleet.location.set(exoship.location)
+
+        }
+    }
 
 
-        if (daysSince > 2) {
+    fun exospace(amount: Float) {
+        (AppDriver.getInstance().currentState as CampaignState).isHideUI = true
+
+        var playerFleet = Global.getSector().playerFleet
+
+        playerFleet.setLocation(exoship.location.x, exoship.location.y)
+        playerFleet.setVelocity(0f, 0f)
+
+        (playerFleet as CampaignFleet).setInJumpTransition(true)
+        playerFleet.setNoEngaging(5f)
+
+        playerFleet.stats.addTemporaryModMult(0.05f, "", "", 0f, playerFleet.stats.fleetwideMaxBurnMod)
+
+        if (daysSince > 1.5) {
             state = ExoshipState.Arriving
             CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
 
@@ -97,11 +134,8 @@ class ExoshipMoveScript(var exoship: SectorEntityToken, var destination: SectorE
             Global.getSector().setCurrentLocation(destinationSystem)
             playerFleet.location.set(destinationPoint)
 
-
         }
     }
-
-    
 
     fun arriving(amount: Float) {
         (AppDriver.getInstance().currentState as CampaignState).isHideUI = true
@@ -129,11 +163,12 @@ class ExoshipMoveScript(var exoship: SectorEntityToken, var destination: SectorE
         playerFleet.setNoEngaging(5f)
 
 
-        if (level <= 0.02 || daysSince > 5) {
+        if (level <= 0.02 || daysSince > 4) {
 
             var angle = Misc.getAngleInDegrees(exoship.location, destination.location) + 180
             exoship.setCircularOrbit(destination, angle, MathUtils.getDistance(exoship.location, destination.location), 120f)
             state = ExoshipState.Arrived
+            exoship.memoryWithoutUpdate.set("\$exoship_state", state)
 
             (playerFleet as CampaignFleet).setInJumpTransition(false)
 
