@@ -16,7 +16,7 @@ class RelicStations {
 
         RelicStation("rat_development_station").apply {
             systemFilter = { system -> true}
-            amount = MathUtils.getRandomNumberInRange(3,4)
+            amount = MathUtils.getRandomNumberInRange(2,3)
             weight = 1000f
         },
 
@@ -39,11 +39,16 @@ class RelicStations {
 
         //Misc
         RelicStation("rat_orbital_construction_station").apply {
-            systemFilter = { system -> system.planets.size >= 3 }
+            systemFilter = { system -> system.planets.any { !it.isStar } }
             amount = 2
             locations = linkedMapOf(LocationType.PLANET_ORBIT to 100f)
             weight = 20f
         },
+
+       /* RelicStation("rat_training_station").apply {
+            systemFilter = { system -> true }
+            locations = linkedMapOf(LocationType.PLANET_ORBIT to 5f, LocationType.IN_ASTEROID_BELT to 5f, LocationType.STAR_ORBIT to 1f)
+        },*/
 
         RelicStation("rat_refurbishment_station").apply {
             amount = 2

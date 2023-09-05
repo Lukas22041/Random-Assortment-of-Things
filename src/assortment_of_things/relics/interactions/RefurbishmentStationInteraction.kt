@@ -30,7 +30,7 @@ class RefurbishmentStationInteraction : RATInteractionPlugin() {
             createOption("Select a ship") {
 
                 dialog.showFleetMemberPickerDialog("Select a ship", "Confirm", "Cancel", 8, 12, 64f, true, false,
-                    Global.getSector().playerFleet.fleetData.membersListCopy, object : FleetMemberPickerListener {
+                    Global.getSector().playerFleet.fleetData.membersListCopy.filter { !it.variant.hasHullMod("rat_refurbished_hull") }, object : FleetMemberPickerListener {
                         override fun pickedFleetMembers(members: MutableList<FleetMemberAPI>?) {
                             if (members!!.isEmpty()) return
 

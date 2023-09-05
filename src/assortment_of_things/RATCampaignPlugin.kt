@@ -14,6 +14,7 @@ import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.PluginPick
 import com.fs.starfarer.api.campaign.*
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 
 class RATCampaignPlugin : BaseCampaignPlugin()
 {
@@ -92,6 +93,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
     }*/
 
     override fun pickAICoreOfficerPlugin(commodityId: String?): PluginPick<AICoreOfficerPlugin>? {
+
         if (commodityId == RATItems.COSMOS_CORE) return PluginPick(CosmosCore(), CampaignPlugin.PickPriority.HIGHEST)
         if (commodityId == RATItems.CHRONOS_CORE) return PluginPick(ChronosCore(), CampaignPlugin.PickPriority.HIGHEST)
         if (commodityId == RATItems.PRIMORDIAL) return PluginPick(PrimordialCore(), CampaignPlugin.PickPriority.HIGHEST)

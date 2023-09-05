@@ -1,3 +1,13 @@
+Version 1.5.8
+
+-> Added a bar event that helps with finding some of the relics content.
+-> Improved the officer picker for the skill stations to look visualy nicer and feel better to interact with.
+-> increased the size of some of the small relics stations by 50% to make them easier to spot.
+-> Fixed the "Refurbished" hullmod from being applicable to a ship that already has it.
+-> Fixed an issue where abyssal ships aquired with a crew conversion & no automated ships skill could not recover the ship.
+
+
+
 Version 1.5.7
 
 -> Fixed a bug with "Keeping Momentum" and nerfed it a slight bit.

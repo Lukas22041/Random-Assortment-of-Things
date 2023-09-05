@@ -1,11 +1,14 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignUIAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.impl.campaign.ids.Stats
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 
@@ -14,6 +17,16 @@ class AbyssalGrid : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
 
+
+        if (Global.getSector()?.characterData?.person != null) {
+            if (Global.getSector().characterData.person!!.stats.hasSkill(Skills.AUTOMATED_SHIPS)
+                || stats!!.variant.hasHullMod("rat_abyssal_conversion") || stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion")) {
+                stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
+            }
+            else {
+                stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
+            }
+        }
 
         stats!!.energyWeaponFluxCostMod.modifyMult(id, 0.9f)
         stats!!.energyWeaponRangeBonus.modifyFlat(id, 100f)

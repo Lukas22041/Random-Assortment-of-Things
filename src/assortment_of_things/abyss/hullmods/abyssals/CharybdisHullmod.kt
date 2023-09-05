@@ -8,6 +8,8 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
+import com.fs.starfarer.api.impl.campaign.ids.Skills
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.util.IntervalTracker
@@ -35,6 +37,16 @@ class CharybdisHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: HullSize, stats: MutableShipStatsAPI, id: String) {
         var member = stats.fleetMember
+
+        if (Global.getSector()?.characterData?.person != null) {
+            if (Global.getSector().characterData.person!!.stats.hasSkill(Skills.AUTOMATED_SHIPS)
+                || stats!!.variant.hasHullMod("rat_abyssal_conversion") || stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion")) {
+                stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
+            }
+            else {
+                stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
+            }
+        }
 
         if (!stats!!.variant.hasHullMod("rat_abyssal_conversion") && !stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats.variant.hasHullMod(HullMods.AUTOMATED))      {
             stats.variant.addPermaMod(HullMods.AUTOMATED)

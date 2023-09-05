@@ -6,3 +6,5 @@ rat_AbyssCrateBarEvent,AddBarEvents,ShouldShowAbyssCrateEvent,"AddBarEvent rat_a
 rat_AbyssCrateBarEvent1,DialogOptionSelected,$option == rat_abyss_Crate,AbyssCrateBarEvent,,"rat_abyssCrateLeave:Leave
 ",
 rat_AbyssCrateBarEvent2,DialogOptionSelected,$option == rat_abyssCrateLeave,BarCMD showOptions,,,
+,,,,,,
+,,,,,,

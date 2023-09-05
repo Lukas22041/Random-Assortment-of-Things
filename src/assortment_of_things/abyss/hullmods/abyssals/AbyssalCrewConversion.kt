@@ -2,22 +2,16 @@ package assortment_of_things.abyss.hullmods.abyssals
 
 import assortment_of_things.abyss.hullmods.BaseAlteration
 import assortment_of_things.misc.baseOrModSpec
-import assortment_of_things.strings.RATItems
-import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.econ.MarketAPI
-import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.MutableShipStatsAPI
+import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
+import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
-import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
-import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.ui.Alignment
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.Misc
-import org.magiclib.kotlin.setAlpha
-import java.awt.Color
-import java.util.*
 
 class AbyssalCrewConversion : BaseAlteration() {
 
@@ -37,6 +31,7 @@ class AbyssalCrewConversion : BaseAlteration() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
+
         if (stats!!.variant.hasHullMod(HullMods.AUTOMATED))
         {
             stats!!.variant.removePermaMod(HullMods.AUTOMATED)
@@ -46,7 +41,6 @@ class AbyssalCrewConversion : BaseAlteration() {
                 module.removePermaMod(HullMods.AUTOMATED)
             }
         }
-
         stats.minCrewMod.modifyFlat("rat_core_conversion", minCrew.get(hullSize)!!)
         stats.maxCrewMod.modifyFlat("rat_core_conversion", maxCrew.get(hullSize)!!)
     }
@@ -96,6 +90,7 @@ class AbyssalCrewConversion : BaseAlteration() {
         tooltip!!.addPara("Can not be removed while an officer is assigned to the ship.", 0f,
             Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
     }
+
 
     override fun onAlterationRemove(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?) {
         variant!!.addPermaMod(HullMods.AUTOMATED)

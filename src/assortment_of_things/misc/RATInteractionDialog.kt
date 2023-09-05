@@ -9,13 +9,16 @@ import com.fs.starfarer.api.impl.campaign.FleetEncounterContext
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.FIDConfig
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
+import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageEntityGeneratorOld
 import com.fs.starfarer.api.impl.campaign.rulecmd.DismissDialog
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.FleetAdvanceScript
+import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageGenFromSeed.SDMParams
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageGenFromSeed.SalvageDefenderModificationPlugin
+import com.fs.starfarer.api.impl.campaign.terrain.DebrisFieldTerrainPlugin.DebrisFieldParams
+import com.fs.starfarer.api.impl.campaign.terrain.DebrisFieldTerrainPlugin.DebrisFieldSource
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.util.Misc
-import lunalib.lunaUI.elements.LunaElement
 import org.lwjgl.input.Keyboard
 import java.awt.Color
 
@@ -259,7 +262,6 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
     override fun getMemoryMap(): MutableMap<String, MemoryAPI>? {
         return null
     }
-
 
 }
 
