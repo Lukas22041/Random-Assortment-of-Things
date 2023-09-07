@@ -3,12 +3,14 @@ package assortment_of_things.misc
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
+import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.combat.BattleCreationContext
 import com.fs.starfarer.api.combat.EngagementResultAPI
 import com.fs.starfarer.api.impl.campaign.FleetEncounterContext
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.FIDConfig
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
+import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageEntityGeneratorOld
 import com.fs.starfarer.api.impl.campaign.rulecmd.DismissDialog
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.FleetAdvanceScript
@@ -18,8 +20,14 @@ import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageGenFromSeed.Sal
 import com.fs.starfarer.api.impl.campaign.terrain.DebrisFieldTerrainPlugin.DebrisFieldParams
 import com.fs.starfarer.api.impl.campaign.terrain.DebrisFieldTerrainPlugin.DebrisFieldSource
 import com.fs.starfarer.api.ui.Alignment
+import com.fs.starfarer.api.ui.BaseTooltipCreator
+import com.fs.starfarer.api.ui.CustomPanelAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 import org.lwjgl.input.Keyboard
+import org.magiclib.kotlin.getPersonalityName
+import org.magiclib.kotlin.isMercenary
 import java.awt.Color
 
 abstract class RATInteractionPlugin() : InteractionDialogPlugin
@@ -261,6 +269,103 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
 
     override fun getMemoryMap(): MutableMap<String, MemoryAPI>? {
         return null
+    }
+
+    fun createOfficerPicker(unapplicableToPlayer: Boolean, onConfirm: (PersonAPI) -> Unit) {
+        dialog.showCustomDialog(320f, 440f, object: BaseCustomDialogDelegate() {
+
+            var selected: PersonAPI? = null
+
+            override fun createCustomDialog(panel: CustomPanelAPI?, callback: CustomDialogDelegate.CustomDialogCallback?) {
+
+                var width = panel!!.position.width
+                var height = panel.position.height
+
+                var officers = ArrayList<PersonAPI>()
+               officers.add(Global.getSector().playerPerson)
+                officers.addAll( Global.getSector().playerFleet.fleetData.officersCopy.map { it.person }.filter { !it.isMercenary() })
+
+                var element = panel!!.createUIElement(width, height, true)
+                element.position.inTL(0f, 0f)
+
+                element.addSpacer(5f)
+                // element.addPara("", 0f).position.inTL(0f, 0f)
+
+                for (officer in officers) {
+                    element.addLunaElement(width - 10, 85f).apply {
+                        enableTransparency = true
+                        backgroundAlpha = 0.4f
+
+                        borderAlpha = 0.5f
+
+                        selectionGroup = "people"
+
+                        var unapplicable = officer == Global.getSector().playerPerson && unapplicableToPlayer
+
+                        if (!unapplicable) {
+                            onClick {
+                                playClickSound()
+                                selected = officer
+                            }
+                        }
+
+
+
+                        advance {
+                            if (officer == selected) {
+                                backgroundAlpha = 0.7f
+                            }
+                            else {
+                                backgroundAlpha = 0.4f
+                            }
+                        }
+
+                        onHoverEnter {
+                            playScrollSound()
+                            borderAlpha = 1f
+                        }
+                        onHoverExit {
+                            borderAlpha = 0.5f
+                        }
+
+                        innerElement.addSpacer(10f)
+                        var img = innerElement.beginImageWithText(officer.portraitSprite, 64f)
+                        img.addPara("Name: ${officer.nameString}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Name:")
+                        img.addPara("Personality: ${officer.getPersonalityName()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Personality:")
+                        img.addSpacer(5f)
+                        if (unapplicable) img.addNegativePara("Can not be applied to the player.")
+                        innerElement.addImageWithText(0f)
+                    }
+
+                    element.addTooltipToPrevious( object : BaseTooltipCreator() {
+                        override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
+                            tooltip!!.addSkillPanel(officer, 0f)
+                        }
+                    }, TooltipMakerAPI.TooltipLocation.RIGHT)
+
+
+
+                    element.addSpacer(10f)
+                }
+
+
+
+
+                panel.addUIElement(element)
+                element.position.inTL(0f, 0f)
+
+            }
+
+            override fun hasCancelButton(): Boolean {
+                return true
+            }
+
+            override fun customDialogConfirm() {
+                if (selected == null) return
+
+                onConfirm(selected!!)
+            }
+        })
     }
 
 }

@@ -21,6 +21,7 @@ import lunalib.lunaExtensions.addLunaElement
 import org.lwjgl.input.Keyboard
 import org.magiclib.kotlin.addOfficerGainText
 import org.magiclib.kotlin.getPersonalityName
+import org.magiclib.kotlin.isMercenary
 
 class CryochamberInteraction : RATInteractionPlugin() {
 
@@ -154,7 +155,10 @@ class CryochamberInteraction : RATInteractionPlugin() {
 
                 }
 
-                if (Global.getSector().characterData.person.stats.officerNumber.modifiedValue <= Global.getSector().playerFleet.fleetData.officersCopy.size) {
+                var maxOfficers = Global.getSector().characterData.person.stats.officerNumber.modifiedValue
+                var officersInFleetWithoutMercs = Global.getSector().playerFleet.fleetData.officersCopy.filter { !it.person.isMercenary() }.size
+
+                if (maxOfficers <= officersInFleetWithoutMercs) {
                     optionPanel.setEnabled("Select an individual to revive", false)
                     optionPanel.setTooltip("Select an individual to revive", "Fleet is at maximum number of officers.")
                 }
