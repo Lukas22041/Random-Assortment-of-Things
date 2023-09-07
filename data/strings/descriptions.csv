@@ -74,7 +74,7 @@ rat_refurbishment_station,CUSTOM,"Used by the Domain to maintain patrols, this s
 rat_cryochamber,CUSTOM,"A station used to keep select useful but dangerous individuals in proverbial storage until they are needed by the Domain. Self-destruct protocols ensure that only the Domain can retrieve them, but the defences may have degraded from lack of dutiful upkeep.",,,,
 rat_spatial_laboratory,CUSTOM,An abandoned station once used to study spatial anomalies and eventualy repurposing them for the production of advanced tools.,,,,
 rat_medical_laboratory,CUSTOM,"An abandoned station once used for the the process of creating advanced human medicine. Some of it was done in philanthropic nature, much of it was sponsored for support in local conflicts. ",,,,
-,,,,,,
+rat_training_station,CUSTOM,"Temporal Training Facilities were a novel and often illegal way to train new recruits in record time, however instabilities with the systems often resulted in some officers spending far more time in the chambers than was safe for the human mind.",,,,
 ,,,,,,
 #Joke Content,,,,,,
 rat_jeff_core,RESOURCE,"What at first seems to be just a rat, is actually the result of Tri-Tachyon AI Core research. They seem to have managed to integrate a shrunken gamma-core in to a living being and connect it to its brain.

@@ -43,6 +43,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 "rat_cryochamber" -> return PluginPick(CryochamberInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_spatial_laboratory" -> return PluginPick(SpatialLaboratoryInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_medical_laboratory" -> return PluginPick(MedicalLaboratoryInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_training_station" -> return PluginPick(TrainingStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
             if (id == "rat_bioengineering_station" || id == "rat_augmentation_station" || id == "rat_neural_laboratory") {

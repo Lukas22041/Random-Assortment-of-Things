@@ -29,7 +29,7 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
         if (Global.getSector().intelManager.hasIntelOfClass(ArchivistIntel::class.java)) return false
 
         var entities = RelicsUtils.getAllRelicStations()
-        entities = entities.filter { it.isDiscoverable  }
+        entities = entities.filter { it.isDiscoverable && !it.isExpired }
         if (entities.isNotEmpty()) {
             return true
         }
@@ -129,23 +129,23 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
 
                 dialog.optionPanel.clearOptions()
                 var entities = RelicsUtils.getAllRelicStations()
-                entities = entities.filter { it.isDiscoverable() != null }
+                entities = entities.filter { it.isDiscoverable && !it.isExpired }
                 var entity = entities.random()
 
 
                 if (known) {
-                    text.addPara("Great! The rumor i want to confirm is the existance of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
+                    text.addPara("\"Great! The rumor i want to confirm is the existance of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
                             "Confirming the rumors validity would be a gateway in to learning much more about the history of this system.",
                         Misc.getTextColor(), Misc.getHighlightColor(), "${entity.name}", "${entity.starSystem.nameWithNoType}")
                 }
                 else {
-                    text.addPara("Thank you! The rumor i want to confirm is the existance of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
+                    text.addPara("\"Thank you! The rumor i want to confirm is the existance of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
                             "Confirming the rumors validity would be a gateway in to learning much more about the history of this system.",
                         Misc.getTextColor(), Misc.getHighlightColor(), "${entity.name}", "${entity.starSystem.nameWithNoType}")
                 }
 
-                text.addPara("Since there are no previous records of its existance, it would be likely that none or few salvagers have yet set foot on it. " +
-                        "I dont care about what happens with the structure, aslong as you send me the data i want.")
+                text.addPara("Since there are no previous records of it, so it would be likely quite that none or few salvagers have yet set foot on it. " +
+                        "I dont care about what happens with the structure, aslong as you send me the data i want.\"")
 
                 dialog.visualPanel.showMapMarker(entity, "Desination: ${entity.starSystem}", Misc.getHighlightColor(), false, "", "", setOf())
 
@@ -153,10 +153,6 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
                 Global.getSector().addScript(intel)
                 Global.getSector().intelManager.addIntel(intel)
                 Global.getSector().intelManager.addIntelToTextPanel(intel, text)
-
-                if (!known){
-                    text.addPara("Thanks for listening to my request, i'l hope to hear back from you soon.")
-                }
 
                 person.memoryWithoutUpdate.set("\$rat_knownByPlayer", true)
 

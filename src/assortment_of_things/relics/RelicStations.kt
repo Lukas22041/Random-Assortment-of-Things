@@ -45,10 +45,10 @@ class RelicStations {
             weight = 20f
         },
 
-       /* RelicStation("rat_training_station").apply {
+        RelicStation("rat_training_station").apply {
             systemFilter = { system -> true }
             locations = linkedMapOf(LocationType.PLANET_ORBIT to 5f, LocationType.IN_ASTEROID_BELT to 5f, LocationType.STAR_ORBIT to 1f)
-        },*/
+        },
 
         RelicStation("rat_refurbishment_station").apply {
             amount = 2

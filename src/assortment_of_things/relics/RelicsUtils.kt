@@ -29,7 +29,9 @@ object RelicsUtils {
 
         //Removes expired stations
         for (entity in ArrayList(entities)) {
-            if (entity.isExpired) entities.remove(entity)
+            if (entity.isExpired)  {
+                entities.remove(entity)
+            }
         }
 
         return ArrayList(entities)
