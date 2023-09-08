@@ -1,3 +1,11 @@
+Version 1.5.9
+
+-> Punitive Cryostation should no longer consider mercenaries for the maximum amount of officers in the fleet.
+-> Fixed "Mass Neural Interface" applying a 100 times multiplier for range instead of a flat 100 increase.
+-> Potentialy Fixed an issue that made the archivist guide you towards places that you already found.
+
+
+
 Version 1.5.8
 
 -> Added a bar event that helps with finding some of the relics content.

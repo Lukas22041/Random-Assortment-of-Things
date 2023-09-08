@@ -31,9 +31,9 @@ class MassInterfaceSkill : RATBaseShipSkill() {
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
 
-        stats!!.ballisticWeaponRangeBonus.modifyMult(id, 100f)
-        stats!!.energyWeaponRangeBonus.modifyMult(id, 100f)
-        stats!!.missileRoFMult.modifyMult(id, 100f)
+        stats!!.ballisticWeaponRangeBonus.modifyFlat(id, 100f)
+        stats!!.energyWeaponRangeBonus.modifyFlat(id, 100f)
+        stats!!.missileRoFMult.modifyFlat(id, 100f)
 
         stats.ballisticRoFMult.modifyMult(id, 1.1f)
         stats.energyRoFMult.modifyMult(id, 1.1f)

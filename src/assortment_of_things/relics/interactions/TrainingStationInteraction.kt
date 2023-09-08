@@ -17,7 +17,7 @@ class TrainingStationInteraction : RATInteractionPlugin() {
         createOption("Explore") {
             clearOptions()
 
-            textPanel.addPara("You enter the station and enter what seems to be some kind of lobby. You walk closer to one of the hallways, but within the blink of the eye the door closed.")
+            textPanel.addPara("You enter the station and enter what seems to be some kind of lobby. You walk closer towards one of the hallways, but within the blink of the eye the door closed.")
 
             textPanel.addPara("\"///ERROR: UNAUTHORISED INDIVIDUAL DETECTED///\"")
 
@@ -25,7 +25,8 @@ class TrainingStationInteraction : RATInteractionPlugin() {
                     "It appears that for some unknown reason only your officers can enter the the training chambers. ")
 
             textPanel.addPara("Your engineers perform an analysis on the facilities power grid, with what is left only one officer has the option of entering a chamber. " +
-                    "Performing training in this station may unlock further potential for an officer of your choice.")
+                    "Performing training in this station may unlock further potential for an officer of your choice.", Misc.getTextColor(), Misc.getHighlightColor(), "" +
+                    "one")
 
             createOption("Pick an officer") {
                 createOfficerPicker(true) {
@@ -41,8 +42,10 @@ class TrainingStationInteraction : RATInteractionPlugin() {
                     textPanel.addPara("> ${it.nameString} maximum level is increased from $currentLevel to ${currentLevel + 1} ", Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor())
                     textPanel.addPara("> ${it.nameString} maximum elite skills increased from $currentElite to ${currentElite + 1} ", Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor())
 
-                    it.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, currentLevel + 1)
-                    it.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_ELITE_SKILLS, currentElite + 1)
+                    it.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, currentLevel + 10)
+                    it.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_ELITE_SKILLS, currentElite + 10)
+
+
 
                     createOption("Leave") {
                         closeDialog()
