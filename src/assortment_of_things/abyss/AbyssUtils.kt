@@ -91,6 +91,8 @@ object AbyssUtils {
         system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
         system.isEnteredByPlayer = false
         Tags.THEME_HIDDEN
+
+       // system.addCustomEntity("A_${Misc.genUID()}", "", "rat_abyss_particle_spawner", Factions.NEUTRAL)
     }
 
 

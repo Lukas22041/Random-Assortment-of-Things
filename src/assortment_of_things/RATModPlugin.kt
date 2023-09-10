@@ -21,6 +21,7 @@ import assortment_of_things.snippets.DropgroupTestSnippet
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
@@ -91,8 +92,6 @@ class RATModPlugin : BaseModPlugin() {
         super.onGameLoad(newGame)
 
 
-     /*   Global.getSector().characterData.person.stats.setSkillLevel("rat_augmented", 1f)
-        Global.getSector().playerFleet.fleetData.officersCopy.forEach { it.person.stats.setSkillLevel("rat_augmented", 1f) }
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
         for (artifact in ArtifactUtils.artifacts)
@@ -112,7 +111,7 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
 
 
 
@@ -184,8 +183,6 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getLogger(this.javaClass).error("Failed to disable help pop-ups.")
             }
         }
-
-
     }
 
     override fun onNewGame() {
