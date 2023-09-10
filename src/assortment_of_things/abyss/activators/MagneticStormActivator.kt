@@ -107,7 +107,6 @@ class MagneticStormActivator(ship: ShipAPI?) : CombatActivator(ship) {
     override fun onActivate() {
         super.onActivate()
 
-        Global.getCombatEngine().addFloatingText(ship.location, "Magnetic Storm", 15f, jitterUnderColor, ship, 1f, 0.5f)
     }
 
     override fun shouldActivateAI(amount: Float): Boolean {

@@ -599,6 +599,34 @@
 	},
 	
 	
+	"rat_event_generator":{
+		"defaultName":"Test", # used if name=null in addCustomEntity()
+		"nameInText":"test",
+		"aOrAn":"an",
+		"defaultRadius":50, # used if radius<0 in addCustomEntity()
+		"interactionImage":"graphics/illustrations/dead_gate.jpg",	
+		"renderShadow":true,
+		"useLightColor":true,
+		"showInCampaign":true,
+		"showIconOnMap":true,
+		"showNameOnMap":true,
+		"scaleNameWithZoom":false,
+		"scaleIconWithZoom":true,
+		"nameColor":[70,200,255,255],
+		"nameShadowColor":[0,0,0,255],
+		#"renderCircleIndicator":false,
+		"renderCircleIndicator":false,
+		"renderCircleIndicatorSelectionFlash":false,
+		"customDescriptionId":"rat_event_generator",
+		"tags":["has_interaction_dialog", "neutrino"],
+		"layers":[STATIONS, BELOW_STATIONS], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"pluginClass":"assortment_of_things.relics.entities.EventGeneratorEntity",
+	},
+	
+	
+	
+	
+	
 	
 	
 	

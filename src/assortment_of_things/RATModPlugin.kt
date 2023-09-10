@@ -212,8 +212,6 @@ class RATModPlugin : BaseModPlugin() {
 
     }
 
-
-
     override fun beforeGameSave() {
         super.beforeGameSave()
 

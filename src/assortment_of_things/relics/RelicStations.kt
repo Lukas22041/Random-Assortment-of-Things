@@ -1,13 +1,16 @@
 package assortment_of_things.relics
 
+import assortment_of_things.relics.entities.EventGeneratorEntity
+import assortment_of_things.relics.entities.GeneratorInputListener
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
-import com.fs.starfarer.api.impl.campaign.ids.Skills
-import com.fs.starfarer.api.impl.campaign.ids.Tags
+import com.fs.starfarer.api.impl.campaign.ids.Terrain
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.LocationType
 import org.lazywizard.lazylib.MathUtils
+import java.awt.Color
 
 class RelicStations {
 
@@ -107,5 +110,25 @@ class RelicStations {
                 it.memoryWithoutUpdate.set("\$rat_prisoners", people)
             }
         },
+
+      /*  RelicStation("rat_event_generator").apply {
+            systemFilter = { system -> system.hasBlackHole() }
+            locations = linkedMapOf(LocationType.STAR_ORBIT to 100f)
+
+            postGeneration = { entity ->
+                var system = entity.containingLocation
+                var plugin = entity.customPlugin as EventGeneratorEntity
+
+                var blackhole = system.planets.find { it.typeId == "black_hole" }
+
+                var terrain = system.addRingBand(blackhole, "misc", "rings_asteroids0", 256f, 3, Color(50, 50, 50),
+                    150f, blackhole!!.radius + 2000f, 200f, Terrain.RING, "Event Horizon Generator") as CampaignTerrainAPI
+                plugin.ring = terrain
+
+                var listener = GeneratorInputListener()
+                Global.getSector().listenerManager.addListener(listener)
+                plugin.inputManager = listener
+            }
+        },*/
     )
 }

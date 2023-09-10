@@ -140,7 +140,6 @@ class PlasmaticShieldActivator(ship: ShipAPI?) : CombatActivator(ship) {
 
         Global.getCombatEngine().getFleetManager(ship.owner).isSuppressDeploymentMessages = false
 
-        Global.getCombatEngine().addFloatingText(ship.location, "Plasmatic Shield", 15f, jitterUnderColor, ship, 1f, 0.5f)
     }
 
     override fun shouldActivateAI(amount: Float): Boolean {

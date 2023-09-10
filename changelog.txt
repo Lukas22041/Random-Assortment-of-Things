@@ -1,3 +1,8 @@
+Version 1.5.10
+
+-> Fixed an issue that bloated save size.
+-> Fightersystem Alterations no longer have the fighters show some text when activated.
+
 Version 1.5.9
 
 -> Punitive Cryostation should no longer consider mercenaries for the maximum amount of officers in the fleet.

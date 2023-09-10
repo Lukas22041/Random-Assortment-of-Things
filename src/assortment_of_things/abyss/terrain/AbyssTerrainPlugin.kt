@@ -33,6 +33,8 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
         params.tiles = null
         savedTiles = encodeTiles(tiles)
 
+        savedActiveCells.clear()
+
         for (i in activeCells.indices) {
             for (j in activeCells[0].indices) {
                 val curr = activeCells[i][j]
@@ -42,6 +44,8 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
             }
         }
     }
+
+
 
 
     override fun applyEffect(entity: SectorEntityToken?, days: Float) {
