@@ -2,7 +2,7 @@
     "displayName": "Strike",
     "fluxCapacitors": 8,
     "fluxVents": 10,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_sariel",
     "hullMods": [
         "hardenedshieldemitter",

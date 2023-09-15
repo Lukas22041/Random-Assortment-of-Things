@@ -93,7 +93,7 @@ class RATModPlugin : BaseModPlugin() {
 
 
 
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
+      /*  Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
         for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)
@@ -111,7 +111,7 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
 
 
 

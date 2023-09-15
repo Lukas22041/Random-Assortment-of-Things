@@ -33,7 +33,7 @@ class MassInterfaceSkill : RATBaseShipSkill() {
 
         stats!!.ballisticWeaponRangeBonus.modifyFlat(id, 100f)
         stats!!.energyWeaponRangeBonus.modifyFlat(id, 100f)
-        stats!!.missileRoFMult.modifyFlat(id, 100f)
+        stats!!.missileWeaponRangeBonus.modifyFlat(id, 100f)
 
         stats.ballisticRoFMult.modifyMult(id, 1.1f)
         stats.energyRoFMult.modifyMult(id, 1.1f)

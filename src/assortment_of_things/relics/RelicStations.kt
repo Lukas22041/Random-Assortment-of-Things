@@ -6,6 +6,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.campaign.ids.Terrain
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.LocationType
@@ -79,6 +80,8 @@ class RelicStations {
                     people.add(person)
                     person.stats.setSkillLevel("rat_maverick", 1f)
 
+                    person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7f)
+
                     person.setPersonality(Personalities.RECKLESS)
 
                     var backstory = "The file on ${person.nameString} reveals a history of high-speed notoriety. With a list of commendations for daring and initiative only matched by a list of citations for ‘race-dueling’ and reckless behaviour, ${person.nameString} seemed to be climbing towards either an Admiral position or dying in a ship explosion. Instead neither happened - during an impromptu ‘race-duel’ with a  fellow officer their reckless behaviour resulted in the death of a lesser domain dignitary, resulting in ${person.hisOrHer} sentencing to this station."
@@ -90,6 +93,8 @@ class RelicStations {
                     people.add(person)
                     person.stats.setSkillLevel("rat_maintaining_momentum", 1f)
 
+                    person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7f)
+
                     person.setPersonality(Personalities.AGGRESSIVE)
 
                     var backstory = "The record of ${person.nameString} shows a wild history that starts out similar to a bog standard Domain Officer, that then goes on to their capture by rebels, taking over and leading the rebels against the Domain, being captured by the Domain, and then re-earning their position in the Domain Navy. This was followed by almost non-stop, continuous combat missions, with ${person.nameString} pushing their ship with each kill. In the end this blood-thirstiness became problematic, so ${person.nameString} was put on ice until ${person.heOrShe} was needed again."
@@ -100,6 +105,8 @@ class RelicStations {
                     var person = Global.getSector().getFaction(Factions.INDEPENDENT).createRandomPerson()
                     people.add(person)
                     person.stats.setSkillLevel("rat_perfect_planning", 1f)
+
+                    person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7f)
 
                     person.setPersonality(Personalities.STEADY)
 

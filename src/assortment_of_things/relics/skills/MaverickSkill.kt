@@ -26,14 +26,14 @@ class MaverickSkill : RATBaseShipSkill() {
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
         info!!.addSpacer(2f)
-        info!!.addPara("If the ship's system regenerates charges: 33%% regeneration rate" , 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info!!.addPara("If the ship's system has a cooldown: -33%% cooldown" , 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("If the ship's system regenerates charges: 25%% regeneration rate" , 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("If the ship's system has a cooldown: -25%% cooldown" , 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
-        stats!!.systemCooldownBonus.modifyMult(id, 0.666f)
-        stats.systemRegenBonus.modifyPercent(id, 33f)
+        stats!!.systemCooldownBonus.modifyMult(id, 0.75f)
+        stats.systemRegenBonus.modifyPercent(id, 25f)
 
 
     }

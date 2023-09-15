@@ -2,7 +2,7 @@
     "displayName": "Support",
     "fluxCapacitors": 1,
     "fluxVents": 30,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_aboleth_m",
     "hullMods": [
         "hardenedshieldemitter",

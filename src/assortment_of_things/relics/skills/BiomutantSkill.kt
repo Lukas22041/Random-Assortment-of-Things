@@ -26,6 +26,7 @@ class BiomutantSkill : RATBaseShipSkill() {
         info!!.addPara("This officer has been bioengineered in to a new form, improving reflexes and decision making. However their decisions appear to always be of the reckless kind. \n\n" +
                 "This officer will always be of \"Reckless\" personality, any attempts at changing it will be reverted \n\n" +
                 "+5%% timeflow\n" +
+                "+5%% damage dealt\n" +
                 "+10 max speed\n" +
                 "+25%% ship maneuverability\n" +
                 "+10%% damage reduction.",
@@ -65,6 +66,12 @@ class BiomutantSkill : RATBaseShipSkill() {
         if (stats.fleetMember != null && stats.fleetMember.captain != null && stats.fleetMember.captain.stats.hasSkill("rat_biomutant")) {
             stats.fleetMember.captain.setPersonality(Personalities.RECKLESS)
         }
+
+
+        stats.damageToFrigates.modifyMult(id, 1.05f)
+        stats.damageToDestroyers.modifyMult(id, 1.05f)
+        stats.damageToCruisers.modifyMult(id, 1.05f)
+        stats.damageToCapital.modifyMult(id, 1.05f)
 
         stats.maxSpeed.modifyFlat(id, 10f)
         stats.acceleration.modifyMult(id, 1.25f)

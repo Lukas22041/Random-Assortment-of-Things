@@ -2,7 +2,7 @@
     "displayName": "Strike",
     "fluxCapacitors": 0,
     "fluxVents": 9,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_aboleth_m",
     "hullMods": [
         "hardenedshieldemitter",

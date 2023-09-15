@@ -23,7 +23,7 @@ rat_cosmos_core,abyss_cache_loot,3
 "wpn_:{weaponSize:SMALL, tags:[rat_abyssals, !no_drop, !no_drop_salvage]}",rat_abyss_weapons,100
 "wpn_:{weaponSize:MEDIUM, tags:[rat_abyssals, !no_drop, !no_drop_salvage]}",rat_abyss_weapons,60
 "wpn_:{weaponSize:LARGE, tags:[rat_abyssals, !no_drop, !no_drop_salvage]}",rat_abyss_weapons,20
-,,
+nothing,rat_abyss_weapons,100
 ,,
 ,,
 ,,
