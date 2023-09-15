@@ -23,7 +23,7 @@ class MapLine(var panel: UIPanelAPI, var positions: Map<StarSystemAPI, Vector2f>
 
         for (pos in positions)
         {
-            var nb = AbyssUtils.getNeighbouringSystems(pos.key)
+            var nb = AbyssUtils.getSystemData(pos.key).neighbours
             var neighbours = positions.filter { nb.contains(it.key) }
             for (neighbour in neighbours)
             {
@@ -31,21 +31,6 @@ class MapLine(var panel: UIPanelAPI, var positions: Map<StarSystemAPI, Vector2f>
 
                 renderLines(c)
 
-
-                GL11.glVertex2f(panel.position.x + pos.value.x + 15 , panel.position.y + pos.value.y + 15)
-                GL11.glVertex2f(panel.position.x + neighbour.value.x + 15 , panel.position.y + neighbour.value.y + 15)
-
-                GL11.glEnd()
-                GL11.glPopMatrix()
-            }
-
-            var fb = AbyssUtils.getFarNeighbouringSystems(pos.key)
-            var farNeighbours = positions.filter { fb.contains(it.key) }
-            for (neighbour in farNeighbours)
-            {
-                var c = AbyssUtils.SUPERCHARGED_COLOR
-
-                renderLines(c)
 
                 GL11.glVertex2f(panel.position.x + pos.value.x + 15 , panel.position.y + pos.value.y + 15)
                 GL11.glVertex2f(panel.position.x + neighbour.value.x + 15 , panel.position.y + neighbour.value.y + 15)

@@ -14,17 +14,6 @@
 	"rat_depths_darkness":{
 		"plugin":"assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin",
 	},
-	"rat_depths_siphon":{
-		"plugin":"assortment_of_things.abyss.terrain.SuperchargedAbyssTerrainPlugin",
-		
-		
-		"loopTwo":"terrain_hyperspace_deep",
-		
-		"loopFour":"terrain_hyperspace_storm",
-		"custom":{
-
-			"stormSound":"terrain_hyperspace_lightning",
-		},
-	},
+	
 }
 

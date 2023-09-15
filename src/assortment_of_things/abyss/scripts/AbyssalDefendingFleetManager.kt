@@ -4,20 +4,13 @@ import assortment_of_things.abyss.AbyssDifficulty
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
-import assortment_of_things.abyss.items.cores.officer.ChronosCore
-import assortment_of_things.abyss.items.cores.officer.CosmosCore
-import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.abyss.procgen.AbyssalSeraphSpawner
-import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.CampaignEventListener.FleetDespawnReason
 import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI
-import com.fs.starfarer.api.characters.PersonAPI
-import com.fs.starfarer.api.combat.ShipAPI.HullSize
-import com.fs.starfarer.api.fleet.FleetMemberAPI
-import com.fs.starfarer.api.impl.campaign.fleets.DefaultFleetInflater
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.fleets.SourceBasedFleetManager
@@ -28,12 +21,9 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseEventIntel
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseFactorTooltip
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseOneTimeFactor
-import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantAssignmentAI
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import java.util.*
 import kotlin.collections.ArrayList
@@ -46,7 +36,7 @@ import kotlin.collections.ArrayList
 
 //Its set to not to long pursuits, so once it looses the player it should go back to its spawn relatively soon.
 
-class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssProcgen.Tier, var type: String) : SourceBasedFleetManager(source, 1f, 0, 1, 999f) {
+class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDepth) : SourceBasedFleetManager(source, 1f, 0, 1, 999f) {
 
 
 
@@ -96,16 +86,13 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
         var minPoints = 0f
         var maxPoints = 0f
 
-        when(tier) {
-            AbyssProcgen.Tier.Low -> {
-                minPoints += 48f
-                maxPoints += 84f
-            }
-            AbyssProcgen.Tier.Mid -> {
+        when(depth) {
+
+            AbyssDepth.Shallow -> {
                 minPoints += 84f
                 maxPoints += 128f
             }
-            AbyssProcgen.Tier.High -> {
+            AbyssDepth.Deep -> {
                 minPoints += 128f
                 maxPoints += 192f
             }
@@ -129,10 +116,9 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
 
                 var difference = playerFP - points
 
-                var scalingMult = when(tier) {
-                    AbyssProcgen.Tier.Low -> 0.4f
-                    AbyssProcgen.Tier.Mid -> 0.45f
-                    AbyssProcgen.Tier.High -> 0.5f
+                var scalingMult = when(depth) {
+                    AbyssDepth.Shallow -> 0.45f
+                    AbyssDepth.Deep -> 0.5f
                 }
 
                 var pointsForScaling = difference * scalingMult
@@ -143,10 +129,9 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
             }
         }
 
-        var qualityOverride = when(tier) {
-            AbyssProcgen.Tier.Low -> 3f
-            AbyssProcgen.Tier.Mid -> 4f
-            AbyssProcgen.Tier.High -> 5f
+        var qualityOverride = when(depth) {
+            AbyssDepth.Shallow -> 4f
+            AbyssDepth.Deep -> 5f
         }
 
         if (difficulty == AbyssDifficulty.Hard) {
@@ -174,7 +159,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
 
 
         var maxSeraphs = 0
-        if (tier == AbyssProcgen.Tier.High) maxSeraphs += 2
+        if (depth == AbyssDepth.Deep) maxSeraphs += 2
         if (difficulty == AbyssDifficulty.Hard) maxSeraphs += 1
 
         AbyssalSeraphSpawner.addSeraphsToFleet(fleet, random, maxSeraphs, 0.4f)
@@ -207,9 +192,8 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var tier: AbyssPro
 
         var alterationChancePerShip = 0.0f
         if (difficulty == AbyssDifficulty.Hard) alterationChancePerShip += 0.4f
-        if (tier == AbyssProcgen.Tier.Low) alterationChancePerShip += 0.2f
-        if (tier == AbyssProcgen.Tier.Mid) alterationChancePerShip += 0.4f
-        if (tier == AbyssProcgen.Tier.High) alterationChancePerShip += 0.5f
+        if (depth == AbyssDepth.Shallow) alterationChancePerShip += 0.4f
+        if (depth == AbyssDepth.Deep) alterationChancePerShip += 0.5f
 
         AbyssUtils.addAlterationsToFleet(fleet, alterationChancePerShip, random)
 

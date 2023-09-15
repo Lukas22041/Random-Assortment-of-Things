@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.terrain
 
+import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -16,14 +17,12 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
 
     var id = Misc.genUID()
 
-    var color = Color(255, 255, 255)
-
     override fun advance(amount: Float) {
         super.advance(amount)
     }
 
     override fun getRenderColor(): Color {
-        return color
+        return AbyssUtils.getSystemData(entity.starSystem).darkColor
     }
 
 

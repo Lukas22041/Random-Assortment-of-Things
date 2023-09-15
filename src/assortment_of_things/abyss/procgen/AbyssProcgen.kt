@@ -1,467 +1,299 @@
 package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssalPhotosphere
-import assortment_of_things.abyss.entities.RiftEntrance
-import assortment_of_things.abyss.entities.RiftExit
-import assortment_of_things.abyss.intel.event.DiscoveredPhotosphere
-import assortment_of_things.abyss.intel.event.SignificantEntityDiscoveredFactor
-import assortment_of_things.abyss.misc.AbyssTags
+import assortment_of_things.abyss.LinkedFracture
+import assortment_of_things.abyss.entities.AbyssalFracture
+import assortment_of_things.abyss.entities.AbyssalLightsource
+import assortment_of_things.abyss.misc.AbyssBackgroundWarper
 import assortment_of_things.abyss.scripts.AbyssalDefendingFleetManager
-import assortment_of_things.artifacts.ArtifactUtils
-import com.fs.starfarer.api.EveryFrameScript
-import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
+import assortment_of_things.abyss.terrain.AbyssTerrainPlugin
+import assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin
+import assortment_of_things.misc.randomAndRemove
+import com.fs.starfarer.api.campaign.CampaignTerrainAPI
+import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
-import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
-import com.fs.starfarer.api.impl.campaign.ids.Entities
+import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
-import com.fs.starfarer.api.impl.campaign.ids.MemFlags
-import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec
-import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
-import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
+import com.fs.starfarer.api.impl.campaign.ids.Tags
+import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
+import com.fs.starfarer.api.impl.campaign.terrain.BaseTiledTerrain
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.api.util.WeightedRandomPicker
-import com.fs.starfarer.campaign.CampaignEngine
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
-import org.magiclib.kotlin.getStorageCargo
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
 
 object AbyssProcgen {
 
-    enum class Tier {
-        Low, Mid, High
+    var SYSTEM_NAMES = arrayListOf("Tranquilility", "Serenity", "Storms", "Harmony", "Decay", "Solitude", "Sorrow", "Time", "Epidemics",
+        "Crises", "Knowledge", "Serpents", "Hope", "Death", "Perseverance", "Fear", "Cold", "Clouds", "Luxury", "Hatred", "Dreams", "Honor", "Trust", "Success", "Joy")
+
+
+    //Sets up important tags, like "HIDDEN" to prevent the systems from being used by other mods.
+    fun setupSystem(system: StarSystemAPI, fraction: Float, depth: AbyssDepth)
+    {
+        var data = AbyssUtils.getSystemData(system)
+        data.depth = depth
+
+        AbyssUtils.getAbyssData().systemsData.add(data)
+
+        system.location.set(AbyssUtils.getAbyssData().hyperspaceLocation)
+        system.addTag(AbyssUtils.SYSTEM_TAG)
+        system.initNonStarCenter()
+        system.generateAnchorIfNeeded()
+        system.isProcgen = false
+        system.addTag(Tags.THEME_HIDDEN)
+        system.addTag(Tags.THEME_UNSAFE)
+        system.addTag(Tags.THEME_SPECIAL)
+        system.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
+        system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
+        system.isEnteredByPlayer = false
+
+        var warper = AbyssBackgroundWarper(system, 8, 0.33f)
+        var color = generateAbyssColor(system, depth)
+        warper.overwriteColor = data.darkColor
+
+        AbyssProcgen.generateAbyssTerrain(system, fraction)
+        AbyssProcgen.generateAbyssDarkness(system)
     }
 
-    fun getLocationToPlaceAt(system: StarSystemAPI, minDistance: Float = 1000f) : Vector2f
+    fun addAbyssParticles(system: StarSystemAPI) {
+        system.addCustomEntity("rat_abyss_particle_manager_${Misc.genUID()}", "", "rat_abyss_particle_spawner", Factions.NEUTRAL)
+    }
+
+    fun createFractures(system1: LocationAPI, system2: LocationAPI) : LinkedFracture
     {
-        var min = 3000f;
-        var max = 16000f;
+        var UID = Misc.genUID()
+        var fracture1 = system1.addCustomEntity("abyss_fracture_" + UID + "_1", "Abyssal Fracture", "rat_abyss_fracture", Factions.NEUTRAL)
+        var fracture2 = system2.addCustomEntity("abyss_fracture_" + UID + "_2", "Abyssal Fracture", "rat_abyss_fracture", Factions.NEUTRAL)
 
-        var range = MathUtils.getRandomNumberInRange(min, max)
-       // var pos = Misc.getPointAtRadius(Vector2f(0f, 0f), range)
+        if (!system1.isHyperspace && !system2.isHyperspace) {
+            AbyssUtils.getSystemData(system1 as StarSystemAPI).neighbours.add(system2 as StarSystemAPI)
+            AbyssUtils.getSystemData(system2).neighbours.add(system1)
+        }
 
-        var angle = MathUtils.getRandomNumberInRange(0f, 360f)
+        linkFracture(fracture1, fracture2)
+        linkFracture(fracture2, fracture1)
 
-        var pos = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), range, angle)
+        if (!system1.isHyperspace) {
+            var plugin1 = addLightsource(fracture1, 10000f)
+            plugin1.color = AbyssUtils.getSystemData(system1 as StarSystemAPI).color.setAlpha(50)
+        }
+        var plugin2 = addLightsource(fracture2, 10000f)
+        plugin2.color = AbyssUtils.getSystemData(system2 as StarSystemAPI).color.setAlpha(50)
 
-        var existingEntities = system.customEntities
-        for (existing in existingEntities)
-        {
-            var distance = MathUtils.getDistance(existing.location, pos)
-            if (distance < minDistance)
-            {
-                getLocationToPlaceAt(system)
+
+        return LinkedFracture(fracture1, fracture2)
+    }
+
+
+    fun linkFracture(fracture: SectorEntityToken, target: SectorEntityToken) {
+        (fracture.customPlugin as AbyssalFracture).connectedEntity = target
+    }
+
+    fun getConnectedFracture(fracture: SectorEntityToken) : SectorEntityToken {
+        return (fracture.customPlugin as AbyssalFracture).connectedEntity!!
+    }
+
+    fun generateAbyssDarkness(system: StarSystemAPI) : AbyssalDarknessTerrainPlugin {
+        val darkness = system.addTerrain("rat_depths_darkness", null)
+        return (darkness as CampaignTerrainAPI).plugin as AbyssalDarknessTerrainPlugin
+    }
+
+    fun getAbyssDarknessTerrainPlugin(system: LocationAPI) : AbyssalDarknessTerrainPlugin? {
+
+        var plugin = system.terrainCopy.find { it.plugin is AbyssalDarknessTerrainPlugin }?.plugin as AbyssalDarknessTerrainPlugin?
+        return plugin
+    }
+
+    fun generateAbyssTerrain(system: StarSystemAPI, fraction: Float) : AbyssTerrainPlugin
+    {
+        val w = 250
+        val h = 250
+
+        val string = StringBuilder()
+        for (y in h - 1 downTo 0) {
+            for (x in 0 until w) {
+                string.append("x")
             }
+        }
+
+        //var textureChoice = MathUtils.getRandomNumberInRange(1, 2)
+        system.backgroundTextureFilename = "graphics/backgrounds/abyss/Abyss2.jpg"
+
+        val nebula = system.addTerrain("rat_depths", BaseTiledTerrain.TileParams(string.toString(), w, h, "rat_terrain", "depths1", 4, 4, null))
+        nebula.id = "rat_depths_${Misc.genUID()}"
+        nebula.location[0f] = 0f
+
+        val nebulaPlugin = (nebula as CampaignTerrainAPI).plugin as AbyssTerrainPlugin
+        val editor = NebulaEditor(nebulaPlugin)
+        editor.regenNoise()
+        editor.noisePrune(fraction)
+        editor.regenNoise()
+
+
+        return nebulaPlugin
+    }
+
+    fun getAbyssTerrainPlugin(system: LocationAPI) : AbyssTerrainPlugin? {
+
+        var plugin = system.terrainCopy.find { it.plugin is AbyssTerrainPlugin }?.plugin as AbyssTerrainPlugin?
+        return plugin
+    }
+
+    fun clearTerrainAroundFractures(fracture: LinkedFracture) {
+        clearTerrainAroundFractures(fracture.fracture1, fracture.fracture2)
+    }
+
+    fun clearTerrainAroundFractures(fracture1: SectorEntityToken, fracture2: SectorEntityToken) {
+        clearTerrainAround(fracture1, 500f)
+        clearTerrainAround(fracture2, 500f)
+    }
+
+    fun clearTerrainAround(entity: SectorEntityToken, radius: Float)
+    {
+        var nebulaPlugin = getAbyssTerrainPlugin(entity.starSystem)
+        val editor = NebulaEditor(nebulaPlugin)
+
+        editor.clearArc(entity.location.x, entity.location.y, 0f, radius, 0f, 360f)
+        editor.clearArc(entity.location.x, entity.location.y, 0f, radius, 0f, 360f, 0.25f)
+    }
+
+    fun clearTerrainAround(system: LocationAPI, location: Vector2f, radius: Float)
+    {
+        var nebulaPlugin = getAbyssTerrainPlugin(system)
+        val editor = NebulaEditor(nebulaPlugin)
+
+        editor.clearArc(location.x, location.y, 0f, radius, 0f, 360f)
+        editor.clearArc(location.x, location.y, 0f, radius, 0f, 360f, 0.25f)
+    }
+
+    fun addLightsource(entity: SectorEntityToken, radius: Float, color: Color? = AbyssUtils.ABYSS_COLOR.setAlpha(50)) : AbyssalLightsource {
+        var lightsource = entity.containingLocation.addCustomEntity("rat_lightsource_${Misc.genUID()}", "", "rat_lightsource", Factions.NEUTRAL)
+        lightsource.setCircularOrbit(entity, 0f, 0f, 1000f)
+
+        var plugin = lightsource.customPlugin as AbyssalLightsource
+        plugin.radius = radius
+        plugin.color = color
+        return plugin
+    }
+
+    fun addLightsource(system: LocationAPI, location: Vector2f, radius: Float, color: Color? = AbyssUtils.ABYSS_COLOR.setAlpha(50)) : AbyssalLightsource {
+        var lightsource = system.addCustomEntity("rat_lightsource_${Misc.genUID()}", "", "rat_lightsource", Factions.NEUTRAL)
+        lightsource.location.set(location)
+
+        var plugin = lightsource.customPlugin as AbyssalLightsource
+        plugin.radius = radius
+        plugin.color = color
+        return plugin
+    }
+
+    fun generateAbyssColor(system: StarSystemAPI, depth: AbyssDepth){
+
+        var data = AbyssUtils.getSystemData(system)
+
+        var h = MathUtils.getRandomNumberInRange(0.925f, 1f)
+        if (Random().nextFloat() > 0.5f) h = MathUtils.getRandomNumberInRange(0.0f, 0.035f)
+        //var h = MathUtils.getRandomNumberInRange(0.935f, 1f)
+       // if (Random().nextFloat() > 0.75f) h = MathUtils.getRandomNumberInRange(0.0f, 0.025f)
+
+        var lightColor = Color.WHITE
+
+        var s = 1f
+        var b = 1f
+        when (depth) {
+            AbyssDepth.Shallow -> {
+                lightColor = Color.gray
+                b = 0.3f
+            }
+            AbyssDepth.Deep -> {
+                lightColor = Color.DARK_GRAY
+                b = 0.2f
+            }
+        }
+
+        system.lightColor = lightColor
+
+        var color = Color.getHSBColor(h, 1f, 1f)
+        data.color = color
+
+        var darkColor = Color.getHSBColor(h, s, b)
+        data.darkColor = darkColor
+    }
+
+    fun generateCircularSlots(system: StarSystemAPI) {
+
+        var amount = 7
+
+        var emptySlots = ArrayList<Vector2f>()
+
+        var lastSlot = Vector2f(0f, 0f)
+        for (i in 0 until amount)
+        {
+            var slot = generateSlot(lastSlot, 0)
+
+            lastSlot = slot
+            emptySlots.add(slot)
+
+            /*   var photosphere = system.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere", Factions.NEUTRAL)
+               photosphere.setLocation(slot.x, slot.y)
+               photosphere.radius = 100f
+
+               var plugin = photosphere.customPlugin as AbyssalPhotosphere
+               plugin.radius = 15000f
+               plugin.color = AbyssUtils.ABYSS_COLOR*/
+        }
+
+        var data = AbyssUtils.getSystemData(system)
+        for (i in 0 until 3) data.fracturePoints.add(emptySlots.randomAndRemove())
+        for (i in 0 until 3) data.majorPoints.add(emptySlots.randomAndRemove())
+        data.uniquePoints.add(emptySlots.randomAndRemove())
+    }
+
+    private fun generateSlot(lastSlot: Vector2f, attempts: Int) : Vector2f
+    {
+        var lastSlotsDistanceFromCenter = MathUtils.getDistance(lastSlot, Vector2f(0f, 0f))
+
+        var averageDistance = 3000f
+        if (lastSlotsDistanceFromCenter < 10000) averageDistance = 3000f
+        else if (lastSlotsDistanceFromCenter < 20000) averageDistance = 2000f
+
+        var spacing = 3000f
+        if (lastSlotsDistanceFromCenter < 10000) spacing = 2900f
+        else if (lastSlotsDistanceFromCenter < 20000) spacing = 8000f
+
+        var distanceFromlast = lastSlotsDistanceFromCenter + averageDistance
+
+        var pos = Misc.getPointAtRadius(Vector2f(0f, 0f), distanceFromlast)
+
+        var mult = 3f
+        if (lastSlotsDistanceFromCenter < 1000)  mult = 0.9f
+        else if (lastSlotsDistanceFromCenter < 4000)  mult = 2f
+
+        var newPosDistanceFromLast = MathUtils.getDistance(lastSlot, pos)
+        if (newPosDistanceFromLast < spacing)
+        {
+            if (attempts > 30)
+            {
+                return pos
+            }
+            generateSlot(lastSlot,attempts + 1)
         }
 
         return pos
     }
 
-    fun takeEmptySlot(system: StarSystemAPI) : Vector2f {
-        var slots = system.memoryWithoutUpdate.get("\$rat_abyss_emptySlots") as MutableList<Vector2f>
-        if (slots.isEmpty()) return Vector2f(0f, 0f)
-        var slot = slots.random()
-        slots.remove(slot)
-        system.memoryWithoutUpdate.set("\$rat_abyss_emptySlots", slots)
-        return slot
-    }
-
-    fun hasEmptySlots(system: StarSystemAPI) : Boolean {
-        var slots = system.memoryWithoutUpdate.get("\$rat_abyss_emptySlots") as MutableList<Vector2f>
-        return slots.isNotEmpty()
-    }
-
-    fun generateDomainResearchStations(system: StarSystemAPI, max: Int, chanceToAddPer: Float)
-    {
-        for (i in 0 until max)
-        {
-            //chance to add per gets run for each attempt to spawn a station, unlike BaseThemeGenerators idea of randomly adding either all or none
-            if (Random().nextFloat() >= chanceToAddPer) continue
-
-            var station = generateResearchStation(system)
-            var loc = getLocationToPlaceAt(system)
-            station.location.set(loc)
-
-            var tier = AbyssUtils.getTier(system)
-
-
-            var defenseChance = when(tier) {
-                Tier.Low -> 0.75f
-                Tier.Mid -> 0.60f
-                Tier.High -> 0.80f
-            }
-
-            addDefenseFleetManager(station, 1, tier, FleetTypes.PATROL_MEDIUM, defenseChance)
-
-            if (tier != Tier.Low) {
-                AbyssUtils.addLightsource(station, 4000f, AbyssUtils.SUPERCHARGED_COLOR.setAlpha(30))
-            }
-        }
-    }
-
-    fun generateResearchStation(system: StarSystemAPI) : SectorEntityToken {
-        var station = system.addCustomEntity("rat_domain_research_${Misc.genUID()}", "Research Station", "rat_abyss_research", Factions.NEUTRAL)
-
-        station.addScript(SignificantEntityDiscoveredFactor(10, station))
-        station.addTag(AbyssTags.DOMAIN_RESEARCH)
-        station.addTag(AbyssTags.LOOTABLE)
-        station.memoryWithoutUpdate.set(MemFlags.SALVAGE_SEED, Misc.genRandomSeed())
-
-        var tier = AbyssUtils.getTier(system)
-
-        var extraChance = when(tier) {
-            Tier.Low -> 0.25f
-            Tier.Mid -> 0.30f
-            Tier.High -> 0.35f
-        }
-
-        if (Random().nextFloat() < extraChance)
-        {
-            var picker = WeightedRandomPicker<String>()
-            picker.add(AbyssTags.DOMAIN_RESEARCH_PRODUCTION, 1f)
-            picker.add(AbyssTags.DOMAIN_RESEARCH_SURVEY, 1f)
-            station.addTag(picker.pick())
-        }
-
-        return station
-    }
-
-    fun generateTransmitters(system: StarSystemAPI, max: Int, chanceToAddPer: Float)
-    {
-        for (i in 0 until max)
-        {
-            if (Random().nextFloat() >= chanceToAddPer) continue
-
-            var transmitter = generateTransmitter(system)
-            var loc = getLocationToPlaceAt(system)
-            transmitter.location.set(loc)
-
-        }
-    }
-
-    fun generateTransmitter(system: StarSystemAPI) : SectorEntityToken {
-
-        var transmitter = system.addCustomEntity("rat_abyss_transmitter_${Misc.genUID()}", "Research Transmitter", "rat_abyss_transmitter", Factions.NEUTRAL)
-
-        transmitter.addTag(AbyssTags.TRANSMITTER)
-        transmitter.addTag(AbyssTags.TRANSMITTER_UNLOOTED)
-        transmitter.memoryWithoutUpdate.set(MemFlags.SALVAGE_SEED, Misc.genRandomSeed())
-
-        return transmitter
-    }
-
-    fun generateCaches(system: StarSystemAPI, max: Int, chanceToAddPer: Float)
-    {
-        for (i in 0 until max)
-        {
-            if (Random().nextFloat() >= chanceToAddPer) continue
-
-            var cache = generateCache(system)
-            var loc = getLocationToPlaceAt(system)
-            cache.location.set(loc)
-        }
-    }
-
-    fun generateCache(system: StarSystemAPI) : SectorEntityToken {
-        var cache = system.addCustomEntity("rat_abyss_cache_${Misc.genUID()}", "Lost Crate", "rat_abyss_cache", Factions.NEUTRAL)
-        cache.addTag(AbyssTags.LOST_CRATE)
-        cache.memoryWithoutUpdate.set(MemFlags.SALVAGE_SEED, Misc.genRandomSeed())
-
-        return cache
-    }
-
-    fun generateOutposts(system: StarSystemAPI)
-    {
-        var tier = AbyssUtils.getTier(system)
-
-        var outpost = generateOutpost(system)
-        var loc = getLocationToPlaceAt(system)
-        outpost.location.set(loc)
-
-        AbyssUtils.clearTerrainAround(outpost, 500f)
-
-        //AbyssUtils.generateSuperchargedTerrain(outpost.starSystem, outpost.location, 300, 0.8f, false)
-
-
-      /*  var token = system.createToken(outpost.location)
-        system.addEntity(token)*/
-        addDefenseFleetManager(outpost, 1, tier, FleetTypes.PATROL_LARGE, 1f)
-
-        AbyssUtils.addLightsource(outpost, 4000f, AbyssUtils.SUPERCHARGED_COLOR.setAlpha(30))
-    }
-
-    fun generateOutpost(system: StarSystemAPI) : SectorEntityToken
-    {
-        var tier = AbyssUtils.getTier(system)
-
-        var outpost = system.addCustomEntity("rat_abyss_outpost_${Misc.genUID()}", "Abandoned Expedition Outpost", "rat_abyss_outpost", Factions.NEUTRAL)
-
-        outpost.addScript(SignificantEntityDiscoveredFactor(10, outpost))
-        outpost.addTag(AbyssTags.OUTPOST)
-        outpost.memoryWithoutUpdate.set(MemFlags.SALVAGE_SEED, Misc.genRandomSeed())
-
-        Misc.setAbandonedStationMarket("abyss_outpost_${Misc.genUID()}", outpost)
-
-        var cargo = outpost.market.getStorageCargo()
-
-        var dropRandom = ArrayList<SalvageEntityGenDataSpec.DropData>()
-        var dropValue = ArrayList<SalvageEntityGenDataSpec.DropData>()
-        var drop = SalvageEntityGenDataSpec.DropData()
-
-        drop = SalvageEntityGenDataSpec.DropData()
-        drop.group = "basic"
-        drop.value = 10000
-        dropValue.add(drop)
-
-        drop = SalvageEntityGenDataSpec.DropData()
-        drop.chances = 3
-        drop.group = "abyss_cache_loot"
-        dropRandom.add(drop)
-
-        var salvage = SalvageEntity.generateSalvage(Random(), 1f, 1f, 1f, 1f, dropValue, dropRandom)
-        cargo.addAll(salvage)
-        ArtifactUtils.generateArtifactLoot(salvage, "abyss", 0.1f, 1, Random())
-
-        return outpost
-    }
-
-    fun generatePhotospheres(system: StarSystemAPI, max: Int, chanceToAddPer: Float)
-    {
-        var tier = AbyssUtils.getTier(system)
-
-        var first = true
-        for (i in 0 until max)
-        {
-            if (first) first = false
-            else if (Random().nextFloat() >= chanceToAddPer) continue
-
-            if (!AbyssProcgen.hasEmptySlots(system)) return
-            var pos = AbyssProcgen.takeEmptySlot(system)
-
-            var photosphere = system.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere", Factions.NEUTRAL)
-            photosphere.setLocation(pos.x, pos.y)
-            photosphere.radius = 100f
-            photosphere.addScript(DiscoveredPhotosphere(10, photosphere))
-
-            var plugin = photosphere.customPlugin as AbyssalPhotosphere
-           // plugin.radius = 15000f
-            plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
-            plugin.color = AbyssUtils.ABYSS_COLOR
-
-            var picker = WeightedRandomPicker<() -> SectorEntityToken>()
-            picker.add( { generateCache(system) }, 2f)
-            picker.add( { generateCache(system) }, 2f)
-            picker.add( { generateCache(system) }, 2f)
-            picker.add( { generateCache(system) }, 2f)
-            picker.add( { generateTransmitter(system) }, 2f)
-            picker.add( { generateResearchStation(system) }, 2f)
-            picker.add( { generateOutpost(system) }, 1f)
-
-            var added = 0
-            var orbit = MathUtils.getRandomNumberInRange(50f, 100f)
-            var days = 30f
-            for (i in 0 until 3)
-            {
-                orbit += MathUtils.getRandomNumberInRange(200f, 350f)
-                days += 35
-                if (Random().nextFloat() > 0.25f)
-                {
-                    var function = picker.pickAndRemove()
-                    var entity = function()
-
-                    entity.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), orbit, days)
-                    added++
-                }
-            }
-
-            if (added == 0)
-            {
-                var function = picker.pickAndRemove()
-                var entity = function()
-
-                entity.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(300f, 1000f), 90f)
-            }
-
-            var defenseChance = 0.75f
-
-            var type = FleetTypes.PATROL_LARGE
-            if (tier == Tier.Low) type = FleetTypes.PATROL_MEDIUM
-            addDefenseFleetManager(photosphere, 2, tier, type, defenseChance)
-
-        }
-    }
-
-    fun addDefenseFleetByTier(defenseTarget: SectorEntityToken, tier: Tier, chanceToAdd: Float)
-    {
-
-    }
-
-    fun addDefenseFleetManager(defenseTarget: SectorEntityToken, max: Int, tier: AbyssProcgen.Tier, type: String, chancetoAddPer: Float)
+    fun addDefenseFleetManager(defenseTarget: SectorEntityToken, max: Int, depth: AbyssDepth, chancetoAddPer: Float)
     {
         for (i in 0 until max)
         {
             if (Random().nextFloat() >= chancetoAddPer) continue
-            defenseTarget.containingLocation.addScript(AbyssalDefendingFleetManager(defenseTarget, tier, type))
+            defenseTarget.containingLocation.addScript(AbyssalDefendingFleetManager(defenseTarget, depth))
         }
 
     }
 
-    fun addDerelictAbyssalShips(system: StarSystemAPI, max: Int, chanceToAddPer: Float) {
-        for (i in 0 until max) {
-            if (Random().nextFloat() >= chanceToAddPer) continue
-
-            val faction: String = "rat_abyssals"
-            val params = DerelictShipEntityPlugin.createRandom(faction, null, Random(), DerelictShipEntityPlugin.getDefaultSModProb())
-
-            if (params != null) {
-                val entity = BaseThemeGenerator.addSalvageEntity(Random(), system, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
-                entity.setDiscoverable(true)
-
-                var loc = getLocationToPlaceAt(system, 250f)
-                entity.location.set(loc)
-                entity.addTag(AbyssTags.ABYSS_WRECK)
-            }
-        }
-    }
-
-    fun createRift(system: StarSystemAPI, location: Vector2f) : StarSystemAPI {
-        var riftEntrance = system.addCustomEntity("rift_entrance_${Misc.genUID()}", "Abyssal Rift", "rat_abyss_rift_entrance", Factions.NEUTRAL)
-        riftEntrance.location.set(location)
-        AbyssUtils.clearTerrainAround(riftEntrance, 1000f)
-
-        var riftEntrancePlugin = riftEntrance.customPlugin as RiftEntrance
-
-
-        var riftSystem = Global.getSector().createStarSystem("${system.baseName} Rift")
-        riftSystem.lightColor = Color.DARK_GRAY
-
-        riftSystem.addTag(AbyssUtils.RIFT_TAG)
-
-        AbyssUtils.setNeighbours(system, riftSystem)
-        AbyssUtils.setTier(riftSystem, Tier.High)
-        AbyssUtils.setupTags(riftSystem)
-        var color = AbyssUtils.generateAbyssColor(riftSystem, Tier.High)
-
-        var terrain = AbyssUtils.generateAbyssTerrain(riftSystem, 0f)
-        terrain.color = color
-        var darkness = AbyssUtils.generateAbyssDarkness(riftSystem)
-
-        riftSystem.backgroundTextureFilename = "graphics/backgrounds/abyss/darkness.jpg"
-
-
-
-        var riftExit = riftSystem.addCustomEntity("rift_entrance_${Misc.genUID()}", "Abyssal Rift", "rat_abyss_rift_exit", Factions.NEUTRAL)
-
-        var riftExitPlugin = riftExit.customPlugin as RiftExit
-
-        riftEntrance.addScript(object: EveryFrameScript {
-
-            var playSound = false
-
-            override fun isDone(): Boolean {
-                return false
-            }
-
-            override fun runWhilePaused(): Boolean {
-                return true
-            }
-
-            override fun advance(amount: Float) {
-                var player = Global.getSector().playerFleet
-
-                if (playSound) {
-                    Global.getSoundPlayer().playSound("jump_point_open", 1f, 0.8f, Global.getSector().playerFleet.location, Vector2f() )
-
-                    playSound = false
-                }
-
-                if (player.containingLocation != riftEntrance.containingLocation) return
-                if (MathUtils.getDistance(player.location, riftEntrance.location) < riftEntrancePlugin.radius) {
-
-                    var playerFleet = Global.getSector().playerFleet
-                    var currentLocation = playerFleet.containingLocation
-
-                    var angle = Misc.getAngleInDegrees(riftEntrance.location, playerFleet.location)
-                    var radius = riftExitPlugin.radius - playerFleet.radius
-                    var point = MathUtils.getPointOnCircumference(riftExit.location, radius, angle)
-
-
-                    currentLocation.removeEntity(playerFleet)
-                    riftSystem.addEntity(playerFleet)
-                    Global.getSector().setCurrentLocation(riftSystem)
-
-
-                    playerFleet.setLocation(point.x, point.y)
-                    playSound = true
-
-                    CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
-
-                }
-            }
-        })
-
-        riftExit.addScript(object: EveryFrameScript {
-
-            var playSound = false
-
-
-            override fun isDone(): Boolean {
-                return false
-            }
-
-            override fun runWhilePaused(): Boolean {
-                return true
-            }
-
-            override fun advance(amount: Float) {
-                var player = Global.getSector().playerFleet
-
-                if (playSound) {
-                    Global.getSoundPlayer().playSound("jump_point_close", 1f, 0.8f, Global.getSector().playerFleet.location, Vector2f() )
-
-                    playSound = false
-                }
-
-                if (player.containingLocation != riftExit.containingLocation) return
-                if (MathUtils.getDistance(player, riftExit) > riftExitPlugin.radius - player.radius) {
-
-                    var playerFleet = Global.getSector().playerFleet
-                    var currentLocation = playerFleet.containingLocation
-
-                    var angle = Misc.getAngleInDegrees(riftExit.location, playerFleet.location)
-                    var radius = riftEntrancePlugin.radius + playerFleet.radius + 20f
-                    var point = MathUtils.getPointOnCircumference(riftEntrance.location, radius, angle)
-
-                    currentLocation.removeEntity(playerFleet)
-                    system.addEntity(playerFleet)
-                    Global.getSector().setCurrentLocation(system)
-
-                    playerFleet.setLocation(point.x, point.y)
-
-                    playSound = true
-
-                    Global.getSector().campaignUI
-                    CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
-
-                }
-            }
-        })
-
-
-
-
-
-
-
-
-        return riftSystem
-
-    }
 
 }

@@ -9,9 +9,6 @@ Abyssal Discovery Instrument,rat_instrument_discovery,abyss_drop,,,5000,1000,1,,
 Abyssal Hostility Instrument,rat_instrument_hostility,abyss_drop,,,5000,1000,1,,graphics/icons/cargo/rat_instrument_hostility.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalHostilityInstrument,,,411
 Abyssal Supply Instrument,rat_instrument_supplies,abyss_drop,,,5000,1000,1,,graphics/icons/cargo/rat_instrument_supply.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalSupplyInstrument,,,412
 ,,,,,,,,,,,,,,,
-Gravitational Destabilizer,rat_destabilizer,mission_item,,,100000,1000,1,,graphics/icons/cargo/rat_singularity_device.png,ui_cargo_special_ultratech_pickup,ui_cargo_special_ultratech_drop,assortment_of_things.abyss.items.GravitationalDestabilizer,,"A device that discharges a small pellet of antimatter at intense gravitational pressure. Activating it creates a rift in hyperspace.
-
-Integrating it into your fleet unlocks access to the ""Singularity Jump"" ability.",0
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,

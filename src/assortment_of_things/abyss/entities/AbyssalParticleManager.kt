@@ -44,7 +44,11 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
     @Transient
     var halo: SpriteAPI? = null
 
+    var color = AbyssUtils.ABYSS_COLOR
+
     override fun advance(amount: Float) {
+
+        color = AbyssUtils.getSystemData(entity.starSystem).color
 
         if (halo == null) {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
@@ -125,7 +129,7 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
 
                 var alpha = MathUtils.getRandomNumberInRange(0.15f, 0.25f)
 
-                particles.add(AbyssalLightParticle(fadeIn, duration, fadeOut, AbyssUtils.ABYSS_COLOR, alpha, size, spawnLocation, velocity))
+                particles.add(AbyssalLightParticle(fadeIn, duration, fadeOut, color, alpha, size, spawnLocation, velocity))
             }
         }
 
@@ -141,7 +145,6 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
 
             if (viewport!!.isNearViewport(particle.location, particle.size * 2)) {
                 halo!!.alphaMult = 0 + (particle.alpha * particle.level )
-
                 halo!!.color = particle.color
                 halo!!.setSize(particle.size / 2, particle.size / 2)
                 halo!!.setAdditiveBlend()

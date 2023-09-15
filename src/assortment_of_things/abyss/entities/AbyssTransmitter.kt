@@ -20,7 +20,6 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
 
     var GLOW_FREQUENCY = 1f
 
-    var interval = IntervalUtil(5f, 10f)
 
     @Transient
     private var sprite: SpriteAPI? = null
@@ -47,11 +46,6 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
         phase += amount * GLOW_FREQUENCY * freqMult
         while (phase > 1) phase--
 
-        interval.advance(amount)
-        var player = Global.getSector().playerFleet
-        if (interval.intervalElapsed())  {
-            AbyssUtils.createSensorIcon(entity, 7500f, AbyssUtils.SUPERCHARGED_COLOR.brighter())
-        }
 
         if (entity.isInCurrentLocation) {
             sincePing += amount

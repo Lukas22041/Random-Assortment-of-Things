@@ -32,7 +32,9 @@ class AbyssalLightsource : BaseCustomEntityPlugin() {
 
     fun initSpritesIfNull()
     {
-        halo = Global.getSettings().getSprite("rat_terrain", "halo")
+        if (halo == null) {
+            halo = Global.getSettings().getSprite("rat_terrain", "halo")
+        }
     }
 
     override fun getRenderRange(): Float {

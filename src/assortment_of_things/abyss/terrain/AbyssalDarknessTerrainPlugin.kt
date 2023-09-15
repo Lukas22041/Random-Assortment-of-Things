@@ -3,7 +3,7 @@ package assortment_of_things.abyss.terrain
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalLightsource
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
-import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.abyss.procgen.AbyssDepth
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -55,8 +55,8 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
     override fun containsPoint(point: Vector2f?, radius: Float): Boolean {
         var system = entity.starSystem
-        var tier = AbyssUtils.getTier(system)
-        if (tier == AbyssProcgen.Tier.Low) return false
+        var data = AbyssUtils.getSystemData(system)
+        var depth = data.depth
 
         var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLightsource }
         var withinLight = false
@@ -87,18 +87,20 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
     override fun applyEffect(entity: SectorEntityToken?, days: Float) {
         super.applyEffect(entity, days)
         var system = entity!!.starSystem
-        var tier = AbyssUtils.getTier(system)
+
+        var data = AbyssUtils.getSystemData(system)
+        var depth = data.depth
 
         if (entity is CampaignFleetAPI)
         {
             var fleet = entity
 
-            if (tier == AbyssProcgen.Tier.Mid) {
+            if (depth == AbyssDepth.Shallow) {
                 fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Darkness", 0.75f, fleet.stats.detectedRangeMod)
 
             }
 
-            if (tier == AbyssProcgen.Tier.High) {
+            if (depth == AbyssDepth.Deep) {
                 fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Extreme Darkness", 0.50f, fleet.stats.detectedRangeMod)
             }
 
@@ -107,11 +109,11 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
     override fun getTerrainName(): String {
         var system = entity.starSystem
-        var tier = AbyssUtils.getTier(system)
+        var data = AbyssUtils.getSystemData(system)
+        var depth = data.depth
 
-        if (tier == AbyssProcgen.Tier.Low) return ""
-        if (tier == AbyssProcgen.Tier.Mid) return "Darkness"
-        if (tier == AbyssProcgen.Tier.High) return "Extreme Darkness"
+        if (depth == AbyssDepth.Shallow) return "Darkness"
+        if (depth == AbyssDepth.Deep) return "Extreme Darkness"
 
         return ""
     }
@@ -124,17 +126,18 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         super.createTooltip(tooltip, expanded)
 
         var system = entity.starSystem
-        var tier = AbyssUtils.getTier(system)
+        var data = AbyssUtils.getSystemData(system)
+        var depth = data.depth
 
         tooltip!!.addTitle(terrainName)
         tooltip.addSpacer(5f)
 
-        if (tier == AbyssProcgen.Tier.Mid) {
+        if (depth == AbyssDepth.Shallow) {
             tooltip!!.addPara("The density of the abyssal matter makes barely any light able to get past it. Decreases the Sensor Detection range by 25%%" +
                     "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Detection", "25%")
             tooltip.addSpacer(5f)
         }
-        if (tier == AbyssProcgen.Tier.High) {
+        if (depth == AbyssDepth.Deep) {
             tooltip!!.addPara("The density of the abyssal matter causes any light to diminish close to its source. Decreases the Sensor Detection range by 50%%" +
                     "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Detection", "50%")
             tooltip.addSpacer(5f)

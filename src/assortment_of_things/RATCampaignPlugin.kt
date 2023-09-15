@@ -64,26 +64,18 @@ class RATCampaignPlugin : BaseCampaignPlugin()
             return PluginPick(RiftStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
-        if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_abyss_cache_singularity") {
-            return PluginPick(SingularityCrateInteration(), CampaignPlugin.PickPriority.HIGHEST)
-        }
+
 
         if (interactionTarget.hasTag(AbyssTags.ABYSS_WRECK)) {
             return PluginPick(AbyssalWreckInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
-        if (interactionTarget.hasTag(AbyssTags.DOMAIN_RESEARCH))
-        {
-            return PluginPick(DomainResearchInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-        }
+
         if (interactionTarget.hasTag(AbyssTags.TRANSMITTER))
         {
             return PluginPick(TransmitterInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
-        if (interactionTarget.hasTag(AbyssTags.LOST_CRATE))
-        {
-            return PluginPick(CacheInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-        }
+
 
         return null
     }

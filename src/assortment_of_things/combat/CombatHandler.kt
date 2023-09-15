@@ -2,6 +2,7 @@ package assortment_of_things.combat
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
+import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
@@ -12,7 +13,6 @@ import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.combat.CombatEngine
 import org.lazywizard.lazylib.MathUtils
-import org.lwjgl.util.vector.Vector2f
 
 
 class CombatHandler : EveryFrameCombatPlugin
@@ -23,38 +23,27 @@ class CombatHandler : EveryFrameCombatPlugin
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {
-            var system = Global.getSector()?.playerFleet?.containingLocation ?: return
+            var system = Global.getSector()?.playerFleet?.starSystem ?: return
             if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
             {
-                var color = AbyssUtils.getSystemColor(system)
-                var tier = AbyssUtils.getTier(system)
-                var darkness = AbyssUtils.getAbyssDarknessTerrainPlugin(system)
+                var data = AbyssUtils.getSystemData(system)
+
+                var color = data.darkColor
+                var depth = data.depth
+                var darkness = AbyssProcgen.getAbyssDarknessTerrainPlugin(system)
                 var background = system.backgroundTextureFilename
 
-                Global.getCombatEngine().addLayeredRenderingPlugin(AbyssCombatHueApplier(color, tier, darkness!!))
+                Global.getCombatEngine().addLayeredRenderingPlugin(AbyssCombatHueApplier(color, depth, darkness!!))
 
                 ResetBackgroundScript.resetBackground = true
 
-
-
-                if (darkness!!.containsEntity(Global.getSector().playerFleet) || tier == AbyssProcgen.Tier.Low) {
+                if (darkness!!.containsEntity(Global.getSector().playerFleet)) {
                     CombatEngine.getBackground().color = color.darker()
                 }
                 else {
-                    if (tier == AbyssProcgen.Tier.Mid) CombatEngine.getBackground().color = color.brighter()
-                    if (tier == AbyssProcgen.Tier.High) CombatEngine.getBackground().color = color.brighter().brighter().brighter()
-
+                    if (depth == AbyssDepth.Shallow) CombatEngine.getBackground().color = color.brighter()
+                    if (depth == AbyssDepth.Deep) CombatEngine.getBackground().color = color.brighter().brighter().brighter()
                 }
-
-               /* if (darkness!!.containsEntity(Global.getSector().playerFleet) || tier == AbyssProcgen.Tier.Low) {
-                    color = color.darker()
-                }
-                else {
-                    if (tier == AbyssProcgen.Tier.Mid) color = color.brighter()
-                    if (tier == AbyssProcgen.Tier.High) color = color.brighter().brighter().brighter()
-
-                }*/
-
 
                 var withinPhotosphere = false
                 var photosphere: SectorEntityToken? = null
@@ -95,12 +84,13 @@ class CombatHandler : EveryFrameCombatPlugin
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {
-            var system = Global.getSector()?.playerFleet?.containingLocation ?: return
+            var system = Global.getSector()?.playerFleet?.starSystem ?: return
             if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
             {
 
-                var tier = AbyssUtils.getTier(system)
-                var darkness = AbyssUtils.getAbyssDarknessTerrainPlugin(system)
+                var data = AbyssUtils.getSystemData(system)
+                var depth = data.depth
+                var darkness = AbyssProcgen.getAbyssDarknessTerrainPlugin(system)
                 if (darkness != null) {
 
                     if (darkness.containsEntity(Global.getSector().playerFleet))
@@ -109,7 +99,7 @@ class CombatHandler : EveryFrameCombatPlugin
                         var path = "graphics/icons/hullsys/high_energy_focus.png"
                         Global.getSettings().loadTexture(path)
 
-                        if (tier == AbyssProcgen.Tier.Mid) {
+                        if (depth == AbyssDepth.Shallow) {
                             Global.getCombatEngine().maintainStatusForPlayerShip("rat_darkness",
                                 path,
                                 "Darkness",
@@ -121,7 +111,7 @@ class CombatHandler : EveryFrameCombatPlugin
                             }
                         }
 
-                        if (tier == AbyssProcgen.Tier.High) {
+                        if (depth == AbyssDepth.Deep) {
 
                             Global.getCombatEngine().maintainStatusForPlayerShip("rat_darkness",
                                 path,

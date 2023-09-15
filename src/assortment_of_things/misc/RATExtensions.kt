@@ -19,6 +19,7 @@ import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.loading.specs.HullVariantSpec
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
+import kotlin.random.Random
 
 fun Any.logger() : Logger {
     return Global.getLogger(this::class.java).apply { level = Level.ALL }
@@ -74,4 +75,10 @@ fun SectorAPI.instantTeleport(destination: SectorEntityToken) {
     destination.containingLocation.addEntity(playerFleet)
     Global.getSector().setCurrentLocation(destination.containingLocation)
     playerFleet.setLocation(destination.location.x, destination.location.y)
+}
+
+public fun <T> MutableCollection<T>.randomAndRemove(): T {
+    val pick = this.random()
+    this.remove(pick)
+    return pick
 }

@@ -1,21 +1,12 @@
 package assortment_of_things.abyss.intel
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.abyss.procgen.AbyssDepth
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CustomUIPanelPlugin
-import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.campaign.StarSystemAPI
-import com.fs.starfarer.api.input.InputEventAPI
-import com.fs.starfarer.api.ui.CustomPanelAPI
-import com.fs.starfarer.api.ui.PositionAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaUI.elements.LunaElement
-import org.lazywizard.console.commands.Jump
-import org.lazywizard.lazylib.ext.plus
-import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
@@ -71,18 +62,12 @@ class AbyssZoneMapIcon(var system: StarSystemAPI, var color: Color, tooltip: Too
         }
         else
         {
-            var tier = AbyssUtils.getTier(system)
-            var color = AbyssUtils.getSystemColor(system)
+            var data = AbyssUtils.getSystemData(system)
+            var depth = data.depth
+            var color = data.darkColor
             sprite.color = color
-            if (tier == AbyssProcgen.Tier.Mid) sprite.color = color.brighter()
-            if (tier == AbyssProcgen.Tier.High) sprite.color = color.brighter()
-            /*var tier = AbyssUtils.getTier(system)
-            when (tier) {
-                AbyssProcgen.Tier.Low -> sprite.color = color.brighter()
-                AbyssProcgen.Tier.Mid -> sprite.color = color
-                AbyssProcgen.Tier.High -> sprite.color = color.darker()
-                else -> sprite.color = color
-            }*/
+            if (depth == AbyssDepth.Shallow) sprite.color = color.brighter()
+            if (depth == AbyssDepth.Deep) sprite.color = color.brighter()
         }
 
         sprite.setSize(width, height)
