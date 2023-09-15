@@ -2,7 +2,7 @@
     "displayName": "Attack",
     "fluxCapacitors": 11,
     "fluxVents": 20,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_sariel",
     "hullMods": [
         "hardenedshieldemitter",

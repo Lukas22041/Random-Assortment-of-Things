@@ -2,7 +2,7 @@
     "displayName": "Support",
     "fluxCapacitors": 40,
     "fluxVents": 50,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_morkoth",
     "hullMods": [
         "advancedoptics",

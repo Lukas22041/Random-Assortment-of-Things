@@ -21,7 +21,7 @@ class MaintainingMomentumSkill : RATBaseShipSkill() {
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
         info!!.addSpacer(2f)
-        info!!.addPara("Whenever the ship destroys or disables an opponent, it gains a stack of \"Momentum\". \nA stack of momentum lasts for 60 seconds and gives the following benefits:" , 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("Whenever the ship destroys or disables an opponent, it gains a stack of \"Momentum\". \nA stack of momentum lasts for 60/60/45/30 seconds depending on hullsize and gives the following benefits:" , 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(5f)
         info.addPara("+10%% damage dealt per stack", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addPara("+10%% flux dissipation per stack", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
@@ -56,6 +56,16 @@ class MaintaningMomentumListener(var pilotedShip: ShipAPI) : HullDamageAboutToBe
     var stacks = ArrayList<MomentumStacks>()
 
     var id = "rat_momentum"
+
+    init {
+        duration = when(pilotedShip.hullSize) {
+            ShipAPI.HullSize.FRIGATE -> 60f
+            ShipAPI.HullSize.DESTROYER -> 60f
+            ShipAPI.HullSize.CRUISER -> 45f
+            ShipAPI.HullSize.CAPITAL_SHIP -> 30f
+            else -> 60f
+        }
+    }
 
     override fun notifyAboutToTakeHullDamage(param: Any?, ship: ShipAPI?,  point: Vector2f?, damageAmount: Float): Boolean {
 

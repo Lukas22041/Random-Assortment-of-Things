@@ -2,7 +2,7 @@
     "displayName": "Attack",
     "fluxCapacitors": 47,
     "fluxVents": 50,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_morkoth",
     "hullMods": [
         "hardenedshieldemitter",

@@ -80,6 +80,8 @@ class RelicStations {
                     people.add(person)
                     person.stats.setSkillLevel("rat_maverick", 1f)
 
+                    person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7f)
+
                     person.setPersonality(Personalities.RECKLESS)
                     person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7)
 
@@ -92,6 +94,8 @@ class RelicStations {
                     people.add(person)
                     person.stats.setSkillLevel("rat_maintaining_momentum", 1f)
 
+                    person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7f)
+
                     person.setPersonality(Personalities.AGGRESSIVE)
                     person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7)
 
@@ -103,6 +107,8 @@ class RelicStations {
                     var person = Global.getSector().getFaction(Factions.INDEPENDENT).createRandomPerson()
                     people.add(person)
                     person.stats.setSkillLevel("rat_perfect_planning", 1f)
+
+                    person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7f)
 
                     person.setPersonality(Personalities.STEADY)
                     person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7)

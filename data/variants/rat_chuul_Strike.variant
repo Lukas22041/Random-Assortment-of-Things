@@ -2,7 +2,7 @@
     "displayName": "Strike",
     "fluxCapacitors": 9,
     "fluxVents": 20,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_chuul",
     "hullMods": [
         "fluxdistributor",

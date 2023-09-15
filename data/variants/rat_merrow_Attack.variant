@@ -2,7 +2,7 @@
     "displayName": "Attack",
     "fluxCapacitors": 0,
     "fluxVents": 9,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_merrow",
     "hullMods": [
         "hardenedshieldemitter",
