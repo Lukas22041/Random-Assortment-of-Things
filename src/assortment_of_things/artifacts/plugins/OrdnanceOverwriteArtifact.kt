@@ -14,7 +14,7 @@ class OrdnanceOverwriteArtifact : BaseArtifactPlugin() {
     override fun addDescription(tooltip: TooltipMakerAPI) {
         var label = tooltip.addPara("Decreases the range of all ballistic/energy weapons in the entire fleet by 20% but increases the firerate by 15% without increasing flux consumption.", 0f)
 
-        label.setHighlight("ballistic", "energy", "missile", "20%", "15%")
+        label.setHighlight("ballistic", "energy", "20%", "15%")
         label.setHighlightColors(Misc.getBallisticMountColor(), Misc.getEnergyMountColor(),  Misc.getNegativeHighlightColor(), Misc.getHighlightColor())
     }
 
