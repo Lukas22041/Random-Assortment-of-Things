@@ -38,7 +38,7 @@ import kotlin.collections.ArrayList
 
 class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDepth) : SourceBasedFleetManager(source, 1f, 0, 1, 999f) {
 
-
+    var starsystem = source.starSystem
 
     //Generates a single seed so that when it reconstructs the fleet, its basicly the same one.
     var randomSeed = Random().nextLong()
@@ -47,7 +47,10 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
     override fun advance(amount: Float) {
         super.advance(amount)
 
-        if (!AbyssUtils.playerInNeighbourOrSystem(source.starSystem))
+
+
+
+        if (!AbyssUtils.playerInNeighbourOrSystem(starsystem))
         {
             for (fleet in ArrayList(fleets))
             {
@@ -78,7 +81,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         if (source.isExpired) return null
 
         //Prevents the game spawning fleets when the player isnt in the system or a neighbour
-        if (!AbyssUtils.playerInNeighbourOrSystem(source.starSystem)) return null
+        if (!AbyssUtils.playerInNeighbourOrSystem(starsystem)) return null
 
         var difficulty = AbyssUtils.getDifficulty()
         val random = Random(randomSeed)
@@ -159,10 +162,10 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
 
         var maxSeraphs = 0
-        if (depth == AbyssDepth.Deep) maxSeraphs += 2
-        if (difficulty == AbyssDifficulty.Hard) maxSeraphs += 1
+        if (depth == AbyssDepth.Deep) maxSeraphs += 3
+        if (difficulty == AbyssDifficulty.Hard) maxSeraphs += 2
 
-        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, random, maxSeraphs, 0.4f)
+        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, random, maxSeraphs, 0.7f)
         fleet.fleetData.sort()
 
         for (member in fleet.fleetData.membersListCopy) {
@@ -172,7 +175,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
        // addAICores(fleet, type, difficulty, random)
 
-        val location = source.containingLocation
+        val location = starsystem
         location.addEntity(fleet)
 
        // RemnantSeededFleetManager.initRemnantFleetProperties(random, fleet, false)
@@ -258,7 +261,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
                                 }, null)
                             }
                         }
-                        source.starSystem.removeScript(this)
+                        starsystem.removeScript(this)
                     }
                 }
             }
@@ -315,14 +318,14 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
                 }
                 //If the fleet is in another system than its source, isnt targeting anything and has no assignments, move back towards its source location.
-                else if (target == null && fleet.containingLocation != source.containingLocation && !fleet.isCurrentAssignment(FleetAssignment.GO_TO_LOCATION) && !fleet.isCurrentAssignment(FleetAssignment.INTERCEPT))
+                else if (target == null && fleet.containingLocation != starsystem && !fleet.isCurrentAssignment(FleetAssignment.GO_TO_LOCATION) && !fleet.isCurrentAssignment(FleetAssignment.INTERCEPT))
                 {
                     var fractures = fleet.containingLocation.customEntities.filter { it.customPlugin is AbyssalFracture }
                     var fracture: CustomCampaignEntityAPI? = null
                     for (frac in fractures)
                     {
                         var plug = frac.customPlugin as AbyssalFracture
-                        if (plug.connectedEntity!!.containingLocation == source.containingLocation)
+                        if (plug.connectedEntity!!.containingLocation == starsystem)
                         {
                             fracture = frac
                         }
@@ -339,6 +342,9 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
                         }
                         fleet.addAssignment(FleetAssignment.DEFEND_LOCATION, source, 9999999f)
                     }
+                }
+                else if (source.isExpired && fleet.starSystem == starsystem) {
+                    fleet.addAssignment(FleetAssignment.PATROL_SYSTEM, source, 9999999f)
                 }
             }
 

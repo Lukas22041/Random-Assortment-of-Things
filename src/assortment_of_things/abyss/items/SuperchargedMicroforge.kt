@@ -1,19 +1,21 @@
 package assortment_of_things.abyss.items
 
-import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
+import assortment_of_things.scripts.AtMarketListener
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.campaign.econ.SubmarketAPI
 import com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin
-import com.fs.starfarer.api.campaign.listeners.ListenerUtil
-import com.fs.starfarer.api.loading.CampaignPingSpec
+import com.fs.starfarer.api.fleet.FleetMemberAPI
+import com.fs.starfarer.api.impl.campaign.intel.events.BaseEventIntel
+import com.fs.starfarer.api.impl.campaign.intel.events.BaseFactorTooltip
+import com.fs.starfarer.api.impl.campaign.intel.events.BaseOneTimeFactor
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import lunalib.lunaExtensions.isPlayerInHyperspace
 import java.awt.Color
 
-class AbyssalSupplyInstrument : BaseSpecialItemPlugin() {
+class SuperchargedMicroforge : BaseSpecialItemPlugin() {
 
 
     override fun init(stack: CargoStackAPI) {
@@ -21,12 +23,13 @@ class AbyssalSupplyInstrument : BaseSpecialItemPlugin() {
 
     }
 
+
     override fun getPrice(market: MarketAPI?, submarket: SubmarketAPI?): Int {
-        return 5000
+        return 30000
     }
 
     override fun getName(): String? {
-        return "Abyssal Supply Instrument"
+        return "Supercharged Microforge"
     }
 
     override fun getTooltipWidth(): Float {
@@ -43,16 +46,15 @@ class AbyssalSupplyInstrument : BaseSpecialItemPlugin() {
         b = Misc.getPositiveHighlightColor()
 
         tooltip.addSpacer(5f)
-        tooltip.addPara("An autonomous device that, when used, activates a miniature nanoforge that creates a one-time stock of supplies. Included in it is: \n\n" +
-                "50x Supplies\n" +
-                "50x Fuel\n" +
+        tooltip.addPara("A microforge that uses charged abyssal matter to create a one-time stock of supplies. On activation it produces: \n\n" +
+                "100x Supplies\n" +
+                "100x Fuel\n" +
                 "\n" +
-                "Does not go over the fleets cargo limits, any excess is wasted.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "used", "stock of supplies.", "50x Supplies", "50x Fuel")
+                "Does not produce over the fleets cargo limits, any excess is wasted.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "microforge", "stock of supplies.", "100x Supplies", "100x Fuel")
         tooltip.addSpacer(5f)
 
         tooltip.addPara("Rightclick to activate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)
 
@@ -70,8 +72,8 @@ class AbyssalSupplyInstrument : BaseSpecialItemPlugin() {
         var fleet = Global.getSector().playerFleet
 
         var cargo = fleet.cargo
-        var supplies = 50f
-        var fuel = 50f
+        var supplies = 100f
+        var fuel = 100f
 
         if (supplies > cargo.spaceLeft)
         {

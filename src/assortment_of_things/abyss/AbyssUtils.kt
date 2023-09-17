@@ -53,6 +53,12 @@ object AbyssUtils {
         return system.memoryWithoutUpdate.get(SYSTEM_DATA_KEY) as AbyssSystemData
     }
 
+    fun getSystemsWithMinorSlots() : List<AbyssSystemData> {
+        var abyssData = getAbyssData()
+        var list = abyssData.systemsData.filter { it.minorPoints.isNotEmpty() }
+        return list
+    }
+
     fun isAnyFleetTargetingPlayer() : Boolean {
         val playerFleet = Global.getSector().playerFleet
 

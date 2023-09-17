@@ -24,6 +24,7 @@ import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
+import kotlin.collections.ArrayList
 
 object AbyssProcgen {
 
@@ -61,6 +62,11 @@ object AbyssProcgen {
 
     fun addAbyssParticles(system: StarSystemAPI) {
         system.addCustomEntity("rat_abyss_particle_manager_${Misc.genUID()}", "", "rat_abyss_particle_spawner", Factions.NEUTRAL)
+    }
+
+    fun addAbyssStorm(system: StarSystemAPI) {
+        system.addCustomEntity("rat_abyss_storm_manager_${Misc.genUID()}", "", "rat_abyss_storm_spawner", Factions.NEUTRAL)
+        system.addTerrain("rat_abyss_ionicstorm", null)
     }
 
     fun createFractures(system1: LocationAPI, system2: LocationAPI) : LinkedFracture
@@ -221,9 +227,11 @@ object AbyssProcgen {
 
         var darkColor = Color.getHSBColor(h, s, b)
         data.darkColor = darkColor
+
+        system.lightColor = darkColor
     }
 
-    fun generateCircularSlots(system: StarSystemAPI) {
+    fun generateCircularPoints(system: StarSystemAPI) {
 
         var amount = 7
 
@@ -251,6 +259,9 @@ object AbyssProcgen {
         for (i in 0 until 3) data.majorPoints.add(emptySlots.randomAndRemove())
         data.uniquePoints.add(emptySlots.randomAndRemove())
     }
+
+
+
 
     private fun generateSlot(lastSlot: Vector2f, attempts: Int) : Vector2f
     {
@@ -280,6 +291,59 @@ object AbyssProcgen {
                 return pos
             }
             generateSlot(lastSlot,attempts + 1)
+        }
+
+        return pos
+    }
+
+    //Generates small slots in random locations and around major points
+    fun generateMinorPoints(system: StarSystemAPI) {
+        var data = AbyssUtils.getSystemData(system)
+
+        for (slot in data.fracturePoints) {
+            var point = MathUtils.getPointOnCircumference(slot, MathUtils.getRandomNumberInRange(1000f, 2000f), MathUtils.getRandomNumberInRange(0f, 360f))
+            data.minorPoints.add(point)
+        }
+
+        for (i in 0 until 15) {
+            var point = getMinorLocationToPlaceAt(system)
+            if (!point.equals(Vector2f(0f, 0f))) {
+                data.minorPoints.add(point)
+            }
+        }
+    }
+
+    private fun getMinorLocationToPlaceAt(system: StarSystemAPI, minDistance: Float = 750f) : Vector2f
+    {
+        var data = AbyssUtils.getSystemData(system)
+        var min = 3000f;
+        var max = 16000f;
+
+        var range = MathUtils.getRandomNumberInRange(min, max)
+        // var pos = Misc.getPointAtRadius(Vector2f(0f, 0f), range)
+
+        var angle = MathUtils.getRandomNumberInRange(0f, 360f)
+
+        var pos = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), range, angle)
+
+        var existingEntities = system.customEntities
+        for (existing in existingEntities)
+        {
+            var distance = MathUtils.getDistance(existing.location, pos)
+            if (distance < minDistance)
+            {
+                getMinorLocationToPlaceAt(system)
+            }
+        }
+
+        var existingPoints = data.minorPoints + data.majorPoints + data.fracturePoints + data.uniquePoints
+        for (existing in existingPoints)
+        {
+            var distance = MathUtils.getDistance(existing, pos)
+            if (distance < minDistance)
+            {
+                getMinorLocationToPlaceAt(system)
+            }
         }
 
         return pos

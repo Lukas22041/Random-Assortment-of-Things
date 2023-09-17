@@ -53,7 +53,7 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
 
     fun initBandIfNull()
     {
-        if (band1 != null) return
+        if (band1 != null && center != null) return
         val var1: Float = radius * 0.45f
         val var2: Float = radius * 3.1415927f * 2.0f
         var var3 = var2 / 50.0f
@@ -81,6 +81,8 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
         super.render(layer, viewport)
 
+        initBandIfNull()
+
         if (layer == CampaignEngineLayers.TERRAIN_SLIPSTREAM)
         {
             center!!.setSize(160f, 160f)
@@ -90,7 +92,7 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
             /* band1!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(100)
              band2!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(200)*/
 
-            var color = AbyssUtils.ABYSS_COLOR.darker().darker().darker().setAlpha(75)
+            var color = AbyssUtils.ABYSS_COLOR.darker().darker().setAlpha(75)
             if (!entity.containingLocation.isHyperspace) color = AbyssUtils.getSystemData(entity.starSystem).darkColor.setAlpha(75)
             if (colorOverride != null) color = colorOverride!!
 
@@ -99,8 +101,8 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
             band2!!.color = color.setAlpha(200)
 
             if (entity.containingLocation.isHyperspace) {
-                band1!!.color = color.setAlpha(50)
-                band2!!.color = color.setAlpha(100)
+                band1!!.color = color.setAlpha(75)
+                band2!!.color = color.setAlpha(150)
             }
 
             band1!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)
@@ -113,11 +115,11 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
         var system = AbyssProcgen.getConnectedFracture(entity).containingLocation
 
         if (entity.containingLocation.isHyperspace) {
-
+            tooltip.addPara("It leads towards the ever descending depths of the abyss.", 0f)
         }
         else if (system.isHyperspace) {
             tooltip!!.addPara("It connects towards ${system.nameWithNoType}.", 0f, Misc.getTextColor(),
-                Color(0, 100, 255), "${system.nameWithNoType}")
+                Color(0, 100, 255), "")
         }
         else if (system.lastPlayerVisitTimestamp == 0L)
         {

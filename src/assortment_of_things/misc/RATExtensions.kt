@@ -82,3 +82,12 @@ public fun <T> MutableCollection<T>.randomAndRemove(): T {
     this.remove(pick)
     return pick
 }
+
+
+fun SectorEntityToken.setLooted() {
+    this.addTag("rat_looted")
+}
+
+fun SectorEntityToken.isLooted() : Boolean {
+    return this.hasTag("rat_looted")
+}

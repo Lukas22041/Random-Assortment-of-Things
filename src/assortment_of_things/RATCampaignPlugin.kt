@@ -14,7 +14,6 @@ import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.PluginPick
 import com.fs.starfarer.api.campaign.*
-import com.fs.starfarer.api.impl.campaign.ids.Commodities
 
 class RATCampaignPlugin : BaseCampaignPlugin()
 {
@@ -59,22 +58,37 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(plugin.connectedEntity, ""), 0.01f)
             }
         }
+        if (interactionTarget.hasTag("rat_abyss_entrance")) {
 
-        if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_abyss_rift_station") {
-            return PluginPick(RiftStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            var fracture = interactionTarget.memoryWithoutUpdate.get("\$rat_jumpoint_destination_override") as SectorEntityToken
+            Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(fracture, ""), 0.01f)
+            return PluginPick(null, CampaignPlugin.PickPriority.HIGHEST)
         }
 
 
 
-        if (interactionTarget.hasTag(AbyssTags.ABYSS_WRECK)) {
-            return PluginPick(AbyssalWreckInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+        if (interactionTarget is CustomCampaignEntityAPI) {
+
+            var id = interactionTarget.customEntitySpec.id
+
+            if (interactionTarget.hasTag(AbyssTags.ABYSS_WRECK)) {
+                return PluginPick(AbyssalWreckInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
+
+            when (id) {
+                "rat_abyss_rift_station" -> return PluginPick(RiftStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_fabrication" -> return PluginPick(FabrictationStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_accumalator" -> return PluginPick(AccumalatorStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_drone" -> return PluginPick(AbyssalProbeInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_transmitter" -> return PluginPick(TransmitterInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_research" -> return PluginPick(AbyssalResearchStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_unknown_lab" -> return PluginPick(AbyssalUnknownLabInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_military_outpost" -> return PluginPick(AbyssalMilitaryOutpostInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
         }
 
 
-        if (interactionTarget.hasTag(AbyssTags.TRANSMITTER))
-        {
-            return PluginPick(TransmitterInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-        }
+
 
 
         return null

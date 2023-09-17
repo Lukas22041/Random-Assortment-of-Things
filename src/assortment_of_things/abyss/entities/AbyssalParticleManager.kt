@@ -32,9 +32,8 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
         var maxDuration = duration
         var maxFadeOut = fadeOut
 
-        var adjustment = MathUtils.getRandomNumberInRange(0.3f, 0.3f)
+        var adjustment = MathUtils.getRandomNumberInRange(-15f, 15f)
         var adjustmentInterval = IntervalUtil(0.5f, 0.75f)
-
     }
 
     var particles = ArrayList<AbyssalLightParticle>()
@@ -47,6 +46,11 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
     var color = AbyssUtils.ABYSS_COLOR
 
     override fun advance(amount: Float) {
+
+        if (Global.getSector().playerFleet.starSystem != entity.starSystem) {
+            particles.clear()
+            return
+        }
 
         color = AbyssUtils.getSystemData(entity.starSystem).color
 
@@ -92,10 +96,10 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
             particle.adjustmentInterval.advance(amount)
             if (particle.adjustmentInterval.intervalElapsed()) {
                 var velocity = Vector2f(0f, 0f)
-                particle.adjustment = MathUtils.getRandomNumberInRange(-0.5f, 0.5f)
+                particle.adjustment = MathUtils.getRandomNumberInRange(-25f, 25f)
             }
 
-            particle.velocity = particle.velocity.rotate(particle.adjustment)
+            particle.velocity = particle.velocity.rotate(particle.adjustment * amount)
 
 
             var x = particle.velocity.x * amount
@@ -106,12 +110,22 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
         }
 
 
+
         particleInterval.advance(amount)
         if (particleInterval.intervalElapsed()) {
             var velocity = Vector2f(0f, 0f)
             velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), MathUtils.getRandomNumberInRange(100f, 150f), MathUtils.getRandomNumberInRange(0f, 360f)))
 
-            for (i in 0..10) {
+
+            var amount = 10
+            var fadeInOverwrite = false
+
+            if (particles.size <= 50) {
+                amount = 150
+                fadeInOverwrite = true
+            }
+
+            for (i in 0..amount) {
 
                 var spawnLocation = Vector2f(Global.getSector().playerFleet.location)
                 //var spawnLocation = MathUtils.getPointOnCircumference(Vector2f(), 45f, entity.facing + 180)
@@ -122,6 +136,7 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
                 spawnLocation = spawnLocation.plus(Vector2f(randomX, randomY))
 
                 var fadeIn = MathUtils.getRandomNumberInRange(1f, 3f)
+                if (fadeInOverwrite) fadeIn = 0.05f
                 var duration = MathUtils.getRandomNumberInRange(2f, 5f)
                 var fadeOut = MathUtils.getRandomNumberInRange(1f, 3f)
 
@@ -140,6 +155,10 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
     }
 
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
+
+        if (halo == null) {
+            halo = Global.getSettings().getSprite("rat_terrain", "halo")
+        }
 
         for (particle in particles) {
 

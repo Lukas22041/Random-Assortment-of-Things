@@ -32,6 +32,8 @@ class AbyssalGrid : BaseHullMod() {
         stats!!.energyWeaponRangeBonus.modifyFlat(id, 100f)
         //stats!!.beamWeaponRangeBonus.modifyMult(id, 100f)
 
+        stats.empDamageTakenMult.modifyMult(id, 0.75f)
+
         stats!!.getDynamic().getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0f);
     }
 
@@ -44,10 +46,10 @@ class AbyssalGrid : BaseHullMod() {
         tooltip.addPara("This ships flux grid is highly optimised for the use of energy weapons. " +
                 "This allows them to operate at a 10%% lower flux cost than normal and increases their base range by 100 units. " +
                 "\n\n" +
-                "This unique grid can also absorb the impact of abyssal storms and similar hazards, providing the ship full immunity against those." +
+                "This unique grid can also absorb the impact of charged particles, enabling it to resist emp damage up to 25%% better than other hulls and provides an immunity against abyssal storms and similar hazards." +
                 "",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "energy weapons", "10%", "100", "abyssal storms")
+            "energy weapons", "10%", "100", "emp", "25%", "abyssal storms")
     }
 
 

@@ -15,5 +15,9 @@
 		"plugin":"assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin",
 	},
 	
+	"rat_abyss_ionicstorm":{
+		"plugin":"assortment_of_things.abyss.terrain.AbyssalIonicStorm",
+	},
+	
 }
 

@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
 import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import com.fs.starfarer.api.GameState
@@ -91,6 +92,8 @@ class CombatHandler : EveryFrameCombatPlugin
                 var data = AbyssUtils.getSystemData(system)
                 var depth = data.depth
                 var darkness = AbyssProcgen.getAbyssDarknessTerrainPlugin(system)
+                var path = "graphics/icons/hullsys/high_energy_focus.png"
+
                 if (darkness != null) {
 
                     if (darkness.containsEntity(Global.getSector().playerFleet))
@@ -123,6 +126,33 @@ class CombatHandler : EveryFrameCombatPlugin
                                 ship.mutableStats.sightRadiusMod.modifyMult("rat_darkness", 0.70f)
                             }
                         }
+                    }
+                }
+
+                if (system.hasTag(IonicStormAbyssType.STORM_TAG)) {
+                    for (ship in Global.getCombatEngine().ships) {
+
+                        Global.getCombatEngine().maintainStatusForPlayerShip("rat_ionic1",
+                            path,
+                            "Ionic Storm",
+                            "10% increased energy weapon damage",
+                            true)
+
+                        Global.getCombatEngine().maintainStatusForPlayerShip("rat_ionic2",
+                            path,
+                            "Ionic Storm",
+                            "15% reduced shield efficiency",
+                            true)
+
+                        Global.getCombatEngine().maintainStatusForPlayerShip("rat_ionic3",
+                            path,
+                            "Ionic Storm",
+                            "20% more emp damage taken",
+                            true)
+
+                        ship.mutableStats.energyWeaponDamageMult.modifyMult("rat_ionicstorm", 1.10f)
+                        ship.mutableStats.shieldDamageTakenMult.modifyMult("rat_ionicstorm", 1.15f)
+                        ship.mutableStats.empDamageTakenMult.modifyMult("rat_ionicstorm", 1.20f)
                     }
                 }
             }

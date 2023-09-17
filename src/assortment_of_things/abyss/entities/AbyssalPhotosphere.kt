@@ -1,11 +1,14 @@
 package assortment_of_things.abyss.entities
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.AbyssProcgen
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.DynamicRingBand
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
@@ -84,6 +87,7 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
         var posX = entity.location.x
         var posY = entity.location.y
 
+        if (!viewport!!.isNearViewport(entity.location, radius)) return
 
         if (layer == CampaignEngineLayers.TERRAIN_7A)
         {
@@ -114,5 +118,16 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
             halo!!.setAdditiveBlend()
             halo!!.renderAtCenter(entity.location.x, entity.location.y)
         }
+    }
+
+    override fun hasCustomMapTooltip(): Boolean {
+        return true
+    }
+
+    override fun createMapTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
+        super.createMapTooltip(tooltip, expanded)
+
+        tooltip!!.addPara("Photosphere", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "Photosphere")
+
     }
 }

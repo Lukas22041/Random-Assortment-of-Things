@@ -57,7 +57,7 @@ class HyperlinkSkill2 : RATBaseShipSkill() {
 
         stats.ballisticWeaponRangeBonus.modifyMult(id, 50f)
         stats.energyWeaponRangeBonus.modifyMult(id, 50f)
-        stats.missileRoFMult.modifyMult(id, 50f)
+        stats.missileWeaponRangeBonus.modifyMult(id, 50f)
 
     }
 

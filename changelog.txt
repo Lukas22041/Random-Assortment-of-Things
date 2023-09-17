@@ -4,9 +4,9 @@ Version 1.5.11
 -> Ordnance Overwrite no longer effects missile weapons.
 -> Punitive Cryostation now gives officers with a max level of 7 instead of 5.
 -> "Maintaining Momentum" now has a shorter duration on larger hulls.
--> Nerfed Maverick to a 25% buff instead of 33%
+-> Nerfed Maverick to a 25% buff instead of 33%.
 -> Decreased the amount of weapon drops from the abyss.
--> Fixed another issue with the Mass Interface skill
+-> Fixed another issue with the Mass Interface skill.
 
 
 

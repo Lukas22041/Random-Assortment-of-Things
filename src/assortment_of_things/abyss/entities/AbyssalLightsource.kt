@@ -44,6 +44,10 @@ class AbyssalLightsource : BaseCustomEntityPlugin() {
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
         super.render(layer, viewport)
 
+        if (halo == null) {
+            halo = Global.getSettings().getSprite("rat_terrain", "halo")
+        }
+
         if (layer == CampaignEngineLayers.ABOVE)
         {
             halo!!.alphaMult = 1f

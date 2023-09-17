@@ -87,6 +87,7 @@ class RATModPlugin : BaseModPlugin() {
 
 
 
+
         for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)
@@ -97,17 +98,12 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmod.id), 3f)
         }
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_primordial_stream"), 3f)
-
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 5f)
-
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 10f)
-
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 30f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_charged_forge", null), 5f)
 
 
 
+        Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
         if (RATSettings.enableAbyss!!)
         {
             if (AbyssUtils.getAbyssData().systemsData.isEmpty()) {
@@ -135,7 +131,6 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().addTransientScript(ResetBackgroundScript())
         }
 
-        Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
         Global.getSector().addTransientScript(ForceNegAbyssalRep())
         Global.getSector().addTransientListener(HullmodRemoverListener())
 

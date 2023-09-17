@@ -6,13 +6,17 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.loading.CampaignPingSpec
+import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
 import java.awt.Color
 
 class AbyssDistantIconScript(var entity: SectorEntityToken, var maxRange: Float) : EveryFrameScript {
 
+    var interval = IntervalUtil(4f, 8f)
+    var done = false
+
     override fun isDone(): Boolean {
-        return entity.isExpired
+        return entity.isExpired || done
     }
 
     override fun runWhilePaused(): Boolean {
@@ -20,6 +24,10 @@ class AbyssDistantIconScript(var entity: SectorEntityToken, var maxRange: Float)
     }
 
     override fun advance(amount: Float) {
+
+        interval.advance(amount)
+        if (!interval.intervalElapsed()) return
+
         var player = Global.getSector().playerFleet
         if (player.containingLocation != entity.containingLocation) return
         if (!entity.isDiscoverable) return
@@ -48,6 +56,8 @@ class AbyssDistantIconScript(var entity: SectorEntityToken, var maxRange: Float)
         custom.isInvert = true
 
         Global.getSector().addPing(player, custom)
+        done = true
+
     }
 
 

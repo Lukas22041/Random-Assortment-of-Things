@@ -5,6 +5,7 @@ rat_chuul,ship,,1.5,normal,graphics/maps/ships/rat_chuul_normal.png
 rat_merrow,ship,,1.5,normal,graphics/maps/ships/rat_merrow_normal.png
 rat_morkoth,ship,,1.5,normal,graphics/maps/ships/rat_morkoth_normal.png
 rat_shield_drone,ship,,1.5,normal,graphics/maps/ships/rat_shield_drone_normal.png
+rat_raguel,ship,,1.5,normal,graphics/maps/ships/rat_raguel_normal.png
 rat_sariel,ship,,1.5,normal,graphics/maps/ships/rat_sariel_normal.png
 rat_sarakiel,ship,,1.5,normal,graphics/maps/ships/rat_sariel_normal.png
 ,,,,,
@@ -41,6 +42,10 @@ chuul_cover,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/chuul/chuul_c
 chuul_cover,turret,,1.5,normal,graphics/maps/weapons/decorative/chuul/chuul_cover_normal.png
 morkoth_cover,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/morkoth/morkoth_cover_normal.png
 morkoth_cover,turret,,1.5,normal,graphics/maps/weapons/decorative/morkoth/morkoth_cover_normal.png
+rat_raguel_cover_left,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/raguel/Raguel_cover_left_normal.png
+rat_raguel_cover_left,turret,,1.5,normal,graphics/maps/weapons/decorative/raguel/Raguel_cover_left_normal.png
+rat_raguel_cover_right,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/raguel/Raguel_cover_right_normal.png
+rat_raguel_cover_right,turret,,1.5,normal,graphics/maps/weapons/decorative/raguel/Raguel_cover_right_normal.png
 rat_sariel_cover_left,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/sariel/sariel_cover_left_normal.png
 rat_sariel_cover_left,turret,,1.5,normal,graphics/maps/weapons/decorative/sariel/sariel_cover_left_normal.png
 rat_sariel_cover_right,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/sariel/sariel_cover_middle_normal.png
@@ -60,6 +65,7 @@ rat_chuul,ship,,,material,graphics/maps/ships/rat_chuul_material.png
 rat_merrow,ship,,,material,graphics/maps/ships/rat_merrow_material.png
 rat_morkoth,ship,,,material,graphics/maps/ships/rat_morkoth_material.png
 rat_shield_drone,ship,,,material,graphics/maps/ships/rat_shield_drone_material.png
+rat_raguel,ship,,,material,graphics/maps/ships/rat_raguel_material.png
 rat_sariel,ship,,,material,graphics/maps/ships/rat_sariel_material.png
 rat_sarakiel,ship,,,material,graphics/maps/ships/rat_sariel_material.png
 ,,,,,
@@ -95,6 +101,10 @@ chuul_cover,hardpoint,,,material,graphics/maps/weapons/decorative/chuul/chuul_co
 chuul_cover,turret,,,material,graphics/maps/weapons/decorative/chuul/chuul_cover_material.png
 morkoth_cover,hardpoint,,,material,graphics/maps/weapons/decorative/morkoth/morkoth_cover_material.png
 morkoth_cover,turret,,,material,graphics/maps/weapons/decorative/morkoth/morkoth_cover_material.png
+rat_raguel_cover_left,hardpoint,,,material,graphics/maps/weapons/decorative/raguel/Raguel_cover_left_material.png
+rat_raguel_cover_left,turret,,,material,graphics/maps/weapons/decorative/raguel/Raguel_cover_left_material.png
+rat_raguel_cover_right,hardpoint,,,material,graphics/maps/weapons/decorative/raguel/Raguel_cover_right_material.png
+rat_raguel_cover_right,turret,,,material,graphics/maps/weapons/decorative/raguel/Raguel_cover_right_material.png
 rat_sariel_cover_left,hardpoint,,,material,graphics/maps/weapons/decorative/sariel/sariel_cover_left_material.png
 rat_sariel_cover_left,turret,,,material,graphics/maps/weapons/decorative/sariel/sariel_cover_left_material.png
 rat_sariel_cover_right,hardpoint,,,material,graphics/maps/weapons/decorative/sariel/sariel_cover_middle_material.png
@@ -115,6 +125,7 @@ rat_chuul,ship,,,surface,graphics/maps/ships/rat_chuul_surface.png
 rat_merrow,ship,,,surface,graphics/maps/ships/rat_merrow_surface.png
 rat_morkoth,ship,,,surface,graphics/maps/ships/rat_morkoth_surface.png
 rat_shield_drone,ship,,,surface,graphics/maps/ships/rat_shield_drone_surface.png
+rat_raguel,ship,,,surface,graphics/maps/ships/rat_raguel_surface.png
 rat_sariel,ship,,,surface,graphics/maps/ships/rat_sariel_surface.png
 rat_sarakiel,ship,,,surface,graphics/maps/ships/rat_sariel_surface.png
 ,,,,,
@@ -150,6 +161,10 @@ chuul_cover,hardpoint,,,surface,graphics/maps/weapons/decorative/chuul/chuul_cov
 chuul_cover,turret,,,surface,graphics/maps/weapons/decorative/chuul/chuul_cover_surface.png
 morkoth_cover,hardpoint,,,surface,graphics/maps/weapons/decorative/morkoth/morkoth_cover_surface.png
 morkoth_cover,turret,,,surface,graphics/maps/weapons/decorative/morkoth/morkoth_cover_surface.png
+rat_raguel_cover_left,hardpoint,,,surface,graphics/maps/weapons/decorative/raguel/Raguel_cover_left_surface.png
+rat_raguel_cover_left,turret,,,surface,graphics/maps/weapons/decorative/raguel/Raguel_cover_left_surface.png
+rat_raguel_cover_right,hardpoint,,,surface,graphics/maps/weapons/decorative/raguel/Raguel_cover_right_surface.png
+rat_raguel_cover_right,turret,,,surface,graphics/maps/weapons/decorative/raguel/Raguel_cover_right_surface.png
 rat_sariel_cover_left,hardpoint,,,surface,graphics/maps/weapons/decorative/sariel/sariel_cover_left_surface.png
 rat_sariel_cover_left,turret,,,surface,graphics/maps/weapons/decorative/sariel/sariel_cover_left_surface.png
 rat_sariel_cover_right,hardpoint,,,surface,graphics/maps/weapons/decorative/sariel/sariel_cover_middle_surface.png

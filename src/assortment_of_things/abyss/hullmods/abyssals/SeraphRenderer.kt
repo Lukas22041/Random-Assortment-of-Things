@@ -65,8 +65,10 @@ class SeraphRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin(Comba
         sprite!!.setNormalBlend()
         sprite!!.renderAtCenter(ship.location.x, ship.location.y)*/
 
+        var extra = 0.2f * ship.system.effectLevel
+
         sprite!!.setAdditiveBlend()
-        sprite!!.alphaMult = additiveGlowAlpha * fader.brightness
+        sprite!!.alphaMult = (additiveGlowAlpha + extra) * fader.brightness
         sprite!!.renderAtCenter(ship.location.x, ship.location.y)
 
     }

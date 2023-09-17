@@ -1,16 +1,10 @@
 name,id,tags,tech/manufacturer,rarity,base price,stack size,cargo space,baseRaidDanger,icon,sound id,sound id drop,plugin,plugin params,desc,order
 #Abyss,,,,,,,,,,,,,,,
 Hullmod installer,rat_alteration_install,,Hull Alteration,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,"A hull alteration is a special, consumable hull modification that can be installed through the ""Additional Options"" section at the top of the refit screen.",400
-Hullmod remover,rat_alteration_remover,,Hull Alteration,,25000,1000,1,,graphics/icons/cargo/rat_alteration_remover.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationRemoverItem,,,401
 ,,,,,,,,,,,,,,,
 Abyssal Survey Data,rat_abyss_survey,,,,20000,1000,1,,graphics/icons/cargo/rat_abyss_survey.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalSurveyData,,,402
 ,,,,,,,,,,,,,,,
-Abyssal Discovery Instrument,rat_instrument_discovery,abyss_drop,,,5000,1000,1,,graphics/icons/cargo/rat_instrument_discovery.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalExplorationInstrument,,,410
-Abyssal Hostility Instrument,rat_instrument_hostility,abyss_drop,,,5000,1000,1,,graphics/icons/cargo/rat_instrument_hostility.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalHostilityInstrument,,,411
-Abyssal Supply Instrument,rat_instrument_supplies,abyss_drop,,,5000,1000,1,,graphics/icons/cargo/rat_instrument_supply.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalSupplyInstrument,,,412
-,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,
+Supercharged Microforge,rat_charged_forge,,,,5000,1000,1,,graphics/icons/cargo/rat_charged_forge.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.SuperchargedMicroforge,,,402
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
 #Other,,,,,,,,,,,,,,,
