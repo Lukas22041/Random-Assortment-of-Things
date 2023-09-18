@@ -1,0 +1,82 @@
+{
+  "hullName": "Ceto",
+  "hullId": "rat_ceto",
+  "hullSize": "FIGHTER",
+  "spriteName": "graphics/ships/rat_ceto.png",
+  "style": "ABYSSAL",
+  "height": 60,
+  "width": 50,
+  "center": [25, 32.5],
+  "collisionRadius": 38,
+  "shieldCenter": [0, -0],
+  "shieldRadius": 32.5,
+  "viewOffset": 0,
+  "builtInMods": [
+    "no_weapon_flux"
+  ],
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "HIDDEN",
+      "arc": 5,
+      "angle": -0,
+      "locations": [18.5, 3]
+    },
+    {
+      "id": "WS0002",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "HIDDEN",
+      "arc": 5,
+      "angle": 0,
+      "locations": [18.5, -3]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-8, 9.5],
+      "length": 15,
+      "width": 5,
+      "angle": -180,
+      "contrailSize": 7,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL"
+    },
+    {
+      "location": [-8, -9.5],
+      "length": 15,
+      "width": 5,
+      "angle": 180,
+      "contrailSize": 7,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL"
+    },
+    {
+      "location": [-7.5, 9.5],
+      "length": 10,
+      "width": 10,
+      "angle": -180,
+      "contrailSize": 7,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL_NOTRAIL"
+    },
+    {
+      "location": [-7.5, -9.5],
+      "length": 10,
+      "width": 10,
+      "angle": 180,
+      "contrailSize": 7,
+      "style": "CUSTOM",
+      "styleId": "ABYSSAL_NOTRAIL"
+    }
+  ],
+  "bounds": [
+    -1, -21,
+    21, -5,
+    21, 5,
+    -1, 21,
+    -23, -0
+  ]
+}

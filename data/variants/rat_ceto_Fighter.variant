@@ -1,0 +1,23 @@
+{
+  "variantId": "rat_ceto_Fighter",
+  "hullId": "rat_ceto",
+  "displayName": "Fighter",
+  "goalVariant": false,
+  "fluxCapacitors": 0,
+  "fluxVents": 0,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [],
+  "weaponGroups": [
+    {
+      "autofire": false,
+      "mode": "ALTERNATING",
+      "weapons": {
+        "WS0001": "rat_ceto_blaster",
+        "WS0002": "rat_ceto_blaster"
+      }
+    }
+  ],
+  "modules": [],
+  "wings": []
+}

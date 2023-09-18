@@ -3,12 +3,14 @@ package assortment_of_things.abyss
 import assortment_of_things.abyss.procgen.AbyssData
 import assortment_of_things.abyss.procgen.AbyssSystemData
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI
+import com.fs.starfarer.api.combat.ShipHullSpecAPI
 import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.Factions
@@ -105,7 +107,7 @@ object AbyssUtils {
 
             var alterations = mutableMapOf("rat_qualityAssurance" to 1f, "rat_timegear" to 1f, "rat_overloaded_systems" to 1f, "rat_preperation" to 1f)
 
-            var hasBay = member.variant.fittedWings.size != 0
+            var hasBay = member.variant.baseOrModSpec().hints.contains(ShipHullSpecAPI.ShipTypeHints.CARRIER)
 
             var hasBallistic = false
             var hasEnergy = false
@@ -116,13 +118,11 @@ object AbyssUtils {
             if (weapons.any { it.mountType == WeaponAPI.WeaponType.ENERGY }) hasEnergy = true
             if (weapons.any { it.mountType == WeaponAPI.WeaponType.MISSILE }) hasMissile = true
 
-            if (hasBay) alterations.putAll(mapOf("rat_temporalAssault" to 2f, "rat_perseverance" to 4f, "rat_magneticStorm" to 4f, "rat_plasmaticShield" to 4f))
+            if (hasBay) alterations.putAll(mapOf("rat_temporalAssault" to 0.5f, "rat_perseverance" to 1f, "rat_magneticStorm" to 1f, "rat_plasmaticShield" to 1f))
 
             if (hasBallistic) alterations.putAll(mapOf("rat_ballistic_focus" to 1.5f))
             if (hasEnergy) alterations.putAll(mapOf("rat_energy_focus" to 1.5f))
             if (hasMissile) alterations.putAll(mapOf("rat_missile_reserve" to 0.5f))
-
-            if (member.variant.hasHullMod(HullMods.SAFETYOVERRIDES)) alterations.putAll(mapOf("rat_overloaded_systems" to 3f))
 
             var picker = WeightedRandomPicker<String>()
             alterations.forEach { picker.add(it.key, it.value) }

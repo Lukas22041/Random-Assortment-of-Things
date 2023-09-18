@@ -72,7 +72,7 @@ class RiftStationInteraction : RATInteractionPlugin() {
 
         drop = SalvageEntityGenDataSpec.DropData()
         drop.chances = 6
-        drop.group = "abyss_research_loot"
+        drop.group = "rat_abyss_fabricator"
         dropRandom.add(drop)
 
         drop = SalvageEntityGenDataSpec.DropData()

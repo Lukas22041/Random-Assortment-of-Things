@@ -317,7 +317,12 @@ class  AbyssGenerator {
 
         val fleet = FleetFactoryV3.createFleet(params)
         fleet.addTag("rat_boss_fleet")
-        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, Random(), 5, 1f)
+
+        var seraphs = 5
+        if (AbyssUtils.getDifficulty() == AbyssDifficulty.Hard) seraphs += 2
+
+        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, Random(), seraphs, 1f)
+
 
         for (member in fleet.fleetData.membersListCopy) {
             member.variant.addTag(Tags.TAG_NO_AUTOFIT)
