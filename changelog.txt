@@ -1,3 +1,19 @@
+Version 1.6.0
+Not save compatible with prior versions.
+
+-> The Abyss is now accessed through the bottom left corner in Hyperspace.
+-> Reworked the generation of the abyss with new interactables and the removal of old ones.
+
+-> Added a new frigate for the abyss faction.
+-> Added a fighter for the abyss faction.
+-> The Fighter-Bay version of the Aboleth can now spawn.
+
+-> Removed Alteration Removers, can now remove alterations freely.
+-> Removed Instrument Items.
+-> "Abyssal Grid" now provides some EMP resistance.
+
+
+
 Version 1.5.11
 
 -> Abyss ships should now have default autofit variants to select from.

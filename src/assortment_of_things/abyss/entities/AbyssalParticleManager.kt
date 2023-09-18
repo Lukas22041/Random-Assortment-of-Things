@@ -32,7 +32,7 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
         var maxDuration = duration
         var maxFadeOut = fadeOut
 
-        var adjustment = MathUtils.getRandomNumberInRange(-15f, 15f)
+        var adjustment = MathUtils.getRandomNumberInRange(-5f, 5f)
         var adjustmentInterval = IntervalUtil(0.5f, 0.75f)
     }
 
@@ -96,7 +96,7 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
             particle.adjustmentInterval.advance(amount)
             if (particle.adjustmentInterval.intervalElapsed()) {
                 var velocity = Vector2f(0f, 0f)
-                particle.adjustment = MathUtils.getRandomNumberInRange(-25f, 25f)
+                particle.adjustment = MathUtils.getRandomNumberInRange(-15f, 15f)
             }
 
             particle.velocity = particle.velocity.rotate(particle.adjustment * amount)
@@ -114,7 +114,7 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
         particleInterval.advance(amount)
         if (particleInterval.intervalElapsed()) {
             var velocity = Vector2f(0f, 0f)
-            velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), MathUtils.getRandomNumberInRange(100f, 150f), MathUtils.getRandomNumberInRange(0f, 360f)))
+            velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), MathUtils.getRandomNumberInRange(75f, 125f), MathUtils.getRandomNumberInRange(0f, 360f)))
 
 
             var amount = 10

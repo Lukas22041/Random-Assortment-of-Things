@@ -3,7 +3,7 @@ commodity,group,freq
 ,,
 item_rat_alteration_install:abyss,abyss_guaranteed_alt,100
 ,,
-nothing,rat_abyss_fabricator,50
+nothing,rat_abyss_fabricator,100
 item_rat_alteration_install:abyss,rat_abyss_fabricator,50
 ,,
 nothing,rat_abyss_probe,40
@@ -15,7 +15,7 @@ rat_cosmos_core,rat_abyss_probe,2.5
 nothing,rat_abyss_transmitter,100
 item_rat_abyss_survey,rat_abyss_transmitter,80
 ,,
-"wpn_:{weaponSize:SMALL, tags:[rat_abyssals, !no_drop, !no_drop_salvage]}",rat_abyss_weapons,100
+"wpn_:{weaponSize:SMALL, tags:[rat_abyssals, !no_drop, !no_drop_salvage, !no_drop_salvage]}",rat_abyss_weapons,100
 "wpn_:{weaponSize:MEDIUM, tags:[rat_abyssals, !no_drop, !no_drop_salvage]}",rat_abyss_weapons,60
 "wpn_:{weaponSize:LARGE, tags:[rat_abyssals, !no_drop, !no_drop_salvage]}",rat_abyss_weapons,20
 nothing,rat_abyss_weapons,100
