@@ -2,10 +2,8 @@ package assortment_of_things.abyss.interactions
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.misc.AbyssTags
-import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATInteractionPlugin
-import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
@@ -66,7 +64,6 @@ class RiftStationInteraction : RATInteractionPlugin() {
 
     fun loot() {
 
-        var tier = AbyssUtils.getTier(interactionTarget.starSystem)
         var random = Random(interactionTarget.getSalvageSeed())
 
         var dropRandom = ArrayList<SalvageEntityGenDataSpec.DropData>()
@@ -75,7 +72,7 @@ class RiftStationInteraction : RATInteractionPlugin() {
 
         drop = SalvageEntityGenDataSpec.DropData()
         drop.chances = 6
-        drop.group = "abyss_research_loot"
+        drop.group = "rat_abyss_fabricator"
         dropRandom.add(drop)
 
         drop = SalvageEntityGenDataSpec.DropData()

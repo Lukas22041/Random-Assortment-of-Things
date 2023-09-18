@@ -50,27 +50,24 @@ class AbyssalFleetInflationListener : FleetInflationListener {
             fleet.addTag("rat_isInflated")
             fleet.stats.sensorRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 0.90f)
 
-            var tier = AbyssProcgen.Tier.High
+            var depth = AbyssDepth.Deep
             if (fleet.containingLocation != null && fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))    {
-                tier = AbyssUtils.getTier(fleet.containingLocation)
+                var data = AbyssUtils.getSystemData(fleet.starSystem)
+                depth = data.depth
             }
 
             var difficulty = AbyssUtils.getDifficulty()
             var chance = WeightedRandomPicker<Int>()
 
 
-            if (tier == AbyssProcgen.Tier.Low) {
-                chance.add(0, 100f)
-            }
-
             if (difficulty == AbyssDifficulty.Hard) {
-                if (tier == AbyssProcgen.Tier.Mid) {
+                if (depth == AbyssDepth.Shallow) {
                     chance.add(0, 0.2f)
                     chance.add(1, 0.4f)
                     chance.add(2, 0.4f)
 
                 }
-                else if (tier == AbyssProcgen.Tier.High) {
+                else if (depth == AbyssDepth.Deep) {
                     chance.add(0, 0.2f)
                     chance.add(1, 0.5f)
                     chance.add(2, 0.5f)
@@ -79,11 +76,11 @@ class AbyssalFleetInflationListener : FleetInflationListener {
             }
             else {
 
-                if (tier == AbyssProcgen.Tier.Mid) {
+                if (depth == AbyssDepth.Shallow) {
                     chance.add(0, 0.7f)
                     chance.add(1, 0.2f)
                 }
-                else if (tier == AbyssProcgen.Tier.High) {
+                else if (depth == AbyssDepth.Deep) {
                     chance.add(0, 0.5f)
                     chance.add(1, 0.2f)
                 }
@@ -98,7 +95,7 @@ class AbyssalFleetInflationListener : FleetInflationListener {
                 }
             }
 
-            addAICores(fleet, tier, AbyssUtils.getDifficulty(), Random())
+            addAICores(fleet, depth, AbyssUtils.getDifficulty(), Random())
 
             for (member in fleet.fleetData.membersListCopy)
             {
@@ -136,14 +133,13 @@ class AbyssalFleetInflationListener : FleetInflationListener {
 
     }
 
-    fun addAICores(fleet: CampaignFleetAPI, tier: AbyssProcgen.Tier, difficulty: AbyssDifficulty, random: Random)
+    fun addAICores(fleet: CampaignFleetAPI, depth: AbyssDepth, difficulty: AbyssDifficulty, random: Random)
     {
 
         var corePercentage = 0f
 
-        if (tier == AbyssProcgen.Tier.Low) corePercentage = 0.4f
-        if (tier == AbyssProcgen.Tier.Mid) corePercentage = 0.5f
-        if (tier == AbyssProcgen.Tier.High) corePercentage = 0.7f
+        if (depth == AbyssDepth.Shallow) corePercentage = 0.5f
+        if (depth == AbyssDepth.Deep) corePercentage = 0.7f
 
         if (difficulty == AbyssDifficulty.Hard) corePercentage += 0.3f
 

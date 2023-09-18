@@ -20,7 +20,6 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
 
     var GLOW_FREQUENCY = 1f
 
-    var interval = IntervalUtil(5f, 10f)
 
     @Transient
     private var sprite: SpriteAPI? = null
@@ -40,6 +39,8 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
         return this
     }
 
+    var color: Color? = null
+
     private var phase = 0f
     private var freqMult = 1f
     private var sincePing = 10f
@@ -47,10 +48,14 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
         phase += amount * GLOW_FREQUENCY * freqMult
         while (phase > 1) phase--
 
-        interval.advance(amount)
-        var player = Global.getSector().playerFleet
-        if (interval.intervalElapsed())  {
-            AbyssUtils.createSensorIcon(entity, 7500f, AbyssUtils.SUPERCHARGED_COLOR.brighter())
+        if (color == null) {
+            if (entity.starSystem != null) {
+                var data = AbyssUtils.getSystemData(entity.starSystem)
+                color = data.color
+            }
+            else {
+                color = Color(0, 230, 120, 255)
+            }
         }
 
         if (entity.isInCurrentLocation) {
@@ -73,7 +78,7 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
                     if (entity.memoryWithoutUpdate.contains(PING_COLOR_KEY)) {
                         pingColor = entity.memoryWithoutUpdate[PING_COLOR_KEY] as Color
                     }
-                    Global.getSector().addPing(entity, pingId, Color(0, 230, 120, 255))
+                    Global.getSector().addPing(entity, pingId, color)
                 }
             }
         }
@@ -108,7 +113,7 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
             glowColor = entity.memoryWithoutUpdate[GLOW_COLOR_KEY] as Color
         }
 
-        glow!!.color = glowColor
+        glow!!.color = color
         glow!!.setSize(w, h)
         glow!!.alphaMult = alphaMult * glowAlpha
         glow!!.setAdditiveBlend()

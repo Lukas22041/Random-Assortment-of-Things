@@ -48,11 +48,6 @@
 		  
 		},
 		
-		"rat_entities": { 
-		  "research_station":"graphics/stations/rat_domain_research_station.png",
-		  "research_station_glow":"graphics/stations/rat_domain_research_station_glow.png",
-		},
-		
 		"rat_cores": {
 		  "chronos":"graphics/portraits/cores/rat_chronos_core.png",
 		  "cosmos":"graphics/portraits/cores/rat_cosmos_core.png",

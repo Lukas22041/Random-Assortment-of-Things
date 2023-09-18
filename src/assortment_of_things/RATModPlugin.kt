@@ -2,14 +2,12 @@ package assortment_of_things
 
 import ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.misc.AbyssBackgroundWarper
+import assortment_of_things.abyss.procgen.AbyssGenerator
+import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
-import assortment_of_things.abyss.scripts.DisableTransverseScript
 import assortment_of_things.abyss.scripts.ForceNegAbyssalRep
 import assortment_of_things.abyss.scripts.HullmodRemoverListener
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
-import assortment_of_things.abyss.systems.MidnightCoreSystem
-import assortment_of_things.abyss.systems.SingularityCrateGeneration
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
@@ -22,10 +20,6 @@ import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
-import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.LocationType
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -93,8 +87,8 @@ class RATModPlugin : BaseModPlugin() {
 
 
 
-      /*  Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_destabilizer", null), 1f)
-        for (artifact in ArtifactUtils.artifacts)
+
+      /*  for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)
         }
@@ -104,33 +98,15 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmod.id), 3f)
         }
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_primordial_stream"), 3f)
-
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_remover", null), 5f)
-
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 10f)
-
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_discovery", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_hostility", null), 5f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_instrument_supplies", null), 5f)*/
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 30f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_charged_forge", null), 5f)*/
 
 
 
+        Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
         if (RATSettings.enableAbyss!!)
         {
-            if (AbyssUtils.getAllAbyssSystems().isEmpty()) {
-
-                var data = Global.getSector().characterData
-
-                if (data.memoryWithoutUpdate.get("\$rat_abyssWithCustomStart") == null) {
-                    var cache = SingularityCrateGeneration.generate()
-                }
-
-                MidnightCoreSystem().generate()
-
-               /* Global.getSector().getCharacterData().addAbility("rat_singularity_jump_ability")
-                Global.getSector().getCharacterData().getMemoryWithoutUpdate().set("\$ability:" + "rat_singularity_jump_ability", true, 0f);*/
-
-                Global.getSector().addScript(DisableTransverseScript())
+            if (AbyssUtils.getAbyssData().systemsData.isEmpty()) {
                 for (faction in Global.getSector().allFactions)
                 {
                     if (faction.id == AbyssUtils.FACTION_ID) continue
@@ -139,11 +115,10 @@ class RATModPlugin : BaseModPlugin() {
 
                 var random = Random(Misc.genRandomSeed())
                 Global.getSector().memoryWithoutUpdate.set("\$rat_alteration_random", random)
+
+                AbyssGenerator().beginGeneration()
             }
         }
-
-
-
 
         if (RATSettings.relicsEnabled!! && Global.getSector().memoryWithoutUpdate.get("\$rat_relics_generated") == null) {
             RelicsGenerator().generate()
@@ -156,7 +131,6 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().addTransientScript(ResetBackgroundScript())
         }
 
-        Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
         Global.getSector().addTransientScript(ForceNegAbyssalRep())
         Global.getSector().addTransientListener(HullmodRemoverListener())
 
@@ -206,7 +180,6 @@ class RATModPlugin : BaseModPlugin() {
         system.addTag(Tags.THEME_HIDDEN)
         AbyssBackgroundWarper(system, 16, 1f)*/
 
-
     }
 
     override fun beforeGameSave() {
@@ -214,15 +187,10 @@ class RATModPlugin : BaseModPlugin() {
 
         for (system in Global.getSector().starSystems.filter { it.hasTag(AbyssUtils.SYSTEM_TAG) })
         {
-            var abyssPlugin = AbyssUtils.getAbyssTerrainPlugin(system)
+            var abyssPlugin = AbyssProcgen.getAbyssTerrainPlugin(system)
             if (abyssPlugin != null)
             {
                 abyssPlugin.save()
-            }
-            var superchargedAbyss = AbyssUtils.getSuperchargedAbyssTerrainPlugin(system)
-            if (superchargedAbyss != null)
-            {
-                superchargedAbyss.save()
             }
         }
     }

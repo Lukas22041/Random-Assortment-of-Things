@@ -27,8 +27,6 @@ class AbyssRiftStation : BaseCustomEntityPlugin() {
     override fun advance(amount: Float) {
         super.advance(amount)
 
-
-
         if (randomRotation)
         {
             entity.facing += 0.015f

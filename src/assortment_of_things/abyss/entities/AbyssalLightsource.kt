@@ -32,7 +32,9 @@ class AbyssalLightsource : BaseCustomEntityPlugin() {
 
     fun initSpritesIfNull()
     {
-        halo = Global.getSettings().getSprite("rat_terrain", "halo")
+        if (halo == null) {
+            halo = Global.getSettings().getSprite("rat_terrain", "halo")
+        }
     }
 
     override fun getRenderRange(): Float {
@@ -41,6 +43,10 @@ class AbyssalLightsource : BaseCustomEntityPlugin() {
 
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
         super.render(layer, viewport)
+
+        if (halo == null) {
+            halo = Global.getSettings().getSprite("rat_terrain", "halo")
+        }
 
         if (layer == CampaignEngineLayers.ABOVE)
         {

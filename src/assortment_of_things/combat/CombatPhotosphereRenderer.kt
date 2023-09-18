@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin
 import com.fs.starfarer.api.combat.CombatEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
@@ -41,6 +42,10 @@ class CombatPhotosphereRenderer(var radius: Float, var photosphere: SectorEntity
         var distance = MathUtils.getDistance(playerfleet, photosphere)
         var angle = Misc.getAngleInDegrees(playerfleet.location, photosphere.location)
         var plugin = photosphere.customPlugin as AbyssalPhotosphere
+
+        var data = AbyssUtils.getSystemData(playerfleet.containingLocation as StarSystemAPI)
+
+        color = data.color
 
         var min = 0f
         var max = plugin.radius / 10

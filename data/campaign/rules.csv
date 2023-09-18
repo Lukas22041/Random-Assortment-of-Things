@@ -2,9 +2,3 @@ id,trigger,conditions,script,text,options,notes
 greetingRATAbyssalsHostile,OpenCommLink,"$faction.id == rat_abyssals score:1000
 ",$entity.ignorePlayerCommRequests = true 1,The opposing fleet does not respond to the comm-request,cutCommLink:Cut the comm link,
 ,,,,,,
-rat_AbyssCrateBarEvent,AddBarEvents,ShouldShowAbyssCrateEvent,"AddBarEvent rat_abyss_Crate ""A lost shipment"" """" rat_abyssColor",,,
-rat_AbyssCrateBarEvent1,DialogOptionSelected,$option == rat_abyss_Crate,AbyssCrateBarEvent,,"rat_abyssCrateLeave:Leave
-",
-rat_AbyssCrateBarEvent2,DialogOptionSelected,$option == rat_abyssCrateLeave,BarCMD showOptions,,,
-,,,,,,
-,,,,,,

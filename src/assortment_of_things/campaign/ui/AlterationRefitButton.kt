@@ -141,17 +141,7 @@ class AlterationRefitButton : BaseRefitButton() {
         alterationDisplayPanel.addUIElement(displayElement)
 
 
-        var removerStacks = Global.getSector().playerFleet.cargo.stacksCopy
-            .filter { it.specialItemSpecIfSpecial != null && it.specialItemSpecIfSpecial.id == "rat_alteration_remover" }
 
-
-        var removerStorageStacks: List<CargoStackAPI> = ArrayList()
-        if (market != null)  {
-            removerStorageStacks = market!!.getStorage().cargo.stacksCopy.filter { it.specialItemSpecIfSpecial != null && it.specialItemSpecIfSpecial.id == "rat_alteration_remover" }
-        }
-
-        var count = removerStacks.sumOf { it.size.toInt() } + removerStorageStacks.sumOf { it.size.toInt() }
-        var noRemovers = count == 0
         var canBeRemoved = true
         if (installedAlteration != null) {
             var plugin = Global.getSettings().scriptClassLoader.loadClass(installedAlteration.effectClass).newInstance() as BaseAlteration
@@ -167,10 +157,10 @@ class AlterationRefitButton : BaseRefitButton() {
         removeButtonElement.position.inTL(-5f ,0f)
         removeButtonElement.addLunaElement(400f, 30f).apply {
             enableTransparency = true
-            addText("Remove & Destroy Alteration ($count)", baseColor = Misc.getBasePlayerColor())
+            addText("Remove & Destroy Alteration", baseColor = Misc.getBasePlayerColor())
             centerText()
 
-            if (hasAlteration && !noRemovers && canBeRemoved) {
+            if (hasAlteration && canBeRemoved) {
                 backgroundAlpha = 0.8f
                 borderAlpha = 1f
 
@@ -185,20 +175,6 @@ class AlterationRefitButton : BaseRefitButton() {
 
                 onClick {
                     playClickSound()
-                    if (removerStacks.isNotEmpty()) {
-                        var stack = removerStacks.random()
-                        stack.subtract(1f)
-                        if (stack.size < 0.1f) {
-                            Global.getSector().playerFleet.cargo.removeStack(stack)
-                        }
-                    }
-                    else {
-                        var stack = removerStorageStacks.random()
-                        stack.subtract(1f)
-                        if (stack.size < 0.1f) {
-                            market!!.getStorage().cargo.removeStack(stack)
-                        }
-                    }
 
                     variant.removePermaMod(installedAlteration!!.id)
                     var plugin = Global.getSettings().scriptClassLoader.loadClass(installedAlteration.effectClass).newInstance() as BaseAlteration
@@ -229,17 +205,11 @@ class AlterationRefitButton : BaseRefitButton() {
             }
 
             override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
-                tooltip!!.addPara("Removes the alteration from the ship and permanently destroys it." +
-                        "This can only be done if there are \"Alteration Detachers\" in the inventory.", 0f)
+                tooltip!!.addPara("Removes the alteration from the ship and permanently destroys it.", 0f)
                 tooltip.addSpacer(5f)
-                tooltip.addPara("Detachers in inventory: $count")
-                tooltip.addSpacer(10f)
 
                 if (!hasAlteration) {
                     tooltip!!.addPara("This ship does not have any alteration installed.", 0f, Misc.getNegativeHighlightColor(), Misc.getHighlightColor())
-                }
-                else if (noRemovers) {
-                    tooltip!!.addPara("There are no \"Alteration Detachers\" in the fleets inventory.", 0f, Misc.getNegativeHighlightColor(), Misc.getHighlightColor())
                 }
                 else if (!canBeRemoved) {
                     var plugin = Global.getSettings().scriptClassLoader.loadClass(installedAlteration!!.effectClass).newInstance() as BaseAlteration

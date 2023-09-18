@@ -1,0 +1,56 @@
+{
+    "displayName": "Attack",
+    "fluxCapacitors": 3,
+    "fluxVents": 30,
+    "goalVariant": true,
+    "hullId": "rat_aboleth",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "targetingunit",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_aboleth_Attack",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "rat_haddock",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_seabream",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "rat_humpback",
+                "WS0004": "rat_humpback",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0011": "rat_shortfin",
+                "WS0010": "rat_shortfin",
+                "WS0007": "rat_shortfin",
+                "WS0006": "rat_shortfin",
+            }
+        },
+    ],
+    "wings": [
+        "rat_ceto",
+        "rat_ceto",
+    ],
+    "modules": [],
+}

@@ -1,12 +1,11 @@
 package assortment_of_things.abyss.intel
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.abyss.procgen.AbyssDepth
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
 import com.fs.starfarer.api.ui.CustomPanelAPI
-import com.fs.starfarer.api.ui.MapParams
 import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
@@ -50,13 +49,14 @@ class AbyssMap : BaseIntelPlugin() {
 
         var center = Vector2f(width * 0.45f, height * 0.35f)
 
-        var systems = AbyssUtils.getAllAbyssSystems()
+        var systemsData = AbyssUtils.getAbyssData().systemsData
 
         var positions = HashMap<StarSystemAPI, Vector2f>()
 
         var icons = ArrayList<LunaElement>()
-        for (system in systems)
+        for (systemData in systemsData)
         {
+            var system = systemData.system
 
             if (!system.isEnteredByPlayer)
             {
@@ -66,7 +66,7 @@ class AbyssMap : BaseIntelPlugin() {
                 }
             }
 
-            var loc = AbyssUtils.getSystemLocation(system)
+            var loc = systemData.mapLocation
             if (loc == null) continue
 
             var locOnMap = center.plus(loc)
@@ -80,7 +80,7 @@ class AbyssMap : BaseIntelPlugin() {
 
 
             var unexplored = 0
-            var neighbours = AbyssUtils.getNeighbouringSystems(system) + AbyssUtils.getFarNeighbouringSystems(system)
+            var neighbours = systemData.neighbours
             for (sys in neighbours)
             {
                 if (!sys.isEnteredByPlayer) unexplored++
@@ -101,23 +101,19 @@ class AbyssMap : BaseIntelPlugin() {
                     tooltip!!.addPara("${system.baseName}", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "${system.baseName}")
                     tooltip.addSpacer(5f)
 
-                    var tier = AbyssUtils.getTier(system)
-                    if (system.baseName == "Midnight")
+                    var depth = systemData.depth
+                    if (system.name.contains("Twilight"))
                     {
                         tooltip!!.addPara("The root of the abyss.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(5f)
                     }
-                    else if (tier == AbyssProcgen.Tier.Low)
-                    {
-                        tooltip!!.addPara("A brightly illuminated part of the abyss, its matter not being dense enough to diminish the light.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
-                        tooltip.addSpacer(5f)
-                    }
-                    else if (tier == AbyssProcgen.Tier.Mid)
+
+                    else if (depth == AbyssDepth.Shallow)
                     {
                         tooltip!!.addPara("This part of the abyss barely sees any light.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(5f)
                     }
-                    else if (tier == AbyssProcgen.Tier.High)
+                    else if (depth == AbyssDepth.Deep)
                     {
                         tooltip!!.addPara("There is almost no light visible within this zone.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(5f)

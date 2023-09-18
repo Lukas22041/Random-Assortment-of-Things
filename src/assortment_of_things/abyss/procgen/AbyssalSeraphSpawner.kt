@@ -15,6 +15,8 @@ object AbyssalSeraphSpawner {
         var picker = WeightedRandomPicker<String>()
         picker.random = random
 
+        picker.add("rat_raguel_Attack", 6f)
+
         picker.add("rat_sariel_Attack", 5f)
         picker.add("rat_sariel_Strike", 2f)
 

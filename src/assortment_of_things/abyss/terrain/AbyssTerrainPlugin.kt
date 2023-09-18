@@ -1,29 +1,27 @@
 package assortment_of_things.abyss.terrain
 
+import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.TerrainAIFlags
+import com.fs.starfarer.api.impl.campaign.ids.Abilities
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.apache.log4j.Level
-import org.apache.log4j.Priority
 import java.awt.Color
 
 class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
 
     var id = Misc.genUID()
 
-    var color = Color(255, 255, 255)
-
     override fun advance(amount: Float) {
         super.advance(amount)
     }
 
     override fun getRenderColor(): Color {
-        return color
+        return AbyssUtils.getSystemData(entity.starSystem).darkColor
     }
 
 
@@ -69,12 +67,25 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
             {
                 fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_1", "In abyssal fog", 1.5f, fleet.stats.fleetwideMaxBurnMod)
                 fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_2", "In abyssal fog", 1.5f, fleet.stats.accelerationMult)
+
+                if (cell != null && cell.isSignaling && cell.signal < 0.2f) {
+                    cell.signal = 0f
+                }
+
+                var goDark = Global.getSector().playerFleet.getAbility(Abilities.GO_DARK)
+                var goDarkActive = false
+
+                if (goDark != null) {
+                    goDarkActive = goDark.isActive
+                }
+
+                if (cell != null && cell.isStorming && !Misc.isSlowMoving(fleet) && !goDarkActive) {
+
+                    applyStormStrikes(cell, fleet, days)
+                }
             }
 
-            if (cell != null && cell.isStorming && !Misc.isSlowMoving(fleet)) {
 
-                applyStormStrikes(cell, fleet, days)
-            }
         }
     }
 
@@ -92,23 +103,14 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
         tooltip!!.addTitle(terrainName)
         tooltip.addSpacer(5f)
 
-     /*   tooltip!!.addPara("The strong forces of the depths of hyperspace are impossible to resist without proper shielding. " +
-                "" +
-                "Staying within it requires a steady amount of shielding. If the fleet runs out of it, it gets forced back in to hyperspace." +
-                "", 0f, Misc.getTextColor(), Misc.getHighlightColor())
-        tooltip.addSpacer(5f)*/
+        tooltip.addPara("A unique location within hyperspace. Discovered with the settlement of the sector, and quicky exploited for its unique resources. " +
+                "Post-collapse humanity however did not have the resources for working within this hostile enviroment, making it quasi isolated from the sector since.", 0f)
 
-        /*tooltip!!.addPara("The abyssal matter appears to strengthen radio waves emitted by the fleet, increasing the Sensor Range by 25%%" +
-                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Range", "50%")
         tooltip.addSpacer(5f)
 
-        tooltip!!.addPara("A similar effect makes it possible to detect structures at further distances than usual, but without any identifiable data. Larger structures can be detected " +
-                "from longer distances." +
-                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "detect", "structures", "longer")*/
-
-        tooltip!!.addPara("Due to a unique interaction between the fleets sensors and the abyssal matter, it is possible to detect structures at further distances than usual, but without any identifying data. " +
-                "The detectable distance depends on the total mass of the structure." +
-                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "detect", "structures", "mass")
+        tooltip!!.addPara("Due to a unique interaction between the fleets sensors and the abyssal matter, it is possible to detect structures at further distances than normal, but without any identifying data. " +
+                "" +
+                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "detect", "structures")
 
         if (isInClouds(player))
         {

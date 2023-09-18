@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.intel.event
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.AbyssProcgen
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
@@ -20,7 +21,7 @@ import java.awt.Color
 class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
 
     enum class Stage(var progress: Int) {
-        START(0), INTO_THE_DEPTHS(150), PERSISTANCE(300), RETURNAL(450), STARE_IN_TO(600)
+        START(0), INTO_THE_DEPTHS(150), PERSISTANCE(300), IN_THE_DARK(450), STARE_IN_TO(600)
     }
 
     companion object {
@@ -51,12 +52,12 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
         addStage(Stage.START, 0);
         addStage(Stage.INTO_THE_DEPTHS, Stage.INTO_THE_DEPTHS.progress, StageIconSize.SMALL);
         addStage(Stage.PERSISTANCE, Stage.PERSISTANCE.progress, StageIconSize.SMALL);
-        addStage(Stage.RETURNAL, Stage.RETURNAL.progress, StageIconSize.MEDIUM);
+        addStage(Stage.IN_THE_DARK, Stage.IN_THE_DARK.progress, StageIconSize.MEDIUM);
         addStage(Stage.STARE_IN_TO, Stage.STARE_IN_TO.progress, StageIconSize.MEDIUM);
 
         getDataFor(Stage.INTO_THE_DEPTHS).keepIconBrightWhenLaterStageReached = true;
         getDataFor(Stage.PERSISTANCE).keepIconBrightWhenLaterStageReached = true;
-        getDataFor(Stage.RETURNAL).keepIconBrightWhenLaterStageReached = true;
+        getDataFor(Stage.IN_THE_DARK).keepIconBrightWhenLaterStageReached = true;
         getDataFor(Stage.STARE_IN_TO).keepIconBrightWhenLaterStageReached = true;
         //getDataFor(Stage.STARE_IN_TO).isRepeatable = true
 
@@ -73,7 +74,7 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
             Stage.START -> "graphics/icons/intel/events/abyssal1.png"
             Stage.INTO_THE_DEPTHS -> "graphics/icons/intel/events/abyssal2.png"
             Stage.PERSISTANCE -> "graphics/icons/intel/events/abyssal3.png"
-            Stage.RETURNAL -> "graphics/icons/intel/events/abyssal4.png"
+            Stage.IN_THE_DARK -> "graphics/icons/intel/events/abyssal4.png"
             Stage.STARE_IN_TO -> "graphics/icons/intel/events/abyssal6.png"
             else -> "graphics/icons/intel/events/abyssal1.png"
         }
@@ -105,8 +106,8 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
                 //info!!.addPara("25%% reduced supply useage in the abyss.", initPad, tc, h, "25%")
                 info!!.addPara("50%% reduced damage from abyssal storms.", initPad, tc, h, "50%")
             }
-            if (esd.id == Stage.RETURNAL) {
-                info!!.addPara("Able to return back to last position within the abyss.", initPad, tc, h, "25%")
+            if (esd.id == Stage.IN_THE_DARK) {
+                info!!.addPara("Additional sensor detection reduction in the dark.", initPad, tc, h)
             }
             if (esd.id == Stage.STARE_IN_TO) {
                 info!!.addPara("Gained a skill point.", initPad, tc, h, "")
@@ -140,7 +141,7 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
                     Stage.START -> tooltip!!.addTitle("Abyssal Exploration")
                     Stage.INTO_THE_DEPTHS -> tooltip!!.addTitle("Into the Depths")
                     Stage.PERSISTANCE -> tooltip!!.addTitle("Persistance")
-                    Stage.RETURNAL -> tooltip!!.addTitle("Returnal")
+                    Stage.IN_THE_DARK -> tooltip!!.addTitle("In the Dark")
                     Stage.STARE_IN_TO -> tooltip!!.addTitle("Stare in to the abyss")
                 }
 
@@ -168,10 +169,10 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
         {
             info.addPara("After studying the patterns of abyssal of the abyssal enviroment, the fleet takes 50%% less damage from abyssal storms due to better pathing through the terrain.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),"50%", "abyssal storms")
         }
-        if (stageId == Stage.RETURNAL)
+        if (stageId == Stage.IN_THE_DARK)
         {
-            info.addPara("Through mapping out the abyss, the fleet is now capable of adjusting the destination of the \"Singularity Jump\" Ability. While Holding L-CTRL in Hyperspace and then activating the ability, the fleet now returns to the last point it left the abyss from.", 0f,
-                Misc.getTextColor(), Misc.getHighlightColor(), "Singularity Jump", "returns the fleet to the last location", "L-CTRL")
+            info.addPara("The fleet is capable of using the darkness of the abyss to to avoid other fleets. Additionaly decreases the fleets sensor detection range by 10%% in the dark.", 0f,
+                Misc.getTextColor(), Misc.getHighlightColor(), "10%")
         }
         if (stageId == Stage.STARE_IN_TO)
         {
@@ -207,7 +208,17 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
             }
         }
 
+        if (isStageActive(Stage.IN_THE_DARK)) {
 
+            if (fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) {
+                var plugin = AbyssProcgen.getAbyssDarknessTerrainPlugin(fleet.starSystem)
+                if (plugin != null) {
+                    if (plugin.containsPoint(fleet.location, fleet.radius)) {
+                        fleet.stats.addTemporaryModMult(0.1f, id,  "In the Dark", 0.90f, fleet.stats.detectedRangeMod)
+                    }
+                }
+            }
+        }
 
         if (isStageActive(Stage.PERSISTANCE))  {
             if (fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))

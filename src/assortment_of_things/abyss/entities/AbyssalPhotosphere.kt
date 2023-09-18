@@ -4,17 +4,12 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
-import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.campaign.CampaignEngine
 import com.fs.starfarer.campaign.DynamicRingBand
-import org.lwjgl.opengl.GL11
-import org.lwjgl.util.glu.Sphere
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
@@ -92,20 +87,13 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
         var posX = entity.location.x
         var posY = entity.location.y
 
-        var tier = AbyssUtils.getTier(entity.containingLocation)
-
+        if (!viewport!!.isNearViewport(entity.location, radius)) return
 
         if (layer == CampaignEngineLayers.TERRAIN_7A)
         {
 
-            if (tier == AbyssProcgen.Tier.Low) {
-                band1!!.color = color.setAlpha(75)
-                center!!.color = color.setAlpha(200)
-            }
-            else {
-                band1!!.color = color.setAlpha(125)
-                center!!.color = color.setAlpha(255)
-            }
+            band1!!.color = color.setAlpha(125)
+            center!!.color = color.setAlpha(255)
 
             center!!.setSize(entity.radius * 1.8f , entity.radius  * 1.8f)
             center!!.renderAtCenter(entity.location.x, entity.location.y)
@@ -116,11 +104,8 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
         if (layer == CampaignEngineLayers.ABOVE)
         {
 
-
-
             halo!!.alphaMult = 1f
             halo!!.color = color.setAlpha(75)
-            if (tier == AbyssProcgen.Tier.Low) halo!!.color = color.setAlpha(50)
 
             halo!!.setSize(radius / 20, radius / 20)
             halo!!.setAdditiveBlend()
@@ -128,11 +113,21 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
 
             halo!!.alphaMult = 1f
             halo!!.color = color.setAlpha(55)
-            if (tier == AbyssProcgen.Tier.Low) halo!!.color = color.setAlpha(40)
 
             halo!!.setSize(radius / 2, radius / 2)
             halo!!.setAdditiveBlend()
             halo!!.renderAtCenter(entity.location.x, entity.location.y)
         }
+    }
+
+    override fun hasCustomMapTooltip(): Boolean {
+        return true
+    }
+
+    override fun createMapTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
+        super.createMapTooltip(tooltip, expanded)
+
+        tooltip!!.addPara("Photosphere", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "Photosphere")
+
     }
 }

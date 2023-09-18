@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.entities
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.OpenGLUtil
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
@@ -8,6 +9,8 @@ import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import org.lwjgl.opengl.GL11
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
@@ -214,5 +217,14 @@ class RiftEntrance : BaseCustomEntityPlugin() {
 
         GL11.glEnd()
         GL11.glPopMatrix()
+    }
+
+    override fun hasCustomMapTooltip(): Boolean {
+        return true
+    }
+
+    override fun createMapTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
+        tooltip!!.addPara("Abyssal Rift", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "Abyssal Rift")
+
     }
 }

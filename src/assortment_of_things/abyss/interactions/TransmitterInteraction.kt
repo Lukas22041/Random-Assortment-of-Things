@@ -1,15 +1,18 @@
 package assortment_of_things.abyss.interactions
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.intel.log.AbyssalLogIntel
-import assortment_of_things.abyss.intel.log.AbyssalLogs
-import assortment_of_things.abyss.misc.AbyssTags
+import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.SpecialItemData
-import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec
+import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.*
+import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
+
+import com.fs.starfarer.api.loading.Description
 import org.magiclib.kotlin.fadeAndExpire
 import org.magiclib.kotlin.getSalvageSeed
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TransmitterInteraction : RATInteractionPlugin() {
 
@@ -22,107 +25,63 @@ class TransmitterInteraction : RATInteractionPlugin() {
             return
         }
 
-        textPanel.addPara("Your fleet approaches the transmitter. Its purpose seems to be to autonomously collect data and send it towards local research stations.")
+        textPanel.addPara("Your fleet approaches the transmitter.")
+
+        textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
 
 
-        if (interactionTarget.hasTag(AbyssTags.TRANSMITTER_UNLOOTED)) {
-            textPanel.addPara("The transmitter however seems to have lost capability to send its data back, slowly accumalating the data within it.")
-        }
-        else  {
-            textPanel.addPara("Its data has already been collected.")
-        }
+        createOption("Investigate") {
+            clearOptions()
+            textPanel.addPara("The fleet inspects the transmitter. It appears to still be sending out data infrequently, but cant establish a connection to anything else. Proceeding with a salvage operation may allow us to retrieve some of the data it has collected.")
 
-      /*  var pick = AbyssalLogs.getAvailableLog(interactionTarget.getSalvageSeed())
-
-        if (!interactionTarget.hasTag("read_log") && pick != null) {
-            textPanel.addPara("It appears that the transmitter has stored the personal log of someone in its database. It may provide worthy reading through it.")
-        }*/
-
-
-
-        addOptions()
-    }
-
-    fun addOptions() {
-
-
-        if (interactionTarget.hasTag(AbyssTags.TRANSMITTER_UNLOOTED)) {
-            createOption("Take accumalated data") {
-
-                interactionTarget.removeTag(AbyssTags.TRANSMITTER_UNLOOTED)
-
+            createOption("Begin salvage operations") {
                 clearOptions()
-               // addOptions()
+                var random = Random(interactionTarget.getSalvageSeed())
+                var depth = AbyssUtils.getSystemData(interactionTarget.starSystem).depth
 
-                textPanel.addPara("You take the data that the transmitter collected for dozens of cycles.", Misc.getTextColor(), Misc.getHighlightColor())
-
-                var tooltip =textPanel.beginTooltip()
-
-                var image = tooltip.beginImageWithText("graphics/icons/cargo/rat_abyss_survey.png", 64f)
-                image.addPara("Aquirred Abyssal Survey Data", 0f)
-                tooltip.addImageWithText(0f)
-
-                textPanel.addTooltip()
-
-                Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 1f)
+                var dropRandom = ArrayList<DropData>()
+                var dropValue = ArrayList<DropData>()
+                var drop = SalvageEntityGenDataSpec.DropData()
 
 
-                createOption("Leave") {
+                drop = DropData()
+                drop.group = "basic"
+                drop.value = 3000
+                dropValue.add(drop)
+
+
+
+
+                drop = SalvageEntityGenDataSpec.DropData()
+                drop.chances = 2
+                drop.group = "rat_abyss_transmitter"
+                dropRandom.add(drop)
+
+                drop = DropData()
+                drop.chances = 1
+                drop.group = "any_hullmod_medium"
+                dropRandom.add(drop)
+
+                var mult = when(depth) {
+                    AbyssDepth.Shallow -> 1f
+                    AbyssDepth.Deep -> 2f
+                    else -> 1f
+                }
+
+                var salvage = SalvageEntity.generateSalvage(random, mult, 1f, 1f, 1f, dropValue, dropRandom)
+
+                visualPanel.showLoot("Loot", salvage, true) {
                     closeDialog()
-                    interactionTarget.fadeAndExpire(2f)
+
+                    interactionTarget.fadeAndExpire(3f)
                 }
             }
-        }
 
-
-
-       /* var pick = AbyssalLogs.getAvailableLog(interactionTarget.getSalvageSeed())
-
-        if (!interactionTarget.hasTag("read_log") && pick != null) {
-
-
-            createOption("Read the stored log") {
-                interactionTarget.addTag("read_log")
-
-                clearOptions()
-                addOptions()
-
-                textPanel.addPara("> Read the stored log",  Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
-                textPanel.addPara("The fleet downloads the entry stored in the transmitters data structure. A copy of it has been stored in the intel window.")
-
-                var intel = AbyssalLogIntel(pick)
-
-                Global.getSector().intelManager.addIntel(intel)
-
-                var tooltip = textPanel.beginTooltip()
-
-                tooltip.createRect(Misc.getBasePlayerColor(), 2f)
-
-                var text = Global.getSettings().loadText("data/strings/abyss/logs/${pick.id}.txt")
-
-                tooltip.addTitle(pick.name)
-                tooltip.addSpacer(2f)
-
-                tooltip.addPara("Author: Undocumented", 0f)
-                tooltip.addPara("Date: ${pick.date} | unknown cycle", 0f)
-
-                tooltip.addSpacer(10f)
-
-                tooltip.addPara("$text", 0f)
-               // pick.lambda(tooltip)
-
-                textPanel.addTooltip()
-
-            }
+            addLeaveOption()
 
         }
-
-*/
 
         addLeaveOption()
+
     }
-
-
-
-
 }

@@ -4,7 +4,7 @@ fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValu
 rat_abyssHeader,The Abyss,Header,The Abyss,,,,,Expansion
 rat_abyssEnabled,"Enable ""The Abyss""",Boolean,true,,"The Abyss is a new area focused on [Exploration]. It adds a variety of ships, weapons, and unique loot to find.
 
-It can be accessed through the ""[A lost shipment]"" event that commonly appears in bars.
+The entrance can be found in the bottom left corner of the sector.
 
 Enabling ""the Abyss"" generates content for both new and existing saves upon game load.",,,Expansion
 rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the Abyss.

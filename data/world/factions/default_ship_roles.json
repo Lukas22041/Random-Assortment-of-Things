@@ -27,6 +27,9 @@
 	},
 	"combatLarge":{
 		
+		"rat_aboleth_Attack":4,
+		"rat_aboleth_Strike":2,
+		
 		"rat_aboleth_m_Attack":3.5,
 		"rat_aboleth_m_Strike":1.5,
 		"rat_aboleth_m_Support":0.5,

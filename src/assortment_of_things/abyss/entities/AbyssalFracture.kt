@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.entities
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.AbyssProcgen
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -52,7 +53,7 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
 
     fun initBandIfNull()
     {
-        if (band1 != null) return
+        if (band1 != null && center != null) return
         val var1: Float = radius * 0.45f
         val var2: Float = radius * 3.1415927f * 2.0f
         var var3 = var2 / 50.0f
@@ -80,6 +81,8 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
         super.render(layer, viewport)
 
+        initBandIfNull()
+
         if (layer == CampaignEngineLayers.TERRAIN_SLIPSTREAM)
         {
             center!!.setSize(160f, 160f)
@@ -89,11 +92,18 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
             /* band1!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(100)
              band2!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(200)*/
 
-            var color = AbyssUtils.getSystemColor(entity.containingLocation).darker()
-            if (colorOverride != null) color = colorOverride
+            var color = AbyssUtils.ABYSS_COLOR.darker().darker().setAlpha(75)
+            if (!entity.containingLocation.isHyperspace) color = AbyssUtils.getSystemData(entity.starSystem).darkColor.setAlpha(75)
+            if (colorOverride != null) color = colorOverride!!
+
 
             band1!!.color = color.setAlpha(100)
             band2!!.color = color.setAlpha(200)
+
+            if (entity.containingLocation.isHyperspace) {
+                band1!!.color = color.setAlpha(75)
+                band2!!.color = color.setAlpha(150)
+            }
 
             band1!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)
             band2!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)
@@ -102,8 +112,16 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
 
     override fun appendToCampaignTooltip(tooltip: TooltipMakerAPI?, level: SectorEntityToken.VisibilityLevel?) {
         tooltip!!.addSpacer(10f)
-        var system = AbyssUtils.getConnectedFracture(entity).containingLocation
-        if (system.lastPlayerVisitTimestamp == 0L)
+        var system = AbyssProcgen.getConnectedFracture(entity).containingLocation
+
+        if (entity.containingLocation.isHyperspace) {
+            tooltip.addPara("It leads towards the ever descending depths of the abyss.", 0f)
+        }
+        else if (system.isHyperspace) {
+            tooltip!!.addPara("It connects towards ${system.nameWithNoType}.", 0f, Misc.getTextColor(),
+                Color(0, 100, 255), "")
+        }
+        else if (system.lastPlayerVisitTimestamp == 0L)
         {
             tooltip!!.addPara("It is unknown where in the abyss it connects to.", 0f, Misc.getTextColor(),
                 AbyssUtils.ABYSS_COLOR, "Zone", "abyss")
@@ -125,7 +143,7 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
     override fun createMapTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
         super.createMapTooltip(tooltip, expanded)
 
-        var system = AbyssUtils.getConnectedFracture(entity).containingLocation
+        var system = AbyssProcgen.getConnectedFracture(entity).containingLocation
 
         if (system.lastPlayerVisitTimestamp == 0L)
         {

@@ -1,7 +1,6 @@
 package assortment_of_things.abyss.shipsystem
 
 import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
-import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.combat.AfterImageRenderer
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.CombatEntityAPI
