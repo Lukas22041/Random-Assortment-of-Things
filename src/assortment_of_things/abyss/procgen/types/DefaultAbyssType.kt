@@ -34,6 +34,6 @@ class DefaultAbyssType : BaseAbyssType() {
         AbyssEntityGenerator.generateMinorEntityWithDefenses(system, "rat_abyss_fabrication", fabricators, 0.9f, 0.7f)
         AbyssEntityGenerator.generateMinorEntity(system, "rat_abyss_drone", 4, 0.6f)
 
-        AbyssEntityGenerator.addDerelictAbyssalShips(system, 3, 0.6f)
+        AbyssEntityGenerator.addDerelictAbyssalShips(system, 4, 0.6f)
     }
 }

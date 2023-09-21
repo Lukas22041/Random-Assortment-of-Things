@@ -96,7 +96,7 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
             particle.adjustmentInterval.advance(amount)
             if (particle.adjustmentInterval.intervalElapsed()) {
                 var velocity = Vector2f(0f, 0f)
-                particle.adjustment = MathUtils.getRandomNumberInRange(-15f, 15f)
+                particle.adjustment = MathUtils.getRandomNumberInRange(-20f, 20f)
             }
 
             particle.velocity = particle.velocity.rotate(particle.adjustment * amount)

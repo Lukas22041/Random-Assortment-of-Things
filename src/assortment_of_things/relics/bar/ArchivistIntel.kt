@@ -11,6 +11,7 @@ import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.magiclib.kotlin.adjustReputationWithPlayer
+import java.awt.Color
 import java.util.LinkedHashSet
 
 class ArchivistIntel(var entity: SectorEntityToken, var archivist: PersonAPI) : BaseIntelPlugin() {
@@ -20,6 +21,13 @@ class ArchivistIntel(var entity: SectorEntityToken, var archivist: PersonAPI) : 
 
     override fun getName(): String? {
         return "A Relic of the Past"
+    }
+
+
+
+    override fun addBulletPoints(info: TooltipMakerAPI?, mode: IntelInfoPlugin.ListInfoMode?, isUpdate: Boolean, tc: Color?, initPad: Float) {
+        info!!.addPara("${entity.name}", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "${entity.name}")
+        info!!.addPara("In ${system.name}", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "${system.name}")
     }
 
     override fun createSmallDescription(info: TooltipMakerAPI, width: Float, height: Float) {

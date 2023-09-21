@@ -305,7 +305,7 @@ object AbyssProcgen {
             data.minorPoints.add(point)
         }
 
-        for (i in 0 until 15) {
+        for (i in 0 until 20) {
             var point = getMinorLocationToPlaceAt(system)
             if (!point.equals(Vector2f(0f, 0f))) {
                 data.minorPoints.add(point)

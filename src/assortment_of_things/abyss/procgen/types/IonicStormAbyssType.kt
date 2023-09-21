@@ -47,6 +47,6 @@ class IonicStormAbyssType : BaseAbyssType() {
         AbyssEntityGenerator.generateMinorEntityWithDefenses(system, "rat_abyss_accumalator", accumalators, 0.9f, 0.8f)
         AbyssEntityGenerator.generateMinorEntity(system, "rat_abyss_drone", 4, 0.6f)
 
-        AbyssEntityGenerator.addDerelictAbyssalShips(system, 3, 0.6f)
+        AbyssEntityGenerator.addDerelictAbyssalShips(system, 4, 0.6f)
     }
 }

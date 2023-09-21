@@ -12,8 +12,6 @@ class RefurbishedHullHullmod : BaseHullMod() {
 
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
-        super.applyEffectsBeforeShipCreation(hullSize, stats, id)
-
         stats!!.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).modifyFlat(id, 1f)
     }
 

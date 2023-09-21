@@ -4,9 +4,9 @@ commodity,group,freq
 item_rat_alteration_install:abyss,abyss_guaranteed_alt,100
 ,,
 nothing,rat_abyss_fabricator,100
-item_rat_alteration_install:abyss,rat_abyss_fabricator,50
+item_rat_alteration_install:abyss,rat_abyss_fabricator,40
 ,,
-nothing,rat_abyss_probe,40
+nothing,rat_abyss_probe,50
 item_rat_alteration_install:abyss,rat_abyss_probe,50
 item_rat_abyss_survey,rat_abyss_probe,10
 rat_chronos_core,rat_abyss_probe,2.5

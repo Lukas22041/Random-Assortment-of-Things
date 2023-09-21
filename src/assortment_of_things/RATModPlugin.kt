@@ -87,7 +87,6 @@ class RATModPlugin : BaseModPlugin() {
 
 
 
-
       /*  for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)

@@ -1,3 +1,13 @@
+Version 1.6.1
+
+-> Now generates a gate in to the first level of the abyss.
+-> The archivist can now appear in bar events even if you already accepted one of her missions.
+-> Reduced Alteration droprates a slight bit.
+-> Fixed the Abyss fighter being findable in random loot pools outside of the abyss.
+-> Fixed the Raguel-Class not having a variant to select from in refit.
+
+
+
 Version 1.6.0
 Not save compatible with prior versions.
 

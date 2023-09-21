@@ -2,7 +2,7 @@
   "variantId": "rat_ceto_Fighter",
   "hullId": "rat_ceto",
   "displayName": "Fighter",
-  "goalVariant": false,
+  "goalVariant": true,
   "fluxCapacitors": 0,
   "fluxVents": 0,
   "quality": 1,

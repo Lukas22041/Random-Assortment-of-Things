@@ -20,13 +20,14 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
 
     var gateSystem: StarSystemAPI? = null
     var finished = false
+    var accepted = false
 
     override fun shouldShowAtMarket(market: MarketAPI?): Boolean {
 
+        if (accepted) return false
         if (market == null) return false
         if (market.isHidden) return false
         if (market.factionId == Factions.PIRATES) return false
-        if (Global.getSector().intelManager.hasIntelOfClass(ArchivistIntel::class.java)) return false
 
         var entities = RelicsUtils.getAllRelicStations()
         entities = entities.filter { it.isDiscoverable && !it.isExpired }
@@ -37,6 +38,7 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
     }
 
     override fun isDialogFinished(): Boolean {
+
         if (finished)  {
             finished = false
             return true
@@ -159,6 +161,7 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
                 options.addOption("Show specification of the target", "SPECIFICATION")
 
                 finished = true
+                accepted = true
 
             }
 

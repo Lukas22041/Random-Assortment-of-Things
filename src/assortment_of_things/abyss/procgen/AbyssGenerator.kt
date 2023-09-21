@@ -14,6 +14,7 @@ import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
@@ -95,7 +96,10 @@ class  AbyssGenerator {
 
         latestSystems.add(twilightSystem)
 
-
+        var gate = twilightSystem.addCustomEntity("testgate", "Abyssal Gate", "inactive_gate", Factions.NEUTRAL)
+        var gateLoc = systemData.majorPoints.randomAndRemove()
+        gate.location.set(gateLoc)
+        gate.addTag("rat_abyss_gate")
 
         //Map Script
         twilightSystem.addScript( object : EveryFrameScript {
@@ -210,11 +214,11 @@ class  AbyssGenerator {
 
                if (latestDepth == AbyssDepth.Shallow)
                {
-                   AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, depth, 0.6f)
+                   AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, latestDepth, 0.6f)
                }
                else if (latestDepth == AbyssDepth.Deep)
                {
-                   AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, depth, 0.75f)
+                   AbyssProcgen.addDefenseFleetManager(fractures.fracture1, 1, latestDepth, 0.75f)
                }
 
                type.generate(systemData)
