@@ -20,7 +20,8 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0001": "lightag",
+                "WS0001": "rat_lusca",
+                "WS0002": "rat_lusca",
             }
         },
         {
@@ -29,13 +30,6 @@
             "weapons": {
                 "WS0003": "rat_seadragon_rack",
                 "WS0004": "rat_seadragon_rack",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0002": "railgun",
             }
         },
     ],

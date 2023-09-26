@@ -1,3 +1,15 @@
+Version 1.6.2
+Should be save compatible but some content wont show up.
+
+-> Added new frigate to abyss faction.
+-> Added 3 new abyss weapons.
+-> added abyss custom start.
+-> Added more relics exploration content.
+-> Alterations are now sorted alphabeticly.
+-> Fixed archivist being able to provide missions to things she already gave you.
+
+
+
 Version 1.6.1
 
 -> Now generates a gate in to the first level of the abyss.

@@ -5,8 +5,8 @@ Artifact Controller,rat_artifact_controller,0,,,"no_drop_salvage, restricted",,3
 #Abyssals,,,,,,,,,,,,,,,,,,
 Abyssal Synergy,rat_abyssal_core,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod,,,graphics/hullmods/rat_abyssal_core.png
 Abyssal Grid,rat_abyssal_grid,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalGrid,,,graphics/hullmods/rat_abyssal_grid.png
-Seraphs Grace,rat_seraphs_grace,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSeraphsGrace,,,graphics/hullmods/rat_seraphs_grace.png
-Sarakiels Blessing,rat_sarakiels_blessing,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSarakielsBlessing,,,graphics/hullmods/rat_sarakiels_blessing.png
+Seraphs Grace,rat_seraphs_grace,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSeraphsGrace,,,graphics/hullmods/rat_seraphs_grace.png
+Sarakiels Blessing,rat_sarakiels_blessing,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSarakielsBlessing,,,graphics/hullmods/rat_sarakiels_blessing.png
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 Primordial Serpent,rat_charybdis_hullmod,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.CharybdisHullmod,,,graphics/hullmods/rat_abyssal_core.png
@@ -22,7 +22,7 @@ Ordnance Redistributor,rat_ordnance_redistributor,0,,,,,3000,FALSE,TRUE,FALSE,0,
 Abyssal Crew Conversion,rat_abyssal_conversion,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalCrewConversion,,,graphics/hullmods/rat_crew_conversion.png
 Abyssal Crew Conversion (Chronos),rat_chronos_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedChronosCore,,,graphics/hullmods/rat_chronos_conversion.png
 Abyssal Crew Conversion (Cosmos),rat_cosmos_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedCosmosCore,,,graphics/hullmods/rat_chosmos_conversion.png
-Primordial Stream,rat_primordial_stream,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.PrimordialStreamHullmod,,,graphics/hullmods/rat_primordial_stream.png
+Primordial Stream,rat_primordial_stream,3,0,Unique Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.PrimordialStreamHullmod,,,graphics/hullmods/rat_primordial_stream.png
 ,,,,,,,,,,,,,,,,,,
 ##Misc,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
@@ -57,8 +57,9 @@ Exceptional Construction,rat_exceptional_construction,0,,,,,3000,FALSE,TRUE,FALS
 Refurbished,rat_refurbished_hull,0,,,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.relics.hullmods.RefurbishedHullHullmod,,,graphics/hullmods/rat_refurbished_hull.png
 ,,,,,,,,,,,,,,,,,,
 #Relics Alterations,,,,,,,,,,,,,,,,,,
+Upscale Protocol,rat_upscale_protocol,3,4,Unique Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.UpscaleProtocolHullmod,,,graphics/hullmods/rat_upscale_protocol.png
+,,,,,,,,,,,,,,,,,,
 Advanced Flux Crystal,rat_advanced_flux_crystal,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, relics",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.AdvancedFluxCrystalHullmod,,,graphics/hullmods/rat_flux_crystal.png
 Boost Redirector,rat_boost_redirector,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, relics",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.BoostRedirectorHullmod,,,graphics/hullmods/rat_boost_redirector.png
 Soft Shields,rat_soft_shields,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, relics",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.SoftShieldsHullmod,,,graphics/hullmods/rat_soft_shields.png
-,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,

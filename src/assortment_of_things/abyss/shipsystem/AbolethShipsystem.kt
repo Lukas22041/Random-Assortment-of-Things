@@ -2,6 +2,7 @@ package assortment_of_things.abyss.shipsystem
 
 import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
 import assortment_of_things.combat.AfterImageRenderer
+import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -186,8 +187,12 @@ class AbolethShipsystem : BaseShipSystemScript() {
 
 
             var points = ArrayList<Vector2f>()
-            points.add(ship.location.plus(Vector2f(100f, 20f).rotate(ship.facing - 90)))
-            points.add(ship.location.plus(Vector2f(-100f, 20f).rotate(ship.facing - 90)))
+
+            if (ship.baseOrModSpec().hullId == "rat_aboleth") {
+                points.add(ship.location.plus(Vector2f(100f, 20f).rotate(ship.facing - 90)))
+                points.add(ship.location.plus(Vector2f(-100f, 20f).rotate(ship.facing - 90)))
+            }
+
             // points.add(ship.location.plus(Vector2f(85f, -30f).rotate(ship.facing - 90)))
             //points.add(ship.location.plus(Vector2f(-85f, -30f).rotate(ship.facing - 90)))
 

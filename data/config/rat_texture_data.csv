@@ -3,6 +3,7 @@ rat_aboleth_m,ship,,1.5,normal,graphics/maps/ships/rat_aboleth_m_normal.png
 rat_aboleth,ship,,1.5,normal,graphics/maps/ships/rat_aboleth_normal.png
 rat_chuul,ship,,1.5,normal,graphics/maps/ships/rat_chuul_normal.png
 rat_merrow,ship,,1.5,normal,graphics/maps/ships/rat_merrow_normal.png
+rat_makara,ship,,1.5,normal,graphics/maps/ships/rat_makara_normal.png
 rat_morkoth,ship,,1.5,normal,graphics/maps/ships/rat_morkoth_normal.png
 rat_shield_drone,ship,,1.5,normal,graphics/maps/ships/rat_shield_drone_normal.png
 rat_raguel,ship,,1.5,normal,graphics/maps/ships/rat_raguel_normal.png
@@ -38,6 +39,10 @@ aboleth_mount_left,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/abolet
 aboleth_mount_left,turret,,1.5,normal,graphics/maps/weapons/decorative/aboleth/aboleth_mount_left_normal.png
 aboleth_mount_right,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/aboleth/aboleth_mount_right_normal.png
 aboleth_mount_right,turret,,1.5,normal,graphics/maps/weapons/decorative/aboleth/aboleth_mount_right_normal.png
+rat_makara_cover_left,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/makara/rat_makara_cover_left_normal.png
+rat_makara_cover_left,turret,,1.5,normal,graphics/maps/weapons/decorative/makara/rat_makara_cover_left_normal.png
+rat_makara_cover_right,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/makara/rat_makara_cover_right_surface.png
+rat_makara_cover_right,turret,,1.5,normal,graphics/maps/weapons/decorative/makara/rat_makara_cover_right_surface.png
 chuul_cover,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/chuul/chuul_cover_normal.png
 chuul_cover,turret,,1.5,normal,graphics/maps/weapons/decorative/chuul/chuul_cover_normal.png
 morkoth_cover,hardpoint,,1.5,normal,graphics/maps/weapons/decorative/morkoth/morkoth_cover_normal.png
@@ -63,6 +68,7 @@ rat_aboleth_m,ship,,,material,graphics/maps/ships/rat_aboleth_m_material.png
 rat_aboleth,ship,,,material,graphics/maps/ships/rat_aboleth_material.png
 rat_chuul,ship,,,material,graphics/maps/ships/rat_chuul_material.png
 rat_merrow,ship,,,material,graphics/maps/ships/rat_merrow_material.png
+rat_makara,ship,,,material,graphics/maps/ships/rat_makara_material.png
 rat_morkoth,ship,,,material,graphics/maps/ships/rat_morkoth_material.png
 rat_shield_drone,ship,,,material,graphics/maps/ships/rat_shield_drone_material.png
 rat_raguel,ship,,,material,graphics/maps/ships/rat_raguel_material.png
@@ -97,6 +103,10 @@ aboleth_mount_left,hardpoint,,,material,graphics/maps/weapons/decorative/aboleth
 aboleth_mount_left,turret,,,material,graphics/maps/weapons/decorative/aboleth/aboleth_mount_left_material.png
 aboleth_mount_right,hardpoint,,,material,graphics/maps/weapons/decorative/aboleth/aboleth_mount_right_material.png
 aboleth_mount_right,turret,,,material,graphics/maps/weapons/decorative/aboleth/aboleth_mount_right_material.png
+rat_makara_cover_left,hardpoint,,,material,graphics/maps/weapons/decorative/makara/rat_makara_cover_left_material.png
+rat_makara_cover_left,turret,,,material,graphics/maps/weapons/decorative/makara/rat_makara_cover_left_material.png
+rat_makara_cover_right,hardpoint,,,material,graphics/maps/weapons/decorative/makara/rat_makara_cover_right_material.png
+rat_makara_cover_right,turret,,,material,graphics/maps/weapons/decorative/makara/rat_makara_cover_right_material.png
 chuul_cover,hardpoint,,,material,graphics/maps/weapons/decorative/chuul/chuul_cover_material.png
 chuul_cover,turret,,,material,graphics/maps/weapons/decorative/chuul/chuul_cover_material.png
 morkoth_cover,hardpoint,,,material,graphics/maps/weapons/decorative/morkoth/morkoth_cover_material.png
@@ -123,6 +133,7 @@ rat_aboleth_m,ship,,,surface,graphics/maps/ships/rat_aboleth_m_surface.png
 rat_aboleth,ship,,,surface,graphics/maps/ships/rat_aboleth_surface.png
 rat_chuul,ship,,,surface,graphics/maps/ships/rat_chuul_surface.png
 rat_merrow,ship,,,surface,graphics/maps/ships/rat_merrow_surface.png
+rat_makara,ship,,,surface,graphics/maps/ships/rat_makara_surface.png
 rat_morkoth,ship,,,surface,graphics/maps/ships/rat_morkoth_surface.png
 rat_shield_drone,ship,,,surface,graphics/maps/ships/rat_shield_drone_surface.png
 rat_raguel,ship,,,surface,graphics/maps/ships/rat_raguel_surface.png
@@ -157,6 +168,10 @@ aboleth_mount_left,hardpoint,,,surface,graphics/maps/weapons/decorative/aboleth/
 aboleth_mount_left,turret,,,surface,graphics/maps/weapons/decorative/aboleth/aboleth_mount_left_surface.png
 aboleth_mount_right,hardpoint,,,surface,graphics/maps/weapons/decorative/aboleth/aboleth_mount_right_surface.png
 aboleth_mount_right,turret,,,surface,graphics/maps/weapons/decorative/aboleth/aboleth_mount_right_surface.png
+rat_makara_cover_left,hardpoint,,,surface,graphics/maps/weapons/decorative/makara/rat_makara_cover_left_surface.png
+rat_makara_cover_left,turret,,,surface,graphics/maps/weapons/decorative/makara/rat_makara_cover_left_surface.png
+rat_makara_cover_right,hardpoint,,,surface,graphics/maps/weapons/decorative/makara/rat_makara_cover_right_surface.png
+rat_makara_cover_right,turret,,,surface,graphics/maps/weapons/decorative/makara/rat_makara_cover_right_surface.png
 chuul_cover,hardpoint,,,surface,graphics/maps/weapons/decorative/chuul/chuul_cover_surface.png
 chuul_cover,turret,,,surface,graphics/maps/weapons/decorative/chuul/chuul_cover_surface.png
 morkoth_cover,hardpoint,,,surface,graphics/maps/weapons/decorative/morkoth/morkoth_cover_surface.png

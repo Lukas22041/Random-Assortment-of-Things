@@ -1,12 +1,14 @@
 {
     "displayName": "Attack",
-    "fluxCapacitors": 11,
+    "fluxCapacitors": 5,
     "fluxVents": 20,
     "goalVariant": true,
     "hullId": "rat_sariel",
     "hullMods": [
+        "fluxdistributor",
         "hardenedshieldemitter",
         "heavyarmor",
+        "magazines",
         "targetingunit",
     ],
     "permaMods": [
@@ -20,23 +22,23 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0003": "rat_leviathan",
+                "WS0003": "rat_haddock",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0001": "rat_calypso",
+                "WS0002": "rat_calypso",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0005": "rat_sariel_launcher_right",
                 "WS0004": "rat_sariel_launcher_left",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0001": "rat_humpback",
-                "WS0002": "rat_humpback",
+                "WS0005": "rat_sariel_launcher_right",
             }
         },
     ],

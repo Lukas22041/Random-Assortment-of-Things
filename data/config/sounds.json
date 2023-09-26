@@ -8,7 +8,7 @@
 		####################################
 
 		"rat_music_abyss":[
-			{"file":"rat_abyss_theme.ogg","source":"sounds/rat/music","volume":1},
+			{"file":"rat_abyss_theme.ogg","source":"sounds/rat/music","volume":0.8},
 			
 		],
 		
@@ -25,6 +25,26 @@
 # collapseclose
 	},
 
+	"rat_abyss_ambient_sounds":[
+		{"file":"sounds/sfx_abyss/rat_abyss_sound_1.ogg","pitch":1.0,"volume":1},
+		{"file":"sounds/sfx_abyss/rat_abyss_sound_2.ogg","pitch":1.0,"volume":1},
+		{"file":"sounds/sfx_abyss/rat_abyss_sound_3.ogg","pitch":1.0,"volume":1},
+		{"file":"sounds/sfx_abyss/rat_abyss_sound_4.ogg","pitch":1.0,"volume":1},
+		{"file":"sounds/sfx_abyss/rat_abyss_sound_5.ogg","pitch":1.0,"volume":1},
+		{"file":"sounds/sfx_abyss/rat_abyss_sound_6.ogg","pitch":1.0,"volume":1},
+		{"file":"sounds/sfx_abyss/rat_abyss_sound_7.ogg","pitch":1.0,"volume":1},
+		{"file":"sounds/sfx_abyss/rat_abyss_sound_8.ogg","pitch":1.0,"volume":1},
+		{"file":"sounds/sfx_abyss/rat_abyss_sound_9.ogg","pitch":1.0,"volume":1},
+		{"file":"sounds/sfx_abyss/rat_abyss_sound_10.ogg","pitch":1.0,"volume":1},
+	],
+
+	"rat_abyss_storm_sounds":[
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_01.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_02.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_03.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_04.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_05.ogg","pitch":1,"volume":0.5},
+    ],
 	
  	"abyss_haddock":[
 		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.9,"volume":0.8},
@@ -32,6 +52,16 @@
 
 	"abyss_humpback":[
 		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.8,"volume":0.75},
+	],
+	
+	"abyss_lusca":[
+		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.9,"volume":0.55},
+	],
+	
+	"abyss_cecaelia":[
+ 		{"file":"sounds/sfx_wpn_energy/cryoblaster_fire_01.ogg","pitch":0.8,"volume":0.9},
+		{"file":"sounds/sfx_wpn_energy/cryoblaster_fire_02.ogg","pitch":0.8,"volume":0.9},
+		{"file":"sounds/sfx_wpn_energy/cryoblaster_fire_03.ogg","pitch":0.8,"volume":0.9},
 	],
 
 	"abyss_leviathan":[

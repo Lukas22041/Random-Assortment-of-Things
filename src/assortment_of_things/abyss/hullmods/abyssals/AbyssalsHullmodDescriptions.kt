@@ -13,6 +13,7 @@ object AbyssalsHullmodDescriptions {
     {
         when (ship!!.baseOrModSpec().hullId) {
             "rat_merrow" -> merrowDescription(tooltip!!, ship)
+            "rat_makara" -> abolethDescription(tooltip!!, ship)
             "rat_chuul" -> chullDescription(tooltip!!, ship)
             "rat_aboleth" -> abolethDescription(tooltip!!, ship)
             "rat_aboleth_m" -> abolethDescription(tooltip!!, ship)

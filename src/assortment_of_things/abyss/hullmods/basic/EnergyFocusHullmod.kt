@@ -20,7 +20,7 @@ class EnergyFocusHullmod : BaseAlteration() {
 
         stats!!.energyWeaponRangeBonus.modifyFlat(modID, 100f)
         stats!!.energyWeaponFluxCostMod.modifyMult(modID, 0.85f)
-        stats!!.energyWeaponDamageMult.modifyMult(modID, 1.05f)
+        stats!!.energyWeaponDamageMult.modifyMult(modID, 1.10f)
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?, isForModSpec: Boolean): Boolean {
@@ -39,8 +39,8 @@ class EnergyFocusHullmod : BaseAlteration() {
 
         tooltip.addPara("Transfigures the hulls internal configuration in to a state that benefits the standard operation of energy weapons.\n\n" +
                 "" +
-                "All energy weapons see an increase in range of 100, reduced flux usage by 15%% and deal 5%% more damage.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "energy weapons", "100", "15%", "5%")
+                "All energy weapons see an increase in range of 100, reduced flux usage by 15%% and deal 10%% more damage.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "energy weapons", "100", "15%", "10%")
 
     }
 }

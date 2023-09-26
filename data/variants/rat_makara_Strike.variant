@@ -1,0 +1,46 @@
+{
+    "displayName": "Strike",
+    "fluxCapacitors": 1,
+    "fluxVents": 3,
+    "goalVariant": true,
+    "hullId": "rat_makara",
+    "hullMods": [
+        "advancedoptics",
+        "hardenedshieldemitter",
+        "magazines",
+        "targetingunit",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_makara_Strike",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "rat_seabream",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "rat_seadragon_rack",
+                "WS0004": "rat_seadragon_rack",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_lusca",
+                "WS0002": "rat_lusca",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

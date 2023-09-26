@@ -237,6 +237,8 @@ class AlterationRefitButton : BaseRefitButton() {
 
         var alterations = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") }
 
+        alterations = alterations.sortedBy { it.displayName }
+
 
         var maxSmods = Global.getSettings().settingsJSON.getInt("maxPermanentHullmods")
         var atSmodLimit = variant.sMods.size >= member!!.stats.dynamic.getValue(Stats.MAX_PERMANENT_HULLMODS_MOD, maxSmods.toFloat())

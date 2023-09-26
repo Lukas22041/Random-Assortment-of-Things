@@ -4,6 +4,9 @@
 		"rat_merrow_Attack":10,
 		"rat_merrow_Support":6,
 		
+		"rat_makara_Attack":8,
+		"rat_makara_Strike":4,
+		
 		"rat_chuul_Attack":2,
 		"rat_chuul_Strike":2,
 		"rat_chuul_Support":0.5,
@@ -13,6 +16,9 @@
 	"combatSmall":{
 		"rat_merrow_Attack":10,
 		"rat_merrow_Support":6,
+		
+		"rat_makara_Attack":8,
+		"rat_makara_Strike":4,
 		
 		"rat_chuul_Attack":2,
 		"rat_chuul_Strike":2,

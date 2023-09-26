@@ -3,7 +3,7 @@
   "name": "Random Assortment of Things",
   "author": "Lukas04",
   "utility": "false",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "A collection of things I create whenever a random idea pops up into my head.",
   "gameVersion": "0.96a-RC10",
   "jars": ["jars/RandomAssortmentofThings.jar"],

@@ -1,14 +1,14 @@
 {
     "displayName": "Attack",
-    "fluxCapacitors": 2,
+    "fluxCapacitors": 3,
     "fluxVents": 10,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_raguel",
     "hullMods": [
+        "fluxdistributor",
         "hardenedshieldemitter",
-        "heavyarmor",
-        "targetingunit",
         "magazines",
+        "targetingunit",
     ],
     "permaMods": [
         "automated",
@@ -18,25 +18,19 @@
     "variantId": "rat_raguel_Attack",
     "weaponGroups": [
         {
-            "autofire": false,
+            "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0006": "rat_seabream",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0005": "rat_humpback",
+                "WS0005": "rat_calypso",
+                "WS0006": "rat_cecaelia",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0001": "rat_shortfin",
-                "WS0002": "rat_shortfin",
+                "WS0001": "rat_lusca",
+                "WS0002": "rat_lusca",
             }
         },
     ],

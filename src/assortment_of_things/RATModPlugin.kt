@@ -5,6 +5,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
+import assortment_of_things.abyss.scripts.AbyssAmbientSoundPlayer
 import assortment_of_things.abyss.scripts.ForceNegAbyssalRep
 import assortment_of_things.abyss.scripts.HullmodRemoverListener
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
@@ -87,7 +88,7 @@ class RATModPlugin : BaseModPlugin() {
 
 
 
-      /*  for (artifact in ArtifactUtils.artifacts)
+        /*for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)
         }
@@ -97,11 +98,13 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmod.id), 3f)
         }
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_primordial_stream"), 3f)
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_upscale_protocol"), 3f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 30f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_charged_forge", null), 5f)*/
 
 
 
+        Global.getSector().addTransientScript(AbyssAmbientSoundPlayer())
         Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
         if (RATSettings.enableAbyss!!)
         {

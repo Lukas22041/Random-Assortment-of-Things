@@ -1,7 +1,7 @@
 {
     "displayName": "Support",
-    "fluxCapacitors": 1,
-    "fluxVents": 9,
+    "fluxCapacitors": 6,
+    "fluxVents": 8,
     "goalVariant": true,
     "hullId": "rat_merrow",
     "hullMods": [
@@ -16,31 +16,19 @@
     "variantId": "rat_merrow_Support",
     "weaponGroups": [
         {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "rat_lusca",
+                "WS0004": "rat_lusca",
+            }
+        },
+        {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0002": "railgun",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0001": "railgun",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0004": "ioncannon",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0003": "ioncannon",
+                "WS0001": "rat_asterina",
+                "WS0002": "rat_asterina",
             }
         },
     ],

@@ -1,0 +1,2 @@
+name,id,planetary,decivRemove,script,desc,icon,order
+Local Gravitational Dynamo,rat_grav_dynamo_condition,TRUE,,assortment_of_things.relics.conditions.GravitationalDynamoCondition,,graphics/icons/markets/rat_grav_dynamo_condition.png,500

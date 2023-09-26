@@ -1,12 +1,18 @@
 package assortment_of_things.abyss.misc
 
+import assortment_of_things.RATCampaignPlugin
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.fixVariant
+import assortment_of_things.misc.instantTeleport
+import assortment_of_things.strings.RATItems
+import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.InteractionDialogAPI
+import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.rules.MemKeys
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.characters.CharacterCreationData
@@ -24,10 +30,13 @@ import exerelin.campaign.ExerelinSetupData
 import exerelin.campaign.PlayerFactionStore
 import exerelin.campaign.customstart.CustomStart
 import exerelin.utilities.StringHelper
+import org.lazywizard.lazylib.MathUtils
+import java.util.*
 
 
 //Loosely based on the SoTF dustkeeper start
 class AbyssStart : CustomStart() {
+
     override fun execute(dialog: InteractionDialogAPI, memoryMap: MutableMap<String, MemoryAPI>) {
 
         val data = memoryMap[MemKeys.LOCAL]!!["\$characterData"] as CharacterCreationData
@@ -45,17 +54,17 @@ class AbyssStart : CustomStart() {
             return
         }
 
+        textPanel.addPara("Your fleet made the risky move to explore the unknown, venturing in to the depths.")
 
-        textPanel.addPara("You are the captain of a fleet that discovered a domain-era device that allows access to the \"Abyss\".\n" +
-                "After days of surving the unique terrain, a hostile fleet appeared with the signature of a unique hull that has not been recorded so far.\n\n" +
-                "Its presence on the battlefield was devastating, putting most ships in to a barely functioning state. " +
-                "However, eventualy the fleet turned out victorious, and to make up for the damage received, an effort has been made to recover the unique ship.")
+        textPanel.addPara("It encountered automated threats that it made quick work off, however in the process much of the fleet was lost. The decision was made to make new purpose of the defeated fleets, transfering and renovating them for your own use.")
 
         PlayerFactionStore.setPlayerFactionIdNGC(Factions.PLAYER)
         val tempFleet = FleetFactoryV3.createEmptyFleet(PlayerFactionStore.getPlayerFactionIdNGC(), FleetTypes.PATROL_SMALL, null)
-        addMember("rat_sarakiel_Standard", dialog, data, tempFleet)
+
 
         var tooltip = textPanel.beginTooltip()
+
+        tooltip.addSpacer(5f)
 
         var automatedIMG = tooltip.beginImageWithText("graphics/icons/skills/automated_ships.png", 48f)
         automatedIMG.addPara("Start with the \"Automated Ships\" skill.", 0f,
@@ -63,19 +72,29 @@ class AbyssStart : CustomStart() {
         tooltip.addImageWithText(0f)
 
         tooltip.addSpacer(10f)
-        var singularityIMG = tooltip.beginImageWithText("graphics/icons/abilities/rat_singularity_jump.png", 48f)
-        singularityIMG.addPara("Start with the \"Singularity Jump\" ability, allowing immediate access to the abyss.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "Singularity Jump")
+
+        var crewConversionIMG = tooltip.beginImageWithText("graphics/hullmods/rat_crew_conversion.png", 48f)
+        crewConversionIMG.addPara("The flagship has been converted for a human crew.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "crew")
         tooltip.addImageWithText(0f)
 
         tooltip.addSpacer(10f)
-        var conversionIMG = tooltip.beginImageWithText("graphics/hullmods/rat_crew_conversion.png", 48f)
-        conversionIMG.addPara("The \"Sarakiel\" has an alteration installed that alows humans to crew it instead of AI.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "Sarakiel")
+
+        var levelIMG = tooltip.beginImageWithText(data.characterData.person.portraitSprite, 48f)
+        levelIMG.addPara("Start at level 4.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "4")
         tooltip.addImageWithText(0f)
+
+        tooltip.addSpacer(5f)
 
         textPanel.addTooltip()
 
+        addMember("rat_aboleth_m_Attack", dialog, data, tempFleet)
+        addMember("rat_chuul_Attack", dialog, data, tempFleet)
+        addMember("rat_chuul_Strike", dialog, data, tempFleet)
+        addMember("rat_makara_Attack", dialog, data, tempFleet)
+        addMember("rat_makara_Strike", dialog, data, tempFleet)
+        addMember("rat_merrow_Attack", dialog, data, tempFleet)
 
         data.startingCargo.credits.add(250000f)
         AddRemoveCommodity.addCreditsGainText(250000, textPanel)
@@ -84,21 +103,30 @@ class AbyssStart : CustomStart() {
         tempFleet.fleetData.syncIfNeeded()
         tempFleet.forceSync()
 
+       /* var coordinates = MathUtils.getRandomPointInCircle(Vector2f(), 10000f)
+        data.startingLocationName = "Sea of Twilight"*/
 
-        var crew = 0f
+
         var fuel = 0f
         var supplies = 0f
         for (member in tempFleet.fleetData.membersListCopy) {
-            crew += (member.minCrew + ((member.maxCrew - member.minCrew) * 0.3f).toInt()).toInt()
-            fuel += (member.fuelCapacity.toInt() * 0.5f).toInt()
-            supplies += member.baseDeploymentCostSupplies.toInt() * 3
+            fuel += (member.fuelCapacity.toInt() * 0.8f).toInt()
+            supplies += (member.cargoCapacity.toInt() * 0.8f).toInt()
         }
 
+        var crew = 30f
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, Commodities.CREW, crew)
+        AddRemoveCommodity.addCommodityGainText(Commodities.CREW, crew.toInt(), textPanel)
+
+
+        data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, RATItems.CHRONOS_CORE, 3f)
+        data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, RATItems.COSMOS_CORE, 3f)
+
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, Commodities.FUEL, fuel)
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, Commodities.SUPPLIES, supplies)
 
-        AddRemoveCommodity.addCommodityGainText(Commodities.CREW, crew.toInt(), textPanel)
+        AddRemoveCommodity.addCommodityGainText(RATItems.CHRONOS_CORE, 3, textPanel)
+        AddRemoveCommodity.addCommodityGainText(RATItems.COSMOS_CORE, 3,textPanel)
         AddRemoveCommodity.addCommodityGainText(Commodities.FUEL, fuel.toInt(), textPanel)
         AddRemoveCommodity.addCommodityGainText(Commodities.SUPPLIES, supplies.toInt(),textPanel)
 
@@ -107,10 +135,9 @@ class AbyssStart : CustomStart() {
 
 
         data.addScript {
+
             val fleet = Global.getSector().playerFleet
 
-            Global.getSector().getCharacterData().memoryWithoutUpdate.set("\$rat_abyssWithCustomStart", true)
-            Global.getSector().getCharacterData().addAbility("rat_singularity_jump_ability")
             Global.getSector().getPlayerPerson().getStats().setSkillLevel(Skills.AUTOMATED_SHIPS, 1f);
 
             NGCAddStandardStartingScript.adjustStartingHulls(fleet)
@@ -119,11 +146,16 @@ class AbyssStart : CustomStart() {
 
                 member.fixVariant()
 
-                if (member.baseOrModSpec().hullId == "rat_sarakiel")
-                member.variant.addPermaMod("rat_abyssal_conversion", true)
+                if (member.baseOrModSpec().hullId == "rat_aboleth_m") {
+                    member.variant!!.addPermaMod("rat_chronos_conversion", true)
+                    member.isFlagship = true
+                    fleet.fleetData.setFlagship(member)
+                }
+
+
 
                 val max = member.repairTracker.maxCR
-                member.repairTracker.cr = max
+                member.repairTracker.cr = 0.7f
 
             }
 
@@ -134,7 +166,16 @@ class AbyssStart : CustomStart() {
                 member.repairTracker.cr = max
             }
 
+            var player = Global.getSector().playerFleet.commanderStats
+            var plugin = Global.getSettings().levelupPlugin
+            for (i in 0 until 3) {
+                var amount = plugin.getXPForLevel(Math.min(plugin.getMaxLevel(), player.getLevel() + 1)) - player.getXP();
+                var added = Math.min(amount, plugin.getXPForLevel(plugin.getMaxLevel()))
+                player.addXP(added)
+            }
+
             fleet.fleetData.setSyncNeeded()
+
         }
 
         dialog.visualPanel.showFleetInfo(StringHelper.getString("exerelin_ngc", "playerFleet", true),
@@ -146,17 +187,19 @@ class AbyssStart : CustomStart() {
 
 
 
-    fun addMember(variantID: String, dialog: InteractionDialogAPI, data: CharacterCreationData, fleet: CampaignFleetAPI) {
+    fun addMember(variantID: String, dialog: InteractionDialogAPI, data: CharacterCreationData, fleet: CampaignFleetAPI, core: String? = null) {
         data.addStartingFleetMember(variantID, FleetMemberType.SHIP)
         val member: FleetMemberAPI = Global.getFactory().createFleetMember(FleetMemberType.SHIP, variantID)
         fleet.fleetData.addFleetMember(member)
         member.repairTracker.cr = 0.7f
 
-        if (variantID == "rat_sarakiel_Standard") {
-            member.fixVariant()
-            member.variant.addPermaMod("rat_abyssal_conversion", true)
+        if (member.baseOrModSpec().hullId == "rat_aboleth_m") {
+            member.variant!!.addPermaMod("rat_chronos_conversion", true)
+            member.isFlagship = true
+            fleet.fleetData.setFlagship(member)
         }
 
-        AddRemoveCommodity.addFleetMemberGainText(member.variant, dialog.textPanel)
+
+       // AddRemoveCommodity.addFleetMemberGainText(member.variant, dialog.textPanel)
     }
 }

@@ -93,7 +93,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
         tooltip.addRow(
             Alignment.MID, Misc.getTextColor(), "Saving Grace Stacks",
-            Alignment.MID, sectorColor, "15",
+            Alignment.MID, sectorColor, "20",
             Alignment.MID, abyssColor, "30",
         )
 
@@ -189,11 +189,11 @@ class AbyssalSeraphsGrace : BaseHullMod() {
         var damageSoFar = 0f
         var stacks = ArrayList<SeraphsGraceStack>()
 
-        var maxStacks = 10
+        var maxStacks = 20
 
         init {
             if (isInAbyss) maxStacks = 30
-            else maxStacks = 15
+            else maxStacks = 20
         }
 
         override fun advance(amount: Float) {

@@ -1,7 +1,6 @@
 package assortment_of_things.abyss.items
 
 import assortment_of_things.abyss.hullmods.BaseAlteration
-import assortment_of_things.scripts.AtMarketListener
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoStackAPI
 import com.fs.starfarer.api.campaign.CargoTransferHandlerAPI
@@ -164,6 +163,21 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)
 
+    }
+
+    override fun createTooltip(tooltip: TooltipMakerAPI,  expanded: Boolean, transferHandler: CargoTransferHandlerAPI?, stackSource: Any?, useGray: Boolean) {
+        val opad = 10f
+        tooltip.addTitle(name)
+        val design = hullmodSpec!!.manufacturer
+        Misc.addDesignTypePara(tooltip, design, opad)
+        if (!spec.desc.isEmpty()) {
+            var c = Misc.getTextColor()
+            if (useGray) c = Misc.getGrayColor()
+            tooltip.addPara(spec.desc, c, opad)
+        }
+        if (javaClass == BaseSpecialItemPlugin::class.java) {
+            addCostLabel(tooltip, opad, transferHandler, stackSource)
+        }
     }
 
     override fun hasRightClickAction(): Boolean {

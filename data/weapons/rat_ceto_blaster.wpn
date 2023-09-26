@@ -31,6 +31,6 @@
 	"projectileSpecId":"rat_ceto_shot",  # projectile that will be fired
 	"stopPreviousFireSound":false,
 	#"fireSoundOne":"heavy_machinegun_intro",
-	"fireSoundTwo":"rat_ceto_shot",
+	"fireSoundTwo":"abyss_lusca",
 	#"fireSoundTwo":"plasma_cannon_fire",
 }

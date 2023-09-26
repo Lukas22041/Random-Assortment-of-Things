@@ -1,6 +1,6 @@
 {
     "displayName": "Strike",
-    "fluxCapacitors": 8,
+    "fluxCapacitors": 9,
     "fluxVents": 10,
     "goalVariant": true,
     "hullId": "rat_sariel",
@@ -37,7 +37,13 @@
             "mode": "LINKED",
             "weapons": {
                 "WS0001": "rat_humpback",
-                "WS0002": "rat_humpback",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "rat_cecaelia",
             }
         },
     ],

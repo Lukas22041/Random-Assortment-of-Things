@@ -29,13 +29,17 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
         if (market.isHidden) return false
         if (market.factionId == Factions.PIRATES) return false
 
+        var existingIntel = Global.getSector().intelManager.getIntel(ArchivistIntel::class.java) as MutableList<ArchivistIntel>
         var entities = RelicsUtils.getAllRelicStations()
         entities = entities.filter { it.isDiscoverable && !it.isExpired }
+        entities = entities.filter { entity -> existingIntel.none { other -> other.entity == entity } }
         if (entities.isNotEmpty()) {
             return true
         }
         return false
     }
+
+
 
     override fun isDialogFinished(): Boolean {
 
@@ -130,8 +134,12 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
 
 
                 dialog.optionPanel.clearOptions()
+                var existingIntel = Global.getSector().intelManager.getIntel(ArchivistIntel::class.java) as MutableList<ArchivistIntel>
                 var entities = RelicsUtils.getAllRelicStations()
+
                 entities = entities.filter { it.isDiscoverable && !it.isExpired }
+                entities = entities.filter { entity -> existingIntel.none { other -> other.entity == entity } }
+
                 var entity = entities.random()
 
 

@@ -1,0 +1,22 @@
+{
+	"id":"rat_cecaelia_shot",
+	"specClass":"projectile",
+	"spawnType":"BALLISTIC_AS_BEAM",
+	"collisionClass":"RAY",
+	"collisionClassByFighter":"RAY_FIGHTER",
+	"length":30.0,
+	"width":9,
+	"glowRadius":20,
+	"hitGlowRadius":20,
+	"fadeTime":0.25,
+	"fringeColor":[85, 199, 40,255],
+	"coreColor":[85, 199, 40,255],
+	"glowColor":[85, 199, 40, 75],
+	#"coreColor":[255,255,255,50],
+	"textureType":"SMOOTH",  # only needed for BEAM spawnType
+	"textureScrollSpeed":-256,
+	"pixelsPerTexel":5.0,
+	#"bulletSprite":"graphics/weapons/abyss/proj/burst_energy_projectile.png"
+	"onFireEffect":"assortment_of_things.abyss.weapons.CecaeliaEffect",
+	"passThroughMissiles":true,
+}

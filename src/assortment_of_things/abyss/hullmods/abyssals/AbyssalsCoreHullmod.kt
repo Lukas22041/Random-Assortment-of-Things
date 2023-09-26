@@ -120,7 +120,8 @@ class AbyssalsCoreHullmod : BaseHullMod() {
 
     }
 
-    class AbyssalCoreRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin(CombatEngineLayers.ABOVE_SHIPS_LAYER) {
+    class
+    AbyssalCoreRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin(CombatEngineLayers.ABOVE_SHIPS_LAYER) {
 
         var fader = FaderUtil(1f, 0.3f, 0.2f, false, false)
         var sprite: SpriteAPI? = null
@@ -178,9 +179,17 @@ class AbyssalsCoreHullmod : BaseHullMod() {
             if (ship.captain == null && !isHullmodIntegration(ship)) return
             if ((ship.captain != null && ship.captain.isAICore) || isHullmodIntegration(ship))
             {
+
+                if (ship.baseOrModSpec().hullId == "rat_aboleth" || ship.baseOrModSpec().hullId == "rat_aboleth_m" || ship.baseOrModSpec().hullId == "rat_makara" ) {
+                    for (weapon in ship.allWeapons.filter { it.isDecorative }) {
+                        weapon.sprite.color = Color(0, 0, 0, (254 * ship.system.effectLevel * 0.5).toInt())
+                    }
+                }
+
                 if (ship.isPhased)
                 {
-                    if (ship.baseOrModSpec().hullId == "rat_aboleth" || ship.baseOrModSpec().hullId == "rat_aboleth_m")
+
+                    if (ship.baseOrModSpec().hullId == "rat_aboleth" || ship.baseOrModSpec().hullId == "rat_aboleth_m" || ship.baseOrModSpec().hullId == "rat_makara" )
                     {
                         if (phaseSprite == null)
                         {

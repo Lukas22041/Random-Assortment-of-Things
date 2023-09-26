@@ -5,6 +5,8 @@ name,id,tier,rarity,base value,range,damage/second,damage/shot,emp,impact,turn r
 Shortfin PD,rat_shortfin,1,,300,300,,15,,1,75,4,,,,ENERGY,1.25,,0,0.075,1,,0,8,1,15,,800,,,10,,,PD,"rat_abyssals, no_sell, no_dealer, restricted, pd8",,Abyssal,,Point Defense,,,,,,,,,,900
 Instability Blaster,rat_ceto_blaster,2,,2000,500,,15,,5,15,0,,,,ENERGY,20,,0,0.7,4,0.10,0,5,0.5,15,,800,,,30,,,,"no_sell, no_drop, no_dealer, restricted, kinetic8",,Abyssal,,Anti Shield,,,,,"%s
 Impacts on hull or armor add a stack of %s to the target, each stack lasts %s seconds and increases the damage taken by hull and armor by %s. A ship can have at most %s stacks.",Spatial Instability | instability | 3 | 0.5% | 30,,,,901
+Lusca Blaster,rat_lusca,2,,2000,500,,25,,5,20,6,,,,KINETIC,20,,0,0.7,3,0.15,0,5,0.5,15,,800,,,30,,,,"rat_abyssals, no_sell, no_dealer, restricted, kinetic12",,Abyssal,,Anti Shield,,,,,"%s
+Impacts on hull or armor add a stack of %s to the target, each stack lasts %s seconds and increases the damage taken by hull and armor by %s. A ship can have at most %s stacks.",Spatial Instability | instability | 3 | 0.5% | 30,,,,901
 Humpback Blaster,rat_humpback,2,,2000,600,,50,,5,15,13,,,,KINETIC,55,,0,0.6,4,0.15,0,5,0.5,15,,800,,,30,,,,"rat_abyssals, no_sell, no_dealer, restricted, kinetic15",,Abyssal,,Anti Shield,,,,,"%s
 Impacts on hull or armor add a stack of %s to the target, each stack lasts %s seconds and increases the damage taken by hull and armor by %s. A ship can have at most %s stacks.",Spatial Instability | instability | 3 | 0.5% | 30,,,,901
 Haddock Blaster,rat_haddock,3,,3000,700,,140,,5,10,20,,,,KINETIC,150,,0,1,3,0.2,0,5,1,15,,700,,,30,,,,"rat_abyssals, no_sell, no_dealer, restricted, kinetic20",,Abyssal,,Anti Shield,,,,,"%s
@@ -18,9 +20,12 @@ Seadragon DEM Launcher,rat_seadragon,2,,2000,2000,,450,,15,20,12,6,0.125,3,ENERG
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Asterina,rat_asterina,1,,300,1000,60,,,0,20,5,,,,KINETIC,,60,0.1,0.1,,,,,,,2400,,,,,,,,"rat_abyssals, no_sell, no_dealer, restricted, beam10, kinetic9",,Abyssal,,Supression,,,,,Deals up to %s damage against shields of targets that are at low flux levels. Deals up to %s damage against targets with high flux levels.,25% more | 25% less,,,,904
 Asterias,rat_asterias,2,,1800,1000,120,,,10,15,10,,,,KINETIC,,105,0.1,0.1,,,,,,,2400,,,,,,,,"rat_abyssals, no_sell, no_dealer, restricted, beam13, kinetic12",,Abyssal,,Supression,,,,,Deals up to %s damage against shields of targets that are at low flux levels. Deals up to %s damage against targets with high flux levels.,25% more | 25% less,,,,905
-Seabream,rat_seabream,1,,2500,700,750,,,0,20,12,2,0.15,1,HIGH_EXPLOSIVE,,700,0.5,0.5,1,1,,,,,3200,,,,,,,USE_LESS_VS_SHIELDS,"rat_abyssals, no_sell, no_dealer, restricted, energy15, beam11",,Abyssal,,General,,,,,The beam deals an additional %s of damage as %s damage.,20% | fragmentation,,,,906
+Seabream,rat_seabream,1,,2500,700,750,,,0,20,12,2,0.15,1,HIGH_EXPLOSIVE,,700,0.5,0.5,1,1,,,,,3200,,,,,,,USE_LESS_VS_SHIELDS,"rat_abyssals, no_sell, no_dealer, restricted, energy15, beam11",,Abyssal,,Anti Armor,,,,,The beam deals an additional %s of damage as %s damage.,20% | fragmentation,,,,906
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+#Seraph Weapons,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Cecaelia Shotgun,rat_cecaelia,2,,2000,500,,300,200,5,15,12,,,,ENERGY,250,,0,1,1,0,0,0,0,0,,800,,,30,,,,"rat_seraph, no_sell, no_dealer, restricted, energy16",,Seraph,,General,,,,,Splits in to %s different projectiles on fire. The damage is %s across all split projectiles. The pellets can pierce through missiles.,8 | spread,,,,901
+Calypso Pulser,rat_calypso,2,,2000,500,,90,,5,15,12,30,2.5,3,HIGH_EXPLOSIVE,75,,0.05,0.05,3,0.1,3,15,1,4,,900,,,30,,,USE_LESS_VS_SHIELDS,"rat_seraph, no_sell, no_dealer, restricted, he16",,Seraph,,Anti Armor,,,,,,,,,,901
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Abyss Builtin,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -37,6 +42,9 @@ Aboleth Mount Right,aboleth_mount_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,
 Chuul Cover,chuul_cover,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Morkoth Cover,morkoth_cover,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Makara Cover Left,rat_makara_cover_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
+Makara Cover Right,rat_makara_cover_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Seraph Decos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Seraph Lensflare,rat_seraph_lensflare,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

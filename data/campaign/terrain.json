@@ -8,7 +8,7 @@
 		"loopFour":"terrain_hyperspace_storm",
 		"custom":{
 
-			"stormSound":"terrain_hyperspace_lightning",
+			"stormSound":"rat_abyss_storm_sounds",
 		},
 	},
 	"rat_depths_darkness":{

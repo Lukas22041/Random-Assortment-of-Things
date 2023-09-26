@@ -1,11 +1,11 @@
 {
-	#"starts":[
-	#	{
-	#		"id":"rat_abyssStart",
-	#		"name":"Abyssal Adventurer",
-	#		"difficulty":"Easy",
-	#		"desc":"You start as a commander that made a discovery of a tool that allows access to a place with treasure unavailable to anyone before you.",
-	#		"className":"assortment_of_things.abyss.misc.AbyssStart",
-	#	},
-	#],
+	"starts":[
+		{
+			"id":"rat_abyssStart",
+			"name":"Abyssal Adventurer",
+			"difficulty":"Easy",
+			"desc":"Your fleet made the risky move to explore the unknown, venturing in to the depths.",
+			"className":"assortment_of_things.abyss.misc.AbyssStart",
+		},
+	],
 }

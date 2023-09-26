@@ -1,0 +1,34 @@
+{
+	"id":"rat_lusca",  # this id must match what's in the spreadsheet
+	"specClass":"projectile",
+	"type":"ENERGY",
+	"size":"SMALL",
+	#"displayArcRadius":300,
+	
+	"turretSprite":"graphics/weapons/abyss/rat_lusca_turret.png",
+	"turretGlowSprite":"graphics/weapons/abyss/rat_lusca_turret_glow.png",
+
+	"hardpointSprite":"graphics/weapons/abyss/rat_lusca_hardpoint.png",
+	"hardpointGlowSprite":"graphics/weapons/abyss/rat_lusca_hardpoint_glow.png",	
+	
+	"turretOffsets":[0, 0],
+	"turretAngleOffsets":[0],
+	"hardpointOffsets":[0, 0],
+	"hardpointAngleOffsets":[0],
+	"specialWeaponGlowWidth":15,
+	"specialWeaponGlowHeight":25,
+	"barrelMode":"ALTERNATING_BURST", # or LINKED.  whether barrels fire at the same time or alternate.
+	"animationType":"GLOW_AND_FLASH",
+	"muzzleFlashSpec":{"length":5.0,   # only used if animationType = MUZZLE_FLASH
+					   "spread":4.0,
+					   "particleSizeMin":8.0,
+					   "particleSizeRange":12.0,
+					   "particleDuration":0.1,
+					   "particleCount":12,
+					   "particleColor": [46, 230, 163, 100]},
+	"projectileSpecId":"rat_lusca_shot",  # projectile that will be fired
+	"stopPreviousFireSound":false,
+	#"fireSoundOne":"heavy_machinegun_intro",
+	"fireSoundTwo":"abyss_lusca",
+	#"fireSoundTwo":"plasma_cannon_fire",
+}

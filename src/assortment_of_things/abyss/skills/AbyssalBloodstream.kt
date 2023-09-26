@@ -23,7 +23,7 @@ class AbyssalBloodstream : RATBaseShipSkill() {
 
         info.addSpacer(5f)
 
-        info!!.addPara("-20%% ballistic & energy weapon range.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        info!!.addPara("-10%% ballistic & energy weapon range.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         info!!.addPara("+15%% damage taken.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
 
         info.addSpacer(2f)
@@ -34,8 +34,8 @@ class AbyssalBloodstream : RATBaseShipSkill() {
         stats!!.energyWeaponDamageMult.modifyMult(modID, 1.2f)
         stats.ballisticWeaponDamageMult.modifyMult(modID, 1.2f)
 
-        stats.energyWeaponRangeBonus.modifyMult(modID, 0.8f)
-        stats.ballisticWeaponRangeBonus.modifyMult(modID, 0.8f)
+        stats.energyWeaponRangeBonus.modifyMult(modID, 0.9f)
+        stats.ballisticWeaponRangeBonus.modifyMult(modID, 0.9f)
 
         stats.shieldAbsorptionMult.modifyMult(modID, 1.15f)
         stats.armorDamageTakenMult.modifyMult(modID, 1.15f)

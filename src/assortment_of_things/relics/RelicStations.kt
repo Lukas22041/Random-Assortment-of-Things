@@ -1,17 +1,19 @@
 package assortment_of_things.relics
 
-import assortment_of_things.relics.entities.EventGeneratorEntity
 import assortment_of_things.relics.entities.GeneratorInputListener
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.characters.PersonAPI
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.MemFlags
-import com.fs.starfarer.api.impl.campaign.ids.Personalities
-import com.fs.starfarer.api.impl.campaign.ids.Terrain
+import com.fs.starfarer.api.fleet.FleetMemberType
+import com.fs.starfarer.api.impl.campaign.ids.*
+import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.LocationType
+import com.fs.starfarer.api.impl.campaign.procgen.themes.OmegaOfficerGeneratorPlugin
 import org.lazywizard.lazylib.MathUtils
+import org.magiclib.kotlin.initConditionMarket
 import java.awt.Color
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RelicStations {
 
@@ -120,6 +122,43 @@ class RelicStations {
                 it.memoryWithoutUpdate.set("\$rat_prisoners", people)
             }
         },
+
+        RelicStation("rat_gravitational_dynamo").apply {
+            systemFilter = { system -> system.planets.any { it.typeId == "black_hole" } && system.planets.filter { !it.isStar }.isNotEmpty() }
+            weight = 1000f
+
+            postGeneration = { station ->
+                var blackhole = station.containingLocation.planets.find { it.typeId == "black_hole" }
+                station.setCircularOrbit(blackhole, MathUtils.getRandomNumberInRange(0f, 360f), blackhole!!.radius + station.radius + 250f, 120f)
+
+                var fleet = Global.getFactory().createEmptyFleet(Factions.REMNANTS, "Automated Defenses", false)
+                fleet.isNoFactionInName = true
+
+                var variants = listOf("facet_Attack", "facet_Shieldbreaker")
+
+                for (variant in variants) {
+                    var member = Global.getFactory().createFleetMember(FleetMemberType.SHIP, variant)
+                    fleet.fleetData.addFleetMember(member)
+
+                    member.repairTracker.cr = member.repairTracker.maxCR
+                    member.variant.addTag(Tags.VARIANT_DO_NOT_DROP_AI_CORE_FROM_CAPTAIN)
+                    member.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
+                }
+
+                var officerGenerator = OmegaOfficerGeneratorPlugin()
+                officerGenerator.addCommanderAndOfficers(fleet, null, Random())
+
+                station.memoryWithoutUpdate.set("\$defenderFleet", fleet)
+
+                var planets = station.containingLocation.planets.filter { !it.isStar }
+                for (planet in planets) {
+                    var market = planet.market ?: continue
+                    market.addCondition("rat_grav_dynamo_condition")
+                    var condition = market.getFirstCondition("rat_grav_dynamo_condition")
+                    condition.isSurveyed = true
+                }
+            }
+        }
 
       /*  RelicStation("rat_event_generator").apply {
             systemFilter = { system -> system.hasBlackHole() }
