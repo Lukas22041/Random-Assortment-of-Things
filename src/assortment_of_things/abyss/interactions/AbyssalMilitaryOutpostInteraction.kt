@@ -32,10 +32,9 @@ class AbyssalMilitaryOutpostInteraction : RATInteractionPlugin() {
 
             textPanel.addPara("You make way through the outpost, all valueables seem to have been taken when the last man left. However you soon discover the controls for some kind of modification bay on the station.")
 
-            textPanel.addPara("This bay appears to use technology developed with abyssal matter to improve the energy mounts on a ship. It is able to decrease the ordnance cost of energy weapons by 1/2/3 based on mount size. " +
-                    "However, the bay is not large enough to be able to service capital ships, and the stations capacitators can likely only sustain operation on one single ship.",
-            Misc.getTextColor(), Misc.getHighlightColor(),
-            "ordnance cost", "energy weapons", "1/2/3", "capital ships", "one single ship")
+            textPanel.addPara("This bay appears to use technology developed with abyssal matter to improve the energy mounts on a ship. It is able to decrease the ordnance cost of energy weapons by 1/2/3 based on mount size. " + "However, the bay is not large enough to be able to service capital ships, and the stations capacitators can likely only sustain operation on one single ship.",
+                Misc.getTextColor(), Misc.getHighlightColor(),
+                "ordnance cost", "energy weapons", "1/2/3", "capital ships", "one single ship")
 
             createOption("Select a ship") {
 

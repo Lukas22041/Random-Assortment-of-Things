@@ -10,15 +10,10 @@ import com.fs.starfarer.api.impl.campaign.FleetEncounterContext
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.FIDConfig
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
-import com.fs.starfarer.api.impl.campaign.ids.Sounds
-import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageEntityGeneratorOld
 import com.fs.starfarer.api.impl.campaign.rulecmd.DismissDialog
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.FleetAdvanceScript
-import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageGenFromSeed.SDMParams
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageGenFromSeed.SalvageDefenderModificationPlugin
-import com.fs.starfarer.api.impl.campaign.terrain.DebrisFieldTerrainPlugin.DebrisFieldParams
-import com.fs.starfarer.api.impl.campaign.terrain.DebrisFieldTerrainPlugin.DebrisFieldSource
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.CustomPanelAPI
@@ -50,7 +45,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
     var negativeColor = Misc.getNegativeHighlightColor()
     var textColor = Misc.getTextColor()
 
-    var optionFunctions: MutableMap<String, RATInteractionPlugin.() -> Unit> = HashMap()
+    var optionFunctions: MutableMap<String, RATInteractionPlugin.(String) -> Unit> = HashMap()
 
     //Innitiates and executes the main dialog method
     final override fun init(dialog: InteractionDialogAPI) {
@@ -71,10 +66,18 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
 
     abstract fun init()
 
-    fun createOption(optionName: String, function: RATInteractionPlugin.() -> Unit)
+   /* fun createOption(optionName: String, function: RATInteractionPlugin.(String) -> Unit)
     {
         optionPanel.addOption(optionName, optionName)
         optionFunctions.put(optionName, function)
+    }*/
+
+    fun createOption(vararg optionName: String, function: RATInteractionPlugin.(String) -> Unit)
+    {
+        for (entry in optionName) {
+            optionPanel.addOption(entry, entry)
+            optionFunctions.put(entry, function)
+        }
     }
 
     override fun optionSelected(optionText: String?, optionData: Any?)
@@ -89,7 +92,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
             if (key == optionText)
             {
                 textPanel.addPara(key, Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
-                value()
+                value(key)
             }
         }
     }
@@ -300,7 +303,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
 
                         selectionGroup = "people"
 
-                        var unapplicable = officer == Global.getSector().playerPerson && unapplicableToPlayer
+                        var unapplicable = (officer == Global.getSector().playerPerson && unapplicableToPlayer) || officer.hasTag("rat_dont_allow_for_skills")
 
                         if (!unapplicable) {
                             onClick {
@@ -333,7 +336,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
                         img.addPara("Name: ${officer.nameString}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Name:")
                         img.addPara("Personality: ${officer.getPersonalityName()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Personality:")
                         img.addSpacer(5f)
-                        if (unapplicable) img.addNegativePara("Can not be applied to the player.")
+                        if (unapplicable) img.addNegativePara("Can not be applied to this officer.")
                         innerElement.addImageWithText(0f)
                     }
 

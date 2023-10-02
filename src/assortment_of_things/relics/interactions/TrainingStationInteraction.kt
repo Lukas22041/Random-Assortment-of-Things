@@ -21,12 +21,9 @@ class TrainingStationInteraction : RATInteractionPlugin() {
 
             textPanel.addPara("\"///ERROR: UNAUTHORISED INDIVIDUAL DETECTED///\"")
 
-            textPanel.addPara("As you take a step away, the door opens once again. When you send an officer to the same spot, the door remains open. " +
-                    "It appears that for some unknown reason only your officers can enter the the training chambers. ")
+            textPanel.addPara("As you take a step away, the door opens once again. When you send an officer to the same spot, the door remains open. " + "It appears that for some unknown reason only your officers can enter the the training chambers. ")
 
-            textPanel.addPara("Your engineers perform an analysis on the facilities power grid, with what is left only one officer has the option of entering a chamber. " +
-                    "Performing training in this station may unlock further potential for an officer of your choice.", Misc.getTextColor(), Misc.getHighlightColor(), "" +
-                    "one")
+            textPanel.addPara("Your engineers perform an analysis on the facilities power grid, with what is left only one officer has the option of entering a chamber. " + "Performing training in this station may unlock further potential for an officer of your choice.", Misc.getTextColor(), Misc.getHighlightColor(), "" + "one")
 
             createOption("Pick an officer") {
                 createOfficerPicker(true) {

@@ -22,6 +22,24 @@ class CombatHandler : EveryFrameCombatPlugin
 
     override fun init(engine: CombatEngineAPI?)  {
 
+
+       /* engine!!.addPlugin(object : BaseEveryFrameCombatPlugin() {
+            var played = false
+            override fun advance(amount: Float, events: List<InputEventAPI>) {
+                if (played || engine.isPaused()) return
+                if (engine.getTotalElapsedTime(false) > 1f) {
+                    try {
+                        Global.getSoundPlayer().playCustomMusic(1, 0, "rat_test", true)
+                    } catch (e: Exception) {
+                        Global.getLogger(this.javaClass).error("Failed to play music set rat_test", e)
+                    }
+                    played = true
+                }
+            }
+        })*/
+
+
+
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {
             var system = Global.getSector()?.playerFleet?.starSystem ?: return
@@ -76,12 +94,23 @@ class CombatHandler : EveryFrameCombatPlugin
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
     }
 
+
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?)
     {
         /*if (ArtifactUtils.getActiveArtifact() != null)
         {
             ArtifactUtils.getActivePlugin()!!.advanceInCombat(Global.getSector().playerFleet, ArtifactUtils.STAT_MOD_ID)
         }*/
+
+       /* var playership = Global.getCombatEngine().playerShip
+        var ships = Global.getCombatEngine().ships
+        for (ship in ships) {
+            if (playership == null) break
+            if (ship == playership) continue
+            ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.ESCORT_OTHER_SHIP, 1f, playership)
+        }*/
+
+
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {

@@ -37,6 +37,7 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
             return true
         }
         return false
+
     }
 
 
@@ -154,7 +155,7 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
                         Misc.getTextColor(), Misc.getHighlightColor(), "${entity.name}", "${entity.starSystem.nameWithNoType}")
                 }
 
-                text.addPara("Since there are no previous records of it, so it would be likely quite that none or few salvagers have yet set foot on it. " +
+                text.addPara("Since there are no previous records of it, so it would be quite likely that none or few salvagers have yet set foot on it. " +
                         "I dont care about what happens with the structure, aslong as you send me the data i want.\"")
 
                 dialog.visualPanel.showMapMarker(entity, "Desination: ${entity.starSystem}", Misc.getHighlightColor(), false, "", "", setOf())
@@ -163,6 +164,7 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
                 Global.getSector().addScript(intel)
                 Global.getSector().intelManager.addIntel(intel)
                 Global.getSector().intelManager.addIntelToTextPanel(intel, text)
+                intel.isImportant = true
 
                 person.memoryWithoutUpdate.set("\$rat_knownByPlayer", true)
 

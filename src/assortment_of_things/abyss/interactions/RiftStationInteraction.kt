@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.interactions
 
-import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATInteractionPlugin
@@ -35,6 +34,7 @@ class RiftStationInteraction : RATInteractionPlugin() {
 
             addOptions()
         }
+
     }
 
 

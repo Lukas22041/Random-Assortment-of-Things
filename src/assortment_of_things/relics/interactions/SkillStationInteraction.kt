@@ -6,7 +6,6 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
 import com.fs.starfarer.api.campaign.CustomDialogDelegate
 import com.fs.starfarer.api.characters.PersonAPI
-import com.fs.starfarer.api.characters.SkillSpecAPI
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.ui.BaseTooltipCreator
@@ -14,12 +13,8 @@ import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import lunalib.backend.ui.components.util.TooltipHelper
 import lunalib.lunaExtensions.addLunaElement
-import lunalib.lunaExtensions.openLunaCustomPanel
-import lunalib.lunaUI.panel.LunaBaseCustomPanelPlugin
 import org.lwjgl.input.Keyboard
-import org.magiclib.kotlin.addOfficerGainText
 import org.magiclib.kotlin.getPersonalityName
 
 class SkillStationInteraction : RATInteractionPlugin() {
@@ -43,16 +38,12 @@ class SkillStationInteraction : RATInteractionPlugin() {
         createOption("Explore") {
             clearOptions()
 
-            textPanel.addPara("Your salvage team works through the facility, shifting through offices oppressed with inert and burnt out personal computers, stalking through laboratories littered with fine but broken scientific equipment, and passing through patient rooms rotted with mold and dust.\n\n" +
-                    "Suddenly there's a ripple through the comms, first one salvor, then another chirping loudly in amazement at their discovery. You watch as the telemetry feed is put onto the main screen and...there it is.\n\n" +
-                    " A bio-reconstructor. ", Misc.getTextColor(), Misc.getHighlightColor(), "bio-reconstructor")
+            textPanel.addPara("Your salvage team works through the facility, shifting through offices oppressed with inert and burnt out personal computers, stalking through laboratories littered with fine but broken scientific equipment, and passing through patient rooms rotted with mold and dust.\n\n" + "Suddenly there's a ripple through the comms, first one salvor, then another chirping loudly in amazement at their discovery. You watch as the telemetry feed is put onto the main screen and...there it is.\n\n" + " A bio-reconstructor. ", Misc.getTextColor(), Misc.getHighlightColor(), "bio-reconstructor")
 
             createOption("Continue") {
                 clearOptions()
 
-                textPanel.addPara("You scarcely believe that you have stumbled upon it - these miraculous devices were nothing more than myth during the time of the Domain, and after its fall these devices were consigned firmly to drunken rumor and magical cure-alls used in movie-holos.\n\n" +
-                        "But here one sits, active and functional on your telemetry feed.\n\n" +
-                        "You consider your options as the salvors gawk at the device, and your Sensor Officer records every detail they can of the device under the badgering of your head Engineer.",
+                textPanel.addPara("You scarcely believe that you have stumbled upon it - these miraculous devices were nothing more than myth during the time of the Domain, and after its fall these devices were consigned firmly to drunken rumor and magical cure-alls used in movie-holos.\n\n" + "But here one sits, active and functional on your telemetry feed.\n\n" + "You consider your options as the salvors gawk at the device, and your Sensor Officer records every detail they can of the device under the badgering of your head Engineer.",
                     Misc.getTextColor(), Misc.getHighlightColor(), "active and functional")
 
                 textPanel.addPara("This specific device can perform the following change.")
@@ -96,7 +87,7 @@ class SkillStationInteraction : RATInteractionPlugin() {
 
                                     selectionGroup = "people"
 
-                                    var unapplicable = officer == Global.getSector().playerPerson && skillSpec.id == "rat_augmented"
+                                    var unapplicable = (officer == Global.getSector().playerPerson && skillSpec.id == "rat_augmented") || officer.hasTag("rat_dont_allow_for_skills")
 
                                     if (!unapplicable) {
                                         onClick {
@@ -110,8 +101,7 @@ class SkillStationInteraction : RATInteractionPlugin() {
                                     advance {
                                         if (officer == selected) {
                                             backgroundAlpha = 0.7f
-                                        }
-                                        else {
+                                        } else {
                                             backgroundAlpha = 0.4f
                                         }
                                     }
@@ -129,7 +119,7 @@ class SkillStationInteraction : RATInteractionPlugin() {
                                     img.addPara("Name: ${officer.nameString}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Name:")
                                     img.addPara("Personality: ${officer.getPersonalityName()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Personality:")
                                     img.addSpacer(5f)
-                                    if (unapplicable) img.addNegativePara("Can not be applied to the player.")
+                                    if (unapplicable) img.addNegativePara("Can not be applied to this person.")
                                     innerElement.addImageWithText(0f)
                                 }
 

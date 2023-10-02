@@ -8,6 +8,7 @@ object RelicsUtils {
     var RELICS_STATION_KEY = "\$rat_relic_stations"
     var RELICS_SYSTEM_TAG = "rat_has_relic"
     var RELICS_ENTITY_TAG = "rat_relic_station"
+    var RELICS_CONDITION_TAG = "rat_relic_condition"
 
     fun addRelicsStationToMemory(entity: SectorEntityToken)
     {

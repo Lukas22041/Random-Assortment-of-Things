@@ -28,7 +28,7 @@ class ComputationalMatrix : BaseArtifactPlugin() {
         if (stats.variant.hasHullMod(HullMods.AUTOMATED)) {
             if (!Automated.isAutomatedNoPenalty(stats))
             {
-                stats.maxCombatReadiness.modifyFlat(id, 0.15f)
+                stats.maxCombatReadiness.modifyFlat(id, 0.15f, "Computation Matrix")
             }
         }
     }

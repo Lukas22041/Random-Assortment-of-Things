@@ -1,6 +1,5 @@
 package assortment_of_things.relics.interactions
 
-import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
@@ -22,8 +21,7 @@ class SpatialLaboratoryInteraction : RATInteractionPlugin() {
 
         createOption("Continue") {
             clearOptions()
-            textPanel.addPara("You dock near the station and make your way through the maze of abandoned test chambers, particle accelerators and antimatter production facilities. " +
-                    "Eventually you make it to the inventory area of the station, full of distinctive treasure.")
+            textPanel.addPara("You dock near the station and make your way through the maze of abandoned test chambers, particle accelerators and antimatter production facilities. " + "Eventually you make it to the inventory area of the station, full of distinctive treasure.")
 
             createOption("Loot") {
                 var random = Random(interactionTarget.getSalvageSeed())

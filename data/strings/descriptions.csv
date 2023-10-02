@@ -74,7 +74,7 @@ rat_seabream,WEAPON,A burst beam weapon that can do effective damage against the
 ,,,,,,
 #Relics,,,,,,
 ,,,,,,
-rat_tactical_core,RESOURCE,An altered Beta Core that is designed to handle carrier specific workloads. This gives it a more steady personality and skills that improve the performance of deployed fighters.,,,,
+rat_neuro_core,RESOURCE,"An experimental alpha-core branch off that is able to detect and communicate with human brainwaves. It has choosen you as the target of its ""Partnership""",,,,
 ,,,,,,
 rat_development_station,CUSTOM,"An abandoned station, its purpose was once to progress mankinds journey through the stars, being the host of many experimental space ship developments.",,,,
 ,,,,,,

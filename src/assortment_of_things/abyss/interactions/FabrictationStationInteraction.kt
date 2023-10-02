@@ -5,7 +5,6 @@ import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.*
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 
@@ -33,11 +32,9 @@ class FabrictationStationInteraction : RATInteractionPlugin() {
 
         createOption("Explore") {
             clearOptions()
-            textPanel.addPara("You navigate through long corridors of extractors, refineries and processors. " +
-                    "This type of station appears to have been specialised in using the exotic matter of the abyss for the production of unique tools.")
+            textPanel.addPara("You navigate through long corridors of extractors, refineries and processors. " + "This type of station appears to have been specialised in using the exotic matter of the abyss for the production of unique tools.")
 
-            textPanel.addPara("The material present all around the abyss seems to be useful for ship components that wouldn't be possible with other materials but it can not be safely transported elsewhere, meaning all production had to be done localy. " +
-                    "Due to this, none of the products seem to have any presence in the present day sector.")
+            textPanel.addPara("The material present all around the abyss seems to be useful for ship components that wouldn't be possible with other materials but it can not be safely transported elsewhere, meaning all production had to be done localy. " + "Due to this, none of the products seem to have any presence in the present day sector.")
 
             createOption("Begin salvage operations") {
                 clearOptions()
@@ -46,7 +43,7 @@ class FabrictationStationInteraction : RATInteractionPlugin() {
 
                 var dropRandom = ArrayList<DropData>()
                 var dropValue = ArrayList<DropData>()
-                var drop = SalvageEntityGenDataSpec.DropData()
+                var drop = DropData()
 
 
 

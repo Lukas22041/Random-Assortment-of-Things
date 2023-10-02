@@ -28,6 +28,8 @@
 	"drop_prob_officer_rat_chronos_core":0.1,
 	"drop_prob_officer_rat_cosmos_core":0.1,
 	"drop_prob_officer_rat_primordial_core":0,
+	
+	"drop_prob_officer_rat_neuro_core":0,
 
 	"graphics":{
 		
@@ -54,6 +56,8 @@
 		  "chronos":"graphics/portraits/cores/rat_chronos_core.png",
 		  "cosmos":"graphics/portraits/cores/rat_cosmos_core.png",
 		  "primordial":"graphics/portraits/cores/rat_primordial_core.png",
+		  
+		  "neuro":"graphics/portraits/cores/rat_neural_core.png",
 		},
 		
 		"rat_preload": {

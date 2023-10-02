@@ -49,7 +49,8 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
     override fun applyEffect(entity: SectorEntityToken?, days: Float) {
         //super.applyEffect(entity, days)
 
-
+        var currentsystem = entity?.containingLocation ?: return
+        if (Global.getSector().playerFleet.containingLocation != currentsystem) return
 
         if (entity is CampaignFleetAPI)
         {

@@ -1,2 +1,11 @@
 name,id,planetary,decivRemove,script,desc,icon,order
-Local Gravitational Dynamo,rat_grav_dynamo_condition,TRUE,,assortment_of_things.relics.conditions.GravitationalDynamoCondition,,graphics/icons/markets/rat_grav_dynamo_condition.png,500
+Local Gravitational Dynamo,rat_grav_dynamo_condition,TRUE,,assortment_of_things.relics.conditions.GravitationalDynamoCondition,,graphics/icons/markets/rat_grav_dynamo_condition.png,5001
+,,,,,,,
+Warscape,rat_warscape,TRUE,,assortment_of_things.relics.conditions.WarscapeCondition,,graphics/icons/markets/rat_warscape.png,5002
+Ancient Industries,rat_ancient_industries,TRUE,,assortment_of_things.relics.conditions.AncientIndustriesCondition,,graphics/icons/markets/rat_ancient_industries.png,5002
+Ancient Fuel Production,rat_ancient_fuel_hub,TRUE,,assortment_of_things.relics.conditions.AncientFuelProductionCondition,,graphics/icons/markets/rat_ancient_fuel_hub.png,5003
+Ancient Military Nexus,rat_ancient_military_hub,TRUE,,assortment_of_things.relics.conditions.AncientMilitaryNexusCondition,,graphics/icons/markets/rat_ancient_military_hub.png,5004
+Kinetic Launchsystem,rat_kinetic_launchsystem,TRUE,,assortment_of_things.relics.conditions.KineticLaunchsystemCondition,,graphics/icons/markets/rat_kinetic_launchsystem.png,5005
+Bionic Plantlife,rat_bionic_plantlife,TRUE,,assortment_of_things.relics.conditions.BionicPlantlifeCondition,,graphics/icons/markets/rat_bionic_plantlife.png,5006
+,,,,,,,
+,,,,,,,

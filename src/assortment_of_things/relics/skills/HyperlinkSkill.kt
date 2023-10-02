@@ -1,6 +1,8 @@
 package assortment_of_things.relics.skills
 
+import activators.ActivatorManager
 import assortment_of_things.campaign.skills.RATBaseShipSkill
+import assortment_of_things.relics.activators.HyperlinkActivator
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
 import com.fs.starfarer.api.characters.LevelBasedEffect
@@ -8,22 +10,38 @@ import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
 import com.fs.starfarer.api.characters.SkillSpecAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 
-class HyperlinkSkill1 : RATBaseShipSkill() {
+class HyperlinkSkill : RATBaseShipSkill() {
 
     override fun getScopeDescription(): LevelBasedEffect.ScopeDescription {
         return LevelBasedEffect.ScopeDescription.PILOTED_SHIP
     }
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
+        info!!.addSpacer(2f)
+
+        info.addPara("This core is able to connect towards the human targets brainwaves. This allows it to perform communication with them in combat. Through this, if both the targets ship and this cores ship are deployed at the same time, they can swap control without delay.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+
+        info.addSpacer(5f)
+
+        info.addPara("The cooldown is 2.5/5/10/15 seconds based on the size of the ship that was switched to.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+
+
+        info!!.addSpacer(2f)
 
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
-        stats!!.fighterWingRange.modifyFlat(id, 500f)
+        var ship = stats!!.entity
+        if (ship is ShipAPI) {
+            if (!ship.hasListenerOfClass(HyperlinkScript::class.java)) {
+                ship.addListener(HyperlinkScript())
+            }
+        }
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
@@ -31,38 +49,23 @@ class HyperlinkSkill1 : RATBaseShipSkill() {
     }
 }
 
-class HyperlinkSkill2 : RATBaseShipSkill() {
+class HyperlinkScript() : AdvanceableListener {
 
-    override fun getScopeDescription(): LevelBasedEffect.ScopeDescription {
-        return LevelBasedEffect.ScopeDescription.SHIP_FIGHTERS
-    }
+    var applied = false
 
-    override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
-        info!!.addSpacer(2f)
+    override fun advance(amount: Float) {
 
-        info.addPara("+500 maximum engagement range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info.addPara("+50 weapon range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info.addPara("+5%% timeflow", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info.addPara("+15%% damage to ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info.addSpacer(2f)
-    }
+        if (!applied) {
+            var engine = Global.getCombatEngine()
+            var player = Global.getSector().playerPerson
+            var playership = engine.ships.find { it.fleetMember?.captain != null && it.fleetMember?.captain == player } ?: return
+            var aiship = engine.ships.find { it.fleetMember?.captain != null && it.fleetMember.captain.isAICore && it.fleetMember.captain.aiCoreId == "rat_neuro_core" } ?: return
 
-    override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
+            ActivatorManager.addActivator(playership, HyperlinkActivator(playership, aiship))
+            ActivatorManager.addActivator(aiship, HyperlinkActivator(aiship, playership))
 
-        stats!!.timeMult.modifyMult(id, 1.05f)
-        stats.damageToFrigates.modifyMult(id, 1.15f)
-        stats.damageToDestroyers.modifyMult(id, 1.15f)
-        stats.damageToCruisers.modifyMult(id, 1.15f)
-        stats.damageToCapital.modifyMult(id, 1.15f)
-
-        stats.ballisticWeaponRangeBonus.modifyMult(id, 50f)
-        stats.energyWeaponRangeBonus.modifyMult(id, 50f)
-        stats.missileWeaponRangeBonus.modifyMult(id, 50f)
+            applied = true
+        }
 
     }
-
-    override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
-
-    }
-
 }

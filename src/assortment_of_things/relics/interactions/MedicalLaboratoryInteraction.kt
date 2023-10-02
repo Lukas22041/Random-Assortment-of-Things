@@ -1,6 +1,5 @@
 package assortment_of_things.relics.interactions
 
-import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SpecialItemData
@@ -26,8 +25,7 @@ class MedicalLaboratoryInteraction : RATInteractionPlugin() {
             clearOptions()
             textPanel.addPara("You dock near the station and make your way through the corridors of medical machinery, once set to produce medical equipment at record pace, but are now decayed far beyond use.")
 
-            textPanel.addPara("After surveying the station for a while, it appears that there is a good amount of drug supply that hasnt left the station, including some experimental ones " +
-                    "that dont appear to have ever made it to the market.")
+            textPanel.addPara("After surveying the station for a while, it appears that there is a good amount of drug supply that hasnt left the station, including some experimental ones " + "that dont appear to have ever made it to the market.")
 
             createOption("Loot") {
                 var random = Random(interactionTarget.getSalvageSeed())

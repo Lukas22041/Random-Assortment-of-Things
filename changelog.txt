@@ -1,5 +1,15 @@
+Version 1.6.3
+
+-> Replaced the reward of a certain station with a new one.
+-> Added 6 planet conditions that can randomly spawn in ruin systems.
+-> The Abyss cores now show their automated ship points cost in officer tooltip.
+-> Archivist Intel is now set to importand and added to the "Accepted" Intel by default.
+-> Archivist intel is no longer removed by default if the structure is still around.
+-> Added the "rat_dont_allow_for_skills" tag which allows mods to forbid officers from being picked for skill stations.
+
+
+
 Version 1.6.2
-Should be save compatible but some content wont show up.
 
 -> Added new frigate to abyss faction.
 -> Added 3 new abyss weapons.

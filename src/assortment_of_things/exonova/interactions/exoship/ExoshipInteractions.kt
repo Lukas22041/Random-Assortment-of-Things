@@ -3,8 +3,6 @@ package assortment_of_things.exonova.interactions.exoship
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.impl.campaign.ids.Tags
-import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 
 class ExoshipInteractions : RATInteractionPlugin() {

@@ -2,26 +2,12 @@ package assortment_of_things.abyss.interactions
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.RATInteractionPlugin
-import assortment_of_things.misc.addNegativePara
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
-import com.fs.starfarer.api.campaign.CustomDialogDelegate
-import com.fs.starfarer.api.characters.PersonAPI
-import com.fs.starfarer.api.characters.SkillSpecAPI
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.loading.Description
-import com.fs.starfarer.api.ui.BaseTooltipCreator
-import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.Fonts
-import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import lunalib.backend.ui.components.util.TooltipHelper
-import lunalib.lunaExtensions.addLunaElement
-import lunalib.lunaExtensions.openLunaCustomPanel
-import lunalib.lunaUI.panel.LunaBaseCustomPanelPlugin
 import org.lwjgl.input.Keyboard
-import org.magiclib.kotlin.addOfficerGainText
-import org.magiclib.kotlin.getPersonalityName
 
 class AbyssalUnknownLabInteraction : RATInteractionPlugin() {
 
@@ -46,16 +32,14 @@ class AbyssalUnknownLabInteraction : RATInteractionPlugin() {
         createOption("Explore") {
             clearOptions()
 
-            textPanel.addPara("You make your way through the silent halls of this station. It appears to be filled with medical facilities, but there are is no indication of what has transpired here. " +
-                    "As you delve deeper, you discover the remaining logs of the station. ")
+            textPanel.addPara("You make your way through the silent halls of this station. It appears to be filled with medical facilities, but there are is no indication of what has transpired here. " + "As you delve deeper, you discover the remaining logs of the station. ")
 
             textPanel.addPara("The stations purpose seems to have been the experimentation of the effects of abyssal matter on biological subjects. ")
 
             createOption("Continue") {
                 clearOptions()
 
-                textPanel.addPara("You skim through the logs to find more details and stumble upon records of an experimental drug that has been developed and successfuly tested on patients. " +
-                        "The logistical records display that a single sample of that drug remains within the stations cargo holds.")
+                textPanel.addPara("You skim through the logs to find more details and stumble upon records of an experimental drug that has been developed and successfuly tested on patients. " + "The logistical records display that a single sample of that drug remains within the stations cargo holds.")
 
                 var tooltip = textPanel.beginTooltip()
 

@@ -4,7 +4,6 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.*
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 
@@ -41,7 +40,7 @@ class TransmitterInteraction : RATInteractionPlugin() {
 
                 var dropRandom = ArrayList<DropData>()
                 var dropValue = ArrayList<DropData>()
-                var drop = SalvageEntityGenDataSpec.DropData()
+                var drop = DropData()
 
 
                 drop = DropData()
@@ -52,7 +51,7 @@ class TransmitterInteraction : RATInteractionPlugin() {
 
 
 
-                drop = SalvageEntityGenDataSpec.DropData()
+                drop = DropData()
                 drop.chances = 2
                 drop.group = "rat_abyss_transmitter"
                 dropRandom.add(drop)

@@ -22,10 +22,9 @@ class RefurbishmentStationInteraction : RATInteractionPlugin() {
         createOption("Continue") {
             clearOptions()
 
-            textPanel.addPara("On approach the station goes into lockdown. Bulkheads close, doorways seal, and the radio pings for the nearest Domain patrol. While this may have worked back in the day when such a patrol would be a short jump away, now its merely an annoyance. Your salvors are easily able to cut into the craft, and you watch mildly disinterested as they steadily move through the command structure, stripping away the defensive systems until you're able to directly integrate with the repair system. The dockspace opens up with a mildly shuddering motion, revealing warming up repair drones.\n\n" +
-                    "There is enough remaining feedstock in the system to improve one ship. This improvement won't change the combat performance of the ship, but will allow the installation of an additional s-mod.",
-            Misc.getTextColor(), Misc.getHighlightColor(),
-            "improve one ship", "allow the installation of an additional s-mod")
+            textPanel.addPara("On approach the station goes into lockdown. Bulkheads close, doorways seal, and the radio pings for the nearest Domain patrol. While this may have worked back in the day when such a patrol would be a short jump away, now its merely an annoyance. Your salvors are easily able to cut into the craft, and you watch mildly disinterested as they steadily move through the command structure, stripping away the defensive systems until you're able to directly integrate with the repair system. The dockspace opens up with a mildly shuddering motion, revealing warming up repair drones.\n\n" + "There is enough remaining feedstock in the system to improve one ship. This improvement won't change the combat performance of the ship, but will allow the installation of an additional s-mod.",
+                Misc.getTextColor(), Misc.getHighlightColor(),
+                "improve one ship", "allow the installation of an additional s-mod")
 
             createOption("Select a ship") {
 

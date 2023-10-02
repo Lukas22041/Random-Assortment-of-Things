@@ -25,7 +25,6 @@ import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.magiclib.kotlin.getSalvageSeed
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.random.asJavaRandom
 
 class AbyssalWreckInteraction : RATInteractionPlugin() {
 

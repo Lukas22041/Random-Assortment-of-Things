@@ -53,6 +53,12 @@ class ChronosCore : AICoreOfficerPlugin {
         tooltip.addSpacer(10f)
         var img = tooltip.beginImageWithText(spec.iconName, 64f)
         img.addPara(desc.text1, 0f)
+
+        img.addSpacer(5f)
+
+        img.addPara("Automated Points Multiplier: ${(person.memoryWithoutUpdate.get(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT) as Float).toInt()}x", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "Automated Points Multiplier")
+
         tooltip.addImageWithText(0f)
 
         tooltip.addSpacer(10f)

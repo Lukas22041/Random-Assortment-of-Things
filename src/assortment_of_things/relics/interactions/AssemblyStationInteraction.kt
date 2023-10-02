@@ -8,7 +8,6 @@ import com.fs.starfarer.api.campaign.FactionProductionAPI
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.loading.Description
-import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lwjgl.input.Keyboard
 import org.magiclib.kotlin.addCreditsLossText
@@ -26,10 +25,9 @@ class AssemblyStationInteraction : RATInteractionPlugin() {
         createOption("Explore") {
             clearOptions()
 
-            textPanel.addPara("You approach according to the basic directions transmitted on repeat by the station. On reaching the dock you ignore the message asking you to 'please wait for one of our helpful humdinger staff to help you make the best choice!', sending in your salvors to break in. \n\n" +
-                    "Alarms sound, are ignored, and are then killed in short order. Your crew chief, sensor officer and communications officer all crowd around a terminal, arguing about how to best access the station's systems; these stations are well-known for uploading truly cancerous advertisement programs into any ship system they can. You'd rather not have an annoying jingle for a long-dead smarmy ship shifter on repeat sounding from the comms system until the end of time.",
+            textPanel.addPara("You approach according to the basic directions transmitted on repeat by the station. On reaching the dock you ignore the message asking you to 'please wait for one of our helpful humdinger staff to help you make the best choice!', sending in your salvors to break in. \n\n" + "Alarms sound, are ignored, and are then killed in short order. Your crew chief, sensor officer and communications officer all crowd around a terminal, arguing about how to best access the station's systems; these stations are well-known for uploading truly cancerous advertisement programs into any ship system they can. You'd rather not have an annoying jingle for a long-dead smarmy ship shifter on repeat sounding from the comms system until the end of time.",
                 Misc.getTextColor(), Misc.getHighlightColor(),
-                )
+            )
 
 
             createOption("Continue") {

@@ -6,12 +6,14 @@ import assortment_of_things.abyss.skills.TimeCoreSkill
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
 import com.fs.starfarer.api.characters.PersonAPI
+import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.campaign.ids.Ranks
 import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import java.util.*
 
 
@@ -52,6 +54,12 @@ class CosmosCore : AICoreOfficerPlugin {
         tooltip.addSpacer(10f)
         var img = tooltip.beginImageWithText(spec.iconName, 64f)
         img.addPara(desc.text1, 0f)
+
+        img.addSpacer(5f)
+
+        img.addPara("Automated Points Multiplier: ${(person.memoryWithoutUpdate.get(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT) as Float).toInt()}x", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "Automated Points Multiplier")
+
         tooltip.addImageWithText(0f)
 
         tooltip.addSpacer(10f)

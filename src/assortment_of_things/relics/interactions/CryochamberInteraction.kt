@@ -4,18 +4,9 @@ import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
 import com.fs.starfarer.api.campaign.CustomDialogDelegate
-import com.fs.starfarer.api.campaign.CustomUIPanelPlugin
-import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
 import com.fs.starfarer.api.characters.PersonAPI
-import com.fs.starfarer.api.combat.MutableShipStatsAPI
-import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.loading.Description
-import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.CustomPanelAPI
-import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import org.lwjgl.input.Keyboard
@@ -34,8 +25,7 @@ class CryochamberInteraction : RATInteractionPlugin() {
 
             clearOptions()
 
-            textPanel.addPara("Approaching a Punitive Cryostation is an agonizingly slow and tense process. You start and stop on your approach, making sure to scan and stop and throw the appropriate level of ECM and spoofed ancient Domain codes to keep the slumbering explosive at its core at bay. Once you’re close enough, your salvors, thoroughly prepped with extra oxygen and thoroughly paid with danger money, slowly emerge from the ship and slowly drift towards the structure.\n\n" +
-                    "They take their time, cutting like termites through bulkheads and walls and avoiding the detectors in the rooms and hallways. Eventually your crew manages to crack into the heart of the station. Inside several cryopods lie beneath an ominous sphere of a thermonuclear payload. After a tense couple of moments, the nuclear payload is deactivated. Your crew chief sighs in relief as your salvor team gets to work investigating the pods and their records.")
+            textPanel.addPara("Approaching a Punitive Cryostation is an agonizingly slow and tense process. You start and stop on your approach, making sure to scan and stop and throw the appropriate level of ECM and spoofed ancient Domain codes to keep the slumbering explosive at its core at bay. Once you’re close enough, your salvors, thoroughly prepped with extra oxygen and thoroughly paid with danger money, slowly emerge from the ship and slowly drift towards the structure.\n\n" + "They take their time, cutting like termites through bulkheads and walls and avoiding the detectors in the rooms and hallways. Eventually your crew manages to crack into the heart of the station. Inside several cryopods lie beneath an ominous sphere of a thermonuclear payload. After a tense couple of moments, the nuclear payload is deactivated. Your crew chief sighs in relief as your salvor team gets to work investigating the pods and their records.")
 
 
             createOption("Continue") {
@@ -48,8 +38,7 @@ class CryochamberInteraction : RATInteractionPlugin() {
 
                 var tooltip = textPanel.beginTooltip()
 
-                for (person in people)
-                {
+                for (person in people) {
                     var img = tooltip.beginImageWithText(person.portraitSprite, 64f)
                     img.addPara("${person.nameString}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${person.nameString}")
                     var backstory = person.memoryWithoutUpdate.get("\$rat_prisoner_backstory") as String
@@ -93,8 +82,7 @@ class CryochamberInteraction : RATInteractionPlugin() {
                                     advance {
                                         if (person == selected) {
                                             backgroundAlpha = 0.7f
-                                        }
-                                        else {
+                                        } else {
                                             backgroundAlpha = 0.4f
                                         }
                                     }

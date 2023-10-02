@@ -9,7 +9,7 @@ import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.exonova.interactions.exoship.ExoshipInteractions
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
-import assortment_of_things.relics.items.cores.TacticalCore
+import assortment_of_things.relics.items.cores.NeuroCore
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.PluginPick
@@ -44,9 +44,10 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 "rat_medical_laboratory" -> return PluginPick(MedicalLaboratoryInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_training_station" -> return PluginPick(TrainingStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_gravitational_dynamo" -> return PluginPick(GravitationalDynamoInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_neural_laboratory" -> return PluginPick(NeuralLaboratoryInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
-            if (id == "rat_bioengineering_station" || id == "rat_augmentation_station" || id == "rat_neural_laboratory") {
+            if (id == "rat_bioengineering_station" || id == "rat_augmentation_station") {
                 return PluginPick(SkillStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
         }
@@ -106,7 +107,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         if (commodityId == RATItems.CHRONOS_CORE) return PluginPick(ChronosCore(), CampaignPlugin.PickPriority.HIGHEST)
         if (commodityId == RATItems.PRIMORDIAL) return PluginPick(PrimordialCore(), CampaignPlugin.PickPriority.HIGHEST)
 
-        if (commodityId == "rat_tactical_core") return PluginPick(TacticalCore(), CampaignPlugin.PickPriority.HIGHEST)
+        if (commodityId == "rat_neuro_core") return PluginPick(NeuroCore(), CampaignPlugin.PickPriority.HIGHEST)
 
         return null
     }

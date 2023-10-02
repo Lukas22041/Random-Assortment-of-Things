@@ -20,7 +20,6 @@ import assortment_of_things.snippets.DropgroupTestSnippet
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -87,7 +86,6 @@ class RATModPlugin : BaseModPlugin() {
         super.onGameLoad(newGame)
 
 
-
         /*for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)
@@ -123,7 +121,9 @@ class RATModPlugin : BaseModPlugin() {
         }
 
         if (RATSettings.relicsEnabled!! && Global.getSector().memoryWithoutUpdate.get("\$rat_relics_generated") == null) {
-            RelicsGenerator().generate()
+            var generator = RelicsGenerator()
+            generator.generateStations()
+            generator.generateConditions()
         }
 
 

@@ -5,7 +5,6 @@ import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.*
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 
@@ -44,7 +43,7 @@ class AbyssalResearchStationInteraction : RATInteractionPlugin() {
 
                 var dropRandom = ArrayList<DropData>()
                 var dropValue = ArrayList<DropData>()
-                var drop = SalvageEntityGenDataSpec.DropData()
+                var drop = DropData()
 
 
 
