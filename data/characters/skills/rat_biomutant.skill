@@ -1,7 +1,7 @@
 {
 	"id":"rat_biomutant",
 	"governingAptitude":"leadership",
-	"elite":true,
+	"elite":false,
 	"scope":"PILOTED_SHIP", 
 	"effectGroups":[
 		{

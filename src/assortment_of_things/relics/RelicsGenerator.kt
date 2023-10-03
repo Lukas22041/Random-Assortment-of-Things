@@ -89,7 +89,7 @@ class RelicsGenerator {
 
             var planets = ArrayList<PlanetAPI>()
             for (system in systems) {
-                var planetsInSystem = system.planets.filter { !it.isStar && !it.hasTag(RelicsUtils.RELICS_CONDITION_TAG) && it.market != null}
+                var planetsInSystem = system.planets.filter { !it.isStar && !it.hasTag(pick.conditionID) && it.market != null}
                 if (planetsInSystem.isEmpty()) continue
 
                 planetsInSystem = planetsInSystem.filter { pick.planetFilter(it) }

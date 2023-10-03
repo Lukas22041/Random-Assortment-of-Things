@@ -1,7 +1,7 @@
 {
 	"id":"rat_maverick",
 	"governingAptitude":"industry",
-	"elite":true,
+	"elite":false,
 	"scope":"PILOTED_SHIP", 
 	"effectGroups":[
 		{

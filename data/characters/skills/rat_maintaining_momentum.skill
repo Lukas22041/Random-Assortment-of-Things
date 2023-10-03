@@ -1,7 +1,7 @@
 {
 	"id":"rat_maintaining_momentum",
 	"governingAptitude":"combat",
-	"elite":true,
+	"elite":false,
 	"scope":"PILOTED_SHIP", 
 	"effectGroups":[
 		{

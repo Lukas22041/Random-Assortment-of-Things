@@ -1,7 +1,7 @@
 {
 	"id":"rat_mass_interface",
 	"governingAptitude":"technology",
-	"elite":true,
+	"elite":false,
 	"scope":"SHIP_FIGHTERS", 
 	"effectGroups":[
 		{

@@ -58,7 +58,7 @@ class  AbyssGenerator {
         var hyperspaceLocation = Vector2f(-20000f, -15000f)
         var orion = Global.getSector().hyperspace.customEntities.find { it.fullName.contains("Orion-Perseus") }
         if (orion != null) {
-            hyperspaceLocation = orion.location.plus(Vector2f(0f, -100f))
+            hyperspaceLocation = orion.location.plus(Vector2f(0f, -1000f))
         }
 
         abyssData.hyperspaceLocation = hyperspaceLocation

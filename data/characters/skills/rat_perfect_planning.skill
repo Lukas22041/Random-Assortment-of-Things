@@ -1,7 +1,7 @@
 {
 	"id":"rat_perfect_planning",
 	"governingAptitude":"leadership",
-	"elite":true,
+	"elite":false,
 	"scope":"PILOTED_SHIP", 
 	"effectGroups":[
 		{

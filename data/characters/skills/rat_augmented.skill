@@ -1,7 +1,7 @@
 {
 	"id":"rat_augmented",
 	"governingAptitude":"technology",
-	"elite":true,
+	"elite":false,
 	"scope":"PILOTED_SHIP", 
 	"effectGroups":[
 		{
