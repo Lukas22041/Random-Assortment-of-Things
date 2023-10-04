@@ -1,3 +1,11 @@
+Version 1.6.4
+
+-> Added 4 new planetery conditions.
+-> Multiple of the new conditions are now able to appear on the same planet.
+-> Nerfed the fuel related condition.
+
+
+
 Version 1.6.3
 
 -> Replaced the reward of a certain station with a new one.

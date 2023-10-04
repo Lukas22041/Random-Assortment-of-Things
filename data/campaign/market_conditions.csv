@@ -10,3 +10,5 @@ Kinetic Launchsystem,rat_kinetic_launchsystem,TRUE,,assortment_of_things.relics.
 Bionic Plantlife,rat_bionic_plantlife,TRUE,,assortment_of_things.relics.conditions.BionicPlantlifeCondition,,graphics/icons/markets/rat_bionic_plantlife.png,5006
 Defensive Dronesystem,rat_defensive_drones,TRUE,,assortment_of_things.relics.conditions.DefensiveDronesCondition,,graphics/icons/markets/rat_defensive_drones.png,5007
 Engineered Utopia,rat_engineered_utopia,TRUE,,assortment_of_things.relics.conditions.EngineeredUtopia,,graphics/icons/markets/rat_engineer_utopia.png,5008
+Rampant Military Core,rat_rampant_military_core,TRUE,,assortment_of_things.relics.conditions.RampantMilitaryCore,,graphics/icons/markets/rat_rampant_military_core.png,5009
+,,,,,,,

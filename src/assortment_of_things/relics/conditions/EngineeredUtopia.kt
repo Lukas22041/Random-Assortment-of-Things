@@ -1,13 +1,9 @@
 package assortment_of_things.relics.conditions
 
-import com.fs.starfarer.api.campaign.econ.Industry
-import com.fs.starfarer.api.campaign.econ.MarketAPI
-import com.fs.starfarer.api.campaign.econ.MarketImmigrationModifier
+import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.impl.campaign.econ.BaseMarketConditionPlugin
-import com.fs.starfarer.api.impl.campaign.ids.Commodities
-import com.fs.starfarer.api.impl.campaign.ids.Industries
-import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.campaign.population.PopulationComposition
+import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 
@@ -17,9 +13,20 @@ class EngineeredUtopia : BaseMarketConditionPlugin() {
 
 
     override fun apply(id: String?) {
-        market.hazard.modifyFlat(id, -0.20f, condition.name)
-        market.accessibilityMod.modifyPercent(id, 25f, condition.name)
+        market.hazard.modifyFlat(id, -0.25f, condition.name)
+        market.accessibilityMod.modifyPercent(id, 20f, condition.name)
         market.stats.dynamic.getMod(Stats.MAX_INDUSTRIES).modifyFlat(id, -1f)
+
+        var industry = market?.industries?.find { it.spec.hasTag("farming") } ?: return
+
+        if (industry.isFunctional) {
+            industry.supply(id, Commodities.FOOD, 2, condition.name)
+        }
+        else {
+            industry.getSupply(Commodities.FOOD).quantity.unmodifyFlat(id)
+        }
+
+
     }
 
     override fun unapply(id: String?) {
@@ -38,8 +45,9 @@ class EngineeredUtopia : BaseMarketConditionPlugin() {
 
         tooltip.addSpacer(10f)
         tooltip.addPara("-1 max industries", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "-1")
-        tooltip.addPara("+25%% accessibility", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+25%")
-        tooltip.addPara("-20%% hazard rating", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "-20%")
+        tooltip.addPara("+20%% accessibility", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+20%")
+        tooltip.addPara("-25%% hazard rating", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "-25%")
+        tooltip.addPara("+2 food production (Farming)", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+2")
         tooltip.addSpacer(5f)
 
     }
