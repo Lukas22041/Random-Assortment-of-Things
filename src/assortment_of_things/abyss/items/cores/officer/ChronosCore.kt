@@ -63,7 +63,7 @@ class ChronosCore : AICoreOfficerPlugin {
 
         tooltip.addSpacer(10f)
 
-        tooltip.addSectionHeading("Innate Skill: Deity of Time", Alignment.MID, 0f)
+        tooltip.addSectionHeading("Signature Skill: Deity of Time", Alignment.MID, 0f)
         tooltip.addSpacer(10f)
 
         var skillImg = tooltip.beginImageWithText(skill.spriteName, 48f)

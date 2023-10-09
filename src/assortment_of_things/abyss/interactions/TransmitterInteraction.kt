@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.interactions
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.intel.log.AbyssalLogIntel
 import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
@@ -31,7 +32,31 @@ class TransmitterInteraction : RATInteractionPlugin() {
 
         createOption("Investigate") {
             clearOptions()
-            textPanel.addPara("The fleet inspects the transmitter. It appears to still be sending out data infrequently, but cant establish a connection to anything else. Proceeding with a salvage operation may allow us to retrieve some of the data it has collected.")
+
+            var descriptionId = interactionTarget.memoryWithoutUpdate.get("\$rat_log_id") as String?
+            if (descriptionId != null) {
+                textPanel.addPara("The fleet inspects the transmitter. It appears to still be sending out data infrequently, but cant establish a connection to anything else. There appears to be a log to be stored within this transmitters database.")
+
+                var description = Global.getSettings().getDescription(descriptionId, Description.Type.CUSTOM)
+                var tooltip = textPanel.beginTooltip()
+
+                tooltip.addTitle("Log: " + description.text1)
+                tooltip.addSpacer(5f)
+                tooltip.addPara("\"${description.text2}\"", 0f)
+
+                textPanel.addTooltip()
+
+                var logs = Global.getSector().intelManager.intel.filter { it::class.java == AbyssalLogIntel::class.java }
+                if (logs.isEmpty() || logs.none { (it as AbyssalLogIntel).descriptionId == descriptionId }) {
+                    var intel = AbyssalLogIntel(descriptionId)
+                    Global.getSector().intelManager.addIntel(intel)
+                    Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)
+                }
+            }
+            else {
+                textPanel.addPara("The fleet inspects the transmitter. It appears to still be sending out data infrequently, but cant establish a connection to anything else. Proceeding with a salvage operation may allow us to retrieve some of the data it has collected.")
+            }
+
 
             createOption("Begin salvage operations") {
                 clearOptions()

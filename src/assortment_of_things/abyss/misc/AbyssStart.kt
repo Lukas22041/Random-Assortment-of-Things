@@ -9,10 +9,7 @@ import assortment_of_things.misc.instantTeleport
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CampaignFleetAPI
-import com.fs.starfarer.api.campaign.CargoAPI
-import com.fs.starfarer.api.campaign.InteractionDialogAPI
-import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.rules.MemKeys
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.characters.CharacterCreationData
@@ -74,7 +71,7 @@ class AbyssStart : CustomStart() {
         tooltip.addSpacer(10f)
 
         var crewConversionIMG = tooltip.beginImageWithText("graphics/hullmods/rat_crew_conversion.png", 48f)
-        crewConversionIMG.addPara("The flagship has been converted for a human crew.", 0f,
+        crewConversionIMG.addPara("The flagship has been converted for a human crew and you start with more tools for the automated fleet.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "crew")
         tooltip.addImageWithText(0f)
 
@@ -96,8 +93,7 @@ class AbyssStart : CustomStart() {
         addMember("rat_makara_Strike", dialog, data, tempFleet)
         addMember("rat_merrow_Attack", dialog, data, tempFleet)
 
-        data.startingCargo.credits.add(250000f)
-        AddRemoveCommodity.addCreditsGainText(250000, textPanel)
+
 
         tempFleet.fleetData.setSyncNeeded()
         tempFleet.fleetData.syncIfNeeded()
@@ -116,19 +112,26 @@ class AbyssStart : CustomStart() {
 
         var crew = 30f
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, Commodities.CREW, crew)
-        AddRemoveCommodity.addCommodityGainText(Commodities.CREW, crew.toInt(), textPanel)
 
-
+        data.startingCargo.addSpecial(SpecialItemData("rat_artifact", "computational_matrix"), 1f)
+        data.startingCargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_abyssal_conversion"), 3f)
+        data.startingCargo.credits.add(250000f)
+        AddRemoveCommodity.addCreditsGainText(250000, textPanel)
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, RATItems.CHRONOS_CORE, 3f)
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, RATItems.COSMOS_CORE, 3f)
 
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, Commodities.FUEL, fuel)
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, Commodities.SUPPLIES, supplies)
 
+        textPanel.setFontSmallInsignia()
+        textPanel.addPara("Gained 1x Computational Matrix", Misc.getPositiveHighlightColor(), Misc.getHighlightColor(), "1x")
+        textPanel.addPara("Gained 3x Abyssal Crew Conversions", Misc.getPositiveHighlightColor(), Misc.getHighlightColor(), "3x")
+        textPanel.setFontInsignia()
         AddRemoveCommodity.addCommodityGainText(RATItems.CHRONOS_CORE, 3, textPanel)
         AddRemoveCommodity.addCommodityGainText(RATItems.COSMOS_CORE, 3,textPanel)
         AddRemoveCommodity.addCommodityGainText(Commodities.FUEL, fuel.toInt(), textPanel)
         AddRemoveCommodity.addCommodityGainText(Commodities.SUPPLIES, supplies.toInt(),textPanel)
+        AddRemoveCommodity.addCommodityGainText(Commodities.CREW, crew.toInt(), textPanel)
 
         PlayerFactionStore.setPlayerFactionIdNGC(Factions.PLAYER)
         ExerelinSetupData.getInstance().freeStart = true

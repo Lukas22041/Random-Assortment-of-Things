@@ -7,10 +7,11 @@ class RelicCondition(var conditionID: String) {
 
     var weight = 10f
 
-    var amount = 1
-
     var planetFilter: (planet: PlanetAPI) -> Boolean = { planet -> !planet.isGasGiant }
     var systemFilter: (system: StarSystemAPI) -> Boolean = { system -> true }
+
+    var allowedCategories = ArrayList<String>()
+    var disallowedCategories = ArrayList<String>()
 
     var surveyed = false
 

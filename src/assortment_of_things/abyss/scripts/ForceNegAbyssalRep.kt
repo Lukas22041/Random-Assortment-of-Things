@@ -14,11 +14,9 @@ class ForceNegAbyssalRep : EveryFrameScript {
 
     override fun advance(amount: Float) {
         var player = Global.getSector().playerFaction
-        var faction = Global.getSector().getFaction("rat_abyssals")
 
-        if (faction != null) {
-            faction.setRelationship(player.id, -1f)
-        }
+        Global.getSector().getFaction("rat_abyssals")?.setRelationship(player.id, -1f)
+        Global.getSector().getFaction("rat_abyssals_deep")?.setRelationship(player.id, -1f)
     }
 
 }

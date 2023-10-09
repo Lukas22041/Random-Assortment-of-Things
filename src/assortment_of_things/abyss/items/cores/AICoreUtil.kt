@@ -7,6 +7,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.combat.AIUtils
 
 object AICoreUtil
 {
@@ -25,7 +26,6 @@ object AICoreUtil
         core.setPortraitSprite(spec.iconName)
 
         core.stats.isSkipRefresh = false
-
         return core
     }
 

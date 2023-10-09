@@ -2,13 +2,11 @@ package assortment_of_things
 
 import ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.intel.DoctrineReportAbyssal
 import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
-import assortment_of_things.abyss.scripts.AbyssAmbientSoundPlayer
-import assortment_of_things.abyss.scripts.ForceNegAbyssalRep
-import assortment_of_things.abyss.scripts.HullmodRemoverListener
-import assortment_of_things.abyss.scripts.ResetBackgroundScript
+import assortment_of_things.abyss.scripts.*
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
@@ -85,6 +83,9 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
+        //Global.getSector().intelManager.addIntel(DoctrineReportAbyssal())
+
+
 
         /*for (artifact in ArtifactUtils.artifacts)
         {
@@ -103,14 +104,16 @@ class RATModPlugin : BaseModPlugin() {
 
 
         Global.getSector().addTransientScript(AbyssAmbientSoundPlayer())
+        Global.getSector().addTransientListener(AbyssDoctrineListener(false))
         Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
         if (RATSettings.enableAbyss!!)
         {
             if (AbyssUtils.getAbyssData().systemsData.isEmpty()) {
                 for (faction in Global.getSector().allFactions)
                 {
-                    if (faction.id == AbyssUtils.FACTION_ID) continue
-                    faction.adjustRelationship(AbyssUtils.FACTION_ID, -100f)
+                    if (faction.id == "rat_abyssals" || faction.id == "rat_abyssals_deep") continue
+                    faction.adjustRelationship("rat_abyssals", -100f)
+                    faction.adjustRelationship("rat_abyssals_deep", -100f)
                 }
 
                 var random = Random(Misc.genRandomSeed())

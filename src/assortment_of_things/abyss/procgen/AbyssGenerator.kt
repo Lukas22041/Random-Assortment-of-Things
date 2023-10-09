@@ -19,6 +19,7 @@ import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
+import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
@@ -242,33 +243,62 @@ class  AbyssGenerator {
        generateSystems()
    }
 
-   fun generateAfterChain() {
+    fun generateAfterChain() {
 
-       generateRift()
+        addLogsToTransmitters()
+        generateRift()
 
-       var systems = ArrayList(AbyssUtils.getAbyssData().systemsData.filter { it.minorPoints.isNotEmpty() } )
+        var systems = ArrayList(AbyssUtils.getAbyssData().systemsData.filter { it.minorPoints.isNotEmpty() } )
 
-       var labSystems = systems.filter { it.depth == AbyssDepth.Deep }
-       if (labSystems.isNotEmpty()) {
-           var system = labSystems.random()
-           systems.remove(system)
-           AbyssEntityGenerator.generateMinorEntityWithDefenses(system.system, "rat_abyss_unknown_lab", 1, 1f, 1f)
-       }
+        var labSystems = systems.filter { it.depth == AbyssDepth.Deep }
+        if (labSystems.isNotEmpty()) {
+            var system = labSystems.random()
+            systems.remove(system)
+            AbyssEntityGenerator.generateMinorEntityWithDefenses(system.system, "rat_abyss_unknown_lab", 1, 1f, 1f)
+        }
 
-       var milOutpostSystems = systems.filter { it.depth == AbyssDepth.Deep }
-       if (milOutpostSystems.isNotEmpty()) {
-           var system = milOutpostSystems.random()
-           systems.remove(system)
-           AbyssEntityGenerator.generateMinorEntityWithDefenses(system.system, "rat_military_outpost", 1, 1f, 1f)
-       }
+        var milOutpostSystems = systems.filter { it.depth == AbyssDepth.Deep }
+        if (milOutpostSystems.isNotEmpty()) {
+            var system = milOutpostSystems.random()
+            systems.remove(system)
+            AbyssEntityGenerator.generateMinorEntityWithDefenses(system.system, "rat_military_outpost", 1, 1f, 1f)
+        }
 
-       for (i in 0 until 2) {
-           var system = systems.randomAndRemove()
-           AbyssEntityGenerator.generateMinorEntityWithDefenses(system.system, "rat_abyss_research", 1, 1f, 1f)
-       }
+        for (i in 0 until 2) {
+            var system = systems.randomAndRemove()
+            AbyssEntityGenerator.generateMinorEntityWithDefenses(system.system, "rat_abyss_research", 1, 1f, 1f)
+        }
 
 
-   }
+    }
+
+    fun addLogsToTransmitters() {
+
+        var data = AbyssUtils.getAbyssData()
+        var transmitters = data.systemsData.map { it.system }.flatMap { system -> system.customEntities.filter { entity -> entity.customEntityType == "rat_abyss_transmitter" } }.toMutableList()
+
+        var descriptions: MutableList<String> = ArrayList<String>()
+        var index = 0
+        var descriptionId = "rat_abyss_log"
+        while (true) {
+            var currentId = descriptionId + index
+            var description = Global.getSettings().getDescription(currentId, Description.Type.CUSTOM)
+
+            if (description.text1 == "No description... yet") {
+                break
+            }
+
+            descriptions.add(currentId)
+            index++
+        }
+
+        for (description in descriptions) {
+            if (transmitters.isEmpty()) break;
+            var pick = transmitters.randomAndRemove()
+            pick.memoryWithoutUpdate.set("\$rat_log_id", description)
+            pick.addTag("rat_transmitter_has_log")
+        }
+    }
 
 
     fun generateRift() {
@@ -325,14 +355,14 @@ class  AbyssGenerator {
         var seraphs = 5
         if (AbyssUtils.getDifficulty() == AbyssDifficulty.Hard) seraphs += 2
 
-        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, Random(), seraphs, 1f)
+        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, Random(), seraphs ,seraphs)
 
 
         for (member in fleet.fleetData.membersListCopy) {
             member.variant.addTag(Tags.TAG_NO_AUTOFIT)
         }
         AbyssUtils.addAlterationsToFleet(fleet, 0.8f, Random())
-        fleet.fleetData.sort()
+        AbyssalSeraphSpawner.sortWithSeraphs(fleet)
 
         /*  for (i in 0 until 3) {
               var member = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_charybdis_head_standard")

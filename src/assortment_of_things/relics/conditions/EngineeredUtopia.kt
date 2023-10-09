@@ -48,7 +48,6 @@ class EngineeredUtopia : BaseMarketConditionPlugin() {
         tooltip.addPara("+20%% accessibility", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+20%")
         tooltip.addPara("-25%% hazard rating", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "-25%")
         tooltip.addPara("+2 food production (Farming)", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+2")
-        tooltip.addSpacer(5f)
 
     }
 

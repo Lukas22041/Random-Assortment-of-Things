@@ -113,8 +113,7 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
 
         particleInterval.advance(amount)
         if (particleInterval.intervalElapsed()) {
-            var velocity = Vector2f(0f, 0f)
-            velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), MathUtils.getRandomNumberInRange(75f, 125f), MathUtils.getRandomNumberInRange(0f, 360f)))
+
 
 
             var amount = 10
@@ -126,6 +125,9 @@ class AbyssalParticleManager() : BaseCustomEntityPlugin() {
             }
 
             for (i in 0..amount) {
+
+                var velocity = Vector2f(0f, 0f)
+                velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), MathUtils.getRandomNumberInRange(75f, 125f), MathUtils.getRandomNumberInRange(0f, 360f)))
 
                 var spawnLocation = Vector2f(Global.getSector().playerFleet.location)
                 //var spawnLocation = MathUtils.getPointOnCircumference(Vector2f(), 45f, entity.facing + 180)

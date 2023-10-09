@@ -15,15 +15,12 @@ rat_abyssCredits,,Text,"[Credits:]
 [Haplogynae] - Music & Sounds
 [Niatahl] & [Ruddygreat] - Helped with some VFX",,,,,Expansion
 ,,,,,,,,
-rat_relicsHeader,Relics of the Past (WIP),Header,Relics of the Past (WIP),,,,,Expansion
-rat_relicsEnabled,"Enable ""Relics of the Past""",Boolean,true,,"A expansion that adds more exploration encounters to [ruined] systems in the fringe-sector.
-
-This expansion is still in development, the amount of content is relatively small as of now.
+rat_relicsHeader,Relics of the Past,Header,Relics of the Past,,,,,Expansion
+rat_relicsEnabled,"Enable ""Relics of the Past""",Boolean,true,,"Generates lots of unique loot, stations, interactions and planetary conditions across the sector, with most of it being discoverable in ruined systems.
 
 Enabling ""Relics of the Past"" generates content for both new and existing saves upon game load.",,,Expansion
 rat_relicsCredits,,Text,"[Credits:]
-[KingAlfonzo] - Helped writing Interactions. 
-",,,,,Expansion
+[KingAlfonzo] - Helped writing Interactions. ",,,,,Expansion
 ,,,,,,,,
 ,,,,,,,,
 #Enhancements,,,,,,,,

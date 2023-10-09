@@ -27,6 +27,7 @@
 	
 	"drop_prob_officer_rat_chronos_core":0.1,
 	"drop_prob_officer_rat_cosmos_core":0.1,
+	"drop_prob_officer_rat_seraph_core":0.15,
 	"drop_prob_officer_rat_primordial_core":0,
 	
 	"drop_prob_officer_rat_neuro_core":0,
@@ -55,6 +56,7 @@
 		"rat_cores": {
 		  "chronos":"graphics/portraits/cores/rat_chronos_core.png",
 		  "cosmos":"graphics/portraits/cores/rat_cosmos_core.png",
+		  "seraph":"graphics/portraits/cores/rat_seraph_core.png",
 		  "primordial":"graphics/portraits/cores/rat_primordial_core.png",
 		  
 		  "neuro":"graphics/portraits/cores/rat_neural_core.png",
@@ -64,6 +66,7 @@
 		"rat_preload": {
 		  "1":"graphics/icons/abilities/rat_singularity_jump_returnal.png",
 		  "2":"graphics/icons/intel/rat_archivist_intel.png",
+		  "3":"graphics/fx/rat_darkness_vignette.png",
 		},
 		
  	}

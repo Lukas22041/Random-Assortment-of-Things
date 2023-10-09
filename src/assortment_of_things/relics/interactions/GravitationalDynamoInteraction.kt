@@ -89,8 +89,6 @@ class GravitationalDynamoInteraction : RATInteractionPlugin() {
 
             salvage.addSpecial(SpecialItemData("rat_alteration_install", "rat_upscale_protocol"), 1f)
 
-            ArtifactUtils.generateArtifactLoot(salvage, "abyss", 0.05f, 1, random)
-
             visualPanel.showLoot("Loot", salvage, true) {
                 clearOptions()
                 textPanel.addPara("After scavenging the contents of the storage facilities you access the control panel. Analysis shows that despite its age, the dynamo is still fully functional, and simply disabled itself due to inactivity")

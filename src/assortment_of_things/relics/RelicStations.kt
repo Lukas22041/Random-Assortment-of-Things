@@ -124,7 +124,7 @@ class RelicStations {
         },
 
         RelicStation("rat_gravitational_dynamo").apply {
-            systemFilter = { system -> system.planets.any { it.typeId == "black_hole" } && system.planets.filter { !it.isStar }.isNotEmpty() }
+            systemFilter = { system -> system.planets.any { it.typeId == "black_hole" } && system.planets.filter { !it.isStar }.size >= 2 }
             weight = 1000f
 
             postGeneration = { station ->

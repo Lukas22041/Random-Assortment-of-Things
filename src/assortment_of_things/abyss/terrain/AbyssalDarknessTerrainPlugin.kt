@@ -4,9 +4,11 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalLightsource
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import assortment_of_things.abyss.procgen.AbyssDepth
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -15,6 +17,9 @@ import org.lwjgl.util.vector.Vector2f
 import java.util.*
 
 class AbyssalDarknessTerrainPlugin : BaseTerrain() {
+
+    @Transient
+    var vignette = Global.getSettings().getSprite("graphics/fx/rat_darkness_vignette.png")
 
     var id = Misc.genUID()
 
@@ -133,14 +138,33 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         tooltip.addSpacer(5f)
 
         if (depth == AbyssDepth.Shallow) {
-            tooltip!!.addPara("The density of the abyssal matter makes barely any light able to get past it. Decreases the Sensor Detection range by 25%%" +
+            tooltip!!.addPara("The density of the abyssal matter makes barely any radiation able to get past it. Decreases the Sensor Detection range by 25%%" +
                     "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Detection", "25%")
             tooltip.addSpacer(5f)
         }
         if (depth == AbyssDepth.Deep) {
-            tooltip!!.addPara("The density of the abyssal matter causes any light to diminish close to its source. Decreases the Sensor Detection range by 50%%" +
+            tooltip!!.addPara("The density of the abyssal matter causes any light or other type of radiation to diminish close to its source. Decreases the Sensor Detection range by 50%%" +
                     "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Detection", "50%")
             tooltip.addSpacer(5f)
+        }
+    }
+
+    override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
+        if (vignette == null) {
+            vignette = Global.getSettings().getSprite("graphics/fx/rat_darkness_vignette.png")
+        }
+        if (layer == CampaignEngineLayers.ABOVE) {
+            var playerfleet = Global.getSector().playerFleet
+            if (entity.containingLocation == playerfleet.containingLocation) {
+
+                var offset = 400f
+
+                vignette.alphaMult = 0.9f
+                vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)
+                vignette.render(viewport!!.llx - (offset / 2), viewport!!.lly - (offset / 2))
+
+            }
+
         }
     }
 }

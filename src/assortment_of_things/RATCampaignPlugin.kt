@@ -6,6 +6,7 @@ import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
+import assortment_of_things.abyss.items.cores.officer.SeraphCore
 import assortment_of_things.exonova.interactions.exoship.ExoshipInteractions
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
@@ -105,10 +106,12 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
         if (commodityId == RATItems.COSMOS_CORE) return PluginPick(CosmosCore(), CampaignPlugin.PickPriority.HIGHEST)
         if (commodityId == RATItems.CHRONOS_CORE) return PluginPick(ChronosCore(), CampaignPlugin.PickPriority.HIGHEST)
+        if (commodityId == RATItems.SERAPH_CORE) return PluginPick(SeraphCore(), CampaignPlugin.PickPriority.HIGHEST)
         if (commodityId == RATItems.PRIMORDIAL) return PluginPick(PrimordialCore(), CampaignPlugin.PickPriority.HIGHEST)
 
         if (commodityId == "rat_neuro_core") return PluginPick(NeuroCore(), CampaignPlugin.PickPriority.HIGHEST)
 
         return null
     }
+
 }

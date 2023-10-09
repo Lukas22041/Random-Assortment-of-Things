@@ -96,8 +96,8 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
                 maxPoints += 128f
             }
             AbyssDepth.Deep -> {
-                minPoints += 128f
-                maxPoints += 192f
+                minPoints += 118f
+                maxPoints += 182f
             }
         }
 
@@ -141,9 +141,12 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
              qualityOverride = 5f
         }
 
+        var factionID = "rat_abyssals"
+        if (depth == AbyssDepth.Deep) factionID = "rat_abyssals_deep"
+
         val params = FleetParamsV3(null,
             source.locationInHyperspace,
-            AbyssUtils.FACTION_ID,
+            factionID,
             qualityOverride,
             FleetTypes.PATROL_MEDIUM,
             points,  // combatPts
@@ -156,17 +159,19 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         )
         params.random = random
         params.withOfficers = false
-
+        params.maxShipSize
 
         val fleet = FleetFactoryV3.createFleet(params)
 
-
+        var minSeraphs = 0
         var maxSeraphs = 0
+        if (depth == AbyssDepth.Deep) minSeraphs += 2
         if (depth == AbyssDepth.Deep) maxSeraphs += 3
+        if (difficulty == AbyssDifficulty.Hard) minSeraphs += 1
         if (difficulty == AbyssDifficulty.Hard) maxSeraphs += 2
 
-        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, random, maxSeraphs, 0.7f)
-        fleet.fleetData.sort()
+        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, random, minSeraphs, maxSeraphs)
+        AbyssalSeraphSpawner.sortWithSeraphs(fleet)
 
         for (member in fleet.fleetData.membersListCopy) {
             member.variant.addTag(Tags.TAG_NO_AUTOFIT)

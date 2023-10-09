@@ -20,7 +20,6 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
 
     var GLOW_FREQUENCY = 1f
 
-
     @Transient
     private var sprite: SpriteAPI? = null
 

@@ -20,6 +20,8 @@ rat_abyss_photosphere,CUSTOM,"This anomalyous object appears to perform active f
 ,,,,,,
 rat_chronos_core,RESOURCE,"An altered form of an Alpha-Level AI Core, what got it in to this state is unknown. Time appears to fluctuate in its surroundings.",,,,
 rat_cosmos_core,RESOURCE,"An altered form of an Alpha-Level AI Core, what got it in to this state is unknown. The Space around it is filled with gravitational instabilities.",,,,
+rat_seraph_core,RESOURCE,"An odd core from the depths of the abyss. It is unable to process normal speech patterns, but appears to be capable of understanding commands. Even in the context of artificial intelligence, it seems especialy reckless.",,,,
+,,,,,,
 ,,,,,,
 rat_ceto,SHIP,A small and fast fighter that packs a strong shield. Its weapons can temporarily decrease the effectiveness of the opponents armor.,,,,
 ,,,,,,
@@ -66,7 +68,45 @@ rat_asterias,WEAPON,"A beam weapon that is capable of reliably supressing enemy 
 rat_seabream,WEAPON,A burst beam weapon that can do effective damage against the targets armor. It can store multiple charges to fire again in quick succession.,,,,
 ,,,,,,
 ,,,,,,
-,,,,,,
+#Abyss Logs,,,,,,
+rat_abyss_log0,CUSTOM,Abyssal Matter,"There are lots of unique aspects about this environment, but one of the defining factors is the exotic matter that engulfs its entirety. Unlike the vacuum of space, moving through it causes constant drag on the hulls surface, and even though the forces at play are rather weak, the persistance of it increases the maintenance required drasticly.  
+
+Not to mention that our sensory instruments are almost useless, as their signals decay after passing through even just short distances of this stuff. We are essentially flying blindfolded.
+
+I atleast find the sound caused by the ship pushing against the abyssal matter to be rather calming, it is a nice change of pace compared to the silence that is only ever broken up by the sound of parts breaking appart, though we aren’t missing that part here either.
+
+Some crew reports hearing more than just those sounds, but i find it easy to blame it on the paranoia caused by our total isolation.
+",,,
+rat_abyss_log1,CUSTOM,Mysterious Particles,"Within the abyssal matter theres occasionally small clumps of especially charged mass. We arent quite sure about the process that creates them, but they turn out to be quite useful for us. The sensors can distinguish them from the rest of the environment and track their paths. It helps us analyse the shifting flows and optimise our pathing for the least resistance.
+
+There however appear to be certain zones that have an especially high concentration of those particles, and traversing them has caused atleast a dozen electronic malfunctions for our fleet.
+
+A few crew members seem to enjoy watching this anomaly through the fleets instruments, it apparently reminds them of the weather of their homeworld.
+",,,
+rat_abyss_log2,CUSTOM,Autonomous Operations,"Overtime the expeditions in to the abyss ramped up. As we discovered more use for the abyssal matter for new technologies, more parties started to show interests despite the danger. 
+
+Due to this new found interest, the place has been flooded with autonomous droneships. Everyone is trying to either make the most of the financial gain connected to taking their own share, and such has been much easier when hulls dont have to be made to a human standard or their families have to be compensated.
+
+Despite this, the AI cores prove rather unreliable at times. At times the droneships have been missing for days after their scheduled arrival date and cores have been found to be rather irresponsive during their flights.
+
+All this commotion even lead to a new gate being constructed close to the surface of the abyss. There were concerns about how it would interact with the enviroment at first, but it appears to be working fine in the end. 
+",,,
+rat_abyss_log3,CUSTOM,Vastness,"As we first discovered this abyss, we were unable to make it through the terrain and had to wait for further supplies and improved hulls to arrive from beyond the gates. It would be suicide to attempt expeditions without that equipment.
+
+We’ve been traversing it for months now, each time we surface back in to hyperspace and dive back in we make some more progress in to its depths, but we havent been able to discover anything new for a while now.
+
+Despite that, there almost seems to be no end to this place. We have so much to still explain, and im sure we will find the answers somewhere deeper. 
+",,,
+rat_abyss_log4,CUSTOM,Missed Schedule,"We’ve been reliant on the scheduled arrival of new supplies to keep this station running, but it has been days now and the fleets still havent arrived. We have tried to contact nearby stations for help, but they can only offer the same complaint.
+
+It seriously can’t be so hard to send new supplies through the gates, especially with so much capital at risk, how incompetent and irresponsible can they be up there? If this continues we will have to abandon this station and make way for the upper levels. We have to hope that other stations on the way can spare us supplies for our way back.
+",,,
+rat_abyss_log5,CUSTOM,Breach,"On more than just one occasion at this point faults in the hull of some poor vessel caused some of the exotic matter to breach in to the ship. So far we have been lucky and all breaches could be repaired before it turned in to the worst case scenario. 
+
+However there was one incident that is stuck in my mind. On one such breach a fellow crewman got exposed to the stuff with direct contact to his skin. Lets just say that it did not turn out well for him. He appeared fine at first, but just a few hours later he started screaming in agony, the medical team could find nothing wrong with his body, but he passed shortly after from the shock.
+
+Whatever that shit is, i dont wanna be anywhere near it. And all of this was just from contact with a brief contact on this fellows skin, i wouldnt want to know how much worse longer exposure would be.
+",,,
 ,,,,,,
 ,,,,,,
 ,,,,,,

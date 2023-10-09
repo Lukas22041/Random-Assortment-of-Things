@@ -9,7 +9,7 @@ import org.lwjgl.util.vector.Vector2f
 
 class AbyssAmbientSoundPlayer : EveryFrameScript {
 
-    var interval = IntervalUtil(120f, 240f)
+    var interval = IntervalUtil(180f, 300f)
 
     override fun isDone(): Boolean {
         return false
@@ -28,6 +28,7 @@ class AbyssAmbientSoundPlayer : EveryFrameScript {
             if (Global.getSector().isFastForwardIteration) {
                 mult = Global.getSettings().getFloat("campaignSpeedupMult")
             }
+
 
             interval.advance(amount / mult)
         }

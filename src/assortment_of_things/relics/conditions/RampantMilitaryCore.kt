@@ -5,6 +5,7 @@ import com.fs.starfarer.api.campaign.econ.Industry
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.campaign.econ.MarketImmigrationModifier
 import com.fs.starfarer.api.characters.FullName
+import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.impl.campaign.econ.BaseMarketConditionPlugin
 import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.population.PopulationComposition
@@ -17,27 +18,34 @@ class RampantMilitaryCore : BaseMarketConditionPlugin() {
 
 
     override fun apply(id: String?) {
-        val core = Global.getFactory().createPerson()
+        var core = market.memoryWithoutUpdate.get("\$rat_military_core_person") as PersonAPI?
+        if (core == null) {
+            core = Global.getFactory().createPerson() as PersonAPI
+            core.setFaction(market.factionId)
+            core.name = FullName("Military Core", "", FullName.Gender.ANY)
+            core.portraitSprite = "graphics/portraits/cores/rat_military_core.png"
+
+            core.rankId = null
+            core.postId = Ranks.POST_ADMINISTRATOR
+
+            core.stats.setSkillLevel(Skills.INDUSTRIAL_PLANNING, 1f)
+            core.stats.setSkillLevel(Skills.HYPERCOGNITION, 1f)
+            market.memoryWithoutUpdate.set("\$rat_military_core_person", core)
+        }
+
         core.setFaction(market.factionId)
-        core.name = FullName("Military Core", "", FullName.Gender.ANY)
-        core.portraitSprite = "graphics/portraits/cores/rat_military_core.png"
-
-        core.rankId = null
-        core.postId = Ranks.POST_ADMINISTRATOR
-
-        core.stats.setSkillLevel(Skills.INDUSTRIAL_PLANNING, 1f)
-        core.stats.setSkillLevel(Skills.HYPERCOGNITION, 1f)
-
         market.admin = core
-
+        if (market.commDirectory.getEntryForPerson(core) == null) {
+            market.commDirectory.addPerson(core)
+            market.commDirectory.getEntryForPerson(core)
+        }
 
         market.stability.modifyFlat(id, -1f, condition.name)
-        market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyPercent(id, 30f, condition.name)
+        market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyFlat(id, 0.30f, condition.name)
 
         market.stats.dynamic.getMod(Stats.PATROL_NUM_LIGHT_MOD).modifyFlat(id, 1f, condition.name)
         market.stats.dynamic.getMod(Stats.PATROL_NUM_MEDIUM_MOD).modifyFlat(id, 1f, condition.name)
         market.stats.dynamic.getMod(Stats.PATROL_NUM_HEAVY_MOD).modifyFlat(id, 1f, condition.name)
-
     }
 
     override fun unapply(id: String?) {

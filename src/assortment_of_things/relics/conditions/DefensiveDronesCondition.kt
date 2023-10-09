@@ -25,6 +25,15 @@ class DefensiveDronesCondition : BaseMarketConditionPlugin() {
                 }
             }
         } catch (e: Throwable) {}
+
+        var industry = market?.industries?.find { it.spec.hasTag("population") } ?: return
+
+        if (industry.isFunctional) {
+            industry.getDemand(Commodities.SHIPS).quantity.modifyFlat(id, 1f, condition.name)
+        }
+        else {
+            industry.getDemand(Commodities.SHIPS).quantity.unmodify(id)
+        }
     }
 
     override fun unapply(id: String?) {
@@ -41,7 +50,7 @@ class DefensiveDronesCondition : BaseMarketConditionPlugin() {
                 "Automaticly launches up to 3 derelict drone fleets to protect the planet and system. The strength of the fleets depends on the planets fleet size multiplier." +
                 "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "3", "derelict", "fleet size")
         tooltip.addSpacer(10f)
-
+        tooltip.addPara("+1 demand for ship hulls and weapons", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+1")
 
 
 

@@ -45,10 +45,18 @@ class AbyssalFleetInflationListener : FleetInflationListener {
     override fun reportFleetInflated(fleet: CampaignFleetAPI?, inflater: FleetInflater?) {
         if (fleet == null) return
         if (fleet.hasTag("rat_isInflated")) return
-        if (fleet.faction.id == "rat_abyssals")
+        var factionID = fleet.faction.id
+        if (factionID == "rat_abyssals" || factionID == "rat_abyssals_deep")
         {
             fleet.addTag("rat_isInflated")
-            fleet.stats.sensorRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 0.90f)
+
+            if (factionID == "rat_abyssals") {
+                fleet.stats.sensorRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 0.90f)
+            }
+
+            if (factionID == "rat_abyssals_deep") {
+                fleet.stats.sensorRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 1.10f)
+            }
 
             var depth = AbyssDepth.Deep
             if (fleet.containingLocation != null && fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))    {
@@ -184,19 +192,19 @@ class AbyssalFleetInflationListener : FleetInflationListener {
 
             if (variantID.contains("temporal") || variantID.contains("chronos"))
             {
-                core = chronos.createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, random)
+                core = chronos.createPerson(RATItems.CHRONOS_CORE, fleet.faction.id, random)
             }
             else if (variantID.contains("cosmal") || variantID.contains("cosmos"))
             {
-                core = cosmos.createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, random)
+                core = cosmos.createPerson(RATItems.COSMOS_CORE, fleet.faction.id, random)
             }
             else if (random.nextFloat() > 0.5f)
             {
-                core = chronos.createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, random)
+                core = chronos.createPerson(RATItems.CHRONOS_CORE, fleet.faction.id, random)
             }
             else
             {
-                core = cosmos.createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, random)
+                core = cosmos.createPerson(RATItems.COSMOS_CORE, fleet.faction.id, random)
             }
 
             if (core != null)

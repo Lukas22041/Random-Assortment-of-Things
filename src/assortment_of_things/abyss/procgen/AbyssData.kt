@@ -10,4 +10,11 @@ class AbyssData {
     var systemsData = ArrayList<AbyssSystemData>()
     var generatedSteps = 0
 
+
+    var abyssalsDestroyed = 0
+    var hasAbyssalDoctrine = false
+
+    var seraphsDestroyed = 0
+    var hasSeraphDoctrine = false
+
 }

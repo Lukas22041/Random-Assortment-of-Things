@@ -22,10 +22,10 @@ class AncientMilitaryNexusCondition : BaseMarketConditionPlugin() {
 
         var hasMilitaryStructure = market?.industries?.any { it.isFunctional && (it.spec.hasTag("patrol") || it.spec.hasTag("military") ||  it.spec.hasTag("command")) }
         if (hasMilitaryStructure != null && hasMilitaryStructure) {
-            market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyMult(id, 1.25f, condition.name)
+            market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyFlat(id, 0.25f, condition.name)
         }
         else {
-            market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).unmodifyMult(id)
+            market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).unmodifyFlat(id)
         }
     }
 
@@ -42,7 +42,7 @@ class AncientMilitaryNexusCondition : BaseMarketConditionPlugin() {
         )
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("+30%% defense rating if a defensive structure is present", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+30%")
+        tooltip.addPara("x1.3 defense rating if a defensive structure is present", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "x1.3")
         tooltip.addPara("+25%% fleet size if a military structure is present", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+25%")
 
     }

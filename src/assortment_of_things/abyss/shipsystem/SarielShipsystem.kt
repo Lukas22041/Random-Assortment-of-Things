@@ -73,6 +73,9 @@ class SarielShipsystem : BaseShipSystemScript() {
         stats.energyRoFMult.modifyMult(id, 1 + (0.33f * effectLevel))
         stats.ballisticRoFMult.modifyMult(id, 1 + (0.33f * effectLevel))
 
+        stats.ballisticAmmoRegenMult.modifyMult(id, 1 + (0.33f * effectLevel))
+        stats.energyAmmoRegenMult.modifyMult(id, 1 + (0.33f * effectLevel))
+
         stats.ballisticWeaponFluxCostMod.modifyMult(id, 1 - (0.33f * effectLevel))
         stats.energyWeaponFluxCostMod.modifyMult(id, 1 - (0.33f * effectLevel))
         stats.missileWeaponFluxCostMod.modifyMult(id, 1 - (0.33f * effectLevel))

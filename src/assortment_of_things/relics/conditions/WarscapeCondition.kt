@@ -16,6 +16,7 @@ class WarscapeCondition : BaseMarketConditionPlugin() {
 
 
     override fun apply(id: String?) {
+
         var industry = market?.industries?.find { it.spec.hasTag("techmining") } ?: return
         market.hazard.modifyFlat(id, 0.10f, condition.name)
 

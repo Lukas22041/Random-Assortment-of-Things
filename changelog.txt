@@ -1,3 +1,29 @@
+Version 1.6.6
+Not sure if its save compatible to be honest, not really recommended atleast.
+
+-> Added a core for abyssal seraphs.
+-> Added "Doctrine Reports", which are short intels that are available after defeating some of the abyss fleets, giving some information about them.
+-> Deep-Abyss fleets now have their a different indicator color and seraphs are shown in the front of the fleet view.
+-> Added one more log.
+-> Improved the vignette in the abyss to more dark at the edges but brighter in the center.
+-> Adjusted the spawn rates for relics conditions.
+-> Fixed an issue where the new planetary conditions did not show up on planets in some menus.
+
+
+
+Version 1.6.5
+
+-> Added lore-logs that can now be found in the abyss.
+-> Improved the darkness visuals of the abyss.
+-> Relics stations and conditions can now spawn in more themes than just ruins, but their spawn chance is still much higher for ruins.
+-> Relics conditions dont have a maximum cap on how often a specific condition can spawn anymore.
+-> Added a bit more to the abyss start.
+-> Adjusted the balance of some of the conditions.
+-> Fixed an issue between the military core condition and indevos military arrays
+-> Fixed an issue where the military core would get a new comm directory entry whenever the market was granted autonomy
+
+
+
 Version 1.6.4
 
 -> Added 4 new planetery conditions.

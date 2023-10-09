@@ -3,6 +3,7 @@ package assortment_of_things.relics.conditions.scripts
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEventListener.FleetDespawnReason
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.FactionDoctrineAPI
 import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
@@ -91,22 +92,22 @@ class DefensiveDronesFleetMananger(source: SectorEntityToken?, thresholdLY: Floa
 
         var market = source.market
 
-        var basePoints = MathUtils.getRandomNumberInRange(50f, 100f)
+        var basePoints = MathUtils.getRandomNumberInRange(30f, 50f)
         var modifier = market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).computeEffective(0f)
 
         var points = basePoints * modifier
-        points = MathUtils.clamp(points, 30f, 200f)
+        points = MathUtils.clamp(points, 30f, 150f)
 
         val random = Random()
 
         var type = FleetTypes.PATROL_SMALL
-        if (points > 90) type = FleetTypes.PATROL_MEDIUM
-        if (points > 160) type = FleetTypes.PATROL_LARGE
+        if (points > 80) type = FleetTypes.PATROL_MEDIUM
+        if (points > 140) type = FleetTypes.PATROL_LARGE
 
         val params = FleetParamsV3(source.market,
             source.locationInHyperspace,
             Factions.DERELICT,
-            1f,
+            3f,
             type,
             points,  // combatPts
             0f,  // freighterPts 

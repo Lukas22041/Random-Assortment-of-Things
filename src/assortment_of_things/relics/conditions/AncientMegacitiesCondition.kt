@@ -41,7 +41,6 @@ class AncientMegacitiesCondition : BaseMarketConditionPlugin(), MarketImmigratio
             Misc.getTextColor(), Misc.getHighlightColor(), "+${getImmigrationBonus().toInt()}")
 
 
-        tooltip.addSpacer(10f)
 
     }
 }
