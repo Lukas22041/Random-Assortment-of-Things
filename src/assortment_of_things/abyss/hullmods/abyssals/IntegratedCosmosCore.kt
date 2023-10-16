@@ -1,6 +1,8 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
 import assortment_of_things.abyss.hullmods.BaseAlteration
+import assortment_of_things.abyss.skills.SpaceCoreSkill
+import assortment_of_things.abyss.skills.TimeCoreSkill
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
@@ -42,11 +44,13 @@ class IntegratedCosmosCore : BaseAlteration() {
 
         stats.minCrewMod.modifyFlat("rat_core_conversion", minCrew.get(hullSize)!!)
         stats.maxCrewMod.modifyFlat("rat_core_conversion", maxCrew.get(hullSize)!!)
+
+        SpaceCoreSkill().apply(stats, stats.variant.hullSize, id, 2f)
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)
-
+        SpaceCoreSkill().apply(ship!!.mutableStats, ship.hullSize, id, 2f)
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  isForModSpec: Boolean): Boolean {
@@ -57,8 +61,14 @@ class IntegratedCosmosCore : BaseAlteration() {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
         tooltip!!.addPara("Replaces the ships AI-Components with a miniature bridge and integrates a cosmos core in to the ships subsystem. " +
-                "This allows humans to crew the ship, while enabling the cosmos-core related shipsystem.", 0f,
+                "This allows humans to crew the ship, while enabling the cosmos-core related shipsystem. Also provides the cores skill to the ship.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "cosmos-core", "shipsystem")
+
+        var spaceSkill = Global.getSettings().getSkillSpec("rat_core_space")
+        tooltip.addSpacer(10f)
+        var spaceSkillImage = tooltip.beginImageWithText(spaceSkill.spriteName, 48f)
+        SpaceCoreSkill().createCustomDescription(null, null, spaceSkillImage, tooltip.widthSoFar)
+        tooltip.addImageWithText(0f)
     }
 
     override fun canInstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {

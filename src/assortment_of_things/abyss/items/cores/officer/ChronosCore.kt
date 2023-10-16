@@ -20,7 +20,7 @@ class ChronosCore : AICoreOfficerPlugin {
 
     var automatedPointsMult = 3f
 
-    override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI? {
+    override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI {
         var core = AICoreUtil.createCorePerson(aiCoreId, factionId)
         core.stats.level = 6
         core.setPersonality(Personalities.RECKLESS)

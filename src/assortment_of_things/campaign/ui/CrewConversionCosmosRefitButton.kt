@@ -1,6 +1,7 @@
 package assortment_of_things.campaign.ui
 
 import assortment_of_things.misc.addNegativePara
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoStackAPI
@@ -28,7 +29,7 @@ class CrewConversionCosmosRefitButton : BaseRefitButton() {
     }
 
     override fun shouldShow(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
-        return variant!!.hasHullMod("rat_abyssal_conversion") && variant!!.hasHullMod("rat_abyssal_core")
+        return variant!!.hasHullMod("rat_abyssal_conversion") && variant!!.baseOrModSpec().hasTag("rat_abyssals")
     }
 
     override fun hasTooltip(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
@@ -43,8 +44,8 @@ class CrewConversionCosmosRefitButton : BaseRefitButton() {
 
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("This allows the ship to use the cosmos shipsystem. \n\n" +
-                "This permanently consumes the integrated core and its mutually exclusive to the chronos core integration.", 0f,
+        tooltip.addPara("This allows the ship to use the cosmos shipsystem and provides its skill." +
+                "", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "shipsystem", "permanently")
 
         if (getCosmosStack(market) == null) {

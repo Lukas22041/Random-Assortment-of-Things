@@ -19,9 +19,11 @@ Ordnance Redistributor,rat_ordnance_redistributor,0,,,,,3000,FALSE,TRUE,FALSE,0,
 #Abyss Installables,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 #Abyss Special Alterations,,,,,,,,,,,,,,,,,,
-Abyssal Crew Conversion,rat_abyssal_conversion,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalCrewConversion,,,graphics/hullmods/rat_crew_conversion.png
+Abyssal Crew Conversion,rat_abyssal_conversion,3,1,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalCrewConversion,,,graphics/hullmods/rat_crew_conversion.png
 Abyssal Crew Conversion (Chronos),rat_chronos_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedChronosCore,,,graphics/hullmods/rat_chronos_conversion.png
 Abyssal Crew Conversion (Cosmos),rat_cosmos_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedCosmosCore,,,graphics/hullmods/rat_chosmos_conversion.png
+Abyssal Crew Conversion (Seraph),rat_seraph_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedSeraphCore,,,graphics/hullmods/rat_seraph_conversion.png
+,,,,,,,,,,,,,,,,,,
 Primordial Stream,rat_primordial_stream,3,0,Unique Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.PrimordialStreamHullmod,,,graphics/hullmods/rat_primordial_stream.png
 ,,,,,,,,,,,,,,,,,,
 ##Misc,,,,,,,,,,,,,,,,,,
@@ -39,14 +41,15 @@ Missile Reserves,rat_missile_reserve,3,4,Hull Alteration,"rat_alteration, no_dro
 Temporal Gear,rat_timegear,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.TimegearHullmod,,,graphics/hullmods/rat_timegear.png
 Deployment Preparation,rat_preperation,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.DeploymentPreperation,,,graphics/hullmods/rat_deployment.png
 Drivefield Overwrite,rat_drivefield_overwrite,3,5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.DrivefieldOverwriteHullmod,,,graphics/hullmods/rat_drivefield_overwrite.png
-,,,,,,,,,,,,,,,,,,
+Advanced Flux Crystal,rat_advanced_flux_crystal,3,3,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.AdvancedFluxCrystalHullmod,,,graphics/hullmods/rat_flux_crystal.png
+Boost Redirector,rat_boost_redirector,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.BoostRedirectorHullmod,,,graphics/hullmods/rat_boost_redirector.png
+Soft Shields,rat_soft_shields,3,3,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.SoftShieldsHullmod,,,graphics/hullmods/rat_soft_shields.png
 ,,,,,,,,,,,,,,,,,,
 ##Fightersystems,,,,,,,,,,,,,,,,,,
 Temporal Assault,rat_temporalAssault,3,1.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.TemporalAssaultHullmod,,,graphics/hullmods/rat_temporal_assault.png
 Perseverance,rat_perseverance,3,2.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.PerseveranceHullmod,,,graphics/hullmods/rat_perseverance.png
 Magnetic Storm,rat_magneticStorm,3,2.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.MagneticStormHullmod,,,graphics/hullmods/rat_magnetic_storm.png
 Plasmatic Shield,rat_plasmaticShield,3,2.5,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, abyss",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.fightersystems.PlasmaticShieldHullmod,,,graphics/hullmods/rat_plasmatic_shield.png
-,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
@@ -59,7 +62,4 @@ Refurbished,rat_refurbished_hull,0,,,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_
 #Relics Alterations,,,,,,,,,,,,,,,,,,
 Upscale Protocol,rat_upscale_protocol,3,4,Unique Alteration,"rat_alteration, rat alteration_no_drop, no_drop_salvage, restricted",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.UpscaleProtocolHullmod,,,graphics/hullmods/rat_upscale_protocol.png
 ,,,,,,,,,,,,,,,,,,
-Advanced Flux Crystal,rat_advanced_flux_crystal,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, relics",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.AdvancedFluxCrystalHullmod,,,graphics/hullmods/rat_flux_crystal.png
-Boost Redirector,rat_boost_redirector,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, relics",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.BoostRedirectorHullmod,,,graphics/hullmods/rat_boost_redirector.png
-Soft Shields,rat_soft_shields,3,4,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, relics",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.relics.hullmods.alterations.SoftShieldsHullmod,,,graphics/hullmods/rat_soft_shields.png
 ,,,,,,,,,,,,,,,,,,

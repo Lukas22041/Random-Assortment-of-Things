@@ -13,7 +13,8 @@ Hard mode greatly increases the strength of fleets found within the Abyss. Also 
 rat_abyssCredits,,Text,"[Credits:]
 [SnazzyPantsMcGee] - Spritework
 [Haplogynae] - Music & Sounds
-[Niatahl] & [Ruddygreat] - Helped with some VFX",,,,,Expansion
+[Niatahl] & [Ruddygreat] - Helped with some VFX
+[Loyse] - Helped with some variants and made the banner 3D model.",,,,,Expansion
 ,,,,,,,,
 rat_relicsHeader,Relics of the Past,Header,Relics of the Past,,,,,Expansion
 rat_relicsEnabled,"Enable ""Relics of the Past""",Boolean,true,,"Generates lots of unique loot, stations, interactions and planetary conditions across the sector, with most of it being discoverable in ruined systems.

@@ -1,0 +1,39 @@
+{
+    "displayName": "Strike",
+    "fluxCapacitors": 6,
+    "fluxVents": 10,
+    "goalVariant": true,
+    "hullId": "rat_raguel",
+    "hullMods": [
+        "fluxdistributor",
+        "hardenedshieldemitter",
+        "rat_artifact_controller",
+        "targetingunit",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_raguel_Strike",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "rat_seabream",
+                "WS0006": "rat_seabream",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_lusca",
+                "WS0002": "rat_lusca",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

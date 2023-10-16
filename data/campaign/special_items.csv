@@ -6,6 +6,11 @@ Abyssal Survey Data,rat_abyss_survey,,,,20000,1000,1,,graphics/icons/cargo/rat_a
 ,,,,,,,,,,,,,,,
 Supercharged Microforge,rat_charged_forge,,,,5000,1000,1,,graphics/icons/cargo/rat_charged_forge.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.SuperchargedMicroforge,,,402
 ,,,,,,,,,,,,,,,
+#Relics,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+Forge-Assisted Industry BP,rat_consumeable_industry,,Forge-Assisted,,20000,1000,1,,graphics/icons/cargo/rat_consumeable_industry.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ConsumeableIndustryBP,,Contains the technological specifications and an industrial-grade nanoforge to allow for the construction and maintenance of this industry or structure.,400
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
 #Other,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,

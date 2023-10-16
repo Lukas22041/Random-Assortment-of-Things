@@ -700,7 +700,34 @@
 	},
 	
 	
-	
+	"rat_damaged_cryosleeper":{
+		"defaultName":"Damaged Domain-era Cryosleeper", # used if name=null in addCustomEntity()
+		"nameInText":"Damaged Domain-era cryosleeper",
+		"shortName":"cryosleeper",
+		"aOrAn":"a",
+		"isOrAre":"is",
+		"defaultRadius":96, # used if radius<0 in addCustomEntity()
+		"customDescriptionId":"rat_damaged_cryosleeper",
+		"interactionImage":"graphics/illustrations/cryosleeper_interior.jpg",
+		"icon":"graphics/icons/cryosleeper.png",
+		"iconWidth":32,
+		"iconHeight":32,
+		"sprite":"graphics/stations/rat_damaged_cryosleeper.png",
+		"spriteWidth":108,
+		"spriteHeight":108,
+		"renderShadow":true,
+		"useLightColor":true,
+		"showInCampaign":true,
+		"showIconOnMap":true,
+		"showNameOnMap":false,
+		"scaleNameWithZoom":false,
+		"scaleIconWithZoom":true,
+		"tags":["has_interaction_dialog", "neutrino_high"],
+		"layers":[STATIONS], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"renderCircleIndicator":true,
+		"renderCircleIndicatorSelectionFlash":true,
+		"pluginClass":"com.fs.starfarer.api.impl.campaign.CryosleeperEntityPlugin",
+	},
 	
 	
 	

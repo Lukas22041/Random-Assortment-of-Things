@@ -21,7 +21,7 @@ class DefensiveDronesCondition : BaseMarketConditionPlugin() {
             if (market.primaryEntity != null) {
                 var entity = market.primaryEntity
                 if (!entity.hasScriptOfClass(DefensiveDronesFleetMananger::class.java)) {
-                    entity.addScript(DefensiveDronesFleetMananger(entity, 3f, 90f, 2, 3))
+                    entity.addScript(DefensiveDronesFleetMananger(entity, 1000f, 90f, 2, 3))
                 }
             }
         } catch (e: Throwable) {}

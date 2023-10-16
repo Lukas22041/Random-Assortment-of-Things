@@ -37,7 +37,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
             var id = interactionTarget.customEntitySpec.id
 
             when(id) {
-                "rat_development_station" -> return PluginPick(DevelopmentStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                //"rat_development_station" -> return PluginPick(DevelopmentStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_orbital_construction_station" -> return PluginPick(AssemblyStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_refurbishment_station" -> return PluginPick(RefurbishmentStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_cryochamber" -> return PluginPick(CryochamberInteraction(), CampaignPlugin.PickPriority.HIGHEST)
@@ -46,6 +46,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 "rat_training_station" -> return PluginPick(TrainingStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_gravitational_dynamo" -> return PluginPick(GravitationalDynamoInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_neural_laboratory" -> return PluginPick(NeuralLaboratoryInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_damaged_cryosleeper" -> return PluginPick(DamagedCryosleeperInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
             if (id == "rat_bioengineering_station" || id == "rat_augmentation_station") {

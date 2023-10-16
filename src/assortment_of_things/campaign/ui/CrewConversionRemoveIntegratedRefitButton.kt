@@ -28,7 +28,7 @@ class CrewConversionRemoveIntegratedRefitButton : BaseRefitButton() {
     }
 
     override fun shouldShow(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
-        return !variant!!.hasHullMod("rat_abyssal_conversion") && (variant.hasHullMod("rat_chronos_conversion") || variant.hasHullMod("rat_cosmos_conversion"))
+        return !variant!!.hasHullMod("rat_abyssal_conversion") && (variant.hasHullMod("rat_chronos_conversion") || variant.hasHullMod("rat_cosmos_conversion") || variant.hasHullMod("rat_seraph_conversion"))
     }
 
     override fun hasTooltip(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
@@ -37,7 +37,7 @@ class CrewConversionRemoveIntegratedRefitButton : BaseRefitButton() {
 
     override fun addTooltip(tooltip: TooltipMakerAPI?,member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?) {
 
-        var label = tooltip!!.addPara("Double-Clicking this button uninstalls the currently integrated core. The Removed Core is not recovered in the process.", 0f,
+        var label = tooltip!!.addPara("Double-Clicking this button uninstalls the currently integrated core. The Removed Core is recovered in the process.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "Double-Clicking", "uninstalls")
 
     }
@@ -53,11 +53,17 @@ class CrewConversionRemoveIntegratedRefitButton : BaseRefitButton() {
 
             if (variant!!.hasHullMod("rat_chronos_conversion")) {
                 variant!!.removePermaMod("rat_chronos_conversion")
-
+                Global.getSector().playerFleet.cargo.addCommodity(RATItems.CHRONOS_CORE, 1f)
             }
 
             if (variant.hasHullMod("rat_cosmos_conversion")) {
                 variant!!.removePermaMod("rat_cosmos_conversion")
+                Global.getSector().playerFleet.cargo.addCommodity(RATItems.COSMOS_CORE, 1f)
+            }
+
+            if (variant.hasHullMod("rat_seraph_conversion")) {
+                variant!!.removePermaMod("rat_seraph_conversion")
+                Global.getSector().playerFleet.cargo.addCommodity(RATItems.SERAPH_CORE, 1f)
             }
 
             variant!!.addPermaMod("rat_abyssal_conversion", true)

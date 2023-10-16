@@ -22,7 +22,7 @@ class SeraphCore : AICoreOfficerPlugin {
 
     var automatedPointsMult = 4f
 
-    override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI? {
+    override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI {
         var core = AICoreUtil.createCorePerson(aiCoreId, factionId)
         core.stats.level = 7
         core.setPersonality(Personalities.RECKLESS)

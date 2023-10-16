@@ -28,10 +28,10 @@ class AbyssalUnknownLabInteraction : RATInteractionPlugin() {
         textPanel.addPara("Your fleet approaches a the unknown lab")
 
         textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
+        var fleetData = Global.getSector()?.playerFleet?.fleetData ?: return
 
         createOption("Explore") {
             clearOptions()
-
             textPanel.addPara("You make your way through the silent halls of this station. It appears to be filled with medical facilities, but there are is no indication of what has transpired here. " + "As you delve deeper, you discover the remaining logs of the station. ")
 
             textPanel.addPara("The stations purpose seems to have been the experimentation of the effects of abyssal matter on biological subjects. ")

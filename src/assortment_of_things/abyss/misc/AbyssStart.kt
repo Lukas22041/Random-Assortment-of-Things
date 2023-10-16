@@ -114,7 +114,7 @@ class AbyssStart : CustomStart() {
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, Commodities.CREW, crew)
 
         data.startingCargo.addSpecial(SpecialItemData("rat_artifact", "computational_matrix"), 1f)
-        data.startingCargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_abyssal_conversion"), 3f)
+        data.startingCargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_abyssal_conversion"), 1f)
         data.startingCargo.credits.add(250000f)
         AddRemoveCommodity.addCreditsGainText(250000, textPanel)
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, RATItems.CHRONOS_CORE, 3f)
@@ -125,7 +125,7 @@ class AbyssStart : CustomStart() {
 
         textPanel.setFontSmallInsignia()
         textPanel.addPara("Gained 1x Computational Matrix", Misc.getPositiveHighlightColor(), Misc.getHighlightColor(), "1x")
-        textPanel.addPara("Gained 3x Abyssal Crew Conversions", Misc.getPositiveHighlightColor(), Misc.getHighlightColor(), "3x")
+        textPanel.addPara("Gained 1x Abyssal Crew Conversions", Misc.getPositiveHighlightColor(), Misc.getHighlightColor(), "1x")
         textPanel.setFontInsignia()
         AddRemoveCommodity.addCommodityGainText(RATItems.CHRONOS_CORE, 3, textPanel)
         AddRemoveCommodity.addCommodityGainText(RATItems.COSMOS_CORE, 3,textPanel)

@@ -13,7 +13,7 @@ Aboleth (M),rat_aboleth_m,Droneship Cruiser,Abyssal,aboleth_system,20,8000,900,1
 Morkoth,rat_morkoth,Drone Battleship,Abyssal,morkoth_system,30,20000,1500,25000,37500,1500,320,,40,30,20,10,15,3500,OMNI,,270,0.3,0.65,,,0,0,250,400,10,40,8,500000,3,15,720,0.25,55,55,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.4,2,4,,3104
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Seraphs,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Raguel,rat_raguel,Droneship,Seraph,rat_raguel_system,14,4000,400,4500,6250,450,65,,110,160,150,45,100,200,FRONT,,270,0.4,0.75,,,0,0,10,15,1,15,10,50000,5,10,360,0.25,14,14,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, rat_seraph",,0.5,2,3,,3111
+Raguel,rat_raguel,Droneship,Seraph,rat_raguel_system,14,4000,400,4500,6250,450,65,,110,160,150,45,100,250,FRONT,,270,0.4,0.75,,,0,0,10,15,1,15,10,50000,5,10,360,0.25,14,14,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, rat_seraph",,0.5,2,3,,3111
 Sariel,rat_sariel,Heavy Droneship,Seraph,rat_sariel_system,18,7000,750,8000,8000,500,115,,80,70,50,20,25,650,FRONT,,270,0.4,0.8,,,0,0,80,60,2,30,10,50000,5,15,420,0.25,18,18,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, rat_seraph",,0.5,2,3,,3112
 Sarakiel,rat_sarakiel,Heavy Droneship,Seraph,rat_sariel_system,18,7000,750,8000,8000,500,115,,80,70,50,20,25,650,FRONT,,270,0.4,0.8,,,0,0,80,60,2,30,10,50000,5,15,420,0.25,18,18,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, rat_seraph",,0.5,2,3,,3113
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

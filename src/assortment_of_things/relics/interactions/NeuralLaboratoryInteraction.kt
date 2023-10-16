@@ -14,11 +14,6 @@ import java.util.Random
 
 class NeuralLaboratoryInteraction : RATInteractionPlugin() {
 
-    var textInterval = IntervalUtil(0.05f, 0.05f)
-    var glitchingDuration = 10f
-    var glitching = 0f
-    var addedOptions = false
-    var changedTimer = false
 
     override fun init() {
         textPanel.addPara("Your fleet approaches the training facility.")
@@ -38,15 +33,25 @@ class NeuralLaboratoryInteraction : RATInteractionPlugin() {
             createOption("Power up the station") {
                 clearOptions()
 
+                CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
 
-                textPanel.addPara("Immediately as the lights turn on, you feel a sensation in your head, a ringing is growing louder, and louder and louder. And suddenly...")
+                textPanel.addPara("Immediately as the lights turn on, sound is building up in your head, a ringing is growing louder, and louder and louder. ")
 
                 createOption("Continue") {
                     clearOptions()
-                    glitching = glitchingDuration
+
                     CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
 
-                    createOption("...") {}
+                    textPanel.addPara("The sound becomes ever increasing, an an immense headache is building and you almost faint and fall to the ground. That is until the sound suddenly stops and you hear a voice")
+
+                    createOption("Continue") {
+
+                        CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
+
+                        clearOptions()
+                        startConvo()
+                    }
+
                 }
             }
 
@@ -59,63 +64,6 @@ class NeuralLaboratoryInteraction : RATInteractionPlugin() {
         addLeaveOption()
     }
 
-    override fun advance(amount: Float) {
-
-        if (glitching > 0) {
-
-            if (!addedOptions && glitching <= glitchingDuration * 0.6f) {
-                clearOptions()
-                addedOptions = true
-                createOption("What...the fuck is going on?", "It...Hurts", "Make...it...stop") {
-                    if (!changedTimer) {
-                        changedTimer = true
-                        glitching = 2f
-                    }
-                }
-            }
-
-            glitching -= 1 * amount
-
-            if (glitching <= 0) {
-                clearOptions()
-                CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
-
-                textPanel.addPara("And then, it suddenly stopped. The massive amount of data streaming in to your head made you loose grip, having the rest of the crew bewildered as to why you almost passed out on the floor.")
-
-                textPanel.addPara("But just as you attempt to get back up, the sudden sound of a voice makes you fall back down.")
-
-                createOption("Continue") {
-                    clearOptions()
-                    startConvo()
-                }
-
-            }
-
-            if (glitching <= 0) return
-
-            textInterval.advance(amount)
-            if (textInterval.intervalElapsed()) {
-
-                var text = ""
-                for (i in 0 until 17) {
-
-                    if (i == 8) {
-                        text += " "
-                    }
-
-                    if (Random().nextFloat() > 0.5f) {
-                        text += "1"
-                    }
-                    else {
-                        text += "0"
-                    }
-                }
-
-                textPanel.addPara(text)
-            }
-        }
-
-    }
 
     fun startConvo() {
         textPanel.addPara("\"Connection established succesfully.\"")
@@ -129,18 +77,26 @@ class NeuralLaboratoryInteraction : RATInteractionPlugin() {
             var core = NeuroCore().createPerson("rat_neuro_core", Factions.NEUTRAL, Random())
             visualPanel.showPersonInfo(core)
 
-            textPanel.addPara("\"Im the Neuro-Core assigned with progressing the field of neurology together with you. I'm capable of communicating directly with my partners brainwaves. " +
-                    "While for security reasons my normal functions are limited, this allows for the most efficient exchange of information with my partner.\"")
+            CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
 
-            createOption("Why am i your partner?") {
+            textPanel.addPara("Suddenly an image flashes in to your mind and the voice continues to speak.")
+
+            textPanel.addPara("\"Im the Neuro-Core assigned with progressing the field of neurology together with you. I'm capable of communicating directly with my partners brainwaves. " +
+                    "While for security reasons my normal functions are limited, this allows for the most efficient exchange of information with my partner.")
+
+            textPanel.addPara("My analysis tells me that you have much combat experience, in that case i can assist by creating a neural link with you during battle, allowing you to pilot both yours and my ship without any delay.\"",
+                Misc.getTextColor(), Misc.getHighlightColor(),
+            "neural link")
+
+            createOption("Why have you selected me?") {
                 clearOptions()
                 textPanel.addPara("\"My protocols will link me to the first available target. This is irreversible, atleast until the contact to my partner is lost.\"")
 
-                createOption("This core may prove useful...") {
+                createOption("Make use of this cores unique features") {
                     clearOptions()
                     textPanel.addPara("You decide to take the core out of the terminal and keep it in your fleet, its unique characteristics may become of use in the future.")
 
-                    textPanel.addPara("\"Im glad to make this journey with you.\"")
+                    textPanel.addPara("\"Im glad to be of your assistance.\"")
 
                     Global.getSector().playerFleet.cargo.addCommodity("rat_neuro_core", 1f)
                     AddRemoveCommodity.addCommodityGainText("rat_neuro_core", 1, textPanel)

@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
 import assortment_of_things.abyss.hullmods.BaseAlteration
+import assortment_of_things.abyss.skills.TimeCoreSkill
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
@@ -45,10 +46,13 @@ class IntegratedChronosCore : BaseAlteration() {
 
         stats.minCrewMod.modifyFlat("rat_core_conversion", minCrew.get(hullSize)!!)
         stats.maxCrewMod.modifyFlat("rat_core_conversion", maxCrew.get(hullSize)!!)
+
+        TimeCoreSkill().apply(stats, stats.variant.hullSize, id, 2f)
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)
+        TimeCoreSkill().apply(ship!!.mutableStats, ship.hullSize, id, 2f)
 
     }
 
@@ -61,8 +65,14 @@ class IntegratedChronosCore : BaseAlteration() {
 
         tooltip!!.addSpacer(5f)
         tooltip!!.addPara("Replaces the ships AI-Components with a miniature bridge and integrates a chronos core in to the ships subsystem. " +
-                "This allows humans to crew the ship, while enabling the chronos-core related shipsystem.", 0f,
+                "This allows humans to crew the ship, while enabling the chronos-core related shipsystem. Also provides the cores skill to the ship.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "chronos-core", "shipsystem")
+
+        var timeSkill = Global.getSettings().getSkillSpec("rat_core_time")
+        tooltip.addSpacer(10f)
+        var timeSkillImage = tooltip.beginImageWithText(timeSkill.spriteName, 48f)
+        TimeCoreSkill().createCustomDescription(null, null, timeSkillImage, tooltip.widthSoFar)
+        tooltip.addImageWithText(0f)
 
     }
 

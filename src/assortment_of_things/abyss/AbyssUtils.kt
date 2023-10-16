@@ -62,6 +62,7 @@ object AbyssUtils {
     }
 
     fun isAnyFleetTargetingPlayer() : Boolean {
+        if (Global.getSettings().isDevMode) return false
         val playerFleet = Global.getSector().playerFleet
 
         for (fleet in playerFleet.containingLocation.fleets) {

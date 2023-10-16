@@ -295,8 +295,9 @@ class  AbyssGenerator {
         for (description in descriptions) {
             if (transmitters.isEmpty()) break;
             var pick = transmitters.randomAndRemove()
+            var descriptionSpec = Global.getSettings().getDescription(description, Description.Type.CUSTOM)
             pick.memoryWithoutUpdate.set("\$rat_log_id", description)
-            pick.addTag("rat_transmitter_has_log")
+            pick.addTag("rat_transmitter_has_log_${descriptionSpec.text1}")
         }
     }
 

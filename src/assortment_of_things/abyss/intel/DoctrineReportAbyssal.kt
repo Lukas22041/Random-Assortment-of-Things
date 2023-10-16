@@ -1,5 +1,9 @@
 package assortment_of_things.abyss.intel
 
+import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.items.cores.officer.ChronosCore
+import assortment_of_things.abyss.items.cores.officer.CosmosCore
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
@@ -8,6 +12,7 @@ import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import java.awt.Color
+import java.util.*
 
 class DoctrineReportAbyssal() : BaseIntelPlugin() {
 
@@ -44,9 +49,26 @@ class DoctrineReportAbyssal() : BaseIntelPlugin() {
             Misc.getTextColor(), Misc.getHighlightColor(), "capable shields", "are not heavily armored")
 
         info.addSpacer(10f)
-        info.addSectionHeading("Hullmods", Alignment.MID, 0f)
+        info.addSectionHeading("AI Cores", Alignment.MID, 0f)
         info.addSpacer(10f)
 
+        var chronosCore = ChronosCore().createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, Random())
+        var chronosCoreIMG = info.beginImageWithText(chronosCore.portraitSprite, 48f)
+        chronosCoreIMG.addPara(chronosCore.nameString, 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        chronosCoreIMG.addPara("The Chronos Core allows ships a faster timeflow and often activates time-related shipsystems on abyssal hulls.", 0f)
+        info.addImageWithText(0f)
+
+        info.addSpacer(10f)
+
+        var cosmosCore = CosmosCore().createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, Random())
+        var cosmosCoreIMG = info.beginImageWithText(cosmosCore.portraitSprite, 48f)
+        cosmosCoreIMG.addPara(cosmosCore.nameString, 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        cosmosCoreIMG.addPara("The Cosmos Core increases the weapon damage and range. It also decreases the damage the ship receives. It activates more defensive or burst focused shipsystems.", 0f)
+        info.addImageWithText(0f)
+
+        info.addSpacer(10f)
+        info.addSectionHeading("Hullmods", Alignment.MID, 0f)
+        info.addSpacer(10f)
 
         var synergyHullmodSpec = Global.getSettings().getHullModSpec("rat_abyssal_core")
         var synergyIMG = info.beginImageWithText(synergyHullmodSpec.spriteName, 48f)

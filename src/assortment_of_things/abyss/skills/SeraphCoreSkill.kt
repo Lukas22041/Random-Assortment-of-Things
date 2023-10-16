@@ -30,7 +30,7 @@ class SeraphCoreSkill : RATBaseShipSkill() {
 
         info.addSpacer(10f)
 
-        info.addPara("The ship deals up to 25%% more non-missile damage based on how much damage it has dealt towards hull or armor so far. The maximum damage is 100000/150000/200000 based on hullsize. " +
+        info.addPara("The ship deals up to 25%% more non-missile damage based on how much damage it has dealt towards hull or armor so far. The maximum damage is 75000/125000/175000 based on hullsize. " +
                 "", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         info.addSpacer(10f)
@@ -78,9 +78,9 @@ class SeraphCoreSkill : RATBaseShipSkill() {
 
         init {
             maxDamage = when(ship.variant.hullSize) {
-                ShipAPI.HullSize.FRIGATE -> 100000f
-                ShipAPI.HullSize.DESTROYER -> 150000f
-                ShipAPI.HullSize.CRUISER -> 200000f
+                ShipAPI.HullSize.FRIGATE -> 75000f
+                ShipAPI.HullSize.DESTROYER -> 125000f
+                ShipAPI.HullSize.CRUISER -> 175000f
                 else -> 1000000f
             }
         }

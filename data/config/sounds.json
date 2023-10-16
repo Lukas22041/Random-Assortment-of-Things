@@ -12,6 +12,11 @@
 			
 		],
 		
+		"rat_music_abyss2":[
+			{"file":"rat_abyss_theme2.ogg","source":"sounds/rat/music","volume":0.8},
+			
+		],
+		
 		"rat_abyss_encounter":[
 			{
 				"file":"rat_abyss_encounter.ogg",

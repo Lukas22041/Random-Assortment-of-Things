@@ -1,13 +1,13 @@
 {
     "displayName": "Strike",
-    "fluxCapacitors": 9,
+    "fluxCapacitors": 14,
     "fluxVents": 20,
     "goalVariant": true,
     "hullId": "rat_chuul",
     "hullMods": [
         "fluxdistributor",
         "hardenedshieldemitter",
-        "missleracks",
+        "magazines",
         "targetingunit",
     ],
     "permaMods": [
@@ -18,6 +18,13 @@
     "variantId": "rat_chuul_Strike",
     "weaponGroups": [
         {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0006": "rat_seabream",
+            }
+        },
+        {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
@@ -25,10 +32,11 @@
             }
         },
         {
-            "autofire": false,
+            "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0006": "rat_seadragon",
+                "WS0001": "rat_lusca",
+                "WS0002": "rat_lusca",
             }
         },
         {
@@ -37,20 +45,6 @@
             "weapons": {
                 "WS0003": "rat_shortfin",
                 "WS0004": "rat_shortfin",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0001": "irpulse",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0002": "irpulse",
             }
         },
     ],

@@ -20,7 +20,7 @@ class RelicsGenerator {
     private val stationFractionToGenerate = 1f
 
     private val chanceToGenerateCondition = 0.1f
-    private val extraChanceToGenerateConditionInRuins = 0.25f
+    private val extraChanceToGenerateConditionInRuins = 0.20f
 
     private val chanceToGenerateSecondCondition = 0.1f
     private val extraChanceToGenerateSecondConditionInRuins = 0.15f
@@ -65,11 +65,12 @@ class RelicsGenerator {
             if (systemPicker.isEmpty) return
             var system = systemPicker.pick()
 
-            var locations = BaseThemeGenerator.getLocations(Random(), system, 100f, pick.locations)
+            var spec = Global.getSettings().getCustomEntitySpec(pick.entityID)
+
+            var locations = BaseThemeGenerator.getLocations(Random(), system, 100 + spec.defaultRadius, pick.locations)
             if (locations.isEmpty) continue
             var location = locations.pick()
 
-            var spec = Global.getSettings().getCustomEntitySpec(pick.entityID)
             var entity = system.addCustomEntity(spec.defaultName + Misc.genUID(), spec.defaultName, spec.id, Factions.NEUTRAL) ?: continue
             entity.getSalvageSeed()
 

@@ -18,8 +18,8 @@ class UpscaleProtocolHullmod : BaseAlteration() {
 
     var modID = "rat_upscale_protocol"
 
-    private var dpFlat = 8f
-    private var dpMult = 0.5f
+    private var dpFlat = 5f
+    private var dpMult = 0.3f
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
@@ -73,8 +73,8 @@ class UpscaleProtocolHullmod : BaseAlteration() {
 
         tooltip!!.addSpacer(5f)
 
-        var label = tooltip.addPara("Increases the ships deployment cost by ${dpFlat.toInt()} or 50%, based on which one is larger. This is calculated with the hulls base deployment cost.", 0f)
-        label.setHighlight("deployment cost", "${dpFlat.toInt()}", "50%", "larger")
+        var label = tooltip.addPara("Increases the ships deployment cost by ${dpFlat.toInt()} or 30%, based on which one is larger. This is calculated with the hulls base deployment cost.", 0f)
+        label.setHighlight("deployment cost", "${dpFlat.toInt()}", "30%", "larger")
         label.setHighlightColors(hc, nc, nc, hc)
 
         tooltip.addSpacer(10f)

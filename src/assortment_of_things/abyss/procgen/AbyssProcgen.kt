@@ -49,7 +49,14 @@ object AbyssProcgen {
         system.addTag(Tags.THEME_UNSAFE)
         system.addTag(Tags.THEME_SPECIAL)
         system.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
-        system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
+
+        if (data.depth == AbyssDepth.Deep) {
+            system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss2")
+        }
+        else {
+            system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
+        }
+
         system.isEnteredByPlayer = false
 
         var warper = AbyssBackgroundWarper(system, 8, 0.33f)

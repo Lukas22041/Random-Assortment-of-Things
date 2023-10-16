@@ -21,13 +21,14 @@
 		"Seraph":[242, 48, 65, 255],
 		"Modular Weapon":[158, 50, 230,255],
 		"Artifact":[97, 21, 212, 255],
+		"Forge-Assisted":[235, 164, 49, 255],
 	},		
 	
 	"rat_abyssColor":[255, 0, 50,255],
 	
 	"drop_prob_officer_rat_chronos_core":0.1,
 	"drop_prob_officer_rat_cosmos_core":0.1,
-	"drop_prob_officer_rat_seraph_core":0.15,
+	"drop_prob_officer_rat_seraph_core":0.33,
 	"drop_prob_officer_rat_primordial_core":0,
 	
 	"drop_prob_officer_rat_neuro_core":0,

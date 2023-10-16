@@ -38,10 +38,12 @@
 		
 		"rat_aboleth_m_Attack":3.5,
 		"rat_aboleth_m_Strike":1.5,
+		"rat_aboleth_m_Overdriven":0.5,
 		"rat_aboleth_m_Support":0.5,
 	},
 	"combatCapital":{		
 		"rat_morkoth_Attack":5,
+		"rat_morkoth_Anchor":3,
 		"rat_morkoth_Support":1,
 	},
 }

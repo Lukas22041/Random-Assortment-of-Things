@@ -1,30 +1,29 @@
 package assortment_of_things.relics
 
-import assortment_of_things.relics.entities.GeneratorInputListener
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CampaignTerrainAPI
+import com.fs.starfarer.api.campaign.FactionAPI.ShipPickParams
 import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.ids.*
-import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.LocationType
 import com.fs.starfarer.api.impl.campaign.procgen.themes.OmegaOfficerGeneratorPlugin
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantOfficerGeneratorPlugin
+import com.fs.starfarer.api.impl.campaign.terrain.DebrisFieldTerrainPlugin.DebrisFieldParams
+import com.fs.starfarer.api.impl.campaign.terrain.DebrisFieldTerrainPlugin.DebrisFieldSource
+import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
-import org.magiclib.kotlin.initConditionMarket
-import java.awt.Color
 import java.util.*
-import kotlin.collections.ArrayList
 
 class RelicStations {
 
     //Default weight is 10f
     var stations = listOf<RelicStation>(
 
-        RelicStation("rat_development_station").apply {
+       /* RelicStation("rat_development_station").apply {
             systemFilter = { system -> true}
             amount = MathUtils.getRandomNumberInRange(2,3)
             weight = 1000f
-        },
+        },*/
 
         //Skill Stations
         RelicStation("rat_bioengineering_station").apply {
@@ -158,7 +157,48 @@ class RelicStations {
                     condition.isSurveyed = true
                 }
             }
-        }
+        },
+
+
+        RelicStation("rat_damaged_cryosleeper").apply {
+            systemFilter = { system -> system.planets.any { !it.isStar } && system.hasTag(Tags.THEME_DERELICT)}
+            locations = linkedMapOf(LocationType.PLANET_ORBIT to 10f)
+
+            postGeneration = {station ->
+                var fleet = Global.getFactory().createEmptyFleet(Factions.DERELICT, "Automated Defenses", false)
+
+                for (pick in fleet.faction.pickShip(ShipRoles.COMBAT_CAPITAL, ShipPickParams.all(), null, Random())) {
+                    fleet.fleetData.addFleetMember(pick.variantId)
+                }
+
+                val plugin = Misc.getAICoreOfficerPlugin(Commodities.ALPHA_CORE)
+                val person = plugin.createPerson(Commodities.ALPHA_CORE, fleet.faction.id, Random())
+
+                person.portraitSprite = fleet.faction.createRandomPerson().portraitSprite
+                fleet.commander = person
+                fleet.flagship.captain = person
+                RemnantOfficerGeneratorPlugin.integrateAndAdaptCoreForAIFleet(fleet.flagship)
+
+                for (member in fleet.fleetData.membersListCopy) {
+                    member.repairTracker.cr = member.repairTracker.maxCR
+                }
+
+                station.memoryWithoutUpdate.set("\$defenderFleet", fleet)
+
+                val params = DebrisFieldParams(300f,  // field radius - should not go above 1000 for performance reasons
+                        -1f,  // density, visual - affects number of debris pieces
+                        10000000f,  // duration in days
+                        0f) // days the field will keep generating glowing pieces
+
+
+                params.source = DebrisFieldSource.GEN
+                val debris = Misc.addDebrisField(station.getContainingLocation(), params, Random())
+                debris.setCircularOrbit(station, 0f, 0f, 100f);
+
+            }
+        },
+
+
 
       /*  RelicStation("rat_event_generator").apply {
             systemFilter = { system -> system.hasBlackHole() }

@@ -34,7 +34,7 @@ class AlterationRefitButton : BaseRefitButton() {
     }
 
     override fun getOrder(member: FleetMemberAPI?, variant: ShipVariantAPI?): Int {
-        return 90
+        return 80
     }
 
     override fun getPanelWidth(member: FleetMemberAPI?, variant: ShipVariantAPI?): Float {

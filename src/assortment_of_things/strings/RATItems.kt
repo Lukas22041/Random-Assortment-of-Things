@@ -17,5 +17,7 @@ object RATItems
 
     var SALVAGED_WEAPON_COMPONENTS = "rat_weapon_salvage"
 
+    var CONSUMEABLE_INDUSTRY_BP = "rat_consumeable_industry"
+
     var JEFF = "rat_jeff_core"
 }
