@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.procgen
 
+import assortment_of_things.abyss.scripts.AbyssDoctrineLearnedListener
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import org.lwjgl.util.vector.Vector2f
 
@@ -16,5 +17,7 @@ class AbyssData {
 
     var seraphsDestroyed = 0
     var hasSeraphDoctrine = false
+
+    var doctrineLearnedListeners = ArrayList<AbyssDoctrineLearnedListener>()
 
 }

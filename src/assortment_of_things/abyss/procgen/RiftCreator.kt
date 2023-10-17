@@ -81,6 +81,8 @@ object RiftCreator {
                     playerFleet.setLocation(point.x, point.y)
                     playSound = true
 
+                    riftSystem.isEnteredByPlayer = true
+
                     CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
 
                 }

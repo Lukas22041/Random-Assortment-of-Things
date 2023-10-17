@@ -8,18 +8,27 @@
 		####################################
 
 		"rat_music_abyss":[
-			{"file":"rat_abyss_theme.ogg","source":"sounds/rat/music","volume":0.8},
+			{"file":"EchoesOfTheDepths.ogg","source":"sounds/rat/music","volume":0.8},
 			
 		],
 		
 		"rat_music_abyss2":[
-			{"file":"rat_abyss_theme2.ogg","source":"sounds/rat/music","volume":0.8},
+			{"file":"ImpendingPresence.ogg","source":"sounds/rat/music","volume":0.8},
 			
 		],
 		
 		"rat_abyss_encounter":[
 			{
-				"file":"rat_abyss_encounter.ogg",
+				"file":"EyesOfTheAbyss.ogg",
+				"source":"sounds/rat/music",
+				"volume":1,
+				"randomStart":true, 
+			},
+		],
+		
+		"rat_abyss_encounter2":[
+			{
+				"file":"EtherealVanguards.ogg",
 				"source":"sounds/rat/music",
 				"volume":1,
 				"randomStart":true, 

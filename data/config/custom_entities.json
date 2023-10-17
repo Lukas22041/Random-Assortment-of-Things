@@ -209,6 +209,27 @@
 	},
 	
 	
+	"rat_abyss_warning_beacon":{
+		"defaultName":"Warning Beacon", # used if name=null in addCustomEntity()
+		"defaultRadius":40, # used if radius<0 in addCustomEntity()
+		"detectionRange":3000, # must be >0 for discoverable/discoveryXP to be used
+		"discoverable":true,
+		"discoveryXP":500,
+		"icon":"graphics/icons/warning_beacon.png",
+		"iconColor":[255,100,0,255],
+		"iconWidth":24,
+		"iconHeight":24,
+		"spriteWidth":64,
+		"spriteHeight":64,
+		"showInCampaign":true,
+		"showIconOnMap":true,
+		"scaleIconWithZoom":true,
+		"customDescriptionId":"rat_abyss_warning_beacon",
+		"interactionImage":"graphics/illustrations/comm_relay.jpg",
+		"tags":["has_interaction_dialog", "neutrino_high"],
+		"layers":[STATIONS], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"pluginClass":"assortment_of_things.abyss.entities.AbyssWarningBeacon",
+	},
 	
 	
 	
@@ -240,6 +261,18 @@
 		"pluginClass":"assortment_of_things.abyss.entities.AbyssalLightsource",
 	},
 	
+	"rat_abyss_token":{
+		"defaultName":"", # used if name=null in addCustomEntity()
+		"defaultRadius":0, # used if radius<0 in addCustomEntity()
+		"showInCampaign":true,
+		"showIconOnMap":false,
+		"scaleIconWithZoom":true,
+		"tags":["non_clickable"],
+		"layers":[ABOVE], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"renderCircleIndicator":false,
+		"renderCircleIndicatorSelectionFlash":false,
+	},
+	
 	"rat_abyss_particle_spawner":{
 		"defaultName":"", # used if name=null in addCustomEntity()
 		"defaultRadius":0, # used if radius<0 in addCustomEntity()
@@ -250,6 +283,7 @@
 		"layers":[ABOVE], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 		"pluginClass":"assortment_of_things.abyss.entities.AbyssalParticleManager",
 	},
+
 	
 	"rat_abyss_storm_spawner":{
 		"defaultName":"", # used if name=null in addCustomEntity()

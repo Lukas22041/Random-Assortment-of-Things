@@ -1,3 +1,23 @@
+Version 1.7.0
+May be save compatible, but not recommended as much would be missing or buggy.
+
+-> 2 new music pieces for the abyss (thanks to Haplogynae)
+-> Added some more variants for the abyss faction (thanks to Loyse)
+-> Added some more Relics Content.
+-> Changed the fleet behaviour around photospheres in the deep abyss a little.
+-> Removed "Development Station" from generation and moved its hull alterations to the abyss drop pool.
+-> Changed some writing in existing interactions and some descriptions, and added an additional log.
+-> Added a warning beacon around the abyss entrance.
+-> Abyssal Crew Conversion no longer permanently consume the core and now provide the cores skill. 
+-> Increased seraph core droprate.
+-> Improved the doctrine-intel a little more.
+-> Fleets now have limited tooltips for ship details until the doctrine is learned.
+-> Rebalanced the Engineered-Utopia condition.
+-> Fixed an issue that made it impossible to cheat in multiple conditions on to the same colony.
+-> Fixed an issue that showed that there is another unexplored connection in abyss systems with a rift.
+
+
+
 Version 1.6.6
 Not sure if its save compatible to be honest, not really recommended atleast.
 

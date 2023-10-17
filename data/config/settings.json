@@ -28,7 +28,7 @@
 	
 	"drop_prob_officer_rat_chronos_core":0.1,
 	"drop_prob_officer_rat_cosmos_core":0.1,
-	"drop_prob_officer_rat_seraph_core":0.33,
+	"drop_prob_officer_rat_seraph_core":0.25,
 	"drop_prob_officer_rat_primordial_core":0,
 	
 	"drop_prob_officer_rat_neuro_core":0,
@@ -62,6 +62,10 @@
 		  
 		  "neuro":"graphics/portraits/cores/rat_neural_core.png",
 		  "military":"graphics/portraits/cores/rat_military_core.png",
+		},
+		
+		"rat_intel": {
+		  "abyss_warning_beacon":"graphics/icons/intel/rat_abyss_warning_beacon.png",
 		},
 		
 		"rat_preload": {

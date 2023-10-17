@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssDifficulty
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
+import assortment_of_things.abyss.scripts.AbyssDoctrineLearnedListener
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.fixVariant
 import assortment_of_things.strings.RATItems
@@ -17,6 +18,7 @@ import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.loading.HullModSpecAPI
 import com.fs.starfarer.api.plugins.impl.CoreAutofitPlugin
 import com.fs.starfarer.api.util.WeightedRandomPicker
@@ -57,6 +59,26 @@ class AbyssalFleetInflationListener : FleetInflationListener {
             if (factionID == "rat_abyssals_deep") {
                 fleet.stats.sensorRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 1.10f)
                 fleet.stats.detectedRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 0.90f)
+            }
+
+
+            var abyssData = AbyssUtils.getAbyssData()
+            if (!abyssData.hasAbyssalDoctrine) {
+                for (member in fleet.fleetData.membersListWithFightersCopy) {
+                    if (member.baseOrModSpec().hasTag("rat_abyssals") && !member.baseOrModSpec().hasTag("rat_seraph")) {
+                        member.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
+                    }
+                }
+                abyssData.doctrineLearnedListeners.add(AbyssDoctrineLearnedListener(fleet))
+            }
+
+            if (!abyssData.hasSeraphDoctrine) {
+                for (member in fleet.fleetData.membersListWithFightersCopy) {
+                    if (member.baseOrModSpec().hasTag("rat_seraph")) {
+                        member.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
+                    }
+                }
+                abyssData.doctrineLearnedListeners.add(AbyssDoctrineLearnedListener(fleet))
             }
 
             var depth = AbyssDepth.Deep

@@ -9,16 +9,20 @@ import assortment_of_things.abyss.scripts.AbyssDistantIconScript
 import assortment_of_things.abyss.scripts.AbyssalDefendingFleetManager
 import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
 import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
+import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.getSalvageSeed
 import java.util.*
 import kotlin.collections.ArrayList
@@ -153,10 +157,41 @@ object AbyssEntityGenerator {
             }
 
             var defenseChance = 0.75f
+
             addDefenseFleetManager(photosphere, 2, defenseChance)
 
-        }
+            if (data.depth == AbyssDepth.Deep) {
+                var token = system.addCustomEntity("rat_abyss_token${Misc.genUID()}", "", "rat_abyss_token", Factions.NEUTRAL)
+                token.setCircularOrbit(photosphere, 0f, 0f, 0f)
 
+                token.radius = 1000f
+                token.addScript(object : EveryFrameScript {
+
+                    var maxDays = MathUtils.getRandomNumberInRange(5f, 10f)
+                    var timestamp = Global.getSector().clock.timestamp
+
+                    override fun isDone(): Boolean {
+                        return false
+                    }
+
+
+                    override fun runWhilePaused(): Boolean {
+                        return true
+                    }
+
+
+                    override fun advance(amount: Float) {
+                        var daysSince = Global.getSector().clock.getElapsedDaysSince(timestamp)
+                        if (daysSince >= maxDays) {
+                            token.radius = MathUtils.getRandomNumberInRange(400f, 2500f)
+                            maxDays = MathUtils.getRandomNumberInRange(5f, 10f)
+                            timestamp = Global.getSector().clock.timestamp
+                        }
+                    }
+                })
+                addDefenseFleetManager(token, 1, defenseChance)
+            }
+        }
     }
 
     fun addDerelictAbyssalShips(system: StarSystemAPI, max: Int, chanceToAddPer: Float) {
