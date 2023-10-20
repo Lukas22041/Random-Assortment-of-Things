@@ -50,7 +50,7 @@ class RelicsGenerator {
             systems = systems.filter { pick.systemFilter(it) }
             if (systems.isEmpty()) continue
 
-            var systemPicker =WeightedRandomPicker<StarSystemAPI>()
+            var systemPicker = WeightedRandomPicker<StarSystemAPI>()
             for (system in systems) {
                 var weight = 0f
 

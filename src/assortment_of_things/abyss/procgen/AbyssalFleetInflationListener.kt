@@ -57,7 +57,7 @@ class AbyssalFleetInflationListener : FleetInflationListener {
             }
 
             if (factionID == "rat_abyssals_deep") {
-                fleet.stats.sensorRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 1.10f)
+               // fleet.stats.sensorRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 1.10f)
                 fleet.stats.detectedRangeMod.modifyMult("rat_abyssals_passive_detect_reduction", 0.90f)
             }
 

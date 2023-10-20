@@ -17,6 +17,10 @@
       "id": "MagicLib",
       "name": "MagicLib"
     },
+	{
+      "id": "shaderLib",
+      "name": "GraphicsLib"
+    },
     {
       "id": "combatactivators",
       "name": "Combat Activators"

@@ -1,6 +1,6 @@
 {
 	"id":"rat_core_seraph",
-	"governingAptitude":"rat_abyss_cores",
+	"governingAptitude":"rat_abyss_abyssal_aptitude",
 	"elite":true,
 	"scope":"PILOTED_SHIP", 
 	"effectGroups":[

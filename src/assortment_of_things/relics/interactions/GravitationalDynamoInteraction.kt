@@ -93,8 +93,8 @@ class GravitationalDynamoInteraction : RATInteractionPlugin() {
                 clearOptions()
                 textPanel.addPara("After scavenging the contents of the storage facilities you access the control panel. Analysis shows that despite its age, the dynamo is still fully functional, and simply disabled itself due to inactivity")
 
-                textPanel.addPara("Activating the station will provide a 25%% hazard reduction to all planets in the system and an increase their population growth.",
-                    Misc.getTextColor(), Misc.getHighlightColor(), "25%", "population growth")
+                textPanel.addPara("Activating the station will provide a 50%% hazard reduction to all planets in the system and an increase their population growth.",
+                    Misc.getTextColor(), Misc.getHighlightColor(), "50%", "population growth")
 
                 createOption("Activate") {
                     clearOptions()

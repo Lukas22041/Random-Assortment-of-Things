@@ -13,6 +13,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
 import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
@@ -40,6 +41,7 @@ object AbyssEntityGenerator {
 
     fun spawnMinorEntity(system: StarSystemAPI, type: String) : SectorEntityToken {
         var entity = system.addCustomEntity("${type}_${Misc.genUID()}", null, type, Factions.NEUTRAL)
+        var data = AbyssUtils.getSystemData(system)
         entity.getSalvageSeed()
 
         var sensor = 10000f
@@ -79,6 +81,13 @@ object AbyssEntityGenerator {
             }
 
         })
+
+        if (data.depth == AbyssDepth.Deep) {
+            entity.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_abyss_interaction2")
+        }
+        else {
+            entity.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_abyss_interaction1")
+        }
 
         return entity
     }

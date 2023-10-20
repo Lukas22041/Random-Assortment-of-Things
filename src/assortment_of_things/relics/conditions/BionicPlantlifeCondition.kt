@@ -28,8 +28,6 @@ class BionicPlantlifeCondition : BaseMarketConditionPlugin() {
     }
 
     override fun createTooltipAfterDescription(tooltip: TooltipMakerAPI?, expanded: Boolean) {
-      /*  var color = market.textColorForFactionOrPlanet
-        tooltip!!.addTitle(condition.getName(), color)*/
 
         tooltip!!.addSpacer(10f)
         tooltip.addPara("To accelerate the growth of local flora, it has once been biongineered to feed the planets population. While this was successful, this causes large-scale farming to be impossible without supplying additional resources to the ecosystem." +
@@ -41,7 +39,5 @@ class BionicPlantlifeCondition : BaseMarketConditionPlugin() {
         tooltip.addPara("+${organicDemand.toInt()} organics demand (Farming)", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+${organicDemand.toInt()}")
 
     }
-
-
 
 }

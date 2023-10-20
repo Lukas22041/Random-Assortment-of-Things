@@ -12,7 +12,7 @@ class GravitationalDynamoCondition : BaseMarketConditionPlugin(), MarketImmigrat
 
     override fun apply(id: String?) {
         if (isDynamoActive()) {
-            market.hazard.modifyFlat(id, -0.25f, condition.name)
+            market.hazard.modifyFlat(id, -0.50f, condition.name)
             market.addTransientImmigrationModifier(this)
         }
         else {
@@ -59,8 +59,8 @@ class GravitationalDynamoCondition : BaseMarketConditionPlugin(), MarketImmigrat
         tooltip.addSpacer(10f)
 
         if (isDynamoActive()) {
-            tooltip.addPara("The Dynamo is actively sending power to this planet, reducing its hazard by 25%% and increasing population growth by ${getImmigrationBonus()} (based on colony size).", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "25%", "${getImmigrationBonus()}")
+            tooltip.addPara("The Dynamo is actively sending power to this planet, reducing its hazard by 50%% and increasing population growth by ${getImmigrationBonus()} (based on colony size).", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "50%", "${getImmigrationBonus()}")
         }
         else {
             tooltip.addPara("The receivers sit idly as no power is being transmitted.", 0f)

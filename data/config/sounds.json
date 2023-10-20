@@ -9,12 +9,10 @@
 
 		"rat_music_abyss":[
 			{"file":"EchoesOfTheDepths.ogg","source":"sounds/rat/music","volume":0.8},
-			
 		],
 		
 		"rat_music_abyss2":[
 			{"file":"ImpendingPresence.ogg","source":"sounds/rat/music","volume":0.8},
-			
 		],
 		
 		"rat_abyss_encounter":[
@@ -33,6 +31,14 @@
 				"volume":1,
 				"randomStart":true, 
 			},
+		],
+		
+		"rat_abyss_interaction1":[
+			{"file":"ThatWhichOnceWas.ogg","source":"sounds/rat/music","volume":0.8},
+		],
+		
+		"rat_abyss_interaction2":[
+			{"file":"TheHeartOfThoseForgotten.ogg","source":"sounds/rat/music","volume":0.8},
 		],
 		
 	
@@ -94,6 +100,12 @@
     [
             {"file":"sounds/sfx_wpn_missiles/dragonfire_dem_payload_01.ogg","pitch":1.0,"volume":0.3},
     ],
+	
+	"rat_bloodstream_trigger":{
+		"sounds":[
+			{"file":"sounds/sfx_systems/combat_readiness_malfunctions_weapon_large_01.ogg","pitch":1,"volume":1},
+		],
+	},	
 
 
 

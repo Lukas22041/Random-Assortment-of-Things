@@ -12,6 +12,7 @@ data class RelicStation(val entityID: String) {
     var amount = 1
 
     var systemFilter: (system: StarSystemAPI) -> Boolean = { system -> true }
+    var systemWeight: (system: StarSystemAPI) -> Float = { system -> 10f }
 
     var locations = linkedMapOf<LocationType, Float>(
         LocationType.PLANET_ORBIT to 5f, LocationType.IN_ASTEROID_BELT to 1f, LocationType.STAR_ORBIT to 1f)

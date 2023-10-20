@@ -1,6 +1,6 @@
 {
 	"id":"rat_abyssal_bloodstream",
-	"governingAptitude":"combat",
+	"governingAptitude":"rat_abyss_abyssal_aptitude",
 	"elite":false,
 	"scope":"PILOTED_SHIP", 
 	"effectGroups":[
