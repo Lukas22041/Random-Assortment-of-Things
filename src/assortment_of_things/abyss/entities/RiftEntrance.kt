@@ -172,7 +172,6 @@ class RiftEntrance : BaseCustomEntityPlugin() {
         //Ref 0 causes the content to not display in the specified area, 1 causes the content to only display in that area.
 
         // <draw the lines>
-
     }
 
     fun endStencil() {

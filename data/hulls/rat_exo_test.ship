@@ -1,0 +1,177 @@
+{
+  "hullName": "Test",
+  "hullId": "rat_exo_test",
+  "hullSize": "CRUISER",
+  "spriteName": "graphics/ships/exo/test.png",
+  "style": "RAT_EXO",
+  "height": 280,
+  "width": 220,
+  "center": [110, 140],
+  "collisionRadius": 160,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 147,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_exogrid"
+  ],
+  "builtInWeapons": {
+    "WS0012": "rat_exo_coil_location"
+  },
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 210,
+      "angle": -30.5,
+      "locations": [21, -55]
+    },
+    {
+      "id": "WS0002",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 210,
+      "angle": 30.5,
+      "locations": [21, 55]
+    },
+    {
+      "id": "WS0005",
+      "size": "LARGE",
+      "type": "SYNERGY",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [86, -0]
+    },
+    {
+      "id": "WS0003",
+      "size": "MEDIUM",
+      "type": "SYNERGY",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [55, 59]
+    },
+    {
+      "id": "WS0004",
+      "size": "MEDIUM",
+      "type": "SYNERGY",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": -0,
+      "locations": [55, -59]
+    },
+    {
+      "id": "WS0006",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 210,
+      "angle": 45,
+      "locations": [56, 34]
+    },
+    {
+      "id": "WS0007",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 210,
+      "angle": -45,
+      "locations": [56, -34]
+    },
+    {
+      "id": "WS0008",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 210,
+      "angle": 120,
+      "locations": [-47, 31]
+    },
+    {
+      "id": "WS0009",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 210,
+      "angle": -120,
+      "locations": [-47, -31]
+    },
+    {
+      "id": "WS0010",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 160,
+      "angle": 90,
+      "locations": [3, 70]
+    },
+    {
+      "id": "WS0011",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 160,
+      "angle": -90,
+      "locations": [3, -70]
+    },
+    {
+      "id": "WS0012",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 0,
+      "angle": 0,
+      "locations": [-26, -0]
+    }
+  ],
+  "engineSlots": [],
+  "bounds": [
+    -82, -18,
+    -131, -23,
+    -129.5, -31,
+    -60.5, -45,
+    -53.5, -54.5,
+    -35, -57.5,
+    -58, -64,
+    -59, -82,
+    -37, -85.5,
+    -76, -97.5,
+    -75.5, -106.5,
+    -9, -97,
+    8, -106,
+    19, -99.5,
+    20, -93.5,
+    72.5, -76.5,
+    60, -74.5,
+    60.5, -51,
+    107.5, -37,
+    128, -25,
+    125.5, -15.5,
+    115.5, -8.5,
+    115.5, 8.5,
+    125.5, 15.5,
+    128, 25,
+    107.5, 37,
+    60.5, 51,
+    60, 74.5,
+    72.5, 76.5,
+    20, 93.5,
+    19, 99.5,
+    8, 106,
+    -9, 97,
+    -75.5, 106.5,
+    -76, 97.5,
+    -37, 85.5,
+    -59, 82,
+    -58, 64,
+    -35, 57.5,
+    -53.5, 54.5,
+    -60.5, 45,
+    -129.5, 31,
+    -131, 23,
+    -82, 18
+  ]
+}

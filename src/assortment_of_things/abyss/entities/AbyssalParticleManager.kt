@@ -1,8 +1,6 @@
 package assortment_of_things.abyss.entities
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.exonova.entities.ExoshipEntity
-import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
@@ -10,7 +8,6 @@ import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
 import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.VectorUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lazywizard.lazylib.ext.rotate
 import org.lwjgl.util.vector.Vector2f

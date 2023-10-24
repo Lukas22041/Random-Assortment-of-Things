@@ -1,4 +1,4 @@
-package assortment_of_things.exonova.interactions.exoship
+package assortment_of_things.exocorp.interactions.exoship
 
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global

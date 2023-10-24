@@ -182,7 +182,7 @@ class AbyssalsCoreHullmod : BaseHullMod() {
 
                 if (ship.baseOrModSpec().hullId == "rat_aboleth" || ship.baseOrModSpec().hullId == "rat_aboleth_m" || ship.baseOrModSpec().hullId == "rat_makara" ) {
                     for (weapon in ship.allWeapons.filter { it.isDecorative }) {
-                        weapon.sprite.color = Color(0, 0, 0, (254 * ship.system.effectLevel * 0.5).toInt())
+                        weapon.sprite.color = Color(255, 255, 255, (254 * (1 - ship.system.effectLevel)).toInt())
                     }
                 }
 

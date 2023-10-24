@@ -1,6 +1,6 @@
-package assortment_of_things.exonova.entities
+package assortment_of_things.exocorp.entities
 
-import assortment_of_things.exonova.interactions.exoship.ExoshipMoveScript
+import assortment_of_things.exocorp.interactions.exoship.ExoshipMoveScript
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
