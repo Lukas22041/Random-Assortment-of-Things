@@ -1,3 +1,14 @@
+Version 1.7.1
+Not save Compatible.
+
+-> Revamped & Expanded a certain skill from the abyss.
+-> Salvage Entities & Other objects in the abyss now have an interaction theme.
+-> Adjusted some relics exploration content.
+-> Buffed the effect of the gravitational dynamo.
+-> A secret lil thing.
+
+
+
 Version 1.7.0
 May be save compatible, but not recommended as much would be missing or buggy.
 

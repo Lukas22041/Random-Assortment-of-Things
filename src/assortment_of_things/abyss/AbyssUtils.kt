@@ -24,6 +24,7 @@ import org.lazywizard.lazylib.MathUtils
 import java.awt.Color
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 enum class AbyssDifficulty {
@@ -106,7 +107,17 @@ object AbyssUtils {
         {
             if (random.nextFloat() > chancePerShip) continue
 
-            var alterations = mutableMapOf("rat_qualityAssurance" to 1f, "rat_timegear" to 1f, "rat_overloaded_systems" to 1f, "rat_preperation" to 1f)
+            var alterations = HashMap<String,Float>()
+            alterations.put("rat_qualityAssurance", 1f)
+            alterations.put("rat_timegear", 1f)
+            alterations.put("rat_overloaded_systems", 1f)
+            alterations.put("rat_advanced_flux_crystal", 1f)
+            alterations.put("rat_boost_redirector", 1f)
+            alterations.put("rat_soft_shields", 1f)
+
+            if (!member.isFrigate) {
+                alterations.put("rat_preperation", 1f)
+            }
 
             var hasBay = member.variant.baseOrModSpec().hints.contains(ShipHullSpecAPI.ShipTypeHints.CARRIER)
 

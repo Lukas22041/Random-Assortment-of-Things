@@ -110,7 +110,9 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         if (commodityId == RATItems.SERAPH_CORE) return PluginPick(SeraphCore(), CampaignPlugin.PickPriority.HIGHEST)
         if (commodityId == RATItems.PRIMORDIAL) return PluginPick(PrimordialCore(), CampaignPlugin.PickPriority.HIGHEST)
 
-        if (commodityId == "rat_neuro_core") return PluginPick(NeuroCore(), CampaignPlugin.PickPriority.HIGHEST)
+        if (commodityId == "rat_neuro_core") {
+            return PluginPick(NeuroCore(), CampaignPlugin.PickPriority.HIGHEST)
+        }
 
         return null
     }

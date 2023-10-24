@@ -29,12 +29,6 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
 
     var rotation = 0f
 
-    init {
-        if (entity != null) {
-            initSpritesIfNull()
-        }
-    }
-
     override fun advance(amount: Float) {
         super.advance(amount)
 
@@ -45,10 +39,13 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
 
     fun initSpritesIfNull()
     {
-        halo = Global.getSettings().getSprite("rat_terrain", "halo")
 
         var radius = entity.radius
-        if (band1 != null) return
+        if (band1 != null && halo != null) return
+
+        color = AbyssUtils.getSystemData(entity.starSystem).getColor()
+        halo = Global.getSettings().getSprite("rat_terrain", "halo")
+
         val var1: Float = radius * 0.45f
         val var2: Float = radius * 3.1415927f * 2.0f
         var var3 = var2 / 50.0f
@@ -82,6 +79,9 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin() {
 
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
         super.render(layer, viewport)
+
+        initSpritesIfNull()
+
         if (band1 == null) return
 
         var posX = entity.location.x

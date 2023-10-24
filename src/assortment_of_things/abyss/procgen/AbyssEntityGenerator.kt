@@ -34,7 +34,7 @@ object AbyssEntityGenerator {
     var sensorRadius = hashMapOf(
         "rat_abyss_fabrication" to 12500f,
         "rat_abyss_accumalator" to 12500f,
-        "rat_abyss_unknown_lab" to 12500f,
+        "rat_abyss_unknown_lab" to 15000f,
         "rat_abyss_research" to 15000f,
     )
 
@@ -122,7 +122,7 @@ object AbyssEntityGenerator {
             var plugin = photosphere.customPlugin as AbyssalPhotosphere
             // plugin.radius = 15000f
             plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
-            plugin.color = data.color
+            plugin.color = data.getColor()
 
             var picker = WeightedRandomPicker<String>()
             if (typePicker != null) {

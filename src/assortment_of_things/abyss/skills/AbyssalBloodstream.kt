@@ -6,6 +6,7 @@ import assortment_of_things.abyss.skills.scripts.AbyssalBloodstreamCampaignScrip
 import assortment_of_things.campaign.skills.RATBaseShipSkill
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.misc.GraphicLibEffects
+import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.LevelBasedEffect
 import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
@@ -38,13 +39,38 @@ class AbyssalBloodstream : RATBaseShipSkill() {
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?,  skill: SkillSpecAPI?, info: TooltipMakerAPI?,  width: Float) {
         info!!.addSpacer(2f)
 
-        info.addPara("An accident has gotten you closer to the abyss than many before. \n\n" +
-                "You remember feeling its call, and you feel that at some point, when your heart is about to stop, it will call back.", 0f, AbyssUtils.ABYSS_COLOR, AbyssUtils.ABYSS_COLOR)
+
+        var script = Global.getSector().scripts.find { it::class.java == AbyssalBloodstreamCampaignScript::class.java } as AbyssalBloodstreamCampaignScript?
+
+        info.addPara("An accident has gotten you closer to the abyss than any before. ",
+            0f, AbyssUtils.ABYSS_COLOR, AbyssUtils.ABYSS_COLOR)
+
+        info.addSpacer(10f)
+
+        if (script == null || !script.shownFirstDialog)
+        {
+            info.addPara("You remember feeling its call, and you feel that at some point, when your heart is about to stop, it will call back.",
+                0f, AbyssUtils.ABYSS_COLOR, AbyssUtils.ABYSS_COLOR)
+        }
+        else {
+            info.addPara("Once per deployment, if the piloted ship is about to be destroyed, time stops, a infinite void forms and the ships hull is restored to operateable conditions. It can not be simulated.",
+                0f, AbyssUtils.ABYSS_COLOR, AbyssUtils.ABYSS_COLOR)
+
+            if (script.shownNeuroDialog) {
+                info.addSpacer(10f)
+
+                info.addPara("The effect can trigger while neural interfacing with the neuro-core.",
+                    0f, AbyssUtils.ABYSS_COLOR, AbyssUtils.ABYSS_COLOR)
+            }
+        }
+
 
         info.addSpacer(2f)
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
+
+
 
         var ship = stats!!.entity
         if (ship is ShipAPI) {
@@ -77,7 +103,8 @@ class AbyssalBloodstream : RATBaseShipSkill() {
         override fun notifyAboutToTakeHullDamage(param: Any?, ship: ShipAPI?, point: Vector2f?, damageAmount: Float): Boolean {
 
             //Remember to uncomment whenever not testing
-            //if (Global.getCombatEngine().isSimulation) return false
+            if (Global.getCombatEngine().isSimulation) return false
+
             if (Global.getCombatEngine().isCombatOver) return false
             if (Global.getCombatEngine().playerShip != ship) return false
             if (ship!!.variant.hasHullMod(HullMods.PHASE_ANCHOR)) return false
@@ -97,11 +124,11 @@ class AbyssalBloodstream : RATBaseShipSkill() {
                 }
 
                 var explosionSpec = DamagingExplosionSpec.explosionSpecForShip(ship)
-                explosionSpec.radius *= 2f
-                explosionSpec.coreRadius *= 2f
-                explosionSpec.detailedExplosionRadius *= 2f
-                explosionSpec.detailedExplosionFlashRadius *= 2f
-                explosionSpec.particleSpawnRadius *= 2f
+                explosionSpec.radius *= 1.5f
+                explosionSpec.coreRadius *= 1.5f
+                explosionSpec.detailedExplosionRadius *= 1.5f
+                explosionSpec.detailedExplosionFlashRadius *= 1.5f
+                explosionSpec.particleSpawnRadius *= 1.5f
 
                 Global.getCombatEngine().spawnDamagingExplosion(explosionSpec, ship, ship.location, false)
                 for (weapon in ship.allWeapons) {
@@ -121,11 +148,30 @@ class AbyssalBloodstream : RATBaseShipSkill() {
                     ,0.1f, 0.1f, 1f, 0.3f, 1f)
 
                 if (!Global.getSector().hasScript(AbyssalBloodstreamCampaignScript::class.java)) {
-                    Global.getSector().addScript(AbyssalBloodstreamCampaignScript())
+                    var script = AbyssalBloodstreamCampaignScript()
+
+                    if (param is ShipAPI) {
+                        if (param.isFighter && param.wing.sourceShip != null) {
+                            script.deathReason = param.wing.sourceShip.baseOrModSpec().hullName
+                        }
+                        else if (!param.isFighter) {
+                            script.deathReason = param.baseOrModSpec().hullName
+                        }
+                    }
+
+
+                    Global.getSector().addScript(script)
                 }
                 else {
-                    var script = Global.getSector().scripts.find { it::class.java == AbyssalBloodstreamCampaignScript::class.java }
+                    var script = Global.getSector().scripts.find { it::class.java == AbyssalBloodstreamCampaignScript::class.java } as AbyssalBloodstreamCampaignScript
 
+                    if (!script.triggeredNeuro && ship.fleetMember?.captain?.isAICore == true && ship.captain.aiCoreId == "rat_neuro_core") {
+                        var core = ship.captain
+                        core.portraitSprite = "graphics/portraits/cores/rat_neural_core2.png"
+                        core.stats.level += 1
+                        core.stats.setSkillLevel("rat_core_seraph", 2f)
+                        script.triggeredNeuro = true
+                    }
                 }
             }
 

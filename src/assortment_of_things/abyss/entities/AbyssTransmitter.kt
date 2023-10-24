@@ -50,7 +50,7 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
         if (color == null) {
             if (entity.starSystem != null) {
                 var data = AbyssUtils.getSystemData(entity.starSystem)
-                color = data.color
+                color = data.getColor()
             }
             else {
                 color = Color(0, 230, 120, 255)

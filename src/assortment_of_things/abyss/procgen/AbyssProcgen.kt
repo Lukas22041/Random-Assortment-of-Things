@@ -61,7 +61,7 @@ object AbyssProcgen {
 
         var warper = AbyssBackgroundWarper(system, 8, 0.33f)
         var color = generateAbyssColor(system, depth)
-        warper.overwriteColor = data.darkColor
+        warper.overwriteColor = data.getDarkColor()
 
         AbyssProcgen.generateAbyssTerrain(system, fraction)
         AbyssProcgen.generateAbyssDarkness(system)
@@ -92,10 +92,10 @@ object AbyssProcgen {
 
         if (!system1.isHyperspace) {
             var plugin1 = addLightsource(fracture1, 10000f)
-            plugin1.color = AbyssUtils.getSystemData(system1 as StarSystemAPI).color.setAlpha(50)
+            plugin1.color = AbyssUtils.getSystemData(system1 as StarSystemAPI).getColor().setAlpha(50)
         }
         var plugin2 = addLightsource(fracture2, 10000f)
-        plugin2.color = AbyssUtils.getSystemData(system2 as StarSystemAPI).color.setAlpha(50)
+        plugin2.color = AbyssUtils.getSystemData(system2 as StarSystemAPI).getColor().setAlpha(50)
 
 
         return LinkedFracture(fracture1, fracture2)
@@ -207,6 +207,10 @@ object AbyssProcgen {
 
         var data = AbyssUtils.getSystemData(system)
 
+
+
+
+
         var h = MathUtils.getRandomNumberInRange(0.925f, 1f)
         if (Random().nextFloat() > 0.5f) h = MathUtils.getRandomNumberInRange(0.0f, 0.035f)
         //var h = MathUtils.getRandomNumberInRange(0.935f, 1f)
@@ -230,10 +234,10 @@ object AbyssProcgen {
         system.lightColor = lightColor
 
         var color = Color.getHSBColor(h, 1f, 1f)
-        data.color = color
+        data.baseColor = color
 
         var darkColor = Color.getHSBColor(h, s, b)
-        data.darkColor = darkColor
+        data.baseDarkColor = darkColor
 
         system.lightColor = darkColor
     }

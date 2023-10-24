@@ -64,7 +64,7 @@ class AbyssZoneMapIcon(var system: StarSystemAPI, var color: Color, tooltip: Too
         {
             var data = AbyssUtils.getSystemData(system)
             var depth = data.depth
-            var color = data.darkColor
+            var color = data.getDarkColor()
             sprite.color = color
             if (depth == AbyssDepth.Shallow) sprite.color = color.brighter()
             if (depth == AbyssDepth.Deep) sprite.color = color.brighter()

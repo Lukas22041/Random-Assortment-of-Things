@@ -45,7 +45,7 @@ class CombatPhotosphereRenderer(var radius: Float, var photosphere: SectorEntity
 
         var data = AbyssUtils.getSystemData(playerfleet.containingLocation as StarSystemAPI)
 
-        color = data.color
+        color = data.getColor()
 
         var min = 0f
         var max = plugin.radius / 10

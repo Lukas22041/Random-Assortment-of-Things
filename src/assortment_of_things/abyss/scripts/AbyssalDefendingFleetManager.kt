@@ -159,7 +159,6 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         )
         params.random = random
         params.withOfficers = false
-        params.maxShipSize
 
         val fleet = FleetFactoryV3.createFleet(params)
 

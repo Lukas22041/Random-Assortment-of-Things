@@ -47,7 +47,7 @@ class CombatHandler : EveryFrameCombatPlugin
             {
                 var data = AbyssUtils.getSystemData(system)
 
-                var color = data.darkColor
+                var color = data.getDarkColor()
                 var depth = data.depth
                 var darkness = AbyssProcgen.getAbyssDarknessTerrainPlugin(system)
                 var background = system.backgroundTextureFilename

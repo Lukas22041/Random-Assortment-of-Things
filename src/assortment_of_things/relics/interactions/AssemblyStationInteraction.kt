@@ -34,9 +34,9 @@ class AssemblyStationInteraction : RATInteractionPlugin() {
 
                 clearOptions()
 
-                textPanel.addPara("After setting up a truly mind-boggling complex system of firewalls and isolated communication systems, a salvor plugs in a hardline. Annoyingly the system will require credits to be deposited in order to function - some absurd DRM restriction used to ensure the manufacturer's liquidity. You're not even sure the account even still exists, let alone where the 25%% markup is going. On the plus side you'll be able to use any blueprint in your database, and the ships will be made up to Domain civilian spec, meaning they'll have elevated combat readiness. The maximum amount you can order is 300.000.",
+                textPanel.addPara("After setting up a truly mind-boggling complex system of firewalls and isolated communication systems, a salvor plugs in a hardline. Annoyingly the system will require credits to be deposited in order to function - some absurd DRM restriction used to ensure the manufacturer's liquidity. You're not even sure the account even still exists, let alone where the 25%% markup is going. On the plus side you'll be able to use any blueprint in your database, and the ships will be made up to Domain civilian spec, meaning they'll have increased ordnance points. The maximum amount you can order is 300.000.",
                     Misc.getTextColor(), Misc.getHighlightColor(),
-                    "the system will require credits to be deposited in order to function", "25%", "any blueprint in your database", "elevated combat readiness", "300.000")
+                    "the system will require credits to be deposited in order to function", "25%", "any blueprint in your database", "increased ordnance points", "300.000")
 
                 createOption("Choose hulls to assemble") {
                     dialog.showCustomProductionPicker(object : CustomProductionPickerDelegate {
@@ -79,7 +79,7 @@ class AssemblyStationInteraction : RATInteractionPlugin() {
                                     member.repairTracker.cr = member.repairTracker.baseCR
 
                                     member.fixVariant()
-                                    member.variant.addPermaMod("rat_exceptional_construction")
+                                    member.variant.addMod("rat_exceptional_construction")
 
                                     textPanel.addFleetMemberGainText(member)
                                 }

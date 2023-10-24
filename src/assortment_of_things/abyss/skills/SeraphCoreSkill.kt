@@ -39,27 +39,29 @@ class SeraphCoreSkill : RATBaseShipSkill() {
 
         info.addSpacer(10f)
 
-        info.addPara("- This Core can not be installed on capital-class hulls.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        info.addPara("- This skill has no effect on capital-class hulls.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
 
         info.addSpacer(2f)
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
         var ship = stats!!.entity
-        if (ship is ShipAPI) {
+        if (ship is ShipAPI && ship.hullSize != ShipAPI.HullSize.CAPITAL_SHIP) {
             if (!ship.hasListenerOfClass(SeraphCoreSkillListener::class.java)) {
                 ship.addListener(SeraphCoreSkillListener(ship))
             }
         }
 
-        if (stats.fleetMember != null) {
+        /*if (stats.fleetMember != null) {
             if (stats.fleetMember.isCapital) {
-                stats.fleetMember.captain = null
+
                 if (stats.fleetMember.fleetData.fleet == Global.getSector().playerFleet) {
-                    Global.getSector().playerFleet.cargo.addCommodity(RATItems.SERAPH_CORE, 1f)
+                    Global.getSector().playerFleet.cargo.addCommodity(stats.fleetMember.captain.aiCoreId, 1f)
                 }
+
+                stats.fleetMember.captain = null
             }
-        }
+        }*/
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {

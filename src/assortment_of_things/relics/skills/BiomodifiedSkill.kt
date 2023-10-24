@@ -3,19 +3,17 @@ package assortment_of_things.relics.skills
 import assortment_of_things.campaign.skills.RATBaseShipSkill
 import assortment_of_things.misc.addNegativePara
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
 import com.fs.starfarer.api.characters.LevelBasedEffect
 import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
 import com.fs.starfarer.api.characters.SkillSpecAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.listeners.AdvanceableListener
-import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 
-class BiomutantSkill : RATBaseShipSkill() {
+class BiomodifiedSkill : RATBaseShipSkill() {
 
     override fun getScopeDescription(): LevelBasedEffect.ScopeDescription {
         return LevelBasedEffect.ScopeDescription.ALL_SHIPS

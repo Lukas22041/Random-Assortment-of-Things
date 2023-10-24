@@ -2,17 +2,15 @@ package assortment_of_things.campaign.ui
 
 import assortment_of_things.misc.addNegativePara
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.Misc
 import lunalib.lunaRefit.BaseRefitButton
 
-class AugmentedRefitButton : BaseRefitButton() {
+class CyberneticInterfaceRefitButton : BaseRefitButton() {
 
     override fun getButtonName(member: FleetMemberAPI?, variant: ShipVariantAPI?): String {
         var people = Global.getSector().playerFleet.fleetData.officersCopy.map { it.person }.plus(Global.getSector().playerPerson)
@@ -20,10 +18,10 @@ class AugmentedRefitButton : BaseRefitButton() {
         var personWithSkill = people.find { it.stats.hasSkill("rat_augmented") } ?: return "Move Augmented Officer"
 
         if (member!!.captain == personWithSkill) {
-            return "Remove Augmented Officer"
+            return "Remove Interfaced Officer"
         }
 
-        return "Move Augmented Officer"
+        return "Move Interfaced Officer"
     }
 
     override fun getIconName(member: FleetMemberAPI?, variant: ShipVariantAPI?): String {
@@ -99,6 +97,11 @@ class AugmentedRefitButton : BaseRefitButton() {
             member.captain = null
         }
         else {
+
+            if (previous != null) {
+                previous.captain = null
+            }
+
             if (person == Global.getSector().playerPerson) {
                 playerfleet.fleetData.setFlagship(member)
                 member!!.isFlagship = true
@@ -106,9 +109,6 @@ class AugmentedRefitButton : BaseRefitButton() {
 
             member!!.captain = person
 
-            if (previous != null) {
-                previous.captain = null
-            }
         }
 
         refreshVariant()

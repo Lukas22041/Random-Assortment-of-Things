@@ -13,3 +13,4 @@ $global.playerCanUseGates
 $gateScanned
 AbyssGateCMD CanBeAdded",AbyssGateCMD Highlight,,,
 ratAbyssGateUseOpt,DialogOptionSelected,$option == ABYSSAL_GATE,AbyssGateCMD Traverse,,,
+,,,,,,

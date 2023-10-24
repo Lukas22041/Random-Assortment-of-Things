@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
@@ -21,9 +22,6 @@ class AbyssalLightsource : BaseCustomEntityPlugin() {
     @Transient
     var halo: SpriteAPI? = null
 
-    init {
-        initSpritesIfNull()
-    }
 
     override fun advance(amount: Float) {
         super.advance(amount)
@@ -33,6 +31,7 @@ class AbyssalLightsource : BaseCustomEntityPlugin() {
     fun initSpritesIfNull()
     {
         if (halo == null) {
+            color = AbyssUtils.getSystemData(entity.starSystem).getColor().setAlpha(50)
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
         }
     }
@@ -43,6 +42,8 @@ class AbyssalLightsource : BaseCustomEntityPlugin() {
 
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
         super.render(layer, viewport)
+
+        initSpritesIfNull()
 
         if (halo == null) {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")

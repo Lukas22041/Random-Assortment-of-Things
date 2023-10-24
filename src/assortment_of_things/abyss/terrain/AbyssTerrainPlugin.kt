@@ -21,7 +21,7 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
     }
 
     override fun getRenderColor(): Color {
-        return AbyssUtils.getSystemData(entity.starSystem).darkColor
+        return AbyssUtils.getSystemData(entity.starSystem).getDarkColor()
     }
 
 

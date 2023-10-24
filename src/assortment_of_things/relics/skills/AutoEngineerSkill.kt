@@ -1,6 +1,7 @@
 package assortment_of_things.relics.skills
 
 import assortment_of_things.campaign.skills.RATBaseShipSkill
+import assortment_of_things.misc.RATControllerHullmod
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
 import com.fs.starfarer.api.characters.LevelBasedEffect
@@ -13,7 +14,9 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lwjgl.opengl.GL11
 
-class AugmentedSkill : RATBaseShipSkill() {
+class AutoEngineerSkill : RATBaseShipSkill() {
+
+    var modID = "rat_auto_engineer"
 
     override fun getScopeDescription(): LevelBasedEffect.ScopeDescription {
         return LevelBasedEffect.ScopeDescription.ALL_SHIPS
@@ -21,25 +24,19 @@ class AugmentedSkill : RATBaseShipSkill() {
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
         info!!.addSpacer(2f)
-        info!!.addPara("Allows this person to command Automated Ships. Does not apply a multipler to the \"Automated Ships\" skill points cost on the ship. \n\n" +
-                "Can not be assigned to automated ships through the usual way, it is instead done through a button in \"Additional Options\" section in the refit screen for any elligable automated ship.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("-1 Deployment Point Cost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("+5%% Maximum Combat Readiness", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
-        var fleet = Global.getSector().playerFleet
-        var person = fleet?.fleetData?.officersCopy?.map { it.person }?.plus(Global.getSector().playerPerson)?.find { it.stats.hasSkill("rat_augmented") }?: return
-
-        var member = Global.getSector().playerFleet.fleetData.membersListCopy.find { it.captain == person } ?: return
-        if (member!!.variant.hasHullMod(HullMods.AUTOMATED)) Misc.setUnremovable(person, true)
-        else Misc.setUnremovable(person, false)
-
-        /*var deployCost = member.deploymentPointsCost
-        person.memoryWithoutUpdate.set(AICoreOfficerPlugin.AUTOMATED_POINTS_VALUE, -deployCost)*/
+        RATControllerHullmod.ensureAddedControllerToFleet()
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
 
+
     }
+
 
 }

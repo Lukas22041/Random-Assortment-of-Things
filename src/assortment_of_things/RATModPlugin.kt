@@ -2,11 +2,11 @@ package assortment_of_things
 
 import ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.intel.DoctrineReportAbyssal
 import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
 import assortment_of_things.abyss.scripts.*
+import assortment_of_things.abyss.skills.scripts.AbyssalBloodstreamCampaignScript
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
@@ -18,7 +18,6 @@ import assortment_of_things.snippets.DropgroupTestSnippet
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -27,6 +26,7 @@ import lunalib.lunaSettings.LunaSettings
 import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
+import java.awt.Color
 import java.util.*
 
 
@@ -35,6 +35,8 @@ class RATModPlugin : BaseModPlugin() {
     companion object {
         var added = false
 
+        var isHalloween = false
+
         init {
             //Global.getSettings().isDevMode = true
         }
@@ -42,6 +44,14 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onApplicationLoad() {
         super.onApplicationLoad()
+
+        val currentDate = Date()
+        //var currentDate = Date(1698530401L * 1000)
+        val startDate = Date(1698530400L * 1000)
+        val endDate = Date(1698793200L * 1000)
+        if (startDate.before(currentDate) && endDate.after(currentDate)) {
+            isHalloween = true
+        }
 
         LunaDebug.addSnippet(ProcgenDebugSnippet())
         LunaDebug.addSnippet(DropgroupTestSnippet())
@@ -61,7 +71,7 @@ class RATModPlugin : BaseModPlugin() {
 
         LunaRefitManager.addRefitButton(DeltaAIRefitButton())
 
-        LunaRefitManager.addRefitButton(AugmentedRefitButton())
+        LunaRefitManager.addRefitButton(CyberneticInterfaceRefitButton())
 
         if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
             //RATNexManager.addStartingFleets()
@@ -89,7 +99,7 @@ class RATModPlugin : BaseModPlugin() {
 
 
 
-      /*  for (artifact in ArtifactUtils.artifacts)
+   /*     for (artifact in ArtifactUtils.artifacts)
         {
             Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)
         }
@@ -101,8 +111,9 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_primordial_stream"), 3f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_upscale_protocol"), 3f)
         Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_abyss_survey", null), 30f)
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_charged_forge", null), 5f)*/
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_charged_forge", null), 5f)
 
+      //  Global.getSector().playerFleet.fleetData.officersCopy.random().person.stats.setSkillLevel("rat_auto_engineer", 1f)*/
 
 
         Global.getSector().addTransientScript(AbyssAmbientSoundPlayer())
@@ -131,8 +142,14 @@ class RATModPlugin : BaseModPlugin() {
             generator.generateConditions()
         }
 
-
-
+        var bloodstreamScript = Global.getSector().scripts.find { it::class.java == AbyssalBloodstreamCampaignScript::class.java } as AbyssalBloodstreamCampaignScript?
+        var skill = Global.getSettings().getSkillSpec("rat_abyssal_bloodstream")
+        if (bloodstreamScript == null || !bloodstreamScript.shownFirstDialog)  {
+            skill!!.name = "Abyssal Bloodstream"
+        }
+        else {
+            skill!!.name = "Abyssal Requiem"
+        }
 
         if (!Global.getSector().hasScript(ResetBackgroundScript::class.java)) {
             Global.getSector().addTransientScript(ResetBackgroundScript())

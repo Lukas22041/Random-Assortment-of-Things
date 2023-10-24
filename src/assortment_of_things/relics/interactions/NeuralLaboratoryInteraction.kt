@@ -75,6 +75,9 @@ class NeuralLaboratoryInteraction : RATInteractionPlugin() {
         createOption("Who is this?") {
             clearOptions()
             var core = NeuroCore().createPerson("rat_neuro_core", Factions.NEUTRAL, Random())
+
+
+
             visualPanel.showPersonInfo(core)
 
             CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)

@@ -124,7 +124,7 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
             /* band1!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(100)
              band2!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(200)*/
 
-            if (!entity.containingLocation.isHyperspace) color = AbyssUtils.getSystemData(entity.starSystem).darkColor.setAlpha(75)
+            if (!entity.containingLocation.isHyperspace) color = AbyssUtils.getSystemData(entity.starSystem).getDarkColor().setAlpha(75)
             if (colorOverride != null) color = colorOverride!!
 
             band1!!.color = color.setAlpha(100)

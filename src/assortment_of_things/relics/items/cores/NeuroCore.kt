@@ -4,6 +4,7 @@ import assortment_of_things.abyss.items.cores.AICoreUtil
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
 import com.fs.starfarer.api.characters.PersonAPI
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.campaign.ids.Ranks
 import com.fs.starfarer.api.impl.campaign.ids.Skills
@@ -16,8 +17,25 @@ class NeuroCore : AICoreOfficerPlugin {
 
     var automatedPointsMult = 4f
 
-    override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI? {
+    companion object {
+        fun getCore() : PersonAPI {
+            var core = Global.getSector().memoryWithoutUpdate.get("\$rat_neuro_core") as PersonAPI?
+            if (core == null) {
+                core = NeuroCore().createPerson("rat_neuro_core", Factions.PLAYER, Random())
+            }
+            return core
+        }
+    }
+
+    override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI {
+
+        var existingCore = Global.getSector().memoryWithoutUpdate.get("\$rat_neuro_core") as PersonAPI?
+        if (existingCore != null) {
+            return existingCore
+        }
+
         var core = AICoreUtil.createCorePerson(aiCoreId, factionId)
+        Global.getSector().memoryWithoutUpdate.set("\$rat_neuro_core", core)
         core.stats.level = 7
         core.setPersonality(Personalities.RECKLESS)
         core.setRankId(Ranks.SPACE_CAPTAIN)
