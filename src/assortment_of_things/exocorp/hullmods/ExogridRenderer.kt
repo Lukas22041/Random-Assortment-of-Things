@@ -25,19 +25,36 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
     override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
 
         var active = false
-        var level = ship.system.effectLevel
-        var state = ship.system.state
+        var level = ship.system?.effectLevel ?: 0f
+        var systemState = ship.system?.state ?: ShipSystemAPI.SystemState.IDLE
+        var phaseState = ShipSystemAPI.SystemState.IDLE
         var paused = Global.getCombatEngine().isPaused
+        var exogridOverload = ship.variant.hasHullMod("rat_exogrid_overload")
 
-        if (state == ShipSystemAPI.SystemState.ACTIVE || state == ShipSystemAPI.SystemState.IN || state == ShipSystemAPI.SystemState.OUT) {
+        if (systemState == ShipSystemAPI.SystemState.ACTIVE || systemState == ShipSystemAPI.SystemState.IN || systemState == ShipSystemAPI.SystemState.OUT) {
             active = true
         }
 
         if (ship.phaseCloak != null) {
-            level = ship.phaseCloak.effectLevel
-            state = ship.phaseCloak.state
+            phaseState = ship.phaseCloak.state
+            if (phaseState == ShipSystemAPI.SystemState.ACTIVE || phaseState == ShipSystemAPI.SystemState.IN || phaseState == ShipSystemAPI.SystemState.OUT) {
+                active = true
+            }
+
+
+
+            if (ship.phaseCloak.effectLevel >= level) {
+                level = ship.phaseCloak.effectLevel
+            }
         }
 
+        if (ship.isPhased) {
+            active = true
+        }
+
+        if (exogridOverload && !ship.fluxTracker.isOverloaded) {
+            renderOverload()
+        }
 
         if (active) {
             var coilLocationDeco = ship.allWeapons.find { it.spec.weaponId == "rat_exo_coil_location" }
@@ -46,10 +63,17 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
                 location = coilLocationDeco.location
             }
 
-            startStencilAroundShip(location, (ship.collisionRadius * level) * 1.2f)
+            var baseAlpha = 0.2f
+            var extraRangeMult = 1.2f
+            var radius = (ship.collisionRadius * level) * extraRangeMult
+            if (systemState == ShipSystemAPI.SystemState.OUT || phaseState == ShipSystemAPI.SystemState.OUT) {
+                radius = ship.collisionRadius * extraRangeMult
+                baseAlpha = 0.2f * level
+            }
+            startStencilAroundShip(location, radius)
 
             glow.setNormalBlend()
-            glow.alphaMult = 0.2f + (level * 0.8f)
+            glow.alphaMult = baseAlpha + (level * 0.8f)
             glow.angle = ship.facing - 90
             glow.renderAtCenter(ship.location.x, ship.location.y)
 
@@ -57,6 +81,7 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
             var jitterCount = 5
             var jitterMaxRange = 2f //Works better without being effected b
             var jitterAlpha = 0.2f
+
 
             if (!paused) {
                 lastJitterLocations.clear()
@@ -80,10 +105,8 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
                 }
 
 
-
-
                 glow.setAdditiveBlend()
-                glow.alphaMult = 0f + (level * jitterAlpha)
+                glow.alphaMult = level * jitterAlpha
                 glow.renderAtCenter(ship.location.x + jitterLoc.x, ship.location.y + jitterLoc.y)
             }
 
@@ -99,6 +122,12 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
 
     }
 
+    fun renderOverload() {
+        glow.setNormalBlend()
+        glow.alphaMult = 1f
+        glow.angle = ship.facing - 90
+        glow.renderAtCenter(ship.location.x, ship.location.y)
+    }
 
     fun startStencilAroundShip(location: Vector2f, radius: Float) {
 

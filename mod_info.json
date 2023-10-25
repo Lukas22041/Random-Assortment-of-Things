@@ -24,6 +24,10 @@
     {
       "id": "combatactivators",
       "name": "Combat Activators"
-    }
+    },
+	{
+      "id": "nexerelin",
+      "name": "Nexerelin"
+    },
   ]
 }

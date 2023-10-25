@@ -22,6 +22,7 @@
 		"Modular Weapon":[158, 50, 230,255],
 		"Artifact":[97, 21, 212, 255],
 		"Forge-Assisted":[235, 164, 49, 255],
+		"Exo-Tech":[217, 164, 57, 255],
 	},		
 	
 	"rat_abyssColor":[255, 0, 50,255],
