@@ -1,4 +1,4 @@
-package assortment_of_things.exocorp.interactions.exoship
+package assortment_of_things.exotech.interactions.exoship
 
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global

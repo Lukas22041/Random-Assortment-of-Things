@@ -1,4 +1,4 @@
-package assortment_of_things.exocorp.shipsystems
+package assortment_of_things.exotech.shipsystems
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI

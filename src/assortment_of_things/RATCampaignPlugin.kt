@@ -7,7 +7,7 @@ import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
-import assortment_of_things.exocorp.interactions.exoship.ExoshipInteractions
+import assortment_of_things.exotech.interactions.exoship.ExoshipInteractions
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
 import assortment_of_things.relics.items.cores.NeuroCore

@@ -1,4 +1,4 @@
-package assortment_of_things.exocorp.hullmods
+package assortment_of_things.exotech.hullmods
 
 import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
@@ -6,7 +6,6 @@ import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipHullSpecAPI.ShipTypeHints
-import com.fs.starfarer.api.impl.hullmods.PhaseField
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import java.awt.Color
