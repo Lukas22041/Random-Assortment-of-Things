@@ -17,7 +17,7 @@ class KineticLaunchsystemCondition : BaseMarketConditionPlugin() {
         var industry = market?.industries?.find { it.spec.hasTag("spaceport") } ?: return
 
         if (industry.isFunctional) {
-            market.accessibilityMod.modifyPercent(id, 25f, condition.name)
+            market.accessibilityMod.modifyFlat(id, 0.25f, condition.name)
             industry.getDemand(Commodities.VOLATILES).quantity.modifyFlat(id + "_0", volatileDemand, condition.name)
         }
         else {

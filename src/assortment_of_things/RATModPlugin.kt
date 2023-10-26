@@ -11,6 +11,7 @@ import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.*
+import assortment_of_things.exotech.systems.DaybreakSystem
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
@@ -26,7 +27,6 @@ import lunalib.lunaSettings.LunaSettings
 import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
-import java.awt.Color
 import java.util.*
 
 
@@ -142,6 +142,8 @@ class RATModPlugin : BaseModPlugin() {
             generator.generateConditions()
         }
 
+        generateExo()
+
         var bloodstreamScript = Global.getSector().scripts.find { it::class.java == AbyssalBloodstreamCampaignScript::class.java } as AbyssalBloodstreamCampaignScript?
         var skill = Global.getSettings().getSkillSpec("rat_abyssal_bloodstream")
         if (bloodstreamScript == null || !bloodstreamScript.shownFirstDialog)  {
@@ -183,26 +185,37 @@ class RATModPlugin : BaseModPlugin() {
         }
     }
 
+    fun generateExo() {
+        if (Global.getSector().memoryWithoutUpdate.get("\$rat_nova_generated") == null) {
+            DaybreakSystem.generate()
+
+            Global.getSector().memoryWithoutUpdate.set("\$rat_nova_generated", true)
+        }
+    }
+
     override fun onNewGame() {
         super.onNewGame()
+
+        generateExo()
     }
 
     override fun onNewGameAfterEconomyLoad() {
         super.onNewGameAfterEconomyLoad()
 
-     /*   //Exoship test
-        var exoshipSystem = Global.getSector().starSystems.filter { it.planets.any { planet -> !planet.isStar } }.random()
-        var location = BaseThemeGenerator.getLocations(Random(), exoshipSystem, 100f, linkedMapOf(LocationType.PLANET_ORBIT to 100f)).pick()
-        var ship = exoshipSystem.addCustomEntity("exoship_${Misc.genUID()}", "Exoship", "rat_exoship", Factions.NEUTRAL)
-        ship.orbit = location.orbit
 
-        //Exospace
-        var system = Global.getSector().createStarSystem("Exospace")
-        system.backgroundTextureFilename = "graphics/backgrounds/exo/exospace.jpg"
-        system.initNonStarCenter()
-        system.generateAnchorIfNeeded()
-        system.addTag(Tags.THEME_HIDDEN)
-        AbyssBackgroundWarper(system, 16, 1f)*/
+        /*   //Exoship test
+           var exoshipSystem = Global.getSector().starSystems.filter { it.planets.any { planet -> !planet.isStar } }.random()
+           var location = BaseThemeGenerator.getLocations(Random(), exoshipSystem, 100f, linkedMapOf(LocationType.PLANET_ORBIT to 100f)).pick()
+           var ship = exoshipSystem.addCustomEntity("exoship_${Misc.genUID()}", "Exoship", "rat_exoship", Factions.NEUTRAL)
+           ship.orbit = location.orbit
+
+           //Exospace
+           var system = Global.getSector().createStarSystem("Exospace")
+           system.backgroundTextureFilename = "graphics/backgrounds/exo/exospace.jpg"
+           system.initNonStarCenter()
+           system.generateAnchorIfNeeded()
+           system.addTag(Tags.THEME_HIDDEN)
+           AbyssBackgroundWarper(system, 16, 1f)*/
 
     }
 

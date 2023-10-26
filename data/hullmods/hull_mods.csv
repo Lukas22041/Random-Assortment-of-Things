@@ -58,7 +58,7 @@ Plasmatic Shield,rat_plasmaticShield,3,2.5,Hull Alteration,"rat_alteration, no_d
 ,,,,,,,,,,,,,,,,,,
 #Exo,,,,,,,,,,,,,,,,,,
 Exogrid,rat_exogrid,0,,Exo-Tech,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.ExogridHullmod,,,graphics/hullmods/rat_exogrid.png
-Exogrid Overload,rat_exogrid_overload,0,,Exo-Tech,"offensive, no_build_in, rat_exo",Phase,3000,TRUE,FALSE,FALSE,10,20,30,50,assortment_of_things.exotech.hullmods.ExogridOverloadHullmod,,,graphics/hullmods/rat_exogrid_overload.png
+Exogrid Overload,rat_exogrid_overload,0,,Exo-Tech,"offensive, no_build_in, rat_exo",,3000,TRUE,FALSE,FALSE,10,20,30,50,assortment_of_things.exotech.hullmods.ExogridOverloadHullmod,,,graphics/hullmods/rat_exogrid_overload.png
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,

@@ -138,6 +138,34 @@ Of those that do, the cores seem weirdly…scarred. Not much in a physical way, 
 ,,,,,,
 ,,,,,,
 ,,,,,,
+#Exo,,,,,,
+rat_exotech,FACTION,"A megacorporation once known as ""ExoTech Engineering"", a research and construction subsidary of ""Altair Exotech"". Their primary purpose was on logistic efforts in the fringes of yet to be developed sectors. Being much more reliant on hyperspace technologies, much of their budget was invested in to researching technologies for improved non-gate travel. 
+
+Eventually a breakthrough was made with a design that merges a ships flux coils with phase components, opening the door for phase ships that were much more compact and integrated. However the real breakthrough became apparent when this design was incorporated in to creating megastructures called “Exoships”; colossal structures capable of tearing open an entrance to a hyperspace-adjacent space. Traversing this 'exo-space' condenses distances far more than almost any other form of travel, second only to gates. Only a few of them were finished before the collapse.
+
+With the fall of the domain gate system, 'exo-space' travel quickly became the superior method of travel, even if limited by what they could finish before the collapse. Exploiting the power of the Exoship, Exocorp quickly became a disproportionately significant power in the sector. As the situation deteriorated further during the Collapse, and the Gates showing no sign of reopening, the company directors present in the sector and officials of a small Exocorp company outpost in the ""Daybreak"" system, decided to secure their own interests for the following era of chaos.
+
+What was once seen as the future for first-step galactic expansion, was now repurposed for acts of piracy against less fortunate settlements. An isolated colony almost never had a chance in preparing for a sudden raid from an Exoship, and often had to capitulate and surrender assets without a fight. Much of the spoils were repurposed for the expansion and production of High-Tech military fleets, that now patrol the system of their Homeworld. However, rumors abound that almost half of this stolen bounty has been placed for future use in a “Vault”; a system so far removed from the core-worlds that no military force could reach them without their own Exoship, holding many treasures that can no longer be replicated since the loss of the gates.
+
+With the state of the sector stabilizing and other powerful factions crystallizing with tougher defenses, the company has stepped back it's 'aggressive asset extraction' policy, and turned to preserving it's place in the status quo. Its acts of piracy and militaristic attitude have not been forgotten, especially in independent systems, but most factions would rather turn a blind-eye than have a rival suddenly appear in key systems with Exotech assistance.",,,,
+rat_exo_plasma_generator,CUSTOM,"A ""primitive"", yet in the sector, astonishing attempt at collecting power from the local blackhole. This array of generators was established to secure a steady supply of power for the system by converting the superheated plasma of the blackholes accretion disk into useable energy.",,,,
+,,,,,,
+rat_exo_arc_planet,CUSTOM,"Once a small outpost for exo-techs research within the persean sector, quickly developed in to its homeplanet after the end of the domain-era cut the company off from real headquarters, and a shift towards self-sustainability caused it to stop adhering to its parent company.",,"A somewhat unique planet in that it had all the necessary ressources to eventually blossom in to a habitateable world, but due to the low heat emissioned from the systems blackhole never could. Not much of terraforming efforts were made by its settlers until the collapse caused their stay to become permanent. 
+
+Extreme efforts were done to construct an array of plasma generators around the blackholes orbit that could send high-energy lasers towards the planet. With the energy gained from this process, terraforming this planet in to a liveable world became a possibility, and so over the last hundreds of cycles a once desolate planet turned in to a terran-adjacent world.",,
+rat_exo_daybreak_station,CUSTOM,"An outpost in the daybreak system that began its existance to aid colonisation efforts on ""Arc"". As Arc was on its path to become Exo-Techs HQ within the pre-collapse sector, its purpose shifted towards the fullfillment of ""Altair Exotech"" commissions. Much of those efforts were later repurposed to further the companies own goal, rather than their contractors.",,,,
+rat_unfinished_exoship,CUSTOM,"The remains of an unfinished exoship. Despite their best efforts, even with their newly acquired resources, this exoship could not see completion in the times past the collapse, and has been sitting unused within the blackholes orbit.",,,,
+,,,,,,
+,,,,,,
+rat_exo_terran,PLANET,"A geologically stable world with a nitrogen-oxygen atmosphere, a magnetic field and ample amounts of liquid water. The axis of rotation creates mild seasons. This type of planet is named for the reputed ancestral home of all human beings in the galaxy.",,,,
+rat_exo_black_hole,PLANET,"The result of the apocalyptic collapse of a massive star. No object can escape from the black hole, nor light itself. The black hole does however emit detectable Hawking radiation due to poorly-understood quantum effects. No information can be detected beyond the event horizon with any device known to exist in the Sector. The intense gravity of the black hole rips and tears nearby objects into an accretion disc which inevitably spirals into the gravitational abyss. Extremely dangerous.",,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
 #Relics,,,,,,
 ,,,,,,
 rat_neuro_core,RESOURCE,"An experimental alpha-core branch off that is able to detect and communicate with human brainwaves. It has choosen you as the target of its ""Partnership""",,,,

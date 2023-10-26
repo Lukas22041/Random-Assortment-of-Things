@@ -1,2 +1,8 @@
 id,name,cost mult,build time,income,upkeep,downgrade,upgrade,tags,data,image,plugin,desc,order,disruptDanger
 rat_expedition_hub,Expedition Hub,90,120,,10,,,industry,,graphics/icons/industry/rat_salvage_hub.png,assortment_of_things.relics.industry.ExpeditionHubIndustry,"Sends expeditions to uninhabited planets in nearby starsystems. The fleets collect resources and attempt to make their way back to the colony. On succesful return it will unload the resources and distribute its findings through the industry, the acquirred materials being determined by the properties of the planet the expedition visited.",200,LOW
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+#Exo,,,,,,,,,,,,,,
+rat_orbital_receivers,Orbital Receivers,30,120,,10,,,,,graphics/icons/industry/rat_generator_receiver.png,assortment_of_things.exotech.industries.OrbitalReceiversIndustry,An array of orbital collectors that constantly receive high-energy lasers from the plasma-generators orbiting the systems blackhole. This design allows for structures that maintain a atmospheric level of heat that would otherwise not be possible within a blackhole system. Additionaly its immense collection of power fuels the planets infrastructure to a degree not often seen in the modern day sector.,152,LOW
+,,,,,,,,,,,,,,

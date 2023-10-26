@@ -1,2 +1,4 @@
 id,age,tags,freqYOUNG,freqAVERAGE,freqOLD,minRadius,maxRadius,habZoneStart,probOrbits,minOrbits,maxOrbits,coronaMin,coronaMult,coronaVar,solarWind,minFlare,maxFlare,crLossMult,lightColorMin,lightColorMax
 rat_abyss_hyperspace_icon,ANY,,0,0,0,1100,1300,4,0.95,3,10,500,1,0.5,7,0,1,2,255 190 140,255 240 200
+rat_exo_black_hole,ANY,,0,0,0,150,200,-20,1,2,10,1000,1,0.5,-10,0,0,25,125 90 125,125 90 125
+,,,,,,,,,,,,,,,,,,,,
