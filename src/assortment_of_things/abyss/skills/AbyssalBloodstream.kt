@@ -141,10 +141,10 @@ class AbyssalBloodstream : RATBaseShipSkill() {
                 Global.getSoundPlayer().playSound("system_entropy", 1f, 1.5f, ship.location, ship.velocity)
                 Global.getSoundPlayer().playSound("explosion_ship", 1f, 1f, ship.location, ship.velocity)
 
-                GraphicLibEffects.CustomRippleDistortion(Vector2f(ship.location), Vector2f(), 3000f, 25f, true, ship.facing, 360f, 1f
+                GraphicLibEffects.CustomRippleDistortion(Vector2f(ship.location), Vector2f(), 3000f, 10f, true, ship.facing, 360f, 1f
                     ,1f, 1f, 1f, 1f, 1f)
 
-                GraphicLibEffects.CustomBubbleDistortion(Vector2f(ship.location), Vector2f(), 1000f + ship.collisionRadius, 50f, true, ship.facing, 360f, 1f
+                GraphicLibEffects.CustomBubbleDistortion(Vector2f(ship.location), Vector2f(), 1000f + ship.collisionRadius, 25f, true, ship.facing, 360f, 1f
                     ,0.1f, 0.1f, 1f, 0.3f, 1f)
 
                 if (!Global.getSector().hasScript(AbyssalBloodstreamCampaignScript::class.java)) {

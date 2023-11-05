@@ -80,6 +80,15 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
         }
     }
 
+    fun createOption(optionName: String, key: Int? = null, function: RATInteractionPlugin.(String) -> Unit)
+    {
+        optionPanel.addOption(optionName, optionName)
+        optionFunctions.put(optionName, function)
+        if (key != null) {
+            optionPanel.setShortcut(optionName, key, false, false, false, false)
+        }
+    }
+
     override fun optionSelected(optionText: String?, optionData: Any?)
     {
         if (optionData is String)
@@ -285,7 +294,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
                 var height = panel.position.height
 
                 var officers = ArrayList<PersonAPI>()
-               officers.add(Global.getSector().playerPerson)
+                officers.add(Global.getSector().playerPerson)
                 officers.addAll( Global.getSector().playerFleet.fleetData.officersCopy.map { it.person }.filter { !it.isMercenary() })
 
                 var element = panel!!.createUIElement(width, height, true)

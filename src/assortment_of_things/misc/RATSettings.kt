@@ -20,6 +20,8 @@ object RATSettings : LunaSettingsListener
     //Relics
     var relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
 
+    //Backgrounds
+    var backgroundsEnabled = LunaSettings.getBoolean(modID, "rat_backgroundsEnabled")
 
     //Procgen
     @JvmStatic
@@ -59,6 +61,8 @@ object RATSettings : LunaSettingsListener
         abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
 
         relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
+
+        backgroundsEnabled = LunaSettings.getBoolean(modID, "rat_backgroundsEnabled")
 
         procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
         procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")

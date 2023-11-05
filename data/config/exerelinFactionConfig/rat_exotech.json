@@ -1,5 +1,5 @@
 {
-    "playableFaction":true,
+    "playableFaction":false,
     "corvusCompatible":true,
     
     "rebelFleetSuffix":"Splinter Group",

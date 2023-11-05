@@ -7,6 +7,7 @@ import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
+import assortment_of_things.backgrounds.commander.BaseCommanderStationInteraction
 import assortment_of_things.exotech.interactions.exoship.ExoshipInteractions
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
@@ -92,8 +93,18 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         }
 
 
+        //Backgrounds
 
+        if (interactionTarget is CustomCampaignEntityAPI) {
 
+            var id = interactionTarget.id
+            var specID = interactionTarget.customEntitySpec.id
+
+            when (id) {
+                "rat_station_commander_station" -> return PluginPick(BaseCommanderStationInteraction(),
+                    CampaignPlugin.PickPriority.HIGHEST)
+            }
+        }
 
         return null
     }

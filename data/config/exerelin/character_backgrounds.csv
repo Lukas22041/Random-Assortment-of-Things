@@ -1,3 +1,3 @@
 id,name,shortDescription,longDescription,order,iconPath,plugin
-#rat_station_commander,Station Commander,,,20,graphics/icons/markets/orbital_station.png,assortment_of_things.backgrounds.StationCommanderBackground
-,,,,,,
+rat_station_commander,Station Commander,,,20,graphics/icons/markets/orbital_station.png,assortment_of_things.backgrounds.StationCommanderBackground
+rat_comradery,Comradery,"None of your achivements were made alone, but together with your trusted partner, the only person you feel equal to.",,19,graphics/icons/backgrounds/rat_comradery.png,assortment_of_things.backgrounds.ComraderyBackground

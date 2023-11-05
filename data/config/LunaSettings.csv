@@ -23,6 +23,10 @@ Enabling ""Relics of the Past"" generates content for both new and existing save
 rat_relicsCredits,,Text,"[Credits:]
 [KingAlfonzo] - Helped writing Interactions. ",,,,,Expansion
 ,,,,,,,,
+rat_backgroundsHeader,Backgrounds,Header,Backgrounds,,,,,Expansion
+rat_backgroundsEnabled,"Enable ""Backgrounds""",Boolean,true,,"Adds more unique backgrounds to Nexerelins ""Background"" system.
+
+Requires [Nexerelin v0.11.1] or newer.",,,Expansion
 ,,,,,,,,
 #Enhancements,,,,,,,,
 rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,Enhancement

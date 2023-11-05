@@ -186,11 +186,11 @@ class RATModPlugin : BaseModPlugin() {
     }
 
     fun generateExo() {
-        if (Global.getSector().memoryWithoutUpdate.get("\$rat_nova_generated") == null) {
+       /* if (Global.getSector().memoryWithoutUpdate.get("\$rat_nova_generated") == null) {
             DaybreakSystem.generate()
 
             Global.getSector().memoryWithoutUpdate.set("\$rat_nova_generated", true)
-        }
+        }*/
     }
 
     override fun onNewGame() {

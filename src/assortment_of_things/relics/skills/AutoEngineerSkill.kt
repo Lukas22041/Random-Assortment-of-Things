@@ -24,8 +24,8 @@ class AutoEngineerSkill : RATBaseShipSkill() {
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
         info!!.addSpacer(2f)
-        info!!.addPara("-1 Deployment Point Cost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info!!.addPara("+5%% Maximum Combat Readiness", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("Ship is almost always recoverable if lost in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("+10%% Maximum Combat Readiness", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
     }
 

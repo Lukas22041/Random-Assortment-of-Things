@@ -5,6 +5,7 @@ import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
+import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 
@@ -34,13 +35,13 @@ class RATControllerHullmod : BaseHullMod() {
         var playerfleet = Global.getSector().playerFleet
 
         if (stats!!.variant.hasHullMod(HullMods.AUTOMATED)) {
-            var hasAutoEngineer = playerfleet.fleetData.membersListCopy.any { it.captain?.stats?.hasSkill("rat_auto_engineer") == true }
+            var hasAutoEngineer = playerfleet?.fleetData?.membersListCopy?.any { it.captain?.stats?.hasSkill("rat_auto_engineer") == true } ?: false
 
             if (hasAutoEngineer) {
-                stats.getSuppliesToRecover().modifyFlat(id, -1f);
-                stats!!.getDynamic().getMod("deployment_points_mod").modifyFlat(id, -1f);
+                stats.getDynamic().getMod(Stats.INDIVIDUAL_SHIP_RECOVERY_MOD).modifyFlat(id, 1000f);
+                stats.getBreakProb().modifyMult(id, 0f);
 
-                stats.maxCombatReadiness.modifyFlat(id, 0.05f, "Auto-Engineer")
+                stats.maxCombatReadiness.modifyFlat(id, 0.10f, "Auto-Engineer")
             }
         }
     }

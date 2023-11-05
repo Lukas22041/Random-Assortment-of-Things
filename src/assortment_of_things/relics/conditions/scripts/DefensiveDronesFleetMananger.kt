@@ -92,7 +92,7 @@ class DefensiveDronesFleetMananger(source: SectorEntityToken?, thresholdLY: Floa
 
         var market = source.market
 
-        var basePoints = MathUtils.getRandomNumberInRange(30f, 50f)
+        var basePoints = MathUtils.getRandomNumberInRange(30f, 40f)
         var modifier = market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).computeEffective(0f)
 
         var points = basePoints * modifier
@@ -119,6 +119,8 @@ class DefensiveDronesFleetMananger(source: SectorEntityToken?, thresholdLY: Floa
         )
 
         params.random = random
+        params.maxShipSize = 3
+
         val fleet = FleetFactoryV3.createFleet(params) ?: return null
         val location = source.containingLocation
         location.addEntity(fleet)

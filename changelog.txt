@@ -1,3 +1,13 @@
+Version 1.7.2
+Probably not save Compatible.
+
+-> Added 2 Character Backgrounds to the mod, which are new custom-start-esque options for the normal faction starts in Nexerelin.
+-> Requires the (currently) discord exclusive nex beta (v0.11.1 or newer) to appear.
+
+-> Fixed the Defensive Drone Condition being able to spawn capital ships like the Guardian.
+
+
+
 Version 1.7.1
 Not save Compatible.
 

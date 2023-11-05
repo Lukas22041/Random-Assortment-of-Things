@@ -1,6 +1,7 @@
 package assortment_of_things.exotech.systems
 
 import assortment_of_things.misc.RATAccretionDiskGen
+import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.SpecialItemData
@@ -8,9 +9,11 @@ import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
+import com.fs.starfarer.api.impl.campaign.procgen.StarAge
 import com.fs.starfarer.api.impl.campaign.procgen.StarGenDataSpec
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
+import com.fs.starfarer.api.impl.campaign.terrain.NebulaTerrainPlugin
 import com.fs.starfarer.api.impl.campaign.terrain.StarCoronaTerrainPlugin.CoronaParams
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
@@ -61,10 +64,10 @@ object DaybreakSystem {
 
         //Disk Station
 
-        var diskStation = system.addCustomEntity("rat_daybreak_disk_station", "Daybreak Station", "station_side06", "rat_exotech")
-        diskStation.customDescriptionId = "rat_exo_daybreak_station"
-        diskStation.setCircularOrbit(star, MathUtils.getRandomNumberInRange(0f, 360f), 2100f, -120f)
-        addMarketplace("rat_exotech", diskStation, ArrayList(), "Daybreak Station", 4,
+        var daybreakStation = system.addCustomEntity("rat_daybreak_disk_station", "Daybreak Station", "station_side06", "rat_exotech")
+        daybreakStation.customDescriptionId = "rat_exo_daybreak_station"
+        daybreakStation.setCircularOrbit(star, MathUtils.getRandomNumberInRange(0f, 360f), 2100f, -120f)
+        addMarketplace("rat_exotech", daybreakStation, ArrayList(), "Daybreak Station", 4,
             arrayListOf(),
             arrayListOf(Submarkets.SUBMARKET_OPEN, Submarkets.SUBMARKET_BLACK),
             arrayListOf(Industries.POPULATION, Industries.SPACEPORT, Industries.LIGHTINDUSTRY, Industries.WAYSTATION, Industries.REFINING, Industries.ORBITALSTATION, Industries.GROUNDDEFENSES, Industries.PATROLHQ),

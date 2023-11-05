@@ -15,6 +15,9 @@ import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.ui.LabelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
+import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipLocation
+import com.fs.starfarer.api.ui.UIComponentAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.loading.specs.HullVariantSpec
 import org.apache.log4j.Level
@@ -33,6 +36,23 @@ fun SettingsAPI.getAndLoadSprite(filename: String) : SpriteAPI{
 fun TooltipMakerAPI.addPara(str: String) = this.addPara(str, 0f)
 
 fun TooltipMakerAPI.addNegativePara(str: String) = this.addPara(str, 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+
+fun TooltipMakerAPI.addTooltip(to: UIComponentAPI, location: TooltipLocation, width: Float, lambda: (TooltipMakerAPI) -> Unit) {
+    this.addTooltipTo(object: TooltipCreator {
+        override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
+            return false
+        }
+
+        override fun getTooltipWidth(tooltipParam: Any?): Float {
+            return width
+        }
+
+        override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
+            lambda(tooltip!!)
+        }
+
+    }, to, location)
+}
 
 fun FleetMemberAPI.fixVariant() {
     if (this.variant.source != VariantSource.REFIT)
