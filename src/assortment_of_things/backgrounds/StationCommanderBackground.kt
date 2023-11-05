@@ -4,6 +4,7 @@ import assortment_of_things.backgrounds.commander.CommanderStationListener
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FactionSpecAPI
+import com.fs.starfarer.api.campaign.RepLevel
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.econ.MarketAPI.SurveyLevel
 import com.fs.starfarer.api.impl.campaign.ids.*
@@ -24,7 +25,7 @@ class StationCommanderBackground : BaseCharacterBackground() {
 
 
     override fun shouldShowInSelection(factionSpec: FactionSpecAPI, factionConfig: NexFactionConfig): Boolean {
-        return RATSettings.backgroundsEnabled!! && factionSpec.id != Factions.PLAYER && !factionConfig.pirateFaction && (!factionSpec.custom.has("decentralized") || factionSpec.custom.get("decentralized") != true)
+        return RATSettings.backgroundsEnabled!! && factionSpec.id != Factions.PLAYER
     }
 
     override fun getShortDescription(factionSpec: FactionSpecAPI, factionConfig: NexFactionConfig?): String {
@@ -52,7 +53,19 @@ class StationCommanderBackground : BaseCharacterBackground() {
 
     override fun onNewGameAfterEconomyLoad(factionSpec: FactionSpecAPI, factionConfig: NexFactionConfig) {
         var markets = Global.getSector().economy.marketsCopy.filter { it.factionId == factionSpec.id }
+
+        if (markets.isEmpty()) {
+            var friendlyFactions = Global.getSector().allFactions.filter { it.relToPlayer.isAtWorst(RepLevel.NEUTRAL) }
+            markets = Global.getSector().economy.marketsCopy.filter { friendlyFactions.any { friendly -> friendly.id == it.factionId } }
+        }
+
+        if (markets.isEmpty()) {
+            markets = Global.getSector().economy.marketsCopy
+        }
+
         markets = markets.sortedByDescending { it.size }
+
+
         var system = markets.first().starSystem
 
 

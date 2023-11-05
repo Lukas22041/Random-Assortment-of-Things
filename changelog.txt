@@ -1,3 +1,12 @@
+Version 1.7.3
+Probably Not save Compatible with versions before 1.7.2
+
+-> Commander background no longer requires the faction to not be decentralised.
+-> Fixed a crash that happened with the commander background if the selected faction has no markets of their own.
+-> Fixed a crash with the abyssal bloodstream skill
+
+
+
 Version 1.7.2
 Probably not save Compatible.
 

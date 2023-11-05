@@ -151,7 +151,7 @@ class AbyssalBloodstream : RATBaseShipSkill() {
                     var script = AbyssalBloodstreamCampaignScript()
 
                     if (param is ShipAPI) {
-                        if (param.isFighter && param.wing.sourceShip != null) {
+                        if (param.isFighter && param.wing != null && param.wing.sourceShip != null) {
                             script.deathReason = param.wing.sourceShip.baseOrModSpec().hullName
                         }
                         else if (!param.isFighter) {
