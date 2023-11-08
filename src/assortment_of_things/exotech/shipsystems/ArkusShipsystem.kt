@@ -11,16 +11,16 @@ import java.awt.Color
 
 class ArkusShipsystem : BaseShipSystemScript() {
 
-    var SPEED_BONUS = 125f
-    var TURN_BONUS = 20f
+    var SPEED_BONUS = 75f
+    var TURN_BONUS = 10f
 
-    private val color = Color(248,172,44, 255)
-    var interval = IntervalUtil(0.5f, 0.5f)
+    private val color = Color(248, 149, 44, 255)
+    var interval = IntervalUtil(0.5f, 1f)
 
 
     override fun apply(stats: MutableShipStatsAPI, id: String?, state: ShipSystemStatsScript.State, effectLevel: Float) {
 
-        stats.fluxDissipation.modifyMult(id, 1 + (0.5f * effectLevel))
+        stats.fluxDissipation.modifyMult(id, 1 + (0.33f * effectLevel))
 
         stats.maxSpeed.modifyFlat(id, SPEED_BONUS * effectLevel)
         stats.acceleration.modifyPercent(id, SPEED_BONUS * 3f * effectLevel)

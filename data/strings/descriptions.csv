@@ -161,8 +161,15 @@ rat_exo_terran,PLANET,"A geologically stable world with a nitrogen-oxygen atmosp
 rat_exo_black_hole,PLANET,"The result of the apocalyptic collapse of a massive star. No object can escape from the black hole, nor light itself. The black hole does however emit detectable Hawking radiation due to poorly-understood quantum effects. No information can be detected beyond the event horizon with any device known to exist in the Sector. The intense gravity of the black hole rips and tears nearby objects into an accretion disc which inevitably spirals into the gravitational abyss. Extremely dangerous.",,,,
 ,,,,,,
 ,,,,,,
+rat_arkas,SHIP,"The defining Exo-Tech ship, making full use of the doctrines exo-grid technology, allowing for incredibly integrated phase-systems for a ship of its size. When it is enabled to close in on the enemies backs, its strike capabilities are second to none.",Unidentified Vessel,"UNKNOWN ENTRY
+
+Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
+,,,,,,
+rat_arkas_launcher_left,WEAPON,"One of several tools assisting the Arkas-Class in its operation. The Callisto DEM enables more pressure against enemy shields, while the Arkas itself can quickly reposition to make advantage of this distraction.",,,,
+rat_arkas_launcher_right,WEAPON,"One of several tools assisting the Arkas-Class in its operation. The Callisto DEM enables more pressure against enemy shields, while the Arkas itself can quickly reposition to make advantage of this distraction.",,,,
 ,,,,,,
 ,,,,,,
+rat_arkas_system,SHIP_SYSTEM,"Rapidly vents the ships spatialy influenced flux through the engines afterburners, increasing both its max speed and flux dissipation for a short time. While active, the ship may strike nearby enemy missiles with EMP arcs.",,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
