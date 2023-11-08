@@ -21,4 +21,4 @@ Primordial Shift,rat_charybdis_head_system,,,,,,,,,,0.5,,0.5,2,TRUE,,TRUE,TRUE,T
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Exocloak,rat_exocloak,,,,,,,,,,0.5,,0.5,2,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,,TRUE,,graphics/icons/hullsys/phase_cloak.png
-,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Unstable Drive,rat_arkus_system,,,,,,,,,,1,2,3,10,,,,,,,,,,,,,graphics/icons/hullsys/infernium_injector.png

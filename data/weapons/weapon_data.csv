@@ -61,11 +61,21 @@ Raguel Cover Right,rat_raguel_cover_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+#Exo Builtins,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Callisto DEM Launcher,rat_arkas_launcher_left,2,,0,1200,,300,,15,30,0,2,0.05,2,KINETIC,0,,0,2,2,1,0,0,0,0,,150,100,5,250,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted, damage_special, damage_soft_flux",,,,Suppression,Slow,Good,,,"The missile fires a graviton beam at the target, dealing approximately %s kinetic damage over the course of %s seconds. This damage is affected by missile damage modifiers and not energy weapon ones.",1500 | 10,,,TRUE,11.94
+Callisto DEM Launcher,rat_arkas_launcher_right,2,,0,1200,,300,,15,30,0,2,0.05,2,KINETIC,0,,0,2,2,1,0,0,0,0,,150,100,5,250,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted, damage_special, damage_soft_flux",,,,Suppression,Slow,Good,,,"The missile fires a graviton beam at the target, dealing approximately %s kinetic damage over the course of %s seconds. This damage is affected by missile damage modifiers and not energy weapon ones.",1500 | 10,,,TRUE,11.94
+    Arkas Launcher - Payload,rat_arkas_launcher_payload,2,,0,1000,150,,,20,30,0,,,,KINETIC,0,,0.1,0.1,10,0.5,,,,,2400,,,,,,,SYSTEM,,,,,,,,,,,,,,,11.95
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo Decos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Exo Coil Location,rat_exo_coil_location,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
+Exo Phase Trail Location,rat_exo_phase_trail_location,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Arkas Cover Left,rat_arkus_cover_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
 Arkas Cover Right,rat_arkus_cover_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
 Arkas Deco Left,rat_arkas_deco_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
 Arkas Deco Right,rat_arkas_deco_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

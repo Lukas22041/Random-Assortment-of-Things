@@ -45,7 +45,7 @@ class ComraderyInteraction(var factionID: String) : RATInteractionPlugin() {
             createOption("Select chatter character") {
                 dialog.showCustomDialog(400f, 600f, CombatChatterSelector(person))
             }
-            optionPanel.setTooltip("Select chatter character", "Allows changing the character that the \"Combat Chatter\" mod uses to decide their personality.")
+            optionPanel.setTooltip("Select chatter character", "Allows changing the character that the \"Combat Chatter\" mod uses to decide their personality. Characters with a chance of 0 require the \"comradery\" categoryTag to be displayed.")
         }
 
         createOption("Confirm") {

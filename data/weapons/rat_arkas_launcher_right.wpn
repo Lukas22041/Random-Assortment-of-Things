@@ -1,0 +1,28 @@
+{
+	"id":"rat_arkas_launcher_right",
+	"specClass":"projectile",
+	"type":"MISSILE",
+	"size":"SMALL",
+	"turretSprite": "graphics/weapons/exo/builtin/arkas_launcher_right.png",
+  	"hardpointSprite": "graphics/weapons/exo/builtin/arkas_launcher_right.png",
+	"hardpointOffsets":[
+		0, 0,
+		0, 0,
+	 ],
+	"turretOffsets":[
+		2, 1,
+		-2, -2,
+	 ],
+	"hardpointAngleOffsets":[0],
+	"turretAngleOffsets":[-45, -45],
+	"barrelMode":"ALTERNATING",
+	"animationType":"SMOKE",
+	"renderHints":[RENDER_LOADED_MISSILES],
+	"interruptibleBurst":false,
+	"displayArcRadius":300,
+	
+	"projectileSpecId":"rat_arkas_launcher_missile",
+	"fireSoundTwo":"harpoon_fire",
+
+	#"everyFrameEffect":"assortment_of_things.abyss.weapons.SarielLauncherEveryframe",
+}

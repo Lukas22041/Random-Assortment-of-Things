@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.shipsystems
 
+import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.PhaseCloakSystemAPI
@@ -10,6 +11,10 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript.StatusData
+import com.fs.starfarer.api.util.IntervalUtil
+import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
+import org.magiclib.plugins.MagicTrailPlugin
 import java.awt.Color
 
 class ExophaseShipsystem : BaseShipSystemScript() {
@@ -34,6 +39,8 @@ class ExophaseShipsystem : BaseShipSystemScript() {
     protected var STATUSKEY3 = Any()
     protected var STATUSKEY4 = Any()
 
+    var trailID = MagicTrailPlugin.getUniqueID()
+    var interval = IntervalUtil(0.05f, 0.05f)
 
     fun getMaxTimeMult(stats: MutableShipStatsAPI): Float {
         return 1f + (MAX_TIME_MULT - 1f) * stats.dynamic.getValue(Stats.PHASE_TIME_BONUS_MULT)
@@ -157,8 +164,6 @@ class ExophaseShipsystem : BaseShipSystemScript() {
         stats.acceleration.modifyMult(id, accelMultMod * effectLevel)
         stats.deceleration.modifyMult(id, accelMultMod * effectLevel)
 
-        val jitterLevel = 0f
-        val jitterRangeBonus = 0f
         var levelForAlpha = effectLevel
 
 
@@ -172,8 +177,28 @@ class ExophaseShipsystem : BaseShipSystemScript() {
         }
 
         ship.extraAlphaMult = 1f - (1f - SHIP_ALPHA_MULT) * levelForAlpha
-        ship.setApplyExtraAlphaToEngines(true)
+        ship.setApplyExtraAlphaToEngines(false) //Disable to make engines not get way to small
 
+        ship.engineController.fadeToOtherColor(this, Color(255, 177, 127, 200), Color(255, 177, 127, 200), 1f * effectLevel, 1f)
+        ship.engineController.extendFlame(this, -0.1f * effectLevel, -0.1f * effectLevel, 0f)
+
+        /*var thrusterID = 1000
+        for (weapon in ship.allWeapons) {
+            if (!ship.isAlive) continue
+            if (ship.isHulk) continue
+            if (weapon.spec.weaponId != "rat_exo_phase_trail_location") continue
+
+            var color = Color(255, 177, 127, 50)
+
+
+            thrusterID += 1000
+            var facing = weapon.arcFacing + ship.facing
+            var location = weapon.location
+
+            MagicTrailPlugin.addTrailMemberSimple(ship, trailID + thrusterID, Global.getSettings().getSprite("fx", "base_trail_zapWithCore"),
+                Vector2f(location.x, location.y) , 100f, facing, 10f, 5f, color, 1f * effectLevel, 0f, 0.15f, 0.1f, true )
+
+        }*/
 
         val extra = 0f
         val shipTimeMult = 1f + (getMaxTimeMult(stats) - 1f) * levelForAlpha * (1f - extra)

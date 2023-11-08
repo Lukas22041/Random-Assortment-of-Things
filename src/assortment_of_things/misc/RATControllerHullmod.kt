@@ -11,7 +11,6 @@ import com.fs.starfarer.api.util.Misc
 
 class RATControllerHullmod : BaseHullMod() {
 
-
     companion object {
         fun ensureAddedControllerToFleet() {
             var playerfleet = Global.getSector().playerFleet

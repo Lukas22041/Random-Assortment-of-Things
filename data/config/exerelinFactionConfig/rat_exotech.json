@@ -6,7 +6,7 @@
     
     "directoryUseShortName":true,
     
-    "marketSpawnWeight":0.75,
+    "marketSpawnWeight":0.5,
     
 	"useConfigRelationshipsInNonRandomSector":true,
     "startRelationships":{ "tritachyon":0.6, "hegemony": -0.1, "luddic_church":-0.6, "luddic_path":-0.8, "pirates":-0.2, "independent":-0.6, "persean":0.0, "sindrian_diktat":0.0 },
@@ -18,6 +18,7 @@
     "alignments":{
         "corporate":1,
         "technocratic":1,
+		"militarist":0.5,
         "hierarchical":0.5,
     },
     "diplomacyTraits":["monopolist", "weak-willed", "anarchist", "lowprofile", "devious", "temperamental"],
@@ -25,7 +26,7 @@
     "freeMarket":true,
     
     # chance of the faction being picked to send a colony expedition. Default 0 (disabled)
-    "colonyExpeditionChance":0.75,	# not really their kind of thing...? I guess
+    "colonyExpeditionChance":0.5,	# not really their kind of thing...? I guess
     "colonyTargetValuator":"exerelin.campaign.colony.IndustrialColonyTargetValuator",
     
     #"stabilizeCommodities":["lobster", "gamma_core"],	# luckily this was a test, if not, lol

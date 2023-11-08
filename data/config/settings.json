@@ -36,6 +36,10 @@
 
 	"graphics":{
 		
+		"blueprint_packages":{
+			
+			"rat_exo_package":"graphics/factions/rat_exo.png",
+		},
 		
 		"rat_terrain": {
 		  "wormhole_bands":"graphics/fx/abyss_portal_textures_small.png",	

@@ -81,6 +81,11 @@ class CombatChatterSelector(var person: PersonAPI) : BaseCustomDialogDelegate() 
         var currentCharacter = ChatterDataManager.getCharacterFromMemory(person)?.let { ChatterDataManager.getCharacterData(it) }
         var characters = ChatterDataManager.CHARACTERS
         for (character in characters) {
+
+            if (character.chance <= 0f && character.categoryTags.none { it == "comradery" }) {
+                continue
+            }
+
             var ratio = FuzzySearch.extractOne(searchText, listOf(character.name, character.id))
             if (searchText != "" && ratio.score <= 55) continue
 

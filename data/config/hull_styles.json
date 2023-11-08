@@ -51,8 +51,8 @@
 		"weaponDisabledExplosionColor":[217, 164, 57,255],
 		"shieldRingColor":[255,255,255,255],
 		"shieldInnerColor":[217, 164, 57,75],
-		"fluxVentCoreColor":[255,255,255,255],
-		"fluxVentFringeColor":[217, 164, 57,255],
+		"fluxVentCoreColor":[255,200,150,255],
+		"fluxVentFringeColor":[248,172,44,255],
 		"engineLoopSet":"engine_loop", 					# id of entry in sounds.json
 		"engineAccelerateSet":"engine_accelerate",		# id of entry in sounds.json
 		"empLoopSet":"emp_loop",						# id of entry in sounds.json

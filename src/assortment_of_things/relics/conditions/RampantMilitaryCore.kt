@@ -11,6 +11,7 @@ import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.population.PopulationComposition
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaUtil.LunaCommons
 
 class RampantMilitaryCore : BaseMarketConditionPlugin() {
 
@@ -39,7 +40,6 @@ class RampantMilitaryCore : BaseMarketConditionPlugin() {
             market.commDirectory.addPerson(core)
             market.commDirectory.getEntryForPerson(core)
         }
-
         market.stability.modifyFlat(id, -1f, condition.name)
         market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyFlat(id, 0.30f, condition.name)
 

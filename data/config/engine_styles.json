@@ -93,4 +93,16 @@
         "contrailCampaignColor":[130, 27, 150, 50],
 		
     },
+	
+	"EXO_TECH":{					
+		"engineColor":[248,172,44,255],
+		"contrailParticleSizeMult":0,
+		"contrailParticleDuration":0,
+		"contrailParticleFinalSizeMult":0,
+		"contrailMaxSpeedMult":0f,
+		"contrailAngularVelocityMult":0f,
+		"contrailColor":[248,172,44,0],
+		"contrailCampaignColor":[248,172,44,75],
+		"type":"GLOW" # GLOW or SMOKE
+	},
 }

@@ -11,14 +11,13 @@ import com.fs.starfarer.api.impl.campaign.fleets.PersonalFleetScript;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import lunalib.lunaSettings.LunaSettings;
+import lunalib.lunaUtil.LunaCommons;
 
 public class Runcodes {
 
     public void Example() {
 
-
         SectorAPI sector = Global.getSector();
-
 
         if (sector.hasScript(PersonalFleetHoracioCaden.class)) {
             PersonalFleetScript fleetScript = null;
