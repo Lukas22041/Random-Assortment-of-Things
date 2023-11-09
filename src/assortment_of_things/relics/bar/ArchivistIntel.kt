@@ -79,6 +79,7 @@ class ArchivistIntel(var entity: SectorEntityToken, var archivist: PersonAPI) : 
             ui!!.recreateIntelUI()
         }
     }
+
     override fun advance(amount: Float) {
         super.advance(amount)
 

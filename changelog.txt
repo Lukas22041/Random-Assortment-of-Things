@@ -1,3 +1,13 @@
+Version 1.7.4
+Not save compatible with prior versions.
+
+-> Made the first ship from the WIP mini-faction available as relics loot.
+-> Commander Background Station now gives production intel, and the duration of the production now depends on the amount ordered
+-> Comradery Background now has a proper portrait selector.
+-> Comradery Background will no longer display Combat-Chatter characters if they have a chance of 0.
+
+
+
 Version 1.7.3
 Probably Not save Compatible with versions before 1.7.2
 

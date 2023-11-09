@@ -45,7 +45,7 @@
     {
       "id": "WS0005",
       "size": "LARGE",
-      "type": "MISSILE",
+      "type": "SYNERGY",
       "mount": "HARDPOINT",
       "arc": 5,
       "angle": 0,

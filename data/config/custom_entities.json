@@ -763,7 +763,14 @@
 		"pluginClass":"com.fs.starfarer.api.impl.campaign.CryosleeperEntityPlugin",
 	},
 	
-	
+	"rat_exo_cache":{
+		"baseId":"supply_cache",
+		"defaultName":"Anomalous Cache",
+		"defaultRadius":35, 
+		"nameInText":"anomalous cache",
+		"shortName":"anomalous cache",
+		"customDescriptionId":"weapon_cache",
+	},
 	
 	
 	

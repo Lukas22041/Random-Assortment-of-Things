@@ -3,6 +3,7 @@ package assortment_of_things.misc
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
+import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.combat.BattleCreationContext
 import com.fs.starfarer.api.combat.EngagementResultAPI
@@ -18,8 +19,11 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import lunalib.lunaExtensions.addLunaSpriteElement
+import lunalib.lunaUI.elements.LunaSpriteElement
 import org.lwjgl.input.Keyboard
 import org.magiclib.kotlin.getPersonalityName
 import org.magiclib.kotlin.isMercenary
@@ -366,6 +370,101 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
                 panel.addUIElement(element)
                 element.position.inTL(0f, 0f)
 
+            }
+
+            override fun hasCancelButton(): Boolean {
+                return true
+            }
+
+            override fun customDialogConfirm() {
+                if (selected == null) return
+
+                onConfirm(selected!!)
+            }
+        })
+    }
+
+    fun addPortraitPicker(current: String?, portraits: ArrayList<String>, onConfirm: (String) -> Unit) {
+        dialog.showCustomDialog(540f, 440f, object: BaseCustomDialogDelegate() {
+
+            var selected: String? = current
+
+
+            override fun createCustomDialog(panel: CustomPanelAPI?, callback: CustomDialogDelegate.CustomDialogCallback?) {
+
+                var width = panel!!.position.width
+                var height = panel.position.height
+
+                var element = panel!!.createUIElement(width, height, true)
+                element.position.inTL(0f, 0f)
+
+                var lastElement: UIPanelAPI? = null
+                var lastRowElement: UIPanelAPI? = null
+                var elementPerRow = 5
+                var currentCount = 0
+                var size = 96f
+
+                for (portrait in portraits) {
+
+                    var luna = element.addLunaSpriteElement(portrait, LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, size, 0f).apply {
+                        enableTransparency = true
+                        width = 0f
+                        height = 0f
+                        getSprite().alphaMult = 0.6f
+
+                        if (selected == portrait) {
+                            getSprite().alphaMult = 1f
+                        }
+
+                        advance {
+                            if (isHovering) {
+                                if (selected == portrait) {
+                                    getSprite().alphaMult = 1f
+                                } else {
+                                    getSprite().alphaMult = 0.9f
+                                }
+                            }
+                            if (!isHovering && selected != portrait) {
+                                getSprite().alphaMult = 0.6f
+
+                            }
+                        }
+
+                        onClick {
+                            selected = portrait
+                            playClickSound()
+                        }
+
+                        onHoverEnter {
+                            playScrollSound()
+                        }
+                    }
+
+                    luna.position.setSize(size, size)
+                    luna.getSprite().setSize(size, size)
+
+                    if (currentCount == 0) {
+                        element.addSpacer(size + 10f)
+                        if (lastRowElement != null) {
+                            luna.elementPanel.position.belowLeft(lastRowElement, 10f)
+                        }
+                        lastRowElement = luna.elementPanel
+                    }
+                    else {
+                        luna.elementPanel.position.rightOfMid(lastElement!!, 10f)
+                    }
+
+                    currentCount++
+
+                    if (currentCount == elementPerRow) {
+                        currentCount = 0
+                    }
+
+                    lastElement = luna.elementPanel
+                }
+
+                element.addSpacer(5f)
+                panel.addUIElement(element)
             }
 
             override fun hasCancelButton(): Boolean {

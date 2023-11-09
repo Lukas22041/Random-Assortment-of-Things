@@ -9,13 +9,13 @@ import com.fs.starfarer.api.util.IntervalUtil
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
-class ArkusShipsystem : BaseShipSystemScript() {
+class ArkasShipsystem : BaseShipSystemScript() {
 
     var SPEED_BONUS = 75f
     var TURN_BONUS = 10f
 
     private val color = Color(248, 149, 44, 255)
-    var interval = IntervalUtil(0.5f, 1f)
+    var interval = IntervalUtil(0.5f, 0.8f)
 
 
     override fun apply(stats: MutableShipStatsAPI, id: String?, state: ShipSystemStatsScript.State, effectLevel: Float) {
@@ -54,7 +54,7 @@ class ArkusShipsystem : BaseShipSystemScript() {
                         if (entity.owner == ship.owner) continue
                         if (entity.maxHitpoints != 0f) {
 
-                            val emp: Float = 50f
+                            val emp: Float = 75f
                             val dam: Float = 150f
 
                             Global.getCombatEngine().spawnEmpArc(ship,

@@ -2,6 +2,7 @@ package assortment_of_things.backgrounds.comradery
 
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.campaign.ids.Stats
@@ -76,18 +77,30 @@ class ComraderyInteraction(var factionID: String) : RATInteractionPlugin() {
             sprite.renderBackground = false
             sprite.enableTransparency = true
 
-            var randomize = innerElement.addLunaElement(300f, 35f)
+            var randomize = innerElement.addLunaElement(145f, 35f)
             randomize.enableTransparency = true
-            randomize.addText("Randomize Portrait", baseColor = Misc.getBasePlayerColor())
+            randomize.addText("Select Portrait", baseColor = Misc.getBasePlayerColor())
             randomize.centerText()
             randomize.elementPanel.position.rightOfTop(sprite.elementPanel, 10f)
             randomize.onClick {
                 playClickSound()
-                var randomPerson = Global.getSector().getFaction(factionID).createRandomPerson()
+              /*  var randomPerson = Global.getSector().getFaction(factionID).createRandomPerson()
                 scrollerPosition = element.externalScroller.yOffset
                 person.portraitSprite = randomPerson.portraitSprite
-                person.gender = randomPerson.gender
-                refreshScreen()
+                person.gender = randomPerson.gender*/
+
+                var portraits = ArrayList<String>()
+                portraits += Global.getSector().playerFaction.factionSpec.getAllPortraits(FullName.Gender.MALE)
+                portraits += Global.getSector().playerFaction.factionSpec.getAllPortraits(FullName.Gender.FEMALE)
+                portraits += Global.getSector().getFaction(factionID).factionSpec.getAllPortraits(FullName.Gender.MALE)
+                portraits += Global.getSector().getFaction(factionID).factionSpec.getAllPortraits(FullName.Gender.FEMALE)
+                portraits = portraits.distinct() as ArrayList<String>
+
+                addPortraitPicker(person.portraitSprite, portraits ) {
+                    person.portraitSprite = it
+                    refreshScreen()
+                }
+
             }
 
             randomize.onHoverEnter {
@@ -97,15 +110,46 @@ class ComraderyInteraction(var factionID: String) : RATInteractionPlugin() {
                 randomize.borderColor = Misc.getDarkPlayerColor()
             }
 
+            var genderButton = innerElement.addLunaElement(145f, 35f)
+            genderButton.enableTransparency = true
+            genderButton.addText("${person.gender.name.lowercase().capitalize()}", baseColor = Misc.getBasePlayerColor())
+            genderButton.centerText()
+            genderButton.elementPanel.position.rightOfMid(randomize.elementPanel, 10f)
+            genderButton.onClick {
+                genderButton.playClickSound()
+
+                if (person.gender == FullName.Gender.MALE) {
+                    person.gender = FullName.Gender.FEMALE
+                }
+                else {
+                    person.gender = FullName.Gender.MALE
+                }
+                genderButton.changeText("${person.gender.name.lowercase().capitalize()}")
+                genderButton.centerText()
+            }
+
+            genderButton.onHoverEnter {
+                genderButton.borderColor = Misc.getDarkPlayerColor().brighter()
+            }
+            genderButton.onHoverExit {
+                genderButton.borderColor = Misc.getDarkPlayerColor()
+            }
+
             var firstName = innerElement.addLunaTextfield("${person.name.first}",false,145f, 35f)
             firstName.enableTransparency = true
             firstName.centerText()
             firstName.elementPanel.position.belowLeft(randomize.elementPanel, 10f)
+            firstName.advance {
+                person.name = FullName(firstName.getText(), person.name.last, person.gender)
+            }
 
             var lastName = innerElement.addLunaTextfield("${person.name.last}",false,145f, 35f)
             lastName.enableTransparency = true
             lastName.centerText()
             lastName.elementPanel.position.rightOfMid(firstName.elementPanel, 10f)
+            lastName.advance {
+                person.name = FullName((person.name.first), lastName.getText(), person.gender)
+            }
 
         }
 

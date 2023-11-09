@@ -24,8 +24,6 @@ class CommanderStationListener(var market: MarketAPI) : EconomyTickListener {
 
     var maxProjects = 8
 
-    var nextMonthsCargo = Global.getFactory().createCargo(true)
-
     init {
         allProjects.add(SpaceportProject().apply { active = true })
         allProjects.add(StorageProject().apply { active = true })
@@ -92,6 +90,16 @@ class CommanderStationListener(var market: MarketAPI) : EconomyTickListener {
         return income
     }
 
+    fun calculateProductionCapacity() : Float {
+        var cap = 0f
+        for (project in allProjects) {
+            if (project.active) {
+                cap += project.getCustomProductionBudget()
+            }
+        }
+        return cap
+    }
+
     override fun reportEconomyMonthEnd() {
         var cargo = market.getStorageCargo()
 
@@ -110,16 +118,5 @@ class CommanderStationListener(var market: MarketAPI) : EconomyTickListener {
 
         var income = calculateIncome()
         bank += (income * 0.8f).toInt()
-        cargo.addAll(nextMonthsCargo)
-
-        if (nextMonthsCargo.mothballedShips == null) {
-            nextMonthsCargo.initMothballedShips(Factions.PLAYER)
-        }
-
-        for (member in nextMonthsCargo.mothballedShips.membersListCopy) {
-            cargo.mothballedShips.addFleetMember(member)
-        }
-
-        nextMonthsCargo = Global.getFactory().createCargo(true)
     }
 }

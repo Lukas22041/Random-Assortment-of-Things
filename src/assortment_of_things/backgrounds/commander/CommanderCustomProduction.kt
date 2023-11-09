@@ -58,7 +58,7 @@ class CommanderCustomProduction(var market: MarketAPI, var listener: CommanderSt
         listener.currentProductionBudget = MathUtils.clamp(listener.currentProductionBudget, 0f, 100000000f)
         var data = ProductionData()
 
-        var cargo = listener.nextMonthsCargo
+        var cargo = Global.getFactory().createCargo(false)
 
         val ships = Global.getFactory().createEmptyFleet(Factions.PLAYER, "temp", true)
         ships.commander = Global.getSector().playerPerson
@@ -97,6 +97,12 @@ class CommanderCustomProduction(var market: MarketAPI, var listener: CommanderSt
             }
             cargo.mothballedShips.addFleetMember(member)
         }
+
+        var level = (cost - 0f) / (listener.calculateProductionCapacity() - 0f)
+        var days = 60 * level
+        days = MathUtils.clamp(days, 10f, 60f)
+        var intel = CommanderProductionIntel(market, cargo, days)
+        Global.getSector().intelManager.addIntel(intel)
     }
 
 }

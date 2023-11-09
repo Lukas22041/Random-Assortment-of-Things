@@ -111,6 +111,7 @@ class StationCommanderBackground : BaseCharacterBackground() {
         var station = Global.getSector().memoryWithoutUpdate.getEntity("\$rat_base_commander_station")
         var listener = station.memoryWithoutUpdate.get("\$rat_commander_listener") as CommanderStationListener
         listener.bank = 25000
+        //listener.bank = 250000
     }
 
     fun generateName(): String? {

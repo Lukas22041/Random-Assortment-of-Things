@@ -2,6 +2,7 @@ package assortment_of_things.relics
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FactionAPI.ShipPickParams
+import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.ids.*
@@ -196,6 +197,12 @@ class RelicStations {
                 debris.setCircularOrbit(station, 0f, 0f, 100f);
 
             }
+        },
+
+        RelicStation("rat_exo_cache").apply {
+            systemFilter = { system -> system.hasBlackHole() }
+            locations = linkedMapOf(LocationType.NEAR_STAR to 10f, LocationType.PLANET_ORBIT to 0.1f)
+            weight = 1000f
         },
 
 

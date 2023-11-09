@@ -48,6 +48,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 "rat_gravitational_dynamo" -> return PluginPick(GravitationalDynamoInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_neural_laboratory" -> return PluginPick(NeuralLaboratoryInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_damaged_cryosleeper" -> return PluginPick(DamagedCryosleeperInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_exo_cache" -> return PluginPick(ExoCacheInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
             if (id == "rat_bioengineering_station" || id == "rat_augmentation_station") {
