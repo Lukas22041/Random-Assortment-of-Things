@@ -45,6 +45,11 @@ class AbyssalStormParticleManager() : BaseCustomEntityPlugin() {
 
     override fun advance(amount: Float) {
 
+        if (Global.getSector().playerFleet.starSystem != entity.starSystem) {
+            particles.clear()
+            return
+        }
+
         color = AbyssUtils.getSystemData(entity.starSystem).getColor()
 
         if (halo == null) {

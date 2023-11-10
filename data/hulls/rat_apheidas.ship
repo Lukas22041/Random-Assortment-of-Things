@@ -1,0 +1,72 @@
+{
+  "hullName": "Apheidas",
+  "hullId": "rat_apheidas",
+  "hullSize": "FRIGATE",
+  "spriteName": "graphics/ships/exo/rat_apheidas.png",
+  "style": "RAT_EXO",
+  "height": 120,
+  "width": 130,
+  "center": [65, 60],
+  "collisionRadius": 70,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 63.5,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_exogrid",
+    "rat_apheidas_hullmod"
+  ],
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": 0,
+      "locations": [0, -0]
+    },
+    {
+      "id": "WS0002",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 90,
+      "angle": -90,
+      "locations": [0, -22]
+    },
+    {
+      "id": "WS0003",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 90,
+      "angle": 90,
+      "locations": [0, 22]
+    },
+    {
+      "id": "WS0004",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 90,
+      "angle": 180,
+      "locations": [-23.5, -0]
+    },
+    {
+      "id": "WS0005",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 90,
+      "angle": 0,
+      "locations": [23.5, -0]
+    }
+  ],
+  "engineSlots": [],
+  "bounds": [
+    29, 31.5,
+    -31.5, 31.5,
+    -31.5, -31.5,
+    29, -31.5
+  ]
+}

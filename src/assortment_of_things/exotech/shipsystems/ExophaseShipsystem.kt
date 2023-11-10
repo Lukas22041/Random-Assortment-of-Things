@@ -31,7 +31,8 @@ class ExophaseShipsystem : BaseShipSystemScript() {
     var MAX_TIME_MULT = 3f
 
     var FLUX_LEVEL_AFFECTS_SPEED = true
-    var MIN_SPEED_MULT = 0.75f
+    //var MIN_SPEED_MULT = 0.75f
+    var MIN_SPEED_MULT = 0.60f
     var BASE_FLUX_LEVEL_FOR_MIN_SPEED = 0.5f
 
     protected var STATUSKEY1 = Any()

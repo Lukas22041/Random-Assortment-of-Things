@@ -17,6 +17,9 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
     var id = Misc.genUID()
 
     override fun advance(amount: Float) {
+        var currentsystem = entity?.containingLocation ?: return
+        if (Global.getSector().playerFleet.containingLocation != currentsystem) return
+
         super.advance(amount)
     }
 
