@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.shipsystems
 
+import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipSystemAPI.SystemState
@@ -11,6 +12,7 @@ import com.fs.starfarer.api.impl.combat.MineStrikeStats
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
+import com.fs.starfarer.combat.entities.Ship
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
@@ -53,6 +55,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
         }
 
         if (platform != null && platform!!.isAlive) {
+
             if (state == ShipSystemStatsScript.State.IN) {
                 var level = 1 - (1 * effectLevel)
                 platform!!.alphaMult = effectLevel
@@ -69,6 +72,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
                 platform!!.isHoldFireOneFrame = true
             }
         }
+
 
         val target = ship!!.mouseTarget
         var test = ""

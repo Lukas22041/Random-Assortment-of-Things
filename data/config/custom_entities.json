@@ -770,6 +770,7 @@
 		"nameInText":"anomalous cache",
 		"shortName":"anomalous cache",
 		"customDescriptionId":"weapon_cache",
+		"tags":["has_interaction_dialog", "salvageable", "neutrino", "not_random_mission_target"],
 	},
 	
 	
