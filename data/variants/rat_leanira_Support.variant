@@ -57,7 +57,7 @@
         "trident_wing",
         "dagger_wing",
     ],
-     "modules": [
+    "modules": [
     {
       "APHEIDAS_SLOT": "rat_apheidas_Base"
     },

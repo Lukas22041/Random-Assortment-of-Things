@@ -1,0 +1,123 @@
+{
+  "hullName": "Test",
+  "hullId": "rat_test",
+  "hullSize": "FRIGATE",
+  "spriteName": "graphics/ships/wolf/wolf_base.png",
+  "style": "HIGH_TECH",
+  "height": 96,
+  "width": 52,
+  "center": [26, 42],
+  "collisionRadius": 80,
+  "shieldCenter": [7, 0],
+  "shieldRadius": 70,
+  "viewOffset": 50,
+  "weaponSlots": [
+    {
+      "id": "WS 001",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 150,
+      "angle": 0,
+      "locations": [11, 0]
+    },
+    {
+      "id": "WS 002",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 200,
+      "angle": 90,
+      "locations": [-13, 12]
+    },
+    {
+      "id": "WS 003",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 200,
+      "angle": -90,
+      "locations": [-13, -11]
+    },
+    {
+      "id": "WS 004",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [45, 0]
+    },
+    {
+      "id": "WS 005",
+      "size": "SMALL",
+      "type": "MISSILE",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [12, 20]
+    },
+    {
+      "id": "WS 006",
+      "size": "SMALL",
+      "type": "MISSILE",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [11, -19]
+    },
+    {
+      "id": "MODULE_SLOT",
+      "size": "LARGE",
+      "type": "STATION_MODULE",
+      "mount": "TURRET",
+      "arc": 5,
+      "angle": 0,
+      "locations": [6.5, -88]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-36, 12],
+      "length": 64,
+      "width": 16,
+      "angle": 180,
+      "contrailSize": 64,
+      "style": "HIGH_TECH"
+    },
+    {
+      "location": [-40, 0],
+      "length": 64,
+      "width": 16,
+      "angle": 180,
+      "contrailSize": 64,
+      "style": "HIGH_TECH"
+    },
+    {
+      "location": [-36, -11],
+      "length": 64,
+      "width": 16,
+      "angle": 180,
+      "contrailSize": 64,
+      "style": "HIGH_TECH"
+    }
+  ],
+  "bounds": [
+    54, 8,
+    54, -8,
+    40, -15,
+    19, -12,
+    14, -24,
+    2, -21,
+    -8, -15,
+    -33, -15,
+    -39, 0,
+    -33, 16,
+    -7, 15,
+    2, 22,
+    14, 24,
+    19, 14,
+    43, 15,
+    44, 10
+  ]
+}

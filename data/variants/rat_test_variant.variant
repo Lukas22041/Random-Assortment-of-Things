@@ -1,0 +1,18 @@
+{
+  "variantId": "rat_test_variant",
+  "hullId": "rat_test",
+  "displayName": "New Variant",
+  "goalVariant": false,
+  "fluxCapacitors": 0,
+  "fluxVents": 0,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [],
+  "weaponGroups": [],
+  "modules": [
+    {
+      "MODULE_SLOT": "rat_test2_variant"
+    },
+  ],
+  "wings": []
+}

@@ -20,7 +20,7 @@ import java.awt.Color
 class LeaniraShipsystem : BaseShipSystemScript() {
 
     var ship: ShipAPI? = null
-    val color = Color(248, 149, 44, 255)
+    val color = Color(248,172,44, 255)
 
     var originalPlatform: ShipAPI? = null
     var variant: ShipVariantAPI? = null
@@ -33,6 +33,15 @@ class LeaniraShipsystem : BaseShipSystemScript() {
         ship = stats.entity as ShipAPI? ?: return
         var system = ship!!.system
 
+        if (platform != null) {
+            var level = (platform!!.hitpoints - 0f) / (platform!!.maxHitpoints - 0f)
+            level = 1 - level
+            var mult = 1 + (2 * level)
+
+            ship!!.system.cooldown = ship!!.system.specAPI.getCooldown(ship!!.mutableStats) * mult
+        }
+
+
         for (module in ship!!.childModulesCopy) {
             if (!module.isAlive) continue
             variant = module.variant
@@ -42,6 +51,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
 
         if (activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
             activated = false
+
             Global.getCombatEngine().removeEntity(platform)
         }
 
@@ -59,7 +69,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             if (state == ShipSystemStatsScript.State.IN) {
                 var level = 1 - (1 * effectLevel)
                 platform!!.alphaMult = effectLevel
-                platform!!.setJitterUnder(this, color, level, 10, 1f, 14f)
+                platform!!.setJitterUnder(this, color, level, 15, 1f, 14f)
             }
             else if (state == ShipSystemStatsScript.State.ACTIVE) {
                 platform!!.alphaMult = 1f
@@ -67,7 +77,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             else if (state == ShipSystemStatsScript.State.OUT) {
                 var level = 1 - (1 * effectLevel)
                 platform!!.alphaMult = effectLevel
-                platform!!.setJitterUnder(this, color, level, 10, 1f, 14f)
+                platform!!.setJitterUnder(this, color, level, 15, 1f, 14f)
 
                 platform!!.isHoldFireOneFrame = true
             }
@@ -122,7 +132,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
     }
 
     protected fun getMaxRange(ship: ShipAPI?): Float {
-        return 500f
+        return 600f
     }
 
 
@@ -216,6 +226,7 @@ class LeaniraShipsystemDamageListener(var parent: ShipAPI) : HullDamageAboutToBe
             if (parent.system.isActive) {
                 parent.useSystem()
             }
+            ship.hitpoints = 1f
             return true
         }
 

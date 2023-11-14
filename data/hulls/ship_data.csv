@@ -35,3 +35,6 @@ Charybdis Segment,rat_charybdis_tail,,Abyssal,,0,15000,2000,10000,12500,700,165,
 Arkas,rat_arkas,Cruiser,Exo-Tech,rat_arkas_system,20,8000,1200,10000,16000,800,160,,70,40,35,20,25,2000,PHASE,rat_exocloak,,,,0.025,0.05,50,100,150,120,2,30,9,225000,5,20,540,0.25,30,30,,,,,,,PHASE,"restricted, rat_exotech_bp",,0.5,2,3,,3103
 Leanira,rat_leanira,Battlecarrier,Exo-Tech,rat_leanira_system,20,7500,1100,11000,12500,650,155,2,60,30,25,20,25,2000,OMNI,,270,0.25,0.8,,,110,200,160,130,2,30,9,140000,5,20,540,0.25,26,26,,,,,,,"CARRIER, COMBAT, SHIP_WITH_MODULES","restricted, rat_exotech_bp",,0.5,2,3,,3103
 Apheidas,rat_apheidas,Turret Platform,Exo-Tech,,2,4500,600,2500,2500,300,45,,1,0,0,3,3,4000,NONE,,200,0.25,0.8,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,5,0,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX, UNDER_PARENT",restricted,,0.5,2,2,,3101
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Test,rat_test,Frigate,High Tech,rat_tylos_system,5,1500,150,2250,1875,150,55,,150,130,100,60,120,200,FRONT,,150,0.4,0.7,,,15,30,50,20,1,20,10,12000,10,20,180,0.25,5,5,,,,,,,SHIP_WITH_MODULES,"restricted, rat_exotech_bp",,0.5,2,2,,200
+Test2,rat_test2,Frigate,High Tech,rat_tylos_system,5,1500,150,2250,1875,150,55,,150,130,100,60,120,200,FRONT,,150,0.4,0.7,,,15,30,50,20,1,20,10,12000,10,20,180,0.25,5,5,,,,,,,,"restricted, rat_exotech_bp",,0.5,2,2,,200

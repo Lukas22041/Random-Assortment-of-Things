@@ -1,10 +1,10 @@
 {
-	"id":"rat_leanira_system",
+	"id":"rat_tylos_system",
 	"type":"STAT_MOD",
 	"aiType":"CUSTOM",
 	"aiScript":"assortment_of_things.exotech.shipsystems.ai.LeaniraSystemAI",
 	
-	"statsScript":"assortment_of_things.exotech.shipsystems.LeaniraShipsystem",
+	"statsScript":"assortment_of_things.exotech.shipsystems.TylosShipsystem",
 	"runScriptWhilePaused":true, # only for the player's ship
 	"runScriptWhileIdle":true,  # this means unapply() never gets called
 	"blockActionsWhileChargingDown":false,
@@ -34,11 +34,4 @@
 	"useSound":"system_interdictor",
 	"outOfUsesSound":"gun_out_of_ammo",
 	"deactivateSound":"system_interdictor",
-
-	"aiHints":{
-		"threatRange":700,
-		"threatAmount":50,
-		"threatAngle":0,
-		"threatArc":360,
-	}
 }

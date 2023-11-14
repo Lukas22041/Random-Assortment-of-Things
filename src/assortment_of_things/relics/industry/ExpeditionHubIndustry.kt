@@ -133,7 +133,7 @@ class ExpeditionHubIndustry : BaseConsumeableIndustry(), EconomyTickListener {
         modifier =  MathUtils.clamp(modifier, 0.2f, 2f)
 
         var points = basePoints * modifier
-        points = MathUtils.clamp(points, 80f, 110f)
+        points = MathUtils.clamp(points, 30f, 110f)
 
         val random = Random()
 
@@ -148,7 +148,7 @@ class ExpeditionHubIndustry : BaseConsumeableIndustry(), EconomyTickListener {
         val params = FleetParamsV3(market,
             entity.locationInHyperspace,
             market.factionId,
-            3f,
+            null,
             type,
             combatPoints,  // combatPts
             logisticPoints,  // freighterPts
@@ -164,7 +164,8 @@ class ExpeditionHubIndustry : BaseConsumeableIndustry(), EconomyTickListener {
         val location = entity.containingLocation
         location.addEntity(fleet)
 
-       // fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_SCAVENGER] = true
+        //fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_SCAVENGER] = true
+        fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORES_OTHER_FLEETS] = true
 
         fleet.setLocation(entity.location.x, entity.location.y)
         fleet.facing = random.nextFloat() * 360f
@@ -224,7 +225,7 @@ class ExpeditionHubIndustry : BaseConsumeableIndustry(), EconomyTickListener {
         var range = getExpeditionRange()
         var location = market.locationInHyperspace
 
-        var starsystems = Global.getSector().starSystems.filter { Misc.getDistanceLY(location, it.location) < range }
+        var starsystems = Global.getSector().starSystems.filter { Misc.getDistanceLY(location, it.location) < range && !it.hasTag(Tags.THEME_HIDDEN) && !it.hasTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER) }
 
         var filteredSystems = ArrayList<StarSystemAPI>()
 
