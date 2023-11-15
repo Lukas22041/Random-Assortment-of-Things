@@ -95,7 +95,7 @@ class TylosShipsystem : BaseShipSystemScript() {
             }
 
 
-            ship!!.setJitterUnder(this, color, 1f * effectLevel, 15, 2f, 14f)
+            ship!!.setJitterUnder(this, color, 1f * effectLevel, 20, 2f, 25f)
 
 
 

@@ -3,6 +3,7 @@ package assortment_of_things.backgrounds.comradery
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.FullName
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.campaign.ids.Stats
@@ -67,6 +68,7 @@ class ComraderyInteraction(var factionID: String) : RATInteractionPlugin() {
         var height = 500f
         var panel = visualPanel.showCustomPanel(width, height, null)
         var element = panel.createUIElement(width, height, true)
+
 
         element.addLunaElement(width - 10, 80f).apply {
             renderBackground = false

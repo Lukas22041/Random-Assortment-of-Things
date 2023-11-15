@@ -42,7 +42,7 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
             renderSystem()
         }
 
-        if (phaseState == ShipSystemAPI.SystemState.ACTIVE || phaseState == ShipSystemAPI.SystemState.IN || phaseState == ShipSystemAPI.SystemState.OUT) {
+        if (phaseState == ShipSystemAPI.SystemState.ACTIVE || phaseState == ShipSystemAPI.SystemState.IN || phaseState == ShipSystemAPI.SystemState.OUT || phaseState == ShipSystemAPI.SystemState.COOLDOWN) {
             renderPhase()
         }
 
@@ -93,7 +93,7 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         systemGlow.angle = ship.facing - 90
         systemGlow.renderAtCenter(ship.location.x, ship.location.y)
 
-        doJitter(systemGlow, level, lastSystemJitterLocations)
+        doJitter(systemGlow, level, lastSystemJitterLocations, 5, 2f)
 
         endStencil()
     }
@@ -102,6 +102,16 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         var location = ship.location
 
         var level = ship.phaseCloak.effectLevel
+
+        var outPercent = ship.phaseCloak.chargeDownDur / ship.phaseCloak.cooldown
+        if (ship.phaseCloak.state == ShipSystemAPI.SystemState.OUT) {
+            level = (1 - outPercent) + ship.phaseCloak.effectLevel * outPercent
+        }
+        if (ship.phaseCloak.state == ShipSystemAPI.SystemState.COOLDOWN) {
+            var cooldownLevel = (ship.phaseCloak.cooldownRemaining - 0f) / (ship.phaseCloak.cooldown - 0f)
+            level = cooldownLevel * (1 - outPercent)
+        }
+
         var systemState = ship.phaseCloak.state
 
         phaseGlow.setNormalBlend()
@@ -109,15 +119,15 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         phaseGlow.angle = ship.facing - 90
         phaseGlow.renderAtCenter(ship.location.x, ship.location.y)
 
-        doJitter(phaseGlow, level, lastPhaseJitterLocations)
+        doJitter(phaseGlow, level, lastPhaseJitterLocations, 5, 2 + (2f * level))
 
     }
 
-    fun doJitter(sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>) {
+    fun doJitter(sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>, jitterCount: Int, jitterMaxRange: Float) {
 
         var paused = Global.getCombatEngine().isPaused
-        var jitterCount = 5
-        var jitterMaxRange = 2f
+     /*   var jitterCount = 5
+        var jitterMaxRange = 2f*/
         var jitterAlpha = 0.2f
 
 

@@ -69,7 +69,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             if (state == ShipSystemStatsScript.State.IN) {
                 var level = 1 - (1 * effectLevel)
                 platform!!.alphaMult = effectLevel
-                platform!!.setJitterUnder(this, color, level, 15, 1f, 14f)
+                platform!!.setJitterUnder(this, color, level, 20, 1f, 30f)
             }
             else if (state == ShipSystemStatsScript.State.ACTIVE) {
                 platform!!.alphaMult = 1f
@@ -77,7 +77,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             else if (state == ShipSystemStatsScript.State.OUT) {
                 var level = 1 - (1 * effectLevel)
                 platform!!.alphaMult = effectLevel
-                platform!!.setJitterUnder(this, color, level, 15, 1f, 14f)
+                platform!!.setJitterUnder(this, color, level, 20, 1f, 30f)
 
                 platform!!.isHoldFireOneFrame = true
             }

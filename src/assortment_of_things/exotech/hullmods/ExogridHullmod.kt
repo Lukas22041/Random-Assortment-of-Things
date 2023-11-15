@@ -74,6 +74,15 @@ class ExogridHullmod : BaseHullMod() {
             Misc.getTextColor(), Misc.getHighlightColor(), "25%", "50%")
     }
 
+    /*override fun hasSModEffect(): Boolean {
+        return true
+    }
+
+    override fun addSModEffectSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean, isForBuildInList: Boolean) {
+        tooltip!!.addSpacer(10f)
+        tooltip!!.addPara("Test", 0f)
+    }*/
+
     override fun getNameColor(): Color {
         return Color(217, 164, 57)
     }
