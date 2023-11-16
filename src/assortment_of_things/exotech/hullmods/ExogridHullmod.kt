@@ -32,6 +32,10 @@ class ExogridHullmod : BaseHullMod() {
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String?) {
         Global.getCombatEngine().addLayeredRenderingPlugin(ExogridRenderer(ship))
+
+        if (ship.shield != null) {
+            ship.shield.setRadius(ship.shieldRadiusEvenIfNoShield, "graphics/fx/rat_exo_shields256.png", "graphics/fx/rat_exo_shields256ring.png")
+        }
     }
 
 
@@ -85,6 +89,7 @@ class ExogridHullmod : BaseHullMod() {
 
     override fun getNameColor(): Color {
         return Color(217, 164, 57)
+
     }
 
     override fun getBorderColor(): Color {

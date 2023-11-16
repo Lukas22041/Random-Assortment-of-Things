@@ -20,7 +20,9 @@ object ExoshipGenerator {
     fun generate(name: String) {
         var system = Global.getSector().starSystems.filter { it.planets.any { planet -> !planet.isStar } && !it.hasBlackHole() && !it.hasPulsar() && !it.hasTag(
             Tags.THEME_HIDDEN) && !it.hasTag(Tags.THEME_CORE)}.random()
-        var location = BaseThemeGenerator.getLocations(Random(), system, 100f, linkedMapOf(BaseThemeGenerator.LocationType.PLANET_ORBIT to 100f)).pick()
+        var location = BaseThemeGenerator.getLocations(Random(), system, 100f, linkedMapOf(BaseThemeGenerator.LocationType.PLANET_ORBIT to 1000f, BaseThemeGenerator.LocationType.STAR_ORBIT to 0.1f)).pick()
+
+        if (location == null) return
 
         var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "$name (Exoship)", "rat_exoship", "rat_exotech")
         exoshipEntity.orbit = location.orbit

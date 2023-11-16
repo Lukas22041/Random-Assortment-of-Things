@@ -22,7 +22,6 @@ class LeaniraShipsystem : BaseShipSystemScript() {
     var ship: ShipAPI? = null
     val color = Color(248,172,44, 255)
 
-    var originalPlatform: ShipAPI? = null
     var variant: ShipVariantAPI? = null
 
     var platform: ShipAPI? = null
@@ -45,8 +44,10 @@ class LeaniraShipsystem : BaseShipSystemScript() {
         for (module in ship!!.childModulesCopy) {
             if (!module.isAlive) continue
             variant = module.variant
-            originalPlatform = module
             Global.getCombatEngine().removeEntity(module)
+            platform = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, 1f, Vector2f(), ship!!.facing)
+            platform!!.captain = ship!!.captain
+            Global.getCombatEngine().removeEntity(platform)
         }
 
         if (activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
@@ -70,6 +71,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
                 var level = 1 - (1 * effectLevel)
                 platform!!.alphaMult = effectLevel
                 platform!!.setJitterUnder(this, color, level, 20, 1f, 30f)
+                platform!!.isHoldFireOneFrame = true
             }
             else if (state == ShipSystemStatsScript.State.ACTIVE) {
                 platform!!.alphaMult = 1f
@@ -78,7 +80,6 @@ class LeaniraShipsystem : BaseShipSystemScript() {
                 var level = 1 - (1 * effectLevel)
                 platform!!.alphaMult = effectLevel
                 platform!!.setJitterUnder(this, color, level, 20, 1f, 30f)
-
                 platform!!.isHoldFireOneFrame = true
             }
         }
@@ -103,11 +104,19 @@ class LeaniraShipsystem : BaseShipSystemScript() {
 
         target = findClearLocation(ship!!, target)
 
-
-        platform = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, 1f, target, ship!!.facing)
-        platform!!.captain = ship!!.captain
-
         platform!!.isHoldFireOneFrame = true
+
+        Global.getCombatEngine().addEntity(platform)
+
+        for (weapon in platform!!.allWeapons) {
+            if (weapon.isDisabled) {
+                weapon.repair()
+            }
+        }
+
+        platform!!.location.set(target)
+        platform!!.hitpoints = platform!!.maxHitpoints
+
 
         platform!!.addListener(LeaniraShipsystemDamageListener(ship!!))
     }
@@ -116,8 +125,6 @@ class LeaniraShipsystem : BaseShipSystemScript() {
         val member = Global.getFactory().createFleetMember(type, variant)
         member.owner = owner
         member.crewComposition.addCrew(member.neededCrew)
-
-        member.captain = originalPlatform!!.captain
 
         val platform = Global.getCombatEngine().getFleetManager(owner).spawnFleetMember(member, location, facing, 0f)
         platform.crAtDeployment = combatReadiness
@@ -196,7 +203,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
 
             val dist = Misc.getDistance(loc, otherLoc)
             val r = otherR
-            var checkDist = originalPlatform!!.shieldRadiusEvenIfNoShield
+            var checkDist = platform!!.shieldRadiusEvenIfNoShield
             if (dist < r + checkDist) {
                 return false
             }

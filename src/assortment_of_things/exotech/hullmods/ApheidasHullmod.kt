@@ -3,6 +3,7 @@ package assortment_of_things.exotech.hullmods
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 class ApheidasHullmod : BaseHullMod() {
@@ -22,6 +23,7 @@ class ApheidasHullmod : BaseHullMod() {
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
 
+        ship!!.velocity.set(Vector2f(ship!!.velocity.x * 0.99f, ship.velocity.y * 0.99f))
         ship!!.giveCommand(ShipCommand.TURN_RIGHT, null, 0);
 
         ship.blockCommandForOneFrame(ShipCommand.VENT_FLUX)
@@ -38,7 +40,7 @@ class ApheidasHullmod : BaseHullMod() {
         tooltip!!.addSpacer(10f)
 
         tooltip!!.addPara("The apheidas-class platform does not operate like a normal ship. " +
-                "It is continuously connected to its carrier, the \"Leanira\", its phase system allowing it to warp in and out of its vast hangar at will, where it can have mid-combat repairs and ammunition refills applied.", 0f,
+                "It is continuously connected to its carrier, the \"Leanira\", its phase system allowing it to warp in and out of its vast hangar at will, where it can have mid-combat repairs made to its hull. Its armor can only be repaired out of combat.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "apheidas-class", "Leanira", "warp")
 
         tooltip.addSpacer(10f)

@@ -41,6 +41,12 @@
 			"rat_exo_package":"graphics/factions/rat_exo.png",
 		},
 		
+		"rat_fx":{
+			
+			"rat_exo_shield_inner":"graphics/fx/rat_exo_shields256.png",
+			"rat_exo_shield_outer":"graphics/fx/rat_exo_shields256ring.png",
+		},
+		
 		"rat_terrain": {
 		  "wormhole_bands":"graphics/fx/abyss_portal_textures_small.png",	
 		  "halo":"graphics/fx/rat_halo.png",	
