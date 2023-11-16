@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.hullmods
 
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
@@ -34,7 +35,7 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         var phaseState = ship.phaseCloak?.state ?: ShipSystemAPI.SystemState.IDLE
         var exogridOverload = ship.variant.hasHullMod("rat_exogrid_overload")
 
-        if (exogridOverload && !ship.fluxTracker.isOverloaded) {
+        if ((exogridOverload || ship.baseOrModSpec().hullId == "rat_apheidas") && !ship.fluxTracker.isOverloaded) {
             renderOverload()
         }
 

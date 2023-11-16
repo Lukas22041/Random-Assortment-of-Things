@@ -1,6 +1,7 @@
 package assortment_of_things.exotech.hullmods
 
 import assortment_of_things.misc.addNegativePara
+import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
@@ -120,12 +121,16 @@ class ExogridOverloadHullmod : BaseHullMod() {
     }
 
     override fun isApplicableToShip(ship: ShipAPI?): Boolean {
+        if (ship!!.baseOrModSpec().hullId == "rat_apheidas") return false
         if (ship!!.variant.hasHullMod(HullMods.SAFETYOVERRIDES)) return false
         if (ship!!.variant.hasHullMod(HullMods.PHASE_ANCHOR)) return false
         return super.isApplicableToShip(ship)
     }
 
     override fun getUnapplicableReason(ship: ShipAPI?): String? {
+        if (ship!!.baseOrModSpec().hullId == "rat_apheidas") {
+            return "Can not be installed on the Apheidas"
+        }
         if (ship!!.variant.hasHullMod(HullMods.SAFETYOVERRIDES)) {
             return "Incompatible with Safety Overrides"
         }
