@@ -141,9 +141,9 @@
 		"carriers":2,
 		"phaseShips":1,
 		
-		"officerQuality":5,
+		"officerQuality":3,
 		"shipQuality":3,
-		"numShips":1,
+		"numShips":3,
 		
 		"shipSize":4,
 		

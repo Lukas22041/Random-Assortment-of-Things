@@ -141,11 +141,11 @@
 		"carriers":2,
 		"phaseShips":1,
 		
-		"officerQuality":5,
+		"officerQuality":3,
 		"shipQuality":3,
-		"numShips":1,
+		"numShips":3,
 		
-		"shipSize":3,
+		"shipSize":4,
 		
 		"aggression":3, # doesn't matter since automated ships are super aggressive regardless
 		

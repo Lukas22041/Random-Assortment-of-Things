@@ -34,7 +34,7 @@ class MaintainingMomentumSkill : RATBaseShipSkill() {
         var ship = stats!!.entity
         if (ship is ShipAPI) {
 
-            if (!Global.getCombatEngine().listenerManager.hasListenerOfClass(MaintaningMomentumListener::class.java)) {
+            if (Global.getCombatEngine()?.listenerManager?.hasListenerOfClass(MaintaningMomentumListener::class.java) != true) {
                 var listener = MaintaningMomentumListener(ship)
                 Global.getCombatEngine().listenerManager.addListener(listener)
                 ship.addListener(listener)

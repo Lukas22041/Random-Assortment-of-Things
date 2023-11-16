@@ -23,48 +23,6 @@
 		"lightPosition":[0,0,10], # in planet radii.  Not used for stars.  z > 0 is above the playing field.
 	},
 	
-	"rat_exo_terran":{
-		"name":"Terran",
-		"tilt":20, # left-right (>0 tilts to the left)
-		"pitch":30, # towards-away from the viewer (>0 pitches towards)
-		"rotation":-3, # degrees/second
-		"planetColor":[255,255,255,255],
-		"atmosphereThickness":0.25, # as fraction of radius.  Set to 0 for no atmosphere
-		"atmosphereThicknessMin":40, #  minimum thickness in pixels
-		"atmosphereColor":[60,160,215,160],
-		"texture":"graphics/planets/terran.jpg",
-		"icon":"graphics/warroom/icon_planet.png",
-		"iconColor":[155,185,255,255],
-		"isStar":false,
-		"lightPosition":[4,-1,8], # in planet radii.  Not used for stars.  z > 0 is above the playing field.
-		"cloudTexture":"graphics/planets/clouds_banded01.png", # omit for no cloud layer
-		"cloudColor":[235,240,250,225],
-		"cloudRotation":-5, # degrees/second, optional
-	},
-	
-	"rat_exo_black_hole":{
-		"name":"Black Hole",
-		"tilt":0, # left-right (>0 tilts to the left)
-		"pitch":0, # towards-away from the viewer (>0 pitches towards)
-		"rotation":-3, # degrees/second
-		"planetColor":[0,0,0,255],
-		"atmosphereThickness":0.25, # as fraction of radius.  Set to 0 for no atmosphere
-		"atmosphereThicknessMin":10, #  minimum thickness in pixels
-		"atmosphereColor":[235, 140, 52,255],
-		"texture":"graphics/planets/star_white.jpg",
-		"icon":"graphics/icons/blackhole.png",
-		#"icon":"graphics/icons/icon_portal.png",
-		"starscapeIcon":"graphics/starscape/blackhole.png",
-		"iconColor":[235, 140, 52,255],
-		"starCoronaSprite":"graphics/fx/star_halo.png", # optional, defaults to really bright particle
-		"starCoronaColor":[235, 140, 52,255], # optional, defaults to white
-		"starCoronaSizeMult":5.12, # required, multiplier for star's radius
-		"isStar":true,
-		"isBlackHole":true,
-		"scaleMultMapIcon":2.5,
-		"scaleMultStarscapeIcon":2.5,
-		"lightPosition":[0,0,10], # in planet radii.  Not used for stars.  z > 0 is above the playing field.
-	},
 }
 
 

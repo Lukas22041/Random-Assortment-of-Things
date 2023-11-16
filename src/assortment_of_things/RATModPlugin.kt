@@ -11,7 +11,7 @@ import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.*
-import assortment_of_things.exotech.systems.DaybreakSystem
+import assortment_of_things.exotech.ExoshipGenerator
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
@@ -187,11 +187,17 @@ class RATModPlugin : BaseModPlugin() {
     }
 
     fun generateExo() {
-       /* if (Global.getSector().memoryWithoutUpdate.get("\$rat_nova_generated") == null) {
-            DaybreakSystem.generate()
 
-            Global.getSector().memoryWithoutUpdate.set("\$rat_nova_generated", true)
-        }*/
+        if (Global.getSector().memoryWithoutUpdate.get("\$rat_exo_generated") == null) {
+            //DaybreakSystem.generate()
+
+            var names = arrayListOf("Nova", "Daybreak", "Aurora")
+            for (name in names) {
+                ExoshipGenerator.generate(name)
+            }
+
+            Global.getSector().memoryWithoutUpdate.set("\$rat_exo_generated", true)
+        }
     }
 
     override fun onNewGame() {
