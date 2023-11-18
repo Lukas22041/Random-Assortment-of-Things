@@ -1,4 +1,4 @@
-package assortment_of_things.abyss.intel
+package assortment_of_things.abyss.intel.map
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssDepth
@@ -10,6 +10,7 @@ import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 import lunalib.lunaExtensions.addLunaSpriteElement
 import lunalib.lunaUI.elements.LunaElement
 import lunalib.lunaUI.elements.LunaSpriteElement
@@ -38,16 +39,27 @@ class AbyssMap : BaseIntelPlugin() {
     override fun createLargeDescription(panel: CustomPanelAPI?, width: Float, height: Float) {
        // super.createLargeDescription(panel, width, height)
 
-        var element = panel!!.createUIElement(width, height, false)
-        panel.position.inTL(0f, 0f)
-        panel.addUIElement(element)
+        var plugin = MoveableMapPanel()
+        var moveablePanel = panel!!.createCustomPanel(width, height, plugin)
+        panel.addComponent(moveablePanel)
 
-        var sprite = element.addLunaSpriteElement("graphics/backgrounds/abyss/Abyss2ForMap.jpg", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, width * 0.8f, height )
-        sprite.position.inTL(0f, 0f)
+        var range = 300f
+        var element = moveablePanel.createUIElement(width, height, true)
+        plugin.component = MoveableMapPanel.MoveableMapElement(element, Vector2f(-350f, 200f), 0f, 0f, range)
 
-        sprite.getSprite().alphaMult = 0.5f
+        var innerPanel = Global.getSettings().createCustom(width, height, null)
+        element.addCustom(innerPanel, 0f)
+        var innerElement = innerPanel.createUIElement(width, height, false)
+        innerPanel.addUIElement(innerElement)
 
-        var center = Vector2f(width * 0.45f, height * 0.35f)
+        addIconsToMap(innerPanel, innerElement, width, height)
+
+        moveablePanel.addUIElement(element)
+        element.position.inTL(350f, 200f)
+
+    }
+
+    fun addIconsToMap(mapPanel: CustomPanelAPI, mapElement: TooltipMakerAPI, width: Float, height: Float) {
 
         var systemsData = AbyssUtils.getAbyssData().systemsData
 
@@ -69,11 +81,11 @@ class AbyssMap : BaseIntelPlugin() {
             var loc = systemData.mapLocation
             if (loc == null) continue
 
-            var locOnMap = center.plus(loc)
+            var locOnMap = Vector2f().plus(loc)
 
 
 
-            var icon = AbyssZoneMapIcon(system, AbyssUtils.ABYSS_COLOR, element, 30f, 30f).apply {
+            var icon = AbyssZoneMapIcon(system, AbyssUtils.ABYSS_COLOR, mapElement, 30f, 30f).apply {
                 position.inTL(locOnMap.x, locOnMap.y)
             }
             icons.add(icon)
@@ -88,13 +100,13 @@ class AbyssMap : BaseIntelPlugin() {
 
             var unidentified = system.customEntities.filter { it.customEntitySpec.id == "rat_abyss_icon" }.count()
 
-            element.addTooltipToPrevious( object: TooltipCreator {
+            mapElement.addTooltipToPrevious( object: TooltipCreator {
                 override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
                     return false
                 }
 
                 override fun getTooltipWidth(tooltipParam: Any?): Float {
-                   return 350f
+                    return 350f
                 }
 
                 override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
@@ -152,11 +164,12 @@ class AbyssMap : BaseIntelPlugin() {
             // para.position.inTL(locOnMap.x, locOnMap.y)
         }
 
-        var line = MapLine(panel, positions, element, width, height)
+
+        var line = MapLine(mapPanel, positions, mapElement, 0f, 0f)
         line.position.inTL(0f, 0f)
         for (icon in icons)
         {
-            element.bringComponentToTop(icon.elementPanel)
+            mapElement.bringComponentToTop(icon.elementPanel)
         }
     }
 

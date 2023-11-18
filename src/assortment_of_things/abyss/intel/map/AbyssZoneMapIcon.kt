@@ -1,4 +1,4 @@
-package assortment_of_things.abyss.intel
+package assortment_of_things.abyss.intel.map
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssDepth

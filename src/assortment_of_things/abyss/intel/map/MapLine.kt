@@ -1,4 +1,4 @@
-package assortment_of_things.abyss.intel
+package assortment_of_things.abyss.intel.map
 
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.campaign.StarSystemAPI
@@ -13,7 +13,7 @@ class MapLine(var panel: UIPanelAPI, var positions: Map<StarSystemAPI, Vector2f>
 
 
     init {
-        renderBorder = false
+        renderBorder = true
         renderBackground = false
 
     }
@@ -27,13 +27,13 @@ class MapLine(var panel: UIPanelAPI, var positions: Map<StarSystemAPI, Vector2f>
             var neighbours = positions.filter { nb.contains(it.key) }
             for (neighbour in neighbours)
             {
-                var c = AbyssUtils.ABYSS_COLOR
+                var systemData = AbyssUtils.getSystemData(pos.key)
+                var c = systemData.getColor()
 
                 renderLines(c)
 
-
-                GL11.glVertex2f(panel.position.x + pos.value.x + 15 , panel.position.y + pos.value.y + 15)
-                GL11.glVertex2f(panel.position.x + neighbour.value.x + 15 , panel.position.y + neighbour.value.y + 15)
+                GL11.glVertex2f(panel!!.position.x  + pos.value.x + 10, panel!!.position.y + pos.value.y + panel!!.position.height + 15)
+                GL11.glVertex2f(panel!!.position.x + neighbour.value.x + 10, panel!!.position.y + neighbour.value.y + panel!!.position.height + 15)
 
                 GL11.glEnd()
                 GL11.glPopMatrix()
