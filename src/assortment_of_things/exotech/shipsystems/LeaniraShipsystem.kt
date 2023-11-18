@@ -47,6 +47,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             Global.getCombatEngine().removeEntity(module)
             platform = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, 1f, Vector2f(), ship!!.facing)
             platform!!.captain = ship!!.captain
+            platform!!.setCustomData("rat_apheidas_parent", ship)
             Global.getCombatEngine().removeEntity(platform)
         }
 
@@ -125,6 +126,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
         val member = Global.getFactory().createFleetMember(type, variant)
         member.owner = owner
         member.crewComposition.addCrew(member.neededCrew)
+        member.captain = ship!!.captain
 
         val platform = Global.getCombatEngine().getFleetManager(owner).spawnFleetMember(member, location, facing, 0f)
         platform.crAtDeployment = combatReadiness

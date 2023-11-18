@@ -4,6 +4,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.loading.VariantSource
@@ -13,7 +14,8 @@ class RATControllerHullmod : BaseHullMod() {
 
     companion object {
         fun ensureAddedControllerToFleet() {
-            var playerfleet = Global.getSector().playerFleet
+            var playerfleet = Global.getSector().playerFleet ?: return
+            if (playerfleet.fleetData?.membersListCopy == null) return
             for (member in playerfleet.fleetData.membersListCopy) {
                 if (!member.variant.hasHullMod("rat_controller")) {
                     if (member.variant.source != VariantSource.REFIT) {

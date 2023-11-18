@@ -359,7 +359,9 @@ class AlterationRefitButton : BaseRefitButton() {
                         tooltip!!.addPara("This ship already has an alteration installed.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
                     }
                     else if (atSmodLimit) {
-                        tooltip!!.addPara("Ship is at maximum amount of s-mods.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+                        var text = "Ship is at maximum amount of s-mods."
+                        if (hasProgressive) text += " (Ignored due to Progressive-Smods)"
+                        tooltip!!.addPara(text, 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
                     }
                     else {
                         plugin.cannotInstallAlterationTooltip(tooltip,  member, variant,400f)

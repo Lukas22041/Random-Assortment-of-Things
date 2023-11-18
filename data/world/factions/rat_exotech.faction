@@ -246,7 +246,7 @@
 		],
 	},
 	"illegalCommodities":[
-		"ai_cores", # only due to treaty w/ Hegemony
+		#"ai_cores", # only due to treaty w/ Hegemony
 	],
 	"music":{
 		"theme":"music_tritach_encounter_neutral",

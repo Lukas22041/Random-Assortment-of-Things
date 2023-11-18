@@ -18,8 +18,8 @@ object ExoshipGenerator {
 
 
     fun generate(name: String) {
-        var system = Global.getSector().starSystems.filter { it.planets.any { planet -> !planet.isStar } && !it.hasBlackHole() && !it.hasPulsar() && !it.hasTag(
-            Tags.THEME_HIDDEN) && !it.hasTag(Tags.THEME_CORE)}.random()
+        var systems = Global.getSector().starSystems.filter { it.planets.any { planet -> !planet.isStar } && !it.hasTag(Tags.THEME_CORE) && !it.hasBlackHole() && !it.hasPulsar() && !it.hasTag(Tags.THEME_HIDDEN)}
+        var system = systems.random()
         var location = BaseThemeGenerator.getLocations(Random(), system, 100f, linkedMapOf(BaseThemeGenerator.LocationType.PLANET_ORBIT to 1000f, BaseThemeGenerator.LocationType.STAR_ORBIT to 0.1f)).pick()
 
         if (location == null) return
@@ -30,7 +30,7 @@ object ExoshipGenerator {
         var market = addMarketplace("rat_exotech", exoshipEntity, arrayListOf(), "$name", 4,
         arrayListOf(Conditions.OUTPOST),
         arrayListOf(Submarkets.SUBMARKET_OPEN),
-        arrayListOf(Industries.MEGAPORT, Industries.WAYSTATION, Industries.MILITARYBASE, Industries.ORBITALWORKS),
+        arrayListOf(Industries.MEGAPORT, Industries.WAYSTATION, Industries.PATROLHQ, Industries.ORBITALWORKS),
         0.3f, false, false)
         market.isHidden = true
     }

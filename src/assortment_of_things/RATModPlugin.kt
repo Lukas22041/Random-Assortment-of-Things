@@ -203,6 +203,9 @@ class RATModPlugin : BaseModPlugin() {
     override fun onNewGame() {
         super.onNewGame()
 
+    }
+
+    override fun onNewGameAfterProcGen() {
         generateExo()
     }
 
