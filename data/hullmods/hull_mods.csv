@@ -62,8 +62,8 @@ Exogrid Overload,rat_exogrid_overload,0,,Exo-Tech,"offensive, no_build_in, rat_e
 ,,,,,,,,,,,,,,,,,,,
 Phase Platform,rat_apheidas_hullmod,0,,Exo-Tech,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.ApheidasHullmod,,,,graphics/hullmods/rat_apheidas_hullmod.png
 ,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,
+#Exo Alterations,,,,,,,,,,,,,,,,,,,
+Autonomous Bays,rat_autonomous_bays,3,1,Hull Alteration,"rat_alteration, no_drop_salvage, restricted, exo",Special,3000,FALSE,FALSE,,0,0,0,0,assortment_of_things.exotech.hullmods.alteration.AutonomousBaysHullmod,,,,graphics/hullmods/rat_autonomous_bays.png
 ,,,,,,,,,,,,,,,,,,,
 #Relics,,,,,,,,,,,,,,,,,,,
 Exceptional Construction,rat_exceptional_construction,0,,,,,3000,FALSE,TRUE,FALSE,-5,-10,-15,-25,assortment_of_things.relics.hullmods.ExceptionalConstructionHullmod,,,,graphics/hullmods/rat_exceptional_construction.png
