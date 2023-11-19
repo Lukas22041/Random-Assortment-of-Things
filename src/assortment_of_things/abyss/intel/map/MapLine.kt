@@ -7,6 +7,7 @@ import com.fs.starfarer.api.ui.UIPanelAPI
 import lunalib.lunaUI.elements.LunaElement
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
 class MapLine(var panel: UIPanelAPI, var positions: Map<StarSystemAPI, Vector2f>, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
@@ -28,7 +29,7 @@ class MapLine(var panel: UIPanelAPI, var positions: Map<StarSystemAPI, Vector2f>
             for (neighbour in neighbours)
             {
                 var systemData = AbyssUtils.getSystemData(pos.key)
-                var c = systemData.getColor()
+                var c = systemData.getColor().setAlpha(75)
 
                 renderLines(c)
 

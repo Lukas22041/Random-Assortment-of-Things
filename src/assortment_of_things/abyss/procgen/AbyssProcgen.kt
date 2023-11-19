@@ -58,6 +58,7 @@ object AbyssProcgen {
         }
 
         system.isEnteredByPlayer = false
+        system.addCustomEntity("${system.name}", "", "rat_abyss_border", Factions.NEUTRAL)
 
         var warper = AbyssBackgroundWarper(system, 8, 0.33f)
         var color = generateAbyssColor(system, depth)

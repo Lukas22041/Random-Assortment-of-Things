@@ -1,3 +1,5 @@
 id,name,color,description,order,effect_skill_id,sound1,sound2,sound3,sound4,sound5,sound_story,elite_overlay,elite_overlay_medium,elite_overlay_small
 rat_abyss_cores,Abyssal Core,"160,0,255,255",Skills held by abyssal cores.,1,rat_abyss_cores_aptitude,combat1,combat2,combat3,combat4,combat5,ui_char_spent_story_point_combat,graphics/icons/skills/rat_elite_cores.png,graphics/icons/skills/rat_elite_cores48.png,graphics/icons/skills/rat_elite_cores32.png
 rat_abyss_abyssal_aptitude,Abyssal Bloodstream,"255,0,0,255",,1,rat_abyss_abyssal_aptitude,combat1,combat2,combat3,combat4,combat5,ui_char_spent_story_point_combat,graphics/icons/skills/rat_elite_abyssal.png,graphics/icons/skills/rat_elite_abyssal48.png,graphics/icons/skills/rat_elite_abyssal32.png
+rat_exo_aptitude,Exo,"248,172,44,255",,1,rat_exo_aptitude,combat1,combat2,combat3,combat4,combat5,ui_char_spent_story_point_combat,graphics/icons/skills/rat_elite_exo.png,graphics/icons/skills/rat_elite_exo48.png,graphics/icons/skills/rat_elite_exo32.png
+,,,,,,,,,,,,,,

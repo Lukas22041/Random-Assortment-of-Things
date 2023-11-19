@@ -12,13 +12,14 @@ import java.awt.Color
 
 class AbyssZoneMapIcon(var system: StarSystemAPI, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
-    var sprite = Global.getSettings().getSprite("graphics/icons/jump-point2.png")
+    var sprite = Global.getSettings().getSprite("graphics/planets/sun_halo.png")
 
     var connectedSystems = ArrayList<StarSystemAPI>()
 
     init {
         renderBorder = false
         renderBackground = false
+        enableTransparency = true
 
         sprite.color = color
 
@@ -58,20 +59,31 @@ class AbyssZoneMapIcon(var system: StarSystemAPI, var color: Color, tooltip: Too
 
         if (Global.getSector().playerFleet.containingLocation == system)
         {
-            sprite.color = Misc.getBasePlayerColor()
+            sprite.color = Misc.getDarkPlayerColor().brighter()
         }
         else
         {
             var data = AbyssUtils.getSystemData(system)
             var depth = data.depth
-            var color = data.getDarkColor()
+            var color = data.getColor().darker().darker()
             sprite.color = color
-            if (depth == AbyssDepth.Shallow) sprite.color = color.brighter()
-            if (depth == AbyssDepth.Deep) sprite.color = color.brighter()
+            if (depth == AbyssDepth.Shallow) color = color.brighter()
+            if (depth == AbyssDepth.Deep) color = color.darker()
+            if (isHovering) color = color.brighter()
+            if (system.name.contains("Twilight")) color = color.brighter()
+            sprite.color = color
+
         }
 
-        sprite.setSize(width, height)
-        sprite.render(x, y)
+
+        if (isHovering) {
+            sprite.setSize(width + 10, height + 10)
+            sprite.render(x - 5, y - 5)
+        }
+        else {
+            sprite.setSize(width, height)
+            sprite.render(x, y)
+        }
     }
 
 }

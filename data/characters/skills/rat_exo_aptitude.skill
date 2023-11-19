@@ -1,0 +1,12 @@
+{
+	"id":"rat_exo_aptitude",
+	"governingAptitude":"rat_exo_aptitude",
+	"effectGroups":[
+		{
+			"requiredSkillLevel":0,
+			"effects":[
+				{"type":"DESCRIPTION", "script":"assortment_of_things.abyss.skills.CoresAptitudeDesc"},
+			]
+		},
+	],
+}

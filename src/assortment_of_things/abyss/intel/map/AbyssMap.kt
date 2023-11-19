@@ -43,7 +43,7 @@ class AbyssMap : BaseIntelPlugin() {
         var moveablePanel = panel!!.createCustomPanel(width, height, plugin)
         panel.addComponent(moveablePanel)
 
-        var range = 300f
+        var range = 350f
         var element = moveablePanel.createUIElement(width, height, true)
         plugin.component = MoveableMapPanel.MoveableMapElement(element, Vector2f(-350f, 200f), 0f, 0f, range)
 
@@ -116,18 +116,18 @@ class AbyssMap : BaseIntelPlugin() {
                     var depth = systemData.depth
                     if (system.name.contains("Twilight"))
                     {
-                        tooltip!!.addPara("The root of the abyss.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
+                        tooltip!!.addPara("The exotic connection between hyoerspace and this unique enviroment.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(5f)
                     }
 
                     else if (depth == AbyssDepth.Shallow)
                     {
-                        tooltip!!.addPara("This part of the abyss barely sees any light.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
+                        tooltip!!.addPara("A zone within the abyss that is relatively close towards the entrance, the abyssal matter isnt very dense.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(5f)
                     }
                     else if (depth == AbyssDepth.Deep)
                     {
-                        tooltip!!.addPara("There is almost no light visible within this zone.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
+                        tooltip!!.addPara("A zone deep in to the abyss. The exotic matter is dense enough to inhibit the functionality of most of a fleets sensors dramaticly.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(5f)
                     }
 
@@ -147,7 +147,7 @@ class AbyssMap : BaseIntelPlugin() {
                         var plural = "s"
                         if (unidentified == 1) prefix = "is"
                         if (unidentified == 1) plural = ""
-                        tooltip!!.addPara("There $prefix $unidentified unidentified structure$plural in this zone.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
+                        tooltip!!.addPara("There $prefix atleast $unidentified unidentified structure$plural in this zone.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(2f)
                     }
 

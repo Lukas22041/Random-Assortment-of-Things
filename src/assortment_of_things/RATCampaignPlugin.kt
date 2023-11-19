@@ -9,6 +9,7 @@ import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
 import assortment_of_things.backgrounds.commander.BaseCommanderStationInteraction
 import assortment_of_things.exotech.interactions.exoship.ExoshipInteractions
+import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
 import assortment_of_things.relics.items.cores.NeuroCore
@@ -124,6 +125,10 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
         if (commodityId == "rat_neuro_core") {
             return PluginPick(NeuroCore(), CampaignPlugin.PickPriority.HIGHEST)
+        }
+
+        if (commodityId == "rat_exo_processor") {
+            return PluginPick(ExoProcessor(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
         return null

@@ -6,4 +6,4 @@ Primordial Core,rat_primordial_core,ai_cores,,,0,100,,"nonecon, no_loss_from_com
 ,,,,,,,,,,,,,,,,,,,,,,
 Neuro Core,rat_neuro_core,ai_cores,,,0,200,,"nonecon, no_loss_from_combat",1000,1,graphics/icons/cargo/rat_neurocore.png,ai_core_pickup,ui_alpha_core_drop,40,,,,HIGH,,1,,
 ,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,
+Exo-Processor,rat_exo_processor,ai_cores,,,0,100,,"nonecon, no_loss_from_combat",1000,1,graphics/icons/cargo/rat_exo_processor.png,ai_core_pickup,ui_alpha_core_drop,40,,,,HIGH,,1,,

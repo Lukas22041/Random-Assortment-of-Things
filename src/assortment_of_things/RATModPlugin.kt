@@ -21,6 +21,7 @@ import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
+import exerelin.campaign.ExerelinSetupData
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaRefit.LunaRefitManager
 import lunalib.lunaSettings.LunaSettings
@@ -38,6 +39,7 @@ class RATModPlugin : BaseModPlugin() {
         var isHalloween = false
 
         init {
+
             //Global.getSettings().isDevMode = true
         }
     }
@@ -93,6 +95,7 @@ class RATModPlugin : BaseModPlugin() {
     }
 
 
+
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
@@ -120,22 +123,8 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(AbyssAmbientSoundPlayer())
         Global.getSector().addTransientListener(AbyssDoctrineListener(false))
         Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
-        if (RATSettings.enableAbyss!!)
-        {
-            if (AbyssUtils.getAbyssData().systemsData.isEmpty()) {
-                for (faction in Global.getSector().allFactions)
-                {
-                    if (faction.id == "rat_abyssals" || faction.id == "rat_abyssals_deep") continue
-                    faction.adjustRelationship("rat_abyssals", -100f)
-                    faction.adjustRelationship("rat_abyssals_deep", -100f)
-                }
 
-                var random = Random(Misc.genRandomSeed())
-                Global.getSector().memoryWithoutUpdate.set("\$rat_alteration_random", random)
-
-                AbyssGenerator().beginGeneration()
-            }
-        }
+        generateAbyss()
 
         if (RATSettings.relicsEnabled!! && Global.getSector().memoryWithoutUpdate.get("\$rat_relics_generated") == null) {
             var generator = RelicsGenerator()
@@ -186,6 +175,25 @@ class RATModPlugin : BaseModPlugin() {
         }
     }
 
+    fun generateAbyss() {
+        if (RATSettings.enableAbyss!!)
+        {
+            if (AbyssUtils.getAbyssData().systemsData.isEmpty()) {
+                for (faction in Global.getSector().allFactions)
+                {
+                    if (faction.id == "rat_abyssals" || faction.id == "rat_abyssals_deep") continue
+                    faction.adjustRelationship("rat_abyssals", -100f)
+                    faction.adjustRelationship("rat_abyssals_deep", -100f)
+                }
+
+                var random = Random(Misc.genRandomSeed())
+                Global.getSector().memoryWithoutUpdate.set("\$rat_alteration_random", random)
+
+                AbyssGenerator().beginGeneration()
+            }
+        }
+    }
+
     fun generateExo() {
 
         if (Global.getSector().memoryWithoutUpdate.get("\$rat_exo_generated") == null) {
@@ -206,12 +214,17 @@ class RATModPlugin : BaseModPlugin() {
     }
 
     override fun onNewGameAfterProcGen() {
+        generateAbyss()
+
+        if (Global.getSector().characterData.memoryWithoutUpdate.get("\$rat_started_abyss") == true) {
+            Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", "rat_abyss_gate")
+        }
+
         generateExo()
     }
 
     override fun onNewGameAfterEconomyLoad() {
         super.onNewGameAfterEconomyLoad()
-
 
         /*   //Exoship test
            var exoshipSystem = Global.getSector().starSystems.filter { it.planets.any { planet -> !planet.isStar } }.random()
