@@ -2,7 +2,7 @@
     "playableFaction":false,
     "corvusCompatible":true,
 	
-	"showIntelEvenIfDead":true,
+	#"showIntelEvenIfDead":true,
 	
     "rebelFleetSuffix":"Splinter Group",
     

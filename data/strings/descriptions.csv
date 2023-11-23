@@ -167,7 +167,7 @@ rat_arkas_system,SHIP_SYSTEM,"Rapidly vents the ships spatialy influenced flux t
 rat_leanira_system,SHIP_SYSTEM,,,"Warps an apheidas-class gun-platform out of its hangar towards a nearby location of choice. This platform is fully refitable, but has no propulsion. When deactivated or if the platform is about to be destroyed, it will phase back in to the ships hangar. While docked it will repair hull over time, and the cooldown until its next deployment increases based on how much it has to repair.",apheidas-class || hull || cooldown,
 rat_tylos_system,SHIP_SYSTEM,,,"This ship has a unique system allowing for two sets of components to exist within the same location in normal- and p-space. Activating the system briefly accelerates the ship and swaps the space all components inhibit, allowing the ship to switch between two refits while deployed in combat. Can be activated even when phased and functions like a a phase-cloak while active. The percentage of stored flux and remaining hull are shared between both states.",swaps || refits || phased,
 ,,,,,,
-rat_exo_processor,RESOURCE,A unique alpha-level ai developed through hundreds of cycles of phase-simulation. This process made its communicative processes fall behind but enables much superior use of phase-spec ships in combat.,,,,
+rat_exo_processor,RESOURCE,A unique alpha-level ai developed through hundreds of cycles of phase-simulation. This process made its communicative algorithms fall behind but enables much superior use of phase-spec ships in combat.,,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,

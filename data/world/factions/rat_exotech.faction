@@ -30,9 +30,6 @@
 		"tags":{
 		},
 		"hulls":{
-			"scarab":0.25,
-			"hyperion":0.25,
-			"brawler_tritachyon":0.5,
 		},
 	},
 	# ships the faction gets access to when importing S&W out-of-faction
@@ -42,46 +39,8 @@
 		],
 	},
 	"knownShips":{
-		"tags":["tritachyon"],
+		"tags":["rat_exotech_bp"],
 		"hulls":[
-			"crig",
-			"ox",
-			"dram",
-			"phaeton",
-			"prometheus",
-			"gemini",
-			"atlas",
-			"mercury",
-			"hermes",
-			"kite_original",
-			"mudskipper",
-			"wayfarer",
-			"nebula",
-			"valkyrie",
-			"starliner",
-			"buffalo_tritachyon",
-			"phantom",
-			"revenant",
-
-    		"brawler_tritachyon",
-			"omen",
-			"tempest",
-			"scarab",
-			"hyperion",
-			"afflictor",
-			"shade",
-			
-			"shrike",
-			"medusa",
-			"harbinger",
-			
-			"fury",
-			"aurora",
-			"doom",
-			
-			"astral",
-			"odyssey",
-			"paragon",
 		],
 	},
 	# listing ships here will make the faction mostly use them even if other hulls become available
@@ -89,13 +48,10 @@
 	"priorityShips":{
 		"tags":[],
 		"hulls":[
-			"astral",
-			"odyssey",
-			"paragon",
 		],
 	},
 	"knownFighters":{
-		"tags":["tritachyon"],
+		"tags":["rat_exotech_bp", "tritachyon"],
 		"fighters":[
 			"broadsword_wing",
 			"dagger_wing",
@@ -114,7 +70,7 @@
 		],
 	},
 	"knownWeapons":{
-		"tags":["tritachyon"],
+		"tags":["rat_exotech_bp", "tritachyon"],
 		"weapons":[
 			"pdlaser",
 			"taclaser",
@@ -177,7 +133,7 @@
 		],
 	},
 	"knownHullMods":{
-		"tags":["standard", "tritachyon"],
+		"tags":["rat_exotech_bp", "standard", "tritachyon"],
 		"hullMods":[
 		],
 	},

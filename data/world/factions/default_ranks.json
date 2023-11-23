@@ -2,6 +2,10 @@
 	"ranks":{
 		"rat_archivist":{"name":"Archivist"},
 	},
+	
+	"posts":{
+		"rat_exo_comm":{"name":"External Communication"},
+	}
 }
 
 

@@ -1,5 +1,7 @@
 package assortment_of_things.exotech.entities
 
+import assortment_of_things.exotech.ExoShipData
+import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.interactions.exoship.ExoshipMoveScript
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
@@ -51,27 +53,24 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         }
 
+        var data = ExoUtils.getExoshipData(entity)
+        var state = data.state
 
-        var state = ExoshipMoveScript.ExoshipState.Arrived
-        if (entity.memoryWithoutUpdate.get("\$exoship_state") != null) {
-            state = entity.memoryWithoutUpdate.get("\$exoship_state") as ExoshipMoveScript.ExoshipState
-        }
-
-        if (state == ExoshipMoveScript.ExoshipState.Arrived) {
+        if (state == ExoShipData.State.Idle) {
            thrusterLevel = 0f
         }
 
-        if (state == ExoshipMoveScript.ExoshipState.Travelling) {
+        if (state == ExoShipData.State.Travelling) {
             thrusterLevel += 0.3f * amount
         }
 
-        if (state == ExoshipMoveScript.ExoshipState.Arriving) {
+        if (state == ExoShipData.State.Arriving) {
             thrusterLevel -= 0.3f * amount
         }
 
         thrusterLevel = MathUtils.clamp(thrusterLevel, 0f, 1f)
 
-        if (state != ExoshipMoveScript.ExoshipState.Arrived) {
+        if (state != ExoShipData.State.Idle) {
             particleInterval.advance(amount)
             if (particleInterval.intervalElapsed()) {
                 var velocity = Vector2f(0f, 0f)

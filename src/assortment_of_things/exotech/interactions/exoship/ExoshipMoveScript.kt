@@ -60,10 +60,9 @@ class ExoshipMoveScript(var exoship: SectorEntityToken, var destination: SectorE
     fun travelling(amount: Float) {
         (AppDriver.getInstance().currentState as CampaignState).isHideUI = true
 
-
         var playerFleet = Global.getSector().playerFleet
 
-        var direction = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 500 * amount, exoship.facing)
+        var direction = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 50000 * amount, exoship.facing)
         exoship.velocity.set(exoship.velocity.plus(direction))
 
         playerFleet.setLocation(exoship.location.x, exoship.location.y)
@@ -95,6 +94,7 @@ class ExoshipMoveScript(var exoship: SectorEntityToken, var destination: SectorE
             finalDestination = pointInOrbit
             previousVelocity = Vector2f(exoship.velocity)
 
+            exoship.containingLocation
             currentLocation.removeEntity(playerFleet)
             destinationSystem.addEntity(playerFleet)
             Global.getSector().setCurrentLocation(destinationSystem)

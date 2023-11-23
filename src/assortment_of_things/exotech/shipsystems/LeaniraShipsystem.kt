@@ -1,10 +1,9 @@
 package assortment_of_things.exotech.shipsystems
 
-import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipSystemAPI.SystemState
-import com.fs.starfarer.api.combat.listeners.AdvanceableListener
+import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
@@ -12,7 +11,7 @@ import com.fs.starfarer.api.impl.combat.MineStrikeStats
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
-import com.fs.starfarer.combat.entities.Ship
+import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
@@ -27,6 +26,10 @@ class LeaniraShipsystem : BaseShipSystemScript() {
     var platform: ShipAPI? = null
 
     var activated = false
+
+    companion object {
+        var range = 600f
+    }
 
     override fun apply(stats: MutableShipStatsAPI, id: String?, state: ShipSystemStatsScript.State, effectLevel: Float) {
         ship = stats.entity as ShipAPI? ?: return
@@ -48,6 +51,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             platform = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, 1f, Vector2f(), ship!!.facing)
             platform!!.captain = ship!!.captain
             platform!!.setCustomData("rat_apheidas_parent", ship)
+            ship!!.setCustomData("rat_leanira_children", platform)
             Global.getCombatEngine().removeEntity(platform)
         }
 
@@ -68,6 +72,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
 
         if (platform != null && platform!!.isAlive) {
 
+
             if (state == ShipSystemStatsScript.State.IN) {
                 var level = 1 - (1 * effectLevel)
                 platform!!.alphaMult = effectLevel
@@ -85,17 +90,20 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             }
         }
 
-
-        val target = ship!!.mouseTarget
-        var test = ""
+       /* if (platform != null && (!platform!!.isAlive || !Global.getCombatEngine().isInPlay(platform))) {
+            platform!!.location.set(ship!!.location)
+        }*/
     }
 
     fun spawnPlatform() {
 
         var target = ship!!.mouseTarget
+        if (ship!!.shipAI != null && ship!!.aiFlags.hasFlag(AIFlags.SYSTEM_TARGET_COORDS)) {
+            target =  ship!!.aiFlags.getCustom(AIFlags.SYSTEM_TARGET_COORDS) as Vector2f
+        }
 
         val dist = Misc.getDistance(ship!!.location, target)
-        val max = getMaxRange(ship) + ship!!.collisionRadius
+        val max = range + ship!!.collisionRadius
         if (dist > max) {
             val dir = Misc.getAngleInDegrees(ship!!.location, target)
             target = Misc.getUnitVectorAtDegreeAngle(dir)
@@ -105,6 +113,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
 
         target = findClearLocation(ship!!, target)
 
+
         platform!!.isHoldFireOneFrame = true
 
         Global.getCombatEngine().addEntity(platform)
@@ -112,6 +121,14 @@ class LeaniraShipsystem : BaseShipSystemScript() {
         for (weapon in platform!!.allWeapons) {
             if (weapon.isDisabled) {
                 weapon.repair()
+            }
+
+            if (weapon.spec.mountType == WeaponAPI.WeaponType.MISSILE || weapon.spec.mountType == WeaponAPI.WeaponType.SYNERGY) {
+                if (weapon.usesAmmo()) {
+                    var restore = (weapon.maxAmmo * 0.2f).toInt()
+                    restore = MathUtils.clamp(restore, 1, weapon.maxAmmo)
+                    weapon.ammo = MathUtils.clamp(weapon.ammo + restore, 1, weapon.maxAmmo)
+                }
             }
         }
 
@@ -140,9 +157,6 @@ class LeaniraShipsystem : BaseShipSystemScript() {
 
     }
 
-    protected fun getMaxRange(ship: ShipAPI?): Float {
-        return 600f
-    }
 
 
     override fun getInfoText(system: ShipSystemAPI, ship: ShipAPI): String? {
@@ -151,7 +165,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
         val target = ship.mouseTarget
         if (target != null) {
             val dist = Misc.getDistance(ship.location, target)
-            val max = getMaxRange(ship) + ship.collisionRadius
+            val max = range + ship.collisionRadius
             return if (dist > max) {
                 "OUT OF RANGE"
             } else {

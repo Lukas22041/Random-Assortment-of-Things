@@ -11,7 +11,9 @@ import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.*
+import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.ExoshipGenerator
+import assortment_of_things.exotech.scripts.ChangeExoIntelState
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
@@ -19,6 +21,7 @@ import assortment_of_things.snippets.DropgroupTestSnippet
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import exerelin.campaign.ExerelinSetupData
@@ -132,6 +135,7 @@ class RATModPlugin : BaseModPlugin() {
             generator.generateConditions()
         }
 
+        Global.getSector().addTransientScript(ChangeExoIntelState())
         generateExo()
 
         var bloodstreamScript = Global.getSector().scripts.find { it::class.java == AbyssalBloodstreamCampaignScript::class.java } as AbyssalBloodstreamCampaignScript?
@@ -196,12 +200,26 @@ class RATModPlugin : BaseModPlugin() {
 
     fun generateExo() {
 
-        if (Global.getSector().memoryWithoutUpdate.get("\$rat_exo_generated") == null) {
+        if (RATSettings.exoEnabled!! && Global.getSector().memoryWithoutUpdate.get("\$rat_exo_generated") == null) {
             //DaybreakSystem.generate()
+
+            var data = ExoUtils.getExoData()
+
+            var person = Global.getSector().getFaction("rat_exotech").createRandomPerson(FullName.Gender.FEMALE)
+            person.portraitSprite = "graphics/portraits/rat_exo_comm.png"
+
+           // person.name = FullName("Janssen", "", FullName.Gender.FEMALE)
+            person.id = "rat_exo_comm"
+            person.rankId = "spaceChief"
+            person.postId = "rat_exo_comm"
+
+            Global.getSector().importantPeople.addPerson(person)
+            data.commPerson = person
 
             var names = arrayListOf("Nova", "Daybreak", "Aurora")
             for (name in names) {
-                ExoshipGenerator.generate(name)
+                var exoship = ExoshipGenerator.generate(name) ?: continue
+                data.exoships.add(exoship)
             }
 
             Global.getSector().memoryWithoutUpdate.set("\$rat_exo_generated", true)

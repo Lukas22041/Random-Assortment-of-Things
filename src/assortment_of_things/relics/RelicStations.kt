@@ -199,11 +199,11 @@ class RelicStations {
             }
         },
 
-        RelicStation("rat_exo_cache").apply {
+       /* RelicStation("rat_exo_cache").apply {
             systemFilter = { system -> system.hasBlackHole() }
             locations = linkedMapOf(LocationType.NEAR_STAR to 10f, LocationType.PLANET_ORBIT to 0.1f)
             weight = 1000f
-        },
+        },*/
 
 
 

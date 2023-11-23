@@ -82,7 +82,6 @@ class DefensiveDronesFleetMananger(source: SectorEntityToken?, thresholdLY: Floa
 
             if (Global.getSector().clock.getElapsedDaysSince(delayTimestamp!!) > launchDelayDays) {
                 delayTimestamp = null
-
             }
             else {
                 return null

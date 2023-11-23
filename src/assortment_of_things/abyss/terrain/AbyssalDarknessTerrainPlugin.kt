@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalLightsource
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import assortment_of_things.abyss.procgen.AbyssDepth
+import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
@@ -159,7 +160,9 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
                 var offset = 400f
 
+
                 vignette.alphaMult = 0.9f
+                if (RATSettings.brighterAbyss!!) vignette.alphaMult = 0.7f
                 vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)
                 vignette.render(viewport!!.llx - (offset / 2), viewport!!.lly - (offset / 2))
 

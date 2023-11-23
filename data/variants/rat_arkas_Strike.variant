@@ -1,13 +1,13 @@
 {
     "displayName": "Strike",
-    "fluxCapacitors": 20,
-    "fluxVents": 16,
+    "fluxCapacitors": 22,
+    "fluxVents": 0,
     "goalVariant": true,
     "hullId": "rat_arkas",
     "hullMods": [
+        "fluxdistributor",
+        "heavyarmor",
         "missleracks",
-        "targetingunit",
-        "unstable_injector",
     ],
     "permaMods": [],
     "sMods": [],
@@ -15,7 +15,7 @@
     "variantId": "rat_arkas_Strike",
     "weaponGroups": [
         {
-            "autofire": false,
+            "autofire": true,
             "mode": "LINKED",
             "weapons": {
                 "WS0005": "cyclone",
@@ -23,7 +23,7 @@
         },
         {
             "autofire": true,
-            "mode": "LINKED",
+            "mode": "ALTERNATING",
             "weapons": {
                 "WS0003": "sabotpod",
                 "WS0004": "sabotpod",
@@ -49,8 +49,16 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0007": "pdlaser",
-                "WS0006": "pdlaser",
+                "WS0007": "ioncannon",
+                "WS0006": "ioncannon",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0011": "pdlaser",
+                "WS0010": "pdlaser",
             }
         },
     ],

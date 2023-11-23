@@ -2,6 +2,7 @@ package assortment_of_things.exotech
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.impl.campaign.ids.Conditions
@@ -11,21 +12,30 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.EntityLocation
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
 import java.util.*
 import kotlin.collections.ArrayList
 
 object ExoshipGenerator {
 
 
-    fun generate(name: String) {
-        var systems = Global.getSector().starSystems.filter { it.planets.any { planet -> !planet.isStar } && !it.hasTag(Tags.THEME_CORE) && !it.hasBlackHole() && !it.hasPulsar() && !it.hasTag(Tags.THEME_HIDDEN)}
+    fun generate(name: String) : SectorEntityToken? {
+        var systems = Global.getSector().starSystems.filter { !it.hasTag(Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasBlackHole() && !it.hasPulsar() && !it.hasTag(Tags.THEME_HIDDEN)}
         var system = systems.random()
-        var location = BaseThemeGenerator.getLocations(Random(), system, 100f, linkedMapOf(BaseThemeGenerator.LocationType.PLANET_ORBIT to 1000f, BaseThemeGenerator.LocationType.STAR_ORBIT to 0.1f)).pick()
+        var location = BaseThemeGenerator.getLocations(Random(), system, MathUtils.getRandomNumberInRange(300f, 400f), linkedMapOf(BaseThemeGenerator.LocationType.STAR_ORBIT to 5f, BaseThemeGenerator.LocationType.OUTER_SYSTEM to 1f)).pick()
 
-        if (location == null) return
+        if (location == null) return null
 
         var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "$name (Exoship)", "rat_exoship", "rat_exotech")
         exoshipEntity.orbit = location.orbit
+
+        var script = ExoshipStateScript(exoshipEntity)
+        exoshipEntity.addScript(script)
+
+        var data = ExoUtils.getExoshipData(exoshipEntity)
+        data.name = name
+
+        data.stateScript = script
 
         var market = addMarketplace("rat_exotech", exoshipEntity, arrayListOf(), "$name", 4,
         arrayListOf(Conditions.OUTPOST),
@@ -33,9 +43,33 @@ object ExoshipGenerator {
         arrayListOf(Industries.MEGAPORT, Industries.WAYSTATION, Industries.PATROLHQ, Industries.ORBITALWORKS),
         0.3f, false, false)
         market.isHidden = true
+
+        addInventory(exoshipEntity, name, data)
+
+        return exoshipEntity
     }
 
+    fun addInventory(exoship: SectorEntityToken, name: String, data: ExoShipData) {
+        var cargo = Global.getFactory().createCargo(true)
 
+        cargo.addCommodity("rat_exo_processor", MathUtils.getRandomNumberInRange(1f, 3f))
+        cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_autonomous_bays"), MathUtils.getRandomNumberInRange(2f, 3f))
+
+        if (name == "Nova") {
+
+        }
+
+        if (name == "Daybreak") {
+
+        }
+
+        if (name == "Aurora") {
+
+        }
+
+        data.cargo.addAll(cargo)
+        //exoship.memoryWithoutUpdate.set("\$rat_exoship_purchase_inventory", cargo)
+    }
 
     //Utility Method from Tahlan-Shipworks by NiaTahl
     fun addMarketplace(factionID: String?, primaryEntity: SectorEntityToken, connectedEntities: ArrayList<SectorEntityToken>?, name: String?,

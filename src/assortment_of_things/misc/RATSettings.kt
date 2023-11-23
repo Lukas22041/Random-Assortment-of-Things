@@ -15,7 +15,11 @@ object RATSettings : LunaSettingsListener
 
     //Abyss
     var enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
+    var brighterAbyss = LunaSettings.getBoolean(modID, "rat_abyssBrighter")
     var abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
+
+    //Exotech
+    var exoEnabled = LunaSettings.getBoolean(modID, "rat_exotechEnabled")
 
     //Relics
     var relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
@@ -58,7 +62,10 @@ object RATSettings : LunaSettingsListener
     fun loadSettings()
     {
         enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
+        brighterAbyss = LunaSettings.getBoolean(modID, "rat_abyssBrighter")
         abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
+
+        exoEnabled = LunaSettings.getBoolean(modID, "rat_exotechEnabled")
 
         relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
 

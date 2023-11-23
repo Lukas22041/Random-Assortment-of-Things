@@ -132,8 +132,7 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
 
     override fun getPrice(market: MarketAPI?, submarket: SubmarketAPI?): Int {
         if (hullmodSpec != null) {
-            val base = super.getPrice(market, submarket).toFloat()
-            return (base * 1f).toInt()
+            return hullmodSpec!!.baseValue.toInt()
         }
         return super.getPrice(market, submarket)
     }

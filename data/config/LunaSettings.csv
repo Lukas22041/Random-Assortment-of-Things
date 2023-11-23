@@ -7,6 +7,7 @@ rat_abyssEnabled,"Enable ""The Abyss""",Boolean,true,,"The Abyss is a new area f
 The entrance can be found in the bottom left corner of the sector.
 
 Enabling ""the Abyss"" generates content for both new and existing saves upon game load.",,,Expansion
+rat_abyssBrighter,Brighter Abyss,Boolean,false,,"Makes the abyss less dark, recommended if it turns out to be to dark in areas even in the vicinity of your fleet.",,,Expansion
 rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the Abyss.
 
 Hard mode greatly increases the strength of fleets found within the Abyss. Also adds slight player fleet scaling.",,,Expansion
@@ -15,6 +16,11 @@ rat_abyssCredits,,Text,"[Credits:]
 [Haplogynae] - Music & Sounds
 [Niatahl] & [Ruddygreat] - Helped with some VFX
 [Loyse] - Helped with some variants and made the banner 3D model.",,,,,Expansion
+,,,,,,,,
+rat_exotechsHeader,Exo-Tech,Header,Exo-Tech,,,,,Expansion
+rat_exotechEnabled,"Enable ""Exo-Tech""",Boolean,true,,"Adds a faction called ""Exo-Tech"" to the sector. The faction can not be started with, and instead hides within the fringe-worlds of the sector, where it may have some oppertunities for trade with rare-technologies.
+
+Can be enabled mid-save",,,Expansion
 ,,,,,,,,
 rat_relicsHeader,Relics of the Past,Header,Relics of the Past,,,,,Expansion
 rat_relicsEnabled,"Enable ""Relics of the Past""",Boolean,true,,"Generates lots of unique loot, stations, interactions and planetary conditions across the sector, with most of it being discoverable in ruined systems.

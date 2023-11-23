@@ -11,14 +11,19 @@ class ApheidasHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         stats!!.empDamageTakenMult.modifyMult(id, 0.75f)
+        stats.weaponDamageTakenMult.modifyMult(id, 0.75f)
 
         stats.energyWeaponRangeBonus.modifyPercent(id, 33f)
+        //stats.missileWeaponRangeBonus.modifyPercent(id, 33f)
 
-        stats.weaponTurnRateBonus.modifyMult(id, 1.5f)
+        stats.weaponTurnRateBonus.modifyMult(id, 2f)
+
 
         stats.autofireAimAccuracy.modifyFlat(id, 0.5f);
         stats.recoilPerShotMult.modifyMult(id, 0.5f)
         stats.maxRecoilMult.modifyMult(id, 0.5f)
+
+        stats.maxSpeed.modifyMult(id, 0f)
     }
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
@@ -46,8 +51,9 @@ class ApheidasHullmod : BaseHullMod() {
         tooltip.addSpacer(10f)
 
         tooltip.addPara("Build with this unique nature in mind, the platform comes without any propulsion. " +
-                "Instead it is equipped with a unique targeting system that extends the range of energy weapons by 33%% while also having much improved weapon targeting and turn rate.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "propulsion", "33%", "weapon targeting and turn rate")
+                "Instead it is equipped with a unique targeting system that extends the range of energy weapons by 33%% while also having much improved weapon targeting and turn rate.\n\n" +
+                "Missile weapons restore 20%% (or atleast 1) of their missiles per deployment. ", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "propulsion", "33%", "weapon targeting and turn rate", "20%", "1")
 
         tooltip.addSpacer(10f)
 

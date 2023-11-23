@@ -7,9 +7,9 @@
   "height": 82,
   "width": 82,
   "center": [41, 41],
-  "collisionRadius": 45,
+  "collisionRadius": 57.5,
   "shieldCenter": [0, -0],
-  "shieldRadius": 42,
+  "shieldRadius": 52.5,
   "viewOffset": 0,
   "builtInMods": [
     "rat_exogrid",
