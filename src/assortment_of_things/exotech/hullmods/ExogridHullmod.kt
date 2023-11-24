@@ -6,6 +6,7 @@ import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipHullSpecAPI.ShipTypeHints
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.combat.CombatUtils
@@ -14,6 +15,15 @@ import java.awt.Color
 class ExogridHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI, id: String?) {
+
+        if (Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(stats!!.fleetMember) == true) {
+            stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
+        }
+        else {
+            stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
+            stats.breakProb.modifyMult(id, 10f);
+        }
+
         stats.sensorProfile.modifyMult(id, 0.5f)
         if (stats.variant.baseOrModSpec().hints.contains(ShipTypeHints.PHASE)) {
             stats.sensorProfile.modifyMult(id, 0.5f)
@@ -76,6 +86,11 @@ class ExogridHullmod : BaseHullMod() {
 
         tooltip.addPara("Due to the use of p-space components, the ships sensor profile is decreased by 25%%. If the ship also has a functional phase-cloak, the reduction is increased to 50%%", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "25%", "50%")
+
+        tooltip.addSpacer(10f)
+
+        tooltip.addPara("To avoid important tech falling in to enemies hands, all exo-tech ships are equipped with explosive charges that prevent recovery without the relevant access codes.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "prevent recovery")
     }
 
     /*override fun hasSModEffect(): Boolean {

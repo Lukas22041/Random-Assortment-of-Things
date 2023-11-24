@@ -8,6 +8,7 @@ import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.impl.combat.MineStrikeStats
+import com.fs.starfarer.api.loading.DamagingExplosionSpec
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
@@ -31,9 +32,12 @@ class LeaniraShipsystem : BaseShipSystemScript() {
         var range = 600f
     }
 
+    var despawned = false
+
     override fun apply(stats: MutableShipStatsAPI, id: String?, state: ShipSystemStatsScript.State, effectLevel: Float) {
         ship = stats.entity as ShipAPI? ?: return
         var system = ship!!.system
+
 
         if (platform != null) {
             var level = (platform!!.hitpoints - 0f) / (platform!!.maxHitpoints - 0f)
@@ -41,24 +45,48 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             var mult = 1 + (2 * level)
 
             ship!!.system.cooldown = ship!!.system.specAPI.getCooldown(ship!!.mutableStats) * mult
+
+            //weird thing thats required to prevent platforms from delaying combat from ending
+            if (!ship!!.isAlive && !despawned) {
+                if (!platform!!.isAlive) {
+                    Global.getCombatEngine().addEntity(platform!!)
+                    platform!!.location.set(Vector2f(1000000f, 0f))
+                    /*despawned = true
+                    var spec = DamagingExplosionSpec.explosionSpecForShip(platform!!)
+                    Global.getCombatEngine().spawnDamagingExplosion(spec, platform!!, Vector2f(platform!!.location))*/
+                }
+                /*platform!!.hitpoints = 1f*/
+                Global.getCombatEngine().applyDamage(platform, platform!!.location, 100000f, DamageType.ENERGY, 1000f, true, false, true )
+               // platform!!.splitShip()
+                despawned = true
+            }
+
         }
+
 
 
         for (module in ship!!.childModulesCopy) {
             if (!module.isAlive) continue
             variant = module.variant
             Global.getCombatEngine().removeEntity(module)
+            module.hitpoints = 0f
+            Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
             platform = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, 1f, Vector2f(), ship!!.facing)
+            Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
             platform!!.captain = ship!!.captain
             platform!!.setCustomData("rat_apheidas_parent", ship)
             ship!!.setCustomData("rat_leanira_children", platform)
+
             Global.getCombatEngine().removeEntity(platform)
+           // Global.getCombatEngine().getFleetManager(ship!!.owner).addToReserves(platform!!.fleetMember)
+
         }
 
-        if (activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
+        if (ship!!.isAlive && activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
             activated = false
 
             Global.getCombatEngine().removeEntity(platform)
+            //Global.getCombatEngine().getFleetManager(ship!!.owner).addToReserves(platform!!.fleetMember)
         }
 
         if (!activated && system.isActive && ship!!.mouseTarget != null && variant != null) {
@@ -91,7 +119,8 @@ class LeaniraShipsystem : BaseShipSystemScript() {
         }
 
        /* if (platform != null && (!platform!!.isAlive || !Global.getCombatEngine().isInPlay(platform))) {
-            platform!!.location.set(ship!!.location)
+          //  platform!!.location.set(ship!!.location)
+            platform!!.hitpoints = 0f
         }*/
     }
 
@@ -134,7 +163,6 @@ class LeaniraShipsystem : BaseShipSystemScript() {
 
         platform!!.location.set(target)
         platform!!.hitpoints = platform!!.maxHitpoints
-
 
         platform!!.addListener(LeaniraShipsystemDamageListener(ship!!))
     }
@@ -245,11 +273,12 @@ class LeaniraShipsystem : BaseShipSystemScript() {
 class LeaniraShipsystemDamageListener(var parent: ShipAPI) : HullDamageAboutToBeTakenListener {
 
     override fun notifyAboutToTakeHullDamage(param: Any?, ship: ShipAPI?, point: Vector2f?, damageAmount: Float): Boolean {
-        if (ship!!.isAlive && ship.hitpoints - damageAmount <= 0) {
+        if (parent.isAlive && ship!!.isAlive && ship.hitpoints - damageAmount <= 0) {
             if (parent.system.isActive) {
                 parent.useSystem()
             }
             ship.hitpoints = 1f
+
             return true
         }
 

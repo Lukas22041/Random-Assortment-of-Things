@@ -57,17 +57,20 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
             if (fleet.isDespawning || fleet.isExpired ) {
                 data.fleets.remove(fleet)
             }
-            if (distFromSource >= maxDist) {
+            if (distFromSource >= maxDist && Global.getSector().playerFleet.containingLocation != fleet.containingLocation) {
                 fleet.despawn()
             }
         }
 
-        if (daysTilMove <= 15) {
+        if (daysTilMove <= 20) {
             for (fleet in data.fleets) {
-                if (fleet.currentAssignment.target != exoship) {
+                if (fleet.currentAssignment?.target != exoship && data.state == ExoShipData.State.Idle  && fleet.containingLocation == exoship.containingLocation) {
                     fleet.clearAssignments()
                     fleet.removeScriptsOfClass(RemnantAssignmentAI::class.java)
                     fleet.addAssignment(FleetAssignment.GO_TO_LOCATION_AND_DESPAWN, exoship, 999999f, "Returning to Exoship")
+                }
+                if (fleet.currentAssignment?.target == exoship && (fleet.containingLocation != exoship.containingLocation || data.state != ExoShipData.State.Idle)) {
+                    fleet.clearAssignments()
                 }
             }
         }
@@ -118,7 +121,10 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
 
        /* var playerFleet = Global.getSector().playerFleet*/
 
-        var direction = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 500 * amount, exoship.facing)
+        var startLevel = (daysSinceDeparture - 0) / (daysForTransfer * 0.5f - 0)
+        startLevel = MathUtils.clamp(startLevel, 0f, 1f)
+
+        var direction = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 300 * amount * startLevel, exoship.facing)
         exoship.velocity.set(exoship.velocity.plus(direction))
 
     /*    playerFleet.setLocation(exoship.location.x, exoship.location.y)
@@ -140,11 +146,11 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
             currentLocation.removeEntity(exoship)
             destinationSystem.addEntity(exoship)
 
-            var point = MathUtils.getPointOnCircumference(destination!!.location, 20000f, exoship.facing + 180)
+            var point = MathUtils.getPointOnCircumference(destination!!.location, 10000f, exoship.facing + 180)
             exoship.location.set(point)
             var angle = Misc.getAngleInDegrees(destination!!.location, exoship.location) + 90
            // var pointInOrbit = MathUtils.getPointOnCircumference(destination!!.location, destination!!.radius + 200f, angle)
-            var destinationPoint = MathUtils.getPointOnCircumference(destination!!.location, 20000f, exoship.facing + 180)
+            var destinationPoint = MathUtils.getPointOnCircumference(destination!!.location, 10000f, exoship.facing + 180)
             exoship.location.set(destinationPoint)
 
             //finalDestination = pointInOrbit
@@ -165,8 +171,9 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
 
         (playerFleet as CampaignFleet).setInJumpTransition(true)*/
 
+
         var distance = MathUtils.getDistance(exoship.location, destination!!.location)
-        var level = (distance - 0) / (20000f - 0)
+        var level = (distance - 0) / (10000f - 0)
         level = MathUtils.clamp(level, 0f, 1f)
 
         var overwriteLevel = (daysSinceDeparture - 0) / (daysForTransfer - 0)
@@ -188,7 +195,7 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
 
         if (level <= 0.02) {
             var angle = Misc.getAngleInDegrees(exoship.location, destination!!.starSystem.center.location) + 180
-            exoship.setCircularOrbit(destination!!.starSystem.center, angle, MathUtils.getDistance(exoship.location, destination!!.starSystem.center.location), 240f)
+            exoship.setCircularOrbit(destination!!.starSystem.center, angle, MathUtils.getDistance(exoship.location, destination!!.starSystem.center.location), 360f)
             data.state = ExoShipData.State.Idle
 
             /*(playerFleet as CampaignFleet).setInJumpTransition(false)

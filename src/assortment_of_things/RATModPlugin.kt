@@ -238,11 +238,12 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", "rat_abyss_gate")
         }
 
-        generateExo()
     }
 
     override fun onNewGameAfterEconomyLoad() {
         super.onNewGameAfterEconomyLoad()
+
+        generateExo()
 
         /*   //Exoship test
            var exoshipSystem = Global.getSector().starSystems.filter { it.planets.any { planet -> !planet.isStar } }.random()

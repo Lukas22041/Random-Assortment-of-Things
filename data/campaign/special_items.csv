@@ -2,7 +2,6 @@ name,id,tags,tech/manufacturer,rarity,base price,stack size,cargo space,baseRaid
 #Abyss,,,,,,,,,,,,,,,
 Hullmod installer,rat_alteration_install,,Hull Alteration,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,"A hull alteration is a special, consumable hull modification that can be installed through the ""Additional Options"" section at the top of the refit screen.",400
 Abyssal Survey Data,rat_abyss_survey,,,,20000,1000,1,,graphics/icons/cargo/rat_abyss_survey.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalSurveyData,,,402
-Supercharged Microforge,rat_charged_forge,,,,5000,1000,1,,graphics/icons/cargo/rat_charged_forge.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.SuperchargedMicroforge,,,402
 ,,,,,,,,,,,,,,,
 #Relics,,,,,,,,,,,,,,,
 Forge-Assisted Industry BP,rat_consumeable_industry,,Forge-Assisted,,20000,1000,1,,graphics/icons/cargo/rat_consumeable_industry.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ConsumeableIndustryBP,,Contains the technological specifications and an industrial-grade nanoforge to allow for the construction and maintenance of this industry or structure.,400
@@ -11,7 +10,7 @@ Forge-Assisted Industry BP,rat_consumeable_industry,,Forge-Assisted,,20000,1000,
 Exo-Tech Blueprint Package,rat_exo_package,"package_bp, no_drop",,,650000,1000,1,,graphics/icons/cargo/rat_blueprint_exo.png,ui_chip_pickup,ui_bp_package_drop,com.fs.starfarer.api.campaign.impl.items.MultiBlueprintItemPlugin,rat_exotech_bp,"Enables heavy industry to construct the more common ship hulls, weapons, and fighter LPCs from the ""exo-tech"" school of design. A doctrine focused on phase ships and their supporting lineup.",270
 ,,,,,,,,,,,,,,,
 Partnership Deed,rat_exo_deed,,,,500000,1000,1,,graphics/icons/cargo/rat_exo_deed.png,ui_chip_pickup,ui_modspec_drop,assortment_of_things.exotech.items.PartnershipDeed,,,-1000
-,,,,,,,,,,,,,,,
+#Drone Replicator,rat_drone_replicator,,,,500000,1000,1,,graphics/icons/cargo/rat_hangar_forge.png,ui_chip_pickup,ui_modspec_drop,assortment_of_things.exotech.items.PartnershipDeed,,,-1000
 ,,,,,,,,,,,,,,,
 #Other,,,,,,,,,,,,,,,
 Artifact,rat_artifact,,Artifact,,50000,1000,1,,graphics/icons/rat_empty.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ArtifactItem,,"An ancient artifact that can be integrated into a fleet to provide additional benefits. Only one can be active at a time. More information will be provided via the ""Artifacts"" intel tab (located in the ""Personal"" section) when integrating for the first time.",5000

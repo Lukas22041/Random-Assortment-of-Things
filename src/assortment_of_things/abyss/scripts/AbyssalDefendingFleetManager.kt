@@ -96,7 +96,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
                 maxPoints += 138f
             }
             AbyssDepth.Deep -> {
-                minPoints += 138f
+                minPoints += 148f
                 maxPoints += 192f
             }
         }

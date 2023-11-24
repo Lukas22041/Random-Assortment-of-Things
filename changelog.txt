@@ -1,3 +1,43 @@
+Version 1.8.1
+
+-> Fixed a crash from a missing ressource.
+
+
+
+Version 1.8.0
+Not save compatible with prior versions.
+
+-> Added the "Exo-Tech" faction, a mini-faction that can be found moving through the fringe-sector. 
+-> It is still in beta, and only has 2 useable ships for now. Will get more over the next updates.
+-> The faction can not be started with.
+-> Added the Campaign "Exoships".
+-> Added another Exo-Tech ship. 
+-> Added 5 new items for trade with the faction.
+-> Changed Exocloak to a minimum speed of 60% instead of 75% at high flux.
+-> Increased Arkas Shipsystem cooldown from 10s to 15s
+-> Exocloak now displays the phase glows fade out over cooldown+out duration, instead of just out.
+-> Removed anomalous cache as its contents are now acquireable through other methods.
+
+-> Reworked how the abyss generates the connection between systems. 
+-> Abyss systems now have a big border around them, going over it teleports you out of the abyss.
+-> Abyss map can now be dragged with rightclick.
+-> Added a config to make the abyss brighter for screens where it would otherwise be hardly visible.
+-> Abyss Custom Start now spawns you in the abyss.
+-> Slightly increased abyss fleet sizes.
+-> Removed rift-system for now.
+-> Deep abyss should have more morkoths spawn again.
+-> Improved the performance for the abyss, removing a lot of functions that were called for systems the player wasnt even in.
+-> Fixed outdated description on the seraph core, mentioning that it can not be installed on capitals.
+-> Fixed issue where recovered abyss ships dont have the "no data" tag removed.
+
+-> Restructured the lunalib config window to make more sense with the amount of expansions in the mod.
+-> Expedition Hub no longer looks for planets in hidden systems and no longer ignores fleet quality.
+
+-> Fixed typo on Biomodifications skill
+-> Fixed Auto-Engineer crash.
+-> Potentialy fixed Maintaining-Momentum crash but it was so extremely rare that i dont even know if the mod was at fault.
+
+
 Version 1.7.4
 Not save compatible with prior versions.
 

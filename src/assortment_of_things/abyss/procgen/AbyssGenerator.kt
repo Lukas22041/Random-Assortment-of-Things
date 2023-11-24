@@ -34,6 +34,7 @@ import kotlin.collections.ArrayList
 class  AbyssGenerator {
 
     var noBranchTag = "rat_no_branch"
+    var branchTag = "rat_abyss_branch"
 
     var systemsOnMainBranch = 9
     var deepSystemsBeginAt = 4
@@ -280,6 +281,8 @@ class  AbyssGenerator {
                 system.name = name
                 AbyssProcgen.setupSystem(system, type.getTerrainFraction(), depth)
                 var systemData = AbyssUtils.getSystemData(system)
+
+                system.addTag(branchTag)
 
                 type.pregenerate(systemData)
 

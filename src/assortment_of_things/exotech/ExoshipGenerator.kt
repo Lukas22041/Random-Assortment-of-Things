@@ -53,7 +53,9 @@ object ExoshipGenerator {
         var cargo = Global.getFactory().createCargo(true)
 
         cargo.addCommodity("rat_exo_processor", MathUtils.getRandomNumberInRange(1f, 3f))
-        cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_autonomous_bays"), MathUtils.getRandomNumberInRange(2f, 3f))
+        cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_autonomous_bays"), MathUtils.getRandomNumberInRange(1f, 3f))
+        cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_overtuned_targeting"), MathUtils.getRandomNumberInRange(1f, 3f))
+        cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_unstopable_force"), MathUtils.getRandomNumberInRange(1f, 3f))
 
         if (name == "Nova") {
 

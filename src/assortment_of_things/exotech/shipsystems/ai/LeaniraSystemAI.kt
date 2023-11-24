@@ -53,7 +53,7 @@ class LeaniraSystemAI : ShipSystemAIScript {
             var potentialLocation = lookForSystemLocation(ship!!, module, target)
 
             if (MathUtils.getDistance(potentialLocation, target.location) < weaponRange * 0.8f) useSystem = true
-            if (ship!!.hitpoints <= ship!!.maxHitpoints * 0.5f) useSystem = true
+            //if (ship!!.hitpoints <= ship!!.maxHitpoints * 0.5f) useSystem = true
 
             if (useSystem) {
 

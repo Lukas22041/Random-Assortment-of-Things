@@ -47,6 +47,14 @@ class ExoshipInteractions : RATInteractionPlugin() {
 
         textPanel.addPara("You enter the vicinity of the Exoship \"${interactionTarget.name.replace("(Exoship)", "")}\".")
 
+        if (faction.relToPlayer.isHostile) {
+            textPanel.addPara("As the fleet attempts to close in, multiple weapon systems go online. It appears due to your reputation with the faction, any attempt at communication is being denied by default.")
+
+            addLeaveOption()
+            return
+        }
+
+
         var firstInteraction = data.interactedWithExoship
 
         if (!firstInteraction) {
@@ -150,6 +158,8 @@ class ExoshipInteractions : RATInteractionPlugin() {
 
         textPanel.addPara("Their ability to quickly traverse between systems without requiring direct hyperspace access made them an unstopable force, however due to their limited production count, larger factions were able to set a quick end to the companies efforts. " +
                 "After a brutal loss, their efforts have been relocated to defending the remaining domain-grade technology that they have acquired from their hauls, having left the core-worlds influence since.")
+
+        textPanel.addPara("Added \"Exo-Tech\" to faction dictionary in the intel tab.", Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor())
 
         createOption("Continue") {
             clearOptions()

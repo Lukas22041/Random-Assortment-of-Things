@@ -162,7 +162,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
 
                 vignette.alphaMult = 0.9f
-                if (RATSettings.brighterAbyss!!) vignette.alphaMult = 0.7f
+                if (RATSettings.brighterAbyss!!) vignette.alphaMult = 0.6f
                 vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)
                 vignette.render(viewport!!.llx - (offset / 2), viewport!!.lly - (offset / 2))
 

@@ -25,22 +25,23 @@ class ExoProcessorSkill : RATBaseShipSkill() {
         info!!.addSpacer(2f)
 
         info.addPara("+200%% more hardflux required to reach minimum phase-speed.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info.addPara("+25%% missile weapon ammo capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info.addPara("+33%% missile speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        //info.addPara("+25%% missile weapon ammo capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+       // info.addPara("+33%% missile speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         info.addSpacer(2f)
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
-        stats!!.missileAmmoBonus.modifyPercent(id, missileAmmoBonus)
 
-        stats.dynamic.getMod(Stats.PHASE_CLOAK_FLUX_LEVEL_FOR_MIN_SPEED_MOD)
+        stats!!.dynamic.getMod(Stats.PHASE_CLOAK_FLUX_LEVEL_FOR_MIN_SPEED_MOD)
             .modifyPercent(id, 200f)
+
+      /*  stats!!.missileAmmoBonus.modifyPercent(id, missileAmmoBonus)
 
         stats!!.missileMaxSpeedBonus.modifyMult(id, missileSpeedMult)
         stats!!.missileAccelerationBonus.modifyMult(id, missileSpeedMult)
         stats!!.missileMaxTurnRateBonus.modifyMult(id, missileSpeedMult)
-        stats!!.missileTurnAccelerationBonus.modifyMult(id, missileSpeedMult)
+        stats!!.missileTurnAccelerationBonus.modifyMult(id, missileSpeedMult)*/
 
     }
 
