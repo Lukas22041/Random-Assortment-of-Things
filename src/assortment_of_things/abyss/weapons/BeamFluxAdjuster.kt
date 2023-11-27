@@ -21,7 +21,7 @@ class BeamFluxAdjuster : BeamEffectPlugin, DamageDealtModifier {
 
         var modID = "RAT_BeamFluxAdjust"
 
-        var mod = 1.25f - (0.5f * target.fluxLevel)
+        var mod = 1.333f - (0.666f * target.fluxLevel)
         damage!!.modifier.modifyMult(modID, mod)
 
         return modID

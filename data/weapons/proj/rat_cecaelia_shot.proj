@@ -18,5 +18,6 @@
 	"pixelsPerTexel":5.0,
 	#"bulletSprite":"graphics/weapons/abyss/proj/burst_energy_projectile.png"
 	"onFireEffect":"assortment_of_things.abyss.weapons.CecaeliaEffect",
+	"onHitEffect":"assortment_of_things.abyss.weapons.FluxSaturationOnHit",
 	"passThroughMissiles":true,
 }

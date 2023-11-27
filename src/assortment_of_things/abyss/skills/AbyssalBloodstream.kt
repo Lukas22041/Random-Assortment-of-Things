@@ -107,7 +107,7 @@ class AbyssalBloodstream : RATBaseShipSkill() {
 
             if (Global.getCombatEngine().isCombatOver) return false
             if (Global.getCombatEngine().playerShip != ship) return false
-            if (ship!!.variant.hasHullMod(HullMods.PHASE_ANCHOR)) return false
+           // if (ship!!.variant.hasHullMod(HullMods.PHASE_ANCHOR)) return false
 
             if (ship!!.hitpoints - damageAmount <= 0 && !triggered) {
                 ship.hitpoints = 10f

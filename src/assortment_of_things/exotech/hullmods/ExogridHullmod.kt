@@ -16,10 +16,10 @@ class ExogridHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI, id: String?) {
 
-        if (Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(stats!!.fleetMember) == true) {
+        if (stats.fleetMember?.fleetData?.fleet?.faction?.id == "player") {
             stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
         }
-        else {
+        else if (stats.fleetMember?.fleetData != null && stats.fleetMember?.fleetData?.fleet?.faction?.id != "player") {
             stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
             stats.breakProb.modifyMult(id, 10f);
         }
