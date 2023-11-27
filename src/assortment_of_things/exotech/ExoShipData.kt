@@ -18,7 +18,8 @@ class ExoShipData {
     var cargo: CargoAPI = Global.getFactory().createCargo(true)
 
     var lastMoveTimestamp = Global.getSector().clock.timestamp
-    var daysBetweenMoves = MathUtils.getRandomNumberInRange(120f, 180f)
+    var daysBetweenMoves = MathUtils.getRandomNumberInRange(90f, 160f)
+    var moveLevel: Float = 0f
 
     var fleets = ArrayList<CampaignFleetAPI>()
     var stateScript: ExoshipStateScript? = null

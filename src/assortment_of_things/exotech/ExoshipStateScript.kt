@@ -1,5 +1,6 @@
 package assortment_of_things.exotech
 
+import assortment_of_things.misc.instantTeleport
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
@@ -9,12 +10,12 @@ import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantAssignmentAI
+import com.fs.starfarer.api.loading.CampaignPingSpec
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.campaign.CampaignState
-import com.fs.state.AppDriver
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
+import java.awt.Color
 import java.util.*
 
 class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, FleetEventListener {
@@ -23,16 +24,21 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
 
     var destination: SectorEntityToken? = null
 
-    var departureTimestamp = Global.getSector().clock.timestamp
-    var daysSinceDeparture = 0f
 
     var previousVelocity = Vector2f()
-    var daysForTransfer = 3.5f
+    var daysForTransfer = 1f
 
     var maxFleets = 4
     var remainingFleetBudget = maxFleets
     var launchDelayDays = 0.25f
     var delayTimestamp = Global.getSector().clock.timestamp
+
+
+    var maxSecondsTravel = 8f
+    var maxSecondsArrival = 5f
+
+    var secondsTravel = 0f
+    var secondsArrival = 0f
 
     override fun isDone(): Boolean {
         return false
@@ -45,8 +51,6 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
 
 
     override fun advance(amount: Float) {
-
-        daysSinceDeparture = Global.getSector().clock.getElapsedDaysSince(departureTimestamp)
 
         var daysTilMove = data.getTimeTilNextMove()
 
@@ -94,129 +98,173 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
             token.orbit = location.orbit
             destination = token
             data.state = ExoShipData.State.Travelling
-            departureTimestamp = Global.getSector().clock.timestamp
-            daysSinceDeparture = Global.getSector().clock.getElapsedDaysSince(departureTimestamp)
+
+            secondsArrival = maxSecondsArrival
+            secondsTravel = 0f
         }
+
+
+
+
         if (data.state == ExoShipData.State.Travelling) {
-            travelToSystem(amount)
+
+            if (!Global.getSector().isPaused) {
+                secondsTravel += 1 * amount
+            }
+
+            var level = (secondsTravel - 0) / ((maxSecondsTravel) - 0)
+            level = MathUtils.clamp(level, 0f, 1f)
+            data.moveLevel = level
+
+            if (Global.getSector().playerFleet.containingLocation == exoship.containingLocation) {
+                Global.getSoundPlayer().playLoop("ui_emergency_burn_loop", exoship, 1.5f, 1f * level, exoship.location, exoship.velocity)
+                if (level >= 0.7) {
+                    Global.getSoundPlayer().playLoop("disintegrator_loop", exoship, 1f, 4f * level, exoship.location, exoship.velocity)
+                }
+            }
+
+            travelToSystem(amount, level)
         }
         if (data.state == ExoShipData.State.Arriving) {
-            arriveInSystem(amount)
+
+            if (!Global.getSector().isPaused) {
+                secondsArrival -= 1 * amount
+            }
+
+            var level = (secondsArrival - 0) / ((maxSecondsArrival) - 0)
+            level = MathUtils.clamp(level, 0f, 1f)
+            data.moveLevel = level
+
+            if (Global.getSector().playerFleet.containingLocation == exoship.containingLocation) {
+                Global.getSoundPlayer().playLoop("ui_emergency_burn_loop", exoship, 1.5f, 1f * level, exoship.location, exoship.velocity)
+                if (level >= 0.7) {
+                    Global.getSoundPlayer().playLoop("disintegrator_loop", exoship, 1f, 4f * level, exoship.location, exoship.velocity)
+                }
+            }
+
+
+            arriveInSystem(amount, level)
         }
     }
 
     fun findSystemToMoveTo() : StarSystemAPI {
-        var systems = Global.getSector().starSystems.filter {!it.hasTag(
-            Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasPulsar() && !it.hasTag( Tags.THEME_HIDDEN)}
+        var systems = Global.getSector().starSystems.filter {!it.hasTag(Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasPulsar() && !it.hasTag( Tags.THEME_HIDDEN)}
 
         var system = systems.random()
-
 
         return system
 
     }
 
-    fun travelToSystem(amount: Float) {
-      //  (AppDriver.getInstance().currentState as CampaignState).isHideUI = true
+    fun travelToSystem(amount: Float, level: Float) {
 
-       /* var playerFleet = Global.getSector().playerFleet*/
-
-        var startLevel = (daysSinceDeparture - 0) / (daysForTransfer * 0.5f - 0)
-        startLevel = MathUtils.clamp(startLevel, 0f, 1f)
-
-        var direction = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 300 * amount * startLevel, exoship.facing)
+        var direction = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 200 * amount * level, exoship.facing)
         exoship.velocity.set(exoship.velocity.plus(direction))
 
-    /*    playerFleet.setLocation(exoship.location.x, exoship.location.y)
-        playerFleet.setVelocity(0f, 0f)
-
-        (playerFleet as CampaignFleet).setInJumpTransition(true)
-        playerFleet.setNoEngaging(5f)
-
-        playerFleet.stats.addTemporaryModMult(0.05f, "", "", 0f, playerFleet.stats.fleetwideMaxBurnMod)*/
-
-        if (daysSinceDeparture > daysForTransfer * 0.4f) {
-
-            data.state = ExoShipData.State.Arriving
-            //CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
-
-            var destinationSystem = destination!!.containingLocation
-            var currentLocation = exoship.containingLocation
-
-            currentLocation.removeEntity(exoship)
-            destinationSystem.addEntity(exoship)
-
-            var point = MathUtils.getPointOnCircumference(destination!!.location, 10000f, exoship.facing + 180)
-            exoship.location.set(point)
-            var angle = Misc.getAngleInDegrees(destination!!.location, exoship.location) + 90
-           // var pointInOrbit = MathUtils.getPointOnCircumference(destination!!.location, destination!!.radius + 200f, angle)
-            var destinationPoint = MathUtils.getPointOnCircumference(destination!!.location, 10000f, exoship.facing + 180)
-            exoship.location.set(destinationPoint)
-
-            //finalDestination = pointInOrbit
-            previousVelocity = Vector2f(exoship.velocity)
-
-           /* currentLocation.removeEntity(playerFleet)
-            destinationSystem.addEntity(playerFleet)
-            Global.getSector().setCurrentLocation(destinationSystem)
-            playerFleet.location.set(destinationPoint)*/
+        if (level >= 1f) {
+            triggerTeleport()
         }
     }
 
-    fun arriveInSystem(amount: Float) {
+    fun triggerTeleport() {
+        data.state = ExoShipData.State.Arriving
+
+        var token = exoship.containingLocation.createToken(exoship.location)
+
+        var ping = CampaignPingSpec()
+        ping.color = Color(248, 149, 44)
+        ping.range = 4000f
+        ping.minRange = exoship.radius
+        ping.duration = 2f
+        ping.alphaMult = 1f
+        ping.width = 10f
+        ping.num = 5
+        ping.delay = 0.1f
+        Global.getSector().addPing(token, ping)
+
+       // Global.getSoundPlayer().playSound("system_phase_teleporter", 1f, 0.5f, exoship.location, exoship.velocity)
+        if (Global.getSector().playerFleet.containingLocation == exoship.containingLocation) {
+            Global.getSoundPlayer().playSound("ui_interdict_off", 0.75f, 0.5f, exoship.location, exoship.velocity)
+            Global.getSoundPlayer().playSound("ui_interdict_off", 1.25f, 0.5f, exoship.location, exoship.velocity)
+        }
+
+        var destinationSystem = destination!!.containingLocation
+        var currentLocation = exoship.containingLocation
+
+        currentLocation.removeEntity(exoship)
+        destinationSystem.addEntity(exoship)
+
+        var point = MathUtils.getPointOnCircumference(destination!!.location, 2000f, exoship.facing + 180)
+        exoship.location.set(point)
+
+        previousVelocity = Vector2f(exoship.velocity)
+
+
+       // Global.getSector().addPing(exoship, ping)
+        callNewSystemPing()
+        callSystemPing()
+
+        //  Global.getSector().instantTeleport(exoship)
+    }
+
+    fun callNewSystemPing() {
+        var ping = CampaignPingSpec()
+        ping.color = Color(248, 149, 44)
+        ping.range = 15000f
+        ping.minRange = exoship.radius
+        ping.duration = 10f
+        ping.alphaMult = 1f
+        ping.width = 10f
+        ping.num = 5
+        ping.delay = 0.2f
+        Global.getSector().addPing(exoship, ping)
+
+
+        if (Global.getSector().playerFleet.containingLocation == exoship.containingLocation) {
+            Global.getSoundPlayer().playUISound("ui_interdict_off", 0.75f, 0.25f)
+            Global.getSoundPlayer().playUISound("ui_interdict_off", 1.25f, 0.25f)
+        }
+        // Global.getSoundPlayer().playSound("system_phase_teleporter", 1f, 0.5f, exoship.location, exoship.velocity)
+
+    }
+
+    fun callSystemPing() {
+        var ping = CampaignPingSpec()
+        ping.color = Color(248, 149, 44)
+        ping.range = 6000f
+        ping.minRange = exoship.radius
+        ping.duration = 8f
+        ping.alphaMult = 1f
+        ping.width = 10f
+        ping.num = 5
+        ping.delay = 0.2f
+        Global.getSector().addPing(exoship.starSystem.hyperspaceAnchor, ping)
+    }
+
+    fun arriveInSystem(amount: Float, level: Float) {
        // (AppDriver.getInstance().currentState as CampaignState).isHideUI = true
 
-
-      /*  var playerFleet = Global.getSector().playerFleet
-
-        (playerFleet as CampaignFleet).setInJumpTransition(true)*/
-
-
         var distance = MathUtils.getDistance(exoship.location, destination!!.location)
-        var level = (distance - 0) / (10000f - 0)
-        level = MathUtils.clamp(level, 0f, 1f)
-
-        var overwriteLevel = (daysSinceDeparture - 0) / (daysForTransfer - 0)
-        overwriteLevel = 1 - overwriteLevel
-        overwriteLevel = MathUtils.clamp(overwriteLevel, 0f, 1f)
-
-        if (overwriteLevel <= level) {
-            level = overwriteLevel
-        }
-
         exoship.velocity.set(Vector2f(previousVelocity.x * level, previousVelocity.y * level))
-       /* playerFleet.setLocation(exoship.location.x, exoship.location.y)
-        playerFleet.setVelocity(0f, 0f)
-        playerFleet.stats.addTemporaryModMult(0.05f, "", "", 0f, playerFleet.stats.fleetwideMaxBurnMod)
 
-
-        playerFleet.setNoEngaging(5f)*/
-
-
-        if (level <= 0.02) {
-            var angle = Misc.getAngleInDegrees(exoship.location, destination!!.starSystem.center.location) + 180
-            exoship.setCircularOrbit(destination!!.starSystem.center, angle, MathUtils.getDistance(exoship.location, destination!!.starSystem.center.location), 360f)
-            data.state = ExoShipData.State.Idle
-
-            /*(playerFleet as CampaignFleet).setInJumpTransition(false)
-
-            playerFleet.setLocation(exoship.location.x, exoship.location.y)
-            playerFleet.setVelocity(0f, 0f)*/
-
-            (AppDriver.getInstance().currentState as CampaignState).isHideUI = false
-
-            exoship.removeTag(Tags.NON_CLICKABLE)
-
-           /* playerFleet.setMoveDestinationOverride(exoship.location.x, exoship.location.y)
-            playerFleet.setNoEngaging(1.0f)*/
-
-
-            data.daysBetweenMoves = MathUtils.getRandomNumberInRange(180f, 240f)
-            data.lastMoveTimestamp = Global.getSector().clock.timestamp
-
-            //Allow spawning new fleets
-            remainingFleetBudget = maxFleets
+        if (level <= 0.01) {
+            stopFlight()
         }
+    }
+
+    fun stopFlight() {
+        var angle = Misc.getAngleInDegrees(exoship.location, destination!!.starSystem.center.location) + 180
+        exoship.setCircularOrbit(destination!!.starSystem.center, angle, MathUtils.getDistance(exoship.location, destination!!.starSystem.center.location), 360f)
+        data.state = ExoShipData.State.Idle
+
+        exoship.removeTag(Tags.NON_CLICKABLE)
+
+
+        data.daysBetweenMoves = MathUtils.getRandomNumberInRange(180f, 240f)
+        data.lastMoveTimestamp = Global.getSector().clock.timestamp
+
+        //Allow spawning new fleets
+        remainingFleetBudget = maxFleets
     }
 
     fun spawnFleet() : CampaignFleetAPI? {

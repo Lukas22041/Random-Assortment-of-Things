@@ -2,14 +2,16 @@ package assortment_of_things.exotech.entities
 
 import assortment_of_things.exotech.ExoShipData
 import assortment_of_things.exotech.ExoUtils
-import assortment_of_things.exotech.interactions.exoship.ExoshipMoveScript
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
+import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lazywizard.lazylib.ext.rotate
@@ -30,11 +32,13 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     @Transient
     var lights: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_lights.png")
 
-
+    @Transient
+    var jitter: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_jitter.png")
 
     var particles = ArrayList<ExoshipThrusterParticle>()
     var particleInterval = IntervalUtil(0.015f, 0.015f)
 
+    var lastJitterLocations = ArrayList<Vector2f>()
 
     var thrusterLevel = 0f
 
@@ -63,7 +67,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
         var data = ExoUtils.getExoshipData(entity)
         var state = data.state
 
-        if (state == ExoShipData.State.Idle) {
+      /*  if (state == ExoShipData.State.Idle) {
            thrusterLevel = 0f
         }
 
@@ -73,9 +77,11 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         if (state == ExoShipData.State.Arriving) {
             thrusterLevel -= 0.3f * amount
-        }
+        }*/
 
+        thrusterLevel = data.moveLevel + 0.2f
         thrusterLevel = MathUtils.clamp(thrusterLevel, 0f, 1f)
+
 
         if (state != ExoShipData.State.Idle && Global.getSector().playerFleet.containingLocation == entity.containingLocation) {
             particleInterval.advance(amount)
@@ -115,6 +121,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             particleSprite = Global.getSettings().getAndLoadSprite("graphics/fx/explosion3.png")
             glow = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_ext_lights.png")
             lights = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_lights.png")
+            jitter = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_jitter.png")
         }
 
         particleSprite!!.setAdditiveBlend()
@@ -142,8 +149,65 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             particleSprite!!.renderAtCenter(location.x, location.y)
         }
 
+        var data = ExoUtils.getExoshipData(entity)
+
+        if (data.state != ExoShipData.State.Idle && data.moveLevel >= 0.7f) {
+            var level = (data.moveLevel -0.7f) * 3
+            doJitter(jitter!!, level * level, lastJitterLocations, 15, 40f * level)
+        }
     }
 
+    fun doJitter(sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>, jitterCount: Int, jitterMaxRange: Float) {
+
+        var paused = Global.getSector().isPaused
+        /*   var jitterCount = 5
+           var jitterMaxRange = 2f*/
+        var jitterAlpha = 0.1f
+
+
+        if (!paused) {
+            lastLocations.clear()
+        }
+
+        for (i in 0 until jitterCount) {
+
+            var jitterLoc = Vector2f()
+
+            if (!paused) {
+                var x = MathUtils.getRandomNumberInRange(-jitterMaxRange, jitterMaxRange)
+                var y = MathUtils.getRandomNumberInRange(-jitterMaxRange, jitterMaxRange)
+
+                jitterLoc = Vector2f(x, y)
+                lastLocations.add(jitterLoc)
+            }
+            else {
+                jitterLoc = lastLocations.getOrElse(i) {
+                    Vector2f()
+                }
+            }
+
+            sprite.setAdditiveBlend()
+            sprite.alphaMult = level * jitterAlpha
+            sprite.angle = entity.facing - 90
+            sprite!!.setSize(95f, 140f)
+            sprite.renderAtCenter(entity.location.x + jitterLoc.x, entity.location.y + jitterLoc.y)
+        }
+    }
+
+    override fun appendToCampaignTooltip(tooltip: TooltipMakerAPI?, level: SectorEntityToken.VisibilityLevel?) {
+
+        var exoData = ExoUtils.getExoData()
+        var shipData = ExoUtils.getExoshipData(entity)
+
+        if (exoData.hasPartnership) {
+            tooltip!!.addSpacer(10f)
+
+            var days = shipData.getTimeTilNextMove().toInt()
+
+            tooltip!!.addPara("The ship is preparing to move towards its next location in $days days", 0f,
+                Misc.getGrayColor(), Misc.getHighlightColor(), "$days")
+        }
+    }
 
 
 }
