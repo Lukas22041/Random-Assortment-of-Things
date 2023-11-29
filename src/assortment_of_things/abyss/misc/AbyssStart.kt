@@ -42,7 +42,7 @@ class AbyssStart : CustomStart() {
         var textPanel = dialog.textPanel
         var optionPanel = dialog.optionPanel
 
-        data.characterData.memoryWithoutUpdate.set("\$rat_started_abyss", true)
+        //data.characterData.memoryWithoutUpdate.set("\$rat_started_abyss", true)
 
         if (!RATSettings.enableAbyss!!) {
             textPanel.addPara("This start is only available with the Abyss enabled in the \"Random Assortment of Things\" config.",
@@ -188,7 +188,8 @@ class AbyssStart : CustomStart() {
         dialog.visualPanel.showFleetInfo(StringHelper.getString("exerelin_ngc", "playerFleet", true),
             tempFleet, null, null)
 
-        optionPanel.addOption(StringHelper.getString("done", true), "nex_NGCDone");
+        //optionPanel.addOption(StringHelper.getString("done", true), "nex_NGCDone");
+        optionPanel.addOption(StringHelper.getString("done", true), "rat_NGCDone_Abyss");
         optionPanel.addOption(StringHelper.getString("back", true), "nex_NGCStartBack");
     }
 

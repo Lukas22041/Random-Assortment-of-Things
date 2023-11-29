@@ -12,9 +12,12 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantAssignmentAI
 import com.fs.starfarer.api.loading.CampaignPingSpec
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.campaign.fleet.CampaignFleetMemberView
+import com.fs.starfarer.campaign.fleet.CampaignFleetView
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.getDistance
 import java.awt.Color
 import java.util.*
 
@@ -58,10 +61,11 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
         val distFromSource = Misc.getDistanceLY(Global.getSector().playerFleet.getLocationInHyperspace(), exoship.locationInHyperspace)
 
         for (fleet in ArrayList(data.fleets)) {
-            if (fleet.isDespawning || fleet.isExpired ) {
+            if (fleet.isDespawning || fleet.isExpired) {
                 data.fleets.remove(fleet)
             }
-            if (distFromSource >= maxDist && Global.getSector().playerFleet.containingLocation != fleet.containingLocation) {
+            if (distFromSource >= maxDist && Global.getSector().playerFleet.containingLocation != fleet.containingLocation
+                && fleet.memoryWithoutUpdate.get("\$do_not_despawn") != true) {
                 fleet.despawn()
             }
         }
@@ -71,14 +75,19 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
                 if (fleet.currentAssignment?.target != exoship && data.state == ExoShipData.State.Idle  && fleet.containingLocation == exoship.containingLocation) {
                     fleet.clearAssignments()
                     fleet.removeScriptsOfClass(RemnantAssignmentAI::class.java)
-                    fleet.addAssignment(FleetAssignment.GO_TO_LOCATION_AND_DESPAWN, exoship, 999999f, "Returning to Exoship")
+                    if (Random().nextFloat() >= 0.5f) {
+                        fleet.addAssignment(FleetAssignment.GO_TO_LOCATION_AND_DESPAWN, exoship, 30f, "Returning to Exoship")
+                    }
+                    else {
+                        fleet.addAssignment(FleetAssignment.ORBIT_PASSIVE, exoship, 30f, "Returning to Exoship")
+                    }
                 }
                 if (fleet.currentAssignment?.target == exoship && (fleet.containingLocation != exoship.containingLocation || data.state != ExoShipData.State.Idle)) {
                     fleet.clearAssignments()
                 }
             }
         }
-        else if (remainingFleetBudget != 0){
+        else if (remainingFleetBudget != 0 && data.fleets.size <= maxFleets){
             if (Global.getSector().clock.getElapsedDaysSince(delayTimestamp!!) > launchDelayDays && distFromSource <= maxDist) {
                 var fleet = spawnFleet()
             }
@@ -108,6 +117,14 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
 
         if (data.state == ExoShipData.State.Travelling) {
 
+          /*  var width = Global.getSettings().screenWidth
+            var height = Global.getSettings().screenHeight
+
+            Global.getSector().viewport.isExternalControl = true
+            Global.getSector().viewport.set(exoship.location.x - (width / 2), exoship.location.y - (height / 2), width , height)
+*/
+
+
             if (!Global.getSector().isPaused) {
                 secondsTravel += 1 * amount
             }
@@ -122,6 +139,15 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
                     Global.getSoundPlayer().playLoop("disintegrator_loop", exoship, 1f, 4f * level, exoship.location, exoship.velocity)
                 }
             }
+
+          /*  var dest = MathUtils.getPointOnCircumference(exoship.location, 200f, exoship.facing + 45)
+            if (level >= 0.2f) {
+                Global.getSector().playerFleet.setVelocity(exoship.velocity.x, exoship.velocity.y)
+                dest = MathUtils.getPointOnCircumference(exoship.location, 250f, exoship.facing)
+            }
+            Global.getSector().playerFleet.setMoveDestination(dest.x, dest.y)*/
+
+
 
             travelToSystem(amount, level)
         }
@@ -161,6 +187,29 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
         var direction = MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 200 * amount * level, exoship.facing)
         exoship.velocity.set(exoship.velocity.plus(direction))
 
+        for (fleet in data.fleets) {
+            if (MathUtils.getDistance(fleet, exoship) >= 500) continue
+
+            var angle = Misc.getAngleInDegrees(exoship.location, fleet.location)
+            var dest = MathUtils.getPointOnCircumference(exoship.location, 200f, angle)
+            if (level >= 0.2f) {
+                fleet.setVelocity(exoship.velocity.x, exoship.velocity.y)
+                dest = MathUtils.getPointOnCircumference(exoship.location, 250f, exoship.facing)
+            }
+            fleet.setMoveDestination(dest.x, dest.y)
+
+            if (level >= 0.7f) {
+                var views = fleet.views
+                for (view in views) {
+                    if (view is CampaignFleetMemberView) {
+                        if (!view.isJittering) {
+                            view.setJitter(secondsArrival + 1, 1f, Color(248, 149, 44, 155), 7, 20f)
+                        }
+                    }
+                }
+            }
+        }
+
         if (level >= 1f) {
             triggerTeleport()
         }
@@ -188,23 +237,46 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
             Global.getSoundPlayer().playSound("ui_interdict_off", 1.25f, 0.5f, exoship.location, exoship.velocity)
         }
 
+        var teleportedFleets = data.fleets.filter { it.getDistance(exoship) <= 600 }
+
         var destinationSystem = destination!!.containingLocation
         var currentLocation = exoship.containingLocation
 
         currentLocation.removeEntity(exoship)
         destinationSystem.addEntity(exoship)
 
+
+
         var point = MathUtils.getPointOnCircumference(destination!!.location, 2000f, exoship.facing + 180)
         exoship.location.set(point)
 
         previousVelocity = Vector2f(exoship.velocity)
 
+        for (fleet in teleportedFleets) {
+            currentLocation.removeEntity(fleet)
+            destinationSystem.addEntity(fleet)
+
+            fleet.memoryWithoutUpdate.set("\$do_not_despawn", true, 1f)
+
+            var fleetPoint = MathUtils.getRandomPointOnCircumference(exoship.location, MathUtils.getRandomNumberInRange(200f, 300f))
+            fleet.setLocation(fleetPoint.x, fleetPoint.y)
+            fleet.setVelocity(exoship.velocity.x, exoship.velocity.y)
+
+            var views = fleet.views
+            for (view in views) {
+                if (view is CampaignFleetMemberView) {
+                    if (!view.isJittering) {
+                        view.setJitter(0f, maxSecondsArrival, Color(248, 149, 44, 155), 7, 20f)
+                    }
+                }
+            }
+        }
 
        // Global.getSector().addPing(exoship, ping)
         callNewSystemPing()
         callSystemPing()
 
-        //  Global.getSector().instantTeleport(exoship)
+       // Global.getSector().instantTeleport(exoship)
     }
 
     fun callNewSystemPing() {
@@ -218,7 +290,6 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
         ping.num = 5
         ping.delay = 0.2f
         Global.getSector().addPing(exoship, ping)
-
 
         if (Global.getSector().playerFleet.containingLocation == exoship.containingLocation) {
             Global.getSoundPlayer().playUISound("ui_interdict_off", 0.75f, 0.25f)

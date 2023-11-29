@@ -38,6 +38,7 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
     }
 
     override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
+        if (!ship.isAlive) return
 
         var active = false
         var level = ship.system?.effectLevel ?: 0f

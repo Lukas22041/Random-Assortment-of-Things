@@ -17,19 +17,16 @@ class CommanderCustomProduction(var market: MarketAPI, var listener: CommanderSt
 
     override fun getAvailableShipHulls(): MutableSet<String> {
         var ships = Global.getSector().playerFaction.knownShips
-        if (!listener.hasActiveProject("ship_production")) ships = setOf()
         return ships
     }
 
     override fun getAvailableWeapons(): MutableSet<String> {
         var weapons = Global.getSector().playerFaction.knownWeapons
-        if (!listener.hasActiveProject("weapon_production")) weapons = setOf()
         return weapons
     }
 
     override fun getAvailableFighters(): MutableSet<String> {
         var fighters = Global.getSector().playerFaction.knownFighters
-        if (!listener.hasActiveProject("weapon_production")) fighters = setOf()
         return fighters
     }
 
@@ -98,8 +95,8 @@ class CommanderCustomProduction(var market: MarketAPI, var listener: CommanderSt
             cargo.mothballedShips.addFleetMember(member)
         }
 
-        var level = (cost - 0f) / (listener.calculateProductionCapacity() - 0f)
-        var days = 60 * level
+        var level = (cost - 0f) / (listener.maxProductionCapacity - 0f)
+        var days = 120 * level
         days = MathUtils.clamp(days, 10f, 60f)
         var intel = CommanderProductionIntel(market, cargo, days)
         Global.getSector().intelManager.addIntel(intel)

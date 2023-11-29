@@ -1,3 +1,15 @@
+Version 1.8.2
+Not save compatible with prior versions.
+
+-> Simplified the Commander start and added a location picker for where the station is placed.
+-> Added new effects to some abyss weapons & adjusted their stats.
+-> Improved the Exoship teleport sequence.
+-> Fixed an issue where selecting the abyss start, then selecting another start would still possibly spawn you in the abyss.
+-> Fixed an issue where exo-tech ships in the player fleet could not be recovered.
+-> Fixed an issue with the exo-professors portrait not loading.
+
+
+
 Version 1.8.1
 
 -> Fixed a crash from a missing ressource.

@@ -1,6 +1,5 @@
 package assortment_of_things.backgrounds.commander
 
-import assortment_of_things.backgrounds.commander.projects.*
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.campaign.econ.MonthlyReport
@@ -9,38 +8,14 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.shared.SharedData
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
+import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.getStorageCargo
 
 class CommanderStationListener(var market: MarketAPI) : EconomyTickListener {
 
-    var allProjects = ArrayList<BaseCommanderProject>()
-
-    var bank = 0
-    var maxCargo = 10000
     var currentProductionBudget = 0f
-    var shipProduction = ArrayList<String>()
-    var weaponProduction = ArrayList<String>()
-    var fighterProduction = ArrayList<String>()
-
-    var maxProjects = 8
-
-    init {
-        allProjects.add(SpaceportProject().apply { active = true })
-        allProjects.add(StorageProject().apply { active = true })
-
-        allProjects.add(MarketProject())
-        allProjects.add(ExpandedQuartersProject())
-
-        allProjects.add(ShipProductionProject())
-        allProjects.add(WeaponProductionProject())
-
-        allProjects.add(SupplyProductionProject())
-        allProjects.add(FuelProductionProject())
-    }
-
-    fun hasActiveProject(string: String) : Boolean {
-        return allProjects.find { it.getID() == string }?.active ?: return false
-    }
+    var maxProductionCapacity = 500000f
+    var budgetPerMonth = 50000f
 
     override fun reportEconomyTick(iterIndex: Int) {
         val numIter = Global.getSettings().getFloat("economyIterPerMonth")
@@ -56,7 +31,7 @@ class CommanderStationListener(var market: MarketAPI) : EconomyTickListener {
         fleetNode.custom = MonthlyReport.FLEET
         fleetNode.tooltipCreator = report.monthlyReportTooltip
 
-        val stipend: Float = calculateIncome() * 0.2f
+        val stipend: Float = calculateIncome().toFloat()
         val stipendNode = report.getNode(fleetNode, "rat_node_id_station_commander")
         stipendNode.income += stipend * f
 
@@ -82,41 +57,18 @@ class CommanderStationListener(var market: MarketAPI) : EconomyTickListener {
 
     fun calculateIncome() : Int {
         var income = 0
-        for (project in allProjects) {
-            if (project.active) {
-                income += project.getIncome()
-            }
-        }
-        return income
+
+        return 2000 * Global.getSector().playerPerson.stats.level
     }
 
-    fun calculateProductionCapacity() : Float {
-        var cap = 0f
-        for (project in allProjects) {
-            if (project.active) {
-                cap += project.getCustomProductionBudget()
-            }
-        }
-        return cap
-    }
+
 
     override fun reportEconomyMonthEnd() {
         var cargo = market.getStorageCargo()
 
-        currentProductionBudget = 0f
-        for (project in allProjects) {
-            if (project.active) {
-                currentProductionBudget += project.getCustomProductionBudget()
+        currentProductionBudget += budgetPerMonth
+        currentProductionBudget = MathUtils.clamp(currentProductionBudget, 0f, maxProductionCapacity)
 
-                for ((commodity, amount) in project.addToMonthlyCargo()) {
-                    if (cargo.getCommodityQuantity(commodity) + amount <= maxCargo) {
-                        cargo.addCommodity(commodity, amount)
-                    }
-                }
-            }
-        }
 
-        var income = calculateIncome()
-        bank += (income * 0.8f).toInt()
     }
 }

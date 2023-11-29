@@ -125,6 +125,7 @@ class ExoshipInteractions : RATInteractionPlugin() {
 
                 exoshipData.daysBetweenMoves = 0f
 
+
                 /*var ship = interactionTarget
                 ship.orbit = null
                 ship.velocity.set(Vector2f(0f, 0f))

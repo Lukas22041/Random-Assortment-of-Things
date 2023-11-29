@@ -7,7 +7,7 @@ import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
-import assortment_of_things.backgrounds.commander.BaseCommanderStationInteraction
+import assortment_of_things.backgrounds.commander.CommanderStationInteraction
 import assortment_of_things.exotech.interactions.exoship.ExoshipInteractions
 import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.relics.RelicsUtils
@@ -103,7 +103,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
             var specID = interactionTarget.customEntitySpec.id
 
             when (id) {
-                "rat_station_commander_station" -> return PluginPick(BaseCommanderStationInteraction(),
+                "rat_station_commander_station" -> return PluginPick(CommanderStationInteraction(),
                     CampaignPlugin.PickPriority.HIGHEST)
             }
         }
