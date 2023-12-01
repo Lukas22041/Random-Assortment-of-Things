@@ -1,5 +1,5 @@
 Version 1.8.3
-Potentialy save compatible, not sure though so i wouldnt recommend it.
+Might not be save compatible, not sure to be honest, use at your own risk.
 
 -> Exo-Tech markets and fleets now have their own encounter theme, thanks to haplo!
 -> Added a new Exo-Tech ship.
