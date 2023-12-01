@@ -11,6 +11,9 @@
 		"rat_chuul_Strike":2,
 		"rat_chuul_Support":0.5,
 		"rat_chuul_Override":0.25,
+		
+		#Exo
+
 	},
 	
 	"combatSmall":{
@@ -24,12 +27,18 @@
 		"rat_chuul_Strike":2,
 		"rat_chuul_Support":0.5,
 		"rat_chuul_Override":0.25,
+		
+		#Exo
+
 	},
 	"combatMedium":{
 		"rat_chuul_Attack":10,
 		"rat_chuul_Strike":10,
 		"rat_chuul_Support":2,
 		"rat_chuul_Override":0.5,
+		
+		#Exo
+		"rat_thestia_Support":5,
 	},
 	"combatLarge":{
 		

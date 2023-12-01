@@ -107,11 +107,29 @@ class AbyssalBloodstream : RATBaseShipSkill() {
 
             if (Global.getCombatEngine().isCombatOver) return false
             if (Global.getCombatEngine().playerShip != ship) return false
+
+            if (triggered && !done) {
+                return true
+            }
+
+            var custom = Global.getCombatEngine().customData
+            if (custom.contains("requirem_triggered") && ship!!.captain == Global.getSector().playerPerson) return false
+            if (custom.contains("requirem_triggered_neuro") && ship!!.captain?.aiCoreId == "rat_neuro_core") return false
+
            // if (ship!!.variant.hasHullMod(HullMods.PHASE_ANCHOR)) return false
+
 
             if (ship!!.hitpoints - damageAmount <= 0 && !triggered) {
                 ship.hitpoints = 10f
                 triggered = true
+
+                var custom = Global.getCombatEngine().customData
+                if (ship!!.captain == Global.getSector().playerPerson) {
+                    custom.set("requirem_triggered", true)
+                }
+                if (ship!!.captain?.aiCoreId == "rat_neuro_core") {
+                    custom.set("requirem_triggered_neuro", true)
+                }
 
                 for (i in 0..100) {
                     ship!!.exactBounds.update(ship!!.location, ship!!.facing)
@@ -205,6 +223,7 @@ class AbyssalBloodstream : RATBaseShipSkill() {
                     for (weapon in ship.allWeapons) {
                         weapon.repair()
                     }
+
                     PostProcessShader.resetDefaults()
                 }
             }

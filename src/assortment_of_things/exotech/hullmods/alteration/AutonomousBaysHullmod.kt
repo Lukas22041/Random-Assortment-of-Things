@@ -60,4 +60,14 @@ class AutonomousBaysHullmod : BaseAlteration() {
             tooltip!!.addNegativePara("Can only be installed on ships that can deploy fighters even without installing other modifications.")
         }
     }
+
+    override fun onAlterationRemove(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?) {
+        super.onAlterationRemove(member, variant, marketAPI)
+
+        if (variant!!.wings.size >= member!!.stats.numFighterBays.modifiedValue) {
+            var last = variant.wings.last()
+            variant.wings.remove(last)
+            Global.getSector().playerFleet.cargo.addFighters(last, 1)
+        }
+    }
 }

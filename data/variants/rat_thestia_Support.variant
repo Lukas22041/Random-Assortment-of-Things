@@ -1,0 +1,45 @@
+{
+    "displayName": "Support",
+    "fluxCapacitors": 13,
+    "fluxVents": 0,
+    "goalVariant": true,
+    "hullId": "rat_thestia",
+    "hullMods": [
+        "expanded_deck_crew",
+        "hardenedshieldemitter",
+        "missleracks",
+    ],
+    "permaMods": [],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_thestia_Support",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "ioncannon",
+                "WS0004": "ioncannon",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "sabotpod",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "taclaser",
+                "WS0002": "taclaser",
+            }
+        },
+    ],
+    "wings": [
+        "trident_wing",
+    ],
+    "modules": [],
+}

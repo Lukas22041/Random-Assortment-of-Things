@@ -1,11 +1,10 @@
 package assortment_of_things.backgrounds.commander
 
 import assortment_of_things.misc.RATInteractionPlugin
-import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
-import com.fs.starfarer.api.campaign.CoreUITabId
-import com.fs.starfarer.api.campaign.CustomDialogDelegate
-import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.*
+import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.CustomPanelAPI
+import lunalib.lunaExtensions.addLunaElement
 import lunalib.lunaExtensions.addLunaTextfield
 import org.lwjgl.input.Keyboard
 
@@ -27,10 +26,6 @@ class CommanderStationInteraction : RATInteractionPlugin() {
         clearOptions()
 
         visualPanel.showImageVisual(interactionTarget.customInteractionDialogImageVisual)
-
-        createOption("Rename Station") {
-            dialog.showCustomDialog(300f, 30f, CommanderNameSelector(interactionTarget))
-        }
 
         // optionPanel.addOption("Access Cargo Storage", "CARGO")
 
@@ -57,30 +52,7 @@ class CommanderStationInteraction : RATInteractionPlugin() {
         }
         optionPanel.setShortcut("Use the local facilities to refit your fleet", Keyboard.KEY_R, false, false, false, false)
 
-
         addLeaveOption()
     }
 }
 
-class CommanderNameSelector(var station: SectorEntityToken) : BaseCustomDialogDelegate() {
-
-
-    var text = station.name
-
-    override fun createCustomDialog(panel: CustomPanelAPI, callback: CustomDialogDelegate.CustomDialogCallback?) {
-        var element = panel.createUIElement(panel.position.width, panel.position.height, false)
-        panel.addUIElement(element)
-
-        element.addLunaTextfield(text, false, panel.position.width, 30f).apply {
-            enableTransparency = true
-            advance {
-                text = this.getText()
-            }
-        }
-    }
-
-    override fun customDialogConfirm() {
-        station.name = text
-    }
-
-}

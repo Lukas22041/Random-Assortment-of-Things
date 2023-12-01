@@ -205,13 +205,13 @@
 		#"ai_cores", # only due to treaty w/ Hegemony
 	],
 	"music":{
-		"theme":"music_tritach_encounter_neutral",
-		"market_neutral":"music_tritach_market_neutral",
-		"market_hostile":"music_tritach_market_hostile",
-		"market_friendly":"music_tritach_market_friendly",
-		"encounter_neutral":"music_tritach_encounter_neutral",
-		"encounter_hostile":"music_tritach_encounter_hostile",
-		"encounter_friendly":"music_tritach_encounter_friendly",
+		"theme":"rat_exo_market",
+		"market_neutral":"rat_exo_market",
+		"market_hostile":"rat_exo_market",
+		"market_friendly":"rat_exo_market",
+		"encounter_neutral":"rat_exo_encounter",
+		"encounter_hostile":"rat_exo_encounter",
+		"encounter_friendly":"rat_exo_encounter",
 	},
 	"internalComms":"tritachyon_internal",
 	"portraits":{

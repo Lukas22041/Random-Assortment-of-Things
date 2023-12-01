@@ -85,7 +85,7 @@ class ConsumeableIndustryBP : BaseSpecialItemPlugin() {
         val known = Global.getSector().playerFaction.knowsIndustry(industryId)
 
         tooltip.addSpacer(10f)
-        tooltip.addPara("Enables the construction of an ${industry!!.name}, to match the performance specified the provided specialised nanoforge is required to construct and maintain it. Due to this only one such structure can be constructed. The nanoforge is reuseable if the structure were to be demolished.", 0f,
+        tooltip.addPara("Enables the construction of a ${industry!!.name}, to match the performance specified the provided specialised nanoforge is required to construct and maintain it. Due to this only one such structure can be constructed. The nanoforge is reuseable if the structure were to be demolished.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "${industry!!.name}" ,"one", "reuseable")
         tooltip.addSpacer(10f)
 

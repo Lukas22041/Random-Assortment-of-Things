@@ -58,7 +58,7 @@ object ExoshipGenerator {
         cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_unstopable_force"), MathUtils.getRandomNumberInRange(1f, 3f))
 
         if (name == "Nova") {
-
+            cargo.addSpecial(SpecialItemData("rat_consumeable_industry", "rat_asteroid_mining"), 1f)
         }
 
         if (name == "Daybreak") {

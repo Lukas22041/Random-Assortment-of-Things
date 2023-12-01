@@ -41,6 +41,27 @@
 			{"file":"TheHeartOfThoseForgotten.ogg","source":"sounds/rat/music","volume":0.8},
 		],
 		
+		"rat_exo_market":[
+			{
+				"file":"PhantomOfTheFringe.ogg",
+				"source":"sounds/rat/music",
+				"volume":1,
+				"randomStart":true, 
+			},
+		],
+		
+		
+		"rat_exo_encounter":[
+			{
+				"file":"PioneeringNomads.ogg",
+				"source":"sounds/rat/music",
+				"volume":1,
+				"randomStart":true, 
+			},
+		],
+		
+		
+		
 	
 # collapseclose
 	},

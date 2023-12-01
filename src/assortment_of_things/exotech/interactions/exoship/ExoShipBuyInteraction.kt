@@ -36,7 +36,6 @@ class ExoShipBuyInteraction(var exoDialog: ExoshipInteractions, var data: ExoDat
         }
 
         for (stack in stationCargo.stacksCopy) {
-            if (!isRareTech(stack)) continue
             tradeCargo.addFromStack(stack)
         }
 

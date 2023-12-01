@@ -1,3 +1,16 @@
+Version 1.8.3
+Potentialy save compatible, not sure though so i wouldnt recommend it.
+
+-> Exo-Tech markets and fleets now have their own encounter theme, thanks to haplo!
+-> Added a new Exo-Tech ship.
+-> Added another Exo-Tech trade in reward.
+-> Gave the mod a new icon in the LunaSettings menu.
+-> Removed the "Rename Station" option from the commander start, as it was bugged and the player can rename the station like any other colony anyways.
+-> Fixed an issue that allowed triggering abyssal bloodstreams effect on multiple ships.
+-> Fixed an issue caused by removing the autonomous bays hullmod while a fighter was installed in its slot.
+
+
+
 Version 1.8.2
 Not save compatible with prior versions.
 

@@ -17,7 +17,7 @@ rat_relicsEnabled,"Enable ""Relics of the Past""",Boolean,true,,"Generates lots 
 Enabling ""Relics of the Past"" generates content for both new and existing saves upon game load.",,,Expansion
 rat_backgroundsEnabled,"Enable ""Backgrounds""",Boolean,true,,"Adds more unique backgrounds to Nexerelins ""Background"" system.
 
-Requires [Nexerelin v0.11.1] or newer.",,,Expansion
+Requires [Nexerelin v0.11.0x] or newer.",,,Expansion
 ,,,,,,,,
 rat_abyssHeader,The Abyss,Header,The Abyss,,,,,Expansion
 rat_abyssBrighter,Brighter Abyss,Boolean,false,,"Makes the abyss less dark, recommended if it turns out to be too dark on your screen.",,,Expansion
@@ -27,8 +27,10 @@ Hard mode greatly increases the strength of fleets found within the Abyss. Also 
 ,,,,,,,,
 rat_creditsHeader,Credits,Header,Credits,,,,,Expansion
 rat_creditsText,,Text,"[Credits:]
+[Lukas04] - Code & Concepts
 [SnazzyPantsMcGee] - Spritework
 [Haplogynae] - Music & Sounds
+
 [Niatahl] & [Ruddygreat] - Helped with some VFX
 [Loyse] - Helped with some variants and made the banner 3D model.
 [KingAlfonzo] - Helped writing some Interactions. ",,,,,Expansion

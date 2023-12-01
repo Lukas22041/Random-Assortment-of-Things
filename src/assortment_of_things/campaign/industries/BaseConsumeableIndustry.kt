@@ -49,7 +49,7 @@ abstract class BaseConsumeableIndustry() : BaseIndustry() {
         }
     }
 
-    private fun getStack() : CargoStackAPI? {
+    protected fun getStack() : CargoStackAPI? {
 
         var stack = Global.getSector().playerFleet.cargo.stacksCopy
             .find { it.isSpecialStack && (it.specialItemSpecIfSpecial.id == "rat_consumeable_industry" && it.specialDataIfSpecial.data == spec.id )}

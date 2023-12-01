@@ -1,0 +1,18 @@
+{
+	"id":"rat_thestia_system",
+	"type":"STAT_MOD",
+	"aiType":"CUSTOM",
+	"aiScript":"assortment_of_things.exotech.shipsystems.ai.ThestiaSystemAI",
+	
+	"statsScript":"assortment_of_things.exotech.shipsystems.ThestiaShipsystem",
+	"runScriptWhilePaused":true, # only for the player's ship
+	"runScriptWhileIdle":true,  # this means unapply() never gets called
+	"blockActionsWhileChargingDown":false,
+	
+	"canNotCauseOverload":true,
+	
+	"fadeActivationSoundOnChargedown":true,
+	"useSound":"system_interdictor",
+	"outOfUsesSound":"gun_out_of_ammo",
+	"deactivateSound":"system_interdictor",
+}

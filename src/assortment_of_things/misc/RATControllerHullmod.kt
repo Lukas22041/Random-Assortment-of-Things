@@ -9,6 +9,7 @@ import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
+import exerelin.campaign.backgrounds.CharacterBackgroundUtils
 
 class RATControllerHullmod : BaseHullMod() {
 
@@ -45,5 +46,15 @@ class RATControllerHullmod : BaseHullMod() {
                 stats.maxCombatReadiness.modifyFlat(id, 0.10f, "Auto-Engineer")
             }
         }
+
+        //Since Nex Backgrounds is still in beta and i just noticed this will crash on non-beta versions
+       /* try {
+            //Will require slight changes to this system to work, noteably i need to make the hullmod be applied from another script, since so far it has been just used for skills
+            if (CharacterBackgroundUtils.isBackgroundActive("")) {
+
+            }
+        } catch (e: Throwable) {}*/
+
+
     }
 }
