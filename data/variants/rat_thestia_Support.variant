@@ -1,6 +1,6 @@
 {
     "displayName": "Support",
-    "fluxCapacitors": 13,
+    "fluxCapacitors": 15,
     "fluxVents": 0,
     "goalVariant": true,
     "hullId": "rat_thestia",
@@ -18,23 +18,16 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0005": "ioncannon",
-                "WS0004": "ioncannon",
+                "WS0001": "sabotpod",
+                "WS0002": "sabotpod",
             }
         },
         {
-            "autofire": true,
-            "mode": "LINKED",
+            "autofire": false,
+            "mode": "ALTERNATING",
             "weapons": {
-                "WS0003": "sabotpod",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0001": "taclaser",
-                "WS0002": "taclaser",
+                "WS0004": "taclaser",
+                "WS0005": "taclaser",
             }
         },
     ],

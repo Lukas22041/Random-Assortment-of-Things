@@ -9,14 +9,10 @@ import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
-import com.fs.starfarer.api.impl.campaign.AICoreOfficerPluginImpl
-import com.fs.starfarer.api.impl.campaign.ids.Commodities
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.combat.PhaseCloakStats
+import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import java.util.*
+import com.fs.starfarer.api.util.WeightedRandomPicker
 
 class AutonomousBaysHullmod : BaseAlteration() {
 
@@ -35,8 +31,41 @@ class AutonomousBaysHullmod : BaseAlteration() {
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
-        var ai = AICoreOfficerPluginImpl().createPerson(Commodities.GAMMA_CORE, Factions.PLAYER, Random())
-        fighter!!.captain = ai
+        var aiCoreId = Commodities.GAMMA_CORE
+
+        val core = Global.getFactory().createPerson()
+        core.setFaction(Factions.PLAYER)
+        core.aiCoreId = aiCoreId
+
+        core.portraitSprite = "graphics/portraits/portrait_ai1b.png"
+        core.stats.level = 3
+
+        var availableSkills = WeightedRandomPicker<String>()
+        availableSkills.add(Skills.HELMSMANSHIP, 1f)
+        availableSkills.add(Skills.TARGET_ANALYSIS, 1f)
+        availableSkills.add(Skills.MISSILE_SPECIALIZATION, 1f)
+        availableSkills.add(Skills.FIELD_MODULATION, 1f)
+        availableSkills.add(Skills.GUNNERY_IMPLANTS, 1f)
+        availableSkills.add(Skills.SYSTEMS_EXPERTISE, 1f)
+        availableSkills.add(Skills.DAMAGE_CONTROL, 1f)
+        availableSkills.add(Skills.IMPACT_MITIGATION, 1f)
+
+        core.stats.setSkillLevel(availableSkills.pickAndRemove(), 2f)
+        core.stats.setSkillLevel(availableSkills.pickAndRemove(), 2f)
+        core.stats.setSkillLevel(availableSkills.pickAndRemove(), 2f)
+
+        core.setPersonality(Personalities.RECKLESS)
+        core.setRankId(Ranks.SPACE_CAPTAIN)
+        core.setPostId(null)
+
+        fighter!!.captain = core
+
+        if (core.stats.hasSkill(Skills.MISSILE_SPECIALIZATION)) {
+            for (weapon in fighter!!.allWeapons) {
+                weapon.maxAmmo = fighter.mutableStats.missileAmmoBonus.computeEffective(weapon.spec.maxAmmo.toFloat()).toInt()
+                weapon.resetAmmo()
+            }
+        }
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?, isForModSpec: Boolean): Boolean {

@@ -12,7 +12,7 @@
 	"canNotCauseOverload":true,
 	
 	"fadeActivationSoundOnChargedown":true,
-	"useSound":"system_interdictor",
+	"useSound":"system_recall_device",
 	"outOfUsesSound":"gun_out_of_ammo",
-	"deactivateSound":"system_interdictor",
+	"deactivateSound":"system_recall_device",
 }

@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.shipsystems
 
+import assortment_of_things.exotech.ExoUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
@@ -14,7 +15,7 @@ class ArkasShipsystem : BaseShipSystemScript() {
     var SPEED_BONUS = 75f
     var TURN_BONUS = 10f
 
-    private val color = Color(248, 149, 44, 255)
+    private val color = ExoUtils.color2
     var interval = IntervalUtil(0.5f, 0.8f)
 
 

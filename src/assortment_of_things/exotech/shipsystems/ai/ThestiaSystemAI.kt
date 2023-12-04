@@ -19,9 +19,9 @@ class ThestiaSystemAI : ShipSystemAIScript {
 
         var wings = ship!!.allWings
         for (wing in wings) {
+            if (target == null) continue
             if (wing.returning.isNotEmpty()) continue
             if (wing.isDestroyed) continue
-            if (target == null) continue
 
             var anyInRange = false
             for (fighter in wing.wingMembers) {

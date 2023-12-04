@@ -1,3 +1,14 @@
+Version 1.8.4
+Not save compatible :skull_emoji:. Patch isnt the largest, and im mostly releasing it now because i may start working on some larger things afterwards.
+
+-> Modified the Thestia-Class Sprite & Mounts.
+-> The Thestia-Class shipsystem now also works on returning fighters and bombers.
+-> Adjusted the Colors of some Exo-Tech shipsystems.
+-> "Autonomous Bays" Alteration now gives 3 random gamma-core skills instead of the base 3 skills that gammas usually have.
+-> Fixed an issue with VIC fighters and the Thestias shipsystem, there will still be a crash until VIC updates however.
+
+
+
 Version 1.8.3
 Might not be save compatible, not sure to be honest, use at your own risk.
 

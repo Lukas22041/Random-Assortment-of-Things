@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.shipsystems
 
+import assortment_of_things.exotech.ExoUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipSystemAPI.SystemState
@@ -14,13 +15,14 @@ import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
 
 class LeaniraShipsystem : BaseShipSystemScript() {
 
     var ship: ShipAPI? = null
-    val color = Color(248,172,44, 255)
+    val color = ExoUtils.color2.setAlpha(150)
 
     var variant: ShipVariantAPI? = null
 

@@ -20,30 +20,21 @@
   "weaponSlots": [
     {
       "id": "WS0001",
-      "size": "SMALL",
-      "type": "ENERGY",
-      "mount": "TURRET",
-      "arc": 210,
-      "angle": -45,
-      "locations": [9, -31]
-    },
-    {
-      "id": "WS0002",
-      "size": "SMALL",
-      "type": "ENERGY",
-      "mount": "TURRET",
-      "arc": 210,
-      "angle": 45,
-      "locations": [9, 31]
-    },
-    {
-      "id": "WS0003",
       "size": "MEDIUM",
       "type": "SYNERGY",
       "mount": "TURRET",
-      "arc": 220,
-      "angle": 0,
-      "locations": [4, -0]
+      "arc": 210,
+      "angle": -45,
+      "locations": [16, -32]
+    },
+    {
+      "id": "WS0002",
+      "size": "MEDIUM",
+      "type": "SYNERGY",
+      "mount": "TURRET",
+      "arc": 210,
+      "angle": 45,
+      "locations": [16, 32]
     },
     {
       "id": "WS0004",
@@ -70,7 +61,7 @@
       "mount": "TURRET",
       "arc": 5,
       "angle": -0,
-      "locations": [20, -0]
+      "locations": [3, -0]
     },
     {
       "id": "LB 1",
