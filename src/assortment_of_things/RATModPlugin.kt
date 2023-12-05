@@ -14,6 +14,7 @@ import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.ExoshipGenerator
 import assortment_of_things.exotech.scripts.ChangeExoIntelState
+import assortment_of_things.misc.OnChange
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
@@ -101,6 +102,8 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
+
+
 
         //Global.getSector().intelManager.addIntel(DoctrineReportAbyssal())
 

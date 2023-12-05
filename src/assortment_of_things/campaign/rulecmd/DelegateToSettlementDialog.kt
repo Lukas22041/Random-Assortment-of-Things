@@ -23,7 +23,7 @@ class DelegateToSettlementDialog() : BaseCommandPlugin() {
         var newPlugin = CreateSettlementInteraction()
         newPlugin.previousPlugin = dialog.plugin
         dialog.plugin = newPlugin
-        dialog.interactionTarget = dialog.interactionTarget.starSystem.createToken(Vector2f())
+        //dialog.interactionTarget = dialog.interactionTarget.starSystem.createToken(Vector2f())
         newPlugin.init(dialog)
 
         return true
