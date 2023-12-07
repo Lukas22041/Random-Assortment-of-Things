@@ -21,7 +21,8 @@ FireBest NewGameOptionSelected",,,
 ,,,,,,
 rat_commander_flavorTextMarket,TradePanelFlavorText,$market.id == rat_station_commander_market score:10000,"AddText ""The humble port concourse is filled with small freighters and freelancers down or up on their luck, identifiable by the shine or grime of ship armor and volume of cargo on-loading. A handful of speculators who all seem to know each other crowd offloading ship captains as they arrive while peddlers call out to crew, holding wares and projecting personal ad-holos."" marketFlavorTextColor",,,
 ,,,,,,
-,,,,,,
-rat_createSettlement,PopulateOptions,"$hasMarket
-$menuState == main",,,7:ratCreateSettlement:Found a new Settlement,
-rat_createSettlementScript,DialogOptionSelected,$option == ratCreateSettlement,DelegateToSettlementDialog,,,
+rat_createSettlement,PopulateOptions,ShouldShowSettlementCreationOption,,,4:ratCreateSettlement:Establish a new Settlement,
+rat_createSettlementDisabled,PopulateOptions,"$market.isSurveyed != true
+","SetEnabled ratCreateSettlement false
+SetTooltip ratCreateSettlement ""Planet has to be surveyed.""",,,
+rat_createSettlementScript,DialogOptionSelected,$option == ratCreateSettlement,DelegateToSettlementCreationDialog,,,

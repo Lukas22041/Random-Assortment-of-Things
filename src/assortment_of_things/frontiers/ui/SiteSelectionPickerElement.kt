@@ -1,8 +1,9 @@
 package assortment_of_things.frontiers.ui
 
-import assortment_of_things.misc.getAndLoadSprite
+import assortment_of_things.frontiers.FrontiersUtils
+import assortment_of_things.frontiers.data.SiteData
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.PositionAPI
@@ -15,15 +16,19 @@ import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 import java.awt.Polygon
 
-class SiteSelectionPickerElement(var planetSprite: SpriteAPI, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class SiteSelectionPickerElement(var planet: PlanetAPI?, var planetSprite: SpriteAPI, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
-    class SiteHexagon() {
+    class SiteHexagon(var site: SiteData) {
         var selected = false
         var hovering = false
         var bounds = ArrayList<Vector2f>()
+        var ressourceSprite: SpriteAPI? = null
+        var ressourceSpriteSil: SpriteAPI? = null
     }
 
     var hexagons = ArrayList<SiteHexagon>()
+    var hoveredHexagon: SiteHexagon? = null
+    var selectedHexagon: SiteHexagon? = null
 
     init {
         enableTransparency = true
@@ -35,25 +40,37 @@ class SiteSelectionPickerElement(var planetSprite: SpriteAPI, tooltip: TooltipMa
     override fun positionChanged(position: PositionAPI?) {
         super.positionChanged(position)
 
-        drawHexGridLoop(Vector2f(x + width / 2, y + height / 2), 5, 48, 5)
+        if (planet == null) return
+        generateGrid(Vector2f(x + width / 2, y + height / 2), 5, 48, 5)
     }
 
     //https://stackoverflow.com/questions/20734438/algorithm-to-generate-a-hexagonal-grid-with-coordinate-system
-    private fun drawHexGridLoop(origin: Vector2f, size: Int, radius: Int, padding: Int) {
+    private fun generateGrid(origin: Vector2f, size: Int, radius: Int, padding: Int) {
         hexagons = ArrayList()
         hexagons.clear()
+
+        var requiresDataGeneration = false
+        var siteData = FrontiersUtils.getSiteData(planet!!)
+        if (siteData.isEmpty()) {
+            siteData = FrontiersUtils.generateNewSites(planet!!)
+        }
+
+        var locations = ArrayList<Vector2f>()
 
         val ang30 = Math.toRadians(30.0)
         val xOff = Math.cos(ang30) * (radius + padding)
         val yOff = Math.sin(ang30) * (radius + padding)
         val half = size / 2
+
+        var index = 0
         for (row in 0 until size) {
             val cols = size - Math.abs(row - half)
             for (col in 0 until cols) {
                 val x = (origin.x + xOff * (col * 2 + 1 - cols)) as Double
                 val y = (origin.y + yOff * (row - half) * 3) as Double
 
-                var hexagon = SiteHexagon()
+                var site = siteData.get(index)
+                var hexagon = SiteHexagon(site)
                 hexagons.add(hexagon)
 
                 var angle = 30f
@@ -61,8 +78,20 @@ class SiteSelectionPickerElement(var planetSprite: SpriteAPI, tooltip: TooltipMa
                     hexagon.bounds.add(MathUtils.getPointOnCircumference(Vector2f(x.toFloat(), y.toFloat()), radius.toFloat(), angle))
                     angle += 60
                 }
+
+                var ressource = FrontiersUtils.getRessource(site)
+                if (ressource != null) {
+                    hexagon.ressourceSprite = Global.getSettings().getSprite(ressource.getIcon())
+                    hexagon.ressourceSpriteSil = Global.getSettings().getSprite(ressource.spec.iconSil)
+                }
+
+                site.location = Vector2f(x.toFloat(), y.toFloat())
+
+                index += 1
             }
         }
+
+
     }
 
     override fun render(alphaMult: Float) {
@@ -77,6 +106,20 @@ class SiteSelectionPickerElement(var planetSprite: SpriteAPI, tooltip: TooltipMa
         endStencil()
 
         for (hexagon in hexagons) {
+
+
+            if (hexagon.ressourceSprite != null) {
+                var sprite = hexagon.ressourceSprite
+                var sil = hexagon.ressourceSpriteSil
+
+                sil!!.color = Misc.getPositiveHighlightColor()
+                sil!!.setSize(65f, 65f)
+                sil!!.renderAtCenter(hexagon.site.location.x, hexagon.site.location.y)
+
+                sprite!!.color = Color(255, 255, 255)
+                sprite!!.setSize(60f, 60f)
+                sprite!!.renderAtCenter(hexagon.site.location.x, hexagon.site.location.y)
+            }
 
             var c = Misc.getDarkPlayerColor().brighter()
             var alpha = 0.7f
@@ -126,6 +169,7 @@ class SiteSelectionPickerElement(var planetSprite: SpriteAPI, tooltip: TooltipMa
     override fun processInput(events: MutableList<InputEventAPI>?) {
 
 
+        hoveredHexagon = null
         for (event in events!!) {
             if (event.isConsumed) continue
             if (event.isMouseEvent) {
@@ -143,6 +187,7 @@ class SiteSelectionPickerElement(var planetSprite: SpriteAPI, tooltip: TooltipMa
                             playScrollSound()
                         }
 
+                        hoveredHexagon = hexagon
                         hexagon.hovering = true
                         continue
                     }
@@ -163,6 +208,7 @@ class SiteSelectionPickerElement(var planetSprite: SpriteAPI, tooltip: TooltipMa
                     if (poly.contains(point.x.toInt(), point.y.toInt())) {
                         hexagons.forEach { it.selected = false }
                         hexagon.selected = true
+                        selectedHexagon = hexagon
                         event.consume()
                         playClickSound()
                         continue

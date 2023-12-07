@@ -14,6 +14,7 @@ import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.ExoshipGenerator
 import assortment_of_things.exotech.scripts.ChangeExoIntelState
+import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
@@ -66,6 +67,8 @@ class RATModPlugin : BaseModPlugin() {
 
         LunaSettings.addSettingsListener(RATSettings)
 
+        FrontiersUtils.loadModifiersFromCSV()
+
         ArtifactUtils.loadArtifactsFromCSV()
 
         LunaRefitManager.addRefitButton(AlterationRefitButton())
@@ -89,6 +92,7 @@ class RATModPlugin : BaseModPlugin() {
             TextureData.readTextureDataCSV("data/config/rat_texture_data.csv")
         }
 
+
     }
 
     override fun onDevModeF8Reload() {
@@ -103,7 +107,7 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-
+        initFrontiers()
 
         //Global.getSector().intelManager.addIntel(DoctrineReportAbyssal())
 
@@ -227,6 +231,10 @@ class RATModPlugin : BaseModPlugin() {
 
             Global.getSector().memoryWithoutUpdate.set("\$rat_exo_generated", true)
         }
+    }
+
+    fun initFrontiers() {
+        FrontiersUtils.setFrontiersActive()
     }
 
     override fun onNewGame() {
