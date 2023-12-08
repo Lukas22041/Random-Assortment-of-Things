@@ -72,10 +72,15 @@ object FrontiersUtils {
     }
 
     fun getFrontiersData() : FrontiersData {
-        return Global.getSector().memoryWithoutUpdate.get("\$rat_frontiers_data") as FrontiersData? ?: FrontiersData()
+        var data =  Global.getSector().memoryWithoutUpdate.get("\$rat_frontiers_data") as FrontiersData?
+        if (data == null) {
+            data = FrontiersData()
+            Global.getSector().memoryWithoutUpdate.set("\$rat_frontiers_data", data)
+        }
+        return data
     }
 
-    fun hasSettlement() = getFrontiersData().hasSettlement
+    fun hasSettlement() = getFrontiersData().activeSettlement != null
 
     fun getSettlementData() : SettlementData {
         return getFrontiersData().activeSettlement!!
@@ -115,7 +120,7 @@ object FrontiersUtils {
 
         for (mod in modifierPlugins) {
             if (mod.isRessource()) {
-                ressources.add(mod, mod.getChance())
+                ressources.add(mod)
                 extraRessources.add(mod, mod.getChance())
             }
         }

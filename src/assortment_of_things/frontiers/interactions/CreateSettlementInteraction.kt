@@ -1,16 +1,25 @@
 package assortment_of_things.frontiers.interactions
 
+import assortment_of_things.frontiers.FrontiersUtils
+import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.data.SiteData
 import assortment_of_things.frontiers.ui.SiteSelectionPickerElement
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
 import com.fs.starfarer.api.campaign.CustomDialogDelegate
-import com.fs.starfarer.api.campaign.CustomUIPanelPlugin
 import com.fs.starfarer.api.campaign.InteractionDialogPlugin
 import com.fs.starfarer.api.campaign.PlanetAPI
+import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.Stats
+import com.fs.starfarer.api.impl.campaign.ids.Submarkets
+import com.fs.starfarer.api.impl.campaign.submarkets.StoragePlugin
+import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
 
 class CreateSettlementInteraction : RATInteractionPlugin() {
@@ -38,6 +47,7 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
             Misc.getTextColor(), Misc.getHighlightColor(), "${planet.faction.displayNameWithArticle}'s", "800.000", "30%")
         }
 
+        textPanel.addPara("You can only own a single Settlement at a time.")
 
         populateOptions()
     }
@@ -45,11 +55,134 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
     fun populateOptions() {
         clearOptions()
         createOption("Select a site") {
-            dialog.showCustomDialog(600f, 600f, object: BaseCustomDialogDelegate() {
+
+            var selectedHexagon: SiteSelectionPickerElement.SiteHexagon? = null
+
+            dialog.showCustomDialog(1000f, 500f, object: BaseCustomDialogDelegate() {
+
+                var basePanel: CustomPanelAPI? = null
+                var panel: CustomPanelAPI? = null
+
+                var leftPanel: CustomPanelAPI? = null
+                var leftElement: TooltipMakerAPI? = null
+
                 override fun createCustomDialog(panel: CustomPanelAPI?, callback: CustomDialogDelegate.CustomDialogCallback?) {
-                    var element = panel!!.createUIElement(600f, 600f, false)
-                    panel.addUIElement(element)
-                    SiteSelectionPickerElement(interactionTarget as PlanetAPI, Global.getSettings().getSprite((interactionTarget as PlanetAPI).spec.texture), element, 600f, 600f)
+                    basePanel = panel
+                    recreatePanel()
+                }
+
+                fun recreatePanel() {
+
+                    if (panel != null) {
+                        basePanel!!.removeComponent(panel)
+                    }
+                    var width = basePanel!!.position.width
+                    var height = basePanel!!.position.height
+                    panel = basePanel!!.createCustomPanel(width, height, null)
+                    basePanel!!.addComponent(panel!!)
+
+                    var element = panel!!.createUIElement(1000f, height, false)
+                    panel!!.addUIElement(element)
+                    //element.addSectionHeading("Select a Site", Alignment.MID, 0f)
+
+                    leftPanel = Global.getSettings().createCustom(440f, height, null)
+                    element.addCustom(leftPanel, 0f)
+                    addLeftPanel(leftPanel!!)
+
+                    var rightPanel = Global.getSettings().createCustom(550f, height, null)
+                    element.addCustom(rightPanel, 0f)
+                    addRightPanel(rightPanel)
+
+                    rightPanel.position.rightOfMid(leftPanel, 10f)
+
+                }
+
+                fun addLeftPanel(leftPanel: CustomPanelAPI) {
+                    leftElement = leftPanel!!.createUIElement(440f, 500f, false)
+                    leftPanel!!.addUIElement(leftElement)
+                    leftElement!!.addSectionHeading("Info", Alignment.MID, 0f)
+                    leftElement!!.addSpacer(10f)
+                    leftElement!!.addPara("The selected site influences multiple characteristics about your settlement. " +
+                            "Most importantly it allows choosing a resources hotspot that can be extracted from for further income and effects for the settlement.", 0f)
+
+                    if (selectedHexagon == null) {
+                        leftElement!!.addSpacer(10f)
+                        leftElement!!.addPara("Select a site on the right for more information.", 0f)
+                        return
+                    }
+
+                    var site = selectedHexagon!!.site
+
+                    leftElement!!.addSpacer(10f)
+                    leftElement!!.addSectionHeading("Resource", Alignment.MID, 0f)
+                    leftElement!!.addSpacer(10f)
+                    Global.getSettings().loadTexture("graphics/icons/mission_marker.png")
+                    var ressource = FrontiersUtils.getRessource(site)
+                    if (ressource != null) {
+                        var img = leftElement!!.beginImageWithText(ressource.getIcon(), 48f)
+                        img.addPara("${ressource.getName()}: ${ressource.getDescription()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${ressource.getName()}")
+                        leftElement!!.addImageWithText(0f)
+
+                        if (ressource.canBeRefined()) {
+                            leftElement!!.addSpacer(10f)
+                            var img = leftElement!!.beginImageWithText(ressource.getRefinedIcon(), 48f)
+                            img.addPara("${ressource.getName()}: Can be refined.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${ressource.getName()}")
+                            leftElement!!.addImageWithText(0f)
+                        }
+                    }
+                    else {
+                        var img = leftElement!!.beginImageWithText("graphics/icons/mission_marker.png", 48f)
+                        img.addPara("This site has no resource.", 0f)
+                        leftElement!!.addImageWithText(0f)
+                    }
+
+                    leftElement!!.addSpacer(10f)
+                    leftElement!!.addSectionHeading("Modifiers", Alignment.MID, 0f)
+                    leftElement!!.addSpacer(10f)
+
+                    var img = leftElement!!.beginImageWithText("graphics/icons/mission_marker.png", 48f)
+                    img.addPara("Placeholder Modifier 1", 0f)
+                    leftElement!!.addImageWithText(0f)
+                    leftElement!!.addSpacer(10f)
+                    img = leftElement!!.beginImageWithText("graphics/icons/mission_marker.png", 48f)
+                    img.addPara("Placeholder Modifier 2", 0f)
+                    leftElement!!.addImageWithText(0f)
+                    leftElement!!.addSpacer(10f)
+                    img = leftElement!!.beginImageWithText("graphics/icons/mission_marker.png", 48f)
+                    img.addPara("Placeholder Modifier 3s", 0f)
+                    leftElement!!.addImageWithText(0f)
+                    leftElement!!.addSpacer(10f)
+                }
+
+                fun addRightPanel(rightPanel: CustomPanelAPI) {
+                    var element = rightPanel!!.createUIElement(550f, 500f, false)
+                    rightPanel!!.addUIElement(element)
+                    element.addSectionHeading("Site Selection", Alignment.MID, 0f)
+
+                    element.addSpacer(10f)
+
+                    var picker = SiteSelectionPickerElement(interactionTarget as PlanetAPI, Global.getSettings().getSprite((interactionTarget as PlanetAPI).spec.texture),
+                        element, 550f, 450f)
+
+                    picker.advance {
+
+
+                        var selected = picker.selectedHexagon
+                        //if (picker.hoveredHexagon != null) selected = picker.hoveredHexagon
+
+                        if (selected != selectedHexagon && selected != null) {
+                            selectedHexagon = selected
+                            leftPanel!!.removeComponent(leftElement)
+                            addLeftPanel(leftPanel!!)
+                        }
+                    }
+                }
+
+                override fun customDialogConfirm() {
+                    if (selectedHexagon != null) {
+                        selectedSite = selectedHexagon!!.site
+                        populateOptions()
+                    }
                 }
 
                 override fun getConfirmText(): String {
@@ -65,17 +198,72 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
             })
         }
 
-        if (selectedSite != null) {
+       /* if (selectedSite != null) {
             textPanel.addPara("Site Description")
-        }
+        }*/
 
         createOption("Establish the settlement") {
+            clearOptions()
 
+            var settlementDelegate = interactionTarget.starSystem.addCustomEntity("rat_frontiers_settlement_${Misc.genUID()}", "${interactionTarget.name} Settlement", "rat_frontiers_settlement", Factions.PLAYER)
+            //station!!.setCircularOrbit(system.center, MathUtils.getRandomNumberInRange(0f, 360f), 3000f, 180f)
+            settlementDelegate.setCircularOrbitPointingDown(interactionTarget, 0f, 0f, 360f)
+            settlementDelegate.memoryWithoutUpdate["\$abandonedStation"] = true
+            val market = Global.getFactory().createMarket("rat_station_commander_market", settlementDelegate.name, 3)
+            market.surveyLevel = MarketAPI.SurveyLevel.FULL
+            market.primaryEntity = settlementDelegate
+            market.factionId = Factions.PLAYER
+            market.addSubmarket(Submarkets.SUBMARKET_STORAGE)
+            market.isPlanetConditionMarketOnly = false
+           // (market.getSubmarket(Submarkets.SUBMARKET_STORAGE).plugin as StoragePlugin).setPlayerPaidToUnlock(false)
+            settlementDelegate.market = market
+            settlementDelegate.memoryWithoutUpdate.unset("\$tradeMode")
+
+            for (condition in interactionTarget.market.conditions) {
+                market.addCondition(condition.id)
+                var cond = market.getCondition(condition.id)
+                cond.isSurveyed = true
+            }
+
+            market.stability.modifyFlat("rat_base", 10f)
+            market.accessibilityMod.modifyFlat("rat_base", 0.40f)
+            market.stats.dynamic.getMod(Stats.GROUND_DEFENSES_MOD).modifyFlat("rat_base", 200f)
+
+            Global.getSector().memoryWithoutUpdate.set("\$rat_base_commander_station", settlementDelegate)
+
+            var settlementData = SettlementData(interactionTarget as PlanetAPI, settlementDelegate)
+            settlementData.location = selectedSite!!.location
+            settlementData.modifiers = selectedSite!!.modifierIDs
+            FrontiersUtils.getFrontiersData().activeSettlement = settlementData
+
+            textPanel.addPara("You lay claim to the site and order the construction of a new settlement on ${interactionTarget.name}. ")
+
+            textPanel.addPara("A fleet of dropships descends from your fleet towards the surface and establishes a provisional landing pad. " +
+                    "Over the following days a small but busy hub sets up around it, forming the fundementals for the new settlement.")
+
+            textPanel.addPara("Due to a settlements limited scope, it is capable of functioning mostly autonomously from locally acquired materials and small-scale trades with other planetary facilities or with traders within nearby space." +
+                    "")
+
+            createOption("Land at the Settlement") {
+                dialog.optionPanel.clearOptions()
+                //dialog.hideVisualPanel()
+
+                var data = FrontiersUtils.getSettlementData()
+                var newPlugin = SettlementInteraction(data)
+                newPlugin.dontReAddLargePlanet = true
+                newPlugin.previousPlugin = previousPlugin
+                dialog.plugin = newPlugin
+                dialog.interactionTarget = settlementDelegate
+                newPlugin.init(dialog)
+            }
         }
+
+        optionPanel.addOptionConfirmation("Establish the settlement",
+            "Are you sure you want to establish your settlement on ${interactionTarget.name}?", "Confirm", "Cancel")
+
         if (selectedSite == null) {
             optionPanel.setEnabled("Establish the settlement", false)
             optionPanel.setTooltip("Establish the settlement", "You need to select a site to establish the settlement.")
-
         }
 
         createOption("Back") {
