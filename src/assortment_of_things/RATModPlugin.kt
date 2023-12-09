@@ -234,7 +234,10 @@ class RATModPlugin : BaseModPlugin() {
     }
 
     fun initFrontiers() {
-        FrontiersUtils.setFrontiersActive()
+
+        if (RATSettings.enableFrontiers!!) {
+            FrontiersUtils.setFrontiersActive()
+        }
     }
 
     override fun onNewGame() {

@@ -15,6 +15,9 @@ Can be enabled mid-save",,,Expansion
 rat_relicsEnabled,"Enable ""Relics of the Past""",Boolean,true,,"Generates lots of unique loot, stations, interactions and planetary conditions across the sector, with most of it being discoverable in ruined systems.
 
 Enabling ""Relics of the Past"" generates content for both new and existing saves upon game load.",,,Expansion
+rat_frontiersEnabled,"Enable ""Frontiers"" (Beta)",Boolean,true,,"Enables the player to construct a ""Settlement"" on a planet. Settlements are intended for people that dont quite enjoy the colony gameplay loop, being both small in scale and requiring much less oversight.
+
+Enabling ""Frontiers"" enables it for the current save on load. Disabling it on an existing save has no effect.",,,Expansion
 rat_backgroundsEnabled,"Enable ""Backgrounds""",Boolean,true,,"Adds more unique backgrounds to Nexerelins ""Background"" system.
 
 Requires [Nexerelin v0.11.0x] or newer.",,,Expansion

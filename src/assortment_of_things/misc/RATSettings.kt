@@ -24,6 +24,9 @@ object RATSettings : LunaSettingsListener
     //Relics
     var relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
 
+    //Frontiers
+    var enableFrontiers = LunaSettings.getBoolean(modID, "rat_frontiersEnabled")
+
     //Backgrounds
     var backgroundsEnabled = LunaSettings.getBoolean(modID, "rat_backgroundsEnabled")
 
@@ -69,7 +72,11 @@ object RATSettings : LunaSettingsListener
 
         relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
 
+        enableFrontiers = LunaSettings.getBoolean(modID, "rat_frontiersEnabled")
+
         backgroundsEnabled = LunaSettings.getBoolean(modID, "rat_backgroundsEnabled")
+
+
 
         procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
         procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")

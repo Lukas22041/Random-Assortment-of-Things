@@ -1,10 +1,12 @@
 package assortment_of_things.frontiers.interactions.panels
 
 import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.ui.FacilityDisplayElement
 import assortment_of_things.frontiers.ui.SiteDisplayElement
 import assortment_of_things.misc.BaseCustomDialogDelegateWithRefresh
 import assortment_of_things.misc.BorderedPanelPlugin
 import assortment_of_things.misc.addWindow
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
 import com.fs.starfarer.api.campaign.CustomDialogDelegate
@@ -51,10 +53,10 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomDialogDel
         var rWidth = rightPanel.position.width
         var rHeight = rightPanel.position.height
 
-        var iconSize = 96f
+        var iconSize = 96f + 32f
 
         var centerX = rWidth / 2 - iconSize / 2
-        var centerY = rHeight / 2 - iconSize / 2 + 15
+        var centerY = (rHeight + 30) / 2 - iconSize / 2
 
         var element = rightPanel.createUIElement(rWidth, rHeight, false)
         rightPanel.addUIElement(element)
@@ -64,14 +66,21 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomDialogDel
         element.addSectionHeading("Facilities", Alignment.MID, 0f)
 
 
-        var siteIcon = SiteDisplayElement(data, Global.getSettings().getSprite(data.primaryPlanet.spec.texture), element, iconSize, iconSize)
+        var siteIcon = SiteDisplayElement(data, Global.getSettings().getSprite(data.primaryPlanet.spec.texture), element, iconSize , iconSize)
         siteIcon.position.inTL(centerX, centerY)
 
-        var radius = iconSize * 1.2f
+        var radius = iconSize + 16f
         var angle = 60f
         for (i in 0 until 6) {
 
-            var siteIcon = SiteDisplayElement(data, Global.getSettings().getSprite(data.primaryPlanet.spec.texture), element, iconSize, iconSize)
+            var iconSize = 96f
+
+            var centerX = rWidth / 2 - iconSize / 2
+            var centerY = (rHeight + 30) / 2 - iconSize / 2
+
+            var sprite = Global.getSettings().getAndLoadSprite("graphics/icons/frontiers/facilities/landing_pad.png")
+
+            var siteIcon = FacilityDisplayElement(data, sprite, element, iconSize, iconSize)
             var loc = MathUtils.getPointOnCircumference(Vector2f(centerX, centerY), radius, angle)
             siteIcon.position.inTL(loc.x, loc.y)
             siteIcon.onClick {

@@ -52,7 +52,6 @@ object ExoshipGenerator {
     fun addInventory(exoship: SectorEntityToken, name: String, data: ExoShipData) {
         var cargo = Global.getFactory().createCargo(true)
 
-        cargo.addCommodity("rat_exo_processor", MathUtils.getRandomNumberInRange(1f, 3f))
 
 
         if (name == "Nova") {
@@ -64,6 +63,8 @@ object ExoshipGenerator {
         }
 
         if (name == "Daybreak") {
+
+            cargo.addCommodity("rat_exo_processor", 2f)
 
             cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_autonomous_bays"), 1f)
             cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_overtuned_targeting"), 3f)

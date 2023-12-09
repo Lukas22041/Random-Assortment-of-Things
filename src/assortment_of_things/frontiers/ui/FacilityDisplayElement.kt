@@ -10,7 +10,7 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 
-class SiteDisplayElement(var site: SettlementData, var planetSprite: SpriteAPI, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class FacilityDisplayElement(var site: SettlementData, var industrySprite: SpriteAPI, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
     init {
         enableTransparency = true
@@ -48,11 +48,9 @@ class SiteDisplayElement(var site: SettlementData, var planetSprite: SpriteAPI, 
 
         startStencil()
 
-        planetSprite.alphaMult = alphaMult
-        planetSprite.setSize(1024f * 1.25f, 512f * 1.25f)
-        var siteLoc = MathUtils.getPointOnCircumference(Vector2f(x, y), site.distanceFromCenteer, site.angleFromCenter)
-        var loc = Vector2f(siteLoc.x + width / 2 , siteLoc.y + height / 2)
-        planetSprite.renderAtCenter(loc.x, loc.y)
+        industrySprite.alphaMult = alphaMult
+        industrySprite.setSize(100f, 100f)
+        industrySprite.renderAtCenter(position.centerX, position.centerY)
 
         endStencil()
 
