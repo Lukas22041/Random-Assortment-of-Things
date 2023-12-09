@@ -11,6 +11,8 @@ class BorderedPanelPlugin : CustomUIPanelPlugin {
     var position: PositionAPI? = null
 
     var renderBackground = false
+    var backgroundColor = Misc.getDarkPlayerColor()
+    var alpha = 0.2f
 
     override fun positionChanged(position: PositionAPI?) {
         this.position = position
@@ -18,7 +20,7 @@ class BorderedPanelPlugin : CustomUIPanelPlugin {
 
     override fun renderBelow(alphaMult: Float) {
         if (renderBackground && position != null) {
-            var color = Misc.getDarkPlayerColor()
+            var color = backgroundColor
 
             GL11.glPushMatrix()
             GL11.glDisable(GL11.GL_TEXTURE_2D)
@@ -31,7 +33,7 @@ class BorderedPanelPlugin : CustomUIPanelPlugin {
             GL11.glColor4f(color.red / 255f,
                 color.green / 255f,
                 color.blue / 255f,
-                color.alpha / 255f * (alphaMult * 0.2f))
+                color.alpha / 255f * (alphaMult * alpha))
 
             GL11.glRectf(position!!.x, position!!.y, position!!.x + position!!.width, position!!.y + position!!.height)
 

@@ -126,7 +126,7 @@ object FrontiersUtils {
         }
 
 
-        for (i in 0 until 20) {
+        for (i in 0 until 19) {
             var site = SiteData()
             var modifiers = WeightedRandomPicker<BaseSettlementModifier>()
 

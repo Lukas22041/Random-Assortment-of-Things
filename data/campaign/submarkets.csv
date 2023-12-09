@@ -1,0 +1,3 @@
+id,name,faction,desc,script,icon,order
+rat_settlement_storage,"Settlement
+Storage",player,Storage space for ships and cargo. Shared with colony storage if one is located on this planet.,assortment_of_things.frontiers.submarkets.SettlementStoragePlugin,graphics/factions/storage.png,1000

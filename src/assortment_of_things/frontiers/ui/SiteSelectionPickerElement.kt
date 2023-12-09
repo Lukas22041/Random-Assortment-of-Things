@@ -87,6 +87,12 @@ class SiteSelectionPickerElement(var planet: PlanetAPI?, var planetSprite: Sprit
 
                 site.location = Vector2f(x.toFloat(), y.toFloat())
 
+                var angleFromCenter = Misc.getAngleInDegrees(site.location, origin)
+                var distanceFromCenter = Misc.getDistance(site.location, origin)
+
+                site.angleFromCenter = angleFromCenter
+                site.distanceFromCenter = distanceFromCenter
+
                 index += 1
             }
         }
@@ -112,10 +118,12 @@ class SiteSelectionPickerElement(var planet: PlanetAPI?, var planetSprite: Sprit
                 var sprite = hexagon.ressourceSprite
                 var sil = hexagon.ressourceSpriteSil
 
+                sil!!.alphaMult = alphaMult
                 sil!!.color = Misc.getPositiveHighlightColor()
                 sil!!.setSize(65f, 65f)
                 sil!!.renderAtCenter(hexagon.site.location.x, hexagon.site.location.y)
 
+                sprite!!.alphaMult = alphaMult
                 sprite!!.color = Color(255, 255, 255)
                 sprite!!.setSize(60f, 60f)
                 sprite!!.renderAtCenter(hexagon.site.location.x, hexagon.site.location.y)

@@ -22,7 +22,7 @@ class ShouldShowSettlementOption : BaseCommandPlugin() {
             }
         }
 
-        return true
+        return false
     }
 
 }

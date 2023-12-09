@@ -11,5 +11,7 @@ class SettlementData(var primaryPlanet: PlanetAPI, var delegateEntity: SectorEnt
     var settlementStats = SettlementStats()
     var modifiers = ArrayList<String>()
     var location = Vector2f()
+    var angleFromCenter = 0f
+    var distanceFromCenteer = 0f
 
 }

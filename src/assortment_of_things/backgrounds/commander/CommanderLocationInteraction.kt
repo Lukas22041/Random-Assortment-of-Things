@@ -5,10 +5,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.campaign.econ.MarketAPI
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Sounds
-import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.campaign.ids.Submarkets
+import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.procgen.MarkovNames
 import com.fs.starfarer.api.impl.campaign.submarkets.StoragePlugin
 import com.fs.starfarer.api.ui.MarkerData
@@ -49,6 +46,7 @@ class CommanderLocationInteraction(var faction: FactionSpecAPI) : RATInteraction
                         market.factionId = Factions.PLAYER
                         market.addSubmarket(Submarkets.SUBMARKET_STORAGE)
                         market.isPlanetConditionMarketOnly = false
+                        market.addIndustry(Industries.SPACEPORT)
                         (market.getSubmarket(Submarkets.SUBMARKET_STORAGE).plugin as StoragePlugin).setPlayerPaidToUnlock(true)
                         station.market = market
                         station.memoryWithoutUpdate.unset("\$tradeMode")

@@ -6,5 +6,7 @@ class SiteData {
 
     var location = Vector2f()
     var modifierIDs = ArrayList<String>()
+    var angleFromCenter = 0f
+    var distanceFromCenter = 0f
 
 }

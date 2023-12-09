@@ -3,6 +3,7 @@ package assortment_of_things.frontiers.interactions
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.data.SiteData
+import assortment_of_things.frontiers.submarkets.SettlementStoragePlugin
 import assortment_of_things.frontiers.ui.SiteSelectionPickerElement
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
@@ -12,6 +13,7 @@ import com.fs.starfarer.api.campaign.InteractionDialogPlugin
 import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.Industries
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Submarkets
 import com.fs.starfarer.api.impl.campaign.submarkets.StoragePlugin
@@ -207,13 +209,16 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
 
             var settlementDelegate = interactionTarget.starSystem.addCustomEntity("rat_frontiers_settlement_${Misc.genUID()}", "${interactionTarget.name} Settlement", "rat_frontiers_settlement", Factions.PLAYER)
             //station!!.setCircularOrbit(system.center, MathUtils.getRandomNumberInRange(0f, 360f), 3000f, 180f)
-            settlementDelegate.setCircularOrbitPointingDown(interactionTarget, 0f, 0f, 360f)
+            settlementDelegate.setCircularOrbitPointingDown(interactionTarget, 1f, 1f, 360f)
             settlementDelegate.memoryWithoutUpdate["\$abandonedStation"] = true
             val market = Global.getFactory().createMarket("rat_station_commander_market", settlementDelegate.name, 3)
             market.surveyLevel = MarketAPI.SurveyLevel.FULL
             market.primaryEntity = settlementDelegate
             market.factionId = Factions.PLAYER
-            market.addSubmarket(Submarkets.SUBMARKET_STORAGE)
+            market.addIndustry(Industries.SPACEPORT)
+            //market.addSubmarket(Submarkets.SUBMARKET_STORAGE)
+            market.addSubmarket("rat_settlement_storage")
+            (market.getSubmarket("rat_settlement_storage").plugin as SettlementStoragePlugin).setPlayerPaidToUnlock(true)
             market.isPlanetConditionMarketOnly = false
            // (market.getSubmarket(Submarkets.SUBMARKET_STORAGE).plugin as StoragePlugin).setPlayerPaidToUnlock(false)
             settlementDelegate.market = market
@@ -229,10 +234,10 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
             market.accessibilityMod.modifyFlat("rat_base", 0.40f)
             market.stats.dynamic.getMod(Stats.GROUND_DEFENSES_MOD).modifyFlat("rat_base", 200f)
 
-            Global.getSector().memoryWithoutUpdate.set("\$rat_base_commander_station", settlementDelegate)
-
             var settlementData = SettlementData(interactionTarget as PlanetAPI, settlementDelegate)
             settlementData.location = selectedSite!!.location
+            settlementData.angleFromCenter = selectedSite!!.angleFromCenter
+            settlementData.distanceFromCenteer = selectedSite!!.distanceFromCenter
             settlementData.modifiers = selectedSite!!.modifierIDs
             FrontiersUtils.getFrontiersData().activeSettlement = settlementData
 
@@ -244,7 +249,7 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
             textPanel.addPara("Due to a settlements limited scope, it is capable of functioning mostly autonomously from locally acquired materials and small-scale trades with other planetary facilities or with traders within nearby space." +
                     "")
 
-            createOption("Land at the Settlement") {
+            createOption("Descend towards the settlement") {
                 dialog.optionPanel.clearOptions()
                 //dialog.hideVisualPanel()
 
