@@ -68,6 +68,7 @@ class RATModPlugin : BaseModPlugin() {
         LunaSettings.addSettingsListener(RATSettings)
 
         FrontiersUtils.loadModifiersFromCSV()
+        FrontiersUtils.loadFacilitiesFromCSV()
 
         ArtifactUtils.loadArtifactsFromCSV()
 

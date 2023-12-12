@@ -11,6 +11,8 @@ import com.fs.starfarer.api.campaign.CoreUITabId
 import com.fs.starfarer.api.campaign.CustomDialogDelegate
 import com.fs.starfarer.api.campaign.InteractionDialogPlugin
 import com.fs.starfarer.api.ui.CustomPanelAPI
+import lunalib.lunaExtensions.openLunaCustomPanel
+import lunalib.lunaUI.panel.LunaBaseCustomPanelPlugin
 import org.lwjgl.input.Keyboard
 
 class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
@@ -29,7 +31,7 @@ class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
 
         createOption("Manage Settlement") {
             var screen = SettlementManagementScreen(data)
-            dialog.showCustomDialog(1000f, 400f, screen)
+            dialog.showCustomVisualDialog(600f, 500f, screen)
         }
 
         createOption("Manage Storage") {

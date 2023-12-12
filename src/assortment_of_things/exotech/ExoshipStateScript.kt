@@ -17,6 +17,7 @@ import com.fs.starfarer.campaign.fleet.CampaignFleetView
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.caresAboutPlayerTransponder
 import org.magiclib.kotlin.getDistance
 import java.awt.Color
 import java.util.*
@@ -406,7 +407,7 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
        // fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER] = true
 
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_NO_JUMP] = true
-
+fleet.caresAboutPlayerTransponder()
         //RemnantSeededFleetManager.addRemnantInteractionConfig(fleet)
         val salvageSeed = random.nextLong()
         fleet.memoryWithoutUpdate[MemFlags.SALVAGE_SEED] = salvageSeed

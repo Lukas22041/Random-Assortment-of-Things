@@ -1,2 +1,7 @@
-id,name,desc,icon,plugin
-landing_pad,Landing Pad,"The settlements central piece of infrastructure. Handling both in- and export, and acting as the main hub of the settlement",graphics/icons/frontiers/facilities/landing_pad.png,
+id,name,descendDesc,icon,plugin
+landing_pad,Landing Pad,,graphics/icons/frontiers/facilities/landing_pad.png,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
+refinery,Refining,,graphics/icons/frontiers/facilities/refinery.png,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
+construction,Construction Halls,,graphics/icons/frontiers/facilities/construction.png,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
+market,Local Market,,graphics/icons/frontiers/facilities/market.png,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
+,,,,
+,,,,

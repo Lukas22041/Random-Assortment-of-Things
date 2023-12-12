@@ -54,7 +54,7 @@ class RATWindowPlugin(private var parentPanel: CustomPanelAPI, private var paren
                 }
                 else {
                     close()
-                    break
+                   // break
                 }
                 event.consume()
                 continue
@@ -64,6 +64,9 @@ class RATWindowPlugin(private var parentPanel: CustomPanelAPI, private var paren
                 {
                     event.consume()
                     continue
+                }
+                else {
+                    event.consume()
                 }
             }
         }

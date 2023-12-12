@@ -1,6 +1,8 @@
 package assortment_of_things.frontiers.ui
 
 import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.plugins.facilities.BaseSettlementFacility
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.ui.PositionAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -10,7 +12,9 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 
-class FacilityDisplayElement(var site: SettlementData, var industrySprite: SpriteAPI, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class FacilityDisplayElement(var site: SettlementData, var facilityPlugin: BaseSettlementFacility, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+
+    var facilitySprite = Global.getSettings().getSprite(facilityPlugin.getIcon())
 
     init {
         enableTransparency = true
@@ -48,9 +52,9 @@ class FacilityDisplayElement(var site: SettlementData, var industrySprite: Sprit
 
         startStencil()
 
-        industrySprite.alphaMult = alphaMult
-        industrySprite.setSize(100f, 100f)
-        industrySprite.renderAtCenter(position.centerX, position.centerY)
+        facilitySprite.alphaMult = alphaMult
+        facilitySprite.setSize(100f, 100f)
+        facilitySprite.renderAtCenter(position.centerX, position.centerY)
 
         endStencil()
 

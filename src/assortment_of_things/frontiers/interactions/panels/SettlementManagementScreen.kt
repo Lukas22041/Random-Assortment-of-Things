@@ -1,73 +1,53 @@
 package assortment_of_things.frontiers.interactions.panels
 
+import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.ui.FacilityDisplayElement
 import assortment_of_things.frontiers.ui.SiteDisplayElement
-import assortment_of_things.misc.BaseCustomDialogDelegateWithRefresh
-import assortment_of_things.misc.BorderedPanelPlugin
-import assortment_of_things.misc.addWindow
-import assortment_of_things.misc.getAndLoadSprite
+import assortment_of_things.misc.*
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
-import com.fs.starfarer.api.campaign.CustomDialogDelegate
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
-import com.fs.starfarer.api.util.Misc
-import lunalib.lunaExtensions.addLunaElement
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
-class SettlementManagementScreen(var data: SettlementData) : BaseCustomDialogDelegateWithRefresh() {
+class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDialogDelegateWithRefresh() {
+
+    var background = Global.getSettings().getAndLoadSprite("graphics/icons/frontiers/ManagementBackground.png")
 
     override fun onRefresh() {
 
-
-        var leftPanel = panel.createCustomPanel(width * 0.43f, height, null)
-        panel.addComponent(leftPanel)
-        addLeftPanel(leftPanel)
-
-        var rightPanel = panel.createCustomPanel(width * 0.54f, height, null)
-        panel.addComponent(rightPanel)
-        rightPanel.position.rightOfTop(leftPanel, width * 0.02f)
-        addRightPanel(rightPanel)
-
-
-       /* SiteDisplayElement(data, Global.getSettings().getSprite(data.primaryPlanet.spec.texture), element, 96f, 96f).apply {
-
-        }*/
-    }
-
-    fun addLeftPanel(leftPanel: CustomPanelAPI) {
-        var element = leftPanel.createUIElement(leftPanel.position.width, leftPanel.position.height, false)
-        leftPanel.addUIElement(element)
-        /*element.addLunaElement(leftPanel.position.width, leftPanel.position.height).apply {
-            enableTransparency = true
-        }*/
-        element.addSectionHeading("Settlement Info", Alignment.MID, 0f)
-
-    }
-
-    fun addRightPanel(rightPanel: CustomPanelAPI) {
-
-        var rWidth = rightPanel.position.width
-        var rHeight = rightPanel.position.height
+        var mainPanel = panel.createCustomPanel(width, height, null)
+        panel.addComponent(mainPanel)
+        addRightPanel(mainPanel)
 
         var iconSize = 96f + 32f
 
-        var centerX = rWidth / 2 - iconSize / 2
-        var centerY = (rHeight + 30) / 2 - iconSize / 2
+        var centerX = width / 2 - iconSize / 2
+        var centerY = (height) / 2 - iconSize / 2
 
-        var element = rightPanel.createUIElement(rWidth, rHeight, false)
-        rightPanel.addUIElement(element)
-       /* element.addLunaElement(rightPanel.position.width, rightPanel.position.height).apply {
-            enableTransparency = true
-        }*/
-        element.addSectionHeading("Facilities", Alignment.MID, 0f)
-
+        var element = mainPanel.createUIElement(width, height, false)
+        mainPanel.addUIElement(element)
+       // element.addSectionHeading("Manage Settlement", Alignment.MID, 0f)
 
         var siteIcon = SiteDisplayElement(data, Global.getSettings().getSprite(data.primaryPlanet.spec.texture), element, iconSize , iconSize)
         siteIcon.position.inTL(centerX, centerY)
+
+
+        siteIcon.renderBelow {
+            background.setSize(width, height)
+            background.alphaMult = it
+            background.renderAtCenter(siteIcon.position.centerX, siteIcon.position.centerY)
+        }
+
+        element.addTooltip(siteIcon.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT, 300f) { tooltip ->
+            tooltip.addSectionHeading("Settlement", Alignment.MID, 0f)
+            tooltip.addSpacer(3f)
+
+            tooltip.addPara("A small settlement established on ${data.primaryPlanet.name}.", 0f)
+        }
 
         var radius = iconSize + 16f
         var angle = 60f
@@ -75,16 +55,25 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomDialogDel
 
             var iconSize = 96f
 
-            var centerX = rWidth / 2 - iconSize / 2
-            var centerY = (rHeight + 30) / 2 - iconSize / 2
+            var centerX = width / 2 - iconSize / 2
+            var centerY = (height) / 2 - iconSize / 2
 
             var sprite = Global.getSettings().getAndLoadSprite("graphics/icons/frontiers/facilities/landing_pad.png")
 
-            var siteIcon = FacilityDisplayElement(data, sprite, element, iconSize, iconSize)
+            var plugin = FrontiersUtils.facilitySpecs.map { FrontiersUtils.getFacilityPlugin(it) }.random()
+
+            var facilityIcon = FacilityDisplayElement(data, plugin, element, iconSize, iconSize)
             var loc = MathUtils.getPointOnCircumference(Vector2f(centerX, centerY), radius, angle)
-            siteIcon.position.inTL(loc.x, loc.y)
-            siteIcon.onClick {
-                element.addWindow(siteIcon.elementPanel, 300f, 300f) {
+
+            element.addTooltip(facilityIcon.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT, 300f) { tooltip ->
+                tooltip.addSectionHeading("Facility", Alignment.MID, 0f)
+                tooltip.addSpacer(3f)
+            }
+
+
+            facilityIcon.position.inTL(loc.x, loc.y)
+            facilityIcon.onClick {
+                element.addWindow(facilityIcon.elementPanel, 300f, 300f) {
 
                     var plugin = BorderedPanelPlugin()
                     plugin.renderBackground = true
@@ -99,7 +88,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomDialogDel
                     windowHeaderEle.addSectionHeading("Select a Facility", Alignment.MID, 0f)
 
                     var ele = windowPanel.createUIElement(300f, 280f, true)
-                   // ele.addSectionHeading("Select a Facility", Alignment.MID, 0f)
+                    // ele.addSectionHeading("Select a Facility", Alignment.MID, 0f)
                     for (i in 0 until 50) {
                         ele.addPara("Test$i", 0f)
                     }
@@ -108,8 +97,14 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomDialogDel
             }
             angle += 60
         }
+
     }
 
+
+    fun addRightPanel(rightPanel: CustomPanelAPI) {
+
+
+    }
 
 
 }

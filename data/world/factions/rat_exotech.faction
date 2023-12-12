@@ -272,13 +272,14 @@
 		},
 	},		
 	"custom":{
-		"offersCommissions":true,
+		"offersCommissions":false,
 		"engagesInHostilities":true,
 		"buysAICores":true,
 		"AICoreValueMult":3,
 		"AICoreRepMult":0.5,
 		"buysSurveyData":true,
 		"hostilityImpactOnGrowth":true,
+		"allowsTransponderOffTrade":false,
 		"punitiveExpeditionData":{
 			"vsCompetitors":true,
 			"vsFreePort":false,

@@ -131,7 +131,7 @@ class ThestiaShipsystem : BaseShipSystemScript() {
                 aftershadow.velocity.set(Vector2f())
                 aftershadow.shipAI = null
 
-                var distance = aftershadow.customData.get("rat_shadow_distance") as Float
+                var distance = aftershadow.customData.get("rat_shadow_distance") as Float?: 0f
                 var angle =  Misc.getAngleInDegrees(original.location, aftershadow.location)
                 var location = MathUtils.getPointOnCircumference(original.location, distance * effectLevel, angle)
                 aftershadow.location.set(location)

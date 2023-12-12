@@ -1,19 +1,49 @@
 package assortment_of_things.frontiers
 
-import assortment_of_things.frontiers.data.FrontiersData
-import assortment_of_things.frontiers.data.SettlementModifierSpec
-import assortment_of_things.frontiers.data.SettlementData
-import assortment_of_things.frontiers.data.SiteData
+import assortment_of_things.frontiers.data.*
+import assortment_of_things.frontiers.plugins.facilities.BaseSettlementFacility
 import assortment_of_things.frontiers.plugins.modifiers.BaseSettlementModifier
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.PlanetAPI
+import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 
 object FrontiersUtils {
 
     var modifierSpecs = ArrayList<SettlementModifierSpec>()
+    var facilitySpecs = ArrayList<SettlementFacilitySpec>()
 
+
+    //Settlement
+
+
+    fun isFrontiersActive() : Boolean {
+        return Global.getSector().memoryWithoutUpdate.get("\$rat_frontiers_active") == true
+    }
+
+    fun setFrontiersActive() {
+        return Global.getSector().memoryWithoutUpdate.set("\$rat_frontiers_active", true)
+    }
+
+    fun getFrontiersData() : FrontiersData {
+        var data =  Global.getSector().memoryWithoutUpdate.get("\$rat_frontiers_data") as FrontiersData?
+        if (data == null) {
+            data = FrontiersData()
+            Global.getSector().memoryWithoutUpdate.set("\$rat_frontiers_data", data)
+        }
+        return data
+    }
+
+    fun hasSettlement() = getFrontiersData().activeSettlement != null
+
+    fun getSettlementData() : SettlementData {
+        return getFrontiersData().activeSettlement!!
+    }
+
+
+
+    //Modifiers
     fun loadModifiersFromCSV()
     {
         var CSV = Global.getSettings().getMergedSpreadsheetDataForMod("id", "data/campaign/frontiers/rat_frontiers_modifers.csv", "assortment_of_things")
@@ -52,51 +82,83 @@ object FrontiersUtils {
             var spec = SettlementModifierSpec(id, name, desc, isResource, canBeRefined, icon, iconRefined, iconSil, chance, combined, pluginPath)
             modifierSpecs.add(spec)
         }
-
-        var plugins = modifierSpecs.map { getPlugin(it) }
-        var text = ""
     }
 
-    fun getPlugin(spec: SettlementModifierSpec) : BaseSettlementModifier {
+    fun getModifierPlugin(spec: SettlementModifierSpec) : BaseSettlementModifier {
         var plugin = Global.getSettings().scriptClassLoader.loadClass(spec.plugin).newInstance() as BaseSettlementModifier
         plugin.spec = spec
         return plugin
     }
 
-    fun isFrontiersActive() : Boolean {
-        return Global.getSector().memoryWithoutUpdate.get("\$rat_frontiers_active") == true
-    }
-
-    fun setFrontiersActive() {
-        return Global.getSector().memoryWithoutUpdate.set("\$rat_frontiers_active", true)
-    }
-
-    fun getFrontiersData() : FrontiersData {
-        var data =  Global.getSector().memoryWithoutUpdate.get("\$rat_frontiers_data") as FrontiersData?
-        if (data == null) {
-            data = FrontiersData()
-            Global.getSector().memoryWithoutUpdate.set("\$rat_frontiers_data", data)
-        }
-        return data
-    }
-
-    fun hasSettlement() = getFrontiersData().activeSettlement != null
-
-    fun getSettlementData() : SettlementData {
-        return getFrontiersData().activeSettlement!!
-    }
 
     fun getModifierByID(id: String) : SettlementModifierSpec {
         return modifierSpecs.find { it.id == id }!!
     }
 
     fun getModifierPluginsByID(site: SiteData) : List<BaseSettlementModifier> {
-        return site.modifierIDs.map { getPlugin(getModifierByID(it)) }
+        return site.modifierIDs.map { getModifierPlugin(getModifierByID(it)) }
     }
 
     fun getRessource(site: SiteData): BaseSettlementModifier? {
         return getModifierPluginsByID(site).find { it.isRessource() }
     }
+
+
+
+
+    //Facilities
+    fun loadFacilitiesFromCSV()
+    {
+        var CSV = Global.getSettings().getMergedSpreadsheetDataForMod("id", "data/campaign/frontiers/rat_frontiers_facilities.csv", "assortment_of_things")
+
+        for (index in 0 until  CSV.length())
+        {
+            val row = CSV.getJSONObject(index)
+
+            val id = row.getString("id")
+            if (id.startsWith("#") || id == "") continue
+            val name = row.getString("name")
+            val descendDesc = row.getString("descendDesc")
+
+            val icon = row.getString("icon")
+
+            Global.getSettings().loadTexture(icon)
+
+            val pluginPath = row.getString("plugin")
+
+            var spec = SettlementFacilitySpec(id, name, descendDesc, icon, pluginPath)
+            facilitySpecs.add(spec)
+        }
+    }
+
+    fun getFacilityPlugin(spec: SettlementFacilitySpec) : BaseSettlementFacility {
+        var plugin = Global.getSettings().scriptClassLoader.loadClass(spec.plugin).newInstance() as BaseSettlementFacility
+        plugin.spec = spec
+        return plugin
+    }
+
+
+    fun getFacilityByID(id: String) : SettlementFacilitySpec {
+        return facilitySpecs.find { it.id == id }!!
+    }
+
+    fun getFacilityPluginsByID(list: List<String>) : List<BaseSettlementFacility> {
+
+
+        var multiplyBySelf: (Int) -> Unit = {
+            it * it
+        }
+
+        multiplyBySelf(5)
+
+        return list.map { getFacilityPlugin(getFacilityByID(it)) }
+    }
+
+
+
+
+
+
 
     fun getSiteData(planet: PlanetAPI) : List<SiteData> {
         var key = "\$rat_settlement_site_data"
@@ -111,7 +173,7 @@ object FrontiersUtils {
         var key = "\$rat_settlement_site_data"
         var sites = ArrayList<SiteData>()
 
-        var modifierPlugins = modifierSpecs.map { getPlugin(it) }
+        var modifierPlugins = modifierSpecs.map { getModifierPlugin(it) }
         modifierPlugins = modifierPlugins.filter { mod -> planet.market.conditions.any { mod.includeForCondition(it.id)  } }
 
         var ressources = WeightedRandomPicker<BaseSettlementModifier>()
