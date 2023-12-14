@@ -31,7 +31,7 @@ class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
 
         createOption("Manage Settlement") {
             var screen = SettlementManagementScreen(data)
-            dialog.showCustomVisualDialog(600f, 500f, screen)
+            dialog.showCustomVisualDialog(600f, 400f, screen)
         }
 
         createOption("Manage Storage") {

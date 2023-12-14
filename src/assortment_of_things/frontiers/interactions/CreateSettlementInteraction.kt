@@ -2,10 +2,12 @@ package assortment_of_things.frontiers.interactions
 
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.data.SettlementFacilitySlot
 import assortment_of_things.frontiers.data.SiteData
 import assortment_of_things.frontiers.submarkets.SettlementStoragePlugin
 import assortment_of_things.frontiers.ui.SiteSelectionPickerElement
 import assortment_of_things.misc.RATInteractionPlugin
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
 import com.fs.starfarer.api.campaign.CustomDialogDelegate
@@ -122,15 +124,23 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
                     var ressource = FrontiersUtils.getRessource(site)
                     if (ressource != null) {
                         var img = leftElement!!.beginImageWithText(ressource.getIcon(), 48f)
-                        img.addPara("${ressource.getName()}: ${ressource.getDescription()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${ressource.getName()}")
+                        img.addPara("${ressource.getName()}:\n${ressource.getDescription()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${ressource.getName()}")
                         leftElement!!.addImageWithText(0f)
 
                         if (ressource.canBeRefined()) {
                             leftElement!!.addSpacer(10f)
                             var img = leftElement!!.beginImageWithText(ressource.getRefinedIcon(), 48f)
-                            img.addPara("${ressource.getName()}: Can be refined.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${ressource.getName()}")
+                            img.addPara("Can be refined to increase the export value by 50%%. Requires the \"Refinery\" facility.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "50%", "Refinery")
                             leftElement!!.addImageWithText(0f)
                         }
+
+                        leftElement!!.addSpacer(10f)
+                        var creditIcon = Global.getSettings().getAndLoadSprite("graphics/icons/frontiers/credit_icon.png")
+                        var img2 = leftElement!!.beginImageWithText("graphics/icons/frontiers/credit_icon.png", 48f)
+                        var income = ressource.spec.conditions.get(interactionTarget.market.conditions.find { ressource.spec.conditions.contains(it.id) }!!.id)
+                        var incomeString = Misc.getDGSCredits(income!!.toFloat())
+                        img2.addPara("The richness of this sites resource hotspot promises an estimated income of ${incomeString} credits per month from exports (without refinement).", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${incomeString}")
+                        leftElement!!.addImageWithText(0f)
                     }
                     else {
                         var img = leftElement!!.beginImageWithText("graphics/icons/mission_marker.png", 48f)
@@ -138,7 +148,7 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
                         leftElement!!.addImageWithText(0f)
                     }
 
-                    leftElement!!.addSpacer(10f)
+                   /* leftElement!!.addSpacer(10f)
                     leftElement!!.addSectionHeading("Modifiers", Alignment.MID, 0f)
                     leftElement!!.addSpacer(10f)
 
@@ -153,7 +163,7 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
                     img = leftElement!!.beginImageWithText("graphics/icons/mission_marker.png", 48f)
                     img.addPara("Placeholder Modifier 3s", 0f)
                     leftElement!!.addImageWithText(0f)
-                    leftElement!!.addSpacer(10f)
+                    leftElement!!.addSpacer(10f)*/
                 }
 
                 fun addRightPanel(rightPanel: CustomPanelAPI) {
@@ -240,6 +250,16 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
             settlementData.distanceFromCenteer = selectedSite!!.distanceFromCenter
             settlementData.modifiers = selectedSite!!.modifierIDs
             FrontiersUtils.getFrontiersData().activeSettlement = settlementData
+
+            var firstSlot = true
+            for (i in 0 until 6) {
+                var slot = SettlementFacilitySlot(settlementData)
+                if (firstSlot) {
+                    firstSlot = false
+                    slot.installNewFacility("landing_pad")
+                }
+                settlementData.facilities.add(slot)
+            }
 
             textPanel.addPara("You lay claim to the site and order the construction of a new settlement on ${interactionTarget.name}. ")
 

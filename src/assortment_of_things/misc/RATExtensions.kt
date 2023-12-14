@@ -2,34 +2,33 @@ package assortment_of_things.misc
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.SettingsAPI
-import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
-import com.fs.starfarer.api.combat.MutableStat
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipHullSpecAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
-import com.fs.starfarer.api.combat.StatBonus
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.loading.VariantSource
-import com.fs.starfarer.api.ui.LabelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipLocation
 import com.fs.starfarer.api.ui.UIComponentAPI
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.loading.specs.HullVariantSpec
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
-import kotlin.random.Random
+
+var previouslyLoadedSprite = HashMap<String, Boolean>()
 
 fun Any.logger() : Logger {
     return Global.getLogger(this::class.java).apply { level = Level.ALL }
 }
 
 fun SettingsAPI.getAndLoadSprite(filename: String) : SpriteAPI{
-    this.loadTexture(filename)
+    if (!previouslyLoadedSprite.contains(filename)) {
+        this.loadTexture(filename)
+        previouslyLoadedSprite.put(filename, true)
+    }
     return this.getSprite(filename)
 }
 

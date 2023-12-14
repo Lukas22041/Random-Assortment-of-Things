@@ -2,6 +2,7 @@ package assortment_of_things.frontiers.ui
 
 import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.plugins.facilities.BaseSettlementFacility
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.ui.PositionAPI
@@ -12,15 +13,22 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 
-class FacilityDisplayElement(var site: SettlementData, var facilityPlugin: BaseSettlementFacility, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class FacilityDisplayElement(var settlement: SettlementData, var facilityPlugin: BaseSettlementFacility?, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
-    var facilitySprite = Global.getSettings().getSprite(facilityPlugin.getIcon())
+    var facilitySprite: SpriteAPI
 
     init {
         enableTransparency = true
         renderBackground = false
         renderBorder = false
         borderAlpha = 0.8f
+
+        if (facilityPlugin != null) {
+            facilitySprite = Global.getSettings().getSprite(facilityPlugin!!.getIcon())
+        }
+        else {
+            facilitySprite = Global.getSettings().getAndLoadSprite("graphics/icons/frontiers/facilities/no_facility.png")
+        }
 
         onClick {
             playClickSound()
@@ -53,8 +61,19 @@ class FacilityDisplayElement(var site: SettlementData, var facilityPlugin: BaseS
         startStencil()
 
         facilitySprite.alphaMult = alphaMult
+        if (facilityPlugin == null) {
+            facilitySprite.alphaMult = 0.4f * alphaMult
+        }
+
         facilitySprite.setSize(100f, 100f)
+        facilitySprite.setNormalBlend()
         facilitySprite.renderAtCenter(position.centerX, position.centerY)
+
+        if (isHovering) {
+            facilitySprite.alphaMult = 0.2f
+            facilitySprite.setAdditiveBlend()
+            facilitySprite.renderAtCenter(position.centerX, position.centerY)
+        }
 
         endStencil()
 

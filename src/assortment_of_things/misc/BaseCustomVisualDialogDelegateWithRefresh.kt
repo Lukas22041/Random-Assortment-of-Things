@@ -1,17 +1,10 @@
 package assortment_of_things.misc
 
-import assortment_of_things.frontiers.ui.SiteDisplayElement
-import assortment_of_things.misc.addWindow
-import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
-import com.fs.starfarer.api.campaign.CustomDialogDelegate
 import com.fs.starfarer.api.campaign.CustomUIPanelPlugin
 import com.fs.starfarer.api.campaign.CustomVisualDialogDelegate
 import com.fs.starfarer.api.ui.CustomPanelAPI
-import lunalib.lunaUI.panel.LunaBaseCustomPanelPlugin
-import org.lwjgl.util.vector.Vector2f
 
-abstract class BaseCustomVisualDialogDelegateWithRefresh : CustomVisualDialogDelegate {
+abstract class BaseCustomVisualDialogDelegateWithRefresh(var background: String? = null) : CustomVisualDialogDelegate {
 
     private lateinit var basePanel: CustomPanelAPI
     lateinit var panel: CustomPanelAPI
@@ -38,7 +31,7 @@ abstract class BaseCustomVisualDialogDelegateWithRefresh : CustomVisualDialogDel
     }
 
      override fun getCustomPanelPlugin(): CustomUIPanelPlugin? {
-         var plugin = PanelWithCloseButton()
+         var plugin = PanelWithCloseButtonAndBackground(background)
          plugin.onClosePress = {
              callbacks.dismissDialog()
          }

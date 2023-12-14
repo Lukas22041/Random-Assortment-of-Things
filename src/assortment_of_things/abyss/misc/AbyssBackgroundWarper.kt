@@ -43,7 +43,10 @@ class AbyssBackgroundWarper(var system: LocationAPI, var chunks: Int, var speedM
     }
 
     override fun advance(amount: Float) {
+        if (Global.getSector().playerFleet.containingLocation != system) return
+
         super.advance(amount)
+
 
         for (var2 in 0 until this.verticesWide) {
             for (var3 in 0 until this.verticesTall) {

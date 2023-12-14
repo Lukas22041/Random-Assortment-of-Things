@@ -103,6 +103,11 @@ object FrontiersUtils {
         return getModifierPluginsByID(site).find { it.isRessource() }
     }
 
+    fun getRessource(data: SettlementData): BaseSettlementModifier? {
+        var spec = data.modifiers.map { id -> FrontiersUtils.getModifierByID(id) }.find { it.isResource } ?: return null
+        return FrontiersUtils.getModifierPlugin(spec)
+    }
+
 
 
 
@@ -118,15 +123,17 @@ object FrontiersUtils {
             val id = row.getString("id")
             if (id.startsWith("#") || id == "") continue
             val name = row.getString("name")
+            val short = row.getString("shortDesc")
             val descendDesc = row.getString("descendDesc")
 
             val icon = row.getString("icon")
+            val cost = row.getString("cost").toFloat()
 
             Global.getSettings().loadTexture(icon)
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SettlementFacilitySpec(id, name, descendDesc, icon, pluginPath)
+            var spec = SettlementFacilitySpec(id, name, short, descendDesc, icon, cost, pluginPath)
             facilitySpecs.add(spec)
         }
     }
@@ -152,6 +159,10 @@ object FrontiersUtils {
         multiplyBySelf(5)
 
         return list.map { getFacilityPlugin(getFacilityByID(it)) }
+    }
+
+    fun getAllFacilityPlugins() : List<BaseSettlementFacility> {
+        return facilitySpecs.map { getFacilityPlugin(it) }
     }
 
 

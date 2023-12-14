@@ -2,20 +2,27 @@ package assortment_of_things.misc
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BaseCustomUIPanelPlugin
+import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.PositionAPI
-import lunalib.backend.scripts.CombatHandler
-import lunalib.backend.ui.components.base.LunaUIBaseElement
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
 import org.lwjgl.util.vector.Vector2f
 
-class PanelWithCloseButton : BaseCustomUIPanelPlugin() {
+class PanelWithCloseButtonAndBackground(var background: String? = null) : BaseCustomUIPanelPlugin() {
 
     private var closeSpriteOff = Global.getSettings().getSprite("ui", "tripad_power_button")
     private var closeSpriteOn = Global.getSettings().getSprite("ui", "tripad_power_button_glow")
     private var closeSpriteBackground = Global.getSettings().getSprite("ui", "tripad_power_button_slot")
     private var buttonAlpha = 0f
+
+    var backgroundSprite: SpriteAPI? = null
+
+    init {
+        if (background != null) {
+            backgroundSprite = Global.getSettings().getAndLoadSprite(background!!)
+        }
+    }
 
     var position: PositionAPI? = null
     private var buttonLocation = Vector2f(Global.getSettings().screenWidth - closeSpriteOff.width, Global.getSettings().screenHeight - closeSpriteOff.height)
@@ -59,6 +66,21 @@ class PanelWithCloseButton : BaseCustomUIPanelPlugin() {
     override fun render(alphaMult: Float) {
         super.render(alphaMult)
 
+
+    }
+
+    override fun renderBelow(alphaMult: Float) {
+        super.renderBelow(alphaMult)
+
+        if (position == null) return
+
+        if (backgroundSprite != null) {
+            backgroundSprite!!.setSize(position!!.width, position!!.height)
+            backgroundSprite!!.alphaMult = alphaMult
+            backgroundSprite!!.renderAtCenter(position!!.centerX, position!!.centerY)
+        }
+
+
         closeSpriteBackground.render(buttonLocation.x - 32f, buttonLocation.y)
         closeSpriteBackground.alphaMult = alphaMult
 
@@ -67,10 +89,6 @@ class PanelWithCloseButton : BaseCustomUIPanelPlugin() {
 
         closeSpriteOn.alphaMult = buttonAlpha * alphaMult
         closeSpriteOn.render(buttonLocation.x, buttonLocation.y)
-    }
-
-    override fun renderBelow(alphaMult: Float) {
-        super.renderBelow(alphaMult)
     }
 
 

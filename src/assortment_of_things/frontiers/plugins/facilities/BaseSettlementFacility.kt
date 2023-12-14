@@ -10,7 +10,7 @@ abstract class BaseSettlementFacility {
 
     lateinit var spec: SettlementFacilitySpec
 
-    open fun getID() : String {
+    fun getID() : String {
         return spec.id
     }
 
@@ -18,18 +18,31 @@ abstract class BaseSettlementFacility {
         return spec.name
     }
 
+    open fun getShortDesc() : String {
+        return spec.shortDesc
+    }
+
     open fun getIcon(): String {
         return spec.icon
     }
 
-    open fun canBeBuild(data: SettlementData): Boolean {
+    open fun canBeBuild(data: SettlementData) : Boolean {
         return true
     }
 
-    abstract fun getColor() : Color
+    open fun getCost(data: SettlementData) : Float {
+        return spec.cost
+    }
+
+    open fun canNotBeBuildReason(tooltip: TooltipMakerAPI, data: SettlementData) {
+
+    }
 
     abstract fun addDescriptionToTooltip(tooltip: TooltipMakerAPI, data: SettlementData)
 
     abstract fun apply(data: SettlementData)
+
+    abstract fun unapply(data: SettlementData)
+
 
 }

@@ -36,7 +36,7 @@ fun TooltipMakerAPI.addWindow(to: UIPanelAPI, width: Float, height: Float, lambd
     plugin.panel = panel
     parentPanel.addComponent(panel)
 
-    parentPanel.position.rightOfTop(to, 20f)
+    parentPanel.position.rightOfMid(to, 20f)
 
     lambda(plugin)
 }

@@ -1,7 +1,8 @@
-id,name,descendDesc,icon,plugin
-landing_pad,Landing Pad,,graphics/icons/frontiers/facilities/landing_pad.png,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
-refinery,Refining,,graphics/icons/frontiers/facilities/refinery.png,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
-construction,Construction Halls,,graphics/icons/frontiers/facilities/construction.png,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
-market,Local Market,,graphics/icons/frontiers/facilities/market.png,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
-,,,,
-,,,,
+id,name,shortDesc,descendDesc,icon,cost,plugin
+landing_pad,Landing Pad,,,graphics/icons/frontiers/facilities/landing_pad.png,0,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
+refinery,Refining,Refines the settlements resource to increase its export value.,,graphics/icons/frontiers/facilities/refinery.png,100000,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
+ship_construction,Shipyard,Enables the production of a small amount of known ship hulls.,,graphics/icons/frontiers/facilities/ship_construction.png,75000,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
+weapon_construction,Ordnance Manufacturing,The necessary manufacturing halls for assembling weapons & fighters.,,graphics/icons/frontiers/facilities/weapon_construction.png,75000,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
+stockpile,Stockpile,Gathers a small amount of commodities.,,graphics/icons/frontiers/facilities/stockpile.png,75000,assortment_of_things.frontiers.plugins.facilities.SpaceportFacility
+,,,,,,
+,,,,,,
