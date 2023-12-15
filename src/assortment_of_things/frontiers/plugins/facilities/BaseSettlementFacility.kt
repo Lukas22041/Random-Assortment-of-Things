@@ -34,6 +34,10 @@ abstract class BaseSettlementFacility {
         return spec.cost
     }
 
+    open fun getBuildTime(data: SettlementData) : Int {
+        return spec.buildTime
+    }
+
     open fun canNotBeBuildReason(tooltip: TooltipMakerAPI, data: SettlementData) {
 
     }
@@ -43,6 +47,8 @@ abstract class BaseSettlementFacility {
     abstract fun apply(data: SettlementData)
 
     abstract fun unapply(data: SettlementData)
+
+    abstract fun advance(data: SettlementData, amount: Float)
 
 
 }

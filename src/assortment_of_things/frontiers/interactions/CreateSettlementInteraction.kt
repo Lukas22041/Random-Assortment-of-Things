@@ -4,6 +4,7 @@ import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.data.SettlementFacilitySlot
 import assortment_of_things.frontiers.data.SiteData
+import assortment_of_things.frontiers.scripts.SettlementManager
 import assortment_of_things.frontiers.submarkets.SettlementStoragePlugin
 import assortment_of_things.frontiers.ui.SiteSelectionPickerElement
 import assortment_of_things.misc.RATInteractionPlugin
@@ -17,13 +18,10 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Industries
 import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.campaign.ids.Submarkets
-import com.fs.starfarer.api.impl.campaign.submarkets.StoragePlugin
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
 
 class CreateSettlementInteraction : RATInteractionPlugin() {
@@ -258,8 +256,19 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
                     firstSlot = false
                     slot.installNewFacility("landing_pad")
                 }
-                settlementData.facilities.add(slot)
+                settlementData.facilitySlots.add(slot)
             }
+
+            if (!Global.getSector().hasScript(SettlementManager::class.java)) {
+                Global.getSector().removeScriptsOfClass(SettlementManager::class.java)
+                Global.getSector().listenerManager.removeListenerOfClass(SettlementManager::class.java)
+            }
+
+            var listener = SettlementManager(settlementData)
+            Global.getSector().addScript(listener)
+            Global.getSector().listenerManager.addListener(listener)
+            settlementData.mananger = listener
+
 
             textPanel.addPara("You lay claim to the site and order the construction of a new settlement on ${interactionTarget.name}. ")
 

@@ -123,6 +123,7 @@ object FrontiersUtils {
             val id = row.getString("id")
             if (id.startsWith("#") || id == "") continue
             val name = row.getString("name")
+            val buildTime = row.getString("buildTime").toInt()
             val short = row.getString("shortDesc")
             val descendDesc = row.getString("descendDesc")
 
@@ -133,7 +134,7 @@ object FrontiersUtils {
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SettlementFacilitySpec(id, name, short, descendDesc, icon, cost, pluginPath)
+            var spec = SettlementFacilitySpec(id, name, buildTime, short, descendDesc, icon, cost, pluginPath)
             facilitySpecs.add(spec)
         }
     }

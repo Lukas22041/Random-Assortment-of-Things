@@ -73,7 +73,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
             tooltip.addSpacer(10f)
 
             if (resource != null) {
-                tooltip.addPara("The settlement harvests from a local hotspot of ${resource.getName()} for more substantual profits.",
+                tooltip.addPara("The settlement harvests from a local hotspot of ${resource.getName()} for more substantual gains.",
                     0f, Misc.getTextColor(), Misc.getHighlightColor(), "${resource.getName()}")
             } else {
                 tooltip.addPara("However, the settlement is not nearby any resource hotspot of significance",
@@ -118,7 +118,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
     fun displayFacilityIcons(element: TooltipMakerAPI, centerSize: Float) {
         var radius = centerSize + 16f
         var angle = -60f
-        var slots = data.facilities
+        var slots = data.facilitySlots
         for (slot in slots) {
 
             var facilitySize = 96f
@@ -130,7 +130,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
             var plugin = slot.getFacilityPlugin()
 
 
-            var facilityIcon = FacilityDisplayElement(data, plugin, element, facilitySize, facilitySize)
+            var facilityIcon = FacilityDisplayElement(data, slot, plugin, element, facilitySize, facilitySize)
             var loc = MathUtils.getPointOnCircumference(Vector2f(centerX, centerY), radius, angle)
 
             element.addTooltip(facilityIcon.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT, 400f) { tooltip ->
@@ -145,7 +145,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                 }
                 else if (plugin.getID() == "landing_pad") {
                     var img = tooltip.beginImageWithText(plugin.getIcon(), 48f)
-                    var label = img.addPara("This plot of land is home to the ${plugin.getName()}. As it is vital to the settlements infrastructure, it can not be removed or replaced.", 0f)
+                    var label = img.addPara("This plot is reserved for the \"${plugin.getName()}\". As it is vital to the settlements infrastructure, it can not be removed or replaced.", 0f)
 
                     label.setHighlightColors(Misc.getHighlightColor(), Misc.getNegativeHighlightColor())
                     label.setHighlight("${plugin.getName()}", "it can not be removed or replaced.")
@@ -159,7 +159,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                 }
                 else {
                     var img = tooltip.beginImageWithText(plugin.getIcon(), 48f)
-                    img.addPara("This plot of land is home to a ${plugin.getName()}. Left-Click to remove or replace it with another facility.", 0f,
+                    img.addPara("This plot is reserved by the \"${plugin.getName()}\" facility. Left-Click to remove or replace it with another facility.", 0f,
                             Misc.getTextColor(), Misc.getHighlightColor(), "${plugin.getName()}", "Left-Click")
                     tooltip.addImageWithText(0f)
 
@@ -209,9 +209,9 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
         var element = windowPanel.createUIElement(popupWidth, popupHeight - 20, true)
 
         var plugins = FrontiersUtils.getAllFacilityPlugins()
-            .filter { plugin -> data.facilities.none { facilities -> facilities.facilityID == plugin.getID() } && plugin.getID() != "landing_pad" }
+            .filter { plugin -> data.facilitySlots.none { facilities -> facilities.facilityID == plugin.getID() } && plugin.getID() != "landing_pad" }
 
-        plugins = plugins.sortedBy { it.canBeBuild(data) }
+        plugins = plugins.sortedByDescending { it.canBeBuild(data) && it.getCost(data) <= Global.getSector().playerFleet.cargo.credits.get() }
 
         element.addSpacer(5f)
 
@@ -222,7 +222,9 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                 enableTransparency = true
                 borderAlpha = 0.2f
                 backgroundAlpha = 0.4f
-                addText("Click to remove current facility", Misc.getBrightPlayerColor())
+                var text = "Click to remove the current facility"
+                if (slot.isBuilding) text = "Cancel construction & refund credits"
+                addText(text, Misc.getBrightPlayerColor())
                 centerText()
 
                 onHoverEnter {
@@ -234,6 +236,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                 }
 
                 onClick {
+                    if (!it.isLMBEvent) return@onClick
                     playClickSound()
                     playSound(Sounds.STORY_POINT_SPEND, 1f, 1f)
                     slot.removeCurrentFacility()
@@ -256,16 +259,28 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
 
                 var inner = innerElement
 
-                var cost = Misc.getDGSCredits(plugin.spec.cost)
+                var cost = Misc.getDGSCredits(plugin.getCost(data))
 
                 inner.addSpacer(5f)
+
+                var cantBeConstructed = plugin.getCost(data) >= Global.getSector().playerFleet.cargo.credits.get()
+
+                var color = Misc.getHighlightColor()
+                if (cantBeConstructed) {
+                    color = Misc.getNegativeHighlightColor()
+                }
+
                 var text = inner.beginImageWithText(plugin.getIcon(), 48f)
-                text.addPara("${plugin.getName()} - $cost \n${plugin.getShortDesc()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${plugin.getName()}", "$cost")
+                text.addPara("${plugin.getName()} - $cost \n${plugin.getShortDesc()}", 0f, Misc.getTextColor(), color, "${plugin.getName()}", "$cost")
                 inner.addImageWithText(0f)
 
                 onClick {
+                    if (!it.isLMBEvent || cantBeConstructed) return@onClick
                     playClickSound()
                     playSound(Sounds.STORY_POINT_SPEND, 1f, 1f)
+                    Global.getSector().playerFleet.cargo.credits.subtract(plugin.getCost(data))
+                    var formated = Misc.getDGSCredits(plugin.getCost(data))
+                    Global.getSector().campaignUI.messageDisplay.addMessage("Spend $formated credits", Misc.getBasePlayerColor(), "$formated", Misc.getHighlightColor())
                     slot.installNewFacility(plugin.getID())
                     window.close()
                     refresh()
@@ -277,6 +292,17 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                 }
                 onHoverExit {
                     backgroundAlpha = 0.3f
+                }
+
+                element.addTooltip(elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 400f) {tooltip ->
+                    tooltip.addTitle("${plugin.getName()}")
+                    tooltip.addSpacer(10f)
+                    plugin.addDescriptionToTooltip(tooltip, data)
+                    tooltip.addSpacer(10f)
+                    var days = plugin.getBuildTime(data)
+                    var playerCash =  Misc.getDGSCredits( Global.getSector().playerFleet.cargo.credits.get())
+                    tooltip.addPara("$cost credits and $days days to build. You have $playerCash.",
+                        0f, Misc.getTextColor(), Misc.getHighlightColor(), "$cost", "$days", "$playerCash")
                 }
             }
             element.addSpacer(10f)

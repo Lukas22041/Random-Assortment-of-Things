@@ -1,5 +1,6 @@
 package assortment_of_things.frontiers.data
 
+import assortment_of_things.frontiers.scripts.SettlementManager
 import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import org.lwjgl.util.vector.Vector2f
@@ -8,11 +9,12 @@ class SettlementData(var primaryPlanet: PlanetAPI, var delegateEntity: SectorEnt
 
     var name = ""
     var description = ""
-    var settlementStats = SettlementStats()
+    var stats = SettlementStats()
     var modifiers = ArrayList<String>()
     var location = Vector2f()
     var angleFromCenter = 0f
     var distanceFromCenteer = 0f
-    var facilities = ArrayList<SettlementFacilitySlot>()
+    var facilitySlots = ArrayList<SettlementFacilitySlot>()
+    lateinit var mananger: SettlementManager
 
 }

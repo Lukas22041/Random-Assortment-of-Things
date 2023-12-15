@@ -14,6 +14,10 @@ class SpaceportFacility : BaseSettlementFacility() {
 
     }
 
+    override fun advance(data: SettlementData, amount: Float) {
+
+    }
+
 
     override fun addDescriptionToTooltip(tooltip: TooltipMakerAPI, data: SettlementData) {
         tooltip.addPara("The landing pad is the heart of the settlement. Every day small dropships come by, landing with new supplies, and leaving with the settlements exports. " +

@@ -1,10 +1,13 @@
 package assortment_of_things.frontiers.ui
 
 import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.data.SettlementFacilitySlot
 import assortment_of_things.frontiers.plugins.facilities.BaseSettlementFacility
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.graphics.SpriteAPI
+import com.fs.starfarer.api.ui.Fonts
+import com.fs.starfarer.api.ui.LabelAPI
 import com.fs.starfarer.api.ui.PositionAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -13,9 +16,10 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 
-class FacilityDisplayElement(var settlement: SettlementData, var facilityPlugin: BaseSettlementFacility?, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class FacilityDisplayElement(var settlement: SettlementData, var slot: SettlementFacilitySlot, var facilityPlugin: BaseSettlementFacility?, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
     var facilitySprite: SpriteAPI
+    var daysPara: LabelAPI? = null
 
     init {
         enableTransparency = true
@@ -30,6 +34,15 @@ class FacilityDisplayElement(var settlement: SettlementData, var facilityPlugin:
             facilitySprite = Global.getSettings().getAndLoadSprite("graphics/icons/frontiers/facilities/no_facility.png")
         }
 
+        innerElement.setParaFont(Fonts.INSIGNIA_LARGE)
+        //daysPara = innerElement.addPara("${MathUtils.getRandomNumberInRange(20, 90)} Days", 0f, Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
+        daysPara = innerElement.addPara("", 0f, Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
+        if (slot.isBuilding) {
+            daysPara?.text = "${slot.daysRemaining.toInt()} days"
+            daysPara!!.position.inTL(width / 2 - daysPara!!.computeTextWidth(daysPara!!.text) / 2, height / 2 - daysPara!!.computeTextHeight(daysPara!!.text) / 2)
+        }
+
+
         onClick {
             playClickSound()
         }
@@ -43,6 +56,12 @@ class FacilityDisplayElement(var settlement: SettlementData, var facilityPlugin:
     override fun positionChanged(position: PositionAPI?) {
         super.positionChanged(position)
 
+        if (position == null) return
+        if (daysPara != null) {
+            daysPara!!.position.inTL(width / 2 - daysPara!!.computeTextWidth(daysPara!!.text) / 2, height / 2 - daysPara!!.computeTextHeight(daysPara!!.text) / 2)
+        }
+
+
         bounds = ArrayList<Vector2f>()
 
         var radius = width * 0.5f
@@ -55,7 +74,7 @@ class FacilityDisplayElement(var settlement: SettlementData, var facilityPlugin:
 
 
 
-    override fun render(alphaMult: Float) {
+    override fun renderBelow(alphaMult: Float) {
         super.render(alphaMult)
 
         startStencil()
@@ -63,6 +82,10 @@ class FacilityDisplayElement(var settlement: SettlementData, var facilityPlugin:
         facilitySprite.alphaMult = alphaMult
         if (facilityPlugin == null) {
             facilitySprite.alphaMult = 0.4f * alphaMult
+        }
+
+        if (slot.isBuilding) {
+            facilitySprite.alphaMult = 0.3f * alphaMult
         }
 
         facilitySprite.setSize(100f, 100f)
@@ -76,6 +99,10 @@ class FacilityDisplayElement(var settlement: SettlementData, var facilityPlugin:
         }
 
         endStencil()
+    }
+
+    override fun render(alphaMult: Float) {
+        super.render(alphaMult)
 
         var c = Misc.getDarkPlayerColor().brighter().brighter()
         var alpha = 0.8f
@@ -111,10 +138,7 @@ class FacilityDisplayElement(var settlement: SettlementData, var facilityPlugin:
 
         GL11.glEnd()
         GL11.glPopMatrix()
-
-
     }
-
 
 
     fun startStencil() {
