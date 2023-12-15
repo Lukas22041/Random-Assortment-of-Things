@@ -62,23 +62,23 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
             tooltip.addSpacer(10f)
 
             var resource = FrontiersUtils.getRessource(data)
-            var baseIncome = Misc.getDGSCredits(5000f)
+
+            var income = data.stats.income.modifiedValue
+            var incomeString = Misc.getDGSCredits(income)
 
             tooltip.addPara("A small settlement established on ${data.primaryPlanet.name}.", 0f)
             tooltip.addSpacer(10f)
             tooltip.addPara("The settlement acts autonomously in most of its duties. " +
-                    "It harvests minor sites of local resources and performs trades to make it from day to day, resuling in an average net income of $baseIncome credits.",
-                0f, Misc.getTextColor(), Misc.getHighlightColor(), "$baseIncome")
+                    "The settlement currently makes $incomeString credits per month from its ground operations.",
+                0f, Misc.getTextColor(), Misc.getHighlightColor(), "$incomeString")
 
-            tooltip.addSpacer(10f)
-
-            if (resource != null) {
+           /* if (resource != null) {
                 tooltip.addPara("The settlement harvests from a local hotspot of ${resource.getName()} for more substantual gains.",
                     0f, Misc.getTextColor(), Misc.getHighlightColor(), "${resource.getName()}")
             } else {
                 tooltip.addPara("However, the settlement is not nearby any resource hotspot of significance",
                     0f, Misc.getTextColor(), Misc.getHighlightColor())
-            }
+            }*/
 
             if (resource != null) {
                 tooltip.addSpacer(10f)
@@ -104,10 +104,6 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                 img2.addPara("The richness of this sites resource hotspot promises an estimated income of ${incomeString} credits per month from exports (without refinement).", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${incomeString}")
                 tooltip!!.addImageWithText(0f)
             }
-
-            tooltip.addSpacer(10f)
-            tooltip.addSectionHeading("Info", Alignment.MID, 0f)
-            tooltip.addSpacer(10f)
 
 
 
@@ -261,13 +257,14 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
 
                 var cost = Misc.getDGSCredits(plugin.getCost())
 
-                inner.addSpacer(5f)
+                inner.addSpacer(6f)
 
-                var cantBeConstructed = plugin.getCost() >= Global.getSector().playerFleet.cargo.credits.get()
+                var cantBeConstructed = plugin.getCost() >= Global.getSector().playerFleet.cargo.credits.get() || !plugin.canBeBuild()
 
                 var color = Misc.getHighlightColor()
                 if (cantBeConstructed) {
                     color = Misc.getNegativeHighlightColor()
+                    backgroundColor = Misc.getNegativeHighlightColor().darker().darker().darker()
                 }
 
                 var text = inner.beginImageWithText(plugin.getIcon(), 48f)

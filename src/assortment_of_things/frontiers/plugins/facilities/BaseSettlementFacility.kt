@@ -87,7 +87,7 @@ abstract class BaseSettlementFacility() {
         return false
     }
 
-    open fun addToMonthlyCargo(): CargoAPI? {
+    open fun addToMonthlyCargo(current: CargoAPI): CargoAPI? {
         return null
     }
 

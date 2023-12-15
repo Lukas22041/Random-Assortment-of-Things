@@ -271,6 +271,11 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
                 var plugin = FrontiersUtils.getModifierPlugin(spec)
                 plugin.settlement = settlementData
                 settlementData.modifiers.add(plugin)
+
+                if (plugin.isRessource()) {
+                    settlementData.stats.income.baseValue = spec.getIncomeForCondition(settlementData.primaryPlanet.market.conditions).toFloat() + 5000
+                }
+
                 plugin.apply()
             }
 

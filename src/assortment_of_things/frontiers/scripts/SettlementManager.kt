@@ -2,7 +2,11 @@ package assortment_of_things.frontiers.scripts
 
 import assortment_of_things.frontiers.data.SettlementData
 import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.econ.MonthlyReport
 import com.fs.starfarer.api.campaign.listeners.EconomyTickListener
+import com.fs.starfarer.api.impl.campaign.shared.SharedData
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 
 class SettlementManager(var settlement: SettlementData) : EveryFrameScript, EconomyTickListener {
 
@@ -41,7 +45,38 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
     }
 
     override fun reportEconomyTick(iterIndex: Int) {
+        val numIter = Global.getSettings().getFloat("economyIterPerMonth")
+        val f = 1f / numIter
 
+        val report = SharedData.getData().currentReport
+
+        val fleetNode = report.getNode(MonthlyReport.FLEET)
+        fleetNode.name = "Fleet"
+        fleetNode.custom = MonthlyReport.FLEET
+        fleetNode.tooltipCreator = report.monthlyReportTooltip
+
+        val stipend = settlement.stats.income.modifiedValue
+        val stipendNode = report.getNode(fleetNode, "rat_settlement")
+        stipendNode.income += stipend * f
+
+        if (stipendNode.name == null) {
+            stipendNode.name = "Settlement"
+            stipendNode.icon = Global.getSector().playerFaction.getCrest()
+            stipendNode.tooltipCreator = object : TooltipMakerAPI.TooltipCreator {
+                override fun isTooltipExpandable(tooltipParam: Any): Boolean {
+                    return false
+                }
+
+                override fun getTooltipWidth(tooltipParam: Any): Float {
+                    return 450f
+                }
+
+                override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean, tooltipParam: Any) {
+                    tooltip.addPara("The monthly income from your settlement",
+                        0f)
+                }
+            }
+        }
     }
 
     override fun reportEconomyMonthEnd() {

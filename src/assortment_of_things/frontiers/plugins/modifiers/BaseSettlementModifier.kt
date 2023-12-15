@@ -4,6 +4,7 @@ import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.data.SettlementFacilitySpec
 import assortment_of_things.frontiers.data.SettlementModifierSpec
+import com.fs.starfarer.api.campaign.CargoAPI
 
 open class BaseSettlementModifier() {
 
@@ -58,5 +59,9 @@ open class BaseSettlementModifier() {
 
     open fun advance(amount: Float) {
 
+    }
+
+    open fun addToMonthlyCargo(current: CargoAPI): CargoAPI? {
+        return null
     }
 }

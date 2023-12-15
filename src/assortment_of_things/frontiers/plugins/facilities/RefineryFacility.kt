@@ -10,7 +10,7 @@ import java.awt.Color
 class RefineryFacility : BaseSettlementFacility() {
 
     override fun apply() {
-        settlement.stats.income.modifyMult("refinery", 1.5f)
+        settlement.stats.income.modifyPercent("refinery", 75f)
     }
 
     override fun unapply() {
@@ -18,12 +18,13 @@ class RefineryFacility : BaseSettlementFacility() {
     }
 
     override fun addDescriptionToTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Increases the settlements income by 50%%. Can only be build in settlements that are located on a hotspot of a refineable resource.", 0f,
-        Misc.getTextColor(), Misc.getHighlightColor(), "50%")
+        tooltip.addPara("Increases the settlements income by 75%%. Can only be build in settlements that are located on a hotspot of a refineable resource.", 0f,
+        Misc.getTextColor(), Misc.getHighlightColor(), "75%")
     }
 
     override fun canBeBuild(): Boolean {
-        return FrontiersUtils.getRessource(settlement) != null
+        var resource = FrontiersUtils.getRessource(settlement)
+        return resource != null && resource.canBeRefined()
     }
 
     override fun canNotBeBuildReason(tooltip: TooltipMakerAPI, data: SettlementData) {
