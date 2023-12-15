@@ -135,7 +135,7 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
                         leftElement!!.addSpacer(10f)
                         var creditIcon = Global.getSettings().getAndLoadSprite("graphics/icons/frontiers/credit_icon.png")
                         var img2 = leftElement!!.beginImageWithText("graphics/icons/frontiers/credit_icon.png", 48f)
-                        var income = ressource.spec.conditions.get(interactionTarget.market.conditions.find { ressource.spec.conditions.contains(it.id) }!!.id)
+                        var income = ressource.getSpec().conditions.get(interactionTarget.market.conditions.find { ressource.getSpec().conditions.contains(it.id) }!!.id)
                         var incomeString = Misc.getDGSCredits(income!!.toFloat())
                         img2.addPara("The richness of this sites resource hotspot promises an estimated income of ${incomeString} credits per month from exports (without refinement).", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${incomeString}")
                         leftElement!!.addImageWithText(0f)
@@ -246,7 +246,9 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
             settlementData.location = selectedSite!!.location
             settlementData.angleFromCenter = selectedSite!!.angleFromCenter
             settlementData.distanceFromCenteer = selectedSite!!.distanceFromCenter
-            settlementData.modifiers = selectedSite!!.modifierIDs
+
+
+
             FrontiersUtils.getFrontiersData().activeSettlement = settlementData
 
             var firstSlot = true
@@ -262,6 +264,14 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
             if (!Global.getSector().hasScript(SettlementManager::class.java)) {
                 Global.getSector().removeScriptsOfClass(SettlementManager::class.java)
                 Global.getSector().listenerManager.removeListenerOfClass(SettlementManager::class.java)
+            }
+
+            for (mod in selectedSite!!.modifierIDs) {
+                var spec = FrontiersUtils.getModifierByID(mod)
+                var plugin = FrontiersUtils.getModifierPlugin(spec)
+                plugin.settlement = settlementData
+                settlementData.modifiers.add(plugin)
+                plugin.apply()
             }
 
             var listener = SettlementManager(settlementData)

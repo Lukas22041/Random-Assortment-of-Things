@@ -99,7 +99,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                 tooltip!!.addSpacer(10f)
                 var creditIcon = Global.getSettings().getAndLoadSprite("graphics/icons/frontiers/credit_icon.png")
                 var img2 = tooltip!!.beginImageWithText("graphics/icons/frontiers/credit_icon.png", 48f)
-                var income = resource.spec.conditions.get(data.primaryPlanet.market.conditions.find { resource.spec.conditions.contains(it.id) }!!.id)
+                var income = resource.getSpec().conditions.get(data.primaryPlanet.market.conditions.find { resource.getSpec().conditions.contains(it.id) }!!.id)
                 var incomeString = Misc.getDGSCredits(income!!.toFloat())
                 img2.addPara("The richness of this sites resource hotspot promises an estimated income of ${incomeString} credits per month from exports (without refinement).", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${incomeString}")
                 tooltip!!.addImageWithText(0f)
@@ -155,7 +155,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                     tooltip.addSpacer(10f)
                     tooltip.addSectionHeading("Facility", Alignment.MID, 0f)
                     tooltip.addSpacer(10f)
-                    plugin.addDescriptionToTooltip(tooltip, data)
+                    plugin.addDescriptionToTooltip(tooltip)
                 }
                 else {
                     var img = tooltip.beginImageWithText(plugin.getIcon(), 48f)
@@ -167,7 +167,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                     tooltip.addSectionHeading("Facility", Alignment.MID, 0f)
                     tooltip.addSpacer(10f)
 
-                    plugin.addDescriptionToTooltip(tooltip, data)
+                    plugin.addDescriptionToTooltip(tooltip)
 
                 }
                 tooltip.addSpacer(3f)
@@ -211,7 +211,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
         var plugins = FrontiersUtils.getAllFacilityPlugins()
             .filter { plugin -> data.facilitySlots.none { facilities -> facilities.facilityID == plugin.getID() } && plugin.getID() != "landing_pad" }
 
-        plugins = plugins.sortedByDescending { it.canBeBuild(data) && it.getCost(data) <= Global.getSector().playerFleet.cargo.credits.get() }
+        plugins = plugins.sortedByDescending { it.canBeBuild() && it.getCost() <= Global.getSector().playerFleet.cargo.credits.get() }
 
         element.addSpacer(5f)
 
@@ -259,11 +259,11 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
 
                 var inner = innerElement
 
-                var cost = Misc.getDGSCredits(plugin.getCost(data))
+                var cost = Misc.getDGSCredits(plugin.getCost())
 
                 inner.addSpacer(5f)
 
-                var cantBeConstructed = plugin.getCost(data) >= Global.getSector().playerFleet.cargo.credits.get()
+                var cantBeConstructed = plugin.getCost() >= Global.getSector().playerFleet.cargo.credits.get()
 
                 var color = Misc.getHighlightColor()
                 if (cantBeConstructed) {
@@ -278,8 +278,8 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                     if (!it.isLMBEvent || cantBeConstructed) return@onClick
                     playClickSound()
                     playSound(Sounds.STORY_POINT_SPEND, 1f, 1f)
-                    Global.getSector().playerFleet.cargo.credits.subtract(plugin.getCost(data))
-                    var formated = Misc.getDGSCredits(plugin.getCost(data))
+                    Global.getSector().playerFleet.cargo.credits.subtract(plugin.getCost())
+                    var formated = Misc.getDGSCredits(plugin.getCost())
                     Global.getSector().campaignUI.messageDisplay.addMessage("Spend $formated credits", Misc.getBasePlayerColor(), "$formated", Misc.getHighlightColor())
                     slot.installNewFacility(plugin.getID())
                     window.close()
@@ -297,12 +297,17 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                 element.addTooltip(elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 400f) {tooltip ->
                     tooltip.addTitle("${plugin.getName()}")
                     tooltip.addSpacer(10f)
-                    plugin.addDescriptionToTooltip(tooltip, data)
+                    plugin.addDescriptionToTooltip(tooltip)
                     tooltip.addSpacer(10f)
-                    var days = plugin.getBuildTime(data)
+                    var days = plugin.getBuildTime()
                     var playerCash =  Misc.getDGSCredits( Global.getSector().playerFleet.cargo.credits.get())
                     tooltip.addPara("$cost credits and $days days to build. You have $playerCash.",
                         0f, Misc.getTextColor(), Misc.getHighlightColor(), "$cost", "$days", "$playerCash")
+
+                    if (!plugin.canBeBuild()) {
+                        tooltip.addSpacer(10f)
+                        plugin.canNotBeBuildReason(tooltip, data)
+                    }
                 }
             }
             element.addSpacer(10f)

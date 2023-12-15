@@ -1,51 +1,62 @@
 package assortment_of_things.frontiers.plugins.modifiers
 
+import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.data.SettlementFacilitySpec
 import assortment_of_things.frontiers.data.SettlementModifierSpec
 
 open class BaseSettlementModifier() {
 
-    lateinit var spec: SettlementModifierSpec
+    var specId: String = ""
+    lateinit var settlement: SettlementData
+
+    fun getSpec() : SettlementModifierSpec {
+        return FrontiersUtils.getModifierByID(specId)
+    }
 
     open fun getID() : String {
-        return spec.id
+        return getSpec().id
     }
 
     open fun getName() : String {
-        return spec.name
+        return getSpec().name
     }
 
     open fun getDescription(): String {
-        return spec.desc
+        return getSpec().desc
     }
 
 
     open fun isRessource() : Boolean {
-        return spec.isResource
+        return getSpec().isResource
     }
 
     open fun canBeRefined() : Boolean {
-        return spec.canBeRefined
+        return getSpec().canBeRefined
     }
 
 
     open fun getIcon() : String {
-        return spec.icon
+        return getSpec().icon
     }
 
     open fun getRefinedIcon() : String {
-        return spec.iconRefined
+        return getSpec().iconRefined
     }
 
     open fun includeForCondition(conditionID : String) : Boolean {
-        return spec.conditions.contains(conditionID)
+        return getSpec().conditions.contains(conditionID)
     }
 
     open fun getChance() : Float {
-        return spec.chance
+        return getSpec().chance
     }
 
-    open fun apply(data: SettlementData) {
+    open fun apply() {
+
+    }
+
+    open fun advance(amount: Float) {
 
     }
 }

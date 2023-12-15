@@ -7,6 +7,18 @@ import com.fs.starfarer.api.campaign.listeners.EconomyTickListener
 class SettlementManager(var settlement: SettlementData) : EveryFrameScript, EconomyTickListener {
 
 
+    fun update() {
+
+/*
+        for (slot in settlement.facilitySlots) {
+            if (slot.facilityID != "" && !slot.isBuilding) {
+                slot.getFacilityPlugin()?.apply(settlement)
+            }
+        }*/
+
+
+    }
+
     override fun advance(amount: Float) {
         var slots = settlement.facilitySlots
         for (slot in slots) {
@@ -16,11 +28,15 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
                 slot.updateDays()
                 if (slot.daysRemaining <= 0.1) {
                     slot.finishConstruction()
+                    update()
                 }
             }
-            else {
-                slot.getFacilityPlugin()?.advance(settlement, amount)
-            }
+
+            slot.getFacilityPlugin()?.advance(amount)
+        }
+
+        for (modifier in settlement.modifiers) {
+            modifier.advance(amount)
         }
     }
 

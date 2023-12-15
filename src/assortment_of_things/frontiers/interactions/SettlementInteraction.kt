@@ -24,6 +24,10 @@ class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
         if (!dontReAddLargePlanet) {
             dialog.visualPanel.showLargePlanet(data.primaryPlanet)
         }
+
+        //Update facilities
+        data.mananger.update()
+
         textPanel.addPara("You take a trip down towards the surface of ${data.primaryPlanet.name}, as your dropship closes on to the ground, the settlement starts becoming visible on the ground below. " +
                 "At first it appears as a tiny, unidentifeable dot, until just moments later this blob has turned in to an outpost spanning the visible surroundings.")
 

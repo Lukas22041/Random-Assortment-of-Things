@@ -16,19 +16,20 @@ class SettlementFacilitySlot(var data: SettlementData) {
     var buildingTimestamp = Global.getSector().clock.timestamp
     var daysRemaining = 0f
 
-    @Transient
-    private var temporaryPlugin: BaseSettlementFacility? = null
+    private var facilityPlugin: BaseSettlementFacility? = null
 
     fun getFacilityPlugin() : BaseSettlementFacility? {
         if (facilityID == "") return null
-        if (temporaryPlugin == null) {
+        if (facilityPlugin == null) {
            updatePlugin()
         }
-        return temporaryPlugin
+        return facilityPlugin
     }
 
     fun updatePlugin() {
-        temporaryPlugin = FrontiersUtils.getFacilityPlugin(FrontiersUtils.getFacilityByID(facilityID))
+        facilityPlugin = FrontiersUtils.getFacilityPlugin(FrontiersUtils.getFacilityByID(facilityID))
+        facilityPlugin?.facilitySlot = this
+        facilityPlugin?.settlement = data
     }
 
     fun getFacilitySpecn() : SettlementFacilitySpec? {
@@ -38,27 +39,34 @@ class SettlementFacilitySlot(var data: SettlementData) {
 
     fun installNewFacility(id: String) {
 
-
-
         removeCurrentFacility()
         facilityID = id
         updatePlugin()
 
         isBuilding = true
+        facilityPlugin?.setBuilding(true)
+
         buildingTimestamp = Global.getSector().clock.timestamp
+
         updateDays()
+
+        if (Global.getSettings().isDevMode) {
+            finishConstruction()
+        }
     }
 
     fun finishConstruction() {
         isBuilding = false
+        facilityPlugin?.setBuilding(false)
         daysRemaining = 0f
 
         var plugin = getFacilityPlugin()
-        plugin!!.apply(data)
+        plugin!!.onBuildingFinished()
+        plugin!!.apply()
 
         Global.getSector().campaignUI.addMessage(object : BaseIntelPlugin() {
             override fun createIntelInfo(info: TooltipMakerAPI?, mode: IntelInfoPlugin.ListInfoMode?) {
-                info!!.addPara( "Finished constructing the \"${plugin.getName()}\" facility in the settlement",
+                info!!.addPara( "Finished constructing the \"${plugin.getName()}\" facility in the settlement on ${data.primaryPlanet.name}.",
                     0f, Misc.getTextColor(), Misc.getHighlightColor(), "${plugin.getName()}")
             }
 
@@ -70,10 +78,9 @@ class SettlementFacilitySlot(var data: SettlementData) {
 
     fun updateDays() {
         var plugin = getFacilityPlugin() ?: return
-        var daysRequired = plugin.getBuildTime(data)
-        if (Global.getSettings().isDevMode) daysRequired = 5
+        var daysRequired = plugin.getBuildTime()
         daysRemaining = daysRequired - Global.getSector().clock.getElapsedDaysSince(buildingTimestamp)
-        daysRemaining = MathUtils.clamp(daysRemaining, 0f, plugin.getBuildTime(data).toFloat())
+        daysRemaining = MathUtils.clamp(daysRemaining, 0f, plugin.getBuildTime().toFloat())
     }
 
     fun removeCurrentFacility() {
@@ -82,16 +89,18 @@ class SettlementFacilitySlot(var data: SettlementData) {
         var plugin = getFacilityPlugin()
 
         if (isBuilding) {
-            var cost = plugin!!.getCost(data)
+            var cost = plugin!!.getCost()
 
             Global.getSector().playerFleet.cargo.credits.add(cost)
             var formated = Misc.getDGSCredits(cost)
             Global.getSector().campaignUI.messageDisplay.addMessage("Refunded $formated credits", Misc.getBasePlayerColor(), "$formated", Misc.getHighlightColor())
         }
+        else {
+            plugin!!.unapply()
+        }
 
         isBuilding = false
 
-        plugin!!.unapply(data)
         facilityID = ""
     }
 

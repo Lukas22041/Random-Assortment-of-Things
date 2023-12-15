@@ -82,7 +82,7 @@ class SiteSelectionPickerElement(var planet: PlanetAPI?, var planetSprite: Sprit
                 var ressource = FrontiersUtils.getRessource(site)
                 if (ressource != null) {
                     hexagon.ressourceSprite = Global.getSettings().getSprite(ressource.getIcon())
-                    hexagon.ressourceSpriteSil = Global.getSettings().getSprite(ressource.spec.iconSil)
+                    hexagon.ressourceSpriteSil = Global.getSettings().getSprite(ressource.getSpec().iconSil)
                 }
 
                 site.location = Vector2f(x.toFloat(), y.toFloat())

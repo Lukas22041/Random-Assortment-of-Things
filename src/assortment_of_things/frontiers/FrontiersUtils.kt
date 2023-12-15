@@ -5,7 +5,6 @@ import assortment_of_things.frontiers.plugins.facilities.BaseSettlementFacility
 import assortment_of_things.frontiers.plugins.modifiers.BaseSettlementModifier
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.PlanetAPI
-import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 
@@ -86,10 +85,9 @@ object FrontiersUtils {
 
     fun getModifierPlugin(spec: SettlementModifierSpec) : BaseSettlementModifier {
         var plugin = Global.getSettings().scriptClassLoader.loadClass(spec.plugin).newInstance() as BaseSettlementModifier
-        plugin.spec = spec
+        plugin.specId = spec.id
         return plugin
     }
-
 
     fun getModifierByID(id: String) : SettlementModifierSpec {
         return modifierSpecs.find { it.id == id }!!
@@ -104,8 +102,8 @@ object FrontiersUtils {
     }
 
     fun getRessource(data: SettlementData): BaseSettlementModifier? {
-        var spec = data.modifiers.map { id -> FrontiersUtils.getModifierByID(id) }.find { it.isResource } ?: return null
-        return FrontiersUtils.getModifierPlugin(spec)
+        var mod = data.modifiers.find { it.isRessource() } ?: return null
+        return mod
     }
 
 
@@ -141,7 +139,7 @@ object FrontiersUtils {
 
     fun getFacilityPlugin(spec: SettlementFacilitySpec) : BaseSettlementFacility {
         var plugin = Global.getSettings().scriptClassLoader.loadClass(spec.plugin).newInstance() as BaseSettlementFacility
-        plugin.spec = spec
+        plugin.specId = spec.id
         return plugin
     }
 
@@ -163,7 +161,10 @@ object FrontiersUtils {
     }
 
     fun getAllFacilityPlugins() : List<BaseSettlementFacility> {
-        return facilitySpecs.map { getFacilityPlugin(it) }
+        return facilitySpecs.map { spec -> getFacilityPlugin(spec).apply {
+             this.settlement = getSettlementData()
+             this.specId = spec.id
+        } }
     }
 
 
