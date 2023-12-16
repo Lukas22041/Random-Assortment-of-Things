@@ -1,6 +1,6 @@
 package assortment_of_things.frontiers.ui
 
-import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.SettlementData
 import assortment_of_things.frontiers.data.SettlementFacilitySlot
 import assortment_of_things.frontiers.plugins.facilities.BaseSettlementFacility
 import assortment_of_things.misc.getAndLoadSprite

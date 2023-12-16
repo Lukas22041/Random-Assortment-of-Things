@@ -1,9 +1,8 @@
 package assortment_of_things.frontiers.interactions.panels
 
 import assortment_of_things.frontiers.FrontiersUtils
-import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.SettlementData
 import assortment_of_things.frontiers.data.SettlementFacilitySlot
-import assortment_of_things.frontiers.intel.SettlementIntel
 import assortment_of_things.frontiers.interactions.SettlementInteraction
 import assortment_of_things.frontiers.ui.FacilityDisplayElement
 import assortment_of_things.frontiers.ui.SiteDisplayElement
@@ -16,6 +15,7 @@ import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import lunalib.lunaExtensions.addLunaSpriteElement
 import lunalib.lunaExtensions.addLunaTextfield
+import lunalib.lunaExtensions.addLunaToggleButton
 import lunalib.lunaUI.elements.LunaSpriteElement
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
@@ -77,7 +77,7 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
 
         }
 
-        var text = element.addLunaSpriteElement("graphics/ui/icons/fleettab/suspend_repairs.png", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, 32f, 32f).apply {
+        var config = element.addLunaSpriteElement("graphics/ui/icons/fleettab/suspend_repairs.png", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, 32f, 32f).apply {
             getSprite().alphaMult = 1f
             getSprite().color = Misc.getDarkPlayerColor().brighter()
             position.belowLeft(help.elementPanel, 2f)
@@ -97,12 +97,11 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
 
 
             var popupWidth = 300f
-            var popupHeight = 250f
+            var popupHeight = 350f
 
             onClick {
                 playClickSound()
                 element.addWindow(this.elementPanel, popupWidth, popupHeight) { window ->
-
 
                     var panelPlugin = BorderedPanelPlugin()
                     panelPlugin.renderBackground = true
@@ -115,12 +114,35 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
                     var windowElement = windowPanel.createUIElement(popupWidth, popupHeight, false)
                     windowPanel.addUIElement(windowElement)
 
-                    windowElement.addSectionHeading("Descend Description", Alignment.MID, 0f)
-                    windowElement.addLunaTextfield("${data.description}", true, popupWidth, popupHeight - 19).apply {
+                    windowElement.addPara("").position.inTL(10f, 0f)
+
+                    var auto = windowElement.addLunaToggleButton(data.autoDescend, popupWidth - 20, 30f).apply {
+                        enableTransparency = true
+                        this.borderAlpha = 0.5f
+                        this.backgroundAlpha = 0.8f
+                        changeStateText("Auto-Descend: On", "Auto-Descend: Off")
+                        centerText()
+
+                        advance {
+                            data.autoDescend = value
+                        }
+                    }
+
+                    windowElement.addTooltip(auto.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 300f) { tooltip ->
+                        tooltip.addPara("Automaticly moves you to the settlement screen instead of the planet screen. Only works on planets that dont have a colony.")
+                    }
+
+                    windowElement.addSpacer(10f)
+
+
+                    var header = windowElement.addSectionHeading("Descend Description", Alignment.MID, 0f)
+                    header.position.setSize(header.position.width - 10, header.position.height)
+
+                    windowElement.addLunaTextfield("${data.description}", true, popupWidth - 20, popupHeight - 95).apply {
                         this.enableTransparency = true
                         this.borderAlpha = 0.5f
                         this.backgroundAlpha = 0.8f
-                        this.position.inTL(0f, 19f)
+                        this.elementPanel.position.belowLeft(auto.elementPanel, 40f)
 
                         this.advance {
                             data.description = this.getText()
@@ -134,8 +156,8 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
             }
         }
 
-        element.addTooltip(text.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT, 350f) { tooltip ->
-            tooltip.addPara("Click to modify the description thats displayed when descending towards the settlement.")
+        element.addTooltip(config.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT, 300f) { tooltip ->
+            tooltip.addPara("Click to configure aspects of the settlement.")
         }
 
 

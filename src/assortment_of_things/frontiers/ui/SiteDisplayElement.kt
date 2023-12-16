@@ -1,6 +1,6 @@
 package assortment_of_things.frontiers.ui
 
-import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.SettlementData
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.ui.PositionAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI

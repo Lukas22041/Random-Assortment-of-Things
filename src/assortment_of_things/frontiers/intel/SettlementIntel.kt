@@ -1,6 +1,6 @@
 package assortment_of_things.frontiers.intel
 
-import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.SettlementData
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken

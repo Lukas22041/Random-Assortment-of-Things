@@ -1,6 +1,6 @@
 package assortment_of_things.frontiers.interactions
 
-import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.SettlementData
 import assortment_of_things.frontiers.interactions.panels.SettlementManagementScreen
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.campaign.CoreUITabId
@@ -57,8 +57,13 @@ class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
 
 
 
-
         createOption("Back") {
+
+            if (data.autoDescend && data.primaryPlanet.market?.isPlanetConditionMarketOnly == true) {
+                dialog.dismiss()
+                return@createOption
+            }
+
             clearOptions()
             dialog.interactionTarget = data.primaryPlanet
             dialog.plugin = previousPlugin

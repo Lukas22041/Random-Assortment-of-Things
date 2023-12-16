@@ -1,8 +1,7 @@
 package assortment_of_things.frontiers.plugins.modifiers
 
 import assortment_of_things.frontiers.FrontiersUtils
-import assortment_of_things.frontiers.data.SettlementData
-import assortment_of_things.frontiers.data.SettlementFacilitySpec
+import assortment_of_things.frontiers.SettlementData
 import assortment_of_things.frontiers.data.SettlementModifierSpec
 import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI

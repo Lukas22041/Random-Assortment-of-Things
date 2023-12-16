@@ -30,5 +30,5 @@ rat_createSettlementDisabled,PopulateOptions,"$market.isSurveyed != true
 SetTooltip ratCreateSettlement ""Planet has to be surveyed.""",,,
 rat_createSettlementScript,DialogOptionSelected,$option == ratCreateSettlement,DelegateToSettlementCreationDialog,,,
 ,,,,,,
-rat_visitSettlement,PopulateOptions,ShouldShowSettlementOption,,,2:ratVisitSettlement:Descend towards the settlement,
+rat_visitSettlement,PopulateOptions,ShouldShowSettlementOption,AutoDescendToSettlement,,2:ratVisitSettlement:Descend towards the settlement,
 rat_visitSettlementScript,DialogOptionSelected,$option == ratVisitSettlement,DelegateToSettlementDialog,,,

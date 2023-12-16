@@ -1,11 +1,7 @@
 package assortment_of_things.frontiers.plugins.facilities
 
-import assortment_of_things.frontiers.data.SettlementData
-import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.lazywizard.lazylib.MathUtils
-import java.awt.Color
 
 class QualityControlFacility : BaseSettlementFacility() {
 

@@ -1,11 +1,10 @@
 package assortment_of_things.frontiers.plugins.facilities
 
 import assortment_of_things.frontiers.FrontiersUtils
-import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.SettlementData
 import assortment_of_things.misc.addNegativePara
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import java.awt.Color
 
 class RefineryFacility : BaseSettlementFacility() {
 

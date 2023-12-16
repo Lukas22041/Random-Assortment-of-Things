@@ -1,7 +1,7 @@
 package assortment_of_things.frontiers.interactions
 
 import assortment_of_things.frontiers.FrontiersUtils
-import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.SettlementData
 import assortment_of_things.frontiers.data.SettlementFacilitySlot
 import assortment_of_things.frontiers.data.SiteData
 import assortment_of_things.frontiers.intel.SettlementIntel

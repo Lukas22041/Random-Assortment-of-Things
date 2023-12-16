@@ -1,8 +1,9 @@
-package assortment_of_things.frontiers.data
+package assortment_of_things.frontiers
 
 import assortment_of_things.frontiers.intel.SettlementIntel
 import assortment_of_things.frontiers.plugins.modifiers.BaseSettlementModifier
-import assortment_of_things.frontiers.SettlementManager
+import assortment_of_things.frontiers.data.SettlementFacilitySlot
+import assortment_of_things.frontiers.data.SettlementStats
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.PlanetAPI
@@ -36,6 +37,8 @@ class SettlementData(var primaryPlanet: PlanetAPI, var settlementEntity: SectorE
     var productionOrders = ArrayList<ProductionData>()
 
     var currentProductionBudget = 0f
+
+    var autoDescend = false
 
     fun isAvailable() : Boolean {
         return !primaryPlanet.faction.isHostileTo(Factions.PLAYER)

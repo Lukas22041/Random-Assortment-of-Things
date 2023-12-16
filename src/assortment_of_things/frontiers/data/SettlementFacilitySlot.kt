@@ -1,6 +1,7 @@
 package assortment_of_things.frontiers.data
 
 import assortment_of_things.frontiers.FrontiersUtils
+import assortment_of_things.frontiers.SettlementData
 import assortment_of_things.frontiers.plugins.facilities.BaseSettlementFacility
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.Global

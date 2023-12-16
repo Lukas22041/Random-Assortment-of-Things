@@ -1,6 +1,5 @@
 package assortment_of_things.frontiers
 
-import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.submarkets.SettlementStoragePlugin
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.EveryFrameScript

@@ -1,6 +1,6 @@
 package assortment_of_things.frontiers.ui
 
-import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.SettlementData
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.FactionAPI.ShipPickMode
