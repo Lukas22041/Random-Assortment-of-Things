@@ -9,13 +9,21 @@ import com.fs.starfarer.api.util.Misc
 class StockpileFacility : BaseSettlementFacility() {
 
     override fun addDescriptionToTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Stores a small amount of several commodites, being made up of leftover materials that the that the settlement acquired over time. The procured materials are free to use. " +
-                "Stockpiles at most 500 units worth of cargo per commodity.",
-            0f, Misc.getTextColor(), Misc.getHighlightColor(), "500")
+        tooltip.addPara("A dedicated storage facility for the settlement. Removes storage fees from both the settlement and colony, if there is one. " +
+                "Also increases the settlements income by 10%%.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
     }
 
     override fun addToMonthlyCargo(current: CargoAPI): CargoAPI? {
         return super.addToMonthlyCargo(current)
+    }
+
+    override fun apply() {
+        settlement.stats.income.modifyPercent("stockpile", 10f)
+    }
+
+    override fun unapply() {
+        settlement.stats.income.unmodify("stockpile")
     }
 
     override fun reportEconomyMonthEnd() {
@@ -24,8 +32,6 @@ class StockpileFacility : BaseSettlementFacility() {
 
     override fun reportEconomyTick(iterIndex: Int) {
         val report = SharedData.getData().currentReport
-
-
 
         var storageNode = report.getNode(MonthlyReport.STORAGE)
         storageNode.name = "Storage"

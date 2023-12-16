@@ -2,6 +2,7 @@ package assortment_of_things.frontiers.intel
 
 import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.misc.RATSettings
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
@@ -74,15 +75,36 @@ class SettlementIntel(var settlement: SettlementData) : BaseIntelPlugin() {
         info.addSpacer(10f)
 
         info.addPara("Ship weapons and fighters: ", 0f)
-        info.addSpacer(3f)
+        info.addSpacer(10f)
         info.showCargo(cargo, 20, true, 0f)
-        info.addSpacer(3f)
+        info.addSpacer(10f)
 
         info.addPara("Ship hulls: ", 0f)
-        info.addSpacer(3f)
+        info.addSpacer(10f)
         info.showShips(cargo.mothballedShips.membersListCopy,20, true,
             false, 0f)
-        info.addSpacer(3f)
+        info.addSpacer(10f)
+
+        var count = 0
+        for (order in settlement.productionOrders) {
+            count++
+            var sinceTimestamp = Global.getSector().clock.getElapsedDaysSince(order.timestamp)
+            var left = order.days - sinceTimestamp
+            info.addSpacer(10f)
+            info.addSectionHeading("Order #$count - ${left.toInt()} days remaining", Alignment.MID, 0f)
+            info.addSpacer(10f)
+
+            info.addPara("Ship weapons and fighters: ", 0f)
+            info.addSpacer(10f)
+            info.showCargo(order.cargo, 20, true, 0f)
+            info.addSpacer(10f)
+
+            info.addPara("Ship hulls: ", 0f)
+            info.addSpacer(10f)
+            info.showShips(order.cargo.mothballedShips.membersListCopy,20, true,
+                false, 0f)
+            info.addSpacer(10f)
+        }
     }
 
     override fun getIntelTags(map: SectorMapAPI?): MutableSet<String> {

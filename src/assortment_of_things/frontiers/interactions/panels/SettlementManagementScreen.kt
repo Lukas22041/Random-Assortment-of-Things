@@ -4,6 +4,7 @@ import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.data.SettlementFacilitySlot
 import assortment_of_things.frontiers.intel.SettlementIntel
+import assortment_of_things.frontiers.interactions.SettlementInteraction
 import assortment_of_things.frontiers.ui.FacilityDisplayElement
 import assortment_of_things.frontiers.ui.SiteDisplayElement
 import assortment_of_things.misc.*
@@ -20,12 +21,11 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
-class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDialogDelegateWithRefresh("graphics/icons/frontiers/ManagementBackground.png") {
+class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: SettlementInteraction) : BaseCustomVisualDialogDelegateWithRefresh("graphics/icons/frontiers/ManagementBackground.png") {
 
     var noFacilityIcon = Global.getSettings().getAndLoadSprite("graphics/icons/frontiers/facilities/empty_facility.png")
 
     override fun onRefresh() {
-
         var mainPanel = panel.createCustomPanel(width, height, null)
         panel.addComponent(mainPanel)
 
@@ -192,13 +192,13 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                 tooltip.addSpacer(10f)
 
                 var img = tooltip!!.beginImageWithText(resource.getIcon(), 48f)
-                img.addPara("${resource.getName()}:\n${resource.getDescription()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${resource.getName()}")
+                resource.getDescription(img)
                 tooltip!!.addImageWithText(0f)
 
                 if (resource.canBeRefined()) {
                     tooltip!!.addSpacer(10f)
                     var img = tooltip!!.beginImageWithText(resource.getRefinedIcon(), 48f)
-                    img.addPara("Can be refined to increase the export value by 50%%. Requires the \"Refinery\" facility.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "50%", "Refinery")
+                    img.addPara("Can be refined to increase the export value by 75%%. Requires the \"Refinery\" facility.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "75%", "Refinery")
                     tooltip!!.addImageWithText(0f)
                 }
 
@@ -315,6 +315,10 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
 
         plugins = plugins.sortedByDescending { it.canBeBuild() && (it.getCost() * RATSettings.frontiersCostMult!!) <= Global.getSector().playerFleet.cargo.credits.get() }
 
+        for (plugin in plugins) {
+            plugin.settlement = data
+        }
+
         element.addSpacer(5f)
 
 
@@ -343,6 +347,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                     playSound(Sounds.STORY_POINT_SPEND, 1f, 1f)
                     slot.removeCurrentFacility()
                     window.close()
+                    dialogPlugin.populateOptions()
                     refresh()
                 }
             }
@@ -352,7 +357,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
 
 
         //Picker List
-        for (plugin in plugins) {
+        for (plugin in plugins.filter { it.shouldShowInPicker() }) {
 
             var facilityElement = element.addLunaElement(popupWidth - 10, 60f).apply {
                 enableTransparency = true
@@ -389,6 +394,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                     Global.getSector().campaignUI.messageDisplay.addMessage("Spend $formated credits", Misc.getBasePlayerColor(), "$formated", Misc.getHighlightColor())
                     slot.installNewFacility(plugin.getID())
                     window.close()
+                    dialogPlugin.populateOptions()
                     refresh()
                 }
 

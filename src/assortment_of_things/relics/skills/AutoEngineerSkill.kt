@@ -30,7 +30,7 @@ class AutoEngineerSkill : RATBaseShipSkill() {
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
-        RATControllerHullmod.ensureAddedControllerToFleet()
+        //RATControllerHullmod.ensureAddedControllerToFleet()
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {

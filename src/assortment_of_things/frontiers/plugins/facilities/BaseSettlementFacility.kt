@@ -40,6 +40,10 @@ abstract class BaseSettlementFacility() {
         return true
     }
 
+    open fun shouldShowInPicker() : Boolean {
+        return true
+    }
+
     open fun canNotBeBuildReason(tooltip: TooltipMakerAPI, data: SettlementData) {
 
     }

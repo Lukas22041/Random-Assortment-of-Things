@@ -5,6 +5,8 @@ import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.data.SettlementFacilitySpec
 import assortment_of_things.frontiers.data.SettlementModifierSpec
 import com.fs.starfarer.api.campaign.CargoAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 
 open class BaseSettlementModifier() {
 
@@ -23,8 +25,8 @@ open class BaseSettlementModifier() {
         return getSpec().name
     }
 
-    open fun getDescription(): String {
-        return getSpec().desc
+    open fun getDescription(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("${getName()}:\n${getSpec().desc}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${getName()}")
     }
 
 

@@ -1,13 +1,10 @@
 package assortment_of_things.frontiers.plugins.facilities
 
-import assortment_of_things.frontiers.FrontiersUtils
-import assortment_of_things.frontiers.data.SettlementData
+import assortment_of_things.frontiers.ui.SettlementCustomProduction
 import assortment_of_things.misc.RATInteractionPlugin
-import assortment_of_things.misc.addNegativePara
 import com.fs.starfarer.api.campaign.InteractionDialogAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import java.awt.Color
 
 class ShipyardFacility : BaseSettlementFacility() {
 
@@ -15,12 +12,14 @@ class ShipyardFacility : BaseSettlementFacility() {
     var budgetPerMonth = 40000f
 
     override fun apply() {
-        settlement.stats.productionBudget.modifyMult("shipyard", budget)
-        settlement.stats.productionBudgetPerMonth.modifyMult("shipyard", budgetPerMonth)
+        settlement.stats.maxProductionBudget.modifyFlat("shipyard", budget)
+        settlement.stats.productionBudgetPerMonth.modifyFlat("shipyard", budgetPerMonth)
+
+        settlement.currentProductionBudget += budgetPerMonth
     }
 
     override fun unapply() {
-        settlement.stats.productionBudget.unmodify("shipyard")
+        settlement.stats.maxProductionBudget.unmodify("shipyard")
         settlement.stats.productionBudgetPerMonth.unmodify("shipyard")
     }
 
@@ -40,8 +39,10 @@ class ShipyardFacility : BaseSettlementFacility() {
     override fun populateSettlementDialog(dialog: InteractionDialogAPI, plugin: RATInteractionPlugin) {
         if (!plugin.optionPanel.hasOption("Order custom production")) {
             plugin.createOption("Order custom production") {
-
+                dialog.showCustomProductionPicker(SettlementCustomProduction(settlement))
             }
+            plugin.optionPanel.setTooltip("Order custom production", "Order production based on what facilities have been build. " +
+                    "Current production orders are displayed in the settlements intel entry and will be delivered towards the settlements storage.")
         }
     }
 }

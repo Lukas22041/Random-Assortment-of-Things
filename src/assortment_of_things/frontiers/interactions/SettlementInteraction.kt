@@ -2,17 +2,9 @@ package assortment_of_things.frontiers.interactions
 
 import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.interactions.panels.SettlementManagementScreen
-import assortment_of_things.frontiers.ui.SiteDisplayElement
 import assortment_of_things.misc.RATInteractionPlugin
-import assortment_of_things.misc.addWindow
-import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
 import com.fs.starfarer.api.campaign.CoreUITabId
-import com.fs.starfarer.api.campaign.CustomDialogDelegate
 import com.fs.starfarer.api.campaign.InteractionDialogPlugin
-import com.fs.starfarer.api.ui.CustomPanelAPI
-import lunalib.lunaExtensions.openLunaCustomPanel
-import lunalib.lunaUI.panel.LunaBaseCustomPanelPlugin
 import org.lwjgl.input.Keyboard
 
 class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
@@ -30,31 +22,40 @@ class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
 
         textPanel.addPara(data.description)
 
+        populateOptions()
+    }
+
+    fun populateOptions() {
+        clearOptions()
+
+        var dialogPlugin = this
         createOption("Manage Settlement") {
-            var screen = SettlementManagementScreen(data)
+            var screen = SettlementManagementScreen(data, dialogPlugin)
             dialog.showCustomVisualDialog(600f, 400f, screen)
         }
-
-        createOption("Manage Storage") {
-            visualPanel.showCore(CoreUITabId.CARGO, data.delegateEntity) { }
-        }
-        optionPanel.setShortcut("Manage Storage", Keyboard.KEY_I, false, false, false, false)
-
-        createOption("Manage Fleet") {
-            visualPanel.showCore(CoreUITabId.FLEET, data.delegateEntity) { }
-        }
-        optionPanel.setShortcut("Manage Fleet", Keyboard.KEY_F, false, false, false, false)
-
-        createOption("Refit Ships") {
-            visualPanel.showCore(CoreUITabId.REFIT, data.delegateEntity) { }
-        }
-        optionPanel.setShortcut("Refit Ships", Keyboard.KEY_R, false, false, false, false)
 
         var slots = data.getFunctionalSlots().sortedBy { it.getPlugin()?.populateSettlementDialogOrder() }
 
         for (slot in slots) {
             slot.getPlugin()?.populateSettlementDialog(dialog, this)
         }
+
+        createOption("Manage Storage") {
+            visualPanel.showCore(CoreUITabId.CARGO, data.settlementEntity) { }
+        }
+        optionPanel.setShortcut("Manage Storage", Keyboard.KEY_I, false, false, false, false)
+
+        createOption("Manage Fleet") {
+            visualPanel.showCore(CoreUITabId.FLEET, data.settlementEntity) { }
+        }
+        optionPanel.setShortcut("Manage Fleet", Keyboard.KEY_F, false, false, false, false)
+
+        createOption("Refit Ships") {
+            visualPanel.showCore(CoreUITabId.REFIT, data.settlementEntity) { }
+        }
+        optionPanel.setShortcut("Refit Ships", Keyboard.KEY_R, false, false, false, false)
+
+
 
 
         createOption("Back") {

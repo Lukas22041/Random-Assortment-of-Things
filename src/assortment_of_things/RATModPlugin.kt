@@ -10,6 +10,7 @@ import assortment_of_things.abyss.skills.scripts.AbyssalBloodstreamCampaignScrip
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
+import assortment_of_things.campaign.scripts.ApplyRATControllerToPlayerFleet
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.ExoshipGenerator
@@ -25,7 +26,6 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
-import exerelin.campaign.ExerelinSetupData
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaRefit.LunaRefitManager
 import lunalib.lunaSettings.LunaSettings
@@ -107,6 +107,8 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
+
+        Global.getSector().addTransientScript(ApplyRATControllerToPlayerFleet())
 
         initFrontiers()
 

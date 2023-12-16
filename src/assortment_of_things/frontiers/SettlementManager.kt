@@ -5,18 +5,25 @@ import assortment_of_things.frontiers.submarkets.SettlementStoragePlugin
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.campaign.econ.MonthlyReport
 import com.fs.starfarer.api.campaign.listeners.EconomyTickListener
-import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
 import com.fs.starfarer.api.impl.campaign.shared.SharedData
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.getStorageCargo
 
 class SettlementManager(var settlement: SettlementData) : EveryFrameScript, EconomyTickListener {
 
 
     fun update() {
+
+    }
+
+    fun abandon() {
 
     }
 
@@ -38,6 +45,36 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
 
         for (modifier in settlement.modifiers) {
             modifier.advance(amount)
+        }
+
+        for (prod in ArrayList(settlement.productionOrders)) {
+            var sinceTimestamp = Global.getSector().clock.getElapsedDaysSince(prod.timestamp)
+            if (sinceTimestamp > prod.days) {
+
+                var marketStorage = settlement.settlementEntity.market.submarketsCopy.find { it.plugin is SettlementStoragePlugin }!!.plugin.cargo
+                marketStorage.addAll(prod.cargo)
+
+                if (prod.cargo.mothballedShips == null) {
+                    prod.cargo.initMothballedShips(Factions.PLAYER)
+                }
+
+                for (member in prod.cargo.mothballedShips.membersListCopy) {
+                    marketStorage.mothballedShips.addFleetMember(member)
+                }
+
+                settlement.productionOrders.remove(prod)
+
+                Global.getSector().campaignUI.addMessage(object : BaseIntelPlugin() {
+                    override fun createIntelInfo(info: TooltipMakerAPI?, mode: IntelInfoPlugin.ListInfoMode?) {
+                        info!!.addPara( "The settlement completed a custom production order.",
+                            0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
+                    }
+
+                    override fun getIcon(): String {
+                        return settlement.intel.icon
+                    }
+                })
+            }
         }
     }
 
@@ -89,7 +126,7 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
 
         var primStorage = settlement.primaryPlanet.market?.getStorageCargo()
         if (primStorage == null && !settlement.hasFacility("stockpile")) {
-            var sub = settlement.delegateEntity.market.submarketsCopy.find { it.plugin is SettlementStoragePlugin }!!.plugin as SettlementStoragePlugin
+            var sub = settlement.settlementEntity.market.submarketsCopy.find { it.plugin is SettlementStoragePlugin }!!.plugin as SettlementStoragePlugin
             val storageFraction = Global.getSettings().getFloat("storageFreeFraction")
 
             var vc = 0f
@@ -131,9 +168,9 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
                     "ships"
                 }
 
-                var mNode = report.getNode(storageNode, settlement.delegateEntity.market.getId())
-                mNode.name = settlement.delegateEntity.market.getName() + " (" + "$desc" + ")"
-                mNode.custom = settlement.delegateEntity.market
+                var mNode = report.getNode(storageNode, settlement.settlementEntity.market.getId())
+                mNode.name = settlement.settlementEntity.market.getName() + " (" + "$desc" + ")"
+                mNode.custom = settlement.settlementEntity.market
                 mNode.custom2 = MonthlyReport.STORAGE
                 mNode.upkeep = fc + fs
             }
@@ -143,23 +180,37 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
     override fun reportEconomyMonthEnd() {
 
 
-        var current = settlement.delegateEntity.market.submarketsCopy.find { it.plugin is SettlementStoragePlugin }?.plugin?.cargo ?: return
-        var add = Global.getFactory().createCargo(true)
-        add.initMothballedShips(Factions.PLAYER)
+        var storage = settlement.settlementEntity.market.submarketsCopy.find { it.plugin is SettlementStoragePlugin }?.plugin?.cargo ?: return
+        var next = settlement.nextMonthsProduction
 
         for (slot in settlement.facilitySlots) {
             if (slot.isFunctional()) {
-                slot.getPlugin()?.addToMonthlyCargo(add)
+                var product = slot.getPlugin()?.addToMonthlyCargo(storage)
+                if (product != null) {
+                    next.addAll(product)
+                }
                 slot.getPlugin()?.reportEconomyMonthEnd()
             }
         }
 
-        settlement.previousMonthsProduction = add
-        if (!add.isEmpty) {
+        for (modifier in settlement.modifiers) {
+            var product = modifier.addToMonthlyCargo(storage)
+            if (product != null) {
+                next.addAll(product)
+            }
+        }
+
+        if (!next.isEmpty) {
             Global.getSector().campaignUI.addMessage(settlement.intel)
         }
 
-        current.addAll(add)
+        settlement.previousMonthsProduction.clear()
+        settlement.previousMonthsProduction.addAll(next)
+        storage.addAll(next)
+        next.clear()
+
+        settlement.currentProductionBudget += settlement.stats.productionBudgetPerMonth.modifiedValue
+        settlement.currentProductionBudget = MathUtils.clamp(settlement.currentProductionBudget, 0f, settlement.stats.maxProductionBudget.modifiedValue)
     }
 
 

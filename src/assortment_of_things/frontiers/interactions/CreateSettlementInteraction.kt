@@ -130,13 +130,13 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
                     var ressource = FrontiersUtils.getRessource(site)
                     if (ressource != null) {
                         var img = leftElement!!.beginImageWithText(ressource.getIcon(), 48f)
-                        img.addPara("${ressource.getName()}:\n${ressource.getDescription()}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${ressource.getName()}")
+                        ressource.getDescription(img)
                         leftElement!!.addImageWithText(0f)
 
                         if (ressource.canBeRefined()) {
                             leftElement!!.addSpacer(10f)
                             var img = leftElement!!.beginImageWithText(ressource.getRefinedIcon(), 48f)
-                            img.addPara("Can be refined to increase the export value by 50%%. Requires the \"Refinery\" facility.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "50%", "Refinery")
+                            img.addPara("Can be refined to increase the export value by 75%%. Requires the \"Refinery\" facility.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "75%", "Refinery")
                             leftElement!!.addImageWithText(0f)
                         }
 

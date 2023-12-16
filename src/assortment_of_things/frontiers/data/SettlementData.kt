@@ -4,12 +4,15 @@ import assortment_of_things.frontiers.intel.SettlementIntel
 import assortment_of_things.frontiers.plugins.modifiers.BaseSettlementModifier
 import assortment_of_things.frontiers.SettlementManager
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import org.lwjgl.util.vector.Vector2f
 
-class SettlementData(var primaryPlanet: PlanetAPI, var delegateEntity: SectorEntityToken) {
+class SettlementData(var primaryPlanet: PlanetAPI, var settlementEntity: SectorEntityToken) {
+
+    data class ProductionData(var cargo: CargoAPI, var timestamp: Long, var days: Float)
 
     var name = ""
     var description = "You take a trip down towards the surface, as your dropship closes on to the ground, the settlement starts becoming visible on the ground below. " +
@@ -25,8 +28,14 @@ class SettlementData(var primaryPlanet: PlanetAPI, var delegateEntity: SectorEnt
     var previousMonthsProduction = Global.getFactory().createCargo(true).apply {
        initMothballedShips(Factions.PLAYER)
     }
+    var nextMonthsProduction = Global.getFactory().createCargo(true).apply {
+        initMothballedShips(Factions.PLAYER)
+    }
     lateinit var mananger: SettlementManager
     lateinit var intel: SettlementIntel
+    var productionOrders = ArrayList<ProductionData>()
+
+    var currentProductionBudget = 0f
 
     fun isAvailable() : Boolean {
         return !primaryPlanet.faction.isHostileTo(Factions.PLAYER)

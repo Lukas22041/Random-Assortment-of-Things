@@ -1,6 +1,8 @@
 package assortment_of_things.misc
 
+import assortment_of_things.frontiers.FrontiersUtils
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -44,6 +46,25 @@ class RATControllerHullmod : BaseHullMod() {
                 stats.getBreakProb().modifyMult(id, 0f);
 
                 stats.maxCombatReadiness.modifyFlat(id, 0.10f, "Auto-Engineer")
+            }
+        }
+
+        if (FrontiersUtils.hasSettlement()) {
+            var settlement = FrontiersUtils.getSettlementData()
+            if (settlement.hasFacility("quality_control")) {
+
+                var mod = when(hullSize) {
+                    ShipAPI.HullSize.CAPITAL_SHIP -> 0.95f
+                    ShipAPI.HullSize.CRUISER -> 0.9f
+                    ShipAPI.HullSize.DESTROYER -> 0.85f
+                    ShipAPI.HullSize.FRIGATE -> 0.8f
+                    else -> 0.8f
+                }
+
+                stats.suppliesPerMonth.modifyMult("rat_quality_control", mod)
+            }
+            if (settlement.hasFacility("specialised_training")) {
+                stats.minCrewMod.modifyMult("rat_specialised_training", 0.85f)
             }
         }
 

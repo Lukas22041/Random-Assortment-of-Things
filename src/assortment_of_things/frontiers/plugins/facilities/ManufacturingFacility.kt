@@ -1,11 +1,10 @@
 package assortment_of_things.frontiers.plugins.facilities
 
-import assortment_of_things.frontiers.FrontiersUtils
-import assortment_of_things.frontiers.data.SettlementData
-import assortment_of_things.misc.addNegativePara
+import assortment_of_things.frontiers.ui.SettlementCustomProduction
+import assortment_of_things.misc.RATInteractionPlugin
+import com.fs.starfarer.api.campaign.InteractionDialogAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import java.awt.Color
 
 class ManufacturingFacility : BaseSettlementFacility() {
 
@@ -13,12 +12,14 @@ class ManufacturingFacility : BaseSettlementFacility() {
     var budgetPerMonth = 20000f
 
     override fun apply() {
-        settlement.stats.productionBudget.modifyMult("manufacturing", budget)
-        settlement.stats.productionBudgetPerMonth.modifyMult("manufacturing", budgetPerMonth)
+        settlement.stats.maxProductionBudget.modifyFlat("manufacturing", budget)
+        settlement.stats.productionBudgetPerMonth.modifyFlat("manufacturing", budgetPerMonth)
+
+        settlement.currentProductionBudget += budgetPerMonth
     }
 
     override fun unapply() {
-        settlement.stats.productionBudget.unmodify("manufacturing")
+        settlement.stats.maxProductionBudget.unmodify("manufacturing")
         settlement.stats.productionBudgetPerMonth.unmodify("manufacturing")
     }
 
@@ -29,5 +30,19 @@ class ManufacturingFacility : BaseSettlementFacility() {
                 "The orders have a maxmimum budget of $budgetString credits. Every month the budget recovers by $budgetPerMonthString credits. " +
                 "\n\nIncreases in the production budget stack with those from other facilities.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "weapons", "fighter wings", "$budgetString", "$budgetPerMonthString")
+    }
+
+    override fun populateSettlementDialogOrder(): Int {
+        return 2
+    }
+
+    override fun populateSettlementDialog(dialog: InteractionDialogAPI, plugin: RATInteractionPlugin) {
+        if (!plugin.optionPanel.hasOption("Order custom production")) {
+            plugin.createOption("Order custom production") {
+                dialog.showCustomProductionPicker(SettlementCustomProduction(settlement))
+            }
+            plugin.optionPanel.setTooltip("Order custom production", "Order production based on what facilities have been build. " +
+                    "Current production orders are displayed in the settlements intel entry and will be delivered towards the settlements storage.")
+        }
     }
 }

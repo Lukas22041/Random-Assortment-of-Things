@@ -1,7 +1,6 @@
 package assortment_of_things.campaign.rulecmd
 
 import assortment_of_things.frontiers.FrontiersUtils
-import assortment_of_things.frontiers.interactions.CreateSettlementInteraction
 import assortment_of_things.frontiers.interactions.SettlementInteraction
 import com.fs.starfarer.api.campaign.InteractionDialogAPI
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
@@ -23,7 +22,7 @@ class DelegateToSettlementDialog() : BaseCommandPlugin() {
         var newPlugin = SettlementInteraction(data)
         newPlugin.previousPlugin = dialog.plugin
         dialog.plugin = newPlugin
-        dialog.interactionTarget = data.delegateEntity
+        dialog.interactionTarget = data.settlementEntity
         newPlugin.init(dialog)
 
         return true

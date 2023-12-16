@@ -8,8 +8,8 @@ class SettlementStats {
 
     var income = MutableStat(5000f)
 
-    var productionBudget = MutableStat(250000f)
-    var productionBudgetPerMonth = MutableStat(25000f)
+    var maxProductionBudget = MutableStat(0f)
+    var productionBudgetPerMonth = MutableStat(0f)
     var productionQuality = MutableStat(1f)
 
     private var dynamic = HashMap<String, MutableStat>()
