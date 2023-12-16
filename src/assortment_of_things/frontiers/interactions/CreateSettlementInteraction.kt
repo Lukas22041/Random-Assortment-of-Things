@@ -246,9 +246,9 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
             settlementDelegate.memoryWithoutUpdate.unset("\$tradeMode")
 
             for (condition in interactionTarget.market.conditions) {
-                market.addCondition(condition.id)
+                /*market.addCondition(condition.id)
                 var cond = market.getCondition(condition.id)
-                cond.isSurveyed = true
+                cond.isSurveyed = true*/
             }
 
             market.stability.modifyFlat("rat_base", 10f)
