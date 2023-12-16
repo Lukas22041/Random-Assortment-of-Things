@@ -8,6 +8,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.econ.MonthlyReport
 import com.fs.starfarer.api.campaign.listeners.EconomyTickListener
 import com.fs.starfarer.api.impl.campaign.ids.Commodities
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.shared.SharedData
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import org.magiclib.kotlin.getStorageCargo
@@ -144,6 +145,7 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
 
         var current = settlement.delegateEntity.market.submarketsCopy.find { it.plugin is SettlementStoragePlugin }?.plugin?.cargo ?: return
         var add = Global.getFactory().createCargo(true)
+        add.initMothballedShips(Factions.PLAYER)
 
         for (slot in settlement.facilitySlots) {
             if (slot.isFunctional()) {
@@ -152,7 +154,6 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
             }
         }
 
-        add.addCommodity(Commodities.SUPPLIES, 5f)
         settlement.previousMonthsProduction = add
         if (!add.isEmpty) {
             Global.getSector().campaignUI.addMessage(settlement.intel)

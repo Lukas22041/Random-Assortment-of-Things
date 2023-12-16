@@ -38,7 +38,7 @@ class SettlementFacilitySlot(var data: SettlementData) {
         facilityPlugin?.settlement = data
     }
 
-    fun getFacilitySpecn() : SettlementFacilitySpec? {
+    fun getFacilitySpec() : SettlementFacilitySpec? {
         if (facilityID == "") return null
         return FrontiersUtils.getFacilityByID(facilityID)
     }
