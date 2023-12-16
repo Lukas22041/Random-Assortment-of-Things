@@ -96,4 +96,12 @@ abstract class BaseSettlementFacility() {
     fun setBuilding(isBuilding: Boolean) {
         this.isBuilding = isBuilding
     }
+
+    open fun reportEconomyTick(iterIndex: Int) {
+
+    }
+
+    open fun reportEconomyMonthEnd() {
+
+    }
 }

@@ -31,7 +31,7 @@ class PanelWithCloseButtonAndBackground(var background: String? = null) : BaseCu
 
     override fun positionChanged(position: PositionAPI) {
         this.position = position
-        buttonLocation =  Vector2f(position.x + position.width - closeSpriteOff.width, position.y + position.height - closeSpriteOff.height)
+        buttonLocation =  Vector2f(position.x + position.width - closeSpriteOff.width + 6f, position.y + position.height - closeSpriteOff.height + 6f)
     }
 
     override fun processInput(events: MutableList<InputEventAPI>) {

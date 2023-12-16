@@ -15,7 +15,8 @@ Can be enabled mid-save",,,Expansion
 rat_relicsEnabled,"Enable ""Relics of the Past""",Boolean,true,,"Generates lots of unique loot, stations, interactions and planetary conditions across the sector, with most of it being discoverable in ruined systems.
 
 Enabling ""Relics of the Past"" generates content for both new and existing saves upon game load.",,,Expansion
-rat_frontiersEnabled,"Enable ""Frontiers"" (Beta)",Boolean,true,,"Enables the player to construct a ""Settlement"" on a planet. Settlements are intended for people that dont quite enjoy the colony gameplay loop, being both small in scale and requiring much less oversight.
+rat_frontiersEnabled,"Enable ""Frontiers"" (Beta)",Boolean,true,,"Enables the player to construct a ""Settlement"" on a planet. Settlements are a low maintenance alternative to colonies for mid- to lategame, Providing a base of operation to the player that does not require much oversight. Only one Settlement can be constructed.
+
 
 Enabling ""Frontiers"" enables it for the current save on load. Disabling it on an existing save has no effect.",,,Expansion
 rat_backgroundsEnabled,"Enable ""Backgrounds""",Boolean,true,,"Adds more unique backgrounds to Nexerelins ""Background"" system.
@@ -27,6 +28,10 @@ rat_abyssBrighter,Brighter Abyss,Boolean,false,,"Makes the abyss less dark, reco
 rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the Abyss.
 
 Hard mode greatly increases the strength of fleets found within the Abyss. Also adds slight player fleet scaling.",,,Expansion
+,,,,,,,,
+rat_frontiersHeader,Frontiers,Header,Frontiers,,,,,Expansion
+rat_frontiersIncomeMult,Income Multiplier,Double,1,,Multiplies the amount of passive income that settlements provide.,0.5,3.0,Expansion
+rat_frontiersCostMult,Cost Multiplier,Double,1,,"Changes the cost of all settlement related expanses, like establishing one and paying for the construction of facilities.",0.5,3.0,Expansion
 ,,,,,,,,
 rat_creditsHeader,Credits,Header,Credits,,,,,Expansion
 rat_creditsText,,Text,"[Credits:]

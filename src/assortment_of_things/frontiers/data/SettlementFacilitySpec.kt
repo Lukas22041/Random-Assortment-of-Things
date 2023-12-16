@@ -5,7 +5,6 @@ data class SettlementFacilitySpec(
     var name: String,
     var buildTime: Int,
     var shortDesc: String,
-    var descendDesc: String,
     var icon: String,
     var cost: Float,
     var plugin: String)

@@ -3,6 +3,7 @@ package assortment_of_things.frontiers.interactions.panels
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.data.SettlementFacilitySlot
+import assortment_of_things.frontiers.intel.SettlementIntel
 import assortment_of_things.frontiers.ui.FacilityDisplayElement
 import assortment_of_things.frontiers.ui.SiteDisplayElement
 import assortment_of_things.misc.*
@@ -12,6 +13,9 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import lunalib.lunaExtensions.addLunaSpriteElement
+import lunalib.lunaExtensions.addLunaTextfield
+import lunalib.lunaUI.elements.LunaSpriteElement
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
@@ -32,6 +36,108 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
 
         displaySettlementIcon(element, centerSize)
         displayFacilityIcons(element, centerSize)
+
+        var help = element.addLunaSpriteElement("graphics/ui/icons/fleettab/more_info.png", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, 32f, 32f).apply {
+            getSprite().alphaMult = 1f
+            getSprite().color = Misc.getDarkPlayerColor().brighter()
+            position.inTL(mainPanel.position.width - 32 - 1, 35f)
+
+            render {
+
+                if (isHovering) {
+                    var sprite = getSprite()
+                    sprite.setAdditiveBlend()
+                    sprite.alphaMult = 1f
+                    sprite.render(x, y)
+                    sprite.alphaMult = 1f
+                    sprite.setNormalBlend()
+                }
+
+            }
+
+            onHoverEnter {
+                playScrollSound()
+            }
+            onClick {
+                playClickSound()
+            }
+        }
+
+        element.addTooltip(help.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT, 350f) { tooltip ->
+            tooltip.addSectionHeading("Settlements", Alignment.MID, 0f)
+            tooltip.addSpacer(3f)
+            tooltip.addPara("The settlement lets you establishing a small-scale home-base within the sector. " +
+                    "It provides some passive income, but noteably comes with a variety of utility related facilities that can be constructed." +
+                    "\n\n" +
+                    "A Settlement only has 6 plots that can hold a facility, with one always being used by its spaceport, meaning that there is a choice between 5 different facilities in your settlement. " +
+                    "Constructing a new facility costs credits and time, but multiple facilities can be constructed at the same time." +
+                    "\n\n" +
+                    "Only one settlement can be constructed by the player.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "income", "facilities", "6", "5", "at the same time")
+
+        }
+
+        var text = element.addLunaSpriteElement("graphics/ui/icons/fleettab/suspend_repairs.png", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, 32f, 32f).apply {
+            getSprite().alphaMult = 1f
+            getSprite().color = Misc.getDarkPlayerColor().brighter()
+            position.belowLeft(help.elementPanel, 2f)
+
+            render {
+
+                if (isHovering) {
+                    var sprite = getSprite()
+                    sprite.setAdditiveBlend()
+                    sprite.alphaMult = 1f
+                    sprite.render(x, y)
+                    sprite.alphaMult = 1f
+                    sprite.setNormalBlend()
+                }
+
+            }
+
+
+            var popupWidth = 300f
+            var popupHeight = 250f
+
+            onClick {
+                playClickSound()
+                element.addWindow(this.elementPanel, popupWidth, popupHeight) { window ->
+
+
+                    var panelPlugin = BorderedPanelPlugin()
+                    panelPlugin.renderBackground = true
+                    panelPlugin.backgroundColor = Color(10, 10, 10)
+                    panelPlugin.alpha = 0.8f
+
+                    var windowPanel = window.panel.createCustomPanel(popupWidth, popupHeight, panelPlugin)
+                    window.panel.addComponent(windowPanel)
+
+                    var windowElement = windowPanel.createUIElement(popupWidth, popupHeight, false)
+                    windowPanel.addUIElement(windowElement)
+
+                    windowElement.addSectionHeading("Descend Description", Alignment.MID, 0f)
+                    windowElement.addLunaTextfield("${data.description}", true, popupWidth, popupHeight - 19).apply {
+                        this.enableTransparency = true
+                        this.borderAlpha = 0.5f
+                        this.backgroundAlpha = 0.8f
+                        this.position.inTL(0f, 19f)
+
+                        this.advance {
+                            data.description = this.getText()
+                        }
+                    }
+                }
+            }
+
+            onHoverEnter {
+                playScrollSound()
+            }
+        }
+
+        element.addTooltip(text.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT, 350f) { tooltip ->
+            tooltip.addPara("Click to modify the description thats displayed when descending towards the settlement.")
+        }
+
 
        /* var plugin = PanelWithCloseButton()
         plugin.onClosePress = {
@@ -63,7 +169,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
 
             var resource = FrontiersUtils.getRessource(data)
 
-            var income = data.stats.income.modifiedValue
+            var income = data.stats.income.modifiedValue * RATSettings.frontiersIncomeMult!!
             var incomeString = Misc.getDGSCredits(income)
 
             tooltip.addPara("A small settlement established on ${data.primaryPlanet.name}.", 0f)
@@ -123,7 +229,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
             var centerY = (height) / 2 - facilitySize / 2
 
 
-            var plugin = slot.getFacilityPlugin()
+            var plugin = slot.getPlugin()
 
 
             var facilityIcon = FacilityDisplayElement(data, slot, plugin, element, facilitySize, facilitySize)
@@ -207,7 +313,7 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
         var plugins = FrontiersUtils.getAllFacilityPlugins()
             .filter { plugin -> data.facilitySlots.none { facilities -> facilities.facilityID == plugin.getID() } && plugin.getID() != "landing_pad" }
 
-        plugins = plugins.sortedByDescending { it.canBeBuild() && it.getCost() <= Global.getSector().playerFleet.cargo.credits.get() }
+        plugins = plugins.sortedByDescending { it.canBeBuild() && (it.getCost() * RATSettings.frontiersCostMult!!) <= Global.getSector().playerFleet.cargo.credits.get() }
 
         element.addSpacer(5f)
 
@@ -255,28 +361,31 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
 
                 var inner = innerElement
 
-                var cost = Misc.getDGSCredits(plugin.getCost())
+                var cost = plugin.getCost() * RATSettings.frontiersCostMult!!
+                var costString = Misc.getDGSCredits(cost)
 
                 inner.addSpacer(6f)
 
-                var cantBeConstructed = plugin.getCost() >= Global.getSector().playerFleet.cargo.credits.get() || !plugin.canBeBuild()
+                var cantBeConstructed = cost >= Global.getSector().playerFleet.cargo.credits.get() || !plugin.canBeBuild()
 
                 var color = Misc.getHighlightColor()
                 if (cantBeConstructed) {
                     color = Misc.getNegativeHighlightColor()
                     backgroundColor = Misc.getNegativeHighlightColor().darker().darker().darker()
+                    borderColor = Misc.getNegativeHighlightColor().darker().darker()
                 }
 
                 var text = inner.beginImageWithText(plugin.getIcon(), 48f)
-                text.addPara("${plugin.getName()} - $cost \n${plugin.getShortDesc()}", 0f, Misc.getTextColor(), color, "${plugin.getName()}", "$cost")
+                text.addPara("${plugin.getName()} - $costString \n${plugin.getShortDesc()}", 0f, Misc.getTextColor(), color, "${plugin.getName()}", "$costString")
                 inner.addImageWithText(0f)
 
                 onClick {
                     if (!it.isLMBEvent || cantBeConstructed) return@onClick
                     playClickSound()
                     playSound(Sounds.STORY_POINT_SPEND, 1f, 1f)
-                    Global.getSector().playerFleet.cargo.credits.subtract(plugin.getCost())
-                    var formated = Misc.getDGSCredits(plugin.getCost())
+
+                    Global.getSector().playerFleet.cargo.credits.subtract(cost)
+                    var formated = Misc.getDGSCredits(cost)
                     Global.getSector().campaignUI.messageDisplay.addMessage("Spend $formated credits", Misc.getBasePlayerColor(), "$formated", Misc.getHighlightColor())
                     slot.installNewFacility(plugin.getID())
                     window.close()
@@ -298,8 +407,8 @@ class SettlementManagementScreen(var data: SettlementData) : BaseCustomVisualDia
                     tooltip.addSpacer(10f)
                     var days = plugin.getBuildTime()
                     var playerCash =  Misc.getDGSCredits( Global.getSector().playerFleet.cargo.credits.get())
-                    tooltip.addPara("$cost credits and $days days to build. You have $playerCash.",
-                        0f, Misc.getTextColor(), Misc.getHighlightColor(), "$cost", "$days", "$playerCash")
+                    tooltip.addPara("$costString credits and $days days to build. You have $playerCash.",
+                        0f, Misc.getTextColor(), Misc.getHighlightColor(), "$costString", "$days", "$playerCash")
 
                     if (!plugin.canBeBuild()) {
                         tooltip.addSpacer(10f)

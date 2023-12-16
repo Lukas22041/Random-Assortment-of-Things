@@ -2,6 +2,7 @@ package assortment_of_things.frontiers.data
 
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.plugins.facilities.BaseSettlementFacility
+import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
@@ -18,13 +19,18 @@ class SettlementFacilitySlot(var data: SettlementData) {
 
     private var facilityPlugin: BaseSettlementFacility? = null
 
-    fun getFacilityPlugin() : BaseSettlementFacility? {
+    fun getPlugin() : BaseSettlementFacility? {
         if (facilityID == "") return null
         if (facilityPlugin == null) {
            updatePlugin()
         }
         return facilityPlugin
     }
+
+    fun isFunctional() : Boolean {
+        return !isBuilding && facilityID != ""
+    }
+
 
     fun updatePlugin() {
         facilityPlugin = FrontiersUtils.getFacilityPlugin(FrontiersUtils.getFacilityByID(facilityID))
@@ -60,7 +66,7 @@ class SettlementFacilitySlot(var data: SettlementData) {
         facilityPlugin?.setBuilding(false)
         daysRemaining = 0f
 
-        var plugin = getFacilityPlugin()
+        var plugin = getPlugin()
         plugin!!.onBuildingFinished()
         plugin!!.apply()
 
@@ -77,7 +83,7 @@ class SettlementFacilitySlot(var data: SettlementData) {
     }
 
     fun updateDays() {
-        var plugin = getFacilityPlugin() ?: return
+        var plugin = getPlugin() ?: return
         var daysRequired = plugin.getBuildTime()
         daysRemaining = daysRequired - Global.getSector().clock.getElapsedDaysSince(buildingTimestamp)
         daysRemaining = MathUtils.clamp(daysRemaining, 0f, plugin.getBuildTime().toFloat())
@@ -86,10 +92,10 @@ class SettlementFacilitySlot(var data: SettlementData) {
     fun removeCurrentFacility() {
         if (facilityID == "") return
 
-        var plugin = getFacilityPlugin()
+        var plugin = getPlugin()
 
         if (isBuilding) {
-            var cost = plugin!!.getCost()
+            var cost = plugin!!.getCost() * RATSettings.frontiersCostMult!!
 
             Global.getSector().playerFleet.cargo.credits.add(cost)
             var formated = Misc.getDGSCredits(cost)

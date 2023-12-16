@@ -11,7 +11,9 @@ import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantAssignmentAI
 import com.fs.starfarer.api.loading.CampaignPingSpec
+import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.util.WeightedRandomPicker
 import com.fs.starfarer.campaign.fleet.CampaignFleetMemberView
 import com.fs.starfarer.campaign.fleet.CampaignFleetView
 import org.lazywizard.lazylib.MathUtils
@@ -177,7 +179,25 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
     fun findSystemToMoveTo() : StarSystemAPI {
         var systems = Global.getSector().starSystems.filter {!it.hasTag(Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasPulsar() && !it.hasTag( Tags.THEME_HIDDEN)}
 
-        var system = systems.random()
+
+        var picker = WeightedRandomPicker<StarSystemAPI>()
+        for (system in systems) {
+            var weight = 1f
+
+            if (system == exoship.containingLocation) continue
+            if (system == Global.getSector().playerFleet.containingLocation) weight += 1
+            if (Misc.getDistanceLY(system.location, Global.getSector().playerFleet.locationInHyperspace) <= 5) weight += 1
+            if (system.hasBlackHole()) weight += 2
+            if (system.customEntities.any { it.customEntitySpec.id == "rat_exoship" }) weight *= 0.5f
+
+            picker.add(system, weight)
+        }
+
+        if (picker.isEmpty) {
+            return systems.random()
+        }
+
+        var system = picker.pick()
 
         return system
 

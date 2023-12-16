@@ -4,10 +4,12 @@ import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.data.SettlementData
 import assortment_of_things.frontiers.data.SettlementFacilitySlot
 import assortment_of_things.frontiers.data.SiteData
-import assortment_of_things.frontiers.scripts.SettlementManager
+import assortment_of_things.frontiers.intel.SettlementIntel
+import assortment_of_things.frontiers.SettlementManager
 import assortment_of_things.frontiers.submarkets.SettlementStoragePlugin
 import assortment_of_things.frontiers.ui.SiteSelectionPickerElement
 import assortment_of_things.misc.RATInteractionPlugin
+import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BaseCustomDialogDelegate
@@ -17,7 +19,9 @@ import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Industries
+import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.impl.campaign.ids.Stats
+import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -28,6 +32,8 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
 
     lateinit var previousPlugin: InteractionDialogPlugin
     var selectedSite: SiteData? = null
+
+    var cost = 350000f * RATSettings.frontiersCostMult!!
 
     override fun init() {
         visualPanel.showLargePlanet(interactionTarget as PlanetAPI)
@@ -40,13 +46,15 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
 
         var planet = interactionTarget as PlanetAPI
 
+        var costString = Misc.getDGSCredits(cost)
+
         if (planet.faction == null || planet.faction.isNeutralFaction) {
-            textPanel.addPara("This planet is not under the control of anyone. Establishing a settlement here will require a start-up cost of 500.000 credits to get the foundations up and running.",
-            Misc.getTextColor(), Misc.getHighlightColor(), "500.000")
+            textPanel.addPara("This planet is not under the control of anyone. Establishing a settlement here will require a start-up cost of $costString credits to get the foundations up and running.",
+            Misc.getTextColor(), Misc.getHighlightColor(), "$costString")
         }
         else {
-            textPanel.addPara("This planet is under ${planet.faction.displayNameWithArticle}'s influence. Acquiring the rights to a site and establishing the settlement will require 800.000 credits. All export income will have a 30%% cut taken, and if you turn hostile towards the faction, the settlement will no longer be accessible.",
-            Misc.getTextColor(), Misc.getHighlightColor(), "${planet.faction.displayNameWithArticle}'s", "800.000", "30%")
+            textPanel.addPara("This planet is under ${planet.faction.displayNameWithArticle}'s influence. Acquiring the rights to a site and establishing the settlement will require $costString credits. If you turn hostile towards the faction, the settlement will no longer be accessible.",
+            Misc.getTextColor(), Misc.getHighlightColor(), "${planet.faction.displayNameWithArticle}'s", "$costString")
         }
 
         textPanel.addPara("You can only own a single Settlement at a time.")
@@ -215,6 +223,11 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
         createOption("Establish the settlement") {
             clearOptions()
 
+            Global.getSoundPlayer().playUISound(Sounds.STORY_POINT_SPEND, 1f, 1f)
+
+            AddRemoveCommodity.addCreditsLossText(cost.toInt(), textPanel)
+            Global.getSector().playerFleet.cargo.credits.subtract(cost)
+
             var settlementDelegate = interactionTarget.starSystem.addCustomEntity("rat_frontiers_settlement_${Misc.genUID()}", "${interactionTarget.name} Settlement", "rat_frontiers_settlement", Factions.PLAYER)
             //station!!.setCircularOrbit(system.center, MathUtils.getRandomNumberInRange(0f, 360f), 3000f, 180f)
             settlementDelegate.setCircularOrbitPointingDown(interactionTarget, 1f, 1f, 360f)
@@ -246,6 +259,8 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
             settlementData.location = selectedSite!!.location
             settlementData.angleFromCenter = selectedSite!!.angleFromCenter
             settlementData.distanceFromCenteer = selectedSite!!.distanceFromCenter
+
+
 
 
 
@@ -293,6 +308,11 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
             textPanel.addPara("Due to a settlements limited scope, it is capable of functioning mostly autonomously from locally acquired materials and small-scale trades with other planetary facilities or with traders within nearby space." +
                     "")
 
+            var intel = SettlementIntel(settlementData)
+            settlementData.intel = intel
+            Global.getSector().intelManager.addIntel(intel)
+            Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)
+
             createOption("Descend towards the settlement") {
                 dialog.optionPanel.clearOptions()
                 //dialog.hideVisualPanel()
@@ -313,6 +333,9 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
         if (selectedSite == null) {
             optionPanel.setEnabled("Establish the settlement", false)
             optionPanel.setTooltip("Establish the settlement", "You need to select a site to establish the settlement.")
+        } else if (Global.getSector().playerFleet.cargo.credits.get() < cost) {
+            optionPanel.setEnabled("Establish the settlement", false)
+            optionPanel.setTooltip("Establish the settlement", "Not enough credits.")
         }
 
         createOption("Back") {

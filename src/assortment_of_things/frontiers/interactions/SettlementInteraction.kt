@@ -28,10 +28,7 @@ class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
         //Update facilities
         data.mananger.update()
 
-        textPanel.addPara("You take a trip down towards the surface of ${data.primaryPlanet.name}, as your dropship closes on to the ground, the settlement starts becoming visible on the ground below. " +
-                "At first it appears as a tiny, unidentifeable dot, until just moments later this blob has turned in to an outpost spanning the visible surroundings.")
-
-        textPanel.addPara("The moment you leave your pod, you are welcomed to a humble but busy enviroment, with settlers making sure that operations can keep running on schedule, and the occasional launch and landings of tradeships from the landing pad.")
+        textPanel.addPara(data.description)
 
         createOption("Manage Settlement") {
             var screen = SettlementManagementScreen(data)
@@ -53,6 +50,12 @@ class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
         }
         optionPanel.setShortcut("Refit Ships", Keyboard.KEY_R, false, false, false, false)
 
+        var slots = data.getFunctionalSlots().sortedBy { it.getPlugin()?.populateSettlementDialogOrder() }
+
+        for (slot in slots) {
+            slot.getPlugin()?.populateSettlementDialog(dialog, this)
+        }
+
 
         createOption("Back") {
             clearOptions()
@@ -63,4 +66,18 @@ class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
         optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
     }
 
+
+    override fun optionSelected(optionText: String?, optionData: Any?) {
+
+        var slots = data.getFunctionalSlots().sortedBy { it.getPlugin()?.populateSettlementDialogOrder() }
+
+        for (slot in slots) {
+            var pressed = slot.getPlugin()!!.optionPressDetected(optionText!!, optionData)
+            if (pressed) {
+                return
+            }
+        }
+
+        super.optionSelected(optionText, optionData)
+    }
 }

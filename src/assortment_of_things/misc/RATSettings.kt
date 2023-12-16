@@ -26,6 +26,8 @@ object RATSettings : LunaSettingsListener
 
     //Frontiers
     var enableFrontiers = LunaSettings.getBoolean(modID, "rat_frontiersEnabled")
+    var frontiersIncomeMult = LunaSettings.getFloat(modID, "rat_frontiersIncomeMult")
+    var frontiersCostMult = LunaSettings.getFloat(modID, "rat_frontiersCostMult")
 
     //Backgrounds
     var backgroundsEnabled = LunaSettings.getBoolean(modID, "rat_backgroundsEnabled")
@@ -73,6 +75,9 @@ object RATSettings : LunaSettingsListener
         relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
 
         enableFrontiers = LunaSettings.getBoolean(modID, "rat_frontiersEnabled")
+        frontiersIncomeMult = LunaSettings.getFloat(modID, "rat_frontiersIncomeMult")
+        frontiersCostMult = LunaSettings.getFloat(modID, "rat_frontiersCostMult")
+
 
         backgroundsEnabled = LunaSettings.getBoolean(modID, "rat_backgroundsEnabled")
 
