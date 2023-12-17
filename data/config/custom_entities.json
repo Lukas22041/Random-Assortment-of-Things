@@ -834,7 +834,7 @@
 		"showInCampaign":true,
 		"showIconOnMap":false,
 		"scaleIconWithZoom":true,
-		"tags":[],
+		"tags":["station"],
 		"layers":[ABOVE], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 	},
 }

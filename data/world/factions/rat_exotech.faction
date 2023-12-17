@@ -279,7 +279,7 @@
 		"AICoreRepMult":0.5,
 		"buysSurveyData":true,
 		"hostilityImpactOnGrowth":true,
-		"allowsTransponderOffTrade":false,
+		"allowsTransponderOffTrade":true,
 		"punitiveExpeditionData":{
 			"vsCompetitors":true,
 			"vsFreePort":false,

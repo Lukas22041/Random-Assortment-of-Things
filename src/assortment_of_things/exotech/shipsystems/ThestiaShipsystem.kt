@@ -3,13 +3,19 @@ package assortment_of_things.exotech.shipsystems
 import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.exotech.ExoUtils
+import assortment_of_things.misc.ReflectionUtils
+import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
+import com.fs.starfarer.api.loading.FighterWingSpecAPI
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.combat.CombatFleetManager
+import com.fs.starfarer.combat.entities.Ship
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
@@ -36,9 +42,9 @@ class ThestiaShipsystem : BaseShipSystemScript() {
         if (activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
             activated = false
 
-            for (aftershadow in aftershadows) {
+            /*for (aftershadow in aftershadows) {
                 aftershadow.hitpoints = 0f
-            }
+            }*/
         }
 
         if (!activated && system.state == ShipSystemAPI.SystemState.IN) {
@@ -57,12 +63,14 @@ class ThestiaShipsystem : BaseShipSystemScript() {
 
 
                     var leftShadow = spawnShipOrWingDirectly(fighter, fighter.variant, FleetMemberType.FIGHTER_WING, fighter.owner, 1f, fighter.location, fighter.facing)
+                        ?: continue
                     leftShadow.setCustomData("rat_shadow_original", fighter)
                     leftShadow.velocity.set(fighter.velocity)
                     leftShadow.location.set(MathUtils.getPointOnCircumference(fighter.location, 10f, fighter.facing + 120))
                     aftershadows.add(leftShadow)
 
                     var rightShadow = spawnShipOrWingDirectly(fighter, fighter.variant, FleetMemberType.FIGHTER_WING, fighter.owner, 1f, fighter.location, fighter.facing)
+                        ?: continue
                     rightShadow.setCustomData("rat_shadow_original", fighter)
                     rightShadow.velocity.set(fighter.velocity)
                     rightShadow.location.set(MathUtils.getPointOnCircumference(fighter.location, 10f, fighter.facing - 120))
@@ -96,6 +104,9 @@ class ThestiaShipsystem : BaseShipSystemScript() {
 
         afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
         for (aftershadow in aftershadows) {
+
+            aftershadow.setShipSystemDisabled(true)
+            aftershadow.blockCommandForOneFrame(ShipCommand.USE_SYSTEM)
 
             var original = aftershadow.customData.get("rat_shadow_original") as ShipAPI
 
@@ -144,29 +155,70 @@ class ThestiaShipsystem : BaseShipSystemScript() {
                 }
             }
 
+            if (state == ShipSystemStatsScript.State.COOLDOWN) {
+                if (aftershadow.isAlive) {
+                    var manager = Global.getCombatEngine().getFleetManager(aftershadow.owner)
+                    aftershadow.isPhased = false
+                    aftershadow.alphaMult = 0f
+                    aftershadow.location.set(Vector2f(50000f, 50000f))
+
+                    var obfManager = manager as CombatFleetManager
+                    obfManager.removeDeployed(aftershadow as Ship, true)
+                }
+            }
+
 
         }
     }
 
-    fun spawnShipOrWingDirectly(originalFighter: ShipAPI, variant: ShipVariantAPI?, type: FleetMemberType?, owner: Int, combatReadiness: Float, location: Vector2f?, facing: Float): ShipAPI {
-        val member = Global.getFactory().createFleetMember(type, originalFighter.wing.spec.id)
+    fun spawnShipOrWingDirectly(originalFighter: ShipAPI, variant: ShipVariantAPI?, type: FleetMemberType?, owner: Int, combatReadiness: Float, location: Vector2f?, facing: Float): ShipAPI? {
+
+        var clone = variant!!.clone()
+
+        clone.clearHullMods()
+        for (hullmod in ArrayList(clone.hullMods)) {
+            clone.removeMod(hullmod)
+            clone.removePermaMod(hullmod)
+            clone.addSuppressedMod(hullmod)
+        }
+
+        for (hullmod in ArrayList(clone.permaMods)) {
+            clone.removePermaMod(hullmod)
+            clone.addSuppressedMod(hullmod)
+        }
+
+        for (hullmod in ArrayList(variant.nonBuiltInHullmods)) {
+            clone.removeMod(hullmod)
+            clone.removePermaMod(hullmod)
+            clone.addSuppressedMod(hullmod)
+        }
+
+        for (slotId in (ArrayList(clone.fittedWeaponSlots))) {
+            var slot = clone.getSlot(slotId)
+            if (slot.isDecorative) {
+                clone.clearSlot(slotId)
+            }
+        }
+
+        val member = Global.getFactory().createFleetMember(FleetMemberType.SHIP, clone)
         member.owner = owner
         member.crewComposition.addCrew(member.neededCrew)
 
         member.captain = originalFighter.captain
-        member.numFightersInWing
+
+        member.setVariant(clone, true, true)
 
 
-        val fighter = Global.getCombatEngine().getFleetManager(owner).spawnFleetMember(member, location, facing, 0f)
+        var fighter = Global.getCombatEngine().getFleetManager(owner).spawnFleetMember(member, location, facing, 0f)
 
-        var wing = fighter.wing
+      /*  var wing = fighter.wing
         for (wingMember in ArrayList(wing.wingMembers)) {
             if (wingMember == fighter) continue
             wing.removeMember(wingMember)
             Global.getCombatEngine().removeEntity(wingMember)
-        }
+        }*/
 
-        fighter.crAtDeployment = combatReadiness
+        fighter!!.crAtDeployment = combatReadiness
         fighter.currentCR = combatReadiness
         fighter.owner = owner
 
