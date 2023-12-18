@@ -32,3 +32,7 @@ rat_createSettlementScript,DialogOptionSelected,$option == ratCreateSettlement,D
 ,,,,,,
 rat_visitSettlement,PopulateOptions,ShouldShowSettlementOption,AutoDescendToSettlement,,2:ratVisitSettlement:Descend towards the settlement,
 rat_visitSettlementScript,DialogOptionSelected,$option == ratVisitSettlement,DelegateToSettlementDialog,,,
+,,,,,,
+rat_utEasteregg,PopulateOptions,,,,1:showUTPanel:Enter the Underground,
+rat_utEastereggScript,DialogOptionSelected,$option == showUTPanel,RATShowUT,,,
+,,,,,,
