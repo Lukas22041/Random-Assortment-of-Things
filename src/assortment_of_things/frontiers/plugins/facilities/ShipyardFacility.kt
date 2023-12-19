@@ -9,7 +9,7 @@ import com.fs.starfarer.api.util.Misc
 class ShipyardFacility : BaseSettlementFacility() {
 
     var budget = 500000f
-    var budgetPerMonth = 40000f
+    var budgetPerMonth = 20000f
 
     override fun apply() {
         settlement.stats.maxProductionBudget.modifyFlat("shipyard", budget)

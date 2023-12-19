@@ -6,6 +6,7 @@
     "collisionRadius": 2,
     "coversColor": "",
     "height": 4,
+    "width": 4,
     "hullId": "rat_aftershadow_drone",
     "hullName": "Aftershadow",
     "hullSize": "FIGHTER",
@@ -13,6 +14,9 @@
         0,
         0
     ],
+    "builtInMods": [
+        "no_weapon_flux"
+      ],
     "shieldRadius": 2,
     "spriteName": "graphics/fx/empty.png",
     "style": "LOW_TECH",
@@ -150,6 +154,5 @@
             "size": "SMALL",
             "type": "UNIVERSAL"
         }
-    ],
-    "width": 4
+    ]
 }

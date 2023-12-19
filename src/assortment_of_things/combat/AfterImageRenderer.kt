@@ -115,6 +115,38 @@ class AfterImageRenderer : BaseEveryFrameCombatPlugin() {
 
                 afterimageData[afterimage.id] = afterimage
             }
+
+        fun addAfterimageWithSpritepath(ship: ShipAPI,
+                          colorIn: Color,
+                          colorOut: Color = colorIn,
+                          duration: Float,
+                          jitter: Float = 0f,
+                          location: Vector2f = Vector2f(ship.location),
+                          spritePath: String) = Afterimage(id = Misc.random.nextLong(),
+            sprite = Global.getSettings().getSprite(spritePath),
+            location = location,
+            facing = ship.facing,
+            colorIn = colorIn,
+            colorOut = colorOut,
+            duration = duration,
+            jitter = jitter).also { afterimage ->
+
+            val sprite = ship.spriteAPI
+            val offsetX = sprite.width / 2 - sprite.centerX
+            val offsetY = sprite.height / 2 - sprite.centerY
+            val trueOffsetX = FastTrig.cos(Math.toRadians((ship.facing - 90f).toDouble()))
+                .toFloat() * offsetX - FastTrig.sin(Math.toRadians((ship.facing - 90f).toDouble()))
+                .toFloat() * offsetY
+            val trueOffsetY = FastTrig.sin(Math.toRadians((ship.facing - 90f).toDouble()))
+                .toFloat() * offsetX + FastTrig.cos(Math.toRadians((ship.facing - 90f).toDouble()))
+                .toFloat() * offsetY
+
+            afterimage.location.x += trueOffsetX
+            afterimage.location.y += trueOffsetY
+            afterimage.actualLoc = afterimage.location
+
+            afterimageData[afterimage.id] = afterimage
+        }
     }
 
     internal class CustomRenderer
