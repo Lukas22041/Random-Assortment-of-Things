@@ -9,8 +9,8 @@ import com.fs.starfarer.api.util.Misc
 class StockpileFacility : BaseSettlementFacility() {
 
     override fun addDescriptionToTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("A dedicated storage facility for the settlement. Removes storage fees from both the settlement and colony, if there is one. " +
-                "Also increases the settlements income by 10%%.",
+        tooltip.addPara("A dedicated storage facility for the settlement. Removes the monthly fees from the settlements storage. " +
+                "If the settlement is located on a planet owned by another faction, it removes the storage fees from the market aswell.  Increases settlement income by 10%%.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
     }
 

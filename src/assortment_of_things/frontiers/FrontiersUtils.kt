@@ -236,7 +236,7 @@ object FrontiersUtils {
                 site.modifierIDs.add(ressources.pickAndRemove().getID())
                 addedRessource = true
             }
-            else if (maxExtraResources > 0) {
+            else if (maxExtraResources > 0 && !extraRessources.isEmpty) {
                 site.modifierIDs.add(extraRessources.pick().getID())
                 addedRessource = true
                 maxExtraResources--

@@ -55,3 +55,14 @@ Rat-Calypso,rat_calypso_shot,base_trail_smooth,5,0,0.1,0.15,7.5,3,"[242,48,65]",
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Rat-Cecaelia,rat_cecaelia_shot,base_trail_smooth,5,0,0.05,0.075,15,3,"[85,199,40]","[85,199,40]",0.7,-128,-256,TRUE,0,0,0,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+#Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Rat-Hyperspatial Javelin1,rat_hyper_javelin_shot,base_trail_smooth,10,0.1,0.1,0.20,25,5,"[252,143,0]","[130,4,189]",0.8,-128,-256,TRUE,25,10,1,0,TRUE,FALSE,TRUE,50,0,0,0,0,0,true,false
+Rat-Hyperspatial Javelin2,rat_hyper_javelin_shot,base_trail_zapWithCore,10,0.1,0.1,0.20,15,2.5,"[252,143,0]","[130,4,189]",0.4,-128,-256,TRUE,25,10,1,0,TRUE,FALSE,TRUE,50,0,1,0,90,180,true,false
+Rat-Hyperspatial Javelin3,rat_hyper_javelin_shot,base_trail_zap,10,0.1,0.1,0.20,10,2.5,"[252,143,0]","[130,4,189]",0.4,-128,-256,TRUE,25,20,1,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
+Rat-Hyperspatial Javelin4,rat_hyper_javelin_shot,base_trail_zap,10,0.1,0.1,0.20,10,2.5,"[252,143,0]","[130,4,189]",0.4,-128,-256,TRUE,25,40,1,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
+Rat-Hyperspatial Javelin5,rat_hyper_javelin_shot,base_trail_zap,10,0.1,0.1,0.20,5,2,"[252,143,0]","[130,4,189]",0.4,-128,-256,TRUE,25,100,1,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
