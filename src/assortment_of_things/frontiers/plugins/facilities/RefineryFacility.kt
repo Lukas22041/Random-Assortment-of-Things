@@ -23,7 +23,7 @@ class RefineryFacility : BaseSettlementFacility() {
 
     override fun canBeBuild(): Boolean {
         var resource = FrontiersUtils.getRessource(settlement)
-        return resource != null && resource.canBeRefined()
+        return resource != null && resource.getSpec().canBeRefined
     }
 
     override fun canNotBeBuildReason(tooltip: TooltipMakerAPI, data: SettlementData) {

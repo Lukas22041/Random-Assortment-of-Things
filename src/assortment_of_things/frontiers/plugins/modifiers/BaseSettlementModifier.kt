@@ -11,6 +11,7 @@ open class BaseSettlementModifier() {
 
     var specId: String = ""
     lateinit var settlement: SettlementData
+    lateinit var conditionId: String
 
     fun getSpec() : SettlementModifierSpec {
         return FrontiersUtils.getModifierByID(specId)
@@ -28,14 +29,6 @@ open class BaseSettlementModifier() {
         tooltip.addPara("${getName()}:\n${getSpec().desc}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${getName()}")
     }
 
-
-    open fun isRessource() : Boolean {
-        return getSpec().isResource
-    }
-
-    open fun canBeRefined() : Boolean {
-        return getSpec().canBeRefined
-    }
 
 
     open fun getIcon() : String {
@@ -65,4 +58,18 @@ open class BaseSettlementModifier() {
     open fun addToMonthlyCargo(current: CargoAPI): CargoAPI? {
         return null
     }
+
+    open fun getTier() : Int {
+        return getSpec().tiers.get(conditionId)!!
+    }
+
+    open fun reportEconomyTick(iterIndex: Int) {
+
+    }
+
+    open fun reportEconomyMonthEnd() {
+
+    }
+
+
 }

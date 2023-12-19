@@ -81,6 +81,10 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
 
         addStorageFees()
 
+        for (mod in settlement.modifiers) {
+            mod.reportEconomyTick(iterIndex)
+        }
+
         for (slot in settlement.facilitySlots) {
             if (slot.isFunctional()) {
                 slot.getPlugin()?.reportEconomyTick(iterIndex)
@@ -182,6 +186,10 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
         var storage = settlement.settlementEntity.market.submarketsCopy.find { it.plugin is SettlementStoragePlugin }?.plugin?.cargo ?: return
         var next = settlement.nextMonthsProduction
 
+        for (mod in settlement.modifiers) {
+            mod.reportEconomyMonthEnd()
+        }
+
         for (slot in settlement.facilitySlots) {
             if (slot.isFunctional()) {
                 var product = slot.getPlugin()?.addToMonthlyCargo(storage)
@@ -191,6 +199,8 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
                 slot.getPlugin()?.reportEconomyMonthEnd()
             }
         }
+
+
 
         for (modifier in settlement.modifiers) {
             var product = modifier.addToMonthlyCargo(storage)

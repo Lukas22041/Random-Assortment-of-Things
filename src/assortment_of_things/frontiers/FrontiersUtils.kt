@@ -76,9 +76,17 @@ object FrontiersUtils {
             val income = row.getString("income").split(",").map { it.trim() }.map { it.toInt() }
             var combined = conditions.zip(income).toMap()
 
+            var condString = row.getString("conditions")
+            var tiers = HashMap<String, Int>()
+            var index = 1
+            for (cond in condString.split(",").map { it.trim() }) {
+                tiers.put(cond, index)
+                index += 1
+            }
+
             val pluginPath = row.getString("plugin")
 
-            var spec = SettlementModifierSpec(id, name, desc, isResource, canBeRefined, icon, iconRefined, iconSil, chance, combined, pluginPath)
+            var spec = SettlementModifierSpec(id, name, desc, isResource, canBeRefined, icon, iconRefined, iconSil, chance, combined, tiers, pluginPath)
             modifierSpecs.add(spec)
         }
     }
@@ -97,14 +105,27 @@ object FrontiersUtils {
         return site.modifierIDs.map { getModifierPlugin(getModifierByID(it)) }
     }
 
-    fun getRessource(site: SiteData): BaseSettlementModifier? {
-        return getModifierPluginsByID(site).find { it.isRessource() }
+    fun getRessource(planet: PlanetAPI, site: SiteData): BaseSettlementModifier? {
+        var spec = site.modifierIDs.map { getModifierByID(it) }.find { it.isResource } ?: return null
+
+        var plugin = getModifierPlugin(spec!!)
+        var condition = planet.market.conditions.find { condition -> spec.conditions.contains(condition.id)  }!!.id
+
+        plugin.specId = spec.id
+        plugin.conditionId = condition
+
+        return plugin
+    }
+
+    fun getRessourceSpec(site: SiteData): SettlementModifierSpec? {
+        return site.modifierIDs.map { getModifierByID(it) }.find { it.isResource }
     }
 
     fun getRessource(data: SettlementData): BaseSettlementModifier? {
-        var mod = data.modifiers.find { it.isRessource() } ?: return null
+        var mod = data.modifiers.find { it.getSpec().isResource } ?: return null
         return mod
     }
+
 
 
 
@@ -193,7 +214,7 @@ object FrontiersUtils {
         var maxExtraResources = MathUtils.getRandomNumberInRange(1, 3)
 
         for (mod in modifierPlugins) {
-            if (mod.isRessource()) {
+            if (mod.getSpec().isResource) {
                 ressources.add(mod)
                 extraRessources.add(mod, mod.getChance())
             }
@@ -205,7 +226,7 @@ object FrontiersUtils {
             var modifiers = WeightedRandomPicker<BaseSettlementModifier>()
 
             for (mod in modifierPlugins) {
-                if (!mod.isRessource()) {
+                if (!mod.getSpec().isResource) {
                     modifiers.add(mod, mod.getChance())
                 }
             }

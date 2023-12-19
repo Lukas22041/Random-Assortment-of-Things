@@ -8,8 +8,8 @@ import com.fs.starfarer.api.util.Misc
 
 class ManufacturingFacility : BaseSettlementFacility() {
 
-    var budget = 250000f
-    var budgetPerMonth = 20000f
+    var budget = 150000f
+    var budgetPerMonth = 10000f
 
     override fun apply() {
         settlement.stats.maxProductionBudget.modifyFlat("manufacturing", budget)

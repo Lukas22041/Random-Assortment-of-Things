@@ -127,13 +127,14 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
                     leftElement!!.addSectionHeading("Resource", Alignment.MID, 0f)
                     leftElement!!.addSpacer(10f)
                     Global.getSettings().loadTexture("graphics/icons/mission_marker.png")
-                    var ressource = FrontiersUtils.getRessource(site)
+                    var ressource = FrontiersUtils.getRessource(interactionTarget as PlanetAPI, site)
                     if (ressource != null) {
+
                         var img = leftElement!!.beginImageWithText(ressource.getIcon(), 48f)
                         ressource.getDescription(img)
                         leftElement!!.addImageWithText(0f)
 
-                        if (ressource.canBeRefined()) {
+                        if (ressource.getSpec().canBeRefined) {
                             leftElement!!.addSpacer(10f)
                             var img = leftElement!!.beginImageWithText(ressource.getRefinedIcon(), 48f)
                             img.addPara("Can be refined to increase the export value by 75%%. Requires the \"Refinery\" facility.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "75%", "Refinery")
@@ -285,9 +286,10 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
                 var spec = FrontiersUtils.getModifierByID(mod)
                 var plugin = FrontiersUtils.getModifierPlugin(spec)
                 plugin.settlement = settlementData
+                plugin.conditionId = settlementData.primaryPlanet.market.conditions.find { condition -> spec.conditions.contains(condition.id)  }!!.id
                 settlementData.modifiers.add(plugin)
 
-                if (plugin.isRessource()) {
+                if (plugin.getSpec().isResource) {
                     settlementData.stats.income.baseValue = spec.getIncomeForCondition(settlementData.primaryPlanet.market.conditions).toFloat() + 5000
                 }
 

@@ -7,10 +7,27 @@ import com.fs.starfarer.api.campaign.impl.items.ModSpecItemPlugin
 import com.fs.starfarer.api.impl.campaign.ids.Conditions
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.DropData
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import java.util.*
 import kotlin.collections.ArrayList
 
 open class RareTechModifier() : BaseSettlementModifier() {
+
+
+    var amount = hashMapOf(
+        1 to "sparse",
+        2 to "moderate",
+        3 to "abundant",
+        4 to "rich")
+
+    override fun getDescription(tooltip: TooltipMakerAPI) {
+        var actualAmount = amount.get(getTier())
+        var a = Misc.getAOrAnFor(actualAmount)
+        tooltip.addPara("${getName()}:\n" +
+                "This site is filled with $a $actualAmount amount of salvageable ruins, providing the settlement with the ability to perform tech-mining. Part of this output can be acquired by the owner.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "${getName()}", "$actualAmount")
+    }
 
     override fun addToMonthlyCargo(current: CargoAPI): CargoAPI? {
 

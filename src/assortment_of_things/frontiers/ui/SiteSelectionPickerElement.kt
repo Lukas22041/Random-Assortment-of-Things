@@ -16,7 +16,7 @@ import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 import java.awt.Polygon
 
-class SiteSelectionPickerElement(var planet: PlanetAPI?, var planetSprite: SpriteAPI, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class SiteSelectionPickerElement(var planet: PlanetAPI, var planetSprite: SpriteAPI, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
     class SiteHexagon(var site: SiteData) {
         var selected = false
@@ -79,7 +79,7 @@ class SiteSelectionPickerElement(var planet: PlanetAPI?, var planetSprite: Sprit
                     angle += 60
                 }
 
-                var ressource = FrontiersUtils.getRessource(site)
+                var ressource = FrontiersUtils.getRessource(planet!!, site)
                 if (ressource != null) {
                     hexagon.ressourceSprite = Global.getSettings().getSprite(ressource.getIcon())
                     hexagon.ressourceSpriteSil = Global.getSettings().getSprite(ressource.getSpec().iconSil)
@@ -113,13 +113,40 @@ class SiteSelectionPickerElement(var planet: PlanetAPI?, var planetSprite: Sprit
 
         for (hexagon in hexagons) {
 
+            var ressource = FrontiersUtils.getRessource(planet!!, hexagon.site)
+
+            var silColor = Misc.getPositiveHighlightColor()
+
+            if (ressource != null) {
+                var tiers = ressource.getSpec().tiers
+                var count = tiers.size
+                var tier = ressource.getTier().toFloat()
+                var level = (1f / count)
+
+                tier -= 1
+                level *= tier
+
+                if (count == 1) {
+                    level = 1f
+                }
+                if (count == 2) {
+                    if (ressource.getTier() == 1) {
+                        level = 0f
+                    }
+                    else {
+                        level = 1f
+                    }
+                }
+
+                silColor = Misc.interpolateColor(Misc.getNegativeHighlightColor(), Misc.getPositiveHighlightColor(), level)
+            }
 
             if (hexagon.ressourceSprite != null) {
                 var sprite = hexagon.ressourceSprite
                 var sil = hexagon.ressourceSpriteSil
 
                 sil!!.alphaMult = alphaMult
-                sil!!.color = Misc.getPositiveHighlightColor()
+                sil!!.color = silColor
                 sil!!.setSize(65f, 65f)
                 sil!!.renderAtCenter(hexagon.site.location.x, hexagon.site.location.y)
 

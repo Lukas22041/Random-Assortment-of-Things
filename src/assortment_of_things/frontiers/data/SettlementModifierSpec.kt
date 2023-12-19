@@ -13,6 +13,7 @@ data class SettlementModifierSpec(
     var iconSil: String,
     var chance: Float,
     var conditions: Map<String, Int>,
+    var tiers: Map<String, Int>,
     var plugin: String) {
 
     fun getIncomeForCondition(marketConditions: List<MarketConditionAPI>) : Int {

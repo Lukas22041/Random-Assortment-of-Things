@@ -217,7 +217,7 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
                 resource.getDescription(img)
                 tooltip!!.addImageWithText(0f)
 
-                if (resource.canBeRefined()) {
+                if (resource.getSpec().canBeRefined) {
                     tooltip!!.addSpacer(10f)
                     var img = tooltip!!.beginImageWithText(resource.getRefinedIcon(), 48f)
                     img.addPara("Can be refined to increase the export value by 75%%. Requires the \"Refinery\" facility.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "75%", "Refinery")

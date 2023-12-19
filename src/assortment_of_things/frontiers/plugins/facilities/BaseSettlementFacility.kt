@@ -108,4 +108,5 @@ abstract class BaseSettlementFacility() {
     open fun reportEconomyMonthEnd() {
 
     }
+
 }
