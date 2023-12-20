@@ -23,7 +23,7 @@ class HypersatialJavelinEffect : EveryFrameWeaponEffectPlugin {
             weapon.ammo = MathUtils.clamp(weapon.ammo, 0, 5)
 
             if (ship.isPhased) {
-                weapon.ammoTracker.reloadProgress += weapon.ammoTracker.ammoPerSecond / 5f * amount
+                weapon.ammoTracker.reloadProgress += spec.ammoPerSecond / 5f * amount
             }
             else {
 
