@@ -11,7 +11,7 @@
 	"hardpointSprite":"graphics/weapons/exo/rat_hyper_javelin_hardpoint.png",
 	"hardpointGlowSprite":"graphics/weapons/exo/rat_hyper_javelin_hardpoint_glow.png",
 	
-	"turretOffsets":[15, 0],
+	"turretOffsets":[30, 0],
 	"turretAngleOffsets":[0],
 	"hardpointOffsets":[30, 0],
 	"hardpointAngleOffsets":[0],
@@ -19,13 +19,13 @@
 	"specialWeaponGlowHeight":25,
 	"barrelMode":"ALTERNATING_BURST", # or LINKED.  whether barrels fire at the same time or alternate.
 	"animationType":"GLOW_AND_FLASH",
-	"muzzleFlashSpec":{"length":20.0,   # only used if animationType = MUZZLE_FLASH
+	"muzzleFlashSpec":{"length":25.0,   # only used if animationType = MUZZLE_FLASH
 					   "spread":360.0,
 					   "particleSizeMin":5.0,
 					   "particleSizeRange":30.0,
 					   "particleDuration":2,
 					   "particleCount":20,
-					   "particleColor":[97, 96, 94, 30]},
+					   "particleColor":[97, 96, 94, 50]},
 	"projectileSpecId":"rat_hyper_javelin_shot",  # projectile that will be fired
 	"stopPreviousFireSound":false,
 	"autocharge":true,
