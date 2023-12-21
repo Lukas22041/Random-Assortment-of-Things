@@ -51,6 +51,10 @@ open class BaseSettlementModifier() {
 
     }
 
+    open fun unapply() {
+
+    }
+
     open fun advance(amount: Float) {
 
     }

@@ -27,7 +27,7 @@ class SettlementData(var primaryPlanet: PlanetAPI, var settlementEntity: SectorE
     var distanceFromCenteer = 0f
     var facilitySlots = ArrayList<SettlementFacilitySlot>()
     var previousMonthsProduction = Global.getFactory().createCargo(true).apply {
-       initMothballedShips(Factions.PLAYER)
+        initMothballedShips(Factions.PLAYER)
     }
     var nextMonthsProduction = Global.getFactory().createCargo(true).apply {
         initMothballedShips(Factions.PLAYER)

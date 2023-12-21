@@ -2,12 +2,14 @@ package assortment_of_things.frontiers.interactions.panels
 
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.SettlementData
+import assortment_of_things.frontiers.SettlementManager
 import assortment_of_things.frontiers.data.SettlementFacilitySlot
 import assortment_of_things.frontiers.interactions.SettlementInteraction
 import assortment_of_things.frontiers.ui.FacilityDisplayElement
 import assortment_of_things.frontiers.ui.SiteDisplayElement
 import assortment_of_things.misc.*
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.InteractionDialogPlugin
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -19,6 +21,7 @@ import lunalib.lunaExtensions.addLunaToggleButton
 import lunalib.lunaUI.elements.LunaSpriteElement
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.fadeAndExpire
 import java.awt.Color
 
 class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: SettlementInteraction) : BaseCustomVisualDialogDelegateWithRefresh("graphics/icons/frontiers/ManagementBackground.png") {
@@ -160,6 +163,53 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
             tooltip.addPara("Click to configure aspects of the settlement.")
         }
 
+        var abandon = element.addLunaSpriteElement("graphics/ui/icons/fleettab/scuttle.png", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, 32f, 32f).apply {
+            getSprite().alphaMult = 1f
+            getSprite().color = Misc.getDarkPlayerColor().brighter()
+            position.belowLeft(config.elementPanel, 2f)
+
+            render {
+
+                if (isHovering) {
+                    var sprite = getSprite()
+                    sprite.setAdditiveBlend()
+                    sprite.alphaMult = 1f
+                    sprite.render(x, y)
+                    sprite.alphaMult = 1f
+                    sprite.setNormalBlend()
+                }
+
+            }
+
+
+            var popupWidth = 300f
+            var popupHeight = 350f
+
+            onClick {
+                abandonSettlement()
+              /*  playClickSound()
+                element.addWindow(this.elementPanel, popupWidth, popupHeight) { window ->
+
+                    var panelPlugin = BorderedPanelPlugin()
+                    panelPlugin.renderBackground = true
+                    panelPlugin.backgroundColor = Color(10, 10, 10)
+                    panelPlugin.alpha = 0.8f
+
+                    var windowPanel = window.panel.createCustomPanel(popupWidth, popupHeight, panelPlugin)
+                    window.panel.addComponent(windowPanel)
+
+                    var windowElement = windowPanel.createUIElement(popupWidth, popupHeight, false)
+                    windowPanel.addUIElement(windowElement)
+
+                    windowElement.addPara("").position.inTL(10f, 0f)
+
+                }*/
+            }
+
+            onHoverEnter {
+                playScrollSound()
+            }
+        }
 
        /* var plugin = PanelWithCloseButton()
         plugin.onClosePress = {
@@ -451,5 +501,31 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
 
 
         windowPanel.addUIElement(element)
+    }
+
+    fun abandonSettlement() {
+
+        callbacks.dismissDialog()
+        dialogPlugin.dialog.dismiss()
+
+        for (mod in data.modifiers) {
+            mod.unapply()
+        }
+
+        for (slot in data.facilitySlots) {
+            if (slot.isFunctional()) {
+                slot.getPlugin()?.unapply()
+            }
+        }
+
+        Global.getSector().removeScript(data.mananger)
+        Global.getSector().listenerManager.removeListener(data.mananger)
+
+        Global.getSector().intelManager.removeIntel(data.intel)
+
+        data.settlementEntity.fadeAndExpire(1f)
+
+        FrontiersUtils.getFrontiersData().activeSettlement = null
+
     }
 }

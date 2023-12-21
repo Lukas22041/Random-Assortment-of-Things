@@ -27,5 +27,4 @@ open class VolatilesModifier() : BaseSettlementModifier() {
         }
     }
 
-
 }
