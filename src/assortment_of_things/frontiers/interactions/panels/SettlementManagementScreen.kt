@@ -14,10 +14,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import lunalib.lunaExtensions.addLunaElement
-import lunalib.lunaExtensions.addLunaSpriteElement
-import lunalib.lunaExtensions.addLunaTextfield
-import lunalib.lunaExtensions.addLunaToggleButton
+import lunalib.lunaExtensions.*
 import lunalib.lunaUI.elements.LunaSpriteElement
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
@@ -183,11 +180,10 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
 
 
             var popupWidth = 300f
-            var popupHeight = 350f
+            var popupHeight = 60f
 
             onClick {
-                abandonSettlement()
-              /*  playClickSound()
+                playClickSound()
                 element.addWindow(this.elementPanel, popupWidth, popupHeight) { window ->
 
                     var panelPlugin = BorderedPanelPlugin()
@@ -203,12 +199,33 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
 
                     windowElement.addPara("").position.inTL(10f, 0f)
 
-                }*/
+                    var button = windowElement.addLunaChargeButton(popupWidth - 20, 30f).apply {
+                        enableTransparency = true
+                        this.borderAlpha = 0.5f
+                        this.backgroundAlpha = 0.8f
+                        addText("Abandon Settlement", Misc.getBasePlayerColor())
+                        centerText()
+
+                        onFinish {
+                            playSound(Sounds.STORY_POINT_SPEND, 1f, 1f)
+                            abandonSettlement()
+                        }
+                    }
+
+                    windowElement.addTooltip(button.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 300f) { tooltip ->
+                        tooltip.addPara("Hold to abandon the settlement. " +
+                                "Abandoning the settlement allows you to create a new one, but causes you to loose all progress and benefits of this settlement.")
+                    }
+                }
             }
 
             onHoverEnter {
                 playScrollSound()
             }
+        }
+
+        element.addTooltip(abandon.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT, 300f) { tooltip ->
+            tooltip.addPara("Click to open the options for abandoning the settlement.")
         }
 
        /* var plugin = PanelWithCloseButton()
