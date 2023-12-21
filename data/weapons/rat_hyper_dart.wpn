@@ -1,0 +1,36 @@
+{
+	"id":"rat_hyper_dart",  # this id must match what's in the spreadsheet
+	"specClass":"projectile",
+	"type":"ENERGY",
+	"size":"MEDIUM",
+	#"displayArcRadius":300,
+	
+	"turretSprite":"graphics/weapons/exo/rat_hyper_dart_turret.png",
+	"turretGlowSprite":"graphics/weapons/exo/rat_hyper_dart_turret_glow.png",
+
+	"hardpointSprite":"graphics/weapons/exo/rat_hyper_dart_hardpoint.png",
+	"hardpointGlowSprite":"graphics/weapons/exo/rat_hyper_dart_hardpoint_glow.png",
+	
+	"turretOffsets":[18, 0],
+	"turretAngleOffsets":[0],
+	"hardpointOffsets":[22, 0],
+	"hardpointAngleOffsets":[0],
+	"specialWeaponGlowWidth":15,
+	"specialWeaponGlowHeight":25,
+	"barrelMode":"ALTERNATING_BURST", # or LINKED.  whether barrels fire at the same time or alternate.
+	"animationType":"GLOW_AND_FLASH",
+	"muzzleFlashSpec":{"length":15.0,   # only used if animationType = MUZZLE_FLASH
+					   "spread":360.0,
+					   "particleSizeMin":3.0,
+					   "particleSizeRange":20.0,
+					   "particleDuration":1.5,
+					   "particleCount":10,
+					   "particleColor":[97, 96, 94, 50]},
+	"projectileSpecId":"rat_hyper_dart_shot",  # projectile that will be fired
+	"stopPreviousFireSound":false,
+	"autocharge":true,
+	#"fireSoundOne":"heavy_machinegun_intro",
+	"fireSoundTwo":"mjolnir_fire",
+	#"fireSoundTwo":"plasma_cannon_fire",
+	"everyFrameEffect":"assortment_of_things.exotech.weapons.HypersatialJavelinEffect",
+}

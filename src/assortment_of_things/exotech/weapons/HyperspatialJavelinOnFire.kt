@@ -14,10 +14,23 @@ class HyperspatialJavelinOnFire : OnFireEffectPlugin {
         var target = weapon?.ship?.shipTarget
         engine.addPlugin(HyperspatialJavelinHomingEffect(projectile, target))
        // engine.spawnExplosion(Vector2f(projectile.location), Vector2f(weapon!!.ship.velocity), Color(252,143,0, 25), 100f, 2f)
-        for (i in 0..20) {
-            engine.addNebulaParticle(MathUtils.getRandomPointOnCircumference(Vector2f(projectile.location), MathUtils.getRandomNumberInRange(0f, 10f)),
-                MathUtils.getRandomPointOnCircumference(Vector2f(weapon!!.ship.velocity), MathUtils.getRandomNumberInRange(20f, 40f)),
-                MathUtils.getRandomNumberInRange(2f, 20f), 0f, 1f, 1f, 1f, Color(252,143,0, 100))
+
+
+        if (weapon!!.spec.weaponId == "rat_hyper_dart") {
+            for (i in 0..5) {
+                engine.addNebulaParticle(MathUtils.getRandomPointOnCircumference(Vector2f(projectile.location), MathUtils.getRandomNumberInRange(0f, 10f)),
+                    MathUtils.getRandomPointOnCircumference(Vector2f(weapon!!.ship.velocity), MathUtils.getRandomNumberInRange(10f, 30f)),
+                    MathUtils.getRandomNumberInRange(1f, 20f), 0f, 1f, 1f, 1f, Color(252,143,0, 100))
+            }
         }
+        else {
+            for (i in 0..20) {
+                engine.addNebulaParticle(MathUtils.getRandomPointOnCircumference(Vector2f(projectile.location), MathUtils.getRandomNumberInRange(0f, 10f)),
+                    MathUtils.getRandomPointOnCircumference(Vector2f(weapon!!.ship.velocity), MathUtils.getRandomNumberInRange(20f, 40f)),
+                    MathUtils.getRandomNumberInRange(2f, 20f), 0f, 1f, 1f, 1f, Color(252,143,0, 100))
+            }
+        }
+
+
     }
 }

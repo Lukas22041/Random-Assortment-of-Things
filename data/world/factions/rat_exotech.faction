@@ -128,7 +128,7 @@
 		],
 	},
 	"priorityWeapons":{
-		"tags":[],
+		"tags":["rat_exotech_bp"],
 		"weapons":[
 		],
 	},
