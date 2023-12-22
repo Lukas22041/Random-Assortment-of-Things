@@ -72,9 +72,13 @@ P-Wave Missile Launcher,rat_p_wave_launcher,2,,10000,2000,,500,,15,10,12,6,0.375
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo Builtins,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Callisto DEM Launcher,rat_arkas_launcher_left,2,,0,1200,,200,0,15,30,0,2,0.0666,2,KINETIC,0,,0,10,2,1,0,0,0,0,,150,100,5,250,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted, damage_special, damage_soft_flux",,,,Suppression,Slow,Good,,,"The missile fires a beam at the target, dealing approximately %s kinetic and %s emp damage over the course of %s seconds. This damage is affected by missile damage modifiers and not energy weapon ones.",1000 | 750 | 10,,,TRUE,11.94
-Callisto DEM Launcher,rat_arkas_launcher_right,2,,0,1200,,200,0,15,30,0,2,0.0666,2,KINETIC,0,,0,10,2,1,0,0,0,0,,150,100,5,250,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted, damage_special, damage_soft_flux",,,,Suppression,Slow,Good,,,"The missile fires a beam at the target, dealing approximately %s kinetic and %s emp damage over the course of %s seconds. This damage is affected by missile damage modifiers and not energy weapon ones.",1000 | 750 | 10,,,TRUE,11.94
+Callisto DEM Launcher,rat_arkas_launcher_left,2,,0,1200,,200,0,15,30,0,2,0.0666,2,KINETIC,0,,0,10,2,1,0,0,0,0,,150,100,5,250,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted, damage_special, damage_soft_flux",,Exo-Tech,,Suppression,Slow,Good,,,"The missile fires a beam at the target, dealing approximately %s kinetic and %s emp damage over the course of %s seconds. This damage is affected by missile damage modifiers and not energy weapon ones.",1000 | 750 | 10,,,TRUE,11.94
+Callisto DEM Launcher,rat_arkas_launcher_right,2,,0,1200,,200,0,15,30,0,2,0.0666,2,KINETIC,0,,0,10,2,1,0,0,0,0,,150,100,5,250,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted, damage_special, damage_soft_flux",,Exo-Tech,,Suppression,Slow,Good,,,"The missile fires a beam at the target, dealing approximately %s kinetic and %s emp damage over the course of %s seconds. This damage is affected by missile damage modifiers and not energy weapon ones.",1000 | 750 | 10,,,TRUE,11.94
     Arkas Launcher - Payload,rat_arkas_launcher_payload,2,,0,1000,100,,75,20,30,0,,,,KINETIC,0,,0.1,0.1,10,0.5,,,,,2400,,,,,,,SYSTEM,,,,,,,,,,,,,,,11.95
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Dawnlance,rat_dawnlance,1,,1500,600,200,,,0,20,0,,,,HIGH_EXPLOSIVE,,,0.5,0.5,,,,,,,3200,,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Exo-Tech,,General,,,,,,,,,,20
+Dawnbreaker,rat_dawnbreaker,1,,1200,1200,,100,50,0,0,0,2,0.5,2,ENERGY,0,,0,5,2,0.3,10,14,2,5,,300,25,5,75,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted",,Exo-Tech,,General,Medium,Medium,,,,,,,TRUE,12
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo Decos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Exo Coil Location,rat_exo_coil_location,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43

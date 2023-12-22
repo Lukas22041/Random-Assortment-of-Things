@@ -5,11 +5,12 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.combat.ShipCommand
 import com.fs.starfarer.api.combat.ShipHullSpecAPI.ShipTypeHints
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.lazywizard.lazylib.combat.CombatUtils
+import org.lazywizard.lazylib.MathUtils
 import java.awt.Color
 
 class ExogridHullmod : BaseHullMod() {
@@ -41,7 +42,9 @@ class ExogridHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String?) {
-        Global.getCombatEngine().addLayeredRenderingPlugin(ExogridRenderer(ship))
+        if (!ship.isFighter) {
+            Global.getCombatEngine()?.addLayeredRenderingPlugin(ExogridRenderer(ship)) ?: return
+        }
 
         if (ship.shield != null) {
             ship.shield.setRadius(ship.shieldRadiusEvenIfNoShield, "graphics/fx/rat_exo_shields256.png", "graphics/fx/rat_exo_shields256ring.png")
@@ -62,6 +65,8 @@ class ExogridHullmod : BaseHullMod() {
         } else {
             Global.getCombatEngine().timeMult.unmodify(id)
         }
+
+
     }
 
 

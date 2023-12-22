@@ -38,3 +38,5 @@ Arkas,rat_arkas,Cruiser,Exo-Tech,rat_arkas_system,20,8000,1200,10000,16000,800,1
 Leanira,rat_leanira,Battlecarrier,Exo-Tech,rat_leanira_system,20,7500,1100,11000,12500,650,155,2,60,30,25,20,25,2000,OMNI,,270,0.25,0.8,,,110,200,160,130,2,30,9,140000,5,20,540,0.25,26,26,,,,,,,"CARRIER, COMBAT, SHIP_WITH_MODULES, DO_NOT_SHOW_MODULES_IN_FLEET_LIST","restricted, rat_exotech_bp",,0.5,2,3,,4001
 Apheidas,rat_apheidas,Turret Platform,Exo-Tech,,0,5500,1150,2500,2500,300,50,,1,0,0,2,2,4000,NONE,,200,0.25,0.8,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,0,0,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX, UNDER_PARENT, ALWAYS_PANIC",restricted,,0.5,2,2,,4002
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Dawnblade,rat_dawnblade,,Exo-Tech,,,750,120,1250,,100,0,,200,300,250,90,180,20,FRONT,,270,0,0.8,,,3,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

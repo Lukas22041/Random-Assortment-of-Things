@@ -22,6 +22,7 @@ FireBest NewGameOptionSelected",,,
 rat_commander_flavorTextMarket,TradePanelFlavorText,$market.id == rat_station_commander_market score:10000,"AddText ""The humble port concourse is filled with small freighters and freelancers down or up on their luck, identifiable by the shine or grime of ship armor and volume of cargo on-loading. A handful of speculators who all seem to know each other crowd offloading ship captains as they arrive while peddlers call out to crew, holding wares and projecting personal ad-holos."" marketFlavorTextColor",,,
 ,,,,,,
 rat_createSettlement1,PopulateOptions,"ShouldShowSettlementCreationOption
+$menuState == main
 $market.isPlanetConditionMarketOnly == false",,,15:ratCreateSettlement:Establish a new Settlement,
 rat_createSettlement2,PopulateOptions,"ShouldShowSettlementCreationOption
 $market.isPlanetConditionMarketOnly == true",,,8:ratCreateSettlement:Establish a new Settlement,
@@ -30,5 +31,9 @@ rat_createSettlementDisabled,PopulateOptions,"$market.isSurveyed != true
 SetTooltip ratCreateSettlement ""Planet has to be surveyed.""",,,
 rat_createSettlementScript,DialogOptionSelected,$option == ratCreateSettlement,DelegateToSettlementCreationDialog,,,
 ,,,,,,
-rat_visitSettlement,PopulateOptions,ShouldShowSettlementOption,AutoDescendToSettlement,,2:ratVisitSettlement:Descend towards the settlement,
+rat_visitSettlement1,PopulateOptions,"ShouldShowSettlementOption
+$menuState == main
+$market.isPlanetConditionMarketOnly == false",AutoDescendToSettlement,,2:ratVisitSettlement:Descend towards the settlement,
+rat_visitSettlement2,PopulateOptions,"ShouldShowSettlementOption
+$market.isPlanetConditionMarketOnly == true",AutoDescendToSettlement,,2:ratVisitSettlement:Descend towards the settlement,
 rat_visitSettlementScript,DialogOptionSelected,$option == ratVisitSettlement,DelegateToSettlementDialog,,,

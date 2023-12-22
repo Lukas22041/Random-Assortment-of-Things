@@ -1,3 +1,5 @@
 id,name,faction,desc,script,icon,order
 rat_settlement_storage,"Settlement
 Storage",player,"Storage space for ships and cargo. Shared with colony storage. Storing materials has a fee attached, this fee can be negated by either building the ""Stockpile"" facility, or by having a colony owned on this planet.",assortment_of_things.frontiers.submarkets.SettlementStoragePlugin,graphics/factions/storage.png,1001
+rat_settlement_market,Trade Post,,A small markets that has been established on this settlement. Trades in common wares and the occasional ordnance known to your faction. ,assortment_of_things.frontiers.submarkets.TradePostSubmarketPlugin,,1000
+,,,,,,

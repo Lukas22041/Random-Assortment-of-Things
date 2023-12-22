@@ -1,0 +1,26 @@
+{
+  "variantId": "rat_dawnblade_Fighter",
+  "hullId": "rat_dawnblade",
+  "displayName": "Fighter",
+  "goalVariant": false,
+  "fluxCapacitors": 0,
+  "fluxVents": 0,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [],
+  "weaponGroups": [
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0001": "rat_dawnlance",
+        "WS0002": "rat_dawnbreaker",
+        "WS0003": "rat_dawnbreaker",
+        "WS0004": "rat_dawnbreaker",
+        "WS0005": "rat_dawnbreaker"
+      }
+    }
+  ],
+  "modules": [],
+  "wings": []
+}

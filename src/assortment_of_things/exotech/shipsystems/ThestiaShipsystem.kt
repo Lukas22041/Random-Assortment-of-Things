@@ -206,11 +206,17 @@ class ThestiaShipsystem : BaseShipSystemScript() {
             variant.addWeaponGroup(group)
         }
 
+        if (originalVariant.hasHullMod("rat_exo_fighter_ai")) {
+            variant.addPermaMod("rat_exo_fighter_ai")
+        }
+
         member.setVariant(variant, true, true)
 
         var clone = Global.getCombatEngine().getFleetManager(originalFighter.owner).spawnFleetMember(member, originalFighter.location, originalFighter.facing, 0f)
         var stats = clone.mutableStats
         var ogStats = originalFighter.mutableStats
+
+
 
         stats.maxSpeed.baseValue = ogStats.maxSpeed.baseValue
         stats.acceleration.baseValue = ogStats.acceleration.baseValue

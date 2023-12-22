@@ -1,0 +1,89 @@
+{
+  "hullName": "Dawnblade",
+  "hullId": "rat_dawnblade",
+  "hullSize": "FIGHTER",
+  "spriteName": "graphics/ships/exo/rat_dawnblade.png",
+  "style": "RAT_EXO",
+  "height": 60,
+  "width": 60,
+  "center": [30, 30],
+  "collisionRadius": 38.5,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 33.5,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_exogrid",
+    "rat_exo_fighter_ai",
+    "no_weapon_flux"
+  ],
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "HARDPOINT",
+      "arc": 0,
+      "angle": 0,
+      "locations": [16, -0]
+    },
+    {
+      "id": "WS0002",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "HARDPOINT",
+      "arc": 0,
+      "angle": 45,
+      "locations": [-0.5, 9.5]
+    },
+    {
+      "id": "WS0003",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "HIDDEN",
+      "arc": 0,
+      "angle": -45,
+      "locations": [-0.5, -9.5]
+    },
+    {
+      "id": "WS0004",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "HIDDEN",
+      "arc": 0,
+      "angle": -70,
+      "locations": [-3.5, -12.5]
+    },
+    {
+      "id": "WS0005",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "HIDDEN",
+      "arc": 0,
+      "angle": 70,
+      "locations": [-3.5, 12.5]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-21, -0],
+      "length": 14,
+      "width": 8,
+      "angle": -180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    }
+  ],
+  "bounds": [
+    -26, 4.5,
+    -15.5, 7.5,
+    -7, 26,
+    5, 13,
+    26.5, 8,
+    26.5, -8,
+    5, -13,
+    -7, -26,
+    -15.5, -7.5,
+    -26, -4.5
+  ]
+}

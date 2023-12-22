@@ -116,7 +116,7 @@ class AbyssalBloodstream : RATBaseShipSkill() {
             if (custom.contains("requirem_triggered") && ship!!.captain == Global.getSector().playerPerson) return false
             if (custom.contains("requirem_triggered_neuro") && ship!!.captain?.aiCoreId == "rat_neuro_core") return false
 
-           // if (ship!!.variant.hasHullMod(HullMods.PHASE_ANCHOR)) return false
+            if (ship!!.variant.hasHullMod(HullMods.PHASE_ANCHOR)) return false
 
 
             if (ship!!.hitpoints - damageAmount <= 0 && !triggered) {

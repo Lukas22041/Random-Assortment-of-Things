@@ -40,10 +40,12 @@ class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
             slot.getPlugin()?.populateSettlementDialog(dialog, this)
         }
 
-        createOption("Manage Storage") {
+        var storageText = "Manage Storage"
+        if (data.hasFacility("trade_post")) storageText = "Manage Storage & Trade"
+        createOption(storageText) {
             visualPanel.showCore(CoreUITabId.CARGO, data.settlementEntity) { }
         }
-        optionPanel.setShortcut("Manage Storage", Keyboard.KEY_I, false, false, false, false)
+        optionPanel.setShortcut(storageText, Keyboard.KEY_I, false, false, false, false)
 
         createOption("Manage Fleet") {
             visualPanel.showCore(CoreUITabId.FLEET, data.settlementEntity) { }
