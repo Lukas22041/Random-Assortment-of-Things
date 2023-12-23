@@ -15,9 +15,12 @@
 	"coreColor":[255,255,255,255],
 	"glowColor":[255,100,100,255],
 	"width":20.0,
-	"textureType":ROUGH,
+	#"textureType":ROUGH,
+
+	"textureType":["graphics/fx/rat_dawnlance_fringe.png", "graphics/fx/rat_dawnlance_core.png"],
 	"textureScrollSpeed":64.0,
 	"pixelsPerTexel":5.0,
+	
 	"pierceSet":[PROJECTILE_FF,PROJECTILE_NO_FF,PROJECTILE_FIGHTER,MISSILE_FF,MISSILE_NO_FF],
 	#"fireSoundOne":"phase_beam_intro",
 	"fireSoundTwo":"phase_beam_loop",	
