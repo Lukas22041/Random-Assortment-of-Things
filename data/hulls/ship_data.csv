@@ -32,11 +32,13 @@ Charybdis Segment,rat_charybdis_tail,,Abyssal,,0,15000,2000,10000,12500,700,165,
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#Good,#Good,,,,,,,,,,,,,,,,,,,,,,
 #Aboleth (F),rat_aboleth,Droneship Cruiser,Abyssal,aboleth_system,20,8000,900,10000,12500,700,165,2,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,#Good,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,"HIDE_IN_CODEX, CARRIER, COMBAT","auto_rec, rat_abyssals",,0.5,2,3,,3103
 #Doom,doom,Phase Cruiser,High Tech,mine_strike,22,8000,1250,10000,18000,900,145,,75,55,40,20,25,1200,PHASE,phasecloak,,,,0.05,0.05,50,100,120,150,3,50,8,250000,4,30,420,0.25,35,35,,,,,,,,"rare_bp, hist2t, merc, kanta_gift",,0.5,2,3,,406
-Aftershadow,rat_aftershadow_drone,,,,,10000000,1000,100000,,100000,,,100,100,100,100,100,100,NONE,,,,,,,,,,,,,,,,,,,,,,,,,,,,"restricted, no_sell",,0,,,,8
+Aftershadow,rat_aftershadow_drone,,,,,10000000,1000,100000,,100000,,,200,300,250,90,180,100,NONE,,,,,,,,,,,,,,,,,,,,,,,,,,,,"restricted, no_sell",,0,,,,8
 Thestia,rat_thestia,Battlecarrier,Exo-Tech,rat_thestia_system,12,4500,500,5500,3750,350,100,1,70,60,55,25,45,500,FRONT,,270,0.25,0.8,,,20,45,70,50,2,30,10,75000,5,15,420,0.25,14,14,,,,,,,"CARRIER, COMBAT","restricted, rat_exotech_bp",,0.5,2,3,,4003
 Arkas,rat_arkas,Cruiser,Exo-Tech,rat_arkas_system,20,8000,1200,10000,16000,800,160,,70,40,35,20,25,2000,PHASE,rat_exocloak,,,,0.025,0.05,50,100,150,120,2,30,9,225000,5,20,540,0.25,30,30,,,,,,,PHASE,"restricted, rat_exotech_bp",,0.5,2,3,,4000
 Leanira,rat_leanira,Battlecarrier,Exo-Tech,rat_leanira_system,20,7500,1100,11000,12500,650,155,2,60,30,25,20,25,2000,OMNI,,270,0.25,0.8,,,110,200,160,130,2,30,9,140000,5,20,540,0.25,26,26,,,,,,,"CARRIER, COMBAT, SHIP_WITH_MODULES, DO_NOT_SHOW_MODULES_IN_FLEET_LIST","restricted, rat_exotech_bp",,0.5,2,3,,4001
 Apheidas,rat_apheidas,Turret Platform,Exo-Tech,,0,5500,1150,2500,2500,300,50,,1,0,0,2,2,4000,NONE,,200,0.25,0.8,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,0,0,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX, UNDER_PARENT, ALWAYS_PANIC",restricted,,0.5,2,2,,4002
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Nightblade,rat_nightblade,,Exo-Tech,,,350,60,450,,100,0,,220,300,250,120,250,20,FRONT,,270,0,0.8,,,1,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
 Dawnblade,rat_dawnblade,,Exo-Tech,,,750,120,1250,,100,0,,200,300,250,90,180,20,FRONT,,270,0,0.8,,,3,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

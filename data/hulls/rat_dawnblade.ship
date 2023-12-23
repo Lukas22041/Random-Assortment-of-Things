@@ -22,7 +22,7 @@
       "size": "SMALL",
       "type": "UNIVERSAL",
       "mount": "HARDPOINT",
-      "arc": 0,
+      "arc": 5,
       "angle": 0,
       "locations": [16, -0]
     },

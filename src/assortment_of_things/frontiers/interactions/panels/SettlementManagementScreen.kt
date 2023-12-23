@@ -267,6 +267,27 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
                     "The settlement currently makes $incomeString credits per month from its ground operations.",
                 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$incomeString")
 
+            var incomeStat = data.stats.income
+
+            tooltip.addSpacer(10f)
+            tooltip.addSectionHeading("Income", Alignment.MID, 0f)
+            tooltip.addSpacer(10f)
+
+            tooltip.addPara("Base & Resource: ${Misc.getDGSCredits(incomeStat.baseValue)}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${Misc.getDGSCredits(incomeStat.baseValue)}")
+
+            for (stat in incomeStat.flatMods) {
+                var value = "+${stat.value.value}"
+                tooltip.addPara("${stat.value.desc}: $value", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$value")
+            }
+            for (stat in incomeStat.percentMods) {
+                var value = "+${stat.value.value}%"
+                tooltip.addPara("${stat.value.desc}: $value%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$value")
+            }
+            for (stat in incomeStat.multMods) {
+                var value = "+${stat.value.value}x"
+                tooltip.addPara("${stat.value.desc}: $value", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$value")
+            }
+
            /* if (resource != null) {
                 tooltip.addPara("The settlement harvests from a local hotspot of ${resource.getName()} for more substantual gains.",
                     0f, Misc.getTextColor(), Misc.getHighlightColor(), "${resource.getName()}")

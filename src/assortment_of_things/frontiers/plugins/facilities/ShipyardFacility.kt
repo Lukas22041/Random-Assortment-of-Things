@@ -28,8 +28,8 @@ class ShipyardFacility : BaseSettlementFacility() {
         var budgetPerMonthString = Misc.getDGSCredits(budgetPerMonth)
         tooltip.addPara("Constructs the infrastructure to enable custom production orders for ship hulls. " +
                 "The orders have a maxmimum budget of $budgetString credits. Every month the budget recovers by $budgetPerMonthString credits. " +
-                "\n\nIncreases in the production budget stack with those from other facilities.", 0f,
-        Misc.getTextColor(), Misc.getHighlightColor(), "ship hulls", "$budgetString", "$budgetPerMonthString")
+                "\n\nIncreases in the production budget stack with those from other facilities. Production costs 20%% more than through other means.", 0f,
+        Misc.getTextColor(), Misc.getHighlightColor(), "ship hulls", "$budgetString", "$budgetPerMonthString", "20%")
     }
 
     override fun populateSettlementDialogOrder(): Int {

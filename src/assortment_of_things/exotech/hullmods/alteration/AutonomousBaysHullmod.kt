@@ -8,6 +8,7 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -62,6 +63,7 @@ class AutonomousBaysHullmod : BaseAlteration() {
 
         if (core.stats.hasSkill(Skills.MISSILE_SPECIALIZATION)) {
             for (weapon in fighter!!.allWeapons) {
+                if (weapon.type == WeaponAPI.WeaponType.MISSILE || weapon.type == WeaponAPI.WeaponType.COMPOSITE)
                 weapon.maxAmmo = fighter.mutableStats.missileAmmoBonus.computeEffective(weapon.spec.maxAmmo.toFloat()).toInt()
                 weapon.resetAmmo()
             }

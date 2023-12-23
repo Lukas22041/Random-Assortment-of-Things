@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.hullmods
 
+import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipCommand
@@ -19,12 +20,29 @@ class ExoFighterAIHullmod : BaseHullMod() {
 class ExoFighterAIScript(var ship: ShipAPI) : AdvanceableListener {
 
     //var minDistance = 600f
-    var maxDistance = MathUtils.getRandomNumberInRange(380f, 420f)
+    var maxDistance = 600f
 
     var decelerateInterval = IntervalUtil(0.2f, 0.4f)
     var canDecelerate = true
     var strafeInterval = IntervalUtil(2f, 5f)
     var strafeState = "none"
+
+    init {
+        decideWeaponRange()
+    }
+
+    fun decideWeaponRange() {
+        var shortest = 1200f
+        for (weapon in ship.allWeapons) {
+            if (weapon.range <= shortest) {
+                shortest = weapon.range
+            }
+        }
+
+        shortest -= MathUtils.getRandomNumberInRange(150f, 250f)
+        shortest = MathUtils.clamp(shortest, 200f, 2000f)
+        maxDistance = shortest
+    }
 
     override fun advance(amount: Float) {
 
@@ -34,8 +52,18 @@ class ExoFighterAIScript(var ship: ShipAPI) : AdvanceableListener {
             strafeState = states.random()
         }
 
+
+        if (ship.baseOrModSpec().hullId == "rat_nightblade") {
+            if (ship.usableWeapons.all { it.ammo == 0 && !it.isFiring} ) {
+                var wing = ship.wing
+                if (wing != null && !wing.isReturning(ship)) {
+                    wing.orderReturn(ship)
+                }
+            }
+        }
+
         var target = ship.shipTarget
-        if (target != null) {
+        if (target != null && (ship.wing != null && !ship.wing.isReturning(ship) )) {
 
             var distance = MathUtils.getDistance(ship, target)
 
@@ -54,6 +82,7 @@ class ExoFighterAIScript(var ship: ShipAPI) : AdvanceableListener {
                 decelerateInterval.advance(amount)
                 if (decelerateInterval.intervalElapsed()) {
                     canDecelerate = true
+                    decideWeaponRange()
                 }
 
 

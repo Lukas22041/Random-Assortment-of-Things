@@ -155,6 +155,8 @@ Nowadays interaction between the company and other factions is limited, with up-
 rat_exoship,CUSTOM,"A construct that stands at the center of all of exotechs life-support. Often refered to as ""exo-ship"", this gigantic station is capable of traversing towards other systems at a speed second only to gates. This once minor benefit became a major advantage within the early days of the post-collapse sector, moving the faction towards unstoppable acts of piracy. They tend to move across systems every few months.",,,,
 ,,,,,,
 ,,,,,,
+rat_nightblade,SHIP,"A unique hybrid of fighter & bomber. Equipped with a single-charge, high damage phase-beam that deals intense burst damage after a few seconds of charging up, at the downside of having to return to its carrier after each attack run.",,,,
+rat_twilightray,WEAPON,"A strong phase-burst-beam developed for the Nightblade-Class. Due to its single-charged nature, and its high time of activation, the targeting computer makes sure that it can find an opening in the opponents shields before firing.",,,,
 ,,,,,,
 rat_dawnblade,SHIP,"The pinnacle of exo-tech fighter engineering. Its central hardpoint holds an incredibly threatening beam, while its micro-missile forge constantly produces new missiles to distract enemy point-defense and supress their shields. ",,,,
 rat_dawnlance,WEAPON,"A weapon specificly designed for exo-tech fighters. Emits a constant and unstable stream of plasma upon its target, dealing detrimental damage towards its armor.",,,,

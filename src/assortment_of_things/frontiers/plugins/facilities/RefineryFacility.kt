@@ -9,7 +9,7 @@ import com.fs.starfarer.api.util.Misc
 class RefineryFacility : BaseSettlementFacility() {
 
     override fun apply() {
-        settlement.stats.income.modifyPercent("refinery", 75f)
+        settlement.stats.income.modifyPercent("refinery", 75f, "Refinery")
     }
 
     override fun unapply() {

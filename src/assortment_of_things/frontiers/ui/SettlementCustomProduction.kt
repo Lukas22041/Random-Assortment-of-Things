@@ -38,7 +38,7 @@ class SettlementCustomProduction(var settlement: SettlementData) : CustomProduct
     }
 
     override fun getCostMult(): Float {
-        return 1f
+        return 1.2f
     }
 
     override fun getMaximumValue(): Float {

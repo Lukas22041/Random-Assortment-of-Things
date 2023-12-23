@@ -20,7 +20,7 @@ class CombatHandler : EveryFrameCombatPlugin
 {
 
 
-    override fun init(engine: CombatEngineAPI?)  {
+    override fun init(engine: CombatEngineAPI)  {
 
 
        /* engine!!.addPlugin(object : BaseEveryFrameCombatPlugin() {
@@ -38,6 +38,9 @@ class CombatHandler : EveryFrameCombatPlugin
             }
         })*/
 
+        if (Global.getCurrentState() != GameState.TITLE) {
+            engine.addPlugin(DPSMeter())
+        }
 
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)

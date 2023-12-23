@@ -1,0 +1,66 @@
+{
+  "hullName": "Nightblade",
+  "hullId": "rat_nightblade",
+  "hullSize": "FIGHTER",
+  "spriteName": "graphics/ships/exo/rat_nightblade.png",
+  "style": "RAT_EXO",
+  "height": 60,
+  "width": 60,
+  "center": [30, 33],
+  "collisionRadius": 26,
+  "shieldCenter": [0, -0],
+  "shieldRadius": 23,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_exogrid",
+    "rat_exo_fighter_ai",
+    "no_weapon_flux"
+  ],
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [7, -0]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-11, 6.5],
+      "length": 8,
+      "width": 4,
+      "angle": -180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-11, -6.5],
+      "length": 8,
+      "width": 4,
+      "angle": 180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    }
+  ],
+  "bounds": [
+    -20, 2,
+    -11, 4,
+    -11, 8,
+    -0.5, 18,
+    2, 10,
+    10, 10,
+    18, 5,
+    18, -5,
+    10, -10,
+    2, -10,
+    -0.5, -18,
+    -11, -8,
+    -11, -4,
+    -20, -2
+  ]
+}

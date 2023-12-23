@@ -12,7 +12,7 @@ rat_ceto,rat_ceto_Fighter,"no_sell, fighter, fighter6, auto_fighter, restricted"
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 rat_dawnblade_wing,rat_dawnblade_Fighter,"no_sell, fighter, fighter8, restricted, rat_exotech_bp",3,,8,25,V,4000,600,,1,FIGHTER,Superfighter,20,50000,,,,,,,,,,,,,2223
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+rat_nightblade_wing,rat_nightblade_Fighter,"no_sell, fighter, fighter8, restricted, rat_exotech_bp",3,,8,15,V,4000,600,,2,FIGHTER,Burst,20,40000,,,,,,,,,,,,,2223
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,

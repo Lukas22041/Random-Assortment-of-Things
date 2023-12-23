@@ -1,0 +1,27 @@
+{
+	"specClass":"beam",
+	"id":"rat_twilightray",
+	"type":"ENERGY",
+	"size":"SMALL",
+	"turretSprite":"graphics/weapons/exo/builtin/rat_twilightray.png",
+	"turretGlowSprite":"graphics/weapons/exo/builtin/rat_twilightray_glow.png",
+	"hardpointSprite":"graphics/weapons/exo/builtin/rat_twilightray.png",
+	"hardpointGlowSprite":"graphics/weapons/exo/builtin/rat_twilightray_glow.png",
+	"turretOffsets":[0, 0],
+	"turretAngleOffsets":[0],
+	"hardpointOffsets":[0, 0],
+	"hardpointAngleOffsets":[0],
+	"fringeColor":[178,33,207,255],
+	"coreColor":[255,255,255,255],
+	"glowColor":[255,100,100,255],
+	"width":20.0,
+	#"textureType":ROUGH,
+
+	"textureType":["graphics/fx/rat_dawnlance_fringe.png", "graphics/fx/rat_dawnlance_core.png"],
+	"textureScrollSpeed":64.0,
+	"pixelsPerTexel":5.0,
+	
+	"pierceSet":[PROJECTILE_FF,PROJECTILE_NO_FF,PROJECTILE_FIGHTER,MISSILE_FF,MISSILE_NO_FF],
+	#"fireSoundOne":"phase_beam_intro",
+	"fireSoundTwo":"phase_beam_loop",	
+}

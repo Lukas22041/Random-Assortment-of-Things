@@ -19,7 +19,7 @@ class StockpileFacility : BaseSettlementFacility() {
     }
 
     override fun apply() {
-        settlement.stats.income.modifyPercent("stockpile", 10f)
+        settlement.stats.income.modifyPercent("stockpile", 10f, "Stockpile")
     }
 
     override fun unapply() {

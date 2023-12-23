@@ -63,14 +63,14 @@ class ThestiaShipsystem : BaseShipSystemScript() {
                     var leftShadow = spawnClone(fighter)
                         ?: continue
                     leftShadow.setCustomData("rat_shadow_original", fighter)
-                    leftShadow.velocity.set(fighter.velocity)
+                    leftShadow.velocity.set(Vector2f(fighter.velocity))
                     leftShadow.location.set(MathUtils.getPointOnCircumference(fighter.location, 10f, fighter.facing + 120))
                     aftershadows.add(leftShadow)
 
                     var rightShadow = spawnClone(fighter)
                         ?: continue
                     rightShadow.setCustomData("rat_shadow_original", fighter)
-                    rightShadow.velocity.set(fighter.velocity)
+                    rightShadow.velocity.set(Vector2f(fighter.velocity))
                     rightShadow.location.set(MathUtils.getPointOnCircumference(fighter.location, 10f, fighter.facing - 120))
                     aftershadows.add(rightShadow)
 
@@ -212,35 +212,25 @@ class ThestiaShipsystem : BaseShipSystemScript() {
 
         member.setVariant(variant, true, true)
 
+
+        applyStats  (member.stats, originalFighter.mutableStats)
+
+
         var clone = Global.getCombatEngine().getFleetManager(originalFighter.owner).spawnFleetMember(member, originalFighter.location, originalFighter.facing, 0f)
         var stats = clone.mutableStats
         var ogStats = originalFighter.mutableStats
 
 
 
-        stats.maxSpeed.baseValue = ogStats.maxSpeed.baseValue
-        stats.acceleration.baseValue = ogStats.acceleration.baseValue
-        stats.deceleration.baseValue = ogStats.deceleration.baseValue
-        stats.turnAcceleration.baseValue = ogStats.turnAcceleration.baseValue
-        stats.maxTurnRate.baseValue = ogStats.maxTurnRate.baseValue
-
-        stats.ballisticWeaponRangeBonus.applyMods(ogStats.ballisticWeaponRangeBonus)
-        stats.energyWeaponRangeBonus.applyMods(ogStats.energyWeaponRangeBonus)
-        stats.missileWeaponRangeBonus.applyMods(ogStats.missileWeaponRangeBonus)
-
-        stats.damageToCapital.modifyMult("rat_shadow", 0.6f)
-        stats.damageToCruisers.modifyMult("rat_shadow", 0.6f)
-        stats.damageToDestroyers.modifyMult("rat_shadow", 0.6f)
-        stats.damageToFrigates.modifyMult("rat_shadow", 0.6f)
-
-        stats.fluxDissipation.baseValue = ogStats.fluxDissipation.baseValue
-        stats.fluxCapacity.baseValue = ogStats.fluxCapacity.baseValue
+        applyStats(stats, ogStats)
 
         clone.mass = originalFighter.mass
         clone.collisionRadius = originalFighter.collisionRadius
 
         clone.maxHitpoints = originalFighter.maxHitpoints
         clone.hitpoints = originalFighter.hitpoints
+
+
 
 
         if (originalFighter.shield != null && originalFighter.shield.type != ShieldAPI.ShieldType.NONE) {
@@ -263,6 +253,25 @@ class ThestiaShipsystem : BaseShipSystemScript() {
         return clone
     }
 
+    fun applyStats(stats: MutableShipStatsAPI, ogStats: MutableShipStatsAPI) {
+      /*  stats.maxSpeed.baseValue = ogStats.maxSpeed.baseValue
+        stats.acceleration.baseValue = ogStats.acceleration.baseValue
+        stats.deceleration.baseValue = ogStats.deceleration.baseValue
+        stats.turnAcceleration.baseValue = ogStats.turnAcceleration.baseValue
+        stats.maxTurnRate.baseValue = ogStats.maxTurnRate.baseValue
+*/
+       /* stats.ballisticWeaponRangeBonus.applyMods(ogStats.ballisticWeaponRangeBonus)
+        stats.energyWeaponRangeBonus.applyMods(ogStats.energyWeaponRangeBonus)
+        stats.missileWeaponRangeBonus.applyMods(ogStats.missileWeaponRangeBonus)*/
+
+        stats.damageToCapital.modifyMult("rat_shadow", 0.6f)
+        stats.damageToCruisers.modifyMult("rat_shadow", 0.6f)
+        stats.damageToDestroyers.modifyMult("rat_shadow", 0.6f)
+        stats.damageToFrigates.modifyMult("rat_shadow", 0.6f)
+
+       /* stats.fluxDissipation.baseValue = ogStats.fluxDissipation.baseValue
+        stats.fluxCapacity.baseValue = ogStats.fluxCapacity.baseValue*/
+    }
 
     /*fun spawnShipOrWingDirectly(originalFighter: ShipAPI, variant: ShipVariantAPI?, type: FleetMemberType?, owner: Int, combatReadiness: Float, location: Vector2f?, facing: Float): ShipAPI? {
 
