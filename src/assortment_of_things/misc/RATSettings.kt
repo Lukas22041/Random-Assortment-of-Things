@@ -51,8 +51,8 @@ object RATSettings : LunaSettingsListener
 
     //UI
 
-    var enableDPS = LunaSettings.getBoolean(modID, "rat_enableDPS")
-    var dpsMeterSeconds = LunaSettings.getInt(modID, "rat_dpsSeconds")
+    /*var enableDPS = LunaSettings.getBoolean(modID, "rat_enableDPS")
+    var dpsMeterSeconds = LunaSettings.getInt(modID, "rat_dpsSeconds")*/
 
 
     var enableMinimap = LunaSettings.getBoolean(modID, "rat_enableMinimap")
@@ -105,8 +105,8 @@ object RATSettings : LunaSettingsListener
         minimapFueloverlay = LunaSettings.getBoolean(modID, "rat_minimapFuel")
         MinimapUI.reset = true
 
-        enableDPS = LunaSettings.getBoolean(modID, "rat_enableDPS")
-        dpsMeterSeconds = LunaSettings.getInt(modID, "rat_dpsSeconds")
+       /* enableDPS = LunaSettings.getBoolean(modID, "rat_enableDPS")
+        dpsMeterSeconds = LunaSettings.getInt(modID, "rat_dpsSeconds")*/
 
         LootModifier.modifySpawns()
     }

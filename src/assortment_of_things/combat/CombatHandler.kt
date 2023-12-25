@@ -39,9 +39,9 @@ class CombatHandler : EveryFrameCombatPlugin
             }
         })*/
 
-        if (RATSettings.enableDPS!! && Global.getCurrentState() != GameState.TITLE && engine.isSimulation) {
+        /*if (RATSettings.enableDPS!! && Global.getCurrentState() != GameState.TITLE && engine.isSimulation) {
             engine.addPlugin(DPSMeter())
-        }
+        }*/
 
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)

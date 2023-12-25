@@ -1,3 +1,4 @@
+/*
 package assortment_of_things.combat
 
 import assortment_of_things.misc.RATSettings
@@ -32,13 +33,14 @@ class DPSMeter : BaseEveryFrameCombatPlugin(), DamageListener {
     var shieldBanner = Global.getSettings().getAndLoadSprite("graphics/ui/rat_dps_shield.png")
     var hullBanner = Global.getSettings().getAndLoadSprite("graphics/ui/rat_dps_hull.png")
     var armorBanner = Global.getSettings().getAndLoadSprite("graphics/ui/rat_dps_armor.png")
+    var dpsBackground = Global.getSettings().getAndLoadSprite("graphics/ui/rat_dps_background.png")
 
     //Make configureable through luna
-    var maxMeasuringTime = RATSettings.dpsMeterSeconds!!.toFloat()
+    var timeForReset = RATSettings.dpsMeterSeconds!!.toFloat()
     var measuredTime = 0f
+    var resetTime = 0f
 
-    data class DealtDamage(var damage: ApplyDamageResultAPI, var timeRemainaing: Float)
-    var recentDamage = ArrayList<DealtDamage>()
+    var recentDamage = ArrayList<ApplyDamageResultAPI>()
 
 
     init {
@@ -49,27 +51,27 @@ class DPSMeter : BaseEveryFrameCombatPlugin(), DamageListener {
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
 
         if (recentDamage.isNotEmpty()) {
-            measuredTime += 1 * amount
-            measuredTime = MathUtils.clamp(measuredTime, 0f, maxMeasuringTime)
-            measuredTime = MathUtils.clamp(measuredTime, 0f, maxMeasuringTime)
+            if (!Global.getCombatEngine().isPaused) {
+
+                resetTime += 1 * amount
+
+                if (resetTime >= timeForReset) {
+                    recentDamage.clear()
+                    measuredTime = 0f
+                    resetTime = 0f
+                }
+                else {
+                    measuredTime += 1 * amount
+                }
+            }
         }
         else {
             measuredTime = 0f
         }
 
         updateInterval.advance(amount)
-        if (updateInterval.intervalElapsed()) {
+        if (updateInterval.intervalElapsed() && !Global.getCombatEngine().isPaused) {
             updateDps()
-        }
-
-        if (!Global.getCombatEngine().isPaused) {
-            for (recent in ArrayList(recentDamage)) {
-                var timeMult = Global.getCombatEngine().timeMult.modifiedValue
-                recent.timeRemainaing += 1 * amount
-                if (recent.timeRemainaing >= maxMeasuringTime) {
-                    recentDamage.remove(recent)
-                }
-            }
         }
 
 
@@ -84,6 +86,8 @@ class DPSMeter : BaseEveryFrameCombatPlugin(), DamageListener {
 
         var armorOffset = 40f
         var hullOffset = 80f
+
+        dpsBackground.renderAtCenter(posX, posY - armorOffset)
 
         shieldBanner.renderAtCenter(posX, posY)
         armorBanner.renderAtCenter(posX, posY - armorOffset)
@@ -113,16 +117,18 @@ class DPSMeter : BaseEveryFrameCombatPlugin(), DamageListener {
         var hullDps = 0f
         var armorDps = 0f
         for (damage in recentDamage) {
-            shieldDps += damage.damage.damageToShields
-            hullDps += damage.damage.damageToHull
-            armorDps += damage.damage.totalDamageToArmor
+            shieldDps += damage.damageToShields
+            hullDps += damage.damageToHull
+            armorDps += damage.totalDamageToArmor
         }
 
-        /*if (oldest != null) {
+        */
+/*if (oldest != null) {
             if (shieldDps != 0f) shieldDps /= oldest
             if (hullDps != 0f) hullDps /= oldest
             if (armorDps != 0f) armorDps /= oldest
-        }*/
+        }*//*
+
 
         if (measuredTime != 0f) {
             shieldDps /= measuredTime
@@ -156,9 +162,12 @@ class DPSMeter : BaseEveryFrameCombatPlugin(), DamageListener {
         }
 
         if (dealer == Global.getCombatEngine().playerShip) {
-            /*resetMeasuringTime = maxResetMeasuringTime
-            isMeasuring = true*/
-            recentDamage.add(DealtDamage(result, 0f))
+            */
+/*resetMeasuringTime = maxResetMeasuringTime
+            isMeasuring = true*//*
+
+            resetTime = 0f
+            recentDamage.add(result)
         }
     }
-}
+}*/
