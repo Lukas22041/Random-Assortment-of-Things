@@ -1,158 +1,120 @@
 {
-    "center": [
-        2,
-        2
-    ],
-    "collisionRadius": 2,
-    "coversColor": "",
-    "height": 4,
-    "width": 4,
-    "hullId": "rat_aftershadow_drone",
-    "hullName": "Aftershadow",
-    "hullSize": "FIGHTER",
-    "shieldCenter": [
-        0,
-        0
-    ],
-    "builtInMods": [
-        "no_weapon_flux"
-      ],
-    "shieldRadius": 2,
-    "spriteName": "graphics/fx/empty.png",
-    "style": "LOW_TECH",
-    "viewOffset": 0,
-    "weaponSlots": [
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "0",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "1",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "2",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "3",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "4",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "5",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "6",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "7",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "8",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "9",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "10",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "UNIVERSAL"
-        }
-    ]
+  "hullName": "Aftershadow",
+  "hullId": "rat_aftershadow_drone",
+  "hullSize": "FIGHTER",
+  "spriteName": "graphics/fx/empty.png",
+  "style": "LOW_TECH",
+  "height": 4,
+  "width": 4,
+  "center": [2, 2],
+  "collisionRadius": 2,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 2,
+  "viewOffset": 0,
+  "builtInMods": [
+    "no_weapon_flux"
+  ],
+  "weaponSlots": [
+    {
+      "id": "0",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    },
+    {
+      "id": "1",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    },
+    {
+      "id": "2",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    },
+    {
+      "id": "3",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    },
+    {
+      "id": "4",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    },
+    {
+      "id": "5",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    },
+    {
+      "id": "6",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    },
+    {
+      "id": "7",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    },
+    {
+      "id": "8",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    },
+    {
+      "id": "9",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    },
+    {
+      "id": "10",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": -90,
+      "locations": [0, 0]
+    }
+  ],
+  "engineSlots": [],
+  "bounds": []
 }

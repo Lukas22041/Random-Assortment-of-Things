@@ -7,6 +7,7 @@ import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
 import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
+import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -38,7 +39,7 @@ class CombatHandler : EveryFrameCombatPlugin
             }
         })*/
 
-        if (Global.getCurrentState() != GameState.TITLE) {
+        if (RATSettings.enableDPS!! && Global.getCurrentState() != GameState.TITLE && engine.isSimulation) {
             engine.addPlugin(DPSMeter())
         }
 

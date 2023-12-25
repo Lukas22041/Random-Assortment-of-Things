@@ -14,7 +14,7 @@
 	"fringeColor":[252,3,3,255],
 	"coreColor":[255,255,255,255],
 	"glowColor":[255,100,100,255],
-	"width":20.0,
+	"width":15.0,
 	#"textureType":ROUGH,
 
 	"textureType":["graphics/fx/rat_dawnlance_fringe.png", "graphics/fx/rat_dawnlance_core.png"],

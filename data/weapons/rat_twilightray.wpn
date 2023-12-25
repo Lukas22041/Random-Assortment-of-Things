@@ -13,11 +13,11 @@
 	"hardpointAngleOffsets":[0],
 	"fringeColor":[178,33,207,255],
 	"coreColor":[255,255,255,255],
-	"glowColor":[255,100,100,255],
+	"glowColor":[206,46,255,255],
 	"width":20.0,
 	#"textureType":ROUGH,
 
-	"textureType":["graphics/fx/rat_dawnlance_fringe.png", "graphics/fx/rat_dawnlance_core.png"],
+	"textureType":["graphics/fx/rat_twilight_fringe.png", "graphics/fx/rat_twilight_core.png"],
 	"textureScrollSpeed":64.0,
 	"pixelsPerTexel":5.0,
 	

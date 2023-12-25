@@ -49,6 +49,14 @@ rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,Enhanc
 rat_parallelEnabled,Enable Parallel Construction,Boolean,false,,"Removes the queue system in Colony Construction, allowing everything to be built at the same time.",,,Enhancement
 rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,,"If set to true and parallel construction is enabled, NPC markets will benefit from the same effect.",,,Enhancement
 ,,,,,,,,
+rat_DPSHeader,DPS-Meter,Header,DPS-Meter,,,,,Enhancement
+rat_enableDPS,Enable DPS-Meter,Boolean,false,,"Enables a DPS-Meter in Combat-Simulation that shows how much damage the currently piloted ship deals. Be aware that certain projectiles may not report themself as being spawned by a ship, and can not be accounted for.
+
+Blue = Shield
+Yellow = Armor
+Red = Hull",,,Enhancement
+rat_dpsSeconds,Interval,Double,5,,Changes how many seconds of damage the DPS-Meter remembers.,1,60,Enhancement
+,,,,,,,,
 rat_UIHeader,Mini-map,Header,Mini-map,,,,,Enhancement
 rat_enableMinimap,Enable Mini-map,Boolean,false,,"Replaces the [Campaign Radar] with an interactive mini-map. Requires a [save/reload] to toggle.
 
