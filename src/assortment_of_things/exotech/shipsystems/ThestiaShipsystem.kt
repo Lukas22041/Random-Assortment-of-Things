@@ -91,10 +91,16 @@ class ThestiaShipsystem : BaseShipSystemScript() {
         afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
         for (aftershadow in aftershadows) {
 
+
+
             aftershadow.setShipSystemDisabled(true)
             aftershadow.blockCommandForOneFrame(ShipCommand.ACCELERATE_BACKWARDS)
-           // aftershadow.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_BACK_OFF)
-            aftershadow.blockCommandForOneFrame(ShipCommand.USE_SYSTEM)
+            // aftershadow.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_BACK_OFF)
+            //aftershadow.aiFlags.removeFlag(ShipwideAIFlags.AIFlags.BACK_OFF)
+           // aftershadow.aiFlags.removeFlag(ShipwideAIFlags.AIFlags.BIGGEST_THREAT)
+            //aftershadow.blockCommandForOneFrame(ShipCommand.USE_SYSTEM)
+
+            var test = aftershadow.aiFlags
 
             var original = aftershadow.customData.get("rat_shadow_original") as ShipAPI
 
@@ -250,12 +256,12 @@ class ThestiaShipsystem : BaseShipSystemScript() {
     }
 
     fun applyStats(stats: MutableShipStatsAPI, ogStats: MutableShipStatsAPI) {
-      /*  stats.maxSpeed.baseValue = ogStats.maxSpeed.baseValue
+        stats.maxSpeed.baseValue = ogStats.maxSpeed.baseValue
         stats.acceleration.baseValue = ogStats.acceleration.baseValue
         stats.deceleration.baseValue = ogStats.deceleration.baseValue
         stats.turnAcceleration.baseValue = ogStats.turnAcceleration.baseValue
         stats.maxTurnRate.baseValue = ogStats.maxTurnRate.baseValue
-*/
+
        /* stats.ballisticWeaponRangeBonus.applyMods(ogStats.ballisticWeaponRangeBonus)
         stats.energyWeaponRangeBonus.applyMods(ogStats.energyWeaponRangeBonus)
         stats.missileWeaponRangeBonus.applyMods(ogStats.missileWeaponRangeBonus)*/

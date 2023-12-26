@@ -20,10 +20,10 @@ class RelicsGenerator {
     private val stationFractionToGenerate = 1f
 
     private val chanceToGenerateCondition = 0.1f
-    private val extraChanceToGenerateConditionInRuins = 0.20f
+    private val extraChanceToGenerateConditionInRuins = 0.10f
 
-    private val chanceToGenerateSecondCondition = 0.1f
-    private val extraChanceToGenerateSecondConditionInRuins = 0.15f
+    private val chanceToGenerateSecondCondition = 0.05f
+    private val extraChanceToGenerateSecondConditionInRuins = 0.1f
 
     fun generateStations() {
         var relicStations = WeightedRandomPicker<RelicStation>()
