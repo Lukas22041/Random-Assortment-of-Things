@@ -5,9 +5,16 @@ import assortment_of_things.frontiers.SettlementData
 import assortment_of_things.frontiers.data.SettlementFacilitySlot
 import assortment_of_things.frontiers.data.SettlementFacilitySpec
 import assortment_of_things.misc.RATInteractionPlugin
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.InteractionDialogAPI
+import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec
+import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.WeightedRandomPicker
+import org.lazywizard.lazylib.MathUtils
+import java.util.*
+import kotlin.collections.ArrayList
 
 abstract class BaseSettlementFacility() {
 

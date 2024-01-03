@@ -8,4 +8,6 @@ stockpile,Stockpile,30,Improve the storage facilities of the settlement.,graphic
 quality_control,Maintenance Bays,60,Improves the condition of your fleet.,graphics/icons/frontiers/facilities/quality_control.png,100000,assortment_of_things.frontiers.plugins.facilities.QualityControlFacility
 specialised_training,Specialised Training,60,Performs special training for your crew.,graphics/icons/frontiers/facilities/specialised_training.png,100000,assortment_of_things.frontiers.plugins.facilities.SpecialisedTrainingFacility
 hyperspace_beacon,Hyperspace Beacon,60,Improves fuel useage in hyperspace.,graphics/icons/frontiers/facilities/hyperspace_beacon.png,100000,assortment_of_things.frontiers.plugins.facilities.HyperspaceBeaconFacility
+logistics_base,Logistics Base,45,Hosts a small logistic fleet to assist in operations.,graphics/icons/frontiers/facilities/logistics_base.png,75000,assortment_of_things.frontiers.plugins.facilities.LogisticsBaseFacility
 gate_beacon,Gate Beacon,90,Allows gates to direct towards this settlement.,graphics/icons/frontiers/facilities/gate_beacon.png,125000,assortment_of_things.frontiers.plugins.facilities.GateBeaconFacility
+headquarters,Headquarters,120,A governing facility for a planets colony.,graphics/icons/frontiers/facilities/headquarters.png,500000,assortment_of_things.frontiers.plugins.facilities.HeadquartersFacility

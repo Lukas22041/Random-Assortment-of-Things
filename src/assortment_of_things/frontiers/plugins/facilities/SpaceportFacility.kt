@@ -9,4 +9,13 @@ class SpaceportFacility : BaseSettlementFacility() {
                 "\n\n" +
                 "The settlers tend to gather around this humble spaceport, be that for planning, business or leisure. Its state represents that of the settlement as a whole", 0f)
     }
+
+    override fun apply() {
+        settlement.stats.income.modifyFlat("landing_pad", 5000f, "Landing Pad")
+
+    }
+
+    override fun unapply() {
+        settlement.stats.income.unmodifyFlat("landing_pad")
+    }
 }

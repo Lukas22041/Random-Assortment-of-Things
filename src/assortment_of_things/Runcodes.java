@@ -10,6 +10,8 @@ import com.fs.starfarer.api.impl.campaign.fleets.PersonalFleetHoracioCaden;
 import com.fs.starfarer.api.impl.campaign.fleets.PersonalFleetScript;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.procgen.NameGenData;
+import com.fs.starfarer.api.impl.campaign.procgen.ProcgenUsedNames;
 import lunalib.lunaSettings.LunaSettings;
 import lunalib.lunaUtil.LunaCommons;
 
@@ -18,6 +20,9 @@ public class Runcodes {
     public void Example() {
 
         SectorAPI sector = Global.getSector();
+
+
+        ProcgenUsedNames.pickName(NameGenData.TAG_STAR, null, null);
 
         if (sector.hasScript(PersonalFleetHoracioCaden.class)) {
             PersonalFleetScript fleetScript = null;

@@ -273,7 +273,7 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
             tooltip.addSectionHeading("Income", Alignment.MID, 0f)
             tooltip.addSpacer(10f)
 
-            tooltip.addPara("Base & Resource: ${Misc.getDGSCredits(incomeStat.baseValue)}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${Misc.getDGSCredits(incomeStat.baseValue)}")
+            tooltip.addPara("Resource: ${Misc.getDGSCredits(incomeStat.baseValue)}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${Misc.getDGSCredits(incomeStat.baseValue)}")
 
             for (stat in incomeStat.flatMods) {
                 var value = "+${stat.value.value}"

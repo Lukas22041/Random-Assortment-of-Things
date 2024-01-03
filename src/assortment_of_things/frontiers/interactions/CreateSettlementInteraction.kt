@@ -290,7 +290,10 @@ class CreateSettlementInteraction : RATInteractionPlugin() {
                 settlementData.modifiers.add(plugin)
 
                 if (plugin.getSpec().isResource) {
-                    settlementData.stats.income.baseValue = spec.getIncomeForCondition(settlementData.primaryPlanet.market.conditions).toFloat() + 5000
+                    settlementData.stats.income.baseValue = spec.getIncomeForCondition(settlementData.primaryPlanet.market.conditions).toFloat()
+                }
+                else {
+                    settlementData.stats.income.baseValue = 0f
                 }
 
                 plugin.apply()

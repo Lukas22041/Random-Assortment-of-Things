@@ -2,16 +2,14 @@ package assortment_of_things.misc
 
 import assortment_of_things.frontiers.FrontiersUtils
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Stats
+import com.fs.starfarer.api.impl.campaign.skills.HullRestoration
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
-import exerelin.campaign.backgrounds.CharacterBackgroundUtils
 
 class RATControllerHullmod : BaseHullMod() {
 
@@ -62,9 +60,15 @@ class RATControllerHullmod : BaseHullMod() {
                 }
 
                 stats.suppliesPerMonth.modifyMult("rat_quality_control", mod)
+
+                stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat(id, 2f)
             }
             if (settlement.hasFacility("specialised_training")) {
                 stats.minCrewMod.modifyMult("rat_specialised_training", 0.85f)
+            }
+            if (settlement.hasFacility("logistics_base")) {
+                stats.cargoMod.modifyMult("logistics_base", 1.25f)
+                stats.fuelMod.modifyMult("logistics_base", 1.25f)
             }
         }
 

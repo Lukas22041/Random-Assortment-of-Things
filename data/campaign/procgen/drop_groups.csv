@@ -31,3 +31,10 @@ item_rat_alteration_install:relics,relics_guaranteed_alt,100
 ,,
 nothing,relics_alteration,50
 item_rat_alteration_install:relics,relics_alteration,50
+,,
+,,
+,,
+supplies,rat_settlement_stockpile,8
+fuel,rat_settlement_stockpile,12
+heavy_machinery,rat_settlement_stockpile,2
+,,
