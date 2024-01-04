@@ -39,14 +39,18 @@ class TylosSystemAI : ShipSystemAIScript {
             //Make it switch if other ship would be in range but itself isnt
             var isInRange = isInRange(ship!!, target)
             var isOtherInRange = isInRange(other, target)
-            if (!isInRange && isOtherInRange) wantsToSwitch = true
+            if (!isInRange && isOtherInRange) {
+                wantsToSwitch = true
+            }
 
 
 
             //If high on flux or low on health, switch if it helps escape or remove flux
-            var otherIsFaster = ship!!.maxSpeed + 10 < other.maxSpeed
+            //Max-Speed is bugged if the ship isnt deployed var otherIsFaster = ship!!.maxSpeed + 10 < other.maxSpeed
             var otherIsBetterDiss = stats.fluxDissipation.modifiedValue + 20 < otherStats.fluxDissipation.modifiedValue
-            if ((ship!!.fluxLevel >= 0.5f || ship!!.hitpoints <= ship!!.maxHitpoints * 0.3f) && (otherIsFaster || otherIsBetterDiss)) wantsToSwitch = true
+            if ((ship!!.fluxLevel >= 0.5f || ship!!.hitpoints <= ship!!.maxHitpoints * 0.3f) && (/*otherIsFaster || */otherIsBetterDiss)) {
+                wantsToSwitch = true
+            }
 
             //Dont even consider switching for the other conditions if the other ship wouldnt be in range
             if ((isInRange && !isOtherInRange)) {
@@ -54,16 +58,14 @@ class TylosSystemAI : ShipSystemAIScript {
                 return
             }
 
-            var flags = ship!!.aiFlags
-
             if (!isInRange && !isOtherInRange) {
-                if (stats.maxSpeed.modifiedValue + 30f <= otherStats.maxSpeed.modifiedValue || (!hasSO && otherHasSO)) {
+                if ((!hasSO && otherHasSO)) {
                     wantsToSwitch = true
                 }
             }
 
             //Switch to Ship with more High-Explosive damage if there is atleast a 50% difference in HE damage between the two.
-            if (isOtherInRange && (target.shield == null || target.shield.isOff || target.fluxTracker.isOverloaded || target.fluxTracker.fluxLevel >= 0.7f)) {
+            if (isOtherInRange && (target.shield == null || target.shield.isOff || target.shield.arc <= 30f || target.fluxTracker.isOverloaded || target.fluxTracker.isVenting || target.fluxTracker.fluxLevel >= 0.7f)) {
                 var HEonShip = ship!!.allWeapons.filter { it.damageType == DamageType.HIGH_EXPLOSIVE }.sumOf { it.damage.damage.toInt() }
                 var HEonOther = other!!.allWeapons.filter { it.damageType == DamageType.HIGH_EXPLOSIVE }.sumOf { it.damage.damage.toInt() }
                 if (HEonShip * 1.5f < HEonOther) {
@@ -81,23 +83,22 @@ class TylosSystemAI : ShipSystemAIScript {
 
             //Switch on an interval randomly if both are in range
             enoughTimePassedInterval.advance(amount)
-            if (enoughTimePassedInterval.intervalElapsed()) {
-                enoughTimePassed = true
-            }
+            if (enoughTimePassedInterval.intervalElapsed()) enoughTimePassed = true
             if (enoughTimePassed) wantsToSwitch = true
 
-            //interval has to be advancing constantly, resets if none of the conditions makes the ship want to switch
-            if (!wantsToSwitch) {
-                resetInterval()
-                return
-            }
         } else {
-            if (stats.maxSpeed.modifiedValue + 30f <= otherStats.maxSpeed.modifiedValue || (!hasSO && otherHasSO)) {
+            if (!hasSO && otherHasSO) {
                 wantsToSwitch = true
             }
         }
 
 
+
+        //interval has to be advancing constantly, resets if none of the conditions makes the ship want to switch
+        if (!wantsToSwitch) {
+            resetInterval()
+            return
+        }
 
         interval.advance(amount)
         if (interval.intervalElapsed()) {
