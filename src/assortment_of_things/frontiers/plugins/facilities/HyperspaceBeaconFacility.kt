@@ -11,7 +11,7 @@ import org.lazywizard.lazylib.MathUtils
 
 class HyperspaceBeaconFacility : BaseSettlementFacility() {
 
-    var maxDistanceLY = 25
+    var maxDistanceLY = 30
     var maxMod = 0.3
 
     override fun addDescriptionToTooltip(tooltip: TooltipMakerAPI) {

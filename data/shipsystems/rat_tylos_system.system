@@ -2,13 +2,14 @@
 	"id":"rat_tylos_system",
 	"type":"STAT_MOD",
 	"aiType":"CUSTOM",
-	"aiScript":"assortment_of_things.exotech.shipsystems.ai.LeaniraSystemAI",
+	"aiScript":"assortment_of_things.exotech.shipsystems.ai.TylosSystemAI",
 	
 	"statsScript":"assortment_of_things.exotech.shipsystems.TylosShipsystem",
 	"runScriptWhilePaused":true, # only for the player's ship
 	"runScriptWhileIdle":true,  # this means unapply() never gets called
 	"blockActionsWhileChargingDown":false,
 	
+	"canUseWhileRightClickSystemOn":true,
 	"canNotCauseOverload":true,
 	
 	#"phaseHighlight":"_glow1",

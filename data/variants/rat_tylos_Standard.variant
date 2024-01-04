@@ -1,0 +1,16 @@
+{
+  "variantId": "rat_tylos_Standard",
+  "hullId": "rat_tylos",
+  "displayName": "Standard",
+  "goalVariant": false,
+  "fluxCapacitors": 0,
+  "fluxVents": 0,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [],
+  "weaponGroups": [],
+  "modules": [
+        { "MODULE": "rat_tylos_double_Standard"},
+    ],
+  "wings": []
+}

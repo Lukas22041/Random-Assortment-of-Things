@@ -12,13 +12,19 @@ import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.impl.combat.TemporalShellStats
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
+import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.combat.CombatFleetManager
+import com.fs.starfarer.combat.entities.Ship
 import org.dark.shaders.post.PostProcessShader
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.combat.DefenseUtils
+import org.lazywizard.lazylib.combat.entities.SimpleEntity
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.input.Mouse
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
+import java.util.*
 
 
 class TylosShipsystem : BaseShipSystemScript() {
@@ -29,10 +35,11 @@ class TylosShipsystem : BaseShipSystemScript() {
     var module: ShipAPI? = null
     var activated = false
 
-    var SPEED_BONUS = 300f
-    var TURN_BONUS = 10f
+    var SPEED_BONUS = 200f
+    var TURN_BONUS = 15f
 
     var afterimageInterval = IntervalUtil(0.05f, 0.05f)
+    var empInterval = IntervalUtil(0.1f, 0.2f)
 
     override fun apply(stats: MutableShipStatsAPI, id: String?, state: ShipSystemStatsScript.State, effectLevel: Float) {
         ship = stats.entity as ShipAPI? ?: return
@@ -41,15 +48,22 @@ class TylosShipsystem : BaseShipSystemScript() {
 
         for (module in ship!!.childModulesCopy) {
             if (!module.isAlive) continue
-            var variant = module.variant
-            Global.getCombatEngine().removeEntity(module)
+            var variant = module.variant.clone()
+            variant.addTag("tylos_no_refit_sprite")
+
+            //Global.getCombatEngine().removeEntity(module)
+            var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
+            var obfManager = manager as CombatFleetManager
+            obfManager.removeDeployed(module as Ship, true)
 
             var newModule = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, 1f, ship!!.location, ship!!.facing)
             this.module = newModule
             newModule!!.setCustomData("rat_tylos_parent", ship)
             newModule.captain = ship!!.captain
             ship!!.setCustomData("rat_tylos_child", newModule)
-            Global.getCombatEngine().removeEntity(newModule)
+
+            //Global.getCombatEngine().removeEntity(newModule)
+            obfManager.removeDeployed(newModule as Ship, true)
         }
 
         var parent = ship!!.customData.get("rat_tylos_parent") as ShipAPI?
@@ -80,11 +94,30 @@ class TylosShipsystem : BaseShipSystemScript() {
 
         if (system.isActive) {
 
+            var cloaked = ship!!.phaseCloak.state == ShipSystemAPI.SystemState.ACTIVE || ship!!.phaseCloak.state == ShipSystemAPI.SystemState.IN
+
             afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
             if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
             {
-                var alpha = (75 * effectLevel).toInt()
-                AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(alpha), color.setAlpha(alpha), 1.5f * effectLevel, 2f, Vector2f().plus(ship!!.location))
+                var alpha = 75
+                if (cloaked) alpha = 75 - ((50 * ship!!.phaseCloak.effectLevel).toInt())
+
+                //AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(alpha), color.setAlpha(alpha), 1.5f * effectLevel, 2f, Vector2f().plus(ship!!.location))
+                AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(alpha), Color(130,4,189, 0), 0.5f, 2f, Vector2f().plus(ship!!.location))
+            }
+
+            empInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
+            if (empInterval.intervalElapsed() && !Global.getCombatEngine().isPaused) {
+                ship!!.exactBounds.update(ship!!.location, ship!!.facing)
+                var from = Vector2f(ship!!.exactBounds.segments.random().p1)
+
+                var angle = Misc.getAngleInDegrees(ship!!.location, from)
+                //var to = MathUtils.getPointOnCircumference(ship!!.location, MathUtils.getRandomNumberInRange(20f, 50f) + ship!!.collisionRadius, angle + MathUtils.getRandomNumberInRange(-30f, 30f))
+
+                var to = Vector2f(ship!!.exactBounds.segments.random().p1)
+
+                var empColor = Misc.interpolateColor(color, Color(130,4,189, 255), Random().nextFloat())
+                Global.getCombatEngine().spawnEmpArcVisual(from, ship, to, SimpleEntity(to), 5f, empColor.setAlpha(75), empColor.setAlpha(75))
             }
 
             if (player) {
@@ -95,7 +128,8 @@ class TylosShipsystem : BaseShipSystemScript() {
             }
 
 
-            ship!!.setJitterUnder(this, color, 1f * effectLevel, 20, 2f, 25f)
+            var intensity = 1f - (0.2f * ship!!.phaseCloak.effectLevel)
+            ship!!.setJitterUnder(this, color, intensity * effectLevel, 20, 2f, 25f)
 
 
 
@@ -184,11 +218,21 @@ class TylosShipsystem : BaseShipSystemScript() {
         //module!!.system.cooldownRemaining = 5f
         module!!.system.forceState(ShipSystemAPI.SystemState.OUT, 0f)
 
+        module!!.isHoldFireOneFrame = true
         engine.addEntity(module)
         if (ship == Global.getCombatEngine().playerShip) {
             engine.setPlayerShipExternal(module)
         }
+
+        var cloaked = ship!!.phaseCloak.state == ShipSystemAPI.SystemState.ACTIVE || ship!!.phaseCloak.state == ShipSystemAPI.SystemState.IN
+        if (cloaked) {
+            setPhase(module!!, ship!!)
+        }
+
         engine.removeEntity(ship)
+        /*var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
+        var obfManager = manager as CombatFleetManager
+        obfManager.removeDeployed(ship as Ship, true)*/
     }
 
     fun doModuleToParent(effectLevel: Float, parent: ShipAPI) {
@@ -197,11 +241,30 @@ class TylosShipsystem : BaseShipSystemScript() {
         //parent.system.cooldownRemaining = 5f
         parent.system.forceState(ShipSystemAPI.SystemState.OUT, 0f)
 
+        parent.isHoldFireOneFrame = true
         engine.addEntity(parent)
         if (ship == Global.getCombatEngine().playerShip) {
             engine.setPlayerShipExternal(parent)
         }
+
+        var cloaked = ship!!.phaseCloak.state == ShipSystemAPI.SystemState.ACTIVE || ship!!.phaseCloak.state == ShipSystemAPI.SystemState.IN
+        if (cloaked) {
+            setPhase(parent, ship!!)
+        }
+
         engine.removeEntity(ship)
+       /* var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
+        var obfManager = manager as CombatFleetManager
+        obfManager.removeDeployed(ship as Ship, true)*/
+    }
+
+    fun setPhase(target: ShipAPI, current: ShipAPI) {
+        var cloak = target.phaseCloak
+        target.isPhased = true
+        cloak.forceState(ShipSystemAPI.SystemState.ACTIVE, 1f)
+        current.phaseCloak.forceState(ShipSystemAPI.SystemState.IDLE, 0f)
+        current.alphaMult = 0f
+        target.alphaMult = 0f
     }
 
 

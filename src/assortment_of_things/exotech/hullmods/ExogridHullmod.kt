@@ -1,6 +1,8 @@
 package assortment_of_things.exotech.hullmods
 
+import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.misc.baseOrModSpec
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
@@ -17,13 +19,20 @@ class ExogridHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI, id: String?) {
 
-        if (stats.fleetMember?.fleetData?.fleet?.faction?.id == "player") {
+        if (ExoUtils.getExoData().hasPartnership) {
+            stats.variant.removeTag(Tags.VARIANT_UNRESTORABLE)
+        }
+        else {
+            stats.variant.addTag(Tags.VARIANT_UNRESTORABLE)
+        }
+
+        /*if (stats.fleetMember?.fleetData?.fleet?.faction?.id == "player") {
             stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
         }
         else if (stats.fleetMember?.fleetData != null && stats.fleetMember?.fleetData?.fleet?.faction?.id != "player") {
             stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
             stats.breakProb.modifyMult(id, 10f);
-        }
+        }*/
 
         stats.sensorProfile.modifyMult(id, 0.5f)
         if (stats.variant.baseOrModSpec().hints.contains(ShipTypeHints.PHASE)) {
@@ -48,6 +57,18 @@ class ExogridHullmod : BaseHullMod() {
 
         if (ship.shield != null) {
             ship.shield.setRadius(ship.shieldRadiusEvenIfNoShield, "graphics/fx/rat_exo_shields256.png", "graphics/fx/rat_exo_shields256ring.png")
+        }
+
+        if (ship.baseOrModSpec().hullId == "rat_tylos_double") {
+            if (!ship.variant.hasTag("tylos_no_refit_sprite")) {
+                var sprite = ship.spriteAPI
+                var x = sprite.centerX
+                var y = sprite.centerY
+
+                ship.setSprite(Global.getSettings().getAndLoadSprite("graphics/ships/exo/rat_tylos_double.png"))
+                ship.spriteAPI.centerX = x
+                ship.spriteAPI.centerY = y
+            }
         }
     }
 
@@ -94,8 +115,8 @@ class ExogridHullmod : BaseHullMod() {
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("To avoid important tech falling in to enemies hands, all exo-tech ships are equipped with explosive charges that prevent recovery without the relevant access codes.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "prevent recovery")
+        tooltip.addPara("The internal components of this ship are poorly understood by your crew. Without an Exo-Tech partnership, the ship can not be restored to remove d-mods.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "restored")
     }
 
     /*override fun hasSModEffect(): Boolean {
