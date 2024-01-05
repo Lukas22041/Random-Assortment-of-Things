@@ -90,8 +90,9 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
             if (state == ShipSystemStatsScript.State.IN) {
                 phantom.isHoldFireOneFrame = true
-                var velocity = MathUtils.getPointOnCircumference(Vector2f(), 4 - (3.5f * effectLevel), Misc.getAngleInDegrees(ship!!.location, phantom.location))
-                phantom.velocity.set(phantom.velocity.plus(velocity))
+                var elapsed = Global.getCombatEngine().elapsedInLastFrame
+                var velocity = MathUtils.getPointOnCircumference(Vector2f(), 300 - (250f * effectLevel), Misc.getAngleInDegrees(ship!!.location, phantom.location))
+                phantom.velocity.set(phantom.velocity.plus(Vector2f(velocity.x * elapsed, velocity.y * elapsed)))
             }
 
             if (state == ShipSystemStatsScript.State.ACTIVE) {

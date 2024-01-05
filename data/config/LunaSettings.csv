@@ -7,16 +7,13 @@ rat_abyssEnabled,"Enable ""The Abyss""",Boolean,true,,"The Abyss is a new area f
 The entrance can be found in the bottom left corner of the sector.
 
 Enabling ""the Abyss"" generates content for both new and existing saves upon game load.",,,Expansion
-rat_exotechEnabled,"Enable ""Exo-Tech"" (Beta)",Boolean,true,,"Adds a faction called ""Exo-Tech"" to the sector. The faction can not be started with, and instead hides within the fringe-worlds of the sector, where it may have some oppertunities for trade with rare-technologies.
-
-The feature is currently in-development, meaning it wont have as much content available yet.
+rat_exotechEnabled,"Enable ""Exo-Tech""",Boolean,true,,"Adds a faction called ""Exo-Tech"" to the sector. The faction can not be started with, and instead hides within the fringe-worlds of the sector, where it may have some oppertunities for trade with rare-technologies.
 
 Can be enabled mid-save",,,Expansion
 rat_relicsEnabled,"Enable ""Relics of the Past""",Boolean,true,,"Generates lots of unique loot, stations, interactions and planetary conditions across the sector, with most of it being discoverable in ruined systems.
 
 Enabling ""Relics of the Past"" generates content for both new and existing saves upon game load.",,,Expansion
-rat_frontiersEnabled,"Enable ""Frontiers"" (Beta)",Boolean,true,,"Enables the player to construct a ""Settlement"" on a planet. Settlements are a low maintenance alternative to colonies for mid- to lategame, Providing a base of operation to the player that does not require much oversight. Only one Settlement can be constructed.
-
+rat_frontiersEnabled,"Enable ""Frontiers""",Boolean,true,,"Enables the player to construct a ""Settlement"" on a planet. Settlements are a low maintenance alternative to colonies for mid- to lategame, Providing a base of operation to the player that does not require much oversight. Only one Settlement can be constructed.
 
 Enabling ""Frontiers"" enables it for the current save on load. Disabling it on an existing save has no effect.",,,Expansion
 rat_backgroundsEnabled,"Enable ""Backgrounds""",Boolean,true,,"Adds more unique backgrounds to Nexerelins ""Background"" system.

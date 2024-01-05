@@ -24,6 +24,9 @@ import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.FullName
+import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.Tags
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -32,6 +35,7 @@ import lunalib.lunaSettings.LunaSettings
 import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
+import org.lazywizard.lazylib.MathUtils
 import java.util.*
 
 
@@ -232,8 +236,24 @@ class RATModPlugin : BaseModPlugin() {
                 data.exoships.add(exoship)
             }
 
+            generateBrokenExoship()
+
             Global.getSector().memoryWithoutUpdate.set("\$rat_exo_generated", true)
         }
+    }
+
+    fun generateBrokenExoship() {
+        var systems = Global.getSector().starSystems.filter { it.planets.filter { !it.isStar }.isNotEmpty() && it.hasBlackHole() && (it.hasTag(Tags.THEME_RUINS) || it.hasTag(Tags.THEME_MISC)) }
+        if (systems.isEmpty()) {
+            systems = Global.getSector().starSystems.filter { it.planets.filter { !it.isStar }.isNotEmpty() && (it.hasTag(Tags.THEME_RUINS) || it.hasTag(Tags.THEME_MISC)) }
+        }
+        var system = systems.random()
+
+        var location = BaseThemeGenerator.getLocations(Random(), system, MathUtils.getRandomNumberInRange(300f, 400f), linkedMapOf(
+            BaseThemeGenerator.LocationType.PLANET_ORBIT to 5f, BaseThemeGenerator.LocationType.IN_ASTEROID_BELT to 1f)).pick()
+
+        var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "Exoship Wreckage", "rat_exoship_broken", Factions.NEUTRAL)
+        exoshipEntity.orbit = location.orbit
     }
 
     fun initFrontiers() {

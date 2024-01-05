@@ -2,7 +2,7 @@
 	"id":"rat_arkas_system",
 	"type":"STAT_MOD",
 	"aiType":"CUSTOM",
-	"aiScript":"assortment_of_things.abyss.shipsystem.ai.TestShipSystemAI",
+	"aiScript":"assortment_of_things.exotech.shipsystems.ai.ArkasSystemAI",
 	
 	"statsScript":"assortment_of_things.exotech.shipsystems.ArkasShipsystem",
 	"runScriptWhilePaused":true, # only for the player's ship
