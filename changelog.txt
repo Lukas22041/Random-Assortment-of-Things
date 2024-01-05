@@ -1,3 +1,28 @@
+Version 1.9.0
+Not save compatible with neither prior versions nor the 1.9.0 beta.
+
+-> Added "Frontiers", a feature allowing players to build a small settlement.
+-> Added a new Exo-Tech ship, the "Tylos", a phase destroyer.
+-> Added 4x Exo-Tech weapons.
+-> Added 3x Exo-Tech fighters.
+-> Added a new exo-tech related procgen encounter.
+-> The Arkas shipsystem has been reworked, and the ship now costs 35DP instead of 30DP to deploy.
+-> Gave the Apheidas-Platform slightly more flux capacity.
+-> Removed the "Exogrid Overload" hullmod. 
+-> Exo-Tech ships can now be recovered from defeated fleets, however their d-mods can not be restored without a partnership with the faction.
+-> Updated Exo-Tech variants to use their new content.
+
+-> Removed the "Commander" Nex-Background, as its concepts clash with what settlements are.
+-> Reworked how the Aftershadows from Thestias shipsystem work, should fix the crash issues with mods like VIC and potentialy other cases.
+-> Exo-Tech should no longer care about the players transponder.
+-> Slightly adjusted how Exoships decide where to go next.
+-> Fixed a crash that occured with the thestia class if another ship forced its shipsystem off.
+-> Fixed rare crash with the Exogrid Hullmod
+
+*Contains some changes & content that beta5 did not have yet
+
+
+
 Version 1.8.4
 Not save compatible :skull_emoji:. Patch isnt the largest, and im mostly releasing it now because i may start working on some larger things afterwards.
 
