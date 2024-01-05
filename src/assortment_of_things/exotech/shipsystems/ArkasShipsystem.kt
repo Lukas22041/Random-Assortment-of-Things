@@ -164,7 +164,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
             new.setRemainingCooldownTo(0.2f)
 
-            new.ammo = original.ammo
+            //new.ammo = original.ammo
         }
 
         phantoms.add(phantom!!)

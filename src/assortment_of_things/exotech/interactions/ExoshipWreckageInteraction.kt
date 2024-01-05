@@ -5,13 +5,18 @@ import assortment_of_things.misc.RATInteractionPlugin
 import assortment_of_things.misc.fixVariant
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.impl.campaign.AICoreOfficerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
+import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 import com.fs.starfarer.api.loading.Description
+import org.lazywizard.lazylib.MathUtils
+import org.magiclib.kotlin.fadeAndExpire
 import java.util.*
+import kotlin.random.asJavaRandom
 
 class ExoshipWreckageInteraction : RATInteractionPlugin() {
     override fun init() {
@@ -34,7 +39,7 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
                 textPanel.addPara("As your fleet further approaches the exoship, a fleet of ships emerge from the hangars. " +
                         "They are quickly identified as automated drones based on exo-tech specs." +
                         "\n\n" +
-                        "They have been likely assigned to defend the wreckage from any salvager trying to acquire anything left of worth. " +
+                        "They have likely been assigned to defend the wreckage from any salvager trying to acquire anything left of worth. " +
                         "Their flagship seems to be piloted by a custom ai, caution is recommended."
                 )
 
@@ -52,12 +57,47 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
     override fun defeatedDefenders() {
         interactionTarget.memoryWithoutUpdate.set("\$defeated", true)
 
-        addLeaveOption()
+        textPanel.addPara("After defeating the drones, the fleet prepares to close on to the wreckage.")
+
+        textPanel.addPara("There likely isnt much left in terms of raw materials, atleast in a useable state, but the drones must have been defending the place for a reason. " +
+                "Investigating the wreckages interiors should proof worthwhile.")
+
+        createOption("Loot Wreckage") {
+            var loot = Global.getFactory().createCargo(true)
+
+            loot.addCommodity("rat_exo_processor", 1f)
+            loot.addSpecial(SpecialItemData("rat_alteration_install", "rat_autonomous_bays"), 1f)
+            loot.addSpecial(SpecialItemData("rat_alteration_install", "rat_overtuned_targeting"), 2f)
+            loot.addSpecial(SpecialItemData("rat_alteration_install", "rat_unstopable_force"), 2f)
+
+            loot.addWeapons("rat_hyper_javelin", 1)
+            loot.addWeapons("rat_hyper_dart", 2)
+            loot.addFighters("rat_dawnblade_wing", 1)
+
+
+            visualPanel.showLoot("Salvage", loot, true) {
+
+                clearOptions()
+
+                textPanel.addPara("After looting whatevers left, the salvage crew returns with both unique items and some remaining logs.")
+
+                textPanel.addPara("It appears that even after its destruction, even with almost all compontents not functioning, the few compartments remaining with just minor damage were used for developing further technologies.\n\n" +
+                        "This kept them out of the eyes of the major factions to avoid repeated retaliation, atleast aslong as it took for their projects to bear fruit. According to the logs, the \"Arkas-Class\", and a unique phase-alligned AI-Core were developed here.")
+
+                textPanel.addPara("But all of this has been far in the past, after the projects were finished and the faction had a way to defend itself, all new projects were moved towards their remaining exoships. This station has been left alone with its drones for dozens of cycles.")
+
+                createOption("Leave") {
+                    closeDialog()
+                }
+
+            }
+        }
     }
 
     fun generateFleet() : CampaignFleetAPI {
         var fleet = Global.getFactory().createEmptyFleet("rat_exotech", "Automated Defenses", false)
-        fleet.name = "Automatedd Defenses"
+        fleet.name = "Automated Defenses"
+        fleet.isNoFactionInName = true
         fleet.memoryWithoutUpdate.set(MemFlags.MEMORY_KEY_LOW_REP_IMPACT, true)
         fleet.inflateIfNeeded()
 

@@ -10,7 +10,6 @@ import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
-import com.fs.starfarer.api.impl.combat.TemporalShellStats
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
@@ -18,10 +17,8 @@ import com.fs.starfarer.combat.CombatFleetManager
 import com.fs.starfarer.combat.entities.Ship
 import org.dark.shaders.post.PostProcessShader
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.combat.DefenseUtils
 import org.lazywizard.lazylib.combat.entities.SimpleEntity
 import org.lazywizard.lazylib.ext.plus
-import org.lwjgl.input.Mouse
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
@@ -42,7 +39,7 @@ class TylosShipsystem : BaseShipSystemScript() {
     var afterimageInterval = IntervalUtil(0.05f, 0.05f)
     var empInterval = IntervalUtil(0.1f, 0.2f)
 
-    var killedParent = false
+    var killedOther = false
 
     override fun apply(stats: MutableShipStatsAPI, id: String?, state: ShipSystemStatsScript.State, effectLevel: Float) {
         ship = stats.entity as ShipAPI? ?: return
@@ -72,12 +69,10 @@ class TylosShipsystem : BaseShipSystemScript() {
             obfManager.removeDeployed(newModule as Ship, true)
         }
 
-
-
         var parent = ship!!.customData.get("rat_tylos_parent") as ShipAPI?
         //Kill parent if its copy dies
         if (ship!!.hitpoints <= 0 && parent != null) {
-            if (!killedParent) {
+            if (!killedOther) {
                 Global.getCombatEngine().addEntity(parent)
                 parent.location.set(Vector2f(100000f, 100000f))
                 parent.splitShip()
