@@ -40,7 +40,7 @@ class ExoFighterAIScript(var ship: ShipAPI) : AdvanceableListener {
         }
 
         shortest -= MathUtils.getRandomNumberInRange(150f, 250f)
-        shortest = MathUtils.clamp(shortest, 200f, 2000f)
+        shortest = MathUtils.clamp(shortest, 200f, 1200f)
         maxDistance = shortest
     }
 

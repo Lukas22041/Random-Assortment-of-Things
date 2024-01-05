@@ -152,10 +152,15 @@ class TylosShipsystem : BaseShipSystemScript() {
         if (!activated && system.state == ShipSystemAPI.SystemState.ACTIVE) {
             activated = true
 
+            var viewport = Global.getCombatEngine().viewport
+            var oldX = viewport.llx
+            var oldY = viewport.lly
+
 
             if (parent != null) {
                 doModuleToParent(effectLevel, parent)
             }
+
 
             if (module != null) {
                 doParentToModule(effectLevel)
@@ -169,8 +174,12 @@ class TylosShipsystem : BaseShipSystemScript() {
 
 
             if (player) {
-                Mouse.setCursorPosition(Global.getSettings().screenWidthPixels.toInt() / 2,
-                    Global.getSettings().screenHeightPixels.toInt() / 2)
+                /*Mouse.setCursorPosition(Global.getSettings().screenWidthPixels.toInt() / 2,
+                    Global.getSettings().screenHeightPixels.toInt() / 2)*/
+
+               /* viewport.isExternalControl = true
+                viewport.set(oldX, oldY, viewport.visibleWidth, viewport.visibleHeight)*/
+
             }
         }
     }

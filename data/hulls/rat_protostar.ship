@@ -1,0 +1,71 @@
+{
+  "hullName": "Protostar",
+  "hullId": "rat_protostar",
+  "hullSize": "FIGHTER",
+  "spriteName": "graphics/ships/exo/rat_protostar.png",
+  "style": "RAT_EXO",
+  "height": 60,
+  "width": 60,
+  "center": [30, 33],
+  "collisionRadius": 25,
+  "shieldCenter": [0, -0],
+  "shieldRadius": 23,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_exogrid",
+    "rat_exo_fighter_ai",
+    "no_weapon_flux"
+  ],
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "SMALL",
+      "type": "UNIVERSAL",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [2, -0]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-10, 8.5],
+      "length": 7,
+      "width": 4,
+      "angle": -180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-10, -8.5],
+      "length": 7,
+      "width": 4,
+      "angle": 180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-12, -0],
+      "length": 10,
+      "width": 6,
+      "angle": -180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    }
+  ],
+  "bounds": [
+    -17.5, 4.5,
+    -10.5, 9,
+    -8.5, 13,
+    4, 17.5,
+    12, 4,
+    12, -4,
+    4, -17.5,
+    -8.5, -13,
+    -10.5, -9,
+    -17.5, -4.5
+  ]
+}

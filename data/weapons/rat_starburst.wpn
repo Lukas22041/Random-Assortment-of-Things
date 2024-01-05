@@ -1,0 +1,40 @@
+{
+	"id":"rat_starburst",
+	"specClass":"projectile",
+	"type":"MISSILE",
+	"size":"MEDIUM",
+	"turretSprite": "graphics/weapons/exo/rat_starburst_turret.png",
+  	"hardpointSprite": "graphics/weapons/exo/rat_starburst_hardpoint.png",
+	"hardpointOffsets":[
+		16, 4,
+		14, 4,
+		15, 2,
+		13, 2,
+
+		13, -1,
+		15, -1,
+		14, -3,
+		16, -3,
+	 ],
+	"turretOffsets":[
+		12, 4,
+		10, 4,
+		11, 2,
+		9, 2,
+
+		9, -1,
+		11, -1,
+		10, -3,
+		12, -3,
+	 ],
+	"hardpointAngleOffsets":[0],
+	"turretAngleOffsets":[0],
+	"barrelMode":"ALTERNATING",
+	"animationType":"SMOKE",
+	"renderHints":[RENDER_LOADED_MISSILES],
+	"interruptibleBurst":false,
+	"displayArcRadius":300,
+	
+	"projectileSpecId":"rat_starburst_missile",
+	"fireSoundTwo":"harpoon_fire",
+}

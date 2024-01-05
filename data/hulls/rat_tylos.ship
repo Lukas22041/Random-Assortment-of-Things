@@ -12,7 +12,8 @@
   "shieldRadius": 93,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_exogrid"
+    "rat_exogrid",
+    "rat_tylos_hullmod"
   ],
   "builtInWeapons": {
     "WS0006": "rat_exo_coil_location"

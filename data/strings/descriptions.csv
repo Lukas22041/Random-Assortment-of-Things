@@ -162,6 +162,9 @@ rat_dawnblade,SHIP,"The pinnacle of exo-tech fighter engineering. Its central ha
 rat_dawnlance,WEAPON,"A weapon specificly designed for exo-tech fighters. Emits a constant and unstable stream of plasma upon its target, dealing detrimental damage towards its armor.",,,,
 rat_dawnbreaker,WEAPON,A micro-launcher designed for exo-tech fighters. Overwhelms any PD-Grid that isnt prepared for its constant array of missiles.,,,,
 ,,,,,,
+rat_protostar,SHIP,"A fighter that has been build around housing the starburst-microlauncher, some may claim its just a microlauncher with engines attached. No matter its construction, it steadily orbits its target and unleashes a swarm of micro-missiles upon them.",,,,
+rat_starburst_fighter,WEAPON,"A heavily modified version of the starburst microlauncher, diminished in size to fit a smaller chassis. Due to this compromise it fails to match the strength of its original, but still stands as a strong piece of ordnance for its fighter.",,,,
+,,,,,,
 rat_thestia,SHIP,"A rather compact carrier, designed to house only a single bay area. The deployed fighters are connected to an experimental device linked with the ships phasegrid, creating what appears to be afterimages that can assist in combat. Not much is understood about the mechanics, and it is still unknown where those ""afterimages"" come from. Some speculate them to be forced in to the sector from a parallel dimension, some asume them to be time-related paradoxes, yet none of those ideas could find any definitive proof. Nonetheless this phenonema gives the ship the ability to severely increase its threat within the span of seconds.",,,,
 rat_tylos,SHIP,"As the latest design in the factions line-up, the Tylos-Class showcases all the extremes researched over dozens of cycles. The technology is used to force specific compartments in to a state of constant superposition, enabling the instant replacement of everything within it at the press of a button. Due to the inherent danger stemming from this tech, the ship has quickly gained a reputation that strikes fear in to any crew that gets assigned to it.",,,,
 rat_tylos_double,SHIP,"
@@ -173,6 +176,8 @@ rat_leanira,SHIP,"The largest battlecarrier within the exo-tech doctrine. Its de
 rat_hyper_dart,WEAPON,"The smaller version of its sibling, the ""H-Javelin"". Developed after the resounding success of its larger brother, made to be able to fullfill the same role on smaller phase-vessels.",,,,
 rat_hyper_javelin,WEAPON,"A unique weapon that integrates the exo-tech phase-grid in to the weapons body. This results in a weapon that excels when combined with the power of a phasecloak, but is rather lackluster without.",,,,
 rat_p_wave_launcher,WEAPON,An evolution of the integrated phase-grids found in other exo-tech weapons. Each warhead contains a small coil that is supercharged by the launchers body while moving through p-space.,,,,
+rat_starburst,WEAPON,"A swarm-type launcher designed to support the fleets front-line from afar, its specs making it an active threat to opponents point-defense and shield systems.",,,,
+,,,,,,
 ,,,,,,
 rat_arkas_launcher_left,WEAPON,"One of several tools assisting the Arkas-Class in its operation. The Callisto DEM enables more pressure against enemy shields, while the Arkas itself can quickly reposition to make advantage of this distraction.",,,,
 rat_arkas_launcher_right,WEAPON,"One of several tools assisting the Arkas-Class in its operation. The Callisto DEM enables more pressure against enemy shields, while the Arkas itself can quickly reposition to make advantage of this distraction.",,,,

@@ -19,6 +19,7 @@ import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
+import java.awt.Color
 
 class ThestiaShipsystem : BaseShipSystemScript() {
 
@@ -89,6 +90,7 @@ class ThestiaShipsystem : BaseShipSystemScript() {
         }
 
         afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
+        var elapsed = afterimageInterval.intervalElapsed()
         for (aftershadow in aftershadows) {
 
 
@@ -113,8 +115,8 @@ class ThestiaShipsystem : BaseShipSystemScript() {
           //  aftershadow.setJitterUnder("rat_system_1", Color(248,172,44, 200), 1f * effectLevel, 10, 1f, 6f)
            // aftershadow.engineController.fadeToOtherColor(this, color.setAlpha(100), color.setAlpha(0), 1f, 1f)
 
-            if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused && aftershadow.isAlive) {
-                AfterImageRenderer.addAfterimageWithSpritepath(aftershadow, color.setAlpha((75 * effectLevel).toInt()), color.setAlpha((0 * effectLevel).toInt()), 1f, 6f, Vector2f().plus(aftershadow.location), original.baseOrModSpec().spriteName)
+            if (elapsed && !Global.getCombatEngine().isPaused && aftershadow.isAlive) {
+                AfterImageRenderer.addAfterimageWithSpritepath(aftershadow, color.setAlpha((125 * effectLevel).toInt()), Color(130,4,189, 0), 1f, 6f, Vector2f().plus(aftershadow.location), original.baseOrModSpec().spriteName)
             }
 
             if (state == ShipSystemStatsScript.State.IN) {
