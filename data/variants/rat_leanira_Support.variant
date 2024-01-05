@@ -1,11 +1,10 @@
 {
     "displayName": "Support",
-    "fluxCapacitors": 5,
-    "fluxVents": 0,
+    "fluxCapacitors": 30,
+    "fluxVents": 6,
     "goalVariant": true,
     "hullId": "rat_leanira",
     "hullMods": [
-        "fluxdistributor",
         "hardenedshieldemitter",
         "targetingunit",
     ],
@@ -18,45 +17,37 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0001": "harpoonpod",
+                "WS0003": "gravitonbeam",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0001": "rat_starburst",
+                "WS0002": "rat_starburst",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0002": "sabotpod",
+                "WS0005": "taclaser",
+                "WS0004": "taclaser",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0003": "phasebeam",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0005": "ioncannon",
-                "WS0004": "ioncannon",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0009": "pdlaser",
-                "WS0008": "pdlaser",
                 "WS0007": "pdlaser",
                 "WS0006": "pdlaser",
             }
         },
     ],
     "wings": [
-        "trident_wing",
-        "trident_wing",
+        "rat_dawnblade_wing",
+        "rat_protostar_wing",
     ],
     "modules": [
         {"APHEIDAS_SLOT": "rat_apheidas_Support"},

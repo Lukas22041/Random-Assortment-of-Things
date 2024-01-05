@@ -829,7 +829,7 @@
 		"defaultRadius":90, # used if radius<0 in addCustomEntity()
 		"nameInText":"station",
 		"shortName":"station",
-		"customDescriptionId":"rat_exoship",
+		"customDescriptionId":"rat_exoship_broken",
 		"interactionImage":"graphics/illustrations/rat_exo_wreckage.jpg",
 		"icon":"graphics/icons/station0.png",
 		"iconWidth":20,
@@ -844,6 +844,9 @@
 		"showNameOnMap":false,
 		"scaleNameWithZoom":false,
 		"scaleIconWithZoom":true,
+		"detectionRange":5000, # must be >0 for discoverable/discoveryXP to be used
+		"discoverable":true,
+		"discoveryXP":500,
 		"tags":["has_interaction_dialog", "neutrino_high"],
 		"layers":[STATIONS], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 		#"pluginClass":"assortment_of_things.exotech.entities.ExoshipEntity",

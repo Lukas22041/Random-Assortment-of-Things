@@ -65,6 +65,13 @@ class ExogridHullmod : BaseHullMod() {
                 var x = sprite.centerX
                 var y = sprite.centerY
 
+                for (weapon in ship.allWeapons) {
+                    if (weapon.isDecorative) {
+                        weapon.sprite.alphaMult = 0f
+                        weapon.sprite.color = Color(0, 0, 0, 0)
+                    }
+                }
+
                 ship.setSprite(Global.getSettings().getAndLoadSprite("graphics/ships/exo/rat_tylos_double.png"))
                 ship.spriteAPI.centerX = x
                 ship.spriteAPI.centerY = y

@@ -1,14 +1,11 @@
 {
     "displayName": "Support",
-    "fluxCapacitors": 0,
-    "fluxVents": 0,
+    "fluxCapacitors": 10,
+    "fluxVents": 4,
     "goalVariant": false,
     "hullId": "rat_apheidas",
     "hullMods": [
-        "fluxbreakers",
         "heavyarmor",
-        "missleracks",
-        "reinforcedhull",
     ],
     "permaMods": [],
     "sMods": [],
@@ -19,23 +16,23 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0003": "lrpdlaser",
-                "WS0002": "lrpdlaser",
-                "WS0004": "lrpdlaser",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0001": "typhoon",
+                "WS0003": "taclaser",
+                "WS0002": "taclaser",
+                "WS0004": "taclaser",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0005": "lrpdlaser",
+                "WS0001": "ionbeam",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "taclaser",
             }
         },
     ],

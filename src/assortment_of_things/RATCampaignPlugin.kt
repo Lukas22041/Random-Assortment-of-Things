@@ -8,6 +8,7 @@ import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
 import assortment_of_things.backgrounds.commander.CommanderStationInteraction
+import assortment_of_things.exotech.interactions.ExoshipWreckageInteraction
 import assortment_of_things.exotech.interactions.exoship.ExoshipInteractions
 import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.relics.RelicsUtils
@@ -30,6 +31,10 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
         if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship") {
             return PluginPick(ExoshipInteractions(), CampaignPlugin.PickPriority.HIGHEST)
+        }
+
+        if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship_broken") {
+            return PluginPick(ExoshipWreckageInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
 

@@ -1,14 +1,43 @@
 {
-  "variantId": "rat_tylos_double_Standard",
-  "hullId": "rat_tylos_double",
-  "displayName": "Standard",
-  "goalVariant": false,
-  "fluxCapacitors": 0,
-  "fluxVents": 0,
-  "quality": 1,
-  "permaMods": [],
-  "hullMods": [],
-  "weaponGroups": [],
-  "modules": [],
-  "wings": []
+    "displayName": "Standard",
+    "fluxCapacitors": 18,
+    "fluxVents": 0,
+    "goalVariant": false,
+    "hullId": "rat_tylos_double",
+    "hullMods": [
+        "heavyarmor",
+        "targetingunit",
+        "unstable_injector",
+    ],
+    "permaMods": [],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_tylos_double_Standard",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_hyper_dart",
+                "WS0002": "rat_hyper_dart",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "rat_p_wave_launcher",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "ioncannon",
+                "WS0004": "ioncannon",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
 }

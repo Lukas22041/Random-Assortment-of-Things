@@ -54,7 +54,7 @@ class GravitationalDynamoCondition : BaseMarketConditionPlugin(), MarketImmigrat
         tooltip.addSpacer(10f)
 
         tooltip.addPara("This planet is located in a system with a Gravitational Dynamo, a Megastructure that can extract energy from gravitational phenonema of the local blackhole. \n\n" +
-                "The Planet is has the necessary infrastructure to receive energy redirected from one at a moments notice.", 0f)
+                "The Planet has the necessary infrastructure to receive energy redirected from one at a moments notice.", 0f)
 
         tooltip.addSpacer(10f)
 

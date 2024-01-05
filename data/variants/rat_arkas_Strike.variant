@@ -1,13 +1,12 @@
 {
     "displayName": "Strike",
-    "fluxCapacitors": 22,
-    "fluxVents": 0,
+    "fluxCapacitors": 23,
+    "fluxVents": 5,
     "goalVariant": true,
     "hullId": "rat_arkas",
     "hullMods": [
-        "fluxdistributor",
         "heavyarmor",
-        "missleracks",
+        "unstable_injector",
     ],
     "permaMods": [],
     "sMods": [],
@@ -18,15 +17,21 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0005": "cyclone",
+                "WS0005": "rat_hyper_javelin",
             }
         },
         {
             "autofire": true,
-            "mode": "ALTERNATING",
+            "mode": "LINKED",
             "weapons": {
-                "WS0003": "sabotpod",
-                "WS0004": "sabotpod",
+                "WS0003": "rat_p_wave_launcher",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0004": "rat_starburst",
             }
         },
         {
@@ -41,24 +46,24 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0001": "phasebeam",
-                "WS0002": "phasebeam",
+                "WS0001": "rat_hyper_dart",
+                "WS0002": "rat_hyper_dart",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0007": "ioncannon",
-                "WS0006": "ioncannon",
+                "WS0011": "ioncannon",
+                "WS0010": "ioncannon",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0011": "pdlaser",
-                "WS0010": "pdlaser",
+                "WS0007": "pdlaser",
+                "WS0006": "pdlaser",
             }
         },
     ],

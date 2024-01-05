@@ -156,6 +156,10 @@ class ExophaseShipsystem : BaseShipSystemScript() {
             return
         }
 
+        for (weapon in ship.allWeapons.filter { it.isDecorative }) {
+            weapon.sprite.color = Color(255, 255, 255, (254 * (1 - ship.phaseCloak.effectLevel)).toInt())
+        }
+
         val speedPercentMod = stats.dynamic.getMod(Stats.PHASE_CLOAK_SPEED_MOD).computeEffective(0f)
         val accelPercentMod = stats.dynamic.getMod(Stats.PHASE_CLOAK_ACCEL_MOD).computeEffective(0f)
         stats.maxSpeed.modifyPercent(id, speedPercentMod * effectLevel)

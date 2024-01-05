@@ -8,6 +8,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipSystemAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberType
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.impl.combat.TemporalShellStats
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
@@ -41,6 +42,8 @@ class TylosShipsystem : BaseShipSystemScript() {
     var afterimageInterval = IntervalUtil(0.05f, 0.05f)
     var empInterval = IntervalUtil(0.1f, 0.2f)
 
+    var killedParent = false
+
     override fun apply(stats: MutableShipStatsAPI, id: String?, state: ShipSystemStatsScript.State, effectLevel: Float) {
         ship = stats.entity as ShipAPI? ?: return
         var system = ship!!.system
@@ -50,6 +53,8 @@ class TylosShipsystem : BaseShipSystemScript() {
             if (!module.isAlive) continue
             var variant = module.variant.clone()
             variant.addTag("tylos_no_refit_sprite")
+            variant.addTag(Tags.UNRECOVERABLE)
+            variant.addTag(Tags.VARIANT_UNBOARDABLE)
 
             //Global.getCombatEngine().removeEntity(module)
             var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
@@ -60,14 +65,24 @@ class TylosShipsystem : BaseShipSystemScript() {
             this.module = newModule
             newModule!!.setCustomData("rat_tylos_parent", ship)
             newModule.captain = ship!!.captain
+
             ship!!.setCustomData("rat_tylos_child", newModule)
 
             //Global.getCombatEngine().removeEntity(newModule)
             obfManager.removeDeployed(newModule as Ship, true)
         }
 
-        var parent = ship!!.customData.get("rat_tylos_parent") as ShipAPI?
 
+
+        var parent = ship!!.customData.get("rat_tylos_parent") as ShipAPI?
+        //Kill parent if its copy dies
+        if (ship!!.hitpoints <= 0 && parent != null) {
+            if (!killedParent) {
+                Global.getCombatEngine().addEntity(parent)
+                parent.location.set(Vector2f(100000f, 100000f))
+                parent.splitShip()
+            }
+        }
 
         if (activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
             activated = false

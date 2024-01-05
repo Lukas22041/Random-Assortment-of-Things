@@ -14,17 +14,24 @@ import assortment_of_things.campaign.scripts.ApplyRATControllerToPlayerFleet
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.ExoshipGenerator
+import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.exotech.scripts.ChangeExoIntelState
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
 import assortment_of_things.snippets.DropgroupTestSnippet
 import assortment_of_things.snippets.ProcgenDebugSnippet
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.FullName
+import com.fs.starfarer.api.impl.campaign.AICoreOfficerPluginImpl
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.HullMods
+import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.util.Misc
@@ -37,7 +44,7 @@ import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import org.lazywizard.lazylib.MathUtils
 import java.util.*
-
+import javax.swing.text.html.HTML.Tag
 
 
 class RATModPlugin : BaseModPlugin() {
@@ -250,10 +257,13 @@ class RATModPlugin : BaseModPlugin() {
         var system = systems.random()
 
         var location = BaseThemeGenerator.getLocations(Random(), system, MathUtils.getRandomNumberInRange(300f, 400f), linkedMapOf(
-            BaseThemeGenerator.LocationType.PLANET_ORBIT to 5f, BaseThemeGenerator.LocationType.IN_ASTEROID_BELT to 1f)).pick()
+            BaseThemeGenerator.LocationType.PLANET_ORBIT to 5f)).pick()
 
-        var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "Exoship Wreckage", "rat_exoship_broken", Factions.NEUTRAL)
+        var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "Exoship Remains", "rat_exoship_broken", Factions.NEUTRAL)
         exoshipEntity.orbit = location.orbit
+
+
+
     }
 
     fun initFrontiers() {
