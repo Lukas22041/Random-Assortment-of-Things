@@ -73,6 +73,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             phantom.setShipSystemDisabled(true)
             phantom.isDefenseDisabled = true
             phantom.alphaMult = effectLevel * 0.05f
+            phantom.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_VENT)
            // phantom.setJitterUnder(this, color.setAlpha(50), 1f * effectLevel, 10, 4f, 14f)
 
             if (phantom.shipTarget == null) {
@@ -84,7 +85,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             }
 
             if (elapsed && !Global.getCombatEngine().isPaused && phantom.isAlive) {
-                AfterImageRenderer.addAfterimage(phantom, color.setAlpha((25 * effectLevel).toInt()), Color(130,4,189, 0), 2f, 0f, Vector2f(phantom.location), false)
+                AfterImageRenderer.addAfterimage(phantom, color.setAlpha((30 * effectLevel).toInt()), Color(130,4,189, 0), 2f, 0f, Vector2f(phantom.location), false)
             }
 
             if (state == ShipSystemStatsScript.State.IN) {
@@ -154,9 +155,13 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         stats.maxTurnRate.modifyFlat("rat_phantom", 30f)
         stats.turnAcceleration.modifyFlat("rat_phantom", 30f)
 
+        stats.timeMult.modifyMult("rat_phantom", 1.1f)
+
         for (i in 0 until ship!!.allWeapons.size) {
             var original = ship!!.allWeapons.getOrNull(i) ?: continue
             var new = phantom!!.allWeapons.getOrNull(i) ?: continue
+
+            new.setRemainingCooldownTo(0.2f)
 
             new.ammo = original.ammo
         }
