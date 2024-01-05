@@ -1,26 +1,18 @@
 {
 	"id":"rat_arkas_system",
-	"type":"ENGINE_MOD",
-	"aiType":"MANEUVERING_JETS",
+	"type":"STAT_MOD",
+	"aiType":"CUSTOM",
+	"aiScript":"assortment_of_things.abyss.shipsystem.ai.TestShipSystemAI",
 	
 	"statsScript":"assortment_of_things.exotech.shipsystems.ArkasShipsystem",
+	"runScriptWhilePaused":true, # only for the player's ship
+	"runScriptWhileIdle":true,  # this means unapply() never gets called
+	"blockActionsWhileChargingDown":false,
 	
-	"engineGlowLengthMult":1,
-	"engineGlowWidthMult":1,
-	"engineGlowGlowMult":2,
+	"canNotCauseOverload":true,
 	
-	"flameoutOnImpactChance":0,
-
-	"clampTurnRateAfter":true,
-	"clampMaxSpeedAfter":false,
-
-	"useSound":"system_plasma_jets",
-	"loopSound":"system_plasma_jets_loop",
-	"outOfUsesSound":"engine_disabled",
-	
-	"aiHints":{
-		"activeSpeedIncrease":75,
-		"burstMovementPotential":0,
-		"averageSpeedIncrease":60,
-	}
+	"fadeActivationSoundOnChargedown":true,
+	"useSound":"system_recall_device",
+	"outOfUsesSound":"gun_out_of_ammo",
+	"deactivateSound":"system_recall_device",
 }

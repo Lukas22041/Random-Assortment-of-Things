@@ -57,6 +57,9 @@ class AfterImageRenderer : BaseEveryFrameCombatPlugin() {
         sprite.color = afterimage.colorIn.interpolateColor(afterimage.colorOut, afterimage.lifetime / afterimage.duration)
         sprite.alphaMult = 1 - afterimage.lifetime / afterimage.duration
         sprite.setAdditiveBlend()
+        if (!afterimage.additive) {
+            sprite.setNormalBlend()
+        }
 
         if (!Global.getCombatEngine().isPaused && afterimage.jitter > 0f) {
             afterimage.actualLoc = MathUtils.getRandomPointInCircle(afterimage.location, afterimage.jitter)
@@ -75,7 +78,8 @@ class AfterImageRenderer : BaseEveryFrameCombatPlugin() {
         val colorIn: Color,
         val colorOut: Color,
         val duration: Float,
-        val jitter: Float
+        val jitter: Float,
+        val additive: Boolean = true
     ) {
         var lifetime = 0f
         var actualLoc = location
@@ -90,14 +94,15 @@ class AfterImageRenderer : BaseEveryFrameCombatPlugin() {
                           colorOut: Color = colorIn,
                           duration: Float,
                           jitter: Float = 0f,
-                          location: Vector2f = Vector2f(ship.location)) = Afterimage(id = Misc.random.nextLong(),
+                          location: Vector2f = Vector2f(ship.location), additive: Boolean = true) = Afterimage(id = Misc.random.nextLong(),
             sprite = Global.getSettings().getSprite(ship.hullSpec.spriteName),
             location = location,
             facing = ship.facing,
             colorIn = colorIn,
             colorOut = colorOut,
             duration = duration,
-            jitter = jitter).also { afterimage ->
+            jitter = jitter,
+            additive = additive).also { afterimage ->
 
                 val sprite = ship.spriteAPI
                 val offsetX = sprite.width / 2 - sprite.centerX

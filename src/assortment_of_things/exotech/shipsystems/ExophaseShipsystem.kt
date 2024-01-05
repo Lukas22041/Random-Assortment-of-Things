@@ -127,6 +127,7 @@ class ExophaseShipsystem : BaseShipSystemScript() {
             return
         }
 
+        if (ship.variant.hasTag("Arkas-Phantom")) return
 
         if (player) {
             maintainStatus(ship, state, effectLevel)

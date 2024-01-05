@@ -40,10 +40,6 @@ class ThestiaShipsystem : BaseShipSystemScript() {
 
         if (activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
             activated = false
-
-            /*for (aftershadow in aftershadows) {
-                aftershadow.hitpoints = 0f
-            }*/
         }
 
         if (!activated && system.state == ShipSystemAPI.SystemState.IN) {
