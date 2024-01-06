@@ -1,10 +1,11 @@
 {
     "displayName": "Standard",
-    "fluxCapacitors": 30,
-    "fluxVents": 7,
+    "fluxCapacitors": 20,
+    "fluxVents": 15,
     "goalVariant": true,
     "hullId": "rat_tylos",
     "hullMods": [
+        "fluxcoil",
         "fluxdistributor",
         "targetingunit",
         "unstable_injector",

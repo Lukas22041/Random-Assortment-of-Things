@@ -1,3 +1,13 @@
+RAT Version 1.9.3
+Save comp with 1.9.0-1.9.2, but not older versions or the 1.9.0 betas.
+
+-> Fixed an issue where the tylos was designated as a cruiser and not destroyer (how did i not notice that)
+-> Fixed Exo-Tech trade thinking you dont have enough tokens if the purchasing cost equals the amount of tokens you have.
+-> Settlement Selection & Icon now renders the planets glow-sprite, if it has one.
+-> Fixed a typo in a description.
+
+
+
 Version 1.9.2
 Save comp with 1.9.0 & 1.9.1, but not older versions or the 1.9.0 betas.
 

@@ -1,8 +1,8 @@
 {
     "displayName": "Standard",
-    "fluxCapacitors": 18,
-    "fluxVents": 0,
-    "goalVariant": false,
+    "fluxCapacitors": 15,
+    "fluxVents": 10,
+    "goalVariant": true,
     "hullId": "rat_tylos_double",
     "hullMods": [
         "heavyarmor",

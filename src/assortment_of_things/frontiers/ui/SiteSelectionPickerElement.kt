@@ -2,6 +2,7 @@ package assortment_of_things.frontiers.ui
 
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.data.SiteData
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
@@ -105,9 +106,20 @@ class SiteSelectionPickerElement(var planet: PlanetAPI, var planetSprite: Sprite
 
         startStencil()
 
+
         planetSprite.alphaMult = alphaMult
         planetSprite.setSize(1024f * 1.25f, 512f * 1.25f)
         planetSprite.renderAtCenter(x + width / 2, y + height / 2)
+
+        var glowTexture = planet.spec.glowTexture
+        if (glowTexture != null) {
+            var glowSprite = Global.getSettings().getAndLoadSprite(glowTexture)
+
+            glowSprite.alphaMult = 0.7f
+            glowSprite.setSize(1024f * 1.25f, 512f * 1.25f)
+            glowSprite.renderAtCenter(x + width / 2, y + height / 2)
+            glowSprite.setAdditiveBlend()
+        }
 
         endStencil()
 

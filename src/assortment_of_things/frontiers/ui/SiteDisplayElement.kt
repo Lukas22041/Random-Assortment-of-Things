@@ -1,6 +1,8 @@
 package assortment_of_things.frontiers.ui
 
 import assortment_of_things.frontiers.SettlementData
+import assortment_of_things.misc.getAndLoadSprite
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.ui.PositionAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -59,6 +61,16 @@ class SiteDisplayElement(var site: SettlementData, var planetSprite: SpriteAPI, 
             planetSprite.alphaMult = alphaMult * 0.2f
             planetSprite.setAdditiveBlend()
             planetSprite.renderAtCenter(loc.x, loc.y)
+        }
+
+        var glowTexture = site.primaryPlanet.spec.glowTexture
+        if (glowTexture != null) {
+            var glowSprite = Global.getSettings().getAndLoadSprite(glowTexture)
+
+            glowSprite.alphaMult = 0.7f
+            glowSprite.setSize(1024f * 1.25f, 512f * 1.25f)
+            glowSprite.renderAtCenter(x + width / 2, y + height / 2)
+            glowSprite.setAdditiveBlend()
         }
 
         endStencil()

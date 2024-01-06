@@ -1,7 +1,7 @@
 {
   "hullName": "Tylos",
   "hullId": "rat_tylos",
-  "hullSize": "CRUISER",
+  "hullSize": "DESTROYER",
   "spriteName": "graphics/ships/exo/rat_tylos.png",
   "style": "RAT_EXO",
   "height": 180,

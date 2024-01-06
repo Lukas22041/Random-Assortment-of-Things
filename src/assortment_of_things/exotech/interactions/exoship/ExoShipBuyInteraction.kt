@@ -99,7 +99,7 @@ class ExoShipBuyInteraction(var exoDialog: ExoshipInteractions, var data: ExoDat
 
                 val tokens = computeValue(cargo)
 
-                if (tokens >= data.tokens && tokens != 0f) {
+                if (tokens > data.tokens && tokens != 0f) {
                     exoDialog.textPanel.addPara("Not enough tokens to finish transaction.", Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
                     return
                 }
