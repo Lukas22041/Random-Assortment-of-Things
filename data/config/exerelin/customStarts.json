@@ -7,5 +7,13 @@
 			"desc":"Your fleet made the risky move to explore the unknown, venturing in to the depths.",
 			"className":"assortment_of_things.abyss.misc.AbyssStart",
 		},
+		
+		{
+			"id":"rat_exoStart",
+			"name":"Exo-Tech Partner",
+			"difficulty":"Easy",
+			"desc":"Your fleet is a trusted partner of the Exo-Tech Corp.",
+			"className":"assortment_of_things.exotech.misc.ExoStart",
+		},
 	],
 }

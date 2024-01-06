@@ -80,7 +80,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
                 phantom.giveCommand(ShipCommand.ACCELERATE, null, 0)
             }
 
-            if (MathUtils.getDistance(ship!!, phantom) <= ship!!.collisionRadius * 1.2) {
+            if (MathUtils.getDistance(ship!!, phantom) <= ship!!.collisionRadius) {
                 phantom.isHoldFireOneFrame = true
             }
 
@@ -89,6 +89,10 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             }
 
             if (state == ShipSystemStatsScript.State.IN) {
+                for (weapon in ship!!.allWeapons) {
+                    weapon.setForceNoFireOneFrame(true)
+                }
+
                 phantom.isHoldFireOneFrame = true
                 var elapsed = Global.getCombatEngine().elapsedInLastFrame
                 var velocity = MathUtils.getPointOnCircumference(Vector2f(), 300 - (250f * effectLevel), Misc.getAngleInDegrees(ship!!.location, phantom.location))
@@ -131,9 +135,17 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
     fun spawnPhantom() : ShipAPI {
         var variant = ship!!.variant.clone()
+
+        for (slotID in variant.fittedWeaponSlots) {
+            var slot = variant.getSlot(slotID) ?: continue
+            if (slot.isBuiltIn) {
+                variant.clearSlot(slotID)
+            }
+        }
+
         variant.addTag("Arkas-Phantom")
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
-        var phantom = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, 1f, Vector2f(), ship!!.facing)
+        var phantom = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, 1f, Vector2f(100000f, 100000f), ship!!.facing)
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
 
         var manager = Global.getCombatEngine().getFleetManager(phantom!!.owner)
@@ -163,7 +175,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             var new = phantom!!.allWeapons.getOrNull(i) ?: continue
 
             new.setRemainingCooldownTo(0.2f)
-
+            new.setForceNoFireOneFrame(true)
             //new.ammo = original.ammo
         }
 

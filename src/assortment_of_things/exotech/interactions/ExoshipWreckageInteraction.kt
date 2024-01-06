@@ -2,6 +2,7 @@ package assortment_of_things.exotech.interactions
 
 import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.misc.RATInteractionPlugin
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.fixVariant
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
@@ -13,9 +14,12 @@ import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 import com.fs.starfarer.api.loading.Description
+import com.fs.starfarer.api.loading.VariantSource
+import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.fadeAndExpire
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.random.asJavaRandom
 
 class ExoshipWreckageInteraction : RATInteractionPlugin() {
@@ -122,8 +126,22 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
         for (member in fleet.fleetData.membersListCopy) {
             member.fixVariant()
             member.variant.addPermaMod(HullMods.AUTOMATED)
+            member.variant.addTag(Tags.TAG_AUTOMATED_NO_PENALTY)
             member.repairTracker.cr = 0.85f
             member.variant.addTag(Tags.TAG_NO_AUTOFIT)
+
+            for (slot in ArrayList(member.variant.moduleSlots)) {
+                var module = member.variant.getModuleVariant(slot) ?: continue
+
+                var variant = module.clone();
+                variant.originalVariant = null;
+                variant.hullVariantId = Misc.genUID()
+                variant.source = VariantSource.REFIT
+                member.variant.setModuleVariant(slot, variant)
+
+                variant.addPermaMod(HullMods.AUTOMATED)
+                variant.addTag(Tags.TAG_AUTOMATED_NO_PENALTY)
+            }
 
             if (member != tylos1 && member != arkas) {
                 member.variant.addTag(Tags.UNRECOVERABLE)
@@ -137,10 +155,10 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
         }
 
         arkas.variant.addTag(Tags.VARIANT_ALWAYS_RECOVERABLE)
-        arkas.variant.addTag(Tags.TAG_AUTOMATED_NO_PENALTY)
+        //arkas.variant.addTag(Tags.TAG_AUTOMATED_NO_PENALTY)
         arkas.variant.addTag(Tags.SHIP_RECOVERABLE)
         tylos1.variant.addTag(Tags.VARIANT_ALWAYS_RECOVERABLE)
-        tylos1.variant.addTag(Tags.TAG_AUTOMATED_NO_PENALTY)
+        //tylos1.variant.addTag(Tags.TAG_AUTOMATED_NO_PENALTY)
         tylos1.variant.addTag(Tags.SHIP_RECOVERABLE)
 
         fleet.inflateIfNeeded()

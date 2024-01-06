@@ -9,6 +9,7 @@ import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.CargoPickerListener
 import com.fs.starfarer.api.campaign.CargoStackAPI
 import com.fs.starfarer.api.campaign.SpecialItemData
+import com.fs.starfarer.api.campaign.TextPanelAPI
 import com.fs.starfarer.api.campaign.impl.items.*
 import com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
@@ -22,6 +23,52 @@ class ExoShipBuyInteraction(var exoDialog: ExoshipInteractions, var data: ExoDat
     var faction = exoDialog.faction
 
     var shipData = ExoUtils.getExoshipData(exoDialog.interactionTarget)
+
+
+    companion object {
+        fun isRareTech(stack: CargoStackAPI) : Boolean {
+
+            if (stack.isCommodityStack) {
+                var spec = stack.resourceIfResource
+                if (spec.hasTag("mission_item")) return false
+
+                if (spec.hasTag("ai_core") || spec.demandClass == "ai_cores") return true
+            }
+
+            if (stack.isSpecialStack) {
+                var spec = stack.specialItemSpecIfSpecial
+                var plugin = stack.plugin
+                if (spec.hasTag("mission_item")) return false
+
+                if (spec.hasTag("mission_item")) return false
+
+                if (spec.id == "rat_alteration_install") return true
+
+                if (plugin is MultiBlueprintItemPlugin || plugin is ShipBlueprintItemPlugin || plugin is WeaponBlueprintItemPlugin
+                    || plugin is FighterBlueprintItemPlugin ||plugin is IndustryBlueprintItemPlugin) return true
+
+                if (ItemEffectsRepo.ITEM_EFFECTS.contains(spec.id)) return true
+
+            }
+
+            return false
+        }
+
+        fun unlockExoIntel(textPanel: TextPanelAPI?, important: Boolean) {
+            for (exoship in ExoUtils.getExoData().exoships) {
+                var intel = ExoshipIntel(exoship)
+                Global.getSector().intelManager.addIntel(intel)
+
+                if (important) {
+                    intel.isImportant = true
+                }
+
+                if (textPanel != null) {
+                    Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)
+                }
+            }
+        }
+    }
 
     fun buyTech() {
 
@@ -149,11 +196,12 @@ class ExoShipBuyInteraction(var exoDialog: ExoshipInteractions, var data: ExoDat
         exoDialog.textPanel.addPara("If you want to request certain Exo-Tech grade equipment for your fleet, contact me through the network as usual. " +
                 "Do not expect to have it easier now though, all future trades will still require additional tokens.\"")
 
-        for (exoship in data.exoships) {
+        /*for (exoship in data.exoships) {
             var intel = ExoshipIntel(exoship)
             Global.getSector().intelManager.addIntel(intel)
             Global.getSector().intelManager.addIntelToTextPanel(intel, exoDialog.textPanel)
-        }
+        }*/
+        unlockExoIntel(exoDialog.textPanel, false)
 
         exoDialog.createOption("Back") {
             exoDialog.clearOptions()
@@ -163,35 +211,7 @@ class ExoShipBuyInteraction(var exoDialog: ExoshipInteractions, var data: ExoDat
         data.hasPartnership = true
     }
 
-    companion object {
-        fun isRareTech(stack: CargoStackAPI) : Boolean {
 
-            if (stack.isCommodityStack) {
-                var spec = stack.resourceIfResource
-                if (spec.hasTag("mission_item")) return false
-
-                if (spec.hasTag("ai_core") || spec.demandClass == "ai_cores") return true
-            }
-
-            if (stack.isSpecialStack) {
-                var spec = stack.specialItemSpecIfSpecial
-                var plugin = stack.plugin
-                if (spec.hasTag("mission_item")) return false
-
-                if (spec.hasTag("mission_item")) return false
-
-                if (spec.id == "rat_alteration_install") return true
-
-                if (plugin is MultiBlueprintItemPlugin || plugin is ShipBlueprintItemPlugin || plugin is WeaponBlueprintItemPlugin
-                    || plugin is FighterBlueprintItemPlugin ||plugin is IndustryBlueprintItemPlugin) return true
-
-                if (ItemEffectsRepo.ITEM_EFFECTS.contains(spec.id)) return true
-
-            }
-
-            return false
-        }
-    }
 
     fun computeValue(cargo: CargoAPI): Float {
 

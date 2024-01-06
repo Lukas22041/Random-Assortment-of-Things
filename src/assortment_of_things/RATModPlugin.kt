@@ -34,6 +34,7 @@ import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.EntityLocation
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -252,6 +253,14 @@ class RATModPlugin : BaseModPlugin() {
     }
 
     fun generateBrokenExoship() {
+        var location = findBrokenLocation()
+        var system = location.orbit.focus.starSystem
+
+        var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "Exoship Remains", "rat_exoship_broken", Factions.NEUTRAL)
+        exoshipEntity.orbit = location.orbit
+    }
+
+    fun findBrokenLocation() : EntityLocation {
         var systems = Global.getSector().starSystems.filter { it.planets.filter { !it.isStar }.isNotEmpty() && it.hasBlackHole() && (it.hasTag(Tags.THEME_RUINS) || it.hasTag(Tags.THEME_MISC)) }
         if (systems.isEmpty()) {
             systems = Global.getSector().starSystems.filter { it.planets.filter { !it.isStar }.isNotEmpty() && (it.hasTag(Tags.THEME_RUINS) || it.hasTag(Tags.THEME_MISC)) }
@@ -262,10 +271,13 @@ class RATModPlugin : BaseModPlugin() {
         var system = systems.random()
 
         var location = BaseThemeGenerator.getLocations(Random(), system, MathUtils.getRandomNumberInRange(200f, 300f), linkedMapOf(
-            BaseThemeGenerator.LocationType.PLANET_ORBIT to 10f, BaseThemeGenerator.LocationType.NEAR_STAR to 0.1f)).pick()
+            BaseThemeGenerator.LocationType.PLANET_ORBIT to 10f, BaseThemeGenerator.LocationType.NEAR_STAR to 1f, BaseThemeGenerator.LocationType.STAR_ORBIT to 1f)).pick()
 
-        var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "Exoship Remains", "rat_exoship_broken", Factions.NEUTRAL)
-        exoshipEntity.orbit = location.orbit
+        if (location?.orbit == null) {
+            location = findBrokenLocation()
+        }
+
+        return location
     }
 
     fun initFrontiers() {

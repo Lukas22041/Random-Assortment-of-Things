@@ -7,12 +7,10 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.combat.ShipCommand
 import com.fs.starfarer.api.combat.ShipHullSpecAPI.ShipTypeHints
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.lazywizard.lazylib.MathUtils
 import java.awt.Color
 
 class ExogridHullmod : BaseHullMod() {
@@ -24,6 +22,27 @@ class ExogridHullmod : BaseHullMod() {
         }
         else {
             stats.variant.addTag(Tags.VARIANT_UNRESTORABLE)
+        }
+
+
+        if (stats.variant.baseOrModSpec().hullId == "rat_tylos") {
+            var module = stats.variant.moduleSlots.map { stats.variant.getModuleVariant(it) }.firstOrNull()
+            if (module != null) {
+
+                for (mod in ArrayList(module.permaMods)) {
+                    var spec = Global.getSettings().getHullModSpec(mod)
+                    if (spec.hasTag("dmod")) {
+                        module.removePermaMod(mod)
+                    }
+                }
+
+                for (mod in ArrayList(stats.variant.permaMods)) {
+                    var spec = Global.getSettings().getHullModSpec(mod)
+                    if (spec.hasTag("dmod")) {
+                        module.addPermaMod(mod)
+                    }
+                }
+            }
         }
 
         /*if (stats.fleetMember?.fleetData?.fleet?.faction?.id == "player") {
@@ -58,6 +77,7 @@ class ExogridHullmod : BaseHullMod() {
         if (ship.shield != null) {
             ship.shield.setRadius(ship.shieldRadiusEvenIfNoShield, "graphics/fx/rat_exo_shields256.png", "graphics/fx/rat_exo_shields256ring.png")
         }
+
 
         if (ship.baseOrModSpec().hullId == "rat_tylos_double") {
             if (!ship.variant.hasTag("tylos_no_refit_sprite")) {

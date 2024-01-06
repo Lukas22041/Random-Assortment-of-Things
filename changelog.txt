@@ -1,4 +1,20 @@
-RAT Version 1.9.1
+Version 1.9.2
+Save comp with 1.9.0 & 1.9.1, but not older versions or the 1.9.0 betas.
+
+-> Added an Exo-Tech custom start.
+-> Increased the flux capacity of the arkas-class.
+-> Fixed issue where the arkas shipsystem would spawn projectiles at a random location on activation.
+-> The tylos now changes back to its base state before dying to avoid issues.
+-> Arkas Phantoms no longer copy its inbuilt weapons as it felt a bit to spam inducing.
+-> The 2nd tylos state combat readiness is now based on the initial combat readiness of the 1st state, instead of always being 100%.
+-> Fixed a certain version of the tylos missing a hullmod.
+-> Fixed the 2nd state of the tylos not sharing the ships dmods.
+-> Another attempt at fixing a crash during procgen.
+-> Fixed an issue that caused lag after the tylos was disabled.
+
+
+
+Version 1.9.1
 Save comp with 1.9.0, but not older versions or the 1.9.0 betas.
 
 -> Fixed crash during procgen.

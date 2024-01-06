@@ -3,10 +3,8 @@ package assortment_of_things.exotech.shipsystems
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.misc.GraphicLibEffects
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.MutableShipStatsAPI
-import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.combat.ShipSystemAPI
-import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
@@ -25,7 +23,7 @@ import java.awt.Color
 import java.util.*
 
 
-class TylosShipsystem : BaseShipSystemScript() {
+class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener {
 
     var ship: ShipAPI? = null
     val color = Color(248,172,44, 255)
@@ -46,6 +44,10 @@ class TylosShipsystem : BaseShipSystemScript() {
         var system = ship!!.system
         var player = ship == Global.getCombatEngine().playerShip
 
+        if (!ship!!.hasListenerOfClass(this::class.java)) {
+            ship!!.addListener(this)
+        }
+
         for (module in ship!!.childModulesCopy) {
             if (!module.isAlive) continue
             var variant = module.variant.clone()
@@ -58,7 +60,9 @@ class TylosShipsystem : BaseShipSystemScript() {
             var obfManager = manager as CombatFleetManager
             obfManager.removeDeployed(module as Ship, true)
 
-            var newModule = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, 1f, ship!!.location, ship!!.facing)
+            Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
+            var newModule = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, ship!!.location, ship!!.facing)
+            Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
             this.module = newModule
             newModule!!.setCustomData("rat_tylos_parent", ship)
             newModule.captain = ship!!.captain
@@ -70,14 +74,20 @@ class TylosShipsystem : BaseShipSystemScript() {
         }
 
         var parent = ship!!.customData.get("rat_tylos_parent") as ShipAPI?
+
         //Kill parent if its copy dies
-        if (ship!!.hitpoints <= 0 && parent != null) {
+        //Went for another solution//
+        /*if (ship!!.hitpoints <= 0 && parent != null) {
             if (!killedOther) {
+                killedOther = true
                 Global.getCombatEngine().addEntity(parent)
                 parent.location.set(Vector2f(100000f, 100000f))
                 parent.splitShip()
+                var manager = Global.getCombatEngine().getFleetManager(parent!!.owner)
+                var obfManager = manager as CombatFleetManager
+                obfManager.removeDeployed(parent as Ship, true)
             }
-        }
+        }*/
 
         if (activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
             activated = false
@@ -101,6 +111,28 @@ class TylosShipsystem : BaseShipSystemScript() {
 
         ship!!.engineController.fadeToOtherColor(this, color, Color(0, 0, 0, 0), effectLevel, 0.67f)
         ship!!.engineController.extendFlame(this, 1f * effectLevel, 1f * effectLevel, 0f * effectLevel)
+
+
+        if (ship!!.hasTag("rat_tylos_deathtrigger") && !system.isActive && module != null) {
+
+            ship!!.phaseCloak.forceState(ShipSystemAPI.SystemState.COOLDOWN, 1f)
+            ship!!.isDefenseDisabled = true
+
+            var manager = Global.getCombatEngine().getFleetManager(module!!.owner)
+            var obfManager = manager as CombatFleetManager
+            obfManager.removeDeployed(module as Ship, true)
+
+          /*  Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
+            module!!.addTag("do_not_trigger")
+            module!!.location.set(Vector2f(10000f, 10000f))
+            Global.getCombatEngine().applyDamage(module, module!!.location, 100000f, DamageType.ENERGY, 1000f, true, false, true )
+            Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
+*/
+            Global.getCombatEngine().applyDamage(ship, ship!!.location, 100000f, DamageType.ENERGY, 1000f, true, false, true )
+
+            //ship!!.splitShip()
+            ship!!.tags.remove("rat_tylos_deathtrigger")
+        }
 
         if (system.isActive) {
 
@@ -206,8 +238,10 @@ class TylosShipsystem : BaseShipSystemScript() {
         other.location.set(current.location)
        // other.hitpoints = current.hitpoints
 
-        var hpPercent = current.hitpoints / current.maxHitpoints
-        other.hitpoints = other.maxHitpoints * hpPercent
+        if (!ship!!.hasTag("rat_tylos_deathtrigger")) {
+            var hpPercent = current.hitpoints / current.maxHitpoints
+            other.hitpoints = other.maxHitpoints * hpPercent
+        }
 
         var hardFluxPercent = current.hardFluxLevel
         var softFluxPercent = current.fluxLevel
@@ -314,6 +348,27 @@ class TylosShipsystem : BaseShipSystemScript() {
         ship.owner = owner
         ship.shipAI.forceCircumstanceEvaluation()
         return ship
+    }
+
+
+    override fun notifyAboutToTakeHullDamage(param: Any?, ship: ShipAPI?,  point: Vector2f?, damageAmount: Float): Boolean {
+
+        if (ship!!.hasTag("rat_tylos_deathtrigger") && ship.system.isActive) {
+            return true
+        }
+
+
+        var parent = ship!!.customData.get("rat_tylos_parent") as ShipAPI? ?: return false
+
+        if (ship.hitpoints - damageAmount <= 0 && !ship.hasTag("do_not_trigger") && ship.system.state != ShipSystemAPI.SystemState.IN) {
+            parent.addTag("rat_tylos_deathtrigger")
+            ship.phaseCloak.forceState(ShipSystemAPI.SystemState.COOLDOWN, 1f)
+            ship.isDefenseDisabled = true
+            ship.system.forceState(ShipSystemAPI.SystemState.IN, 0f)
+            return true
+        }
+
+        return false
     }
 
 }
