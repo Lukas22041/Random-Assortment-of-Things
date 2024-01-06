@@ -106,6 +106,10 @@ class TylosShipsystem : BaseShipSystemScript() {
 
             var cloaked = ship!!.phaseCloak.state == ShipSystemAPI.SystemState.ACTIVE || ship!!.phaseCloak.state == ShipSystemAPI.SystemState.IN
 
+            for (weapon in ship!!.allWeapons) {
+                weapon.setForceNoFireOneFrame(true)
+            }
+
             afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
             if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
             {
@@ -248,6 +252,10 @@ class TylosShipsystem : BaseShipSystemScript() {
             setPhase(module!!, ship!!)
         }
 
+        for (weapon in module!!.allWeapons) {
+            weapon.setForceNoFireOneFrame(true)
+        }
+
         engine.removeEntity(ship)
         /*var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
         var obfManager = manager as CombatFleetManager
@@ -269,6 +277,10 @@ class TylosShipsystem : BaseShipSystemScript() {
         var cloaked = ship!!.phaseCloak.state == ShipSystemAPI.SystemState.ACTIVE || ship!!.phaseCloak.state == ShipSystemAPI.SystemState.IN
         if (cloaked) {
             setPhase(parent, ship!!)
+        }
+
+        for (weapon in parent.allWeapons) {
+            weapon.setForceNoFireOneFrame(true)
         }
 
         engine.removeEntity(ship)

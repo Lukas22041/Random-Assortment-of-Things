@@ -43,6 +43,8 @@ import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import org.lazywizard.lazylib.MathUtils
+import java.lang.Exception
+import java.lang.NullPointerException
 import java.util.*
 import javax.swing.text.html.HTML.Tag
 
@@ -254,16 +256,16 @@ class RATModPlugin : BaseModPlugin() {
         if (systems.isEmpty()) {
             systems = Global.getSector().starSystems.filter { it.planets.filter { !it.isStar }.isNotEmpty() && (it.hasTag(Tags.THEME_RUINS) || it.hasTag(Tags.THEME_MISC)) }
         }
+        if (systems.isEmpty()) {
+            systems = Global.getSector().starSystems
+        }
         var system = systems.random()
 
-        var location = BaseThemeGenerator.getLocations(Random(), system, MathUtils.getRandomNumberInRange(300f, 400f), linkedMapOf(
-            BaseThemeGenerator.LocationType.PLANET_ORBIT to 5f)).pick()
+        var location = BaseThemeGenerator.getLocations(Random(), system, MathUtils.getRandomNumberInRange(200f, 300f), linkedMapOf(
+            BaseThemeGenerator.LocationType.PLANET_ORBIT to 10f, BaseThemeGenerator.LocationType.NEAR_STAR to 0.1f)).pick()
 
         var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "Exoship Remains", "rat_exoship_broken", Factions.NEUTRAL)
         exoshipEntity.orbit = location.orbit
-
-
-
     }
 
     fun initFrontiers() {

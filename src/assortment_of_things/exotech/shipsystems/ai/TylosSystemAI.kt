@@ -52,11 +52,7 @@ class TylosSystemAI : ShipSystemAIScript {
                 wantsToSwitch = true
             }
 
-            //Dont even consider switching for the other conditions if the other ship wouldnt be in range
-            if ((isInRange && !isOtherInRange)) {
-                resetInterval()
-                return
-            }
+
 
             if (!isInRange && !isOtherInRange) {
                 if ((!hasSO && otherHasSO)) {
@@ -81,6 +77,12 @@ class TylosSystemAI : ShipSystemAIScript {
                 }
             }
 
+            //Dont even consider switching for the other conditions if the other ship wouldnt be in range and it doesnt wanna swap yet
+            if (!wantsToSwitch && isInRange && !isOtherInRange) {
+                resetInterval()
+                return
+            }
+
             //Switch on an interval randomly if both are in range
             enoughTimePassedInterval.advance(amount)
             if (enoughTimePassedInterval.intervalElapsed()) enoughTimePassed = true
@@ -92,7 +94,13 @@ class TylosSystemAI : ShipSystemAIScript {
             }
         }
 
+        //Switch if running out of PPT
+        if (ship!!.peakTimeRemaining <= 1) wantsToSwitch = true
+        if (ship!!.currentCR <= 0.4f) wantsToSwitch = true
 
+        //Dont ever switch if the other ship ran out of PPT
+        if (other.peakTimeRemaining <= 1) wantsToSwitch = false
+        if (other!!.currentCR <= 0.4f) wantsToSwitch = false
 
         //interval has to be advancing constantly, resets if none of the conditions makes the ship want to switch
         if (!wantsToSwitch) {

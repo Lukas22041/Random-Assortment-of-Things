@@ -1,3 +1,13 @@
+RAT Version 1.9.1
+Save comp with 1.9.0, but not older versions or the 1.9.0 betas.
+
+-> Fixed crash during procgen.
+-> Fixed an issue where the Dawnblades weapons ranges were mismatched, causing its beam to sometimes not fire.
+-> Fixed some weapons not being able to autofire after using the tylos shipsystem.
+-> The Tylos system AI will no longer switch if the other states CR or PPT is to low.
+
+
+
 Version 1.9.0
 Not save compatible with neither prior versions nor the 1.9.0 beta.
 
