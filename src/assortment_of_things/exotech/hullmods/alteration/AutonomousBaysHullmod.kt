@@ -83,12 +83,37 @@ class AutonomousBaysHullmod : BaseAlteration() {
     }
 
     override fun canInstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return member!!.baseOrModSpec().fighterBays != 0
+
+        var builtIns = 0
+
+        for (i in 0 until member!!.stats.numFighterBays.modifiedValue.toInt()) {
+            var wingID = variant!!.wings.getOrNull(i) ?: continue
+            var isBuiltin = !variant.nonBuiltInWings.contains(wingID)
+            if (isBuiltin) {
+                builtIns++
+            }
+        }
+
+        return member!!.baseOrModSpec().fighterBays != 0 && builtIns != member.stats.numFighterBays.modifiedValue.toInt()
     }
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?, member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
         if (member!!.baseOrModSpec().fighterBays == 0) {
             tooltip!!.addNegativePara("Can only be installed on ships that can deploy fighters even without installing other modifications.")
+        }
+
+        var builtIns = 0
+
+        for (i in 0 until member!!.stats.numFighterBays.modifiedValue.toInt()) {
+            var wingID = variant!!.wings.getOrNull(i) ?: continue
+            var isBuiltin = !variant.nonBuiltInWings.contains(wingID)
+            if (isBuiltin) {
+                builtIns++
+            }
+        }
+
+        if (builtIns == member.stats.numFighterBays.modifiedValue.toInt()) {
+            tooltip!!.addNegativePara("Can not be installed on ships that only have built-in fighters.")
         }
     }
 
