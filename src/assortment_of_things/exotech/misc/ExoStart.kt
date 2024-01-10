@@ -155,6 +155,7 @@ class ExoStart : CustomStart() {
 
             var player = Global.getSector().playerFleet.commanderStats
             var plugin = Global.getSettings().levelupPlugin
+            player.addPoints(1)
             for (i in 0 until 2) {
                 var amount = plugin.getXPForLevel(Math.min(plugin.getMaxLevel(), player.getLevel() + 1)) - player.getXP();
                 var added = Math.min(amount, plugin.getXPForLevel(plugin.getMaxLevel()))

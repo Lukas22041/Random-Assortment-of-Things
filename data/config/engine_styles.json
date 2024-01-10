@@ -102,7 +102,7 @@
 		"contrailMaxSpeedMult":0f,
 		"contrailAngularVelocityMult":0f,
 		"contrailColor":[248,172,44,0],
-		"contrailCampaignColor":[248,172,44,75],
+		"contrailCampaignColor":[248,172,44,25],
 		"type":"GLOW" # GLOW or SMOKE
 	},
 }

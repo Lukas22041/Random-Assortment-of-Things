@@ -114,7 +114,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
                 phantom.velocity.set(Vector2f())
                 phantom.shipAI = null
 
-                var distance = phantom.customData.get("rat_phantom_distance") as Float?: 0f
+                var distance = phantom.customData.get("rat_phantom_distance") as Float? ?: 0f
                 var angle =  Misc.getAngleInDegrees(ship!!.location, phantom.location)
                 var location = MathUtils.getPointOnCircumference(ship!!.location, distance * effectLevel, angle)
                 phantom.location.set(location)
