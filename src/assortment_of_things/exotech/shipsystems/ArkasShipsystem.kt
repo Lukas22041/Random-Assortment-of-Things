@@ -199,7 +199,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
 
     override fun notifyAboutToTakeHullDamage(param: Any?,  ship: ShipAPI?, point: Vector2f?,damageAmount: Float): Boolean {
-
+        
         if (param is ShipAPI) {
             if (param.variant.hasTag("Arkas-Phantom")) {
                 return false
@@ -207,5 +207,12 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         }
 
         return false
+    }
+
+    override fun unapply(stats: MutableShipStatsAPI?, id: String?) {
+        for (phantom in ArrayList(phantoms)) {
+            Global.getCombatEngine().removeEntity(phantom)
+            phantoms.remove(phantom)
+        }
     }
 }

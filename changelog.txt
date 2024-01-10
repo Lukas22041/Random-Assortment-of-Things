@@ -1,4 +1,15 @@
-RAT Version 1.9.3
+Version 1.9.4
+Save comp with 1.9.0-1.9.3, but not older versions or the 1.9.0 betas.
+
+-> Fixed the Exo-Tech custom start giving 1 less skillpoint than it should.
+-> Fixed an issue where the "Autonomous Bays" alteration can be installed on ships with only built-in fighters.
+-> Fixed a bug where the Arkas wouldnt despawn its phantoms if it exited the fight through phase-anchor.
+-> Fixed an issue that would cause the the tylos to not actually swap to its base state on death.
+-> Fixed an issue that caused the tylos to not be able to receive commands in the 2nd state. This causes another issue of the 2nd state being visible in the deployment window, but whatever.
+
+
+
+Version 1.9.3
 Save comp with 1.9.0-1.9.2, but not older versions or the 1.9.0 betas.
 
 -> Fixed an issue where the tylos was designated as a cruiser and not destroyer (how did i not notice that)

@@ -2,12 +2,14 @@ package assortment_of_things.exotech.shipsystems
 
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.misc.GraphicLibEffects
+import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
+import com.fs.starfarer.api.mission.FleetSide
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
@@ -69,8 +71,8 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
             ship!!.setCustomData("rat_tylos_child", newModule)
 
-            //Global.getCombatEngine().removeEntity(newModule)
-            obfManager.removeDeployed(newModule as Ship, true)
+            Global.getCombatEngine().removeEntity(newModule)
+            //obfManager.removeDeployed(newModule as Ship, true)
         }
 
         var parent = ship!!.customData.get("rat_tylos_parent") as ShipAPI?
@@ -112,6 +114,12 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         ship!!.engineController.fadeToOtherColor(this, color, Color(0, 0, 0, 0), effectLevel, 0.67f)
         ship!!.engineController.extendFlame(this, 1f * effectLevel, 1f * effectLevel, 0f * effectLevel)
 
+        if (ship!!.hitpoints <= 0f && module != null) {
+            var manager = Global.getCombatEngine().getFleetManager(module!!.owner)
+            var obfManager = manager as CombatFleetManager
+            obfManager.removeDeployed(module as Ship, true)
+            module = null
+        }
 
         if (ship!!.hasTag("rat_tylos_deathtrigger") && !system.isActive && module != null) {
 
@@ -121,6 +129,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             var manager = Global.getCombatEngine().getFleetManager(module!!.owner)
             var obfManager = manager as CombatFleetManager
             obfManager.removeDeployed(module as Ship, true)
+            module = null
 
           /*  Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
             module!!.addTag("do_not_trigger")
@@ -277,6 +286,18 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
         module!!.isHoldFireOneFrame = true
         engine.addEntity(module)
+
+        //Copy over assignments from previous ship & remove it from the old one
+        var fleetMananger = engine.getFleetManager(ship!!.owner)
+        var taskManager = fleetMananger.getTaskManager(false)
+        var assignment = taskManager.getAssignmentFor(ship)
+        if (assignment != null) {
+           // var new = taskManager.createAssignment(assignment.type, assignment.target, false)
+            taskManager.giveAssignment(fleetMananger.getDeployedFleetMember(module), assignment, false)
+            ReflectionUtils.invoke("cancelDirectOrdersForMember", taskManager, fleetMananger.getDeployedFleetMember(ship))
+        }
+
+
         if (ship == Global.getCombatEngine().playerShip) {
             engine.setPlayerShipExternal(module)
         }
@@ -302,8 +323,22 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         //parent.system.cooldownRemaining = 5f
         parent.system.forceState(ShipSystemAPI.SystemState.OUT, 0f)
 
+
+
         parent.isHoldFireOneFrame = true
         engine.addEntity(parent)
+
+        //Copy over assignments from previous ship & remove it from the old one
+        var fleetMananger = engine.getFleetManager(ship!!.owner)
+        var taskManager = fleetMananger.getTaskManager(false)
+        var assignment = taskManager.getAssignmentFor(ship)
+        if (assignment != null) {
+            //var new = taskManager.createAssignment(assignment.type, assignment.target, false)
+            taskManager.giveAssignment(fleetMananger.getDeployedFleetMember(parent), assignment, false)
+            ReflectionUtils.invoke("cancelDirectOrdersForMember", taskManager, fleetMananger.getDeployedFleetMember(ship))
+        }
+
+
         if (ship == Global.getCombatEngine().playerShip) {
             engine.setPlayerShipExternal(parent)
         }
@@ -316,6 +351,8 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         for (weapon in parent.allWeapons) {
             weapon.setForceNoFireOneFrame(true)
         }
+
+
 
         engine.removeEntity(ship)
        /* var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
@@ -360,11 +397,14 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
         var parent = ship!!.customData.get("rat_tylos_parent") as ShipAPI? ?: return false
 
-        if (ship.hitpoints - damageAmount <= 0 && !ship.hasTag("do_not_trigger") && ship.system.state != ShipSystemAPI.SystemState.IN) {
+        if (ship.hitpoints - damageAmount <= 0 && !ship.hasTag("do_not_trigger")) {
             parent.addTag("rat_tylos_deathtrigger")
             ship.phaseCloak.forceState(ShipSystemAPI.SystemState.COOLDOWN, 1f)
             ship.isDefenseDisabled = true
-            ship.system.forceState(ShipSystemAPI.SystemState.IN, 0f)
+
+            if (ship.system.state != ShipSystemAPI.SystemState.IN) {
+                ship.system.forceState(ShipSystemAPI.SystemState.IN, 0f)
+            }
             return true
         }
 
