@@ -66,7 +66,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
         afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
         var elapsed = afterimageInterval.intervalElapsed()
-        for (phantom in phantoms) {
+        for (phantom in ArrayList(phantoms)) {
 
             phantom.phaseCloak.forceState(ShipSystemAPI.SystemState.IDLE, 0f)
             phantom.collisionClass = CollisionClass.NONE
@@ -129,6 +129,13 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
             if (state == ShipSystemStatsScript.State.COOLDOWN) {
                 Global.getCombatEngine().removeEntity(phantom)
+                for (wing in phantom.allWings) {
+                    for (fighter in wing.wingMembers) {
+                        fighter.splitShip()
+                        fighter.hitpoints = 0f
+                    }
+                }
+                phantoms.remove(phantom)
             }
         }
     }
@@ -212,6 +219,12 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
     override fun unapply(stats: MutableShipStatsAPI?, id: String?) {
         for (phantom in ArrayList(phantoms)) {
             Global.getCombatEngine().removeEntity(phantom)
+            for (wing in phantom.allWings) {
+                for (fighter in wing.wingMembers) {
+                    fighter.splitShip()
+                    fighter.hitpoints = 0f
+                }
+            }
             phantoms.remove(phantom)
         }
     }

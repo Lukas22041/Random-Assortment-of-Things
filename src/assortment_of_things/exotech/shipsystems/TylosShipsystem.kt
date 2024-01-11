@@ -212,6 +212,13 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             var oldY = viewport.lly
 
 
+            for (wing in ship!!.allWings) {
+                for (fighter in wing.wingMembers) {
+                    fighter.splitShip()
+                    fighter.hitpoints = 0f
+                }
+            }
+
             if (parent != null) {
                 doModuleToParent(effectLevel, parent)
             }
