@@ -1,8 +1,8 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
+import assortment_of_things.abyss.hullmods.HullmodTooltipAbyssParticles
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CampaignUIAPI
-import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -11,6 +11,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 
 class AbyssalGrid : BaseHullMod() {
 
@@ -42,6 +43,14 @@ class AbyssalGrid : BaseHullMod() {
     }
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  width: Float, isForModSpec: Boolean) {
+
+        var initialHeight = tooltip!!.heightSoFar
+        var particleSpawner = HullmodTooltipAbyssParticles(tooltip, initialHeight)
+        var element = tooltip!!.addLunaElement(0f, 0f).apply {
+            advance { particleSpawner.advance(this, it) }
+            render { particleSpawner.renderBelow(this, it) }
+        }
+
         tooltip!!.addSpacer(5f)
         tooltip.addPara("This ships flux grid is highly optimised for the use of energy weapons. " +
                 "This allows them to operate at a 10%% lower flux cost than normal and increases their base range by 100 units. " +
@@ -50,6 +59,12 @@ class AbyssalGrid : BaseHullMod() {
                 "",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "energy weapons", "10%", "100", "emp", "25%", "abyssal storms")
+
+
+        tooltip!!.addLunaElement(0f, 0f).apply {
+            render {particleSpawner.renderVignette(element, it)  }
+        }
+
     }
 
 

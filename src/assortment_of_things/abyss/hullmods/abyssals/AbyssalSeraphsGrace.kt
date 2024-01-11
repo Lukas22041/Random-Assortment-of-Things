@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.hullmods.HullmodTooltipAbyssParticles
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.*
@@ -9,6 +10,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 import org.lwjgl.util.vector.Vector2f
 
 class AbyssalSeraphsGrace : BaseHullMod() {
@@ -59,6 +61,13 @@ class AbyssalSeraphsGrace : BaseHullMod() {
     }
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
+
+        var initialHeight = tooltip!!.heightSoFar
+        var particleSpawner = HullmodTooltipAbyssParticles(tooltip, initialHeight)
+        var element = tooltip!!.addLunaElement(0f, 0f).apply {
+            advance { particleSpawner.advance(this, it) }
+            render { particleSpawner.renderBelow(this, it) }
+        }
 
         var isInAbyss = false
         if (Global.getSector() != null && Global.getSector().playerFleet != null) {
@@ -154,6 +163,10 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
         tooltip.addSpacer(5f)
         tooltip.addPara("While in the abyss, whenever a stack dissipates it vents 10 flux with it.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10")
+
+        tooltip!!.addLunaElement(0f, 0f).apply {
+            render {particleSpawner.renderVignette(element, it)  }
+        }
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
