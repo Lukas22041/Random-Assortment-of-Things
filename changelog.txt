@@ -1,3 +1,13 @@
+Version 1.9.5
+Save comp with 1.9.0-1.9.4, but not older versions or the 1.9.0 betas.
+
+-> Arkas shipsystem duration now slows down while phased, allowing it to make better use of the system.
+-> Arkas Phantoms now deal 60% less damage rather than 66% less.
+-> Reduced the Repair Time for Exo-Tech fighters.
+-> Both the Arkas and Tylos now destroy their fighters on shipsystem end/activation when they are equiped with converted hangars
+
+
+
 Version 1.9.4
 Save comp with 1.9.0-1.9.3, but not older versions or the 1.9.0 betas.
 

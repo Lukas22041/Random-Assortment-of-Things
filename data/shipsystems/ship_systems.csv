@@ -22,7 +22,7 @@ Primordial Shift,rat_charybdis_head_system,,,,,,,,,,0.5,,0.5,2,TRUE,,TRUE,TRUE,T
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Exocloak,rat_exocloak,,,,,,,,,,0.5,0,0.5,2,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,,TRUE,,graphics/icons/hullsys/phase_cloak.png
 #Unstable Drive,rat_arkas_system,,,,,,,,,,1,2,3,15,,,,,,,,,,,,,graphics/icons/hullsys/infernium_injector.png
-Phase Phantoms,rat_arkas_system,,,,4000,,,,,,1,10,1.5,20,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
+Phase Phantoms,rat_arkas_system,,,,3000,,,,,,11,0.1,1.5,20,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 Phased Deployment,rat_leanira_system,,,,,,,,,,1,,1,20,TRUE,,,,,,,,,,,,graphics/icons/hullsys/infernium_injector.png
 Superposition,rat_tylos_system,,,,,,,,,,1,0.1,1,5,FALSE,,,,,,,,,,,,graphics/icons/hullsys/infernium_injector.png
 Aftershadows,rat_thestia_system,,,,,,,,,,1,10,1.5,20,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png

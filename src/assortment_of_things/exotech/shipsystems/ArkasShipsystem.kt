@@ -4,6 +4,7 @@ import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.exotech.ExoUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
@@ -20,7 +21,7 @@ import java.awt.Color
 
 
 //Only here to test funny stuff
-class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener {
+class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener, AdvanceableListener {
 
     var ship: ShipAPI? = null
 
@@ -32,6 +33,13 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
     val color = ExoUtils.color2
 
     var activated = false
+
+    var timer = 0f
+    var isCountingTimer = false
+    var actualIn = 1f
+    var actualActive = 10f
+    var maxTime = actualActive + actualIn
+
 
     override fun apply(stats: MutableShipStatsAPI?, id: String?, state: ShipSystemStatsScript.State?, effectLevel: Float) {
         if (stats!!.entity == null) return
@@ -54,6 +62,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
             phantoms.clear()
 
+            isCountingTimer = true
 
             var leftPhantom = spawnPhantom()
             leftPhantom.velocity.set(Vector2f(ship!!.velocity))
@@ -64,6 +73,15 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             rightPhantom.location.set(MathUtils.getPointOnCircumference(ship!!.location, 10f, ship!!.facing - 110))
         }
 
+
+
+        var stateLevel = timer / actualIn
+        stateLevel = MathUtils.clamp(stateLevel, 0f, 1f)
+        if (state == ShipSystemStatsScript.State.OUT) {
+            stateLevel = effectLevel
+        }
+
+
         afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
         var elapsed = afterimageInterval.intervalElapsed()
         for (phantom in ArrayList(phantoms)) {
@@ -72,7 +90,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             phantom.collisionClass = CollisionClass.NONE
             phantom.setShipSystemDisabled(true)
             phantom.isDefenseDisabled = true
-            phantom.alphaMult = effectLevel * 0.05f
+            phantom.alphaMult = stateLevel * 0.05f
             phantom.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_VENT)
            // phantom.setJitterUnder(this, color.setAlpha(50), 1f * effectLevel, 10, 4f, 14f)
 
@@ -85,21 +103,22 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             }
 
             if (elapsed && !Global.getCombatEngine().isPaused && phantom.isAlive) {
-                AfterImageRenderer.addAfterimage(phantom, color.setAlpha((30 * effectLevel).toInt()), Color(130,4,189, 0), 2f, 0f, Vector2f(phantom.location), false)
+                AfterImageRenderer.addAfterimage(phantom, color.setAlpha((30 * stateLevel).toInt()), Color(130,4,189, 0), 2f, 0f, Vector2f(phantom.location), false)
             }
 
-            if (state == ShipSystemStatsScript.State.IN) {
+            if (state == ShipSystemStatsScript.State.IN && timer <= actualIn) {
                 for (weapon in ship!!.allWeapons) {
                     weapon.setForceNoFireOneFrame(true)
                 }
 
                 phantom.isHoldFireOneFrame = true
-                var elapsed = Global.getCombatEngine().elapsedInLastFrame
-                var velocity = MathUtils.getPointOnCircumference(Vector2f(), 300 - (250f * effectLevel), Misc.getAngleInDegrees(ship!!.location, phantom.location))
-                phantom.velocity.set(phantom.velocity.plus(Vector2f(velocity.x * elapsed, velocity.y * elapsed)))
+                var lastFrame = Global.getCombatEngine().elapsedInLastFrame
+                var timeMod = ship!!.mutableStats.timeMult.modifiedValue
+                var velocity = MathUtils.getPointOnCircumference(Vector2f(), 300  - (250f * stateLevel / ship!!.mutableStats.timeMult.modifiedValue), Misc.getAngleInDegrees(ship!!.location, phantom.location))
+                phantom.velocity.set(phantom.velocity.plus(Vector2f(velocity.x * lastFrame / timeMod, velocity.y * lastFrame / timeMod)))
             }
 
-            if (state == ShipSystemStatsScript.State.ACTIVE) {
+            if (state == ShipSystemStatsScript.State.IN && timer > actualIn) {
                 var distance = MathUtils.getDistance(phantom.location, ship!!.location)
                 phantom.setCustomData("rat_phantom_distance", distance)
 
@@ -116,14 +135,14 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
                 var distance = phantom.customData.get("rat_phantom_distance") as Float? ?: 0f
                 var angle =  Misc.getAngleInDegrees(ship!!.location, phantom.location)
-                var location = MathUtils.getPointOnCircumference(ship!!.location, distance * effectLevel, angle)
+                var location = MathUtils.getPointOnCircumference(ship!!.location, distance * stateLevel, angle)
                 phantom.location.set(location)
 
                 if (phantom.facing > ship!!.facing + 1) {
-                    phantom.facing -= 200f * (1 - effectLevel) * Global.getCombatEngine().elapsedInLastFrame
+                    phantom.facing -= 200f * (1 - stateLevel) * Global.getCombatEngine().elapsedInLastFrame
                 }
                 if (phantom.facing < ship!!.facing + 1) {
-                    phantom.facing += 200f * (1 - effectLevel) * Global.getCombatEngine().elapsedInLastFrame
+                    phantom.facing += 200f * (1 - stateLevel) * Global.getCombatEngine().elapsedInLastFrame
                 }
             }
 
@@ -136,6 +155,9 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
                     }
                 }
                 phantoms.remove(phantom)
+
+                isCountingTimer = false
+                timer = 0f
             }
         }
     }
@@ -230,6 +252,25 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
                 }
             }
             phantoms.remove(phantom)
+        }
+
+        isCountingTimer = false
+        timer = 0f
+    }
+
+    override fun advance(amount: Float) {
+        if (isCountingTimer && ship!!.system.state != ShipSystemAPI.SystemState.OUT) {
+            timer += 1f * amount / ship!!.mutableStats.timeMult.modifiedValue
+            var stateLevel = timer / maxTime
+            if (stateLevel >= 1) {
+                //ship!!.system.forceState(ShipSystemAPI.SystemState.ACTIVE, maxTime - 1f)
+                isCountingTimer = false
+                timer = 0f
+            }
+            else {
+                var level = stateLevel
+                ship!!.system.forceState(ShipSystemAPI.SystemState.IN, level)
+            }
         }
     }
 }
