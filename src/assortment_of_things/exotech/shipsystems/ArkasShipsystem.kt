@@ -163,11 +163,15 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         phantom.shipAI = null
 
         var stats = phantom.stats
-        stats.damageToCapital.modifyMult("rat_phantom", 0.33f)
-        stats.damageToCruisers.modifyMult("rat_phantom", 0.33f)
-        stats.damageToDestroyers.modifyMult("rat_phantom", 0.33f)
-        stats.damageToFrigates.modifyMult("rat_phantom", 0.33f)
-        stats.damageToFighters.modifyMult("rat_phantom", 0.33f)
+        stats.damageToCapital.modifyMult("rat_phantom", 0.40f)
+        stats.damageToCruisers.modifyMult("rat_phantom", 0.40f)
+        stats.damageToDestroyers.modifyMult("rat_phantom", 0.40f)
+        stats.damageToFrigates.modifyMult("rat_phantom", 0.40f)
+        stats.damageToFighters.modifyMult("rat_phantom", 0.40f)
+
+        stats.ballisticWeaponRangeBonus.modifyFlat("rat_phantom", 50f)
+        stats.energyWeaponRangeBonus.modifyFlat("rat_phantom", 50f)
+        stats.missileWeaponRangeBonus.modifyFlat("rat_phantom", 50f)
 
         stats.maxSpeed.modifyFlat("rat_phantom", 20f)
         stats.acceleration.modifyFlat("rat_phantom", 30f)

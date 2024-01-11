@@ -12,8 +12,8 @@ rat_ceto,rat_ceto_Fighter,"no_sell, fighter, fighter6, auto_fighter, restricted"
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-rat_dawnblade_wing,rat_dawnblade_Fighter,"no_sell, fighter, fighter12, restricted, rat_exotech_bp",3,,8,25,V,4000,600,,1,FIGHTER,Superfighter,20,25000,,,,,,,,,,,,,2223
-rat_nightblade_wing,rat_nightblade_Fighter,"no_sell, fighter, fighter8, restricted, rat_exotech_bp",3,,6,15,V,4000,600,,2,FIGHTER,Burst,20,15000,,,,,,,,,,,,,2223
-rat_protostar_wing,rat_protostar_Fighter,"no_sell, fighter, fighter8, restricted, rat_exotech_bp",3,,6,15,V,4000,600,,2,FIGHTER,Fighter,20,12500,,,,,,,,,,,,,2223
+rat_dawnblade_wing,rat_dawnblade_Fighter,"no_sell, fighter, fighter12, restricted, rat_exotech_bp",3,,8,25,V,4000,600,,1,FIGHTER,Superfighter,15,25000,,,,,,,,,,,,,2223
+rat_nightblade_wing,rat_nightblade_Fighter,"no_sell, fighter, fighter8, restricted, rat_exotech_bp",3,,6,15,V,4000,600,,2,FIGHTER,Burst,12,15000,,,,,,,,,,,,,2223
+rat_protostar_wing,rat_protostar_Fighter,"no_sell, fighter, fighter8, restricted, rat_exotech_bp",3,,6,15,V,4000,600,,2,FIGHTER,Fighter,12,12500,,,,,,,,,,,,,2223
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
