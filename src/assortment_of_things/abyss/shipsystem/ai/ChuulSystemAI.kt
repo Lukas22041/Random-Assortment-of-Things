@@ -1,12 +1,10 @@
 package assortment_of_things.abyss.shipsystem.ai
 
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
+import assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.combat.AIUtils
-import org.lazywizard.lazylib.combat.CombatUtils
 import org.lwjgl.util.vector.Vector2f
 
 class ChuulSystemAI : ShipSystemAIScript {
@@ -26,7 +24,7 @@ class ChuulSystemAI : ShipSystemAIScript {
         var system = ship!!.system
 
 
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) {
 
             if (wasActivated) {
 
@@ -54,7 +52,7 @@ class ChuulSystemAI : ShipSystemAIScript {
             }
         }
 
-        if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) {
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!)) {
             if (target == null) return
             if (system.isCoolingDown) return
             if (system.isActive)  return

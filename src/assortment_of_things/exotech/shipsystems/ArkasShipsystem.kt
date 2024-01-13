@@ -77,10 +77,11 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
         var stateLevel = timer / actualIn
         stateLevel = MathUtils.clamp(stateLevel, 0f, 1f)
-        if (state == ShipSystemStatsScript.State.OUT) {
+        if (state == ShipSystemStatsScript.State.OUT || state == ShipSystemStatsScript.State.ACTIVE) {
             stateLevel = effectLevel
         }
 
+        ship!!.setCustomData("rat_exogrid_level_override", stateLevel)
 
         afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
         var elapsed = afterimageInterval.intervalElapsed()

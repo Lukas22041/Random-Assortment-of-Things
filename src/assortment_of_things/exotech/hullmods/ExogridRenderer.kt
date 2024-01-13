@@ -84,6 +84,11 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
 
 
         var level = ship.system?.effectLevel ?: 0f
+        var levelOverride = ship!!.customData.get("rat_exogrid_level_override") as Float?
+        if (levelOverride != null) {
+            level = levelOverride
+        }
+
         var systemState = ship.system.state
 
         var baseAlpha = 0.2f

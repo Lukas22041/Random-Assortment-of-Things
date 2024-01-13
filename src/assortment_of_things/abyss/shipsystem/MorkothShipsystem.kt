@@ -1,6 +1,6 @@
 package assortment_of_things.abyss.shipsystem
 
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
+import assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod
 import assortment_of_things.combat.AfterImageRenderer
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.CombatEntityAPI
@@ -9,7 +9,6 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipSystemAPI
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.combat.listeners.DamageListener
-import com.fs.starfarer.api.combat.listeners.DamageTakenModifier
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
@@ -41,10 +40,10 @@ class MorkothShipsystem : BaseShipSystemScript(), DamageListener {
         ship = stats!!.entity as ShipAPI
 
         if (!activated && ship!!.system.isActive) {
-            if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
+            if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) {
                 Global.getSoundPlayer().playSound("system_maneuvering_jets", 1f, 1f, ship!!.location, ship!!.velocity)
             }
-            if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) {
+            if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!)) {
                 Global.getSoundPlayer().playSound("system_damper", 1f, 1f, ship!!.location, ship!!.velocity)
                 if (ship!!.shield != null) {
                     ship!!.shield.toggleOn()
@@ -55,22 +54,22 @@ class MorkothShipsystem : BaseShipSystemScript(), DamageListener {
 
         if (ship!!.system.isActive)
         {
-            AbyssalsCoreHullmod.getRenderer(ship!!).enableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).enableBlink()
         }
         else
         {
-            AbyssalsCoreHullmod.getRenderer(ship!!).disableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).disableBlink()
         }
 
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!))
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!))
         {
             if (ship!!.system.isActive) {
                 ship!!.engineController.extendFlame(this, 1f * effectLevel, 0.2f * effectLevel, 0.5f * effectLevel)
-                ship!!.setJitterUnder(this, AbyssalsCoreHullmod.getColorForCore(ship!!).setAlpha(100), 1f * effectLevel, 10, 0f, 10f)
+                ship!!.setJitterUnder(this, AbyssalsAdaptabilityHullmod.getColorForCore(ship!!).setAlpha(100), 1f * effectLevel, 10, 0f, 10f)
                 afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
                 if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
                 {
-                    AfterImageRenderer.addAfterimage(ship!!, AbyssalsCoreHullmod.getColorForCore(ship!!).setAlpha(100), Color(150, 0 ,255).setAlpha(100), 2f, 2f, Vector2f().plus(ship!!.location))
+                    AfterImageRenderer.addAfterimage(ship!!, AbyssalsAdaptabilityHullmod.getColorForCore(ship!!).setAlpha(100), Color(150, 0 ,255).setAlpha(100), 2f, 2f, Vector2f().plus(ship!!.location))
                 }
             }
 
@@ -87,7 +86,7 @@ class MorkothShipsystem : BaseShipSystemScript(), DamageListener {
             }
         }
 
-        if (AbyssalsCoreHullmod.isCosmosCore(ship!!))
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!))
         {
             if (!addedDamageListener) {
                 ship!!.addListener(this)
@@ -114,8 +113,8 @@ class MorkothShipsystem : BaseShipSystemScript(), DamageListener {
 
             if (ship!!.shield != null)
             {
-                var ringColor = Misc.interpolateColor(ship!!.hullSpec.shieldSpec.ringColor, AbyssalsCoreHullmod.getColorForCore(ship!!), level * effectLevel)
-                var innerColor = Misc.interpolateColor(ship!!.hullSpec.shieldSpec.innerColor, AbyssalsCoreHullmod.getColorForCore(ship!!), level * effectLevel)
+                var ringColor = Misc.interpolateColor(ship!!.hullSpec.shieldSpec.ringColor, AbyssalsAdaptabilityHullmod.getColorForCore(ship!!), level * effectLevel)
+                var innerColor = Misc.interpolateColor(ship!!.hullSpec.shieldSpec.innerColor, AbyssalsAdaptabilityHullmod.getColorForCore(ship!!), level * effectLevel)
 
                 ship!!.shield.ringColor = ringColor.setAlpha(255)
                 ship!!.shield.innerColor = innerColor.setAlpha(75)
@@ -164,7 +163,7 @@ class MorkothShipsystem : BaseShipSystemScript(), DamageListener {
         super.unapply(stats, id)
 
         if (ship != null) {
-            AbyssalsCoreHullmod.getRenderer(ship!!).disableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).disableBlink()
         }
 
         stats!!.shieldDamageTakenMult.unmodify(id)
@@ -200,46 +199,46 @@ class MorkothShipsystem : BaseShipSystemScript(), DamageListener {
     }
 
     override fun getActiveOverride(ship: ShipAPI): Float {
-        if (AbyssalsCoreHullmod.isChronosCore(ship)) return 2f
-        if (AbyssalsCoreHullmod.isCosmosCore(ship)) return 12f
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship)) return 2f
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship)) return 12f
 
         return super.getActiveOverride(ship)
     }
 
     override fun getOutOverride(ship: ShipAPI): Float {
-        if (AbyssalsCoreHullmod.isChronosCore(ship)) return 0.25f
-        if (AbyssalsCoreHullmod.isCosmosCore(ship)) return 1f
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship)) return 0.25f
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship)) return 1f
 
         return super.getOutOverride(ship)
     }
 
     override fun getUsesOverride(ship: ShipAPI): Int {
-        if (AbyssalsCoreHullmod.isChronosCore(ship)) return 2
-        if (AbyssalsCoreHullmod.isCosmosCore(ship)) return 1
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship)) return 2
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship)) return 1
 
         return super.getUsesOverride(ship)
     }
 
     override fun getRegenOverride(ship: ShipAPI): Float {
-        if (AbyssalsCoreHullmod.isChronosCore(ship)) return 0.04f
-        if (AbyssalsCoreHullmod.isCosmosCore(ship)) return 0.02f
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship)) return 0.04f
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship)) return 0.02f
 
         return super.getRegenOverride(ship)
     }
 
     override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
-        if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) return true
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return true
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!)) return true
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) return true
         return false
     }
 
     override fun getDisplayNameOverride(state: ShipSystemStatsScript.State?, effectLevel: Float): String {
         if (ship == null) return "Inactive Shipsystem"
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!))
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!))
         {
             return "Temporal Jets"
         }
-        else if ( AbyssalsCoreHullmod.isCosmosCore(ship!!))
+        else if ( AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!))
         {
             return "Event Horizon"
         }

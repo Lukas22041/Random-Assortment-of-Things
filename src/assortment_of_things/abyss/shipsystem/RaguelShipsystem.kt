@@ -1,7 +1,5 @@
 package assortment_of_things.abyss.shipsystem
 
-import assortment_of_things.abyss.hullmods.HullmodUtils
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
 import assortment_of_things.combat.AfterImageRenderer
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
@@ -10,13 +8,11 @@ import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.combat.CombatUtils
 import org.lazywizard.lazylib.combat.entities.SimpleEntity
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
-import java.util.*
 
 class RaguelShipsystem : BaseShipSystemScript() {
 

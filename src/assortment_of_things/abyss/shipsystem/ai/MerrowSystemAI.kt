@@ -1,12 +1,9 @@
 package assortment_of_things.abyss.shipsystem.ai
 
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
-import com.fs.starfarer.api.Global
+import assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.combat.AIUtils
-import org.lazywizard.lazylib.combat.CombatUtils
 import org.lwjgl.util.vector.Vector2f
 
 class MerrowSystemAI : ShipSystemAIScript {
@@ -25,7 +22,7 @@ class MerrowSystemAI : ShipSystemAIScript {
         if (system.isCoolingDown) return
         if (system.isActive)  return
 
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) {
             if (target == null) return
             if (!ship!!.areAnyEnemiesInRange()) return
 
@@ -43,7 +40,7 @@ class MerrowSystemAI : ShipSystemAIScript {
             ship!!.useSystem()
         }
 
-        if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) {
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!)) {
             if (ship!!.fluxLevel < 0.35f) return
             if (ship!!.shield != null && ship!!.shield.isOff) return
 
