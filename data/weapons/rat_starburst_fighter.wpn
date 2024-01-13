@@ -32,5 +32,5 @@
 	"displayArcRadius":300,
 	
 	"projectileSpecId":"rat_starburst_missile",
-	"fireSoundTwo":"harpoon_fire",
+	"fireSoundTwo":"rat_starburst_fire",
 }

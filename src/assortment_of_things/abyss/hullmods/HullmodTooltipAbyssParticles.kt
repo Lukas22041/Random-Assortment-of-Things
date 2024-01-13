@@ -151,8 +151,6 @@ class HullmodTooltipAbyssParticles(var tooltip: TooltipMakerAPI, var initialHeig
 
         startStencil(element)
 
-
-
         for (particle in particles) {
 
             halo!!.alphaMult = 0 + (particle.alpha * particle.level )

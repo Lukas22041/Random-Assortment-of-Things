@@ -6,8 +6,13 @@ import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
 import com.fs.starfarer.api.characters.SkillSpecAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.combat.WeaponAPI
+import com.fs.starfarer.api.combat.listeners.AdvanceableListener
+import com.fs.starfarer.api.combat.listeners.WeaponBaseRangeModifier
+import com.fs.starfarer.api.combat.listeners.WeaponRangeModifier
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.combat.CombatUtils
 
 class TimeCoreSkill : RATBaseShipSkill() {
 
@@ -19,18 +24,29 @@ class TimeCoreSkill : RATBaseShipSkill() {
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?,  skill: SkillSpecAPI?, info: TooltipMakerAPI?,  width: Float) {
         info!!.addSpacer(2f)
-        info!!.addPara("+10%% timeflow", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info!!.addPara("+20%% maneuverability", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info!!.addPara("+5 su/second to zero flux speed boost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info.addPara("Ballistic & Energy base weapon ranges can no longer go beyond 500/600/700 units and weapon ranges are decreased by an additional 20%%.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info.addSpacer(5f)
+        info!!.addPara("+25%% timeflow", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("+25%% maneuverability", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("+10 su/second to the ships max speed.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
-        stats!!.timeMult.modifyMult(modID, 1.1f)
-        stats.acceleration.modifyMult(modID, 1.20f)
-        stats.deceleration.modifyMult(modID, 1.20f)
-        stats.turnAcceleration.modifyMult(modID, 1.20f)
-        stats.zeroFluxSpeedBoost.modifyFlat(modID, 5f)
+
+        if (stats!!.entity is ShipAPI) {
+            var ship = stats.entity as ShipAPI
+
+            if (!ship.hasListenerOfClass(ChronosRangeModifier::class.java)) {
+                ship.addListener(ChronosRangeModifier(ship))
+            }
+        }
+
+        stats.timeMult.modifyMult(modID, 1.25f)
+        stats.acceleration.modifyMult(modID, 1.25f)
+        stats.deceleration.modifyMult(modID, 1.25f)
+        stats.turnAcceleration.modifyMult(modID, 1.25f)
+        stats.maxSpeed.modifyFlat(modID, 10f)
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
@@ -39,6 +55,43 @@ class TimeCoreSkill : RATBaseShipSkill() {
         stats.deceleration.unmodify(modID)
         stats.turnAcceleration.unmodify(modID)
         stats.zeroFluxSpeedBoost.unmodify(modID)
+
+        if (stats!!.entity is ShipAPI) {
+            var ship = stats.entity as ShipAPI
+
+            if (ship.hasListenerOfClass(ChronosRangeModifier::class.java)) {
+                ship.removeListenerOfClass(ChronosRangeModifier::class.java)
+            }
+        }
+    }
+}
+
+//Caps Base Range at 500
+class ChronosRangeModifier(var ship: ShipAPI) : WeaponBaseRangeModifier {
+
+    override fun getWeaponBaseRangePercentMod(ship: ShipAPI?, weapon: WeaponAPI?): Float {
+        return 0f
     }
 
+    override fun getWeaponBaseRangeMultMod(ship: ShipAPI?, weapon: WeaponAPI?): Float {
+        return 0.8f
+    }
+
+    override fun getWeaponBaseRangeFlatMod(ship: ShipAPI?, weapon: WeaponAPI?): Float {
+        if (weapon!!.type == WeaponAPI.WeaponType.MISSILE) return 0f
+
+        var maxRange = when(weapon.size) {
+            WeaponAPI.WeaponSize.SMALL -> 500
+            WeaponAPI.WeaponSize.MEDIUM -> 600
+            WeaponAPI.WeaponSize.LARGE -> 700
+        }
+
+        var range = weapon!!.spec.maxRange
+        if (range > maxRange) {
+            var difference = range - maxRange
+            return -difference
+        }
+
+        return 0f
+    }
 }
