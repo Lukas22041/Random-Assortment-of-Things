@@ -1,15 +1,10 @@
 package assortment_of_things.abyss.activators
 
 import activators.CombatActivator
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
 import assortment_of_things.combat.AfterImageRenderer
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.DamageType
-import com.fs.starfarer.api.combat.DamagingProjectileAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.util.IntervalUtil
-import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.combat.CombatUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha

@@ -1,7 +1,6 @@
 package assortment_of_things.abyss.shipsystem
 
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
-import com.fs.starfarer.api.Global
+import assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipSystemAPI
@@ -21,18 +20,18 @@ class MerrowShipsystem : BaseShipSystemScript() {
 
         if (ship!!.system.isActive)
         {
-            AbyssalsCoreHullmod.getRenderer(ship!!).enableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).enableBlink()
         }
         else
         {
-            AbyssalsCoreHullmod.getRenderer(ship!!).disableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).disableBlink()
         }
 
 
 
-        var color = AbyssalsCoreHullmod.getColorForCore(ship!!).setAlpha(100)
+        var color = AbyssalsAdaptabilityHullmod.getColorForCore(ship!!).setAlpha(100)
 
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!))
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!))
         {
             stats.energyAmmoRegenMult.modifyMult(id, 1f + (0.5f * effectLevel))
             stats.ballisticAmmoRegenMult.modifyMult(id, 1f + (0.5f * effectLevel))
@@ -57,11 +56,11 @@ class MerrowShipsystem : BaseShipSystemScript() {
             }
         }
 
-        if (AbyssalsCoreHullmod.isCosmosCore(ship!!))
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!))
         {
             if (ship!!.system.isActive)
             {
-                ship!!.setJitterUnder(this, AbyssalsCoreHullmod.getColorForCore(ship!!).setAlpha(100), 1f, 25, 0f, 4 * effectLevel)
+                ship!!.setJitterUnder(this, AbyssalsAdaptabilityHullmod.getColorForCore(ship!!).setAlpha(100), 1f, 25, 0f, 4 * effectLevel)
             }
 
             stats.hardFluxDissipationFraction.modifyFlat(id, 1f * effectLevel)
@@ -70,18 +69,18 @@ class MerrowShipsystem : BaseShipSystemScript() {
     }
 
     override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
-        if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) return true
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return true
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!)) return true
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) return true
         return false
     }
 
     override fun getDisplayNameOverride(state: ShipSystemStatsScript.State?, effectLevel: Float): String {
         if (ship == null) return "Inactive Shipsystem"
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!))
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!))
         {
             return "Accelerated Barrels"
         }
-        else if ( AbyssalsCoreHullmod.isCosmosCore(ship!!))
+        else if ( AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!))
         {
             return "Abyssal Rift"
         }

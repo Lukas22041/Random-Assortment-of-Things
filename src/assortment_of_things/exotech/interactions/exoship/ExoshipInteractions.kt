@@ -123,8 +123,9 @@ class ExoshipInteractions : RATInteractionPlugin() {
         if (Global.getSettings().isDevMode) {
             createOption("(Devmode) Force Move") {
 
-                exoshipData.daysBetweenMoves = 0f
-
+                //exoshipData.daysBetweenMoves = 0f
+                exoshipData.lastMoveTimestamp = Global.getSector().clock.timestamp
+                exoshipData.daysBetweenMoves = 0.5f
 
                 /*var ship = interactionTarget
                 ship.orbit = null

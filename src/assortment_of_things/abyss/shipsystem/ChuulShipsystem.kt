@@ -1,24 +1,15 @@
 package assortment_of_things.abyss.shipsystem
 
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
+import assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod
 import assortment_of_things.combat.AfterImageRenderer
-import assortment_of_things.combat.CombatWarpingSpriteRenderer
-import assortment_of_things.misc.baseOrModSpec
-import assortment_of_things.misc.getAndLoadSprite
-import com.fs.graphics.Sprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
-import com.fs.starfarer.api.loading.ProjectileSpecAPI
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
-import com.fs.starfarer.combat.CombatEngine
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
-import java.awt.Color
-import java.util.*
 
 class ChuulShipsystem : BaseShipSystemScript() {
 
@@ -39,10 +30,10 @@ class ChuulShipsystem : BaseShipSystemScript() {
         if (state == ShipSystemStatsScript.State.IN && !init) {
             onInit(ship!!)
 
-            if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
+            if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) {
                 Global.getSoundPlayer().playSound("system_phase_skimmer", 1f, 1f, ship!!.location, ship!!.velocity)
             }
-            if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) {
+            if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!)) {
                 Global.getSoundPlayer().playSound("system_ammo_feeder", 1f, 1f, ship!!.location, ship!!.velocity)
             }
 
@@ -53,7 +44,7 @@ class ChuulShipsystem : BaseShipSystemScript() {
         }
 
         if (state == ShipSystemStatsScript.State.ACTIVE && !activated) {
-            if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
+            if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) {
                 ship!!.location.set(targetLocation)
             }
             activated = true
@@ -65,16 +56,16 @@ class ChuulShipsystem : BaseShipSystemScript() {
 
         if (ship!!.system.isActive)
         {
-            AbyssalsCoreHullmod.getRenderer(ship!!).enableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).enableBlink()
         }
         else
         {
-            AbyssalsCoreHullmod.getRenderer(ship!!).disableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).disableBlink()
         }
 
-        var color = AbyssalsCoreHullmod.getColorForCore(ship!!).setAlpha(100)
+        var color = AbyssalsAdaptabilityHullmod.getColorForCore(ship!!).setAlpha(100)
 
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!))
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!))
         {
 
             if (state == ShipSystemStatsScript.State.IN) {
@@ -109,7 +100,7 @@ class ChuulShipsystem : BaseShipSystemScript() {
             }
         }
 
-        if (AbyssalsCoreHullmod.isCosmosCore(ship!!))
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!))
         {
             stats.ballisticWeaponDamageMult.modifyMult(id, 1f + (0.40f * effectLevel))
             stats.energyWeaponDamageMult.modifyMult(id, 1f + (0.40f * effectLevel))
@@ -132,7 +123,7 @@ class ChuulShipsystem : BaseShipSystemScript() {
     }
 
     fun onInit(ship: ShipAPI) {
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) {
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) {
             targetLocation = findTargetLocation(ship, 5f)
         }
     }
@@ -165,43 +156,43 @@ class ChuulShipsystem : BaseShipSystemScript() {
 
 
     override fun getInOverride(ship: ShipAPI?): Float {
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return 0.25f
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) return 0.25f
         return 0.5f
     }
 
     override fun getOutOverride(ship: ShipAPI?): Float {
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return 0.75f
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) return 0.75f
         return 0.5f
     }
 
     override fun getActiveOverride(ship: ShipAPI?): Float {
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return 0.1f
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) return 0.1f
         return 6f
     }
 
     override fun getUsesOverride(ship: ShipAPI?): Int {
-        if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) return 1
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!)) return 1
         return 3
     }
 
     override fun getRegenOverride(ship: ShipAPI?): Float {
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return 0.1f
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) return 0.1f
         return 0.05f
     }
 
     override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
-        if (AbyssalsCoreHullmod.isCosmosCore(ship!!)) return true
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!)) return true
+        if (AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!)) return true
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!)) return true
         return false
     }
 
     override fun getDisplayNameOverride(state: ShipSystemStatsScript.State?, effectLevel: Float): String {
         if (ship == null) return "Inactive Shipsystem"
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!))
+        if (AbyssalsAdaptabilityHullmod.isChronosCore(ship!!))
         {
             return "Temporal Skimmer"
         }
-        else if ( AbyssalsCoreHullmod.isCosmosCore(ship!!))
+        else if ( AbyssalsAdaptabilityHullmod.isCosmosCore(ship!!))
         {
             return "Singularity"
         }

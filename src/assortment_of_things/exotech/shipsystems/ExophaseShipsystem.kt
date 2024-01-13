@@ -1,6 +1,5 @@
 package assortment_of_things.exotech.shipsystems
 
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.PhaseCloakSystemAPI
@@ -12,9 +11,6 @@ import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript.StatusData
 import com.fs.starfarer.api.util.IntervalUtil
-import org.lazywizard.lazylib.combat.entities.SimpleEntity
-import org.lwjgl.util.vector.Vector2f
-import org.magiclib.kotlin.setAlpha
 import org.magiclib.plugins.MagicTrailPlugin
 import java.awt.Color
 

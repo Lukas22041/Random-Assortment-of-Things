@@ -1,23 +1,22 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
-import assortment_of_things.abyss.hullmods.HullmodUtils
-import assortment_of_things.misc.baseOrModSpec
+import assortment_of_things.abyss.hullmods.HullmodTooltipAbyssParticles
+import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
-import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.FaderUtil
-import org.lazywizard.lazylib.ext.campaign.contains
+import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
 
-class AbyssalsCoreHullmod : BaseHullMod() {
+class AbyssalsAdaptabilityHullmod : BaseHullMod() {
 
     companion object {
         fun getRenderer(ship: ShipAPI) : AbyssalCoreRenderer {
@@ -28,6 +27,10 @@ class AbyssalsCoreHullmod : BaseHullMod() {
         {
             var color = Color(130, 27, 150,255)
 
+            if (isSeraphCore(ship))
+            {
+                color = Color(196, 20, 35, 255)
+            }
             if (isCosmosCore(ship))
             {
                 color = Color(255, 0, 100)
@@ -38,6 +41,22 @@ class AbyssalsCoreHullmod : BaseHullMod() {
             }
 
             return color
+        }
+
+
+        fun hasAbyssalCore(ship: ShipAPI) : Boolean {
+            if (isSeraphCore(ship)) return true
+            if (isChronosCore(ship)) return true
+            if (isCosmosCore(ship)) return true
+            return false
+        }
+
+        fun isSeraphCore(ship: ShipAPI) : Boolean
+        {
+            if (ship.variant.hasHullMod("rat_seraph_conversion")) return true
+            if (ship.captain == null) return false
+            if (ship.captain.aiCoreId == RATItems.SERAPH_CORE) return true
+            return false
         }
 
         fun isChronosCore(ship: ShipAPI) : Boolean
@@ -53,12 +72,6 @@ class AbyssalsCoreHullmod : BaseHullMod() {
             if (ship.variant.hasHullMod("rat_cosmos_conversion")) return true
             if (ship.captain == null) return false
             if (ship.captain.aiCoreId == RATItems.COSMOS_CORE) return true
-            return false
-        }
-
-        fun isHullmodIntegration(ship: ShipAPI) : Boolean {
-            if (ship.variant.hasHullMod("rat_chronos_conversion")) return true
-            if (ship.variant.hasHullMod("rat_cosmos_conversion")) return true
             return false
         }
     }
@@ -94,7 +107,12 @@ class AbyssalsCoreHullmod : BaseHullMod() {
         ship.setCustomData("abyssal_glow_renderer", renderer)
         Global.getCombatEngine().addLayeredRenderingPlugin(renderer)
 
+        var stats = ship.mutableStats
 
+        if (!hasAbyssalCore(ship)) {
+            stats.systemCooldownBonus.modifyMult(id, 1.333f)
+            stats.systemRegenBonus.modifyMult(id, 0.666f)
+        }
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  isForModSpec: Boolean): Boolean {
@@ -108,30 +126,27 @@ class AbyssalsCoreHullmod : BaseHullMod() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
+        var initialHeight = tooltip!!.heightSoFar
+        var particleSpawner = HullmodTooltipAbyssParticles(tooltip, initialHeight)
+        var element = tooltip!!.addLunaElement(0f, 0f).apply {
+            advance { particleSpawner.advance(this, it) }
+            render { particleSpawner.renderBelow(this, it) }
+        }
+
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("This hull synergises well with the Chronos and Cosmos AI cores, and are required for the shipsystem to function. The installed core influences the effect of it.", 0f)
-        tooltip.addSpacer(10f)
-      /*  tooltip.addSectionHeading("AI Core Synergy", Alignment.MID, 0f)
-        tooltip.addSpacer(10f)*/
+        tooltip.addPara("This type of hull is sensitive to the kind of ai core that controls it. " +
+                "Without an abyssal ai-core, the shipsystems cooldown and time to restore charges is worsened by 33%%.", 0f,
+        Misc.getTextColor(), Misc.getHighlightColor(), "33%")
 
-        AbyssalsHullmodDescriptions.createDescription(tooltip, hullSize, ship, width, isForModSpec)
-
-        tooltip.addSpacer(5f)
-       /* tooltip.addSectionHeading("Enviroment", Alignment.MID, 0f)
-        tooltip.addSpacer(10f)
-
-        tooltip.addPara("Abyssal hulls are immune to damage from Abyssal Storms, but also from similar hazards" +
-                " in other enviroments.", 0f)
-*/
-
+        tooltip!!.addLunaElement(0f, 0f).apply {
+            render {particleSpawner.renderVignette(element, it)  }
+        }
     }
 
-    class
-    AbyssalCoreRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin(CombatEngineLayers.ABOVE_SHIPS_LAYER) {
+    class AbyssalCoreRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin(CombatEngineLayers.ABOVE_SHIPS_LAYER) {
 
         var fader = FaderUtil(1f, 0.3f, 0.2f, false, false)
         var sprite: SpriteAPI? = null
-        var phaseSprite: SpriteAPI? = null
 
         private var baseGlowAlpha = 0.5f
         private var additiveGlowAlpha = 0.3f
@@ -140,9 +155,7 @@ class AbyssalsCoreHullmod : BaseHullMod() {
 
         init {
             var path = ship.hullSpec.spriteName.replace(".png", "") + "_glow.png"
-
-            Global.getSettings().loadTexture(path)
-            sprite = Global.getSettings().getSprite(path)
+            sprite = Global.getSettings().getAndLoadSprite(path)
         }
 
         fun enableBlink() { blink = true }
@@ -173,57 +186,19 @@ class AbyssalsCoreHullmod : BaseHullMod() {
             if (sprite == null) return
             if (!ship.isAlive || ship.isHulk) return
 
-            var c = getColorForCore(ship)
+            var glowColor = getColorForCore(ship)
 
             sprite!!.angle = ship.facing + 270
-            sprite!!.color = c
-            ship.engineController.fadeToOtherColor("rat_abyssals_enginefade", c, c.setAlpha(75), 1f, 1f)
+            sprite!!.color = glowColor
+            ship.engineController.fadeToOtherColor("rat_abyssals_enginefade", glowColor, glowColor.setAlpha(75), 1f, 1f)
 
             sprite!!.alphaMult = baseGlowAlpha
             sprite!!.setNormalBlend()
             sprite!!.renderAtCenter(ship.location.x, ship.location.y)
-            if (ship.captain == null && !isHullmodIntegration(ship)) return
-            if ((ship.captain != null && ship.captain.isAICore) || isHullmodIntegration(ship))
-            {
 
-                if (ship.baseOrModSpec().hullId == "rat_aboleth" || ship.baseOrModSpec().hullId == "rat_aboleth_m" || ship.baseOrModSpec().hullId == "rat_makara" ) {
-                    for (weapon in ship.allWeapons.filter { it.isDecorative }) {
-                        weapon.sprite.color = Color(255, 255, 255, (254 * (1 - ship.system.effectLevel)).toInt())
-                    }
-                }
-
-                if (ship.isPhased)
-                {
-
-                    if (ship.baseOrModSpec().hullId == "rat_aboleth" || ship.baseOrModSpec().hullId == "rat_aboleth_m" || ship.baseOrModSpec().hullId == "rat_makara" )
-                    {
-                        if (phaseSprite == null)
-                        {
-                            var path = ship.hullSpec.spriteName.replace(".png", "") + "_phaseglow.png"
-                            Global.getSettings().loadTexture(path)
-                            phaseSprite = Global.getSettings().getSprite(path)
-                        }
-
-                        phaseSprite!!.angle = ship.facing + 270
-                        phaseSprite!!.color = c
-
-                        phaseSprite!!.setAdditiveBlend()
-                        phaseSprite!!.alphaMult = 0.7f + (0.3f * fader.brightness)
-                        phaseSprite!!.renderAtCenter(ship.location.x, ship.location.y)
-                    }
-
-                    sprite!!.setAdditiveBlend()
-                    sprite!!.alphaMult = 1 * fader.brightness
-                    sprite!!.renderAtCenter(ship.location.x, ship.location.y)
-                }
-                else
-                {
-                    sprite!!.setAdditiveBlend()
-                    sprite!!.alphaMult = additiveGlowAlpha * fader.brightness
-                    sprite!!.renderAtCenter(ship.location.x, ship.location.y)
-                }
-            }
-
+            sprite!!.setAdditiveBlend()
+            sprite!!.alphaMult = additiveGlowAlpha * fader.brightness
+            sprite!!.renderAtCenter(ship.location.x, ship.location.y)
         }
 
         override fun isExpired(): Boolean {

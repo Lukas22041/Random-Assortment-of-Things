@@ -1,6 +1,6 @@
 package assortment_of_things.abyss.shipsystem.ai
 
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
+import assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import org.lwjgl.util.vector.Vector2f
@@ -27,27 +27,12 @@ class AbolethSystemAI : ShipSystemAIScript {
             return
         }
 
-        if (AbyssalsCoreHullmod.isChronosCore(ship!!))
+        var validFlags = listOf<AIFlags>(AIFlags.PURSUING, AIFlags.MANEUVER_TARGET, AIFlags.MOVEMENT_DEST, AIFlags.RUN_QUICKLY)
+        for (valid in validFlags)
         {
-            var validFlags = listOf<AIFlags>(AIFlags.PURSUING, AIFlags.MANEUVER_TARGET, AIFlags.MOVEMENT_DEST, AIFlags.RUN_QUICKLY)
-            for (valid in validFlags)
-            {
-                if (flags.hasFlag(valid)) {
-                    ship!!.useSystem()
-                    return
-                }
-            }
-        }
-
-        if (AbyssalsCoreHullmod.isCosmosCore(ship!!))
-        {
-            var validFlags = listOf<AIFlags>(AIFlags.PURSUING, AIFlags.BACK_OFF,  AIFlags.RUN_QUICKLY, AIFlags.BACKING_OFF)
-            for (valid in validFlags)
-            {
-                if (flags.hasFlag(valid)) {
-                    ship!!.useSystem()
-                    return
-                }
+            if (flags.hasFlag(valid)) {
+                ship!!.useSystem()
+                return
             }
         }
     }
