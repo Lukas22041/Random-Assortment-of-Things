@@ -96,7 +96,12 @@
 	],
 	
 	"abyss_lusca":[
-		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.9,"volume":0.55},
+		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.9,"volume":0.45},
+	],
+	
+	"rat_abyss_ceto_blaster":
+	[
+		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.7,"volume":0.4},
 	],
 	
 	"abyss_cecaelia":[

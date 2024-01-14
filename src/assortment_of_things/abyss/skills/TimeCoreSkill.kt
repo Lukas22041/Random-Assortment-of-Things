@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.skills
 
 import assortment_of_things.campaign.skills.RATBaseShipSkill
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.LevelBasedEffect
 import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
 import com.fs.starfarer.api.characters.SkillSpecAPI
@@ -26,7 +27,7 @@ class TimeCoreSkill : RATBaseShipSkill() {
         info!!.addSpacer(2f)
         info.addPara("Ballistic & Energy base weapon ranges can no longer go beyond 500/600/700 units and weapon ranges are decreased by an additional 20%%.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(5f)
-        info!!.addPara("+25%% timeflow", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("+15%% timeflow", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("+25%% maneuverability", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("+10 su/second to the ships max speed.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
@@ -42,7 +43,7 @@ class TimeCoreSkill : RATBaseShipSkill() {
             }
         }
 
-        stats.timeMult.modifyMult(modID, 1.25f)
+        stats.timeMult.modifyMult(modID, 1.15f)
         stats.acceleration.modifyMult(modID, 1.25f)
         stats.deceleration.modifyMult(modID, 1.25f)
         stats.turnAcceleration.modifyMult(modID, 1.25f)
@@ -67,7 +68,7 @@ class TimeCoreSkill : RATBaseShipSkill() {
 }
 
 //Caps Base Range at 500
-class ChronosRangeModifier(var ship: ShipAPI) : WeaponBaseRangeModifier {
+class ChronosRangeModifier(var ship: ShipAPI) : WeaponBaseRangeModifier, AdvanceableListener {
 
     override fun getWeaponBaseRangePercentMod(ship: ShipAPI?, weapon: WeaponAPI?): Float {
         return 0f
@@ -93,5 +94,18 @@ class ChronosRangeModifier(var ship: ShipAPI) : WeaponBaseRangeModifier {
         }
 
         return 0f
+    }
+
+    override fun advance(amount: Float) {
+        var mod = 1.15f
+        var modID = ship.id + "abyssal_adaptability"
+
+        ship.mutableStats!!.timeMult.modifyMult(modID, mod);
+        if (ship == Global.getCombatEngine().playerShip) {
+            Global.getCombatEngine().timeMult.modifyMult(modID + ship.id, 1 / mod)
+        }
+        else {
+            Global.getCombatEngine().timeMult.unmodify(modID + ship.id)
+        }
     }
 }

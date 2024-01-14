@@ -11,7 +11,6 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
-import org.lwjgl.util.vector.Vector2f
 
 class AbyssalSeraphsGrace : BaseHullMod() {
 
@@ -165,7 +164,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
         tooltip.addPara("While in the abyss, whenever a stack dissipates it vents 10 flux with it.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10")
 
         tooltip!!.addLunaElement(0f, 0f).apply {
-            render {particleSpawner.renderVignette(element, it)  }
+            render {particleSpawner.renderForeground(element, it)  }
         }
     }
 

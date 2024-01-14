@@ -1,11 +1,10 @@
 package assortment_of_things.abyss.shipsystem.ai
 
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import org.lwjgl.util.vector.Vector2f
 
-class AbolethSystemAI : ShipSystemAIScript {
+class AbyssalCloakSystemAI : ShipSystemAIScript {
 
     var ship: ShipAPI? = null
 

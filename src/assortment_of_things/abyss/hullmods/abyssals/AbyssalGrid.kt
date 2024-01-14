@@ -1,7 +1,6 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
 import assortment_of_things.abyss.hullmods.HullmodTooltipAbyssParticles
-import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
@@ -61,8 +60,9 @@ class AbyssalGrid : BaseHullMod() {
             "energy weapons", "10%", "100", "emp", "25%", "abyssal storms")
 
 
+
         tooltip!!.addLunaElement(0f, 0f).apply {
-            render {particleSpawner.renderVignette(element, it)  }
+            render {particleSpawner.renderForeground(element, it)  }
         }
 
     }
