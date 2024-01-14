@@ -1,13 +1,9 @@
 package assortment_of_things.abyss.hullmods
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CampaignEngineLayers
-import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.combat.ViewportAPI
-import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.IntervalUtil
 import lunalib.lunaUI.elements.LunaElement
 import org.lazywizard.lazylib.MathUtils
@@ -18,6 +14,10 @@ import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 class HullmodTooltipAbyssParticles(var tooltip: TooltipMakerAPI, var initialHeight: Float) {
+
+    companion object {
+        var particles = ArrayList<AbyssalLightParticle>()
+    }
 
     class AbyssalLightParticle(var fadeIn: Float, var duration: Float, var fadeOut: Float, var color: Color, var alpha: Float, var size: Float, var location: Vector2f, var velocity: Vector2f) {
 
@@ -37,12 +37,11 @@ class HullmodTooltipAbyssParticles(var tooltip: TooltipMakerAPI, var initialHeig
         var adjustmentInterval = IntervalUtil(0.5f, 0.75f)
     }
 
-    var particles = ArrayList<AbyssalLightParticle>()
 
     var particleInterval = IntervalUtil(0.2f, 0.2f)
 
     var halo = Global.getSettings().getSprite("rat_terrain", "halo")
-    var vignette = Global.getSettings().getSprite("graphics/fx/rat_darkness_vignette_reversed.png")
+    var foreground = Global.getSettings().getAndLoadSprite("graphics/fx/rat_darkener.png")
 
     var color = AbyssUtils.ABYSS_COLOR
 
@@ -106,16 +105,16 @@ class HullmodTooltipAbyssParticles(var tooltip: TooltipMakerAPI, var initialHeig
 
 
 
-            var amount = 2
+            var count = 2
             var fadeInOverwrite = false
 
 
             if (particles.size <= 10) {
-                amount = 10
+                count = 10
                 fadeInOverwrite = true
             }
 
-            for (i in 0..amount) {
+            for (i in 0..count) {
 
                 var velocity = Vector2f(0f, 0f)
                 velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), MathUtils.getRandomNumberInRange(30f, 50f), MathUtils.getRandomNumberInRange(0f, 360f)))
@@ -163,14 +162,14 @@ class HullmodTooltipAbyssParticles(var tooltip: TooltipMakerAPI, var initialHeig
         endStencil()
     }
 
-    fun renderVignette(element: LunaElement, alphaMult: Float) {
+    fun renderForeground(element: LunaElement, alphaMult: Float) {
 
         startStencil(element)
 
-        vignette.color = Color(50, 0, 0)
-        vignette.alphaMult = 0.3f
-        vignette.setSize(tooltip.widthSoFar + 40, tooltip.heightSoFar + 40)
-        vignette.render(element.x - 20, element.y - tooltip.heightSoFar + 20)
+        foreground.color = Color(50, 0, 0)
+        foreground.alphaMult = 0.25f
+        foreground.setSize(tooltip.widthSoFar + 40, tooltip.heightSoFar + 40)
+        foreground.render(element.x - 20, element.y - tooltip.heightSoFar + 20)
 
         endStencil()
 

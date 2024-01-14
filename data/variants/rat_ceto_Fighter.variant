@@ -14,7 +14,8 @@
       "mode": "ALTERNATING",
       "weapons": {
         "WS0001": "rat_ceto_blaster",
-        "WS0002": "rat_ceto_blaster"
+        "WS0002": "rat_ceto_blaster",
+        "WS0003": "rat_ceto_laser"
       }
     }
   ],

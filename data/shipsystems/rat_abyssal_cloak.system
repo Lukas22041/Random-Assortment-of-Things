@@ -1,10 +1,10 @@
 {
-	"id":"aboleth_system",
+	"id":"rat_abyssal_cloak",
 	"type":"PHASE_CLOAK",
 	"aiType":"CUSTOM",
-	"aiScript":"assortment_of_things.abyss.shipsystem.ai.AbolethSystemAI",
+	"aiScript":"assortment_of_things.abyss.shipsystem.ai.AbyssalCloakSystemAI",
 	
-	"statsScript":"assortment_of_things.abyss.shipsystem.AbolethShipsystem",
+	"statsScript":"assortment_of_things.abyss.shipsystem.AbyssalCloakShipsystem",
 	"runScriptWhilePaused":true, # only for the player's ship
 	"runScriptWhileIdle":true,  # this means unapply() never gets called
 	"blockActionsWhileChargingDown":false,

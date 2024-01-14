@@ -21,8 +21,8 @@
       "type": "ENERGY",
       "mount": "HIDDEN",
       "arc": 5,
-      "angle": -0,
-      "locations": [18.5, 3]
+      "angle": 0,
+      "locations": [1.5, 15]
     },
     {
       "id": "WS0002",
@@ -30,8 +30,17 @@
       "type": "ENERGY",
       "mount": "HIDDEN",
       "arc": 5,
+      "angle": -0,
+      "locations": [1.5, -15]
+    },
+    {
+      "id": "WS0003",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "HIDDEN",
+      "arc": 5,
       "angle": 0,
-      "locations": [18.5, -3]
+      "locations": [14.5, -0]
     }
   ],
   "engineSlots": [

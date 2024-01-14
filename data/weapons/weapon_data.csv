@@ -3,8 +3,9 @@ name,id,tier,rarity,base value,range,damage/second,damage/shot,emp,impact,turn r
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Abyss Weapons,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Shortfin PD,rat_shortfin,1,,300,300,,15,,1,75,4,,,,ENERGY,1.25,,0,0.075,1,,0,8,1,15,,800,,,10,,,PD,"rat_abyssals, no_sell, no_dealer, restricted, pd8",,Abyssal,,Point Defense,,,,,,,,,,900
-Instability Blaster,rat_ceto_blaster,2,,2000,500,,20,,5,15,0,,,,ENERGY,20,,0,0.7,4,0.10,0,5,0.5,15,,800,,,30,,,,"no_sell, no_drop, no_dealer, restricted, kinetic8",,Abyssal,,Anti Shield,,,,,"%s
+Exomatter Blaster,rat_ceto_blaster,2,,2000,500,,30,,5,15,0,,,,ENERGY,20,,0,0.7,3,0.25,0,5,1,15,,800,,,30,,,,"no_sell, no_drop, no_dealer, restricted, kinetic8",,Abyssal,,Anti Shield,,,,,"%s
 Impacts on hull or armor add a stack of %s to the target, each stack lasts %s seconds and increases the damage taken by hull and armor by %s. A ship can have at most %s stacks.",Spatial Instability | instability | 3 | 0.5% | 30,,,,901
+Exotic Plasmastreamer,rat_ceto_laser,1,,1500,500,150,,,0,20,0,,,,HIGH_EXPLOSIVE,,,0.5,0.5,,,,,,,3200,,,,,,,"SYSTEM, USE_LESS_VS_SHIELDS","no_sell, no_dealer, restricted",,Abyssal,,Anti-Armor,,,,,,,,,,20
 Lusca Blaster,rat_lusca,2,,2000,500,,25,,5,20,6,,,,KINETIC,20,,0,0.7,3,0.15,0,5,0.5,15,,800,,,30,,,,"rat_abyssals, no_sell, no_dealer, restricted, kinetic12",,Abyssal,,Anti Shield,,,,,"%s
 Impacts on hull or armor add a stack of %s to the target, each stack lasts %s seconds and increases the damage taken by hull and armor by %s. A ship can have at most %s stacks.",Spatial Instability | instability | 3 | 0.5% | 30,,,,901
 Humpback Blaster,rat_humpback,2,,2000,600,,55,,5,15,13,,,,KINETIC,55,,0,0.6,4,0.15,0,5,0.5,15,,800,,,30,,,,"rat_abyssals, no_sell, no_dealer, restricted, kinetic15",,Abyssal,,Anti Shield,,,,,"%s
@@ -76,7 +77,7 @@ Callisto DEM Launcher,rat_arkas_launcher_left,2,,0,1200,,200,0,15,30,0,2,0.0666,
 Callisto DEM Launcher,rat_arkas_launcher_right,2,,0,1200,,200,0,15,30,0,2,0.0666,2,KINETIC,0,,0,10,2,1,0,0,0,0,,150,100,5,250,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted, damage_special, damage_soft_flux",,Exo-Tech,,Suppression,Slow,Good,,,"The missile fires a beam at the target, dealing approximately %s kinetic and %s emp damage over the course of %s seconds. This damage is affected by missile damage modifiers and not energy weapon ones.",1000 | 750 | 10,,,TRUE,11.94
     Arkas Launcher - Payload,rat_arkas_launcher_payload,2,,0,1000,100,,75,20,30,0,,,,KINETIC,0,,0.1,0.1,10,0.5,,,,,2400,,,,,,,SYSTEM,,,,,,,,,,,,,,,11.95
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Twilight Ray,rat_twilightray,1,,1500,500,500,,,0,20,0,1,,,HIGH_EXPLOSIVE,,,5,1,1,5,,,,,3200,,,,,,,"SYSTEM, USE_LESS_VS_SHIELDS","no_sell, no_dealer, restricted",,Exo-Tech,,General,,,,,,,,,,20
+Twilight Ray,rat_twilightray,1,,1500,500,600,,,0,20,0,1,,,HIGH_EXPLOSIVE,,,5,1,1,5,,,,,3200,,,,,,,"SYSTEM, USE_LESS_VS_SHIELDS","no_sell, no_dealer, restricted",,Exo-Tech,,General,,,,,,,,,,20
 Dawnlance,rat_dawnlance,1,,1500,500,200,,,0,20,0,,,,HIGH_EXPLOSIVE,,,1,1,,,,,,,3200,,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Exo-Tech,,General,,,,,,,,,,20
 Dawnbreaker,rat_dawnbreaker,1,,1200,500,,100,50,0,0,0,2,0.5,2,ENERGY,0,,0,5,2,0.3,10,14,2,5,,300,25,5,75,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted",,Exo-Tech,,General,Medium,Medium,,,,,,,TRUE,12
 Starburst Microlauncher (F),rat_starburst_fighter,1,,1200,500,,40,10,5,0,0,12,2,12,KINETIC,0,,0,2,12,0.1,0,0,0,,,400,50,2,50,,,"SYSTEM, DO_NOT_AIM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted",,Exo-Tech,,Supression,Good,Good,,,,,,,,12
