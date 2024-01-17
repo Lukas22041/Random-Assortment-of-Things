@@ -45,7 +45,7 @@ class ExoshipInteractions : RATInteractionPlugin() {
         exoshipData = ExoUtils.getExoshipData(interactionTarget)
         faction = interactionTarget.faction
 
-        textPanel.addPara("You enter the vicinity of the Exoship \"${interactionTarget.name}\".")
+        textPanel.addPara("You enter the vicinity of the Exoship \"${interactionTarget.market.name}\".")
 
         if (faction.relToPlayer.isHostile) {
             textPanel.addPara("As the fleet attempts to close in, multiple weapon systems go online. It appears due to your reputation with the faction, any attempt at communication is being denied by default.")

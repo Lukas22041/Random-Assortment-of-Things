@@ -167,7 +167,7 @@ class HullmodTooltipAbyssParticles(var tooltip: TooltipMakerAPI, var initialHeig
         startStencil(element)
 
         foreground.color = Color(50, 0, 0)
-        foreground.alphaMult = 0.25f
+        foreground.alphaMult = 0.2f
         foreground.setSize(tooltip.widthSoFar + 40, tooltip.heightSoFar + 40)
         foreground.render(element.x - 20, element.y - tooltip.heightSoFar + 20)
 
