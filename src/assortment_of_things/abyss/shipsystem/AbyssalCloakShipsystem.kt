@@ -56,7 +56,6 @@ class AbyssalCloakShipsystem : BaseShipSystemScript() {
         var jitterUnderColor = color.setAlpha(150)
         var jitterLevel = effectLevel
         var jitterRangeBonus = 0f
-        val maxRangeBonus = 10f
         var mult = 2f
 
         ship!!.setJitter(this, jitterColor, jitterLevel, 3, 0f, 0 + jitterRangeBonus)
@@ -94,10 +93,11 @@ class AbyssalCloakShipsystem : BaseShipSystemScript() {
                 fighter.engineController.extendFlame(this, 0.25f * effectLevel, 0.25f * effectLevel, 0.25f * effectLevel)
 
                 fighter!!.setJitter(this, jitterColor, jitterLevel, 3, 0f, 0f)
-                fighter!!.setJitterUnder(this, jitterUnderColor, jitterLevel, 5, 0f, 7f)
+                fighter!!.setJitterUnder(this, jitterUnderColor.setAlpha(200), jitterLevel, 10, 0f, 7f)
 
-                fighter.engineController.fadeToOtherColor("rat_abyssals_enginefade", color.setAlpha(255), color, 1f, 1f)
-
+                if (fighter.baseOrModSpec().hullId == "rat_ceto") {
+                    fighter.engineController.fadeToOtherColor("rat_abyssals_enginefade", color.setAlpha(255), color, 1f, 1f)
+                }
             }
         }
 
