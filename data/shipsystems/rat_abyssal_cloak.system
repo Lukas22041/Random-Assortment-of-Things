@@ -30,7 +30,7 @@
 	"shipAlpha":1, # handled in stats script
 	#"shipAlpha":0.25,
 	
-	"useSound":"system_phase_cloak_activate",
+	"useSound":"temporal_shell_activate",
 	#"deactivateSound":"system_phase_cloak_deactivate",
 	"deactivateSound":"system_phase_cloak_deactivate",
 	"outOfUsesSound":"system_phase_cloak_collision",
