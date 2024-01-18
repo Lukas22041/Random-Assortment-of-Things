@@ -13,10 +13,12 @@
   "viewOffset": 0,
   "builtInMods": [
     "rat_abyssal_core",
-    "rat_abyssal_grid",
+    "rat_abyssal_grid"
   ],
   "builtInWeapons": {
-    "WS0017": "morkoth_cover"
+    "WS0017": "morkoth_cover",
+    "WS0018": "rat_morkoth_coils_location",
+    "WS0019": "rat_morkoth_coils_location"
   },
   "weaponSlots": [
     {
@@ -171,6 +173,24 @@
       "arc": 5,
       "angle": 0,
       "locations": [127, -0]
+    },
+    {
+      "id": "WS0018",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "HARDPOINT",
+      "arc": 0,
+      "angle": 0,
+      "locations": [61, -117]
+    },
+    {
+      "id": "WS0019",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "HARDPOINT",
+      "arc": 0,
+      "angle": -0,
+      "locations": [61, 117]
     }
   ],
   "engineSlots": [

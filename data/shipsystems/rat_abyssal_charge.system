@@ -1,0 +1,18 @@
+{
+	"id":"rat_abyssal_charge",
+	"type":"STAT_MOD",
+	"aiType":"CUSTOM",
+	"aiScript":"assortment_of_things.abyss.shipsystem.ai.AbyssalChargeSystemAI",
+	
+	"statsScript":"assortment_of_things.abyss.shipsystem.AbyssalChargeShipsystem",
+	"runScriptWhilePaused":true, # only for the player's ship
+	"runScriptWhileIdle":true,  # this means unapply() never gets called
+	"blockActionsWhileChargingDown":false,
+	
+	"canNotCauseOverload":true,
+	
+	"fadeActivationSoundOnChargedown":true,
+	"useSound":"temporal_shell_activate",
+	"outOfUsesSound":"gun_out_of_ammo",
+	#"deactivateSound":"system_recall_device",
+}
