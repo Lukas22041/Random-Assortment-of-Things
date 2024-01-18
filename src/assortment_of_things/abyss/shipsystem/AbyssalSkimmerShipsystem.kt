@@ -59,6 +59,7 @@ class AbyssalSkimmerShipsystem : BaseShipSystemScript() {
         }
 
         var color = AbyssalsAdaptabilityHullmod.getColorForCore(ship!!).setAlpha(100)
+        var secondaryColor = AbyssalsAdaptabilityHullmod.getSecondaryColorForCore(ship!!).setAlpha(75)
 
         if (state == ShipSystemStatsScript.State.IN) {
             var angle =  Misc.getAngleInDegrees(startLocation, targetLocation)
@@ -80,7 +81,7 @@ class AbyssalSkimmerShipsystem : BaseShipSystemScript() {
             if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
             {
                 if (state == ShipSystemStatsScript.State.IN) {
-                    AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(125), Color(150, 0 ,255).setAlpha(75), 0.65f, 25f, Vector2f(ship!!.location))
+                    AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(125), secondaryColor.setAlpha(75), 0.65f, 25f, Vector2f(ship!!.location))
                 }
             }
 
@@ -91,7 +92,7 @@ class AbyssalSkimmerShipsystem : BaseShipSystemScript() {
                 var angle = Misc.getAngleInDegrees(ship!!.location, from)
                 var to = Vector2f(ship!!.exactBounds.segments.random().p1)
 
-                var empColor = Misc.interpolateColor(color, Color(130,4,189, 255), Random().nextFloat() * 0.75f)
+                var empColor = Misc.interpolateColor(color, secondaryColor, Random().nextFloat() * 0.75f)
                 Global.getCombatEngine().spawnEmpArcVisual(from, ship, to, SimpleEntity(to), 5f, empColor.setAlpha(75), empColor.setAlpha(75))
             }
 

@@ -31,20 +31,12 @@ class AbyssSystemData(var system: StarSystemAPI) {
     var fractures = ArrayList<AbyssalFracture>()
 
     fun getColor() : Color {
-        if (RATModPlugin.isHalloween) {
-            return Color.getHSBColor(0.075f, 1f, 1f)
-        }
-
         if (RATSettings.brighterAbyss!!) return baseColor.brighter()
 
         return baseColor
     }
 
     fun getDarkColor() : Color {
-        if (RATModPlugin.isHalloween) {
-            return Color.getHSBColor(0.075f, 1f, 0.2f)
-        }
-
         if (RATSettings.brighterAbyss!!) return baseDarkColor.brighter()
 
         return baseDarkColor

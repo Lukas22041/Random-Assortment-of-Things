@@ -5,7 +5,7 @@ Shield,rat_shield_object,,High Tech,,,100,10,1000,,100,0,,325,200,150,180,360,10
 #Abyssals,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Ceto,rat_ceto,,Abyssal,,,600,80,800,,100,0,,250,380,360,120,240,20,OMNI,,270,0,1,,,0,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Merrow,rat_merrow,Droneship,Abyssal,maneuveringjets,7,1250,250,2500,2500,300,45,,130,180,170,75,230,150,OMNI,,200,0.3,0.55,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,5,5,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,2,,3101
+Merrow,rat_merrow,Droneship,Abyssal,rat_abyssal_current,7,1250,250,2500,2500,300,45,,130,180,170,75,230,150,OMNI,,200,0.3,0.55,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,6,6,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,2,,3101
 Makara,rat_makara,Droneship,Abyssal,rat_abyssal_cloak,9,1300,225,2750,2500,300,55,,95,140,130,50,120,150,OMNI,,270,0.3,0.6,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,8,8,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,2,,3101
 Chuul,rat_chuul,Droneship,Abyssal,rat_abyssal_skimmer,12,5000,450,5000,3750,400,110,,90,75,50,30,50,500,OMNI,,190,0.3,0.6,,,0,0,80,60,2,30,10,50000,5,15,420,0.25,11,11,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,3,,3102
 Aboleth (F),rat_aboleth,Droneship Cruiser,Abyssal,rat_abyssal_cloak,20,8000,900,10000,12500,700,165,2,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,"HIDE_IN_CODEX, CARRIER, COMBAT","auto_rec, rat_abyssals",,0.5,2,3,,3103

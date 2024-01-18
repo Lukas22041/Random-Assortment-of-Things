@@ -58,7 +58,7 @@ rat_sarakiel,SHIP,"A hull with no official records of its existance, found withi
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
 ,,,,,,
-merrow_system,SHIP_SYSTEM,"The ship has an adaptive shipsystem that will change depending on the active AI core. Without a core, the shipsystem can not be activated. Using a chronos core, the shipsystem increases the firerate of ballistic and energy weapons, with a cosmos core, it is able to vent hardflux with the shields active.",,,,
+rat_abyssal_current,SHIP_SYSTEM,"When activated, the ship can fire its built-in ""Abyssal Wave Emitter"" weapon. This beam enables a short burst of damage, partially dealing EMP damage through emitted EMP Arcs.",,,,
 rat_abyssal_skimmer,SHIP_SYSTEM,,,"Instantly relocates the ship some distance in to the direction the ship is travelling. For a short moment after activation, time is slowed down and flux dissipation is increased by 25%.",relocates | slowed | 25%,
 rat_abyssal_cloak,SHIP_SYSTEM,,,"Temporarily doubles the ships timeflow, decreases damage taken by 20% and increases the damage dealt by non-missile weapons by 10%. Also effects all fighters deployed by the ship.",doubles | 20% | 10%,
 morkoth_system,SHIP_SYSTEM,"The ship has an adaptive shipsystem that will change depending on the active AI core. Without a core, the shipsystem can not be activated. With a chronos core, the ship gets a brief but strong boost in maneuverability, where as with a cosmos core it is able to turn shield damage taken in to several beneficial buffs.",,,,
@@ -67,6 +67,7 @@ rat_sariel_system,SHIP_SYSTEM,"Disables shields and prevents any increases in we
 ,,,,,,
 ,,,,,,
 #Abyss Builtins,,,,,,
+rat_merrow_beam,WEAPON,A strong beam that is only capable of firing when the ship enables its shipsystem. The beam is highly efficient on flux use and can pose a large threat to unshielded hulls due to its high EMP output.,,,,
 ,,,,,,
 rat_sariel_launcher_left,WEAPON,A small missile launcher that recharges its ammunition by absorbing remaining flux from the surroundings of targeted ships.,,,,
 rat_sariel_launcher_right,WEAPON,A small missile launcher that recharges its ammunition by absorbing remaining flux from the surroundings of targeted ships.,,,,
