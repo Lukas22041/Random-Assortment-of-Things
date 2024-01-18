@@ -4,6 +4,7 @@ import assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod
 import assortment_of_things.combat.AfterImageRenderer
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.CombatEntityAPI
+import com.fs.starfarer.api.combat.MissileAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipSystemAPI

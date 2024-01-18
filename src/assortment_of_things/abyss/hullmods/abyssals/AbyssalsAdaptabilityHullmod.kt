@@ -45,6 +45,18 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             return color
         }
 
+        fun getSecondaryColorForCore(ship: ShipAPI) : Color
+        {
+            var color = Color(150, 0 ,255)
+
+            if (isSeraphCore(ship))
+            {
+                color = Color(156, 20, 35, 255)
+            }
+
+            return color
+        }
+
 
         fun hasAbyssalCore(ship: ShipAPI) : Boolean {
             if (isSeraphCore(ship)) return true

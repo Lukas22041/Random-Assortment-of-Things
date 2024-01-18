@@ -51,6 +51,7 @@ class AbyssalCloakShipsystem : BaseShipSystemScript() {
 
 
         var color = AbyssalsAdaptabilityHullmod.getColorForCore(ship!!).setAlpha(75)
+        var secondaryColor = AbyssalsAdaptabilityHullmod.getSecondaryColorForCore(ship).setAlpha(75)
 
         var jitterColor = color.setAlpha(55)
         var jitterUnderColor = color.setAlpha(150)
@@ -105,13 +106,13 @@ class AbyssalCloakShipsystem : BaseShipSystemScript() {
             afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
             if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
             {
-                AfterImageRenderer.addAfterimage(ship!!, color, Color(150, 0 ,255).setAlpha(75), 2f, 2f, Vector2f().plus(ship!!.location))
+                AfterImageRenderer.addAfterimage(ship!!, color, secondaryColor.setAlpha(75), 2f, 2f, Vector2f().plus(ship!!.location))
             }
             afterimageFighterInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
             if (afterimageFighterInterval.intervalElapsed() && !Global.getCombatEngine().isPaused) {
                 for (wing in ship.allWings) {
                     for (fighter in wing.wingMembers) {
-                        AfterImageRenderer.addAfterimage(fighter, color, Color(150, 0 ,255).setAlpha(75), 1f, 1f, Vector2f().plus(fighter.location))
+                        AfterImageRenderer.addAfterimage(fighter, color, secondaryColor.setAlpha(75), 1f, 1f, Vector2f().plus(fighter.location))
                     }
                 }
             }
