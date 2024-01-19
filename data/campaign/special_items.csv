@@ -1,6 +1,6 @@
 name,id,tags,tech/manufacturer,rarity,base price,stack size,cargo space,baseRaidDanger,icon,sound id,sound id drop,plugin,plugin params,desc,order
 #Abyss,,,,,,,,,,,,,,,
-Hullmod installer,rat_alteration_install,,Hull Alteration,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,"A hull alteration is a special, consumable hull modification that can be installed through the ""Additional Options"" section at the top of the refit screen.",400
+Hullmod installer,rat_alteration_install,,Hull Alteration,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,,400
 Abyssal Survey Data,rat_abyss_survey,,,,20000,1000,1,,graphics/icons/cargo/rat_abyss_survey.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalSurveyData,,,402
 ,,,,,,,,,,,,,,,
 #Relics,,,,,,,,,,,,,,,

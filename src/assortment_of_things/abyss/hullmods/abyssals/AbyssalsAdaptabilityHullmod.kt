@@ -245,7 +245,7 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
         tooltip.addSpacer(10f)
 
         var chronosImage = tooltip.beginImageWithText("graphics/icons/cargo/rat_chronos_core.png", 32f)
-        chronosImage.addPara("Provides the ship with an 10%% increase in timeflow and the shipsystems cooldown recovers 10%% faster.", 0f,
+        chronosImage.addPara("Provides the ship with a 10%% increase in timeflow and the shipsystems cooldown recovers 10%% faster.", 0f,
             chronosColor, Misc.getHighlightColor(), "10%", "10%")
         tooltip.addImageWithText(0f)
 

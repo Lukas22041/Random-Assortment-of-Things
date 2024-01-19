@@ -443,7 +443,7 @@ class  AbyssGenerator {
         for (member in fleet.fleetData.membersListCopy) {
             member.variant.addTag(Tags.TAG_NO_AUTOFIT)
         }
-        AbyssUtils.addAlterationsToFleet(fleet, 0.8f, Random())
+        AbyssUtils.addAlterationsToFleet(fleet, 0.4f, Random())
         AbyssalSeraphSpawner.sortWithSeraphs(fleet)
 
         /*  for (i in 0 until 3) {

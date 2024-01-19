@@ -169,11 +169,12 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
         tooltip.addTitle(name)
         val design = hullmodSpec!!.manufacturer
         Misc.addDesignTypePara(tooltip, design, opad)
-        if (!spec.desc.isEmpty()) {
-            var c = Misc.getTextColor()
-            if (useGray) c = Misc.getGrayColor()
-            tooltip.addPara(spec.desc, c, opad)
-        }
+
+        var c = Misc.getTextColor()
+        if (useGray) c = Misc.getGrayColor()
+        tooltip.addPara("A hull alteration is a special, consumable hull modification that can be installed through the \"Additional Options\" section at the top of the refit screen.",
+            opad, c, Misc.getHighlightColor(), "\"Additional Options\"")
+
         if (javaClass == BaseSpecialItemPlugin::class.java) {
             addCostLabel(tooltip, opad, transferHandler, stackSource)
         }
