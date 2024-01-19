@@ -65,8 +65,8 @@ class IntegratedChronosCore : BaseAlteration() {
 
         tooltip!!.addSpacer(5f)
         tooltip!!.addPara("Replaces the ships AI-Components with a miniature bridge and integrates a chronos core in to the ships subsystem. " +
-                "This allows humans to crew the ship, while enabling the chronos-core related shipsystem. Also provides the cores skill to the ship.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "chronos-core", "shipsystem")
+                "This allows humans to crew the ship. It enables the bonuses from the \"Abyssal Adaptability\" hullmod and provides the cores skill to the ship.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "\"Abyssal Adaptability\"", "skill")
 
         var timeSkill = Global.getSettings().getSkillSpec("rat_core_time")
         tooltip.addSpacer(10f)

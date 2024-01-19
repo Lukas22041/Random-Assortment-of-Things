@@ -61,8 +61,8 @@ class IntegratedCosmosCore : BaseAlteration() {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
         tooltip!!.addPara("Replaces the ships AI-Components with a miniature bridge and integrates a cosmos core in to the ships subsystem. " +
-                "This allows humans to crew the ship, while enabling the cosmos-core related shipsystem. Also provides the cores skill to the ship.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "cosmos-core", "shipsystem")
+                "This allows humans to crew the ship. It enables the bonuses from the \"Abyssal Adaptability\" hullmod and provides the cores skill to the ship.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "\"Abyssal Adaptability\"", "skill")
 
         var spaceSkill = Global.getSettings().getSkillSpec("rat_core_space")
         tooltip.addSpacer(10f)
