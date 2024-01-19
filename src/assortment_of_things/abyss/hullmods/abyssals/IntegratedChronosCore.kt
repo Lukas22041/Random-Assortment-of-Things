@@ -90,11 +90,11 @@ class IntegratedChronosCore : BaseAlteration() {
     }
 
     override fun canUninstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return member!!.captain == null || member!!.captain.nameString == ""
+        return false
     }
 
     override fun cannotUninstallAlterationTooltip(tooltip: TooltipMakerAPI?,member: FleetMemberAPI?, variant: ShipVariantAPI?,width: Float) {
-        tooltip!!.addPara("Can not be removed while an officer is assigned to the ship.", 0f,
+        tooltip!!.addPara("Can not be removed while a core is integrated.", 0f,
             Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
     }
 

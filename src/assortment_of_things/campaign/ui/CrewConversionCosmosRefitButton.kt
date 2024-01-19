@@ -64,8 +64,8 @@ class CrewConversionCosmosRefitButton : BaseRefitButton() {
         var cosmosStack = getCosmosStack(market)
 
         if (event!!.isLMBEvent && event.isDoubleClick && cosmosStack != null) {
-            variant!!.removePermaMod("rat_abyssal_conversion")
-            variant!!.addPermaMod("rat_cosmos_conversion", true)
+            variant!!.removeMod("rat_abyssal_conversion")
+            variant!!.addMod("rat_cosmos_conversion")
 
             Global.getSoundPlayer().playUISound("ui_char_spent_story_point", 1f, 1f)
 

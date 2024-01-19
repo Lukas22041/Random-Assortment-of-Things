@@ -52,21 +52,21 @@ class CrewConversionRemoveIntegratedRefitButton : BaseRefitButton() {
         if (event!!.isLMBEvent && event.isDoubleClick) {
 
             if (variant!!.hasHullMod("rat_chronos_conversion")) {
-                variant!!.removePermaMod("rat_chronos_conversion")
+                variant!!.removeMod("rat_chronos_conversion")
                 Global.getSector().playerFleet.cargo.addCommodity(RATItems.CHRONOS_CORE, 1f)
             }
 
             if (variant.hasHullMod("rat_cosmos_conversion")) {
-                variant!!.removePermaMod("rat_cosmos_conversion")
+                variant!!.removeMod("rat_cosmos_conversion")
                 Global.getSector().playerFleet.cargo.addCommodity(RATItems.COSMOS_CORE, 1f)
             }
 
             if (variant.hasHullMod("rat_seraph_conversion")) {
-                variant!!.removePermaMod("rat_seraph_conversion")
+                variant!!.removeMod("rat_seraph_conversion")
                 Global.getSector().playerFleet.cargo.addCommodity(RATItems.SERAPH_CORE, 1f)
             }
 
-            variant!!.addPermaMod("rat_abyssal_conversion", true)
+            variant!!.addMod("rat_abyssal_conversion")
 
             Global.getSoundPlayer().playUISound("ui_char_spent_story_point", 1f, 1f)
 
