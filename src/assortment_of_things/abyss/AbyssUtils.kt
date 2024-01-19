@@ -149,7 +149,7 @@ object AbyssUtils {
                 variant.source = VariantSource.REFIT
                 member.setVariant(variant, false, true)
             }
-            member.variant.addPermaMod(pick, true)
+            member.variant.addMod(pick)
             member.updateStats()
 
         }

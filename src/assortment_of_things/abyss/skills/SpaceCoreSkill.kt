@@ -22,7 +22,7 @@ class SpaceCoreSkill : RATBaseShipSkill() {
 
         info!!.addPara("The ships max speed and maneuverability is reduced by 25%% and the weapon fire rate is reduced by 20%%.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(5f)
-        info!!.addPara("+15% range for ballistic and energy weapons.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("+15%% range for ballistic and energy weapons.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("+10%% damage to ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("-10%% shield, armor & hull damage taken.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
