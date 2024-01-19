@@ -34,7 +34,7 @@
 		"nameInText":"fabrication station",
 		"shortName":"station",
 		"customDescriptionId":"rat_abyss_fabrication",
-		"interactionImage":"graphics/illustrations/rat_abyss_abandoned.jpg",
+		"interactionImage":"graphics/illustrations/rat_abyss_wreckage.jpg",
 		"icon":"graphics/icons/station0.png",
 		"iconWidth":20,
 		"iconHeight":20,

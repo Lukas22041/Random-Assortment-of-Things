@@ -22,7 +22,7 @@ class SpaceCoreSkill : RATBaseShipSkill() {
 
         info!!.addPara("The ships max speed and maneuverability is reduced by 25%% and the weapon fire rate is reduced by 20%%.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(5f)
-        info!!.addPara("+100 units to ballistic and energy weapon range.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("+15% range for ballistic and energy weapons.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("+10%% damage to ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("-10%% shield, armor & hull damage taken.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
@@ -42,8 +42,8 @@ class SpaceCoreSkill : RATBaseShipSkill() {
         stats.damageToCruisers.modifyMult(modID, 1.1f)
         stats.damageToCapital.modifyMult(modID, 1.1f)
 
-        stats.energyWeaponRangeBonus.modifyFlat(modID, 100f)
-        stats.ballisticWeaponRangeBonus.modifyFlat(modID, 100f)
+        stats.energyWeaponRangeBonus.modifyPercent(modID, 15f)
+        stats.ballisticWeaponRangeBonus.modifyPercent(modID, 15f)
 
         stats.ballisticRoFMult.modifyMult(modID, 0.8f)
         stats.energyRoFMult.modifyMult(modID, 0.8f)
