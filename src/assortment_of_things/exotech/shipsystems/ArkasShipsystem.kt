@@ -37,7 +37,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
     var timer = 0f
     var isCountingTimer = false
     var actualIn = 1f
-    var actualActive = 10f
+    var actualActive = 11f
     var maxTime = actualActive + actualIn
 
 
@@ -87,7 +87,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         var elapsed = afterimageInterval.intervalElapsed()
         for (phantom in ArrayList(phantoms)) {
 
-            phantom.phaseCloak.forceState(ShipSystemAPI.SystemState.IDLE, 0f)
+            //phantom.phaseCloak.forceState(ShipSystemAPI.SystemState.IDLE, 0f)
             phantom.collisionClass = CollisionClass.NONE
             phantom.setShipSystemDisabled(true)
             phantom.isDefenseDisabled = true
@@ -99,9 +99,9 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
                 phantom.giveCommand(ShipCommand.ACCELERATE, null, 0)
             }
 
-            if (MathUtils.getDistance(ship!!, phantom) <= ship!!.collisionRadius) {
+            /*if (MathUtils.getDistance(ship!!, phantom) <= ship!!.collisionRadius) {
                 phantom.isHoldFireOneFrame = true
-            }
+            }*/
 
             if (elapsed && !Global.getCombatEngine().isPaused && phantom.isAlive) {
                 AfterImageRenderer.addAfterimage(phantom, color.setAlpha((30 * stateLevel).toInt()), Color(130,4,189, 0), 2f, 0f, Vector2f(phantom.location), false)
@@ -166,6 +166,9 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
     fun spawnPhantom() : ShipAPI {
         var variant = ship!!.variant.clone()
 
+        var spec = Global.getSettings().getHullSpec("rat_arkas_phantom")
+        variant.setHullSpecAPI(spec)
+
         for (slotID in variant.fittedWeaponSlots) {
             var slot = variant.getSlot(slotID) ?: continue
             if (slot.isBuiltIn) {
@@ -211,6 +214,12 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             new.setRemainingCooldownTo(0.2f)
             new.setForceNoFireOneFrame(true)
             //new.ammo = original.ammo
+        }
+
+        for (weapon in phantom.allWeapons) {
+            weapon.ensureClonedSpec()
+            weapon.spec.aiHints.add(WeaponAPI.AIHints.DO_NOT_CONSERVE)
+            weapon.spec.aiHints.remove(WeaponAPI.AIHints.USE_LESS_VS_SHIELDS)
         }
 
         phantoms.add(phantom!!)

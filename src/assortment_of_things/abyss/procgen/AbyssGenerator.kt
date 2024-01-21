@@ -54,7 +54,7 @@ class  AbyssGenerator {
         var abyssData = AbyssData()
         Global.getSector().memoryWithoutUpdate.set(AbyssUtils.ABYSS_DATA_KEY, abyssData)
 
-        var hyperspaceLocation = Vector2f(-20000f, -15000f)
+        var hyperspaceLocation = Vector2f(-25000f, -20000f)
         var orion = Global.getSector().hyperspace.customEntities.find { it.fullName.contains("Orion-Perseus") }
         if (orion != null) {
             hyperspaceLocation = orion.location.plus(Vector2f(0f, -1000f))
@@ -80,6 +80,7 @@ class  AbyssGenerator {
         fractures.fracture1.location.set(hyperspaceLocation)
         fractures.fracture2.location.set(Vector2f(0f, 0f))
 
+        fractures.fracture1.name = "The Abyssal Depths"
 
         val hyper = Misc.getHyperspaceTerrain().plugin as HyperspaceTerrainPlugin
         val editor = NebulaEditor(hyper)
@@ -128,7 +129,7 @@ class  AbyssGenerator {
 
 
         //Fake icon system
-        var iconSystem = Global.getSector().createStarSystem("Abyss")
+        var iconSystem = Global.getSector().createStarSystem("Abyssal Depths")
         iconSystem.addTag(Tags.THEME_HIDDEN)
         iconSystem.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
         //iconSystem.initNonStarCenter()
@@ -150,7 +151,7 @@ class  AbyssGenerator {
 
         var entrancePoint = points.find { it.destinations.any { it.destination.containingLocation == iconSystem } }
         entrancePoint!!.radius = 0f
-        entrancePoint.name = "Abyssal Fracture"
+        entrancePoint.name = "The Abyssal Depths"
         entrancePoint.addTag("rat_abyss_entrance")
         entrancePoint.clearDestinations()
         entrancePoint.memoryWithoutUpdate.set("\$rat_jumpoint_destination_override", fractures.fracture2)

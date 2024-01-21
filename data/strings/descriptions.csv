@@ -15,9 +15,9 @@ The astute starship captain will heed well its warning.",,
 ,,,,,,
 rat_abyss_fabrication,CUSTOM,An abandoned station equipped with the tools required to manufacture components from local abyssal matter. Scans indicate that it has been dead for ages.,,,,
 rat_abyss_accumalator,CUSTOM,A station that once collected charged abyssal matter to power local infrastructure and produce new technologies.,,,,
-rat_abyss_research,CUSTOM,A unique and abandoned research station that performed experiments with the exotic matter of the abyss. It is said that many new technologies were once in the grasp of completion thanks to this type of station.,,,,
-rat_abyss_drone,CUSTOM,"An Abandoned multi-purpose drone that was once used for delivering materials, scanning locations and deploying smaller droneships for local tasks throughout the abyss.",,,,
-rat_abyss_transmitter,CUSTOM,A relatively small transmitter that was used to establish a communication network through the different zones of the abyss and to measure local phenonema.,,,,
+rat_abyss_research,CUSTOM,A unique and abandoned research station that performed experiments with the exotic matter of the abyssal depths. It is said that many new technologies were once in the grasp of completion thanks to this type of station.,,,,
+rat_abyss_drone,CUSTOM,"An Abandoned multi-purpose drone that was once used for delivering materials, scanning locations and deploying smaller droneships for local tasks throughout the abyssal depths.",,,,
+rat_abyss_transmitter,CUSTOM,A relatively small transmitter that was used to establish a communication network through the different zones of the abyssal depths and to measure local phenonema.,,,,
 rat_abyss_unknown_lab,CUSTOM,A small station that with no remaining records of its existance. Scans indicate that it may have been abandoned for longer than just since the collapse.,,,,
 rat_military_outpost,CUSTOM,A small military outpost that doesnt appear on any surviving records.,,,,
 ,,,,,,
@@ -25,36 +25,33 @@ rat_abyss_photosphere,CUSTOM,"This anomalous object appears to perform active fu
 ,,,,,,
 rat_chronos_core,RESOURCE,"A core resembling that of an alpha-level ai. It appears heavily altered, though by what remains unknown, as the core refuses to respond to any such matter. It has a high affinity for time-manipulating machinery. ",,,,
 rat_cosmos_core,RESOURCE,"A core resembling that of an alpha-level ai. It appears heavily altered, though by what remains unknown, as the core refuses to respond to any such matter. It has a high affinity for space-bending mechanisms. ",,,,
-rat_seraph_core,RESOURCE,"An odd core from the depths of the abyss. It is unable to process normal speech patterns, but appears to be capable of understanding commands. Even in the context of artificial intelligence, it seems especialy reckless. ",,,,
+rat_seraph_core,RESOURCE,"An odd core from the abyssal depths. It is unable to process normal speech patterns, but appears to be capable of understanding commands. Even in the context of artificial intelligence, it seems especialy reckless. ",,,,
 ,,,,,,
 ,,,,,,
 rat_ceto,SHIP,A small and fast fighter that packs a strong shield. Its weapons can temporarily decrease the effectiveness of the opponents armor.,,,,
 ,,,,,,
-rat_merrow,SHIP,"A hull with no official records of its existance, found within the depths of the abyss. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
+rat_merrow,SHIP,"A hull with no official records of its existance, found within the abyssal depths. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
-rat_makara,SHIP,"A hull with no official records of its existance, found within the depths of the abyss. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
+rat_makara,SHIP,"A hull with no official records of its existance, found within the abyssal depths. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
-rat_chuul,SHIP,"A hull with no official records of its existance, found within the depths of the abyss. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
+rat_chuul,SHIP,"A hull with no official records of its existance, found within the abyssal depths. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
-rat_aboleth,SHIP,"A hull with no official records of its existance, found within the depths of the abyss. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
+rat_aboleth,SHIP,"A hull with no official records of its existance, found within the abyssal depths. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
-rat_aboleth_m,SHIP,"A hull with no official records of its existance, found within the depths of the abyss. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
+rat_aboleth_m,SHIP,"A hull with no official records of its existance, found within the abyssal depths. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
-rat_morkoth,SHIP,"A hull with no official records of its existance, found within the depths of the abyss. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
+rat_morkoth,SHIP,"A hull with no official records of its existance, found within the abyssal depths. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind.",Unidentified Vessel,"UNKNOWN ENTRY
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
-rat_raguel,SHIP,"A hull with no official records of its existance, found within the depths of the abyss. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind. Some unknown type of energy is emitted from the center of the ship.",Unidentified Vessel,"UNKNOWN ENTRY
+rat_raguel,SHIP,"A hull with no official records of its existance, found within the abyssal depths. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind. Some unknown type of energy is emitted from the center of the ship.",Unidentified Vessel,"UNKNOWN ENTRY
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
-rat_sariel,SHIP,"A hull with no official records of its existance, found within the depths of the abyss. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind. Some unknown type of energy is emitted from the center of the ship.",Unidentified Vessel,"UNKNOWN ENTRY
-
-Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
-rat_sarakiel,SHIP,"A hull with no official records of its existance, found within the depths of the abyss. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind. Some unknown type of energy is emitted from the center of the ship.",Unidentified Vessel,"UNKNOWN ENTRY
+rat_sariel,SHIP,"A hull with no official records of its existance, found within the abyssal depths. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind. Some unknown type of energy is emitted from the center of the ship.",Unidentified Vessel,"UNKNOWN ENTRY
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
 ,,,,,,
@@ -108,7 +105,7 @@ There however appear to be certain zones that have an especially high concentrat
 
 A few crew members seem to enjoy watching this anomaly through the fleets instruments, it apparently reminds them of the weather of their homeworld.
 ",,,
-rat_abyss_log2,CUSTOM,Autonomous Operations,"Overtime the expeditions in to the abyss ramped up. As we discovered more use for the abyssal matter for new technologies, more parties started to show interests despite the danger. 
+rat_abyss_log2,CUSTOM,Autonomous Operations,"Overtime the expeditions in to the abyssal depths ramped up. As we discovered more use for the abyssal matter for new technologies, more parties started to show interests despite the danger. 
 
 Due to this new found interest, the place has been flooded with autonomous droneships. Everyone is trying to either make the most of the financial gain connected to taking their own share, and such has been much easier when hulls dont have to be made to a human standard or their families have to be compensated.
 
@@ -116,7 +113,7 @@ Despite this, the AI cores prove rather unreliable at times. At times the drones
 
 All this commotion even lead to a new gate being constructed close to the surface of the abyss. There were concerns about how it would interact with the enviroment at first, but it appears to be working fine in the end. 
 ",,,
-rat_abyss_log3,CUSTOM,Vastness,"As we first discovered this abyss, we were unable to make it through the terrain and had to wait for further supplies and improved hulls to arrive from beyond the gates. It would be suicide to attempt expeditions without that equipment.
+rat_abyss_log3,CUSTOM,Vastness,"As we first discovered the abyssal depths, we were unable to make it through the terrain and had to wait for further supplies and improved hulls to arrive from beyond the gates. It would be suicide to attempt expeditions without that equipment.
 
 We’ve been traversing it for months now, each time we surface back in to hyperspace and dive back in we make some more progress in to its depths, but we havent been able to discover anything new for a while now.
 

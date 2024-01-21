@@ -145,7 +145,7 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             stats.systemRegenBonus.modifyMult(id, 1.1f)
         }
         else if (isCosmosCore(stats.fleetMember)) {
-            stats.hardFluxDissipationFraction.modifyFlat(id, 0.1f)
+            stats.hardFluxDissipationFraction.modifyFlat(id, 0.05f)
 
             stats.recoilPerShotMult.modifyMult(id, 0.5f)
             stats.recoilDecayMult.modifyMult(id, 1.25f)
@@ -252,8 +252,8 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
         tooltip.addSpacer(10f)
 
         var cosmosImage = tooltip.beginImageWithText("graphics/icons/cargo/rat_cosmos_core.png", 32f)
-        cosmosImage.addPara("The ship gains the ability to vent hardflux at 10%% of the normal dissipation rate and weapons have decreased recoil.", 0f,
-            cosmosColor, Misc.getHighlightColor(), "10%", "decreased")
+        cosmosImage.addPara("The ship gains the ability to vent hardflux at 5%% of the normal dissipation rate and weapons have decreased recoil.", 0f,
+            cosmosColor, Misc.getHighlightColor(), "5%", "decreased")
         tooltip.addImageWithText(0f)
 
         tooltip.addSpacer(10f)

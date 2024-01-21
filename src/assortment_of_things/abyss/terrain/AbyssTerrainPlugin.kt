@@ -10,6 +10,7 @@ import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.magiclib.plugins.MagicCampaignTrailPlugin
 import java.awt.Color
 
 class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
@@ -147,10 +148,9 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
         val inCloud = this.isInClouds(player)
 
 
-
         if (isInStorm(player)) return "Abyssal Storm"
         if (inCloud) return "Abyssal Fog"
-        return "Abyss"
+        return "Abyssal Depths"
     }
 
     fun isInStorm(entity: SectorEntityToken) : Boolean
