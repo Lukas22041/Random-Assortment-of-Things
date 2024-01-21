@@ -191,8 +191,8 @@ class ThestiaShipsystem : BaseShipSystemScript() {
             var slot = variant.getSlot(stringID) ?: break
             slot.arc = ogSlot.arc
             slot.angle = ogSlot.angle
-            slot.renderOrderMod = ogSlot.renderOrderMod
-            slot.location.set(ogSlot.location)
+           /* slot.renderOrderMod = ogSlot.renderOrderMod
+            slot.location.set(ogSlot.location)*/
 
             variant.addWeapon(stringID, originalVariant.getWeaponId(slotID))
             val group = WeaponGroupSpec(WeaponGroupType.LINKED)
