@@ -171,9 +171,7 @@ class RATModPlugin : BaseModPlugin() {
             skill!!.name = "Abyssal Requiem"
         }
 
-        if (!Global.getSector().hasScript(ResetBackgroundScript::class.java)) {
-            Global.getSector().addTransientScript(ResetBackgroundScript())
-        }
+        Global.getSector().addTransientScript(ResetBackgroundScript())
 
         Global.getSector().addTransientScript(ForceNegAbyssalRep())
         Global.getSector().addTransientListener(HullmodRemoverListener())
