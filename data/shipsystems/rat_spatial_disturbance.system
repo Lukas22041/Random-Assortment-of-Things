@@ -1,10 +1,10 @@
 {
-	"id":"rat_abyssal_cloak",
+	"id":"rat_spatial_disturbance",
 	"type":"STAT_MOD",
 	"aiType":"CUSTOM",
-	"aiScript":"assortment_of_things.abyss.shipsystem.ai.AbyssalCloakSystemAI",
+	"aiScript":"assortment_of_things.abyss.shipsystem.ai.SpatialDisturbanceSystemAI",
 	
-	"statsScript":"assortment_of_things.abyss.shipsystem.AbyssalCloakShipsystem",
+	"statsScript":"assortment_of_things.abyss.shipsystem.SpatialDisturbanceSystem",
 	"runScriptWhilePaused":true, # only for the player's ship
 	"runScriptWhileIdle":true,  # this means unapply() never gets called
 	"blockActionsWhileChargingDown":false,
@@ -14,21 +14,14 @@
 	#"phaseHighlight":"_glow1",
 	#"phaseDiffuse":"_glow2",
 	
-	
-	"effectColor1":[255,175,255,255],
-	"effectColor2":[255,0,255,150],
-	
 	"clampTurnRateAfter":true,
 	"clampMaxSpeedAfter":true,
-	
-
 	
 	"soundFilterType":"LOWPASS",
 	"soundFilterGain":0.8,
 	"soundFilterGainHF":0.25,
 	
 	"shipAlpha":1, # handled in stats script
-	#"shipAlpha":0.25,
 	
 	"useSound":"temporal_shell_activate",
 	#"deactivateSound":"system_phase_cloak_deactivate",

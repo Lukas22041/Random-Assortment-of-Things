@@ -1,7 +1,10 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
+import activators.ActivatorManager
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.activators.PerseveranceActivator
 import assortment_of_things.abyss.hullmods.HullmodTooltipAbyssParticles
+import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaActivator
 import assortment_of_things.combat.AfterImageRenderer
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseHullMod
@@ -42,6 +45,10 @@ class GenesisHullmod : BaseHullMod() {
             stats.variant.addPermaMod(HullMods.AUTOMATED)
         }
 
+        stats!!.dynamic.getMod(Stats.SMALL_ENERGY_MOD).modifyFlat(id, -2f)
+        stats!!.dynamic.getMod(Stats.MEDIUM_ENERGY_MOD).modifyFlat(id, -4f)
+        stats!!.dynamic.getMod(Stats.LARGE_ENERGY_MOD).modifyFlat(id, -6f)
+
         stats!!.energyWeaponFluxCostMod.modifyMult(id, 0.8f)
         stats!!.energyWeaponRangeBonus.modifyFlat(id, 200f)
         //stats!!.beamWeaponRangeBonus.modifyMult(id, 100f)
@@ -55,9 +62,19 @@ class GenesisHullmod : BaseHullMod() {
         return false
     }
 
+    override fun affectsOPCosts(): Boolean {
+        return true
+    }
+
+    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
+        super.applyEffectsAfterShipCreation(ship, id)
+        if (ship == null) return
+        ActivatorManager.addActivator(ship, PrimordialSeaActivator(ship))
+    }
+
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
         afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
-        if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
+        if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused && ship!!.isAlive)
         {
             AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(75), color.setAlpha(0), 3.5f, 0f, Vector2f().plus(ship!!.location))
         }
