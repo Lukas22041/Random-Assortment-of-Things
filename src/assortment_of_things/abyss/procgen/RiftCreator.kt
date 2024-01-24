@@ -6,6 +6,7 @@ import assortment_of_things.abyss.entities.RiftExit
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.combat.ShipSystemAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
@@ -71,7 +72,6 @@ object RiftCreator {
                     var angle = Misc.getAngleInDegrees(riftEntrance.location, playerFleet.location)
                     var radius = riftExitPlugin.radius - playerFleet.radius
                     var point = MathUtils.getPointOnCircumference(riftExit.location, radius, angle)
-
 
                     currentLocation.removeEntity(playerFleet)
                     riftSystem.addEntity(playerFleet)

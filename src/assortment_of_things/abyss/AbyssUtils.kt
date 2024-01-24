@@ -36,6 +36,7 @@ data class LinkedFracture(val fracture1: SectorEntityToken, var fracture2: Secto
 object AbyssUtils {
 
     var ABYSS_COLOR = Color(255, 0, 50)
+    var GENESIS_COLOR = Color(140, 0, 250)
     var FACTION_ID = "rat_abyssals"
 
     var SYSTEM_TAG = "rat_abyss_system"

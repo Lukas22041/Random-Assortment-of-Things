@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
-class HullmodTooltipAbyssParticles(var tooltip: TooltipMakerAPI, var initialHeight: Float) {
+class HullmodTooltipAbyssParticles(var tooltip: TooltipMakerAPI, var initialHeight: Float, var color: Color = AbyssUtils.ABYSS_COLOR) {
 
     companion object {
         var particles = ArrayList<AbyssalLightParticle>()
@@ -43,11 +43,8 @@ class HullmodTooltipAbyssParticles(var tooltip: TooltipMakerAPI, var initialHeig
     var halo = Global.getSettings().getSprite("rat_terrain", "halo")
     var foreground = Global.getSettings().getAndLoadSprite("graphics/fx/rat_darkener.png")
 
-    var color = AbyssUtils.ABYSS_COLOR
 
     fun advance(element: LunaElement, amount: Float) {
-
-        color = AbyssUtils.ABYSS_COLOR
 
         for (particle in ArrayList(particles)) {
 

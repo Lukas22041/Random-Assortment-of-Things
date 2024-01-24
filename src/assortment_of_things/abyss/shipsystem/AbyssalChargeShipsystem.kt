@@ -59,7 +59,7 @@ class AbyssalChargeShipsystem : BaseShipSystemScript() {
             for (ally in allies) {
                 if (!ally.isAlive) continue
                 ally.removeListenerOfClass(AbyssalChargeBuffListener::class.java)
-                ally.addListener(AbyssalChargeBuffListener(ally, color))
+                ally.addListener(AbyssalChargeBuffListener(ally, color, secondaryColor))
                 Global.getSoundPlayer().playSound("system_emp_emitter_impact", 0.9f, 1.5f, ally.location, ally.velocity)
             }
 
@@ -147,31 +147,49 @@ class AbyssalChargeShipsystem : BaseShipSystemScript() {
 
 }
 
-class AbyssalChargeBuffListener(var ship: ShipAPI, var color: Color) : AdvanceableListener {
+class AbyssalChargeBuffListener(var ship: ShipAPI, var color: Color, var secondaryColor: Color) : AdvanceableListener {
 
     var maxTime = 7f
+    var outTime = 2f
     var timer = maxTime
 
 
+
+    var afterimageInterval = IntervalUtil(0.2f, 0.2f)
+
     override fun advance(amount: Float) {
         timer -= 1 * amount
-        timer = MathUtils.clamp(timer, 0f, maxTime)
 
-        var level = timer / maxTime
+        var level = timer / outTime
+        level = MathUtils.clamp(level, 0f, 1f)
 
         ship!!.setJitter(this, color.setAlpha(55), 1f * level, 3, 0f, 0f)
-        ship!!.setJitterUnder(this, color.setAlpha(125), 1f * level, 15, 0f, 10f)
+        ship!!.setJitterUnder(this, color.setAlpha(125), 1f * level, 15, 2f, 10f)
 
         var stats = ship.mutableStats
-        stats.timeMult.modifyMult("rat_abyssal_charge", 1 + (0.2f * level))
-        stats.maxSpeed.modifyMult("rat_abyssal_charge", 1 + (0.25f * level))
-        stats.acceleration.modifyMult("rat_abyssal_charge", 1 + (0.5f * level))
-        stats.deceleration.modifyMult("rat_abyssal_charge", 1 + (0.5f * level))
+        stats.timeMult.modifyMult("rat_abyssal_charge", 1 + (0.1f * level))
+        stats.maxSpeed.modifyMult("rat_abyssal_charge", 1 + (0.1f * level))
+        stats.acceleration.modifyMult("rat_abyssal_charge", 1 + (0.25f * level))
+        stats.deceleration.modifyMult("rat_abyssal_charge", 1 + (0.25f * level))
 
-        stats.fluxDissipation.modifyMult("rat_abyssal_charge", 1 + (1f * level))
+        stats.fluxDissipation.modifyMult("rat_abyssal_charge", 1 + (0.25f * level))
 
-        stats.energyWeaponFluxCostMod.modifyMult("rat_abyssal_charge", 1 - (0.25f * level))
-        stats.ballisticWeaponFluxCostMod.modifyMult("rat_abyssal_charge", 1 - (0.25f * level))
+        stats.energyWeaponFluxCostMod.modifyMult("rat_abyssal_charge", 1 - (0.1f * level))
+        stats.ballisticWeaponFluxCostMod.modifyMult("rat_abyssal_charge", 1 - (0.1f * level))
+
+        afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
+        if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused)
+        {
+            AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(100), secondaryColor.setAlpha(100), 1f, 2f, Vector2f().plus(ship!!.location))
+        }
+
+        if (ship.system != null) {
+
+            if (ship.system.state == ShipSystemAPI.SystemState.COOLDOWN) {
+                ship.system.cooldownRemaining -= 1f * amount * level
+            }
+            ship.system.ammoReloadProgress += ship.system.ammoPerSecond * amount * level
+        }
 
         if (timer <= 0) {
             ship.removeListener(this)
