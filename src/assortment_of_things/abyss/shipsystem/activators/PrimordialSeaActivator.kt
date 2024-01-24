@@ -2,18 +2,21 @@ package assortment_of_things.abyss.shipsystem.activators
 
 import activators.CombatActivator
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import org.lwjgl.opengl.GL11
+import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 import java.util.*
 
 class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
 
-    var addedRenderer = false
     var renderer: PrimordialSeaRenderer = PrimordialSeaRenderer(ship, this)
 
+    var deactivated = false
     var range = 3000f
 
     init {
@@ -21,7 +24,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
     }
 
     override fun getBaseActiveDuration(): Float {
-        return 15f
+        return 3f
     }
 
     override fun getBaseCooldownDuration(): Float {
@@ -52,9 +55,37 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
         return AbyssUtils.GENESIS_COLOR
     }
 
+    override fun onActivate() {
+        deactivated = false
+
+        Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.7f, 1f, ship.location, ship.velocity)
+
+        GraphicLibEffects.CustomRippleDistortion(ship!!.location, Vector2f(), ship.collisionRadius + 500, 75f, true, ship!!.facing, 360f, 1f
+            ,0.5f, 3f, 1f, 1f, 1f)
+
+      /*  GraphicLibEffects.CustomRippleDistortion(ship!!.location, Vector2f(), ship.collisionRadius + 2500, 25f, true, ship!!.facing, 360f, 1f
+            ,0.5f, 3f, 1f, 1f, 1f)*/
+    }
+
+
+
+    override fun onFinished() {
+
+    }
+
     override fun advance(amount: Float) {
-        if (!addedRenderer) {
-            addedRenderer = true
+
+        if (isActive ||isIn || isOut) {
+            Global.getSoundPlayer().playLoop("mote_attractor_loop_dark", ship, 0.5f, 1f * effectLevel, ship.location, ship.velocity)
+        }
+
+        if (state == State.OUT && !deactivated) {
+            deactivated = true
+
+            Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.6f, 0.8f, ship.location, ship.velocity)
+
+            GraphicLibEffects.CustomBubbleDistortion(ship!!.location, Vector2f(), 1000f + ship!!.collisionRadius, 50f, true, ship!!.facing, 360f, 1f
+                ,0.75f, 0.1f, 0.75f, 0.3f, 1f)
         }
     }
 
