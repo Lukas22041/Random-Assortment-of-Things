@@ -29,7 +29,7 @@ class CrewConversionSeraphRefitButton : BaseRefitButton() {
     }
 
     override fun shouldShow(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
-        return variant!!.hasHullMod("rat_abyssal_conversion") && variant!!.baseOrModSpec().hasTag("rat_abyssals")
+        return variant!!.hasHullMod("rat_abyssal_conversion")
     }
 
     override fun hasTooltip(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {

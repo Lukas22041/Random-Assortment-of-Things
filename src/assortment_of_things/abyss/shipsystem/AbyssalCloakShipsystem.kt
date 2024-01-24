@@ -22,14 +22,6 @@ import java.awt.Color
 
 class AbyssalCloakShipsystem : BaseShipSystemScript() {
 
-    protected var STATUSKEY1 = Any()
-    protected var STATUSKEY2 = Any()
-    protected var STATUSKEY3 = Any()
-    protected var STATUSKEY4 = Any()
-    protected fun isDisruptable(cloak: ShipSystemAPI): Boolean {
-        return cloak.specAPI.hasTag(Tags.DISRUPTABLE)
-    }
-
     var afterimageInterval = IntervalUtil(0.2f, 0.2f)
     var afterimageFighterInterval = IntervalUtil(0.05f, 0.05f)
 
