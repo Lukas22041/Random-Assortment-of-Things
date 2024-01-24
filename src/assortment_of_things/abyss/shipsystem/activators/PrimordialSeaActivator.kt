@@ -310,8 +310,8 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
             apparation.spriteAPI.renderAtCenter(apparation.location.x, apparation.location.y)
 
             for (weapon in apparation.allWeapons) {
-                weapon.sprite.alphaMult = 1f
-                weapon.sprite.renderAtCenter(weapon.location.x, weapon.location.y)
+                weapon.sprite?.alphaMult = 1f
+                weapon.sprite?.renderAtCenter(weapon.location.x, weapon.location.y)
             }
         }
     }
