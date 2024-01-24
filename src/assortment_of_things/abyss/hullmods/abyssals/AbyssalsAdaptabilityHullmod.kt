@@ -310,6 +310,8 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
         override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
             super.render(layer, viewport)
 
+
+
             if (sprite == null) return
             if (!ship.isAlive || ship.isHulk) return
 
