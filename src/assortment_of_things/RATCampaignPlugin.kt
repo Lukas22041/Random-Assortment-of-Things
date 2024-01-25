@@ -67,7 +67,13 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         var plugin = interactionTarget.customPlugin
         if (plugin is AbyssalFracture)  {
             if (plugin.connectedEntity != null) {
-                Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(plugin.connectedEntity, ""), 0.01f)
+
+                if (interactionTarget.hasTag("rat_final_fracture")) {
+                    return PluginPick(FinalFractureInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                }
+                else {
+                    Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(plugin.connectedEntity, ""), 0.01f)
+                }
             }
         }
         if (interactionTarget.hasTag("rat_abyss_entrance")) {

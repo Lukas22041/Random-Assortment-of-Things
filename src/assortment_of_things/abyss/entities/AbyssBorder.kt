@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.entities
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.misc.OpenGLUtil
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
@@ -38,11 +39,15 @@ class AbyssBorder : BaseCustomEntityPlugin() {
 
     override fun init(entity: SectorEntityToken?, params: Any?) {
         this.entity = entity
-
     }
 
     override fun advance(amount: Float) {
         if (entity == null) return
+
+        if (entity.containingLocation.hasTag("rat_abyss_final")) {
+            radius = 4000f
+        }
+
         var playerfleet = Global.getSector().playerFleet
         if (playerfleet.containingLocation != entity.containingLocation) return
 

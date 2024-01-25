@@ -72,8 +72,6 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
         GraphicLibEffects.CustomRippleDistortion(ship!!.location, Vector2f(), ship.collisionRadius + 500, 75f, true, ship!!.facing, 360f, 1f
             ,0.5f, 3f, 1f, 1f, 1f)
 
-
-
         for (i in 0 until 6) {
             var apparation = spawnApparation()
             apparations.add(apparation)
@@ -137,12 +135,17 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
         var apparation = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, Vector2f(100000f, 100000f), ship!!.facing)
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
+
+        apparation!!.captain = ship.captain
+
         obfManager.removeDeployed(apparation as Ship, true)
+
 
         apparation.isPhased = true
         apparation.alphaMult = 0f
+        //apparation.addTag("module_no_status_bar")
         //Might be needed to hide bars on fighters, not sure
-       // apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_prim_sea", 0f)
+        //apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_prim_sea", 0f)
 
         var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 1600f))
         loc = findClearLocation(apparation, loc)

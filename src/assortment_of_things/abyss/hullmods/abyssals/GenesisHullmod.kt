@@ -66,12 +66,6 @@ class GenesisHullmod : BaseHullMod() {
         return true
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
-        super.applyEffectsAfterShipCreation(ship, id)
-        if (ship == null) return
-        ActivatorManager.addActivator(ship, PrimordialSeaActivator(ship))
-    }
-
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
         afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
         if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused && ship!!.isAlive)
@@ -93,7 +87,7 @@ class GenesisHullmod : BaseHullMod() {
         }
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("A ship thats warping the space around it just by its sheer existance. Enables the \"Primordial Sea\" subsystem, opening a rift towards locations yet unseen.\n\n" +
+        tooltip.addPara("A ship thats warping the space around it just by its sheer existance.\n\n" +
                 "Energy weapons operate at a 20%% lower flux cost, have an increased base range of 200 units and cost 2/4/6 less ordnance points based on mount size." +
                 "\n\n" +
                 "The ships distorted grid takes 50%% less emp damage and has full immunity against abyssal storms and similar hazards." +

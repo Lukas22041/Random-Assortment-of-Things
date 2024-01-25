@@ -33,7 +33,7 @@ object AbyssProcgen {
 
 
     //Sets up important tags, like "HIDDEN" to prevent the systems from being used by other mods.
-    fun setupSystem(system: StarSystemAPI, fraction: Float, depth: AbyssDepth)
+    fun setupSystem(system: StarSystemAPI, fraction: Float, depth: AbyssDepth, final: Boolean = false)
     {
         var data = AbyssUtils.getSystemData(system)
         data.depth = depth
@@ -60,12 +60,22 @@ object AbyssProcgen {
         system.isEnteredByPlayer = false
         system.addCustomEntity("${system.name}", "", "rat_abyss_border", Factions.NEUTRAL)
 
-        var warper = AbyssBackgroundWarper(system, 8, 0.33f)
+
         var color = generateAbyssColor(system, depth)
-        warper.overwriteColor = data.getDarkColor()
+        if (!final) {
+            var warper = AbyssBackgroundWarper(system, 8, 0.33f)
+            warper.overwriteColor = data.getDarkColor()
+        }
+
+
 
         AbyssProcgen.generateAbyssTerrain(system, fraction)
         AbyssProcgen.generateAbyssDarkness(system)
+
+        if (final) {
+            system.backgroundTextureFilename = "graphics/backgrounds/abyss/rat_abyss_black.jpg"
+        }
+
     }
 
     fun addAbyssParticles(system: StarSystemAPI) {
