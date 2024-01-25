@@ -5,6 +5,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.intel.map.AbyssMap
 import assortment_of_things.abyss.procgen.types.DefaultAbyssType
+import assortment_of_things.abyss.procgen.types.FinalAbyssType
 import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
 import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.EveryFrameScript
@@ -35,8 +36,9 @@ class  AbyssGenerator {
 
     var noBranchTag = "rat_no_branch"
     var branchTag = "rat_abyss_branch"
+    var finalTag = "rat_abyss_final"
 
-    var systemsOnMainBranch = 9
+    var systemsOnMainBranch = 8
     var deepSystemsBeginAt = 4
     var branches = 3
 
@@ -191,7 +193,16 @@ class  AbyssGenerator {
 
            var system = Global.getSector().createStarSystem(name)
            system.name = name
-           AbyssProcgen.setupSystem(system, type.getTerrainFraction(), depth)
+
+           var isFinal = false
+           if (step == systemsOnMainBranch - 1) {
+               AbyssUtils.getAbyssData().finalSystem = system
+               system.addTag(finalTag)
+               type = FinalAbyssType()
+               isFinal = true
+           }
+
+           AbyssProcgen.setupSystem(system, type.getTerrainFraction(), depth, isFinal)
            var systemData = AbyssUtils.getSystemData(system)
 
            if (step == systemsOnMainBranch || step == systemsOnMainBranch - 1 || step == systemsOnMainBranch - 2) {
@@ -210,6 +221,9 @@ class  AbyssGenerator {
 
            fractures.fracture1.location.set(pos1)
            fractures.fracture2.location.set(pos2)
+           if (isFinal) {
+               fractures.fracture1.addTag("rat_final_fracture")
+           }
 
            AbyssProcgen.clearTerrainAroundFractures(fractures)
 

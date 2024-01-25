@@ -12,7 +12,8 @@
   "shieldRadius": 249.5,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_genesis_hullmod"
+    "rat_genesis_hullmod",
+    "rat_primordial_sea_hullmod"
   ],
   "weaponSlots": [],
   "engineSlots": [],
