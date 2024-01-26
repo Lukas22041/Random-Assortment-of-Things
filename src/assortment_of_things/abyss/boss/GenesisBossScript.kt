@@ -174,7 +174,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                 var fadeInOverwrite = false
 
                 if (particles.size <= 50) {
-                    count = 500
+                    count = 1000
                     fadeInOverwrite = true
                 }
 
