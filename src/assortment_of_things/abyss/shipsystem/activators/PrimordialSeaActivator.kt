@@ -8,6 +8,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.combat.MineStrikeStats
+import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import com.fs.starfarer.combat.CombatFleetManager
@@ -27,6 +28,8 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
 
     var apparations = ArrayList<ShipAPI>()
     var renderer: PrimordialSeaRenderer = PrimordialSeaRenderer(ship, this, apparations)
+
+    var aiInterval = IntervalUtil(3f, 3f)
 
     init {
         Global.getCombatEngine().addLayeredRenderingPlugin(renderer)
@@ -52,8 +55,47 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
         return false
     }
 
+    override fun canActivate(): Boolean {
+        return ship.customData.get("rat_boss_second_phase") != true
+    }
+
     override fun shouldActivateAI(amount: Float): Boolean {
-        return true
+        var targetsInRange = false
+        var iterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship.location, 2000f, 2000f)
+        for (other in iterator) {
+            if (other !is ShipAPI) continue
+            if (other.owner == ship.owner) continue
+            if (other.isFighter) continue
+
+            if (!isInRange(ship, other)) continue
+
+            targetsInRange = true
+        }
+
+        if (targetsInRange) {
+            aiInterval.advance(amount)
+            if (aiInterval.intervalElapsed()) {
+                return true
+            }
+            else {
+                aiInterval = IntervalUtil(3f, 3f)
+            }
+        }
+
+        return false
+    }
+
+    fun isInRange(ship: ShipAPI, target: ShipAPI) : Boolean {
+        var range = 0f
+        for (weapon in ship.allWeapons) {
+            if (weapon.range > range)
+            {
+                range = weapon.range
+            }
+        }
+        var distance = MathUtils.getDistance(ship, target)
+        var inRange = distance <= range + 100
+        return inRange
     }
 
     override fun getDisplayText(): String {
@@ -113,6 +155,11 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
             Global.getSoundPlayer().playLoop("mote_attractor_loop_dark", ship, 0.5f, 1f * effectLevel, ship.location, ship.velocity)
         }
 
+
+        if (ship.customData.get("rat_boss_second_phase") == true && state != State.OUT && state != State.COOLDOWN && state != State.READY) {
+            setState(State.OUT)
+        }
+
         if (state == State.OUT && !deactivated) {
             deactivated = true
 
@@ -139,7 +186,6 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
         apparation!!.captain = ship.captain
 
         obfManager.removeDeployed(apparation as Ship, true)
-
 
         apparation.isPhased = true
         apparation.alphaMult = 0f

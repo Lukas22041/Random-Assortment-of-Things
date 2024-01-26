@@ -3,6 +3,7 @@ package assortment_of_things.abyss.hullmods.abyssals
 import activators.ActivatorManager
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.activators.PerseveranceActivator
+import assortment_of_things.abyss.boss.GenesisBossScript
 import assortment_of_things.abyss.hullmods.HullmodTooltipAbyssParticles
 import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaActivator
 import assortment_of_things.combat.AfterImageRenderer
@@ -39,6 +40,8 @@ class PrimordialSeaHullmod : BaseHullMod() {
         super.applyEffectsAfterShipCreation(ship, id)
         if (ship == null) return
         ActivatorManager.addActivator(ship, PrimordialSeaActivator(ship))
+
+        Global.getCombatEngine().addLayeredRenderingPlugin(GenesisBossScript(ship))
     }
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  width: Float, isForModSpec: Boolean) {
 
