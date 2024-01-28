@@ -7,6 +7,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.FleetAssignment
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager
@@ -36,11 +37,14 @@ class FinalAbyssType : BaseAbyssType() {
         AbyssProcgen.addAbyssParticles(system)
         AbyssProcgen.clearTerrainAround(system, Vector2f(), 10000f)
 
+        data.system.addCustomEntity("rat_final_system_ambience", "", "rat_abyss_final_system_ambience", Factions.NEUTRAL)
+
         var fleet = createFleet(data)
     }
 
     fun createFleet(data: AbyssSystemData) : CampaignFleetAPI {
         var fleet = Global.getFactory().createEmptyFleet("rat_abyssals_primordials", "Singularity", true)
+        fleet.isNoFactionInName = true
 
         var token = data.system.createToken(Vector2f())
         data.system.addEntity(token)

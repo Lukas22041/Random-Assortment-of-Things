@@ -68,8 +68,8 @@ public class GraphicLibEffects {
         DistortionShader.addDistortion(wave);
     }
 
-    public static void CustomRippleDistortion (Vector2f loc, Vector2f vel, float size, float intensity, boolean flip, float angle, float arc, float edgeSmooth, float fadeIn, float last, float fadeOut, float growthTime, float shrinkTime){
-        if (!Global.getSettings().getModManager().isModEnabled("shaderLib")) return;
+    public static RippleDistortion CustomRippleDistortion (Vector2f loc, Vector2f vel, float size, float intensity, boolean flip, float angle, float arc, float edgeSmooth, float fadeIn, float last, float fadeOut, float growthTime, float shrinkTime){
+        if (!Global.getSettings().getModManager().isModEnabled("shaderLib")) return null;
 
         RippleDistortion ripple = new RippleDistortion(loc, vel);
 
@@ -92,10 +92,11 @@ public class GraphicLibEffects {
         }
         if(shrinkTime!=0){
             ripple.setAutoFadeSizeTime(shrinkTime);
-        } 
+        }
         ripple.setFrameRate(60);
         DistortionShader.addDistortion(ripple);
-        
+
+        return ripple;
     }
 
         public static void CustomStaticRippleDistortion (Vector2f loc, Vector2f vel, float size, float intensity, boolean flip, float angle, float arc, float edgeSmooth, float fadeIn, float last, float fadeOut, float growthTime, float shrinkTime, boolean wide){

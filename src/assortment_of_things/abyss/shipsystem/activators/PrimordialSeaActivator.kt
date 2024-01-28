@@ -36,11 +36,11 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
     }
 
     override fun getBaseActiveDuration(): Float {
-        return 3f
+        return 12f
     }
 
     override fun getBaseCooldownDuration(): Float {
-        return 3f
+        return 20f
     }
 
     override fun getBaseInDuration(): Float {
@@ -64,10 +64,11 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
         var iterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship.location, 2000f, 2000f)
         for (other in iterator) {
             if (other !is ShipAPI) continue
+            if (other == ship) continue
             if (other.owner == ship.owner) continue
             if (other.isFighter) continue
 
-            if (!isInRange(ship, other)) continue
+            if (!isInRange(ship, other) && MathUtils.getDistance(ship, other) >= 800f) continue
 
             targetsInRange = true
         }
@@ -77,9 +78,9 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
             if (aiInterval.intervalElapsed()) {
                 return true
             }
-            else {
-                aiInterval = IntervalUtil(3f, 3f)
-            }
+        }
+        else {
+            aiInterval = IntervalUtil(3f, 3f)
         }
 
         return false

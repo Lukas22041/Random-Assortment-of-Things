@@ -40,7 +40,7 @@ class  AbyssGenerator {
 
     var systemsOnMainBranch = 8
     var deepSystemsBeginAt = 4
-    var branches = 3
+    var branches = 2
 
     var totalSystems = 0
 
