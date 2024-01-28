@@ -54,6 +54,10 @@ Please register your Tri-Tachyon datapad to receive the latest news and updates.
 rat_sariel,SHIP,"A hull with no official records of its existance, found within the abyssal depths. Some of its properties resemble that of old domain-era drones that were made use of to explore the abyss without the human element getting in the way. Aside from those slight similarities however, the hull is very unlike its presumed predecessor, appearing designed with combat capabilities in mind. Some unknown type of energy is emitted from the center of the ship.",Unidentified Vessel,"UNKNOWN ENTRY
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
+rat_genesis,SHIP,"A hull similar to those encountered before, however while some glimpses of their properties remain, it is mutiliated beyond recognition. Fleet Operations around this ship are dangerous for the fleet at large. The constant and unending spatial instability around it make it a threat to any other hull nearby, and with much of its workings poorly understood, it is unknown what actions may trigger any fatalities.",Genesis-Class,"UNKNOWN ENTRY
+
+Please register your Tri-Tachyon datapad to receive the latest news and updates.",,
+,,,,,,
 ,,,,,,
 rat_abyssal_current,SHIP_SYSTEM,"When activated, the ship can fire its built-in ""Abyssal Wave Emitter"" weapon. This beam enables a short burst of damage, partially dealing EMP damage through emitted EMP Arcs.",,,,
 rat_abyssal_skimmer,SHIP_SYSTEM,,,"Instantly relocates the ship some distance in to the direction the ship is travelling. For a short moment after activation, time is slowed down and flux dissipation is increased by 25%.",relocates | slowed | 25%,

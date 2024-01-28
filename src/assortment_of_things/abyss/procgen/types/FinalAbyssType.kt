@@ -2,6 +2,7 @@ package assortment_of_things.abyss.procgen.types
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.*
+import assortment_of_things.misc.fixVariant
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
@@ -19,7 +20,7 @@ import java.util.Random
 
 class FinalAbyssType : BaseAbyssType() {
     override fun getWeight() : Float{
-        return 1f
+        return 0f
     }
 
     override fun getTerrainFraction(): Float {
@@ -50,17 +51,23 @@ class FinalAbyssType : BaseAbyssType() {
         data.system.addEntity(token)
 
         var boss = fleet.fleetData.addFleetMember("rat_genesis_Hull")
+        boss.fixVariant()
 
         boss.variant.addTag(Tags.TAG_NO_AUTOFIT)
+        boss.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
+
+        fleet.addTag("rat_genesis_fleet")
+        fleet.memoryWithoutUpdate.set("\$defenderFleet", fleet)
 
         data.system.addEntity(fleet)
 
         RemnantSeededFleetManager.addRemnantInteractionConfig(fleet)
 
         fleet.clearAssignments()
-        fleet.addAssignment(FleetAssignment.DEFEND_LOCATION, token, 9999999f)
+        fleet.addAssignment(FleetAssignment.DEFEND_LOCATION, token, 9999999f, "Waiting")
         fleet.setLocation(token.location.x, token.location.y)
         fleet.facing = Random().nextFloat() * 360f
+        fleet.stats.sensorProfileMod.modifyMult("rat_genesis", 3f)
 
         fleet.makeImportant("")
 
@@ -87,9 +94,14 @@ class FinalAbyssType : BaseAbyssType() {
         }
 
         override fun advance(amount: Float) {
+
+            if (fleet.isAlive && !fleet.memoryWithoutUpdate.contains(MemFlags.ENTITY_MISSION_IMPORTANT)) {
+                fleet.makeImportant("")
+            }
+
             if (!fleet.isCurrentAssignment(FleetAssignment.DEFEND_LOCATION)) {
                 fleet.clearAssignments()
-                fleet.addAssignment(FleetAssignment.DEFEND_LOCATION, token, 9999999f)
+                fleet.addAssignment(FleetAssignment.DEFEND_LOCATION, token, 9999999f, "Waiting")
                 fleet.facing = Random().nextFloat() * 360f
             }
         }

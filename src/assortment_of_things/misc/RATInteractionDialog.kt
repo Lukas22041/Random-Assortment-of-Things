@@ -211,39 +211,46 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
      * Triggers defenders if $defenderFleet is set to a fleet in the memory of the target.
      * Once defeated, it will trigger the defeatedDefenders() method.
      */
-    final fun triggerDefenders(fidConfig: FIDConfig? = null)
+    final fun triggerDefenders(fidConfig: FIDConfig? = null, fleet: CampaignFleetAPI? = null)
     {
 
-        if (targetMemory.getFleet("\$defenderFleet") == null) return
+
+
+        var defenders = fleet
+
+        if (defenders == null) {
+            if (targetMemory.getFleet("\$defenderFleet") == null) return
+            defenders = targetMemory.getFleet("\$defenderFleet")
+        }
+
 
         val entity = dialog.interactionTarget
-        val defenders = targetMemory.getFleet("\$defenderFleet")
-
-        dialog.interactionTarget = defenders
 
         var config: FIDConfig? = fidConfig
-        if (config == null) config = FIDConfig()
+        if (config == null)  {
+            config = FIDConfig()
 
-        config.leaveAlwaysAvailable = true
-        config.showCommLinkOption = false
-        config.showEngageText = false
-        config.showFleetAttitude = false
-        config.showTransponderStatus = false
-        config.showWarningDialogWhenNotHostile = false
-        config.alwaysAttackVsAttack = true
-        config.impactsAllyReputation = true
-        config.impactsEnemyReputation = false
-        config.pullInAllies = false
-        config.pullInEnemies = false
-        config.pullInStations = false
-        config.lootCredits = false
+            config.leaveAlwaysAvailable = true
+            config.showCommLinkOption = false
+            config.showEngageText = false
+            config.showFleetAttitude = false
+            config.showTransponderStatus = false
+            config.showWarningDialogWhenNotHostile = false
+            config.alwaysAttackVsAttack = true
+            config.impactsAllyReputation = true
+            config.impactsEnemyReputation = false
+            config.pullInAllies = false
+            config.pullInEnemies = false
+            config.pullInStations = false
+            config.lootCredits = false
 
-        config.firstTimeEngageOptionText = "Engage the defenses"
-        config.afterFirstTimeEngageOptionText = "Re-engage the defenses"
-        config.noSalvageLeaveOptionText = "Continue"
+            config.firstTimeEngageOptionText = "Engage the defenses"
+            config.afterFirstTimeEngageOptionText = "Re-engage the defenses"
+            config.noSalvageLeaveOptionText = "Continue"
 
-        config.dismissOnLeave = false
-        config.printXPToDialog = true
+            config.dismissOnLeave = false
+            config.printXPToDialog = true
+        }
 
         val seed = targetMemory.getLong(MemFlags.SALVAGE_SEED)
         config.salvageRandom = Misc.getRandom(seed, 75)
@@ -252,7 +259,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
 
         val originalPlugin = dialog.plugin
 
-        config.delegate = FIDOverride(defenders, dialog, plugin, originalPlugin, this)
+        config.delegate = FIDOverride(defenders!!, dialog, plugin, originalPlugin, this)
 
         dialog.plugin = plugin
         plugin.init(dialog)
