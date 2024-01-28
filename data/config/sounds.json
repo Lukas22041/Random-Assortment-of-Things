@@ -41,6 +41,14 @@
 			{"file":"TheHeartOfThoseForgotten.ogg","source":"sounds/rat/music","volume":0.8},
 		],
 		
+		"rat_abyss_genesis1":[
+			{"file":"GenesisBossPhase1.ogg","source":"sounds/rat/music","volume":1},
+		],
+		
+		"rat_abyss_genesis2":[
+			{"file":"GenesisBossPhase2.ogg","source":"sounds/rat/music","volume":1},
+		],
+		
 		"rat_exo_market":[
 			{
 				"file":"PhantomOfTheFringe.ogg",

@@ -365,6 +365,7 @@
 		"pluginClass":"assortment_of_things.abyss.entities.RiftExit",
 	},
 	
+	
 	"rat_abyss_rift_station":{
 		"defaultName":"Rift Station", # used if name=null in addCustomEntity()
 		"defaultRadius":80, # used if radius<0 in addCustomEntity()
@@ -390,6 +391,17 @@
 		"tags":["has_interaction_dialog", "neutrino"],
 		"layers":[TERRAIN_7A, TERRAIN_7], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 		"pluginClass":"assortment_of_things.abyss.entities.AbyssRiftStation",
+	},
+	
+	"rat_abyss_final_system_ambience":{
+		"defaultName":"", # used if name=null in addCustomEntity()
+		"defaultRadius":0, # used if radius<0 in addCustomEntity()
+		"showInCampaign":true,
+		"showIconOnMap":false,
+		"scaleIconWithZoom":true,
+		"tags":[],
+		"layers":[TERRAIN_7], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"pluginClass":"assortment_of_things.abyss.entities.AbyssFinalSystemAmbience",
 	},
 	
 	"rat_abyss_border":{

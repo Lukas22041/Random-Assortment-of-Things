@@ -8,9 +8,9 @@ import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
-import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
+import org.dark.shaders.distortion.RippleDistortion
 import org.dark.shaders.post.PostProcessShader
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.combat.entities.SimpleEntity
@@ -21,7 +21,6 @@ import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
-import kotlin.math.exp
 import kotlin.math.max
 
 class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullDamageAboutToBeTakenListener {
@@ -46,6 +45,10 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     var particleInterval = IntervalUtil(0.2f, 0.2f)
     var halo = Global.getSettings().getSprite("rat_terrain", "halo")
 
+    var ripple: RippleDistortion? = null
+
+    var startedMusic = false
+
     enum class Phases {
         P1, P2, P3
     }
@@ -67,56 +70,18 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         return false
     }
 
+
+
     override fun advance(amount: Float) {
 
-        for (particle in ArrayList(particles)) {
-
-            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeIn) {
-                particle.fadeIn -= 1 * amount
-
-                var level = (particle.fadeIn - 0f) / (particle.maxFadeIn - 0f)
-                particle.level = 1 - level
-
-                if (particle.fadeIn < 0) {
-                    particle.state = AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.Mid
-                }
-            }
-
-            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.Mid) {
-                particle.duration -= 1 * amount
+        handleParticles(amount)
 
 
-                particle.level = 1f
+        var soundplayer = Global.getSoundPlayer()
 
-                if (particle.duration < 0) {
-                    particle.state = AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeOut
-                }
-            }
-
-            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeOut) {
-                particle.fadeOut -= 1 * amount
-
-                particle.level = (particle.fadeOut - 0f) / (particle.maxFadeOut - 0f)
-
-                if (particle.fadeOut < 0) {
-                    particles.remove(particle)
-                    continue
-                }
-            }
-
-            particle.adjustmentInterval.advance(amount)
-            if (particle.adjustmentInterval.intervalElapsed()) {
-                var velocity = Vector2f(0f, 0f)
-                particle.adjustment = MathUtils.getRandomNumberInRange(-1f, 1f)
-            }
-
-            particle.velocity = particle.velocity.rotate(particle.adjustment * amount)
-
-
-            var x = particle.velocity.x * amount
-            var y = particle.velocity.y * amount
-            var velocity = Vector2f(x, y)
-            particle.location = particle.location.plus(velocity)
+        if (!startedMusic && Global.getCombatEngine().getTotalElapsedTime(false) >= 1f) {
+            soundplayer.playCustomMusic(1, 1, "rat_abyss_genesis1", true)
+            startedMusic = true
         }
 
         if (phase == Phases.P2) {
@@ -154,7 +119,15 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                 if (transitionTimer.state == StateBasedTimer.TimerState.Out && !activateZone) {
                     activateZone = true
-                    Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.7f, 1f, ship.location, ship.velocity)
+                    Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.7f, 1.3f, ship.location, ship.velocity)
+
+                    ripple = GraphicLibEffects.CustomRippleDistortion(ship!!.location, Vector2f(), ship.collisionRadius + 500, 75f, true, ship!!.facing, 360f, 1f
+                        ,0.5f, 3f, 1f, 1f, 1f)
+
+                }
+
+                if (ripple != null) {
+                    ripple!!.advance(realAmount)
                 }
 
                 if (transitionTimer.done) {
@@ -170,7 +143,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
 
 
-                var count = 40
+                var count = 25
                 var fadeInOverwrite = false
 
                 if (particles.size <= 50) {
@@ -184,11 +157,15 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     var velocity = Vector2f(0f, 0f)
                     velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), MathUtils.getRandomNumberInRange(200f, 550f), MathUtils.getRandomNumberInRange(180f, 210f)))
 
+                    var playership = Global.getCombatEngine().playerShip
                     var spawnLocation = ship.location
+                    if (Random().nextFloat() >= 0.5f && playership != null) {
+                        spawnLocation = playership.location
+                    }
                     //var spawnLocation = MathUtils.getPointOnCircumference(Vector2f(), 45f, entity.facing + 180)
 
-                    var randomX = MathUtils.getRandomNumberInRange(-7500f, 7500f)
-                    var randomY = MathUtils.getRandomNumberInRange(-7500f, 7500f)
+                    var randomX = MathUtils.getRandomNumberInRange(-5000f, 5000f)
+                    var randomY = MathUtils.getRandomNumberInRange(-5000f, 5000f)
 
                     spawnLocation = spawnLocation.plus(Vector2f(randomX, randomY))
 
@@ -222,6 +199,15 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         return 10000000f
     }
 
+    fun getPhase2Range() : Float {
+        var zoneLevel = 1 - transitionTimer.level
+        var radius = 10000 * (zoneLevel * zoneLevel)
+        if (zoneLevel >= 0.95f) {
+            radius = 30000 * (zoneLevel * zoneLevel)
+        }
+        return radius
+    }
+
     override fun render(layer: CombatEngineLayers, viewport: ViewportAPI) {
 
         var width = viewport.visibleWidth
@@ -248,7 +234,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                 var segments = 100
                 var zoneLevel = 1 - transitionTimer.level
-                var radius = 10000 * (zoneLevel * zoneLevel)
+                var radius = getPhase2Range()
 
                 startStencil(ship!!, radius, segments)
 
@@ -341,6 +327,10 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                     GraphicLibEffects.CustomBubbleDistortion(Vector2f(ship.location), Vector2f(), 1000f + ship.collisionRadius, 25f, true, ship.facing, 360f, 1f
                         ,0.1f, 0.1f, 1f, 0.3f, 1f)
+
+                    //Global.getSoundPlayer().pauseCustomMusic()
+                    Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
+
                 }
 
                 return true
@@ -351,6 +341,58 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         return false
 
+    }
+
+    fun handleParticles(amount: Float) {
+        for (particle in ArrayList(particles)) {
+
+            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeIn) {
+                particle.fadeIn -= 1 * amount
+
+                var level = (particle.fadeIn - 0f) / (particle.maxFadeIn - 0f)
+                particle.level = 1 - level
+
+                if (particle.fadeIn < 0) {
+                    particle.state = AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.Mid
+                }
+            }
+
+            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.Mid) {
+                particle.duration -= 1 * amount
+
+
+                particle.level = 1f
+
+                if (particle.duration < 0) {
+                    particle.state = AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeOut
+                }
+            }
+
+            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeOut) {
+                particle.fadeOut -= 1 * amount
+
+                particle.level = (particle.fadeOut - 0f) / (particle.maxFadeOut - 0f)
+
+                if (particle.fadeOut < 0) {
+                    particles.remove(particle)
+                    continue
+                }
+            }
+
+            particle.adjustmentInterval.advance(amount)
+            if (particle.adjustmentInterval.intervalElapsed()) {
+                var velocity = Vector2f(0f, 0f)
+                particle.adjustment = MathUtils.getRandomNumberInRange(-1f, 1f)
+            }
+
+            particle.velocity = particle.velocity.rotate(particle.adjustment * amount)
+
+
+            var x = particle.velocity.x * amount
+            var y = particle.velocity.y * amount
+            var velocity = Vector2f(x, y)
+            particle.location = particle.location.plus(velocity)
+        }
     }
 
     fun startStencil(ship: ShipAPI, radius: Float, circlePoints: Int) {

@@ -19,5 +19,9 @@
 		"plugin":"assortment_of_things.abyss.terrain.AbyssalIonicStorm",
 	},
 	
+	"rat_hyperspace_rendering":{
+		"plugin":"assortment_of_things.campaign.ui.HyperspaceRenderingTerrainPlugin",
+	},
+	
 }
 

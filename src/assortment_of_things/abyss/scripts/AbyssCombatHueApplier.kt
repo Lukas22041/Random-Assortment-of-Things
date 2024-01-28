@@ -38,6 +38,10 @@ class AbyssCombatHueApplier(var color: Color, var depth: AbyssDepth, var darknes
                 AbyssDepth.Deep -> 85
             }
         }
+
+        if (darkness.entity.containingLocation.hasTag("rat_abyss_final")) {
+            alpha = 30
+        }
     }
 
 
