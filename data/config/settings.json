@@ -13,12 +13,13 @@
 
 	"designTypeColors":{
 		"Chiral":[122,139,221,255],
-		"Hull Alteration":[252, 227, 3,255],
+		"Hull Alteration":[250, 187, 77,255],
 		"Unique Alteration":[222, 146, 16,255],
 		"Special Alteration":[16, 202, 227, 255],
 		"Abyss":[255, 0, 50, 255],
 		"Abyssal":[255, 0, 50, 255],
 		"Seraph":[242, 48, 65, 255],
+		"Primordial":[140, 0, 250, 255],
 		"Modular Weapon":[158, 50, 230,255],
 		"Artifact":[97, 21, 212, 255],
 		"Forge-Assisted":[235, 164, 49, 255],

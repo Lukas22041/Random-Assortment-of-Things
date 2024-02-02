@@ -1,5 +1,6 @@
 package assortment_of_things
 
+import assortment_of_things.abyss.boss.GenesisInteraction
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.interactions.*
 import assortment_of_things.abyss.misc.AbyssTags
@@ -38,6 +39,8 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         }
 
 
+
+
         //Relics
         if (interactionTarget.hasTag(RelicsUtils.RELICS_ENTITY_TAG)) {
 
@@ -64,10 +67,23 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
 
         //Abyss
+
+        if (interactionTarget is CampaignFleetAPI) {
+            if (interactionTarget.hasTag("rat_genesis_fleet")) {
+                return PluginPick(GenesisInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
+        }
+
         var plugin = interactionTarget.customPlugin
         if (plugin is AbyssalFracture)  {
             if (plugin.connectedEntity != null) {
-                Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(plugin.connectedEntity, ""), 0.01f)
+
+                if (interactionTarget.hasTag("rat_final_fracture")) {
+                    return PluginPick(FinalFractureInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                }
+                else {
+                    Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(plugin.connectedEntity, ""), 0.01f)
+                }
             }
         }
         if (interactionTarget.hasTag("rat_abyss_entrance")) {

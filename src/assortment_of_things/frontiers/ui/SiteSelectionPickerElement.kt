@@ -106,7 +106,6 @@ class SiteSelectionPickerElement(var planet: PlanetAPI, var planetSprite: Sprite
 
         startStencil()
 
-
         planetSprite.alphaMult = alphaMult
         planetSprite.setSize(1024f * 1.25f, 512f * 1.25f)
         planetSprite.renderAtCenter(x + width / 2, y + height / 2)

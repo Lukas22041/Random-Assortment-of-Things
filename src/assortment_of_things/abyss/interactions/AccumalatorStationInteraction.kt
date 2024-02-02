@@ -52,13 +52,13 @@ class AccumalatorStationInteraction : RATInteractionPlugin() {
                 drop.value = 10000
                 dropValue.add(drop)
 
-                drop = DropData()
+                /*drop = DropData()
                 drop.chances = 1
                 drop.group = "abyss_guaranteed_alt"
-                dropRandom.add(drop)
+                dropRandom.add(drop)*/
 
                 drop = DropData()
-                drop.chances = 2
+                drop.chances = 3
                 drop.group = "rat_abyss_fabricator"
                 dropRandom.add(drop)
 

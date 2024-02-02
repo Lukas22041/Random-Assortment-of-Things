@@ -36,6 +36,7 @@ data class LinkedFracture(val fracture1: SectorEntityToken, var fracture2: Secto
 object AbyssUtils {
 
     var ABYSS_COLOR = Color(255, 0, 50)
+    var GENESIS_COLOR = Color(140, 0, 250)
     var FACTION_ID = "rat_abyssals"
 
     var SYSTEM_TAG = "rat_abyss_system"
@@ -149,7 +150,7 @@ object AbyssUtils {
                 variant.source = VariantSource.REFIT
                 member.setVariant(variant, false, true)
             }
-            member.variant.addPermaMod(pick, true)
+            member.variant.addMod(pick)
             member.updateStats()
 
         }

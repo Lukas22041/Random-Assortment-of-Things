@@ -26,7 +26,7 @@ object ExoshipGenerator {
 
         if (location == null) return null
 
-        var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "$name (Exoship)", "rat_exoship", "rat_exotech")
+        var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "$name - Exoship", "rat_exoship", "rat_exotech")
         exoshipEntity.orbit = location.orbit
 
         var script = ExoshipStateScript(exoshipEntity)

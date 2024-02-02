@@ -5,6 +5,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.intel.map.AbyssMap
 import assortment_of_things.abyss.procgen.types.DefaultAbyssType
+import assortment_of_things.abyss.procgen.types.FinalAbyssType
 import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
 import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.EveryFrameScript
@@ -35,10 +36,11 @@ class  AbyssGenerator {
 
     var noBranchTag = "rat_no_branch"
     var branchTag = "rat_abyss_branch"
+    var finalTag = "rat_abyss_final"
 
-    var systemsOnMainBranch = 9
+    var systemsOnMainBranch = 8
     var deepSystemsBeginAt = 4
-    var branches = 3
+    var branches = 2
 
     var totalSystems = 0
 
@@ -54,7 +56,7 @@ class  AbyssGenerator {
         var abyssData = AbyssData()
         Global.getSector().memoryWithoutUpdate.set(AbyssUtils.ABYSS_DATA_KEY, abyssData)
 
-        var hyperspaceLocation = Vector2f(-20000f, -15000f)
+        var hyperspaceLocation = Vector2f(-25000f, -20000f)
         var orion = Global.getSector().hyperspace.customEntities.find { it.fullName.contains("Orion-Perseus") }
         if (orion != null) {
             hyperspaceLocation = orion.location.plus(Vector2f(0f, -1000f))
@@ -80,6 +82,7 @@ class  AbyssGenerator {
         fractures.fracture1.location.set(hyperspaceLocation)
         fractures.fracture2.location.set(Vector2f(0f, 0f))
 
+        fractures.fracture1.name = "The Abyssal Depths"
 
         val hyper = Misc.getHyperspaceTerrain().plugin as HyperspaceTerrainPlugin
         val editor = NebulaEditor(hyper)
@@ -128,7 +131,7 @@ class  AbyssGenerator {
 
 
         //Fake icon system
-        var iconSystem = Global.getSector().createStarSystem("Abyss")
+        var iconSystem = Global.getSector().createStarSystem("Abyssal Depths")
         iconSystem.addTag(Tags.THEME_HIDDEN)
         iconSystem.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
         //iconSystem.initNonStarCenter()
@@ -150,7 +153,7 @@ class  AbyssGenerator {
 
         var entrancePoint = points.find { it.destinations.any { it.destination.containingLocation == iconSystem } }
         entrancePoint!!.radius = 0f
-        entrancePoint.name = "Abyssal Fracture"
+        entrancePoint.name = "The Abyssal Depths"
         entrancePoint.addTag("rat_abyss_entrance")
         entrancePoint.clearDestinations()
         entrancePoint.memoryWithoutUpdate.set("\$rat_jumpoint_destination_override", fractures.fracture2)
@@ -190,7 +193,16 @@ class  AbyssGenerator {
 
            var system = Global.getSector().createStarSystem(name)
            system.name = name
-           AbyssProcgen.setupSystem(system, type.getTerrainFraction(), depth)
+
+           var isFinal = false
+          /* if (step == systemsOnMainBranch - 1) {
+               AbyssUtils.getAbyssData().finalSystem = system
+               system.addTag(finalTag)
+               type = FinalAbyssType()
+               isFinal = true
+           }*/
+
+           AbyssProcgen.setupSystem(system, type.getTerrainFraction(), depth, isFinal)
            var systemData = AbyssUtils.getSystemData(system)
 
            if (step == systemsOnMainBranch || step == systemsOnMainBranch - 1 || step == systemsOnMainBranch - 2) {
@@ -209,6 +221,9 @@ class  AbyssGenerator {
 
            fractures.fracture1.location.set(pos1)
            fractures.fracture2.location.set(pos2)
+           if (isFinal) {
+               fractures.fracture1.addTag("rat_final_fracture")
+           }
 
            AbyssProcgen.clearTerrainAroundFractures(fractures)
 
@@ -443,7 +458,7 @@ class  AbyssGenerator {
         for (member in fleet.fleetData.membersListCopy) {
             member.variant.addTag(Tags.TAG_NO_AUTOFIT)
         }
-        AbyssUtils.addAlterationsToFleet(fleet, 0.8f, Random())
+        AbyssUtils.addAlterationsToFleet(fleet, 0.4f, Random())
         AbyssalSeraphSpawner.sortWithSeraphs(fleet)
 
         /*  for (i in 0 until 3) {

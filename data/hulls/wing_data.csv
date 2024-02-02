@@ -5,7 +5,7 @@ id,variant,tags,tier,rarity,fleet pts,op cost,formation,range,attackRunRange,att
 rat_shield_drone_wing,rat_shield_drone_variant,"no_drop, no_sell, low",1,,5,5,CLAW,4000,200,700,1,SUPPORT,Support Drone,5,6000,,,,,,,,,,,,,7
 rat_shield_object_wing,rat_shield_object_variant,"no_drop, no_sell, low",1,,5,5,CLAW,4000,200,700,1,SUPPORT,Support Drone,5,6000,,,,,,,,,,,,,7
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,9
-rat_ceto,rat_ceto_Fighter,"no_sell, fighter, fighter6, auto_fighter, restricted",3,,8,14,V,4000,500,,3,FIGHTER,Fighter Drone,10,8000,,,,,,,,,,,,,2223
+rat_ceto,rat_ceto_Fighter,"no_sell, fighter, fighter6, auto_fighter, restricted",3,,8,14,V,4000,500,,2,FIGHTER,Fighter Drone,10,8000,,,,,,,,,,,,,2223
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,

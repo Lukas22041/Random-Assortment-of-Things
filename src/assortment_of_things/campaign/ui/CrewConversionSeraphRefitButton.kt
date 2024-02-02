@@ -29,7 +29,7 @@ class CrewConversionSeraphRefitButton : BaseRefitButton() {
     }
 
     override fun shouldShow(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
-        return variant!!.hasHullMod("rat_abyssal_conversion") && variant!!.baseOrModSpec().hasTag("rat_abyssals")
+        return variant!!.hasHullMod("rat_abyssal_conversion")
     }
 
     override fun hasTooltip(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
@@ -64,8 +64,8 @@ class CrewConversionSeraphRefitButton : BaseRefitButton() {
         var seraphStack = getSeraphStack(market)
 
         if (event!!.isLMBEvent && event.isDoubleClick && seraphStack != null) {
-            variant!!.removePermaMod("rat_abyssal_conversion")
-            variant!!.addPermaMod("rat_seraph_conversion", true)
+            variant!!.removeMod("rat_abyssal_conversion")
+            variant!!.addMod("rat_seraph_conversion")
 
             Global.getSoundPlayer().playUISound("ui_char_spent_story_point", 1f, 1f)
 

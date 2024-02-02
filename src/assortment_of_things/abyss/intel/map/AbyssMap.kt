@@ -116,7 +116,7 @@ class AbyssMap : BaseIntelPlugin() {
                     var depth = systemData.depth
                     if (system.name.contains("Twilight"))
                     {
-                        tooltip!!.addPara("The exotic connection between hyoerspace and this unique enviroment.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
+                        tooltip!!.addPara("The exotic connection between hyperspace and this unique enviroment.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(5f)
                     }
 

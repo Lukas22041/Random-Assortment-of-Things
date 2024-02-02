@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.entities.AbyssalLightsource
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import assortment_of_things.abyss.procgen.AbyssDepth
@@ -9,18 +10,32 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.ViewportAPI
+import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
+import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.ui.LazyFont
+import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.bounty.ui.drawOutlined
+import org.magiclib.kotlin.setAlpha
 import java.util.*
 
 class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
     @Transient
     var vignette = Global.getSettings().getSprite("graphics/fx/rat_darkness_vignette.png")
+
+    @Transient
+    var halo: SpriteAPI? = null
+
+    var font: LazyFont? = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+
+
 
     var id = Misc.genUID()
 
@@ -43,6 +58,172 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
     override fun getTerrainId(): String {
         return super.getTerrainId() + id
+    }
+
+    override fun renderOnMap(factor: Float, alphaMult: Float) {
+        var system = AbyssUtils.getSystemData(entity.starSystem)
+
+        if (font == null) {
+            font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+        }
+
+        if (halo == null) {
+            halo = Global.getSettings().getSprite("rat_terrain", "halo")
+        }
+
+        var photospheres = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalPhotosphere }
+        for (photosphere in photospheres)
+        {
+            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
+            var loc = Vector2f(photosphere.location.x * factor, photosphere.location.y * factor)
+
+            var plugin = photosphere.customPlugin as AbyssalPhotosphere
+            var radius = plugin.radius * factor
+
+            halo!!.alphaMult = 1f * alphaMult
+            halo!!.color = color.setAlpha(75)
+
+            halo!!.setSize(radius / 20, radius / 20)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+
+            halo!!.alphaMult = 1f * alphaMult
+            halo!!.color = color.setAlpha(55)
+
+            halo!!.setSize(radius / 2, radius / 2)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+        }
+
+        var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLightsource }
+        for (source in lightsources)
+        {
+            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
+            var loc = Vector2f(source.location.x * factor, source.location.y * factor)
+
+            var plugin = source.customPlugin as AbyssalLightsource
+            var radius = plugin.radius * factor
+
+            halo!!.alphaMult = 0.6f * alphaMult
+            halo!!.color = color.setAlpha(75)
+
+            halo!!.setSize(radius / 20, radius / 20)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+
+            halo!!.alphaMult = 0.8f * alphaMult
+            halo!!.color = color.setAlpha(55)
+
+            halo!!.setSize(radius / 2, radius / 2)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+        }
+
+        for (fracture in system.system.customEntities) {
+            if (fracture.customEntitySpec.id != "rat_abyss_fracture") continue
+            var plugin = fracture.customPlugin
+            if (plugin !is AbyssalFracture) continue
+
+            var destination = plugin.connectedEntity?.containingLocation ?: continue
+            if ((destination is StarSystemAPI && !destination.isEnteredByPlayer)) continue
+
+            var destinationName = destination.nameWithNoType ?: continue
+            var text = font!!.createText(destinationName, AbyssUtils.ABYSS_COLOR.setAlpha((225 * alphaMult).toInt()), 400f * factor)
+            text.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            text.blendSrc = GL11.GL_SRC_ALPHA
+
+            text.drawOutlined(fracture.location.x * factor - (text.width / 2), (fracture.location.y + 600) * factor + (text.height))
+
+        }
+    }
+
+    override fun renderOnRadar(radarCenter: Vector2f, factor: Float, alphaMult: Float) {
+        super.renderOnRadar(radarCenter, factor, alphaMult)
+
+        var system = AbyssUtils.getSystemData(entity.starSystem) ?: return
+
+        if (halo == null) {
+            halo = Global.getSettings().getSprite("rat_terrain", "halo")
+        }
+
+
+        val radarRadius = Global.getSettings().getFloat("campaignRadarRadius") + 2000
+        var photospheres = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalPhotosphere }
+
+        for (photosphere in photospheres)
+        {
+            if (MathUtils.getDistance(photosphere.location, radarCenter) >= radarRadius) continue
+
+            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
+            var loc = Vector2f((photosphere.location.x - radarCenter.x) * factor, (photosphere.location.y - radarCenter.y) * factor)
+
+
+            var plugin = photosphere.customPlugin as AbyssalPhotosphere
+            var radius = plugin.radius * factor
+
+            halo!!.alphaMult = 1f * alphaMult
+            halo!!.color = color.setAlpha(75)
+
+            halo!!.setSize(radius / 20, radius / 20)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+
+            halo!!.alphaMult = 1f * alphaMult
+            halo!!.color = color.setAlpha(55)
+
+            halo!!.setSize(radius / 2, radius / 2)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+        }
+
+        var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLightsource }
+        for (source in lightsources)
+        {
+            if (MathUtils.getDistance(source.location, radarCenter) >= radarRadius) continue
+
+            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
+            var loc = Vector2f((source.location.x - radarCenter.x) * factor, (source.location.y - radarCenter.y) * factor)
+
+            var plugin = source.customPlugin as AbyssalLightsource
+            var radius = plugin.radius * factor
+
+            halo!!.alphaMult = 0.8f * alphaMult
+            halo!!.color = color.setAlpha(75)
+
+            halo!!.setSize(radius / 20, radius / 20)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+
+            halo!!.alphaMult = 1f * alphaMult
+            halo!!.color = color.setAlpha(55)
+
+            halo!!.setSize(radius / 2, radius / 2)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+        }
+
+
+        if (font == null) {
+            font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+        }
+
+        for (fracture in system.system.customEntities) {
+
+            if (MathUtils.getDistance(fracture.location, radarCenter) >= radarRadius) continue
+
+            if (fracture.customEntitySpec.id != "rat_abyss_fracture") continue
+            var plugin = fracture.customPlugin
+            if (plugin !is AbyssalFracture) continue
+
+            var destination = plugin.connectedEntity?.containingLocation ?: continue
+            if ((destination is StarSystemAPI && !destination.isEnteredByPlayer)) continue
+
+            var destinationName = destination.nameWithNoType ?: continue
+            var text = font!!.createText(destinationName, AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt()), 800f * factor)
+            text.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            text.blendSrc = GL11.GL_SRC_ALPHA
+            text.drawOutlined((fracture.location.x - radarCenter.x) * factor - (text.width / 2), (fracture.location.y - radarCenter.y + 800) * factor + (text.height))
+        }
     }
 
     fun containingPhotosphere(other: SectorEntityToken): SectorEntityToken? {

@@ -22,15 +22,10 @@
 					   "particleSizeRange":12.0,
 					   "particleDuration":0.1,
 					   "particleCount":12,
-					   "particleColor": [
-      236,
-      139,
-      91,
-      100
-    ]},
+					   "particleColor": [150, 0 ,255, 50]},
 	"projectileSpecId":"rat_ceto_shot",  # projectile that will be fired
 	"stopPreviousFireSound":false,
 	#"fireSoundOne":"heavy_machinegun_intro",
-	"fireSoundTwo":"abyss_lusca",
+	"fireSoundTwo":"rat_abyss_ceto_blaster",
 	#"fireSoundTwo":"plasma_cannon_fire",
 }

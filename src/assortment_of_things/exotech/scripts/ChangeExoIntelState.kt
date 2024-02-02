@@ -3,7 +3,6 @@ package assortment_of_things.exotech.scripts
 import assortment_of_things.exotech.ExoUtils
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
-import exerelin.utilities.NexConfig
 
 class ChangeExoIntelState : EveryFrameScript {
 

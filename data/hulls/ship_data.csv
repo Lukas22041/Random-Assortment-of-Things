@@ -3,19 +3,18 @@ Shield Drone,rat_shield_drone,,High Tech,,,100,10,1000,,100,0,,325,200,150,180,3
 Shield,rat_shield_object,,High Tech,,,100,10,1000,,100,0,,325,200,150,180,360,10,OMNI,,360,0,0.4,,,0,0,,,,,,,,,,,,,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX",,,0,,,,103
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Abyssals,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Ceto,rat_ceto,,Abyssal,,,550,60,650,,100,0,,250,380,360,120,240,20,OMNI,,270,0,1,,,0,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
+Ceto,rat_ceto,,Abyssal,,,600,80,800,,100,0,,250,380,360,120,240,20,OMNI,,270,0,1,,,0,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Merrow,rat_merrow,Droneship,Abyssal,merrow_system,7,1250,250,2500,2500,300,45,,130,180,170,75,230,150,OMNI,,200,0.3,0.55,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,5,5,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,2,,3101
-Makara,rat_makara,Droneship,Abyssal,aboleth_system,9,1300,225,2750,2500,300,55,,95,140,130,50,120,150,OMNI,,270,0.3,0.6,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,8,8,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,2,,3101
-Chuul,rat_chuul,Droneship,Abyssal,chuul_system,12,5000,450,5000,3750,400,110,,90,75,50,30,50,500,OMNI,,190,0.3,0.6,,,0,0,80,60,2,30,10,50000,5,15,420,0.25,11,11,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,3,,3102
-Aboleth (F),rat_aboleth,Droneship Cruiser,Abyssal,aboleth_system,20,8000,900,10000,12500,700,165,2,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,"HIDE_IN_CODEX, CARRIER, COMBAT","auto_rec, rat_abyssals",,0.5,2,3,,3103
-Aboleth (M),rat_aboleth_m,Droneship Cruiser,Abyssal,aboleth_system,20,8000,900,10000,12500,700,165,,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,3,,3103
-Morkoth,rat_morkoth,Drone Battleship,Abyssal,morkoth_system,30,20000,1500,25000,37500,1500,320,,40,30,20,10,15,3500,OMNI,,270,0.3,0.65,,,0,0,250,400,10,40,8,500000,3,15,720,0.25,55,55,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.4,2,4,,3104
+Merrow,rat_merrow,Droneship,Abyssal,rat_abyssal_current,7,1250,250,2500,2500,300,45,,130,180,170,75,230,150,OMNI,,200,0.3,0.55,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,7,7,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,2,,3101
+Makara,rat_makara,Droneship,Abyssal,rat_abyssal_cloak,9,1300,225,2750,2500,300,55,,95,140,130,50,120,150,OMNI,,270,0.3,0.6,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,8,8,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,2,,3101
+Chuul,rat_chuul,Droneship,Abyssal,rat_abyssal_skimmer,12,5000,450,5000,3750,400,110,,90,75,50,30,50,500,OMNI,,190,0.3,0.6,,,0,0,80,60,2,30,10,50000,5,15,420,0.25,11,11,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,3,,3102
+Aboleth (F),rat_aboleth,Droneship Cruiser,Abyssal,rat_abyssal_cloak,20,8000,900,10000,12500,700,165,2,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,"HIDE_IN_CODEX, CARRIER, COMBAT","auto_rec, rat_abyssals",,0.5,2,3,,3103
+Aboleth (M),rat_aboleth_m,Droneship Cruiser,Abyssal,rat_abyssal_cloak,20,8000,900,10000,12500,700,165,,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,3,,3103
+Morkoth,rat_morkoth,Drone Battleship,Abyssal,rat_abyssal_charge,30,18000,1300,22000,37500,1500,300,,50,30,25,15,20,3500,OMNI,,270,0.3,0.75,,,0,0,250,400,10,40,8,500000,3,15,720,0.25,60,60,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.4,2,4,,3104
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Seraphs,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Raguel,rat_raguel,Droneship,Seraph,rat_raguel_system,14,4000,400,4500,6250,450,65,,110,160,150,45,100,250,FRONT,,270,0.4,0.75,,,0,0,10,15,1,15,10,50000,5,10,360,0.25,14,14,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, rat_seraph",,0.5,2,3,,3111
 Sariel,rat_sariel,Heavy Droneship,Seraph,rat_sariel_system,18,7000,750,8000,8000,500,115,,80,70,50,20,25,650,FRONT,,270,0.4,0.8,,,0,0,80,60,2,30,10,50000,5,15,420,0.25,18,18,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, rat_seraph",,0.5,2,3,,3112
-Sarakiel,rat_sarakiel,Heavy Droneship,Seraph,rat_sariel_system,18,7000,750,8000,8000,500,115,,80,70,50,20,25,650,FRONT,,270,0.4,0.8,,,0,0,80,60,2,30,10,50000,5,15,420,0.25,18,18,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, rat_seraph",,0.5,2,3,,3113
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Primordials,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -24,7 +23,7 @@ Charybdis Segment,rat_charybdis_large,,Abyssal,,0,15000,1500,10000,12500,700,165
 Charybdis Segment,rat_charybdis_small,,Abyssal,,0,15000,1400,10000,12500,700,165,0,0,0,0,0,0,2000,NONE,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,0,0,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, no_autofit",,0.5,2,3,,3103
 Charybdis Segment,rat_charybdis_tail,,Abyssal,,0,15000,2000,10000,12500,700,165,0,0,0,0,0,0,2000,NONE,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,0,0,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, no_autofit",,0.5,2,3,,3103
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Genesis,rat_genesis,Protector,Primordial,rat_spatial_disturbance,40,18000,1400,16000,30000,1400,300,,45,50,50,15,25,2400,FRONT,,270,0.4,0.9,,,0,0,220,600,8,50,8,1000000,3,50,600,0.25,75,75,,,,,,,HIDE_IN_CODEX,no_autofit,,0.4,2,3,,510
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -32,11 +31,12 @@ Charybdis Segment,rat_charybdis_tail,,Abyssal,,0,15000,2000,10000,12500,700,165,
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#Good,#Good,,,,,,,,,,,,,,,,,,,,,,
 #Aboleth (F),rat_aboleth,Droneship Cruiser,Abyssal,aboleth_system,20,8000,900,10000,12500,700,165,2,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,#Good,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,"HIDE_IN_CODEX, CARRIER, COMBAT","auto_rec, rat_abyssals",,0.5,2,3,,3103
 #Doom,doom,Phase Cruiser,High Tech,mine_strike,22,8000,1250,10000,18000,900,145,,75,55,40,20,25,1200,PHASE,phasecloak,,,,0.05,0.05,50,100,120,150,3,50,8,250000,4,30,420,0.25,35,35,,,,,,,,"rare_bp, hist2t, merc, kanta_gift",,0.5,2,3,,406
-Aftershadow,rat_aftershadow_drone,,,,,10000000,1000,100000,,100000,,,200,300,250,90,180,100,NONE,,,,,,,,,,,,,,,,,,,,,,,,,,,,"restricted, no_sell",,0,,,,8
+Aftershadow,rat_aftershadow_drone,,,,,10000000,10000,100000,,100000,,,200,300,250,90,180,100,NONE,,,,,,,,,,,,,,,,,,,,,,,,,,,,"restricted, no_sell",,0,,,,8
 Thestia,rat_thestia,Battlecarrier,Exo-Tech,rat_thestia_system,12,4500,500,5500,3750,350,100,1,70,60,55,25,45,500,FRONT,,270,0.25,0.8,,,20,45,70,50,2,30,10,75000,5,20,420,0.25,14,14,,,,,,,"CARRIER, COMBAT","restricted, rat_exotech_bp",,0.5,2,3,,4003
 Tylos,rat_tylos,Phase Destroyer,Exo-Tech,rat_tylos_system,15,5000,800,6000,10000,600,110,,100,85,65,40,45,600,PHASE,rat_exocloak,,,,0.025,0.05,30,60,80,100,2,50,10,125000,5,20,360,0.25,16,16,,,,,,,"PHASE, SHIP_WITH_MODULES, DO_NOT_SHOW_MODULES_IN_FLEET_LIST","restricted, rat_exotech_bp",,0.5,2,3,,4004
 Tylos,rat_tylos_double,Phase Destroyer,Exo-Tech,rat_tylos_system,15,5000,800,6000,10000,600,110,,100,85,65,40,45,600,PHASE,rat_exocloak,,,,0.025,0.05,30,60,80,100,2,50,10,1000000,5,20,360,0.25,0,0,,,,,,,"PHASE, UNBOARDABLE, HIDE_IN_CODEX, UNDER_PARENT",restricted,,0.5,2,3,,4004
-Arkas,rat_arkas,Phase Cruiser,Exo-Tech,rat_arkas_system,20,8000,1200,12000,16000,800,160,,70,40,35,20,25,2000,PHASE,rat_exocloak,,,,0.025,0.05,50,100,150,120,2,30,9,200000,5,20,540,0.25,35,35,,,,,,,PHASE,"restricted, rat_exotech_bp",,0.5,2,3,,4000
+Arkas,rat_arkas,Phase Cruiser,Exo-Tech,rat_arkas_system,20,8000,1200,12000,16000,800,160,,70,50,45,20,25,2000,PHASE,rat_exocloak,,,,0.025,0.05,50,100,150,120,2,30,9,200000,5,20,540,0.25,35,35,,,,,,,PHASE,"restricted, rat_exotech_bp",,0.5,2,3,,4000
+Arkas (Phantom),rat_arkas_phantom,Phase Cruiser,Exo-Tech,,20,100000,3000,12000,16000,800,160,,70,50,45,20,25,2000,NONE,,,,,0.025,0.05,50,100,150,120,2,30,9,200000,5,20,540,0.25,0,0,,,,,,,"PHASE,  ALWAYS_PANIC, UNBOARDABLE, HIDE_IN_CODEX, NEVER_DODGE_MISSILES",restricted,,0.5,2,3,,4000
 Leanira,rat_leanira,Battlecarrier,Exo-Tech,rat_leanira_system,20,7500,1100,11000,12500,650,155,2,60,30,25,20,25,2000,OMNI,,270,0.25,0.8,,,110,200,160,130,2,30,9,175000,5,20,540,0.25,26,26,,,,,,,"CARRIER, COMBAT, SHIP_WITH_MODULES, DO_NOT_SHOW_MODULES_IN_FLEET_LIST","restricted, rat_exotech_bp",,0.5,2,3,,4001
 Apheidas,rat_apheidas,Turret Platform,Exo-Tech,,0,5500,1150,3000,2500,300,50,,1,0,0,2,2,4000,NONE,,200,0.25,0.8,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,0,0,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX, UNDER_PARENT, ALWAYS_PANIC",restricted,,0.5,2,2,,4002
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

@@ -1,7 +1,6 @@
 package assortment_of_things.abyss.shipsystem
 
 import assortment_of_things.abyss.hullmods.HullmodUtils
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsCoreHullmod
 import assortment_of_things.combat.AfterImageRenderer
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
@@ -13,7 +12,6 @@ import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
-import java.util.*
 
 class SarielShipsystem : BaseShipSystemScript() {
 

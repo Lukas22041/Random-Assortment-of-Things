@@ -145,7 +145,7 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
         var system = AbyssProcgen.getConnectedFracture(entity).containingLocation
 
         if (entity.containingLocation.isHyperspace) {
-            tooltip.addPara("It leads towards the ever descending depths of the abyss.", 0f)
+            tooltip.addPara("It leads towards the ever descending abyssal depths.", 0f)
         }
         else if (system.isHyperspace) {
             tooltip!!.addPara("It connects towards ${system.nameWithNoType}.", 0f, Misc.getTextColor(),

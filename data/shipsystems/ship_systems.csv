@@ -4,16 +4,15 @@ name,id,flux/second,f/s (base rate),f/s (base cap),flux/use,f/u (base rate),f/u 
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Abyssal Synergy,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Abyssal Core,merrow_system,,,,,,,,,,0.3,5,0.3,16,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
-Abyssal Core,chuul_system,,,,,,,,3,1,0.25,0.01,0.25,0,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
-Abyssal Core,aboleth_system,,,,,,,,,,0.5,6,0.5,15,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
-Abyssal Core,morkoth_system,,,,,,,,2,0.04,0.25,3,0.25,3,,,,,,,,,,TRUE,,,graphics/icons/hullsys/phase_cloak.png
-,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Test System,rat_test_system,,,,,,,,,0,2,,2,0.5,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
+Abyssal Current,rat_abyssal_current,,,,,,,,,,1,3,0.5,12,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
+Abyssal Skimmer,rat_abyssal_skimmer,,,,,,,,3,0.1,0.25,0.1,1,0,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
+Abyssal Cloak,rat_abyssal_cloak,,,,,,,,,,1.5,6,0.5,15,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
+Abyssal Charge,rat_abyssal_charge,,,,,,,,,,0.5,0.5,1.5,22,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Temporal Dash,rat_raguel_system,,,,,,,,3,0,0.1,2,0.1,0.5,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 Offensive Override,rat_sariel_system,,,,,,,,,,1,7.5,1,15,,,,,,,,,TRUE,,,,graphics/icons/hullsys/ammo_feeder.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Spatial Disturbance,rat_spatial_disturbance,,,,,,,,3,0.075,0.5,1,0.5,1.5,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Charybdis Phase,rat_charybdis_head_system,,,,,,,,,,0.5,10,0.5,10,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
 Primordial Shift,rat_charybdis_head_system,,,,,,,,,,0.5,,0.5,2,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,,TRUE,,graphics/icons/hullsys/phase_cloak.png
@@ -22,7 +21,7 @@ Primordial Shift,rat_charybdis_head_system,,,,,,,,,,0.5,,0.5,2,TRUE,,TRUE,TRUE,T
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Exocloak,rat_exocloak,,,,,,,,,,0.5,0,0.5,2,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,,TRUE,,graphics/icons/hullsys/phase_cloak.png
 #Unstable Drive,rat_arkas_system,,,,,,,,,,1,2,3,15,,,,,,,,,,,,,graphics/icons/hullsys/infernium_injector.png
-Phase Phantoms,rat_arkas_system,,,,3000,,,,,,11,0.1,1.5,20,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
+Phase Phantoms,rat_arkas_system,,,,3000,,,,,,12,0.1,1.5,20,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 Phased Deployment,rat_leanira_system,,,,,,,,,,1,,1,20,TRUE,,,,,,,,,,,,graphics/icons/hullsys/infernium_injector.png
 Superposition,rat_tylos_system,,,,,,,,,,1,0.1,1,5,FALSE,,,,,,,,,,,,graphics/icons/hullsys/infernium_injector.png
 Aftershadows,rat_thestia_system,,,,,,,,,,1,10,1.5,20,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png

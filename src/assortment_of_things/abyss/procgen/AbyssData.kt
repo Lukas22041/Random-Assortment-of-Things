@@ -11,8 +11,11 @@ class AbyssData {
     var hyperspaceFracture: SectorEntityToken? = null
 
     var rootSystem: StarSystemAPI? = null
+    var finalSystem: StarSystemAPI? = null
     var systemsData = ArrayList<AbyssSystemData>()
     var generatedSteps = 0
+
+
 
 
     var abyssalsDestroyed = 0

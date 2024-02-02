@@ -3,8 +3,10 @@ package assortment_of_things.campaign.ui
 import assortment_of_things.abyss.hullmods.BaseAlteration
 import assortment_of_things.misc.BorderedPanelPlugin
 import assortment_of_things.misc.addPara
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoStackAPI
+import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -65,7 +67,7 @@ class AlterationRefitButton : BaseRefitButton() {
             backgroundPanel!!.removeComponent(panel)
         }
 
-        var installedAlteration = variant!!.permaMods.map { Global.getSettings().getHullModSpec(it) }.find { it.hasTag("rat_alteration") }
+        var installedAlteration = variant!!.hullMods.map { Global.getSettings().getHullModSpec(it) }.find { it.hasTag("rat_alteration") }
         var hasAlteration = installedAlteration != null
 
         var width = getPanelWidth(member, variant)
@@ -92,13 +94,14 @@ class AlterationRefitButton : BaseRefitButton() {
         aboutElement.position
         aboutElement.addSectionHeading("About", Alignment.MID, 0f)
         aboutElement.addSpacer(10f)
-        aboutElement.addPara("Hull-Alterations are a unique type of consumeable hullmod. Only one can be installed per ship through this menu. \n\n" + "Alterations count towards the ships s-mod limit, and they cant be installed if the ship already reached the limit.\n\n" + "This menu can pull alterations from the fleet inventory or from the storage of the docked-at colony.",
+        aboutElement.addPara("Hull-Alterations are a unique type of consumeable hullmod. Only one can be installed per ship at a time. \n\n" + "They provide powerful and unique effects that can hardly be found anywhere else. \n\n" + /*"Alterations count towards the ships s-mod limit, and they cant be installed if the ship already reached the limit.\n\n" +*/ "This menu can pull alterations from the fleet inventory or from the storage of the docked-at colony.",
             0f,
             Misc.getTextColor(),
             Misc.getHighlightColor(),
             "Hull-Alterations",
             "consumeable hullmod",
-            "s-mod limit",
+            "powerful",
+            "unique",
             "fleet inventory",
             "storage").position.inTL(10f, 30f)
 
@@ -157,7 +160,7 @@ class AlterationRefitButton : BaseRefitButton() {
         removeButtonElement.position.inTL(-5f ,0f)
         removeButtonElement.addLunaElement(400f, 30f).apply {
             enableTransparency = true
-            addText("Remove & Destroy Alteration", baseColor = Misc.getBasePlayerColor())
+            addText("Remove Alteration", baseColor = Misc.getBasePlayerColor())
             centerText()
 
             if (hasAlteration && canBeRemoved) {
@@ -176,9 +179,11 @@ class AlterationRefitButton : BaseRefitButton() {
                 onClick {
                     playClickSound()
 
-                    variant.removePermaMod(installedAlteration!!.id)
+                    variant.removeMod(installedAlteration!!.id)
                     var plugin = Global.getSettings().scriptClassLoader.loadClass(installedAlteration.effectClass).newInstance() as BaseAlteration
                     plugin.onAlterationRemove(member, variant, market)
+
+                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData(RATItems.ALTERATION_INSTALLER, installedAlteration.id), 1f)
 
                     refreshVariant()
                     refreshButtonList()
@@ -205,7 +210,7 @@ class AlterationRefitButton : BaseRefitButton() {
             }
 
             override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
-                tooltip!!.addPara("Removes the alteration from the ship and permanently destroys it.", 0f)
+                tooltip!!.addPara("Removes the alteration from the ship and return its installer back in to the inventory.", 0f)
                 tooltip.addSpacer(5f)
 
                 if (!hasAlteration) {
@@ -238,12 +243,6 @@ class AlterationRefitButton : BaseRefitButton() {
         var alterations = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") }
 
         alterations = alterations.sortedBy { it.displayName }
-
-
-        var maxSmods = Global.getSettings().settingsJSON.getInt("maxPermanentHullmods")
-        var atSmodLimit = variant.sMods.size >= member!!.stats.dynamic.getValue(Stats.MAX_PERMANENT_HULLMODS_MOD, maxSmods.toFloat())
-
-        var hasProgressive = Global.getSettings().modManager.isModEnabled("progressiveSMods")
 
         var stacks = Global.getSector().playerFleet.cargo.stacksCopy.filter { it.isSpecialStack && it.specialItemSpecIfSpecial.id == "rat_alteration_install" }.toMutableList()
         if (market != null) {
@@ -296,7 +295,7 @@ class AlterationRefitButton : BaseRefitButton() {
 
 
                 var nameColor = Misc.getTextColor()
-                if (!isInstallable || (atSmodLimit && !hasProgressive) || hasAlteration) nameColor = Misc.getNegativeHighlightColor()
+                if (!isInstallable || hasAlteration) nameColor = Misc.getNegativeHighlightColor()
 
                 var namePara = innerElement.addPara(alteration.displayName, 0f, nameColor, nameColor)
                 namePara.position.rightOfMid(sprite.elementPanel, 10f)
@@ -321,8 +320,8 @@ class AlterationRefitButton : BaseRefitButton() {
                     playClickSound()
 
                     if (it.isDoubleClick ) {
-                        if (isInstallable && (!atSmodLimit || hasProgressive) && !hasAlteration) {
-                            variant.addPermaMod(alteration.id, true)
+                        if (isInstallable && !hasAlteration) {
+                            variant.addMod(alteration.id)
 
                             stack.subtract(1f)
                             if (stack.size < 0.1f) {
@@ -352,16 +351,11 @@ class AlterationRefitButton : BaseRefitButton() {
                     plugin.addPostDescriptionSection(tooltip, variant.hullSize, null, 400f, false)
                     tooltip!!.addSpacer(10f)
 
-                    if (isInstallable && !atSmodLimit && !hasAlteration) {
+                    if (isInstallable && !hasAlteration) {
                         tooltip!!.addPara("Double-Click to install", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
                     }
                     else if (hasAlteration) {
                         tooltip!!.addPara("This ship already has an alteration installed.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
-                    }
-                    else if (atSmodLimit) {
-                        var text = "Ship is at maximum amount of s-mods."
-                        if (hasProgressive) text += " (Ignored due to Progressive-Smods)"
-                        tooltip!!.addPara(text, 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
                     }
                     else {
                         plugin.cannotInstallAlterationTooltip(tooltip,  member, variant,400f)

@@ -129,6 +129,11 @@ class RATModPlugin : BaseModPlugin() {
         //Global.getSector().intelManager.addIntel(DoctrineReportAbyssal())
 
 
+        var hyperspace = Global.getSector().hyperspace
+        if (hyperspace.terrainCopy.none { it.plugin is HyperspaceRenderingTerrainPlugin }) {
+            hyperspace.addTerrain("rat_hyperspace_rendering", null)
+        }
+
 
    /*     for (artifact in ArtifactUtils.artifacts)
         {
@@ -171,9 +176,7 @@ class RATModPlugin : BaseModPlugin() {
             skill!!.name = "Abyssal Requiem"
         }
 
-        if (!Global.getSector().hasScript(ResetBackgroundScript::class.java)) {
-            Global.getSector().addTransientScript(ResetBackgroundScript())
-        }
+        Global.getSector().addTransientScript(ResetBackgroundScript())
 
         Global.getSector().addTransientScript(ForceNegAbyssalRep())
         Global.getSector().addTransientListener(HullmodRemoverListener())

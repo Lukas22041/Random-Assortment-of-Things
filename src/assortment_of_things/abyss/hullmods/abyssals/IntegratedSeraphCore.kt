@@ -57,8 +57,8 @@ class IntegratedSeraphCore : BaseAlteration() {
 
         tooltip!!.addSpacer(5f)
         tooltip!!.addPara("Replaces the ships AI-Components with a miniature bridge and integrates a seraph core in to the ships subsystem. " +
-                "This allows humans to crew the ship and provides the seraph-cores skill to the ship.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "seraph-cores", "shipsystem")
+                "This allows humans to crew the ship. It enables the bonuses from the \"Abyssal Adaptability\" hullmod and provides the cores skill to the ship.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "\"Abyssal Adaptability\"", "skill")
 
         var seraphSkill = Global.getSettings().getSkillSpec("rat_core_seraph")
         tooltip.addSpacer(10f)
@@ -81,12 +81,13 @@ class IntegratedSeraphCore : BaseAlteration() {
         }
     }
 
+
     override fun canUninstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return member!!.captain == null || member!!.captain.nameString == ""
+        return false
     }
 
     override fun cannotUninstallAlterationTooltip(tooltip: TooltipMakerAPI?,member: FleetMemberAPI?, variant: ShipVariantAPI?,width: Float) {
-        tooltip!!.addPara("Can not be removed while an officer is assigned to the ship.", 0f,
+        tooltip!!.addPara("Can not be removed while a core is integrated.", 0f,
             Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
     }
 

@@ -3,9 +3,9 @@
   "name": "Random Assortment of Things",
   "author": "Lukas04",
   "utility": "false",
-  "version": "1.9.5",
+  "version": "2.0.0-Part1",
   "description": "A collection of things I create whenever a random idea pops up into my head.",
-  "gameVersion": "0.96a-RC10",
+  "gameVersion": "0.97a-RC6",
   "jars": ["jars/RandomAssortmentofThings.jar"],
   "modPlugin": "assortment_of_things.RATModPlugin",
   "dependencies": [
@@ -25,9 +25,9 @@
       "id": "combatactivators",
       "name": "Combat Activators"
     },
-	{
-      "id": "nexerelin",
-      "name": "Nexerelin"
-    },
+	#{
+    #  "id": "nexerelin",
+    #  "name": "Nexerelin"
+    #},
   ]
 }

@@ -41,6 +41,14 @@
 			{"file":"TheHeartOfThoseForgotten.ogg","source":"sounds/rat/music","volume":0.8},
 		],
 		
+		"rat_abyss_genesis1":[
+			{"file":"GenesisBossPhase1.ogg","source":"sounds/rat/music","volume":1},
+		],
+		
+		"rat_abyss_genesis2":[
+			{"file":"GenesisBossPhase2.ogg","source":"sounds/rat/music","volume":1},
+		],
+		
 		"rat_exo_market":[
 			{
 				"file":"PhantomOfTheFringe.ogg",
@@ -79,6 +87,10 @@
 		{"file":"sounds/sfx_abyss/rat_abyss_sound_10.ogg","pitch":1.0,"volume":1},
 	],
 
+	"rat_genesis_system_sound":[
+            {"file":"sounds/sfx_systems/mote_attractor_targeted_ship_01.ogg","pitch":0.8,"volume":0.6},
+    ],
+
 	"rat_abyss_storm_sounds":[
 		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_01.ogg","pitch":1,"volume":0.5},
 		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_02.ogg","pitch":1,"volume":0.5},
@@ -96,7 +108,12 @@
 	],
 	
 	"abyss_lusca":[
-		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.9,"volume":0.55},
+		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.9,"volume":0.45},
+	],
+	
+	"rat_abyss_ceto_blaster":
+	[
+		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.7,"volume":0.4},
 	],
 	
 	"abyss_cecaelia":[
@@ -128,6 +145,9 @@
 		],
 	},	
 
-
+	"rat_starburst_fire":
+    [
+            {"file":"sounds/sfx_wpn_missiles/harpoon_fire_01.ogg","pitch":1.1,"volume":0.5},
+    ],
 
 }

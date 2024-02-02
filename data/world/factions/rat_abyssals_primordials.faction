@@ -1,0 +1,203 @@
+{
+	id:"rat_abyssals_primordials",
+	"displayName":"Primordial",
+	"displayNameWithArticle":"the primordials",
+	"displayNameLong":"Primordial",
+	"displayNameLongWithArticle":"the Primordials",
+	"entityNamePrefix":"Primordial",
+	"personNamePrefix":"Primordial",
+	"personNamePrefixAOrAn":"an",
+	"displayNameIsOrAre":"are",
+	
+	"logo":"graphics/factions/rat_primordials.png",
+	"crest":"graphics/factions/rat_primordials_crest.png",
+	"shipNamePrefix":"ABS",
+	
+	"color":[140, 0, 250,255],
+	"baseUIColor":[140, 0, 250,255],
+	#"color":[100,100,100,255],
+	#"baseUIColor":[155,155,155,255],
+	
+	#"darkUIColor":[31,94,112,175],
+	#"gridUIColor":[70,200,255,75],
+	
+	"showInIntelTab":false,
+	
+	"shipNameSources":{
+		"MERCANTILE":1,
+		"SPACE":1,
+		"DERELICT_DRONE":1,
+	},
+	"names":{
+		"ai":1,
+	},
+	"variantOverrides":{
+	},
+	# multiplier for how often hulls show up in the faction's fleets
+	"hullFrequency":{
+		"tags":{
+		},
+		"hulls":{
+		},
+	},
+	# ships the faction gets access to when importing S&W out-of-faction
+	"shipsWhenImporting":{
+		"tags":[],
+		"hulls":[
+		],
+	},
+	"knownShips":{
+		"tags":[],
+		"hulls":[
+		],
+	},
+	# listing ships here will make the faction mostly use them even if other hulls become available
+	"priorityShips":{
+		"tags":[],
+		"hulls":[
+		],
+	},
+	"knownFighters":{
+		"tags":["rat_abyssals"],
+		"fighters":[
+		],
+	},
+	"priorityFighters":{
+		"tags":[],
+		"fighters":[
+		],
+	},
+	"knownWeapons":{
+		"tags":["base_bp", "lowtech_bp", "midline_bp", "hightech_bp", "missile_bp", "rat_abyssals"],
+		"weapons":[
+			"lightneedler",
+			"railgun",
+			"dualflak",
+			"heavymauler",
+			"hveldriver",
+			"heavyneedler",
+			"gauss",
+			"mjolnir",
+			"multineedler",
+			"breachpod",
+			"sabotpod",
+			"phasecl",
+			"cyclone",
+			"hurricane",
+			"squall",
+			"locust",
+			"pdburst",
+			"amblaster",
+			"phasebeam",
+			"heavyblaster",
+			"heavyburst",
+			"ionpulser",
+			"ionbeam",
+			"plasma",
+			"guardian",
+			"tachyonlance",
+		],
+	},
+	"priorityWeapons":{
+		"tags":[],
+		"weapons":[
+		],
+	},
+	"knownHullMods":{
+		"tags":["base_bp", "remnant"],
+		"hullMods":[
+			"advancedshieldemitter", # accelerated
+			"advancedoptics",
+			"turretgyros",
+			"armoredweapons",
+			"augmentedengines",
+			"autorepair",
+			"converted_hangar",
+			"eccm",
+			"ecm",
+			"expanded_deck_crew",
+			"magazines",
+			"missleracks",
+			"extendedshieldemitter",
+			"frontemitter",
+			"frontshield",  # makeshift
+			"hardenedshieldemitter",
+			"heavyarmor",
+			"insulatedengine",
+			"pointdefenseai",
+			"targetingunit",
+			"nav_relay",
+			"adaptiveshields", # omni
+			"operations_center",
+			"recovery_shuttles",
+			"fluxbreakers",
+			"solar_shielding",
+			"stabilizedshieldemitter",
+			"surveying_equipment",
+		],
+	},
+	"factionDoctrine":{
+		"warships":4,
+		"carriers":2,
+		"phaseShips":1,
+		
+		"officerQuality":3,
+		"shipQuality":3,
+		"numShips":3,
+		
+		"shipSize":4,
+		
+		"aggression":3, # doesn't matter since automated ships are super aggressive regardless
+		
+		"combatFreighterProbability":0,     				# instead of some portion of the freighters in a fleet
+		"combatFreighterCombatUseFraction":1,				# as part of the normal combat lineup
+		"combatFreighterCombatUseFractionWhenPriority":1,   # as part of normal combat lineup, when marked as priority ship
+		"autofitRandomizeProbability":0.25,
+
+		"commanderSkillsShuffleProbability":1,
+		"commanderSkills":[ # unlike other factions, can get up to 3 skills depending
+			"electronic_warfare",
+			"flux_regulation",
+			"coordinated_maneuvers",
+		],
+	},
+	
+	"illegalCommodities":[
+	],
+	"music":{
+		"encounter_neutral":"rat_abyss_encounter2",
+		"encounter_hostile":"rat_abyss_encounter2",
+		"encounter_friendly":"rat_abyss_encounter2",
+	},	
+	#"internalComms":"hegemony_internal",
+	"portraits":{
+		"standard_male":[
+			"graphics/portraits/cores/rat_chronos_core.png",
+			"graphics/portraits/cores/rat_cosmos_core.png",
+
+		],
+		"standard_female":[
+			"graphics/portraits/cores/rat_chronos_core.png",
+			"graphics/portraits/cores/rat_cosmos_core.png",
+
+		],
+	},
+	"ranks":{
+		"ranks":{
+		},
+		"posts":{
+		},
+	},
+	"custom":{
+		"engageWhenEvenStrength":true,
+		"allowsTransponderOffTrade":true, # to prevent cargoscan dialog from "patrols"
+		"postsNoBounties":true,
+		"fightToTheLast":true, # order a full assault instead of retreating, in most cases
+	},	
+	"fleetTypeNames":{
+		"patrolSmall":"Lookout",
+		"patrolMedium":"Defenders",
+		"patrolLarge":"Eradicators",
+		"battlestation":"Nexus",
+	},
+},

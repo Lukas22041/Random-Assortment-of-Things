@@ -58,9 +58,9 @@ class AbyssalCrewConversion : BaseAlteration() {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
         tooltip!!.addSpacer(5f)
-        tooltip!!.addPara("Replaces the AI-Components in abyssal hulls with a miniature bridge and leaves a subterminal for the integration of either a chronos or cosmos core, allowing humans to crew the ship. \n\n" +
-                "The subterminal allows an integrated core to restore the functionality of the shipsystem on ships with the \"Abyssal Synergy\" hullmod.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "subterminal", "chronos", "cosmos", "humans to crew the ship", "subterminal", "shipsystem")
+        tooltip!!.addPara("Replaces the AI-Components in abyssal hulls with a miniature bridge and leaves a subterminal for the integration of either a chronos, cosmos or seraph core, allowing humans to crew the ship. \n\n" +
+                "The subterminal allows an integrated core to activate the additional effects on ships with the \"Abyssal Adaptability\" hullmod.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "subterminal", "chronos", "cosmos", "seraph", "humans to crew the ship", "subterminal", "\"Abyssal Adaptability\"")
 
         tooltip.addSpacer(10f)
 
@@ -70,7 +70,7 @@ class AbyssalCrewConversion : BaseAlteration() {
     }
 
     override fun canInstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return (variant!!.hasHullMod("rat_abyssal_core") || variant!!.hasHullMod("rat_seraphs_grace") ||  variant!!.hasHullMod("rat_charybdis_hullmod")) && (member!!.captain == null || member!!.captain.nameString == "")
+        return (variant!!.hasHullMod("rat_abyssal_core") || variant!!.hasHullMod("rat_seraphs_grace") ||  variant!!.hasHullMod("rat_genesis_hullmod")) && (member!!.captain == null || member!!.captain.nameString == "")
     }
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?,  member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {

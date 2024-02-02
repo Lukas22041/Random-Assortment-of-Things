@@ -19,13 +19,22 @@ class SpaceCoreSkill : RATBaseShipSkill() {
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?,  skill: SkillSpecAPI?, info: TooltipMakerAPI?,  width: Float) {
         info!!.addSpacer(2f)
+
+        info!!.addPara("The ships max speed and maneuverability is reduced by 25%% and the weapon fire rate is reduced by 20%%.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info.addSpacer(5f)
+        info!!.addPara("+15%% range for ballistic and energy weapons.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("+10%% damage to ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info!!.addPara("+15%% ballistic and energy weapon range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info!!.addPara("-10%% shield, armor & hull damage taken.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         info.addSpacer(2f)
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
+
+        stats!!.maxSpeed.modifyMult(modID, 0.75f)
+        stats.acceleration.modifyMult(modID, 0.75f)
+        stats.deceleration.modifyMult(modID, 0.75f)
+        stats.turnAcceleration.modifyMult(modID, 0.75f)
+        stats.maxTurnRate.modifyMult(modID, 0.75f)
 
         stats!!.damageToFighters.modifyMult(modID, 1.1f)
         stats.damageToFrigates.modifyMult(modID, 1.1f)
@@ -33,8 +42,12 @@ class SpaceCoreSkill : RATBaseShipSkill() {
         stats.damageToCruisers.modifyMult(modID, 1.1f)
         stats.damageToCapital.modifyMult(modID, 1.1f)
 
-        stats.energyWeaponRangeBonus.modifyMult(modID, 1.1f)
-        stats.ballisticWeaponRangeBonus.modifyMult(modID, 1.1f)
+        stats.energyWeaponRangeBonus.modifyPercent(modID, 15f)
+        stats.ballisticWeaponRangeBonus.modifyPercent(modID, 15f)
+
+        stats.ballisticRoFMult.modifyMult(modID, 0.8f)
+        stats.energyRoFMult.modifyMult(modID, 0.8f)
+        stats.missileRoFMult.modifyMult(modID, 0.8f)
 
         stats.shieldAbsorptionMult.modifyMult(modID, 0.90f)
         stats.armorDamageTakenMult.modifyMult(modID, 0.90f)

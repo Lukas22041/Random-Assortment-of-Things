@@ -1,6 +1,8 @@
 package assortment_of_things.abyss.procgen.types
 
 import assortment_of_things.abyss.procgen.*
+import com.fs.starfarer.api.Global
+import com.fs.starfarer.combat.CombatEngine
 
 class DefaultAbyssType : BaseAbyssType() {
     override fun getWeight() : Float{
@@ -24,7 +26,6 @@ class DefaultAbyssType : BaseAbyssType() {
 
         var fabricators = 1
         if (data.depth == AbyssDepth.Deep) fabricators = 2
-
 
 
 

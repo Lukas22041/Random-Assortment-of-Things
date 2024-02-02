@@ -1,69 +1,67 @@
 {
-    "displayName": "Attack",
-    "fluxCapacitors": 47,
-    "fluxVents": 50,
-    "goalVariant": true,
-    "hullId": "rat_morkoth",
-    "hullMods": [
-        "hardenedshieldemitter",
-        "insulatedengine",
-        "pointdefenseai",
-        "targetingunit",
-    ],
-    "permaMods": [
-        "automated",
-    ],
-    "sMods": [],
-    "suppressedMods": [],
-    "variantId": "rat_morkoth_Attack",
-    "weaponGroups": [
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0016": "rat_leviathan",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0001": "rat_haddock",
-                "WS0002": "rat_haddock",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0014": "rat_seabream",
-                "WS0013": "rat_seabream",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0008": "rat_asterina",
-                "WS0005": "rat_asterina",
-                "WS0015": "rat_asterias",
-                "WS0007": "rat_asterina",
-                "WS0006": "rat_asterina",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0012": "rat_shortfin",
-                "WS0011": "rat_shortfin",
-                "WS0003": "rat_shortfin",
-                "WS0010": "rat_shortfin",
-                "WS0009": "rat_shortfin",
-                "WS0004": "rat_shortfin",
-            }
-        },
-    ],
-    "wings": [],
-    "modules": [],
+  "variantId": "rat_morkoth_Attack",
+  "hullId": "rat_morkoth",
+  "displayName": "Attack",
+  "goalVariant": true,
+  "fluxCapacitors": 47,
+  "fluxVents": 45,
+  "quality": 1,
+  "permaMods": [
+    "automated"
+  ],
+  "hullMods": [
+    "hardenedshieldemitter",
+    "insulatedengine",
+    "targetingunit"
+  ],
+  "weaponGroups": [
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0016": "rat_leviathan"
+      }
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0001": "rat_haddock",
+        "WS0002": "rat_haddock"
+      }
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0013": "rat_seabream",
+        "WS0014": "rat_seabream"
+      }
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0005": "rat_asterina",
+        "WS0006": "rat_asterina",
+        "WS0007": "rat_asterina",
+        "WS0008": "rat_asterina",
+        "WS0015": "rat_asterias"
+      }
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0003": "rat_shortfin",
+        "WS0004": "rat_shortfin",
+        "WS0009": "rat_shortfin",
+        "WS0010": "rat_shortfin",
+        "WS0011": "rat_shortfin",
+        "WS0012": "rat_shortfin"
+      }
+    }
+  ],
+  "modules": [],
+  "wings": []
 }

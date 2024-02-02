@@ -1,0 +1,30 @@
+{
+	"id":"rat_spatial_disturbance",
+	"type":"STAT_MOD",
+	"aiType":"CUSTOM",
+	"aiScript":"assortment_of_things.abyss.shipsystem.ai.SpatialDisturbanceSystemAI",
+	
+	"statsScript":"assortment_of_things.abyss.shipsystem.SpatialDisturbanceSystem",
+	"runScriptWhilePaused":true, # only for the player's ship
+	"runScriptWhileIdle":true,  # this means unapply() never gets called
+	"blockActionsWhileChargingDown":false,
+	
+	"canNotCauseOverload":true,
+	
+	#"phaseHighlight":"_glow1",
+	#"phaseDiffuse":"_glow2",
+	
+	"clampTurnRateAfter":true,
+	"clampMaxSpeedAfter":true,
+	
+	"soundFilterType":"LOWPASS",
+	"soundFilterGain":0.8,
+	"soundFilterGainHF":0.25,
+	
+	"shipAlpha":1, # handled in stats script
+	
+	"useSound":"temporal_shell_activate",
+	#"deactivateSound":"system_phase_cloak_deactivate",
+	"deactivateSound":"system_phase_cloak_deactivate",
+	"outOfUsesSound":"system_phase_cloak_collision",
+}
