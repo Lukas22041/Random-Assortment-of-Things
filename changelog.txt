@@ -1,3 +1,27 @@
+Version 2.0.0 Part 1
+Not Save compatible
+
+-> Renamed the "Abyss" to the "Abyssal Depths"
+-> Made the abyssal depths smaller.
+-> Reworked Hull-Alterations, they are no longer s-mods and their item is refunded on removal.
+-> Reduced the Droprate of Hull-Alterations in the abyssal depths.
+-> Reworked the Shipsystems of all baseline abyss ships.
+-> All baseline abyss ships have their previous built-in hullmod replaced with "Abyssal Adaptability", which provides buffs depending on which core that is installed.
+-> Reworked the stats of the Morkoth-Class, being now much less tanky and being much more maneuverable.
+-> Reworked the chronos and cosmos core skills.
+-> New Portraits for chronos and cosmos cores (Thanks to Selkie)
+-> Added a new interaction image for Abyss Entities (Thanks to Anulackk)
+-> Reworked the Ceto Fighter
+-> Both the Map and Radar now have more information of abyss enviroments displayed.
+-> Added some visual effects to abyss hullmods tooltips.
+-> Reduced the volume of the starburst launchers fire sound.
+-> Fixed an issue with the Arkas Shipsystem visuals
+-> Made the arkas accelerate & deccelerate a bit faster.
+-> Made the Arkas Phantoms more Aggressive.
+-> Lots of other changes im unable to remember.
+
+
+
 Version 1.9.5
 Save comp with 1.9.0-1.9.4, but not older versions or the 1.9.0 betas.
 
