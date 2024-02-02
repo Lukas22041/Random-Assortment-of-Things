@@ -1,6 +1,7 @@
 Version 2.0.0 Part 1
 Not Save compatible
 
+-> Updated to 0.97a.
 -> Renamed the "Abyss" to the "Abyssal Depths"
 -> Made the abyssal depths smaller.
 -> Reworked Hull-Alterations, they are no longer s-mods and their item is refunded on removal.
