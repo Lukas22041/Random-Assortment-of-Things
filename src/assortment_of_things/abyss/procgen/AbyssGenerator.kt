@@ -195,12 +195,12 @@ class  AbyssGenerator {
            system.name = name
 
            var isFinal = false
-           if (step == systemsOnMainBranch - 1) {
+          /* if (step == systemsOnMainBranch - 1) {
                AbyssUtils.getAbyssData().finalSystem = system
                system.addTag(finalTag)
                type = FinalAbyssType()
                isFinal = true
-           }
+           }*/
 
            AbyssProcgen.setupSystem(system, type.getTerrainFraction(), depth, isFinal)
            var systemData = AbyssUtils.getSystemData(system)

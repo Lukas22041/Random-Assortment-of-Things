@@ -49,6 +49,7 @@ object AbyssProcgen {
         system.addTag(Tags.THEME_UNSAFE)
         system.addTag(Tags.THEME_SPECIAL)
         system.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
+        system.addTag("do_not_show_stranded_dialog")
 
         if (data.depth == AbyssDepth.Deep) {
             system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss2")
