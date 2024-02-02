@@ -186,7 +186,9 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
 
         apparation!!.captain = ship.captain
 
-        obfManager.removeDeployed(apparation as Ship, true)
+        if (apparation is Ship) {
+            obfManager.removeDeployed(apparation as Ship, true)
+        }
 
         apparation.isPhased = true
         apparation.alphaMult = 0f
