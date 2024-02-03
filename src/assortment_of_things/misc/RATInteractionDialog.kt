@@ -214,8 +214,6 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
     final fun triggerDefenders(fidConfig: FIDConfig? = null, fleet: CampaignFleetAPI? = null)
     {
 
-
-
         var defenders = fleet
 
         if (defenders == null) {
@@ -224,7 +222,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
         }
 
 
-        val entity = dialog.interactionTarget
+        dialog.interactionTarget = defenders
 
         var config: FIDConfig? = fidConfig
         if (config == null)  {

@@ -45,7 +45,7 @@ class GenesisInteraction : RATInteractionPlugin() {
         config.straightToEngage = false
         config.playerAttackingStation = true
 
-        triggerDefenders(config, interactionTarget as CampaignFleetAPI)
+        triggerDefenders(config)
     }
 
     override fun defeatedDefenders() {

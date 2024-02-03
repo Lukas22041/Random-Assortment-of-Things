@@ -1,3 +1,10 @@
+RAT Version 2.0.1 Part 1
+Not Save compatible with versions prior to 2.0.0
+
+-> Fixed Crash when interacting with some entities.
+
+
+
 Version 2.0.0 Part 1
 Not Save compatible
 
