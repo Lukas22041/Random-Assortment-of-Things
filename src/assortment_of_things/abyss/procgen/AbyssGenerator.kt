@@ -155,7 +155,7 @@ class  AbyssGenerator {
         entrancePoint!!.radius = 0f
         entrancePoint.name = "The Abyssal Depths"
         entrancePoint.addTag("rat_abyss_entrance")
-        entrancePoint.clearDestinations()
+        //entrancePoint.clearDestinations()
         entrancePoint.memoryWithoutUpdate.set("\$rat_jumpoint_destination_override", fractures.fracture2)
 
         var beacon = Global.getSector().hyperspace.addCustomEntity("", "Warning Beacon", "rat_abyss_warning_beacon", Factions.NEUTRAL)

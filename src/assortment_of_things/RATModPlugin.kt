@@ -2,6 +2,7 @@ package assortment_of_things
 
 import ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
@@ -26,6 +27,7 @@ import assortment_of_things.snippets.ProcgenDebugSnippet
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.impl.campaign.AICoreOfficerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.Commodities
@@ -37,6 +39,7 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.EntityLocation
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
+import com.fs.starfarer.campaign.JumpPoint
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaRefit.LunaRefitManager
 import lunalib.lunaSettings.LunaSettings
@@ -44,6 +47,7 @@ import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.util.vector.Vector2f
 import java.lang.Exception
 import java.lang.NullPointerException
 import java.util.*
@@ -126,8 +130,20 @@ class RATModPlugin : BaseModPlugin() {
 
         initFrontiers()
 
+        //Fixes a dumb crash in 0.97 for non-new saves
+        for (jumppoint in Global.getSector().hyperspace.jumpPoints) {
+            if (jumppoint.hasTag("rat_abyss_entrance") && jumppoint is JumpPointAPI && jumppoint.destinations.isEmpty()) {
+                var system = AbyssUtils.getAbyssData().rootSystem
+
+                var fracture = system!!.customEntities.find { it.customPlugin is AbyssalFracture }
+
+                jumppoint.addDestination(JumpPointAPI.JumpDestination(fracture, "Failsafe"))
+            }
+        }
+
         //Global.getSector().intelManager.addIntel(DoctrineReportAbyssal())
 
+        //Runcodes.findNearestGravityWell(Global.getSector().playerFleet, Global.getSector().hyperspace)
 
         var hyperspace = Global.getSector().hyperspace
         if (hyperspace.terrainCopy.none { it.plugin is HyperspaceRenderingTerrainPlugin }) {
