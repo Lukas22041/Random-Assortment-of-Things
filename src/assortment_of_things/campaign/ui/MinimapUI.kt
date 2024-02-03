@@ -48,7 +48,9 @@ class MinimapUI : EveryFrameScript {
         frames = MathUtils.clamp(frames, 0f, 100f)
         var state = AppDriver.getInstance().currentState
         if (state !is CampaignState) return
-        var core = state.core as UIPanelAPI
+
+        //var core = state.core as UIPanelAPI
+        var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI ?: return
 
         var size = when(RATSettings.minimapShape!!) {
             "Wide" -> Vector2f(350f, 200f)
