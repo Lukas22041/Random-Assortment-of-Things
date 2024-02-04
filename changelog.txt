@@ -1,3 +1,19 @@
+RAT Version 2.0.5 Part 1
+Not Save compatible with versions prior to 2.0.0
+
+-> Fixed Starsystems being able to spawn to close to the vanilla abyss
+-> Fixed some other Miscellanious generation issue.
+
+
+
+RAT Version 2.0.4 Part 1
+Not Save compatible with versions prior to 2.0.0
+
+-> Fixed crash when entering sim with 2nd tylos state
+-> Fixed a crash with the arkas shipsystem
+
+
+
 RAT Version 2.0.3 Part 1
 Not Save compatible with versions prior to 2.0.0
 

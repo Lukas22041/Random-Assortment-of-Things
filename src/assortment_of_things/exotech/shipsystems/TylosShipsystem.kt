@@ -3,6 +3,7 @@ package assortment_of_things.exotech.shipsystems
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.ReflectionUtils
+import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
@@ -127,7 +128,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         if (ship!!.hitpoints <= 0f && module != null) {
             var manager = Global.getCombatEngine().getFleetManager(module!!.owner)
             var obfManager = manager as CombatFleetManager
-            obfManager.removeDeployed(module as Ship, true)
+            obfManager.removeDeployed(module, true)
             module = null
         }
 
@@ -138,7 +139,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
             var manager = Global.getCombatEngine().getFleetManager(module!!.owner)
             var obfManager = manager as CombatFleetManager
-            obfManager.removeDeployed(module as Ship, true)
+            obfManager.removeDeployed(module, true)
             module = null
 
           /*  Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
@@ -214,7 +215,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             syncStats(ship!!, module!!)
         }
 
-        if (module == null && parent == null && (ship!!.system.isActive || ship!!.shipTarget != null)) {
+        if (module == null && ship!!.baseOrModSpec().hullId != "rat_tylos_double" && (ship!!.system.isActive || ship!!.shipTarget != null)) {
             createInitialCopy()
         }
 

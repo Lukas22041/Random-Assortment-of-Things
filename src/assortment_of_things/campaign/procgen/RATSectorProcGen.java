@@ -7,8 +7,10 @@ import java.util.Random;
 
 import assortment_of_things.misc.RATSettings;
 import assortment_of_things.campaign.procgen.vannilaThemes.*;
+import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.procgen.*;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.*;
+import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceAbyssPlugin;
 import data.campaign.procgen.SectorProcGenMod;
 import data.campaign.procgen.themes.SectorThemeGenerator;
 import org.lwjgl.util.vector.Vector2f;
@@ -174,37 +176,40 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 		}
 		
 		// for the Orion-Perseus Abyss label
-		blotOut(cells, 0, 0, 12);
-		blotOut(cells, 6, 0, 12);
-		blotOut(cells, 12, 0, 12);
+		//		blotOut(cells, 0, 0, 12);
+//		blotOut(cells, 6, 0, 12);
+//		blotOut(cells, 12, 0, 12);
+		blotOut(cells, 0, 0, 22);
+		blotOut(cells, 16, 3, 16);
+		blotOut(cells, 5, 11, 12);
 		
 		progress.render("Generating sector...", 0.1f);
 		
 		List<CustomConstellationParams> custom = getCustomConstellations();
-		
+
 		List<Constellation> constellations = new ArrayList<Constellation>();
 		for (int k = 0; k < count; k++) {
 			WeightedRandomPicker<Pair<Integer, Integer>> picker = new WeightedRandomPicker<Pair<Integer,Integer>>(StarSystemGenerator.random);
 			for (int i = 0; i < cells.length; i++) {
 				for (int j = 0; j < cells[0].length; j++) {
 					if (cells[i][j]) continue;
-					
+
 					Pair<Integer, Integer> p = new Pair<Integer, Integer>(i, j);
 					picker.add(p);
 				}
 			}
-			
+
 			Pair<Integer, Integer> pick = picker.pick();
 			if (pick == null) continue;
-			
+
 			blotOut(cells, pick.one, pick.two, CONSTELLATION_CELLS);
-			
+
 			float x = pick.one * CELL_SIZE - w / 2f;
 			float y = pick.two * CELL_SIZE - h / 2f;
-			
+
 			CustomConstellationParams params = new CustomConstellationParams(StarAge.ANY);
 			if (!custom.isEmpty()) params = custom.remove(0);
-			
+
 			StarAge age = sectorAge;
 			if (age == StarAge.ANY) {
 //				if (x < -w/6f) {
@@ -220,13 +225,13 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 				agePicker.add(StarAge.OLD);
 				age = agePicker.pick();
 			}
-			
+
 			params.age = age;
-			
+
 			params.location = new Vector2f(x, y);
 			Constellation c = new StarSystemGenerator(params).generate();
 			constellations.add(c);
-			
+
 			progress.render("Generating constellations...", 0.1f + 0.8f * (float)k / (float) count);
 		}
 		
@@ -266,7 +271,9 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 			
 			editor.clearArc(dir.x, dir.y, dist - width/2f, dist + width/2f, 0, 360f, clearThreshold);
 		}
-		
+
+		clearAbyssalHyperspaceAndSetSystemTags();
+
 		progress.render("Generating objects...", 0.9f);
 		
 		
@@ -289,9 +296,29 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 //			new StarSystemGenerator(params).generate();
 //		}
 	}
-	
-	
-	
+
+
+	public static void clearAbyssalHyperspaceAndSetSystemTags() {
+		float w = Global.getSettings().getFloat("sectorWidth");
+		float h = Global.getSettings().getFloat("sectorHeight");
+
+		HyperspaceTerrainPlugin hyper = (HyperspaceTerrainPlugin) Misc.getHyperspaceTerrain().getPlugin();
+		NebulaEditor editor = new NebulaEditor(hyper);
+
+		HyperspaceAbyssPlugin ac = hyper.getAbyssPlugin();
+		float ts = editor.getTileSize();
+		for (float x = -w/2f; x < w/2f; x += ts * 0.8f) {
+			for (float y = -h/2f; y < h/2f; y += ts * 0.8f) {
+				if (ac.isInAbyss(new Vector2f(x, y))) {
+					editor.setTileAt(x, y, -1, 0f, false);
+				}
+			}
+		}
+
+		for (StarSystemAPI system : Misc.getAbyssalSystems()) {
+			system.addTag(Tags.SYSTEM_ABYSSAL);
+		}
+	}
 	
 	
 	public static void blotOut(boolean [][] cells, int x, int y, int c) {

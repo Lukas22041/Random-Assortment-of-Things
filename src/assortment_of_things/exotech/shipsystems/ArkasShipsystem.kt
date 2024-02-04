@@ -183,12 +183,12 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
         var manager = Global.getCombatEngine().getFleetManager(phantom!!.owner)
         var obfManager = manager as CombatFleetManager
-        obfManager.removeDeployed(phantom as Ship, true)
+        obfManager.removeDeployed(phantom, true)
 
         Global.getCombatEngine().addEntity(phantom)
         phantom.shipAI = null
 
-        var stats = phantom.stats
+        var stats = phantom.mutableStats
         stats.damageToCapital.modifyMult("rat_phantom", 0.40f)
         stats.damageToCruisers.modifyMult("rat_phantom", 0.40f)
         stats.damageToDestroyers.modifyMult("rat_phantom", 0.40f)

@@ -158,7 +158,7 @@ class ThestiaShipsystem : BaseShipSystemScript() {
                     aftershadow.location.set(Vector2f(50000f, 50000f))
 
                     var obfManager = manager as CombatFleetManager
-                    obfManager.removeDeployed(aftershadow as Ship, true)
+                    obfManager.removeDeployed(aftershadow, true)
                 }
             }
 
