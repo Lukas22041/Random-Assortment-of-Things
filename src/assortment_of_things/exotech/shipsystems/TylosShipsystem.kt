@@ -73,7 +73,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
             newVariant = variant
 
-           /* Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
+            Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
             var newModule = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, ship!!.location, ship!!.facing)
             Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
             this.module = newModule
@@ -82,7 +82,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
             ship!!.setCustomData("rat_tylos_child", newModule)
 
-            Global.getCombatEngine().removeEntity(newModule)*/
+            Global.getCombatEngine().removeEntity(newModule)
             //obfManager.removeDeployed(newModule as Ship, true)
         }
 
@@ -216,7 +216,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         }
 
         if (module == null && ship!!.baseOrModSpec().hullId != "rat_tylos_double" && (ship!!.system.isActive || ship!!.shipTarget != null)) {
-            createInitialCopy()
+           // createInitialCopy()
         }
 
         if (!activated && system.state == ShipSystemAPI.SystemState.ACTIVE) {
@@ -263,9 +263,10 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         }
     }
 
-    fun createInitialCopy() {
+    /*fun createInitialCopy() {
+        if (newVariant == null) return
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
-        var newModule = spawnShipOrWingDirectly(newVariant, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, ship!!.location, ship!!.facing)
+        var newModule = spawnShipOrWingDirectly(newVariant!!, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, ship!!.location, ship!!.facing)
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
         this.module = newModule
         newModule!!.setCustomData("rat_tylos_parent", ship)
@@ -274,7 +275,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         ship!!.setCustomData("rat_tylos_child", newModule)
 
         Global.getCombatEngine().removeEntity(newModule)
-    }
+    }*/
 
 
     fun syncStats(current: ShipAPI, other: ShipAPI) {
@@ -410,7 +411,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
     }
 
-    fun spawnShipOrWingDirectly(variant: ShipVariantAPI?, type: FleetMemberType?, owner: Int, combatReadiness: Float, location: Vector2f?, facing: Float): ShipAPI? {
+    fun spawnShipOrWingDirectly(variant: ShipVariantAPI, type: FleetMemberType, owner: Int, combatReadiness: Float, location: Vector2f?, facing: Float): ShipAPI? {
         val member = Global.getFactory().createFleetMember(type, variant)
         member.owner = owner
         member.crewComposition.addCrew(member.neededCrew)

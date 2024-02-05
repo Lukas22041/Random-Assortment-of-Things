@@ -37,6 +37,7 @@ import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.EntityLocation
+import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import com.fs.starfarer.campaign.JumpPoint
@@ -47,6 +48,8 @@ import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
 import java.lang.Exception
 import java.lang.NullPointerException
@@ -59,24 +62,15 @@ class RATModPlugin : BaseModPlugin() {
     companion object {
         var added = false
 
-        var isHalloween = false
 
-        init {
-
-            //Global.getSettings().isDevMode = true
-        }
     }
 
     override fun onApplicationLoad() {
         super.onApplicationLoad()
 
-        val currentDate = Date()
-        //var currentDate = Date(1698530401L * 1000)
-        val startDate = Date(1698530400L * 1000)
-        val endDate = Date(1698793200L * 1000)
-        if (startDate.before(currentDate) && endDate.after(currentDate)) {
-            isHalloween = true
-        }
+       /* Global.getSettings().loadFont("graphics/fonts/monocraft24.fnt")
+        Fonts.DEFAULT_SMALL = "graphics/fonts/monocraft24.fnt"*/
+
 
         LunaDebug.addSnippet(ProcgenDebugSnippet())
         LunaDebug.addSnippet(DropgroupTestSnippet())
