@@ -1,11 +1,13 @@
 package assortment_of_things.exotech.hullmods
 
+import assortment_of_things.misc.SpriteWithShader
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.graphics.SpriteAPI
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import java.util.*
@@ -16,6 +18,11 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
     lateinit var systemGlow: SpriteAPI
     lateinit var phaseGlow: SpriteAPI
     var hasPhase = false
+
+ /*   var vertex = Global.getSettings().loadText("data/shaders/testVertex.shader")
+    var frag = Global.getSettings().loadText("data/shaders/testFragment.shader")
+
+    var shaderRenderer = SpriteWithShader("graphics/ships/rat_makara.png", vertex, frag)*/
 
     init {
         systemGlow = Global.getSettings().getAndLoadSprite(ship.hullSpec.spriteName.replace(".png", "") + "_glow1.png")
@@ -68,8 +75,9 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
 
         }
 
-
-
+        /*shaderRenderer.angle = ship.facing - 90
+        shaderRenderer.renderAtCenter(ship.location.x + 200f, ship.location.y + 0f)
+*/
 
 
 

@@ -154,7 +154,7 @@ class AbyssStart : CustomStart() {
                 member.fixVariant()
 
                 if (member.baseOrModSpec().hullId == "rat_aboleth_m") {
-                    member.variant!!.addPermaMod("rat_chronos_conversion", true)
+                    member.variant!!.addMod("rat_chronos_conversion")
                     member.isFlagship = true
                     fleet.fleetData.setFlagship(member)
                 }
@@ -202,7 +202,7 @@ class AbyssStart : CustomStart() {
         member.repairTracker.cr = 0.7f
 
         if (member.baseOrModSpec().hullId == "rat_aboleth_m") {
-            member.variant!!.addPermaMod("rat_chronos_conversion", true)
+            member.variant!!.addMod("rat_chronos_conversion")
             member.isFlagship = true
             fleet.fleetData.setFlagship(member)
         }

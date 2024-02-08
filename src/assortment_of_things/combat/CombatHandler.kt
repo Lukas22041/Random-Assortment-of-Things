@@ -60,12 +60,21 @@ class CombatHandler : EveryFrameCombatPlugin
 
                 ResetBackgroundScript.resetBackground = true
 
-                if (darkness!!.containsEntity(Global.getSector().playerFleet)) {
+               /* if (darkness!!.containsEntity(Global.getSector().playerFleet)) {
                     CombatEngine.getBackground().color = color.darker()
                 }
                 else {
                     if (depth == AbyssDepth.Shallow) CombatEngine.getBackground().color = color.brighter()
                     if (depth == AbyssDepth.Deep) CombatEngine.getBackground().color = color.brighter().brighter().brighter()
+                }*/
+
+               // Global.getCombatEngine().isRenderStarfield = false
+                if (darkness!!.containsEntity(Global.getSector().playerFleet)) {
+                    Global.getCombatEngine().backgroundColor = color.darker()
+                }
+                else {
+                    if (depth == AbyssDepth.Shallow)  Global.getCombatEngine().backgroundColor = color.brighter()
+                    if (depth == AbyssDepth.Deep)  Global.getCombatEngine().backgroundColor = color.brighter().brighter().brighter()
                 }
 
                 var withinPhotosphere = false

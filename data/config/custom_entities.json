@@ -783,6 +783,9 @@
 		"showNameOnMap":false,
 		"scaleNameWithZoom":false,
 		"scaleIconWithZoom":true,
+		"detectionRange":5000, # must be >0 for discoverable/discoveryXP to be used
+		"discoverable":true,
+		"discoveryXP":500,
 		"tags":["has_interaction_dialog", "neutrino_high"],
 		"layers":[STATIONS], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 		"renderCircleIndicator":true,

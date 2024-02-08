@@ -3,9 +3,9 @@
   "name": "Random Assortment of Things",
   "author": "Lukas04",
   "utility": "false",
-  "version": "2.0.6-Part1",
+  "version": "2.0.7-Part1",
   "description": "A collection of things I create whenever a random idea pops up into my head.",
-  "gameVersion": "0.97a-RC6",
+  "gameVersion": "0.97a-RC8",
   "jars": ["jars/RandomAssortmentofThings.jar"],
   "modPlugin": "assortment_of_things.RATModPlugin",
   "dependencies": [

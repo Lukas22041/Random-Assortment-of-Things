@@ -1,7 +1,17 @@
+RAT Version 2.0.7 Part 1
+Not Save compatible with versions prior to 2.0.0
+
+-> Fixed the Abyssal Depths having the wrong background colors in combat.
+-> Fixed the damaged cryosleeper being visible without discovering it first on the map.
+-> Fixed the abyss custom start giving its starting ship an alteration as an smod.
+
+
+
 RAT Version 2.0.6 Part 1
 Not Save compatible with versions prior to 2.0.0
 
 -> Reverted a change in the code of the tylos shipsystem, maybe fixing a specific crash when viewing the tactical map.
+
 
 
 RAT Version 2.0.5 Part 1
