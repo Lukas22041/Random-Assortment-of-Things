@@ -73,7 +73,7 @@ class GenesisHullmod : BaseHullMod() {
         afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
         if (afterimageInterval.intervalElapsed() && !Global.getCombatEngine().isPaused && ship!!.isAlive)
         {
-            AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(75), color.setAlpha(0), 3.5f, 0f, Vector2f().plus(ship!!.location))
+            AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(50), color.setAlpha(0), 3.5f, 0f, Vector2f().plus(ship!!.location))
         }
 
        // ship!!.setJitter(this, color.setAlpha(25), 1f, 3, 0f, 0f)

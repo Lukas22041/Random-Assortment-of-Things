@@ -103,17 +103,17 @@
 		"contrailMaxSpeedMult":1f,
 		"contrailAngularVelocityMult":0f,
 		
-		"type":"GLOW", # GLOW or SMOKE; additive or regular blend mode
+		"type":"SMOKE", # GLOW or SMOKE; additive or regular blend mode
 						
 		"glowSprite":"graphics/fx/rat_abyssal_glow.png",
 		"glowOutline":"graphics/fx/rat_abyssal_flame.png",
 		"omegaMode":true,
-		"glowSizeMult":1,
-		"glowAlternateColor":[115, 34, 52,255],
+		"glowSizeMult":0.8,
+		"glowAlternateColor":[178, 36, 69,255],
 		
-		"engineColor":[115, 34, 52,255],
-		"contrailColor":[115, 34, 52,75],
-        "contrailCampaignColor":[115, 34, 52, 50],
+		"engineColor":[178, 36, 69,255],
+		"contrailColor":[178, 36, 69,75],
+        "contrailCampaignColor":[178, 36, 69, 50],
 		
     },
 	
@@ -132,7 +132,7 @@
 		"glowOutline":"graphics/fx/rat_abyssal_flame.png",
 		"omegaMode":true,
 		"glowSizeMult":0,
-		"glowAlternateColor":[100, 0, 200,25],
+		"glowAlternateColor":[0, 0, 0,0],
 		
 		"engineColor":[140, 0, 250,50],
 		"contrailColor":[140, 0, 250,75],

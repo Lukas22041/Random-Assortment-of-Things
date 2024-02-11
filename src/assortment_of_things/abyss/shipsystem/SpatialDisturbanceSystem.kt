@@ -61,7 +61,7 @@ class SpatialDisturbanceSystem : BaseShipSystemScript() {
         stats.turnAcceleration.modifyFlat(id, 30 * effectLevel)
         //stats.turnAcceleration.modifyMult(id, 1 + (2f * effectLevel))
 
-        ship!!.engineController.extendFlame(this, 0.5f * effectLevel, 0.5f * effectLevel, 0.5f * effectLevel)
+        ship!!.engineController.extendFlame(this, 0.3f * effectLevel, 0.2f * effectLevel, 0.4f * effectLevel)
 
     }
 
