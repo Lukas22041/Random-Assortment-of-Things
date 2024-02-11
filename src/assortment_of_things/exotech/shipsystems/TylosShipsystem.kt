@@ -127,8 +127,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
 
         if (ship!!.hitpoints <= 0f && module != null) {
             var manager = Global.getCombatEngine().getFleetManager(module!!.owner)
-            var obfManager = manager as CombatFleetManager
-            obfManager.removeDeployed(module, true)
+            manager.removeDeployed(module, true)
             module = null
         }
 
@@ -138,8 +137,7 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             ship!!.isDefenseDisabled = true
 
             var manager = Global.getCombatEngine().getFleetManager(module!!.owner)
-            var obfManager = manager as CombatFleetManager
-            obfManager.removeDeployed(module, true)
+            manager.removeDeployed(module, true)
             module = null
 
           /*  Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true

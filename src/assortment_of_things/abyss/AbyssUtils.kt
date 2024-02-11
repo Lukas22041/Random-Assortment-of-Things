@@ -10,6 +10,7 @@ import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI
+import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipHullSpecAPI
 import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.impl.MusicPlayerPluginImpl

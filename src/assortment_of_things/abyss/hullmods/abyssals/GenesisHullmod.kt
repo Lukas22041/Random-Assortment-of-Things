@@ -45,11 +45,14 @@ class GenesisHullmod : BaseHullMod() {
             stats.variant.addPermaMod(HullMods.AUTOMATED)
         }
 
-        stats!!.dynamic.getMod(Stats.SMALL_ENERGY_MOD).modifyFlat(id, -2f)
+        /*stats!!.dynamic.getMod(Stats.SMALL_ENERGY_MOD).modifyFlat(id, -2f)
         stats!!.dynamic.getMod(Stats.MEDIUM_ENERGY_MOD).modifyFlat(id, -4f)
-        stats!!.dynamic.getMod(Stats.LARGE_ENERGY_MOD).modifyFlat(id, -6f)
+        stats!!.dynamic.getMod(Stats.LARGE_ENERGY_MOD).modifyFlat(id, -6f)*/
 
+        stats.energyWeaponDamageMult.modifyMult(id, 1.2f)
+        stats.energyRoFMult.modifyMult(id, 1.2f)
         stats!!.energyWeaponFluxCostMod.modifyMult(id, 0.8f)
+
         stats!!.energyWeaponRangeBonus.modifyFlat(id, 200f)
         //stats!!.beamWeaponRangeBonus.modifyMult(id, 100f)
 
@@ -62,9 +65,9 @@ class GenesisHullmod : BaseHullMod() {
         return false
     }
 
-    override fun affectsOPCosts(): Boolean {
+   /* override fun affectsOPCosts(): Boolean {
         return true
-    }
+    }*/
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
         afterimageInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
@@ -88,7 +91,7 @@ class GenesisHullmod : BaseHullMod() {
 
         tooltip!!.addSpacer(5f)
         tooltip.addPara("A ship thats warping the space around it just by its sheer existance.\n\n" +
-                "Energy weapons operate at a 20%% lower flux cost, have an increased base range of 200 units and cost 2/4/6 less ordnance points based on mount size." +
+                "Energy weapons operate at 20%% increased damage, fire rate, and lower flux cost. They also have an increased base range of 200 units." +
                 "\n\n" +
                 "The ships distorted grid takes 50%% less emp damage and has full immunity against abyssal storms and similar hazards." +
                 "",

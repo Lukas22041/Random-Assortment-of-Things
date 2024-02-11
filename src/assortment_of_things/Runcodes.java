@@ -1,11 +1,14 @@
 package assortment_of_things;
 
+import assortment_of_things.misc.ReflectionUtils;
+import com.fs.graphics.Sprite;
 import com.fs.starfarer.api.EveryFrameScript;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.combat.ShipAPI;
+import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.impl.campaign.fleets.PersonalFleetHoracioCaden;
 import com.fs.starfarer.api.impl.campaign.fleets.PersonalFleetScript;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
@@ -16,6 +19,8 @@ import lunalib.lunaSettings.LunaSettings;
 import lunalib.lunaUtil.LunaCommons;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,7 +29,6 @@ public class Runcodes {
     public void Example() {
 
         SectorAPI sector = Global.getSector();
-
 
         ProcgenUsedNames.pickName(NameGenData.TAG_STAR, null, null);
 

@@ -17,6 +17,7 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
 
     lateinit var systemGlow: SpriteAPI
     lateinit var phaseGlow: SpriteAPI
+    var arkasPhantomGlow: SpriteAPI? = null
     var hasPhase = false
 
  /*   var vertex = Global.getSettings().loadText("data/shaders/testVertex.shader")
@@ -31,10 +32,15 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         if (hasPhase) {
             phaseGlow = Global.getSettings().getAndLoadSprite(ship.hullSpec.spriteName.replace(".png", "") + "_glow2.png")
         }
+
+        if (ship.baseOrModSpec().hullId == "rat_arkas_phantom") {
+            arkasPhantomGlow = Global.getSettings().getAndLoadSprite("graphics/ships/exo/rat_arkas_glow2.png")
+        }
     }
 
     var lastSystemJitterLocations = ArrayList<Vector2f>()
     var lastPhaseJitterLocations = ArrayList<Vector2f>()
+    var lastArkasPhantomJitterLocations = ArrayList<Vector2f>()
 
     override fun getRenderRadius(): Float {
         return 100000000f
@@ -56,6 +62,10 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
 
         if (ship.baseOrModSpec().hullId == "rat_apheidas") {
             renderLeaniraModule()
+        }
+
+        if (arkasPhantomGlow != null) {
+            renderArkasPhantom()
         }
 
         if ((exogridOverload) && !ship.fluxTracker.isOverloaded) {
@@ -204,6 +214,21 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         systemGlow.renderAtCenter(ship.location.x, ship.location.y)
 
         doJitter(systemGlow, parent.system.effectLevel, lastSystemJitterLocations, 4, 2f)
+    }
+
+    fun renderArkasPhantom() {
+
+        var parent = ship.customData.get("rat_phantom_parent") as ShipAPI ?: return
+        var level = parent.customData.get("rat_exogrid_level_override") as Float ?: return
+
+        level *= level * 0.3f
+
+        arkasPhantomGlow!!.setAdditiveBlend()
+        arkasPhantomGlow!!.alphaMult = level
+        arkasPhantomGlow!!.angle = ship.facing - 90
+        arkasPhantomGlow!!.renderAtCenter(ship.location.x, ship.location.y)
+
+        doJitter(arkasPhantomGlow!!, level, lastArkasPhantomJitterLocations, 5, 5f)
     }
 
     fun startStencilAroundShip(location: Vector2f, radius: Float) {

@@ -1,6 +1,8 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
 import assortment_of_things.abyss.hullmods.HullmodTooltipAbyssParticles
+import assortment_of_things.misc.baseOrModSpec
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
@@ -11,6 +13,8 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import org.lwjgl.input.Keyboard
+import java.awt.Color
 
 class AbyssalGrid : BaseHullMod() {
 
@@ -40,6 +44,10 @@ class AbyssalGrid : BaseHullMod() {
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?,  ship: ShipAPI?,   isForModSpec: Boolean): Boolean {
         return false
+    }
+
+    override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
+
     }
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  width: Float, isForModSpec: Boolean) {

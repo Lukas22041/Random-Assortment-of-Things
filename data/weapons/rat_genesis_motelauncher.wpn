@@ -1,0 +1,28 @@
+{
+	"id":"rat_genesis_motelauncher",
+	"specClass":"projectile",
+	"type":"ENERGY",
+	"size":"SMALL",
+	"turretSprite":"",
+	"hardpointSprite":"",
+	"hardpointOffsets":[0, 0],
+	"turretOffsets":[0, 0],
+	"hardpointAngleOffsets":[0],
+	"turretAngleOffsets":[0],
+	"barrelMode":"ALTERNATING",
+	"noShieldImpactSounds":true,
+	"noNonShieldImpactSounds":true,
+	"interruptibleBurst":false,
+	"animationType":"MUZZLE_FLASH",
+	"muzzleFlashSpec":{"length":20.0,   # only used if animationType = MUZZLE_FLASH
+					   "spread":25.0,
+					   "particleSizeMin":18.0,
+					   "particleSizeRange":24.0,
+					   "particleDuration":0.4,
+					   "particleCount":16,
+					   "particleColor":[178, 36, 69,25],
+					   },
+	"projectileSpecId":"rat_genesis_mote",
+	"fireSoundTwo":"system_flare_launcher_active",
+}
+
