@@ -1,4 +1,4 @@
-RAT Version 2.0.7 Part 1
+RAT Version 2.0.8 Part 1
 NOT SAVE COMPATIBLE WITH PRIOR VERSIONS
 
 -> Fixed storms not appearing in the abyss.
