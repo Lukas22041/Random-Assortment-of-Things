@@ -33,7 +33,7 @@ public abstract class OldBaseTiledTerrain extends BaseTerrain {
 		public int tH;
 		public String name;
 		public TileParams(String tiles, int width, int height,
-				String tileTexCat, String tileTexKey, int tilesWide, int tilesHigh, String name) {
+						  String tileTexCat, String tileTexKey, int tilesWide, int tilesHigh, String name) {
 			this.tiles = tiles;
 			this.w = width;
 			this.h = height;

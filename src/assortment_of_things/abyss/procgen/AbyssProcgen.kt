@@ -8,6 +8,8 @@ import assortment_of_things.abyss.misc.AbyssBackgroundWarper
 import assortment_of_things.abyss.scripts.AbyssalDefendingFleetManager
 import assortment_of_things.abyss.terrain.AbyssTerrainPlugin
 import assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin
+import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
+import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.LocationAPI
@@ -148,12 +150,20 @@ object AbyssProcgen {
         //var textureChoice = MathUtils.getRandomNumberInRange(1, 2)
         system.backgroundTextureFilename = "graphics/backgrounds/abyss/Abyss2.jpg"
 
-        val nebula = system.addTerrain("rat_depths", BaseTiledTerrain.TileParams(string.toString(), w, h, "rat_terrain", "depths1", 4, 4, null))
+        val nebula = system.addTerrain("rat_depths",
+            OldBaseTiledTerrain.TileParams(string.toString(),
+                w,
+                h,
+                "rat_terrain",
+                "depths1",
+                4,
+                4,
+                null))
         nebula.id = "rat_depths_${Misc.genUID()}"
         nebula.location[0f] = 0f
 
         val nebulaPlugin = (nebula as CampaignTerrainAPI).plugin as AbyssTerrainPlugin
-        val editor = NebulaEditor(nebulaPlugin)
+        val editor = OldNebulaEditor(nebulaPlugin)
         editor.regenNoise()
         editor.noisePrune(fraction)
         editor.regenNoise()
@@ -180,7 +190,7 @@ object AbyssProcgen {
     fun clearTerrainAround(entity: SectorEntityToken, radius: Float)
     {
         var nebulaPlugin = getAbyssTerrainPlugin(entity.starSystem)
-        val editor = NebulaEditor(nebulaPlugin)
+        val editor = OldNebulaEditor(nebulaPlugin)
 
         editor.clearArc(entity.location.x, entity.location.y, 0f, radius, 0f, 360f)
         editor.clearArc(entity.location.x, entity.location.y, 0f, radius, 0f, 360f, 0.25f)
@@ -189,7 +199,7 @@ object AbyssProcgen {
     fun clearTerrainAround(system: LocationAPI, location: Vector2f, radius: Float)
     {
         var nebulaPlugin = getAbyssTerrainPlugin(system)
-        val editor = NebulaEditor(nebulaPlugin)
+        val editor = OldNebulaEditor(nebulaPlugin)
 
         editor.clearArc(location.x, location.y, 0f, radius, 0f, 360f)
         editor.clearArc(location.x, location.y, 0f, radius, 0f, 360f, 0.25f)

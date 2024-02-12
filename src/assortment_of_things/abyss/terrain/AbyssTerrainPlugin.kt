@@ -118,105 +118,9 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
 
 
 
-
-
-    fun renderBorder(radius: Float, color: Color, circlePoints: Int) {
-        var c = color
-        GL11.glPushMatrix()
-
-        GL11.glTranslatef(0f, 0f, 0f)
-        GL11.glRotatef(0f, 0f, 0f, 1f)
-
-        GL11.glDisable(GL11.GL_TEXTURE_2D)
-
-
-        GL11.glEnable(GL11.GL_BLEND)
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-
-
-        GL11.glColor4f(c.red / 255f,
-            c.green / 255f,
-            c.blue / 255f,
-            c.alpha / 255f * (1f))
-
-        GL11.glEnable(GL11.GL_LINE_SMOOTH)
-        GL11.glBegin(GL11.GL_LINE_STRIP)
-
-        val x = 0f
-        val y = 0f
-
-
-        for (i in 0..circlePoints) {
-            val angle: Double = (2 * Math.PI * i / circlePoints)
-            val vertX: Double = Math.cos(angle) * (radius)
-            val vertY: Double = Math.sin(angle) * (radius)
-            GL11.glVertex2d(x + vertX, y + vertY)
-        }
-
-        GL11.glEnd()
-        GL11.glPopMatrix()
-    }
-
-    fun startStencil(radius: Float, location: Vector2f, circlePoints: Int) {
-
-        GL11.glClearStencil(0);
-        GL11.glStencilMask(0xff);
-        //set everything to 0
-        GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
-
-        //disable drawing colour, enable stencil testing
-        GL11.glColorMask(false, false, false, false); //disable colour
-        GL11.glEnable(GL11.GL_STENCIL_TEST); //enable stencil
-
-        // ... here you render the part of the scene you want masked, this may be a simple triangle or square, or for example a monitor on a computer in your spaceship ...
-        //begin masking
-        //put 1s where I want to draw
-        GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xff); // Do not test the current value in the stencil buffer, always accept any value on there for drawing
-        GL11.glStencilMask(0xff);
-        GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE); // Make every test succeed
-
-        // <draw a quad that dictates you want the boundaries of the panel to be>
-
-        GL11.glBegin(GL11.GL_POLYGON) // Middle circle
-
-        val x = location.x
-        val y = location.y
-
-        for (i in 0..circlePoints) {
-
-            var extra = 0f
-
-            val angle: Double = (2 * Math.PI * i / circlePoints)
-            val vertX: Double = Math.cos(angle) * (radius + extra)
-            val vertY: Double = Math.sin(angle) * (radius + extra)
-            GL11.glVertex2d(x + vertX, y + vertY)
-        }
-
-        GL11.glEnd()
-
-        //GL11.glRectf(x, y, x + width, y + height)
-
-        GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP); // Make sure you will no longer (over)write stencil values, even if any test succeeds
-        GL11.glColorMask(true, true, true, true); // Make sure we draw on the backbuffer again.
-
-
-
-
-        GL11.glStencilFunc(GL11.GL_EQUAL, 0, 0xFF); // Now we will only draw pixels where the corresponding stencil buffer value equals 1
-        //Ref 0 causes the content to not display in the specified area, 1 causes the content to only display in that area.
-
-        // <draw the lines>
-
-    }
-
-    fun endStencil() {
-        GL11.glDisable(GL11.GL_STENCIL_TEST);
-    }
-
-
     fun save()
     {
-        /*params.tiles = null
+        params.tiles = null
         savedTiles = encodeTiles(tiles)
 
         savedActiveCells.clear()
@@ -228,7 +132,7 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
                     savedActiveCells.add(curr)
                 }
             }
-        }*/
+        }
     }
 
 
@@ -366,4 +270,102 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
         if (flag == TerrainAIFlags.MOVES_FLEETS) return true
         return false
     }
+
+
+
+
+
+    fun renderBorder(radius: Float, color: Color, circlePoints: Int) {
+        var c = color
+        GL11.glPushMatrix()
+
+        GL11.glTranslatef(0f, 0f, 0f)
+        GL11.glRotatef(0f, 0f, 0f, 1f)
+
+        GL11.glDisable(GL11.GL_TEXTURE_2D)
+
+
+        GL11.glEnable(GL11.GL_BLEND)
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+
+
+        GL11.glColor4f(c.red / 255f,
+            c.green / 255f,
+            c.blue / 255f,
+            c.alpha / 255f * (1f))
+
+        GL11.glEnable(GL11.GL_LINE_SMOOTH)
+        GL11.glBegin(GL11.GL_LINE_STRIP)
+
+        val x = 0f
+        val y = 0f
+
+
+        for (i in 0..circlePoints) {
+            val angle: Double = (2 * Math.PI * i / circlePoints)
+            val vertX: Double = Math.cos(angle) * (radius)
+            val vertY: Double = Math.sin(angle) * (radius)
+            GL11.glVertex2d(x + vertX, y + vertY)
+        }
+
+        GL11.glEnd()
+        GL11.glPopMatrix()
+    }
+
+    fun startStencil(radius: Float, location: Vector2f, circlePoints: Int) {
+
+        GL11.glClearStencil(0);
+        GL11.glStencilMask(0xff);
+        //set everything to 0
+        GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
+
+        //disable drawing colour, enable stencil testing
+        GL11.glColorMask(false, false, false, false); //disable colour
+        GL11.glEnable(GL11.GL_STENCIL_TEST); //enable stencil
+
+        // ... here you render the part of the scene you want masked, this may be a simple triangle or square, or for example a monitor on a computer in your spaceship ...
+        //begin masking
+        //put 1s where I want to draw
+        GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xff); // Do not test the current value in the stencil buffer, always accept any value on there for drawing
+        GL11.glStencilMask(0xff);
+        GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE); // Make every test succeed
+
+        // <draw a quad that dictates you want the boundaries of the panel to be>
+
+        GL11.glBegin(GL11.GL_POLYGON) // Middle circle
+
+        val x = location.x
+        val y = location.y
+
+        for (i in 0..circlePoints) {
+
+            var extra = 0f
+
+            val angle: Double = (2 * Math.PI * i / circlePoints)
+            val vertX: Double = Math.cos(angle) * (radius + extra)
+            val vertY: Double = Math.sin(angle) * (radius + extra)
+            GL11.glVertex2d(x + vertX, y + vertY)
+        }
+
+        GL11.glEnd()
+
+        //GL11.glRectf(x, y, x + width, y + height)
+
+        GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP); // Make sure you will no longer (over)write stencil values, even if any test succeeds
+        GL11.glColorMask(true, true, true, true); // Make sure we draw on the backbuffer again.
+
+
+
+
+        GL11.glStencilFunc(GL11.GL_EQUAL, 0, 0xFF); // Now we will only draw pixels where the corresponding stencil buffer value equals 1
+        //Ref 0 causes the content to not display in the specified area, 1 causes the content to only display in that area.
+
+        // <draw the lines>
+
+    }
+
+    fun endStencil() {
+        GL11.glDisable(GL11.GL_STENCIL_TEST);
+    }
+
 }

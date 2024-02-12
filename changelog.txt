@@ -1,4 +1,17 @@
 RAT Version 2.0.7 Part 1
+NOT SAVE COMPATIBLE WITH PRIOR VERSIONS
+
+-> Fixed storms not appearing in the abyss.
+-> Opponent Ship AI should no longer focus on the Arkas Phantoms
+-> Slightly buffed the Protostars weapon.
+-> Reduced the DPS of the beam on the ceto
+-> Arkas Phantoms now render the ships phase-glow.
+-> Fixed two issues related to the autonomous bays hmod.
+-> Fixed an issue with the deployment speed of arkas phantoms if the game is paused right after activating the shipsystem
+
+
+
+RAT Version 2.0.7 Part 1
 Not Save compatible with versions prior to 2.0.0
 
 -> Fixed the Abyssal Depths having the wrong background colors in combat.
