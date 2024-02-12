@@ -24,12 +24,14 @@ class AutonomousBaysHullmod : BaseAlteration() {
 
         stats!!.numFighterBays.modifyFlat(id, 1f)
         stats.dynamic.getStat(Stats.FIGHTER_CREW_LOSS_MULT).modifyMult(id, 0f)
-
     }
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
 
     }
+
+
+
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         var aiCoreId = Commodities.GAMMA_CORE
@@ -87,7 +89,7 @@ class AutonomousBaysHullmod : BaseAlteration() {
         var builtIns = 0
 
         for (i in 0 until member!!.stats.numFighterBays.modifiedValue.toInt()) {
-            var wingID = variant!!.wings.getOrNull(i) ?: continue
+            var wingID = variant!!.fittedWings.getOrNull(i) ?: continue
             var isBuiltin = !variant.nonBuiltInWings.contains(wingID)
             if (isBuiltin) {
                 builtIns++
@@ -120,9 +122,10 @@ class AutonomousBaysHullmod : BaseAlteration() {
     override fun onAlterationRemove(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?) {
         super.onAlterationRemove(member, variant, marketAPI)
 
-        if (variant!!.wings.size >= member!!.stats.numFighterBays.modifiedValue) {
-            var last = variant.wings.last()
-            variant.wings.remove(last)
+        if (variant!!.fittedWings.size >= member!!.stats.numFighterBays.modifiedValue) {
+            var last = variant.fittedWings.lastOrNull() ?: return
+            var index = variant.wings.lastIndexOf(last)
+            variant.setWingId(index, null)
             Global.getSector().playerFleet.cargo.addFighters(last, 1)
         }
     }

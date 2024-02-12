@@ -27,8 +27,8 @@
       "size": "LARGE",
       "type": "HYBRID",
       "mount": "TURRET",
-      "arc": 360,
-      "angle": 0,
+      "arc": 220,
+      "angle": -30,
       "locations": [14, -72]
     },
     {
@@ -36,8 +36,8 @@
       "size": "LARGE",
       "type": "HYBRID",
       "mount": "TURRET",
-      "arc": 360,
-      "angle": 0,
+      "arc": 220,
+      "angle": 30,
       "locations": [14, 72]
     },
     {

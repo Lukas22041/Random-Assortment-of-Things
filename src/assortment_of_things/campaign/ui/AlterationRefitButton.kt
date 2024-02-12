@@ -376,7 +376,7 @@ class AlterationRefitButton : BaseRefitButton() {
     }
 
     override fun shouldShow(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
-        if (variant!!.hullMods.any { Global.getSettings().getHullModSpec(it).hasTag("rat_alteration") }) return true
+       /* if (variant!!.hullMods.any { Global.getSettings().getHullModSpec(it).hasTag("rat_alteration") }) return true
         if (Global.getSector().playerFleet.cargo.stacksCopy
                 .any { it.isSpecialStack && (it.specialItemSpecIfSpecial.id == "rat_alteration_install" || it.specialItemSpecIfSpecial.id == "rat_alteration_remover" )}) return true
 
@@ -384,6 +384,8 @@ class AlterationRefitButton : BaseRefitButton() {
                 .any { it.isSpecialStack && (it.specialItemSpecIfSpecial.id == "rat_alteration_install" || it.specialItemSpecIfSpecial.id == "rat_alteration_remover" )}) return true
 
 
-        return false
+        return false*/
+
+        return true
     }
 }

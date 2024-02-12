@@ -2,12 +2,11 @@ package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssBorder
-import assortment_of_things.abyss.entities.AbyssalFracture
+import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
-import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.TerrainAIFlags
 import com.fs.starfarer.api.impl.campaign.ids.Abilities
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
@@ -18,11 +17,10 @@ import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.ui.LazyFont
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
-import org.magiclib.bounty.ui.drawOutlined
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
-class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
+class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
 
     var id = Misc.genUID()
 
@@ -38,14 +36,19 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
     @Transient
     var font: LazyFont? = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
 
-
+   /* override fun isInAbyss(other: SectorEntityToken?): Boolean {
+        return false
+    }*/
 
     override fun advance(amount: Float) {
         var currentsystem = entity?.containingLocation ?: return
         if (Global.getSector().playerFleet.containingLocation != currentsystem) return
 
+
+
         super.advance(amount)
     }
+
 
     override fun getRenderColor(): Color {
         return AbyssUtils.getSystemData(entity.starSystem).getDarkColor()
@@ -213,7 +216,7 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
 
     fun save()
     {
-        params.tiles = null
+        /*params.tiles = null
         savedTiles = encodeTiles(tiles)
 
         savedActiveCells.clear()
@@ -225,7 +228,7 @@ class AbyssTerrainPlugin() : HyperspaceTerrainPlugin() {
                     savedActiveCells.add(curr)
                 }
             }
-        }
+        }*/
     }
 
 
