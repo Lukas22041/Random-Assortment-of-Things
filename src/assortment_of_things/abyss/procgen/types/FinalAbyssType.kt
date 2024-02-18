@@ -64,7 +64,7 @@ class FinalAbyssType : BaseAbyssType() {
         RemnantSeededFleetManager.addRemnantInteractionConfig(fleet)
 
         fleet.clearAssignments()
-        fleet.addAssignment(FleetAssignment.DEFEND_LOCATION, token, 9999999f, "Waiting")
+        fleet.addAssignment(FleetAssignment.ORBIT_PASSIVE, token, 9999999f, "Waiting")
         fleet.setLocation(token.location.x, token.location.y)
         fleet.facing = Random().nextFloat() * 360f
         fleet.stats.sensorProfileMod.modifyMult("rat_genesis", 3f)
@@ -99,9 +99,9 @@ class FinalAbyssType : BaseAbyssType() {
                 fleet.makeImportant("")
             }
 
-            if (!fleet.isCurrentAssignment(FleetAssignment.DEFEND_LOCATION)) {
+            if (!fleet.isCurrentAssignment(FleetAssignment.ORBIT_PASSIVE)) {
                 fleet.clearAssignments()
-                fleet.addAssignment(FleetAssignment.DEFEND_LOCATION, token, 9999999f, "Waiting")
+                fleet.addAssignment(FleetAssignment.ORBIT_PASSIVE, token, 9999999f, "Waiting")
                 fleet.facing = Random().nextFloat() * 360f
             }
         }

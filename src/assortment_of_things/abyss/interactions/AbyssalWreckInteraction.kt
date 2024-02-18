@@ -125,7 +125,7 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
 
             member.fixVariant()
             if (!member.variant.hasHullMod("rat_abyssal_conversion")) {
-                member.variant.addPermaMod("rat_abyssal_conversion", true)
+                member.variant.addMod("rat_abyssal_conversion")
             }
 
             dialog.showFleetMemberRecoveryDialog("Select ships to recover", listOf(member), object :

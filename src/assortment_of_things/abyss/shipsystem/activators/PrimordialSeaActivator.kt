@@ -7,7 +7,9 @@ import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.fleet.FleetMemberType
+import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.combat.MineStrikeStats
+import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
@@ -283,6 +285,11 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
     var wormhole = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
     var wormhole2 = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
 
+    var systemGlow: SpriteAPI = Global.getSettings().getAndLoadSprite(ship.hullSpec.spriteName.replace(".png", "") + "_glow.png")
+    var fader = FaderUtil(1f, 2f, 1.5f, false, false)
+    var lastJitterLocations = ArrayList<Vector2f>()
+    var lastSecondJitterLocations = ArrayList<Vector2f>()
+
     override fun init(entity: CombatEntityAPI?) {
 
     }
@@ -296,7 +303,15 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
     }
 
     override fun advance(amount: Float) {
-
+        fader.advance(amount)
+        if (fader.brightness >= 1)
+        {
+            fader.fadeOut()
+        }
+        else if (fader.brightness <= 0)
+        {
+            fader.fadeIn()
+        }
     }
 
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
@@ -319,7 +334,23 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
         var radius = activator.getCurrentRange()
         var segments = 100
 
+        var level = 1f * activator.effectLevel * 3f
+        level = MathUtils.clamp(level, 0f, 1f)
+
         startStencil(ship!!, radius, segments)
+
+        systemGlow.setNormalBlend()
+        systemGlow.alphaMult = (0.8f + (0.2f * fader.brightness))
+        systemGlow.angle = ship.facing - 90
+        systemGlow.renderAtCenter(ship.location.x, ship.location.y)
+
+        systemGlow.setAdditiveBlend()
+        systemGlow.alphaMult = ((0.5f * fader.brightness))
+        systemGlow.angle = ship.facing - 90
+        systemGlow.renderAtCenter(ship.location.x, ship.location.y)
+
+        doJitter(systemGlow, 0.5f, lastJitterLocations, 5, 2f)
+        doJitter(systemGlow, 0.3f, lastSecondJitterLocations, 5, 12f)
 
         if (layer == CombatEngineLayers.BELOW_PLANETS) {
 
@@ -365,6 +396,39 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
                 weapon.sprite?.alphaMult = 1f
                 weapon.sprite?.renderAtCenter(weapon.location.x, weapon.location.y)
             }
+        }
+    }
+
+    fun doJitter(sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>, jitterCount: Int, jitterMaxRange: Float) {
+
+        var paused = Global.getCombatEngine().isPaused
+        var jitterAlpha = 0.2f
+
+
+        if (!paused) {
+            lastLocations.clear()
+        }
+
+        for (i in 0 until jitterCount) {
+
+            var jitterLoc = Vector2f()
+
+            if (!paused) {
+                var x = MathUtils.getRandomNumberInRange(-jitterMaxRange, jitterMaxRange)
+                var y = MathUtils.getRandomNumberInRange(-jitterMaxRange, jitterMaxRange)
+
+                jitterLoc = Vector2f(x, y)
+                lastLocations.add(jitterLoc)
+            }
+            else {
+                jitterLoc = lastLocations.getOrElse(i) {
+                    Vector2f()
+                }
+            }
+
+            sprite.setAdditiveBlend()
+            sprite.alphaMult = level * jitterAlpha
+            sprite.renderAtCenter(ship.location.x + jitterLoc.x, ship.location.y + jitterLoc.y)
         }
     }
 

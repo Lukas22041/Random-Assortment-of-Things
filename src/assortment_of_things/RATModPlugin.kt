@@ -1,6 +1,6 @@
 package assortment_of_things
 
-import ParallelConstruction
+import assortment_of_things.scripts.ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.procgen.AbyssGenerator
@@ -15,32 +15,23 @@ import assortment_of_things.campaign.scripts.ApplyRATControllerToPlayerFleet
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.ExoshipGenerator
-import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.exotech.scripts.ChangeExoIntelState
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
 import assortment_of_things.snippets.DropgroupTestSnippet
 import assortment_of_things.snippets.ProcgenDebugSnippet
-import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.characters.FullName
-import com.fs.starfarer.api.impl.campaign.AICoreOfficerPluginImpl
-import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.HullMods
-import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.EntityLocation
-import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
-import com.fs.starfarer.campaign.JumpPoint
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaRefit.LunaRefitManager
 import lunalib.lunaSettings.LunaSettings
@@ -48,13 +39,7 @@ import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import org.lazywizard.lazylib.MathUtils
-import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL20
-import org.lwjgl.util.vector.Vector2f
-import java.lang.Exception
-import java.lang.NullPointerException
 import java.util.*
-import javax.swing.text.html.HTML.Tag
 
 
 class RATModPlugin : BaseModPlugin() {

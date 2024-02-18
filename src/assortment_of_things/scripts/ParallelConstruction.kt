@@ -1,3 +1,5 @@
+package assortment_of_things.scripts
+
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
