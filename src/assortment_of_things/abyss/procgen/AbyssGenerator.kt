@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.procgen
 
-import assortment_of_things.abyss.AbyssDifficulty
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.intel.map.AbyssMap
@@ -11,12 +10,8 @@ import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.JumpPointAPI
-import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
-import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
-import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
@@ -26,10 +21,6 @@ import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
-import org.magiclib.kotlin.getSalvageSeed
-import java.awt.geom.GeneralPath
-import java.awt.geom.Path2D
-import java.util.*
 import kotlin.collections.ArrayList
 
 class  AbyssGenerator {
@@ -346,12 +337,12 @@ class  AbyssGenerator {
 
         var systems = ArrayList(AbyssUtils.getAbyssData().systemsData.filter { it.minorPoints.isNotEmpty() } )
 
-        var labSystems = systems.filter { it.depth == AbyssDepth.Deep }
+        /*var labSystems = systems.filter { it.depth == AbyssDepth.Deep }
         if (labSystems.isNotEmpty()) {
             var system = labSystems.random()
             systems.remove(system)
             AbyssEntityGenerator.generateMinorEntityWithDefenses(system.system, "rat_abyss_unknown_lab", 1, 1f, 1f)
-        }
+        }*/
 
         var milOutpostSystems = systems.filter { it.depth == AbyssDepth.Deep }
         if (milOutpostSystems.isNotEmpty()) {
@@ -363,6 +354,15 @@ class  AbyssGenerator {
         for (i in 0 until 2) {
             var system = systems.randomAndRemove()
             AbyssEntityGenerator.generateMinorEntityWithDefenses(system.system, "rat_abyss_research", 1, 1f, 1f)
+        }
+
+        var spheresInDeep = systems.filter { it.depth == AbyssDepth.Deep }.flatMap { it.system.customEntities.filter { it.customEntitySpec.id == "rat_abyss_photosphere" } }.toMutableList()
+        if (spheresInDeep.isNotEmpty()) {
+            var photosphere = spheresInDeep.random()
+            spheresInDeep.remove(photosphere)
+
+            var entity = AbyssEntityGenerator.spawnMinorEntity(photosphere.starSystem, "rat_sariel_outpost")
+            entity.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(600f, 700f), 120f)
         }
 
 
@@ -398,94 +398,6 @@ class  AbyssGenerator {
     }
 
 
-    fun generateRift() {
-        var systems = AbyssUtils.getAbyssData().systemsData
-        var filtered = systems.filter { it.depth == AbyssDepth.Deep && it.uniquePoints.isNotEmpty() }
-
-        if (filtered.isEmpty()) return
-
-        var pick = filtered.random()
-        var location = pick.uniquePoints.randomAndRemove()
-
-        var riftSystem = RiftCreator.createRift(pick.system, location)
-        var station = riftSystem.addCustomEntity("rift_station${Misc.genUID()}", "Rift Station", "rat_abyss_rift_station", "rat_abyssals")
-        station.setLocation(0f, 0f)
-        station.getSalvageSeed()
-
-        addWormBoss(station)
-
-        /* var playerFleet = Global.getSector().playerFleet
-         var currentLocation = playerFleet.containingLocation
-
-         currentLocation.removeEntity(playerFleet)
-         riftSystem.addEntity(playerFleet)
-         Global.getSector().setCurrentLocation(riftSystem)
-         playerFleet.location.set(Vector2f(0f, 0f))*/
-    }
-
-    fun addWormBoss(station: SectorEntityToken) {
-
-
-        var points = 300f
-        if (AbyssUtils.getDifficulty() == AbyssDifficulty.Hard) {
-            points += 50f
-        }
-
-        val params = FleetParamsV3(null,
-            station.containingLocation.location,
-            AbyssUtils.FACTION_ID,
-            5f,
-            FleetTypes.PATROL_MEDIUM,
-            points,  // combatPts
-            0f,  // freighterPts
-            0f,  // tankerPts
-            0f,  // transportPts
-            0f,  // linerPts
-            0f,  // utilityPts
-            5f // qualityMod
-        )
-        params.withOfficers = false
-
-        val fleet = FleetFactoryV3.createFleet(params)
-        fleet.addTag("rat_boss_fleet")
-
-        var seraphs = 5
-        if (AbyssUtils.getDifficulty() == AbyssDifficulty.Hard) seraphs += 2
-
-        AbyssalSeraphSpawner.addSeraphsToFleet(fleet, Random(), seraphs ,seraphs)
-
-
-        for (member in fleet.fleetData.membersListCopy) {
-            member.variant.addTag(Tags.TAG_NO_AUTOFIT)
-        }
-        AbyssUtils.addAlterationsToFleet(fleet, 0.4f, Random())
-        AbyssalSeraphSpawner.sortWithSeraphs(fleet)
-
-        /*  for (i in 0 until 3) {
-              var member = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_charybdis_head_standard")
-
-              var core = PrimordialCore().createPerson("rat_primordial_core", AbyssUtils.FACTION_ID, Random())
-              member.captain = core
-
-              member.repairTracker.cr = member.repairTracker.maxCR
-              fleet.fleetData.addFleetMember(member)
-          }
-
-          fleet.fleetData.sort()
-
-          var member = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_charybdis_head_standard")
-
-          var core = PrimordialCore().createPerson("rat_primordial_core", AbyssUtils.FACTION_ID, Random())
-          member.captain = core
-
-          member.repairTracker.cr = member.repairTracker.maxCR
-          station.memoryWithoutUpdate.set("\$rewardShip", member)*/
-
-
-
-        station.memoryWithoutUpdate.set("\$defenderFleet", fleet)
-        fleet.inflateIfNeeded()
-    }
 
 
     fun getName() : String

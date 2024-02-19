@@ -198,9 +198,9 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         addMemKeyApplierScript(fleet)
 
         var alterationChancePerShip = 0.0f
-        if (difficulty == AbyssDifficulty.Hard) alterationChancePerShip += 0.2f
-        if (depth == AbyssDepth.Shallow) alterationChancePerShip += 0.2f
-        if (depth == AbyssDepth.Deep) alterationChancePerShip += 0.3f
+        if (difficulty == AbyssDifficulty.Hard) alterationChancePerShip += 0.1f
+        if (depth == AbyssDepth.Shallow) alterationChancePerShip += 0.1f
+        if (depth == AbyssDepth.Deep) alterationChancePerShip += 0.2f
 
         AbyssUtils.addAlterationsToFleet(fleet, alterationChancePerShip, random)
 

@@ -334,9 +334,6 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
         var radius = activator.getCurrentRange()
         var segments = 100
 
-        var level = 1f * activator.effectLevel * 3f
-        level = MathUtils.clamp(level, 0f, 1f)
-
         startStencil(ship!!, radius, segments)
 
         systemGlow.setNormalBlend()

@@ -3,6 +3,7 @@ package assortment_of_things.abyss.hullmods.abyssals
 import activators.ActivatorManager
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.activators.PerseveranceActivator
+import assortment_of_things.abyss.boss.GenesisBossScript
 import assortment_of_things.abyss.hullmods.HullmodTooltipAbyssParticles
 import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaActivator
 import assortment_of_things.combat.AfterImageRenderer
@@ -29,21 +30,27 @@ class GenesisHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
 
-        if (Global.getSector()?.characterData?.person != null) {
-            if (Global.getSector().characterData.person!!.stats.hasSkill(Skills.AUTOMATED_SHIPS)
-                || stats!!.variant.hasHullMod("rat_abyssal_conversion") ||
-                stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion") || stats!!.variant.hasHullMod("rat_seraph_conversion")) {
-                stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
-            }
-            else {
-                stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
-            }
-        }
-
         if (!stats!!.variant.hasHullMod("rat_abyssal_conversion") && !stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats!!.variant.hasHullMod("rat_seraph_conversion")  && !stats.variant.hasHullMod(
                 HullMods.AUTOMATED)) {
             stats.variant.addPermaMod(HullMods.AUTOMATED)
         }
+
+        if (stats.fleetMember?.fleetData?.fleet?.faction?.id == "rat_abyssals_primordials") {
+            stats.crewLossMult.modifyMult("test", 0f)
+            stats.crLossPerSecondPercent.modifyMult("test", 0f)
+        } else {
+            if (Global.getSector()?.characterData?.person != null) {
+                if (Global.getSector().characterData.person!!.stats.hasSkill(Skills.AUTOMATED_SHIPS)
+                    || stats!!.variant.hasHullMod("rat_abyssal_conversion") ||
+                    stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion") || stats!!.variant.hasHullMod("rat_seraph_conversion")) {
+                    stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
+                }
+                else {
+                    stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
+                }
+            }
+        }
+
 
         /*stats!!.dynamic.getMod(Stats.SMALL_ENERGY_MOD).modifyFlat(id, -2f)
         stats!!.dynamic.getMod(Stats.MEDIUM_ENERGY_MOD).modifyFlat(id, -4f)
@@ -59,6 +66,15 @@ class GenesisHullmod : BaseHullMod() {
         stats.empDamageTakenMult.modifyMult(id, 0.5f)
 
         stats!!.getDynamic().getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0f);
+    }
+
+    override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String?) {
+        super.applyEffectsAfterShipCreation(ship, id)
+
+        if (ship.mutableStats?.fleetMember?.fleetData?.fleet?.faction?.id == "rat_abyssals_primordials") {
+
+            Global.getCombatEngine().addLayeredRenderingPlugin(GenesisBossScript(ship))
+        }
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?,  ship: ShipAPI?,   isForModSpec: Boolean): Boolean {

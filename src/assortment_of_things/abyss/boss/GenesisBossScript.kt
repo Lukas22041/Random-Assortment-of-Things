@@ -8,6 +8,8 @@ import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
+import com.fs.starfarer.api.graphics.SpriteAPI
+import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.dark.shaders.distortion.RippleDistortion
@@ -49,6 +51,11 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
     var startedMusic = false
 
+    var systemGlow: SpriteAPI = Global.getSettings().getAndLoadSprite(ship.hullSpec.spriteName.replace(".png", "") + "_glow.png")
+    var fader = FaderUtil(1f, 2f, 1.5f, false, false)
+    var lastJitterLocations = ArrayList<Vector2f>()
+    var lastSecondJitterLocations = ArrayList<Vector2f>()
+
     enum class Phases {
         P1, P2, P3
     }
@@ -79,7 +86,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         var soundplayer = Global.getSoundPlayer()
 
-        if (!startedMusic && Global.getCombatEngine().getTotalElapsedTime(false) >= 1f) {
+        var viewport = Global.getCombatEngine().viewport
+        if (viewport.isNearViewport(ship.location, ship.collisionRadius + 100f) && !startedMusic && Global.getCombatEngine().getTotalElapsedTime(false) >= 1f) {
             soundplayer.playCustomMusic(1, 1, "rat_abyss_genesis1", true)
             startedMusic = true
         }
@@ -192,7 +200,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     }
 
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
-        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS, CombatEngineLayers.JUST_BELOW_WIDGETS)
+        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS, CombatEngineLayers.JUST_BELOW_WIDGETS, CombatEngineLayers.ABOVE_SHIPS_LAYER)
     }
 
     override fun getRenderRadius(): Float {
@@ -285,14 +293,63 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)
             vignette.render(viewport!!.llx - (offset * 0.5f), viewport!!.lly - (offset * 0.5f))
         }
+
+        if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER && (phase == Phases.P2 || phase == Phases.P3)) {
+            systemGlow.setNormalBlend()
+            systemGlow.alphaMult = (0.8f + (0.2f * fader.brightness)) * vignetteLevel
+            systemGlow.angle = ship.facing - 90
+            systemGlow.renderAtCenter(ship.location.x, ship.location.y)
+
+            systemGlow.setAdditiveBlend()
+            systemGlow.alphaMult = ((0.5f * fader.brightness)) * vignetteLevel
+            systemGlow.angle = ship.facing - 90
+            systemGlow.renderAtCenter(ship.location.x, ship.location.y)
+
+            doJitter(systemGlow, 0.5f * vignetteLevel, lastJitterLocations, 5, 2f)
+            doJitter(systemGlow, 0.3f * vignetteLevel, lastSecondJitterLocations, 5, 12f)
+        }
+    }
+
+    fun doJitter(sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>, jitterCount: Int, jitterMaxRange: Float) {
+
+        var paused = Global.getCombatEngine().isPaused
+        var jitterAlpha = 0.2f
+
+
+        if (!paused) {
+            lastLocations.clear()
+        }
+
+        for (i in 0 until jitterCount) {
+
+            var jitterLoc = Vector2f()
+
+            if (!paused) {
+                var x = MathUtils.getRandomNumberInRange(-jitterMaxRange, jitterMaxRange)
+                var y = MathUtils.getRandomNumberInRange(-jitterMaxRange, jitterMaxRange)
+
+                jitterLoc = Vector2f(x, y)
+                lastLocations.add(jitterLoc)
+            }
+            else {
+                jitterLoc = lastLocations.getOrElse(i) {
+                    Vector2f()
+                }
+            }
+
+            sprite.setAdditiveBlend()
+            sprite.alphaMult = level * jitterAlpha
+            sprite.renderAtCenter(ship.location.x + jitterLoc.x, ship.location.y + jitterLoc.y)
+        }
     }
 
 
     override fun notifyAboutToTakeHullDamage(param: Any?, ship: ShipAPI?, point: Vector2f?, damageAmount: Float): Boolean {
 
-        if (phase == Phases.P1 || phase == Phases.P2) {
+        //remove "transitionDone" from here at some point after testing
+        if ((phase == Phases.P1 || phase == Phases.P2) && !transitionDone) {
 
-            if (phase == Phases.P2) {
+            if (phase == Phases.P2 ) {
                 return true
             }
 

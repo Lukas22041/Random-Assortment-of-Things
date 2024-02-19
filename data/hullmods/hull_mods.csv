@@ -21,7 +21,7 @@ Ordnance Redistributor,rat_ordnance_redistributor,0,,,,,3000,FALSE,TRUE,FALSE,0,
 #Abyss Installables,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,
 #Abyss Special Alterations,,,,,,,,,,,,,,,,,,,
-Abyssal Crew Conversion,rat_abyssal_conversion,3,1,Hull Alteration,"rat_alteration, no_build_in, no_drop_salvage, restricted, abyss",Special,10000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalCrewConversion,,,,graphics/hullmods/rat_crew_conversion.png
+Abyssal Crew Conversion,rat_abyssal_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_build_in, no_drop_salvage, restricted",Special,10000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalCrewConversion,,,,graphics/hullmods/rat_crew_conversion.png
 Abyssal Crew Conversion (Chronos),rat_chronos_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_build_in, no_drop_salvage, restricted",Special,10000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedChronosCore,,,,graphics/hullmods/rat_chronos_conversion.png
 Abyssal Crew Conversion (Cosmos),rat_cosmos_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_build_in, no_drop_salvage, restricted",Special,10000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedCosmosCore,,,,graphics/hullmods/rat_chosmos_conversion.png
 Abyssal Crew Conversion (Seraph),rat_seraph_conversion,3,0,Hull Alteration,"rat_alteration, rat alteration_no_drop, no_build_in, no_drop_salvage, restricted",Special,10000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.IntegratedSeraphCore,,,,graphics/hullmods/rat_seraph_conversion.png

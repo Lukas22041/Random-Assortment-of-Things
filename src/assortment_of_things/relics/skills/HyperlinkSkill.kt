@@ -1,19 +1,15 @@
 package assortment_of_things.relics.skills
 
 import activators.ActivatorManager
-import assortment_of_things.abyss.skills.AbyssalBloodstream
-import assortment_of_things.abyss.skills.scripts.AbyssalBloodstreamCampaignScript
 import assortment_of_things.campaign.skills.RATBaseShipSkill
 import assortment_of_things.relics.activators.HyperlinkActivator
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
 import com.fs.starfarer.api.characters.LevelBasedEffect
 import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
 import com.fs.starfarer.api.characters.SkillSpecAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.listeners.AdvanceableListener
-import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 
@@ -42,14 +38,6 @@ class HyperlinkSkill : RATBaseShipSkill() {
         if (ship is ShipAPI) {
             if (!ship.hasListenerOfClass(HyperlinkScript::class.java)) {
                 ship.addListener(HyperlinkScript())
-            }
-
-            var script = Global.getSector().scripts.find { it::class.java == AbyssalBloodstreamCampaignScript::class.java } as AbyssalBloodstreamCampaignScript?
-
-            if (script != null && script.shownFirstDialog) {
-                var listener = AbyssalBloodstream.AbyssalBloodstreamListener(ship)
-                ship.addListener(listener)
-                Global.getCombatEngine().addLayeredRenderingPlugin(listener)
             }
         }
     }

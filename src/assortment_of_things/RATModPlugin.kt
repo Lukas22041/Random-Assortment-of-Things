@@ -7,7 +7,6 @@ import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
 import assortment_of_things.abyss.scripts.*
-import assortment_of_things.abyss.skills.scripts.AbyssalBloodstreamCampaignScript
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
@@ -162,14 +161,7 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(ChangeExoIntelState())
         generateExo()
 
-        var bloodstreamScript = Global.getSector().scripts.find { it::class.java == AbyssalBloodstreamCampaignScript::class.java } as AbyssalBloodstreamCampaignScript?
-        var skill = Global.getSettings().getSkillSpec("rat_abyssal_bloodstream")
-        if (bloodstreamScript == null || !bloodstreamScript.shownFirstDialog)  {
-            skill!!.name = "Abyssal Bloodstream"
-        }
-        else {
-            skill!!.name = "Abyssal Requiem"
-        }
+
 
       //  Global.getSector().addTransientScript(ResetBackgroundScript())
 

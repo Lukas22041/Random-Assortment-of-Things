@@ -52,44 +52,46 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
 
         visualPanel.showFleetMemberInfo(member, true)
 
-        textPanel.addPara("A long abandoned ship, having been inactive for dozens of cycles.")
+        textPanel.addPara("The derelict of an inactive ship.")
 
         textPanel.addPara("After a short inspection, it is determined that the ship seems to be automated, recovery of it wont be possible through normal means.")
 
-        createOption("Salvage") {
-            var dropRandom = ArrayList<SalvageEntityGenDataSpec.DropData>()
-            var dropValue = ArrayList<SalvageEntityGenDataSpec.DropData>()
-            var drop = SalvageEntityGenDataSpec.DropData()
+        if (!interactionTarget.hasTag("Dont_Show_Salvage_Option")) {
+            createOption("Salvage") {
+                var dropRandom = ArrayList<SalvageEntityGenDataSpec.DropData>()
+                var dropValue = ArrayList<SalvageEntityGenDataSpec.DropData>()
+                var drop = SalvageEntityGenDataSpec.DropData()
 
-            drop = SalvageEntityGenDataSpec.DropData()
-            drop.chances = 1
-            drop.group = "weapons2"
-            dropRandom.add(drop)
+                drop = SalvageEntityGenDataSpec.DropData()
+                drop.chances = 1
+                drop.group = "weapons2"
+                dropRandom.add(drop)
 
-            drop = SalvageEntityGenDataSpec.DropData()
-            drop.chances = 1
-            drop.valueMult = 0.1f
-            drop.group = "any_hullmod_medium"
-            dropRandom.add(drop)
+                drop = SalvageEntityGenDataSpec.DropData()
+                drop.chances = 1
+                drop.valueMult = 0.1f
+                drop.group = "any_hullmod_medium"
+                dropRandom.add(drop)
 
-            drop = SalvageEntityGenDataSpec.DropData()
-            drop.group = "basic"
-            drop.value = 500
-            dropValue.add(drop)
+                drop = SalvageEntityGenDataSpec.DropData()
+                drop.group = "basic"
+                drop.value = 500
+                dropValue.add(drop)
 
-            var mult = when(member.hullSpec.hullSize) {
-                HullSize.FRIGATE -> 1f
-                HullSize.DESTROYER -> 1.5f
-                HullSize.CRUISER -> 2f
-                HullSize.CAPITAL_SHIP -> 3f
-                else -> 1f
-            }
+                var mult = when(member.hullSpec.hullSize) {
+                    HullSize.FRIGATE -> 1f
+                    HullSize.DESTROYER -> 1.5f
+                    HullSize.CRUISER -> 2f
+                    HullSize.CAPITAL_SHIP -> 3f
+                    else -> 1f
+                }
 
-            var salvage = SalvageEntity.generateSalvage(random, mult, mult, 1f, 1f, dropValue, dropRandom)
+                var salvage = SalvageEntity.generateSalvage(random, mult, mult, 1f, 1f, dropValue, dropRandom)
 
-            visualPanel.showLoot("Loot", salvage, true) {
-                closeDialog()
-                Misc.fadeAndExpire(interactionTarget)
+                visualPanel.showLoot("Loot", salvage, true) {
+                    closeDialog()
+                    Misc.fadeAndExpire(interactionTarget)
+                }
             }
         }
 
@@ -100,7 +102,7 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
         tooltip.addSpacer(10f)
 
         var img = tooltip.beginImageWithText("graphics/hullmods/rat_crew_conversion.png", 32f)
-        img.addPara("By using the \"Abyssal Crew Conversion\" alteration, the ship can be made recoverable and boardable by human crew. This however consumes the item and takes up an s-mod slot.", 0f,
+        img.addPara("By using the \"Abyssal Crew Conversion\" alteration, the ship can be made recoverable and boardable by human crew. ", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "Abyssal Crew Conversion")
 
         tooltip.addImageWithText(0f)

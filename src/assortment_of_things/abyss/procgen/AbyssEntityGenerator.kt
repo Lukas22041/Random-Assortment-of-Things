@@ -36,6 +36,8 @@ object AbyssEntityGenerator {
         "rat_abyss_accumalator" to 12500f,
         "rat_abyss_unknown_lab" to 15000f,
         "rat_abyss_research" to 15000f,
+        "rat_military_outpost" to 15000f,
+        "rat_sariel_outpost" to 15000f
     )
 
 

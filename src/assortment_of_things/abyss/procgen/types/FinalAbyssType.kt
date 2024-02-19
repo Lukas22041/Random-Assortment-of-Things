@@ -54,6 +54,7 @@ class FinalAbyssType : BaseAbyssType() {
         boss.fixVariant()
 
         boss.variant.addTag(Tags.TAG_NO_AUTOFIT)
+        boss.variant.addTag(Tags.VARIANT_UNBOARDABLE)
         boss.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
 
         fleet.addTag("rat_genesis_fleet")
@@ -74,6 +75,9 @@ class FinalAbyssType : BaseAbyssType() {
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_SAW_PLAYER_WITH_TRANSPONDER_ON] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOSTILE] = true
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_PURSUE_PLAYER] = true
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALWAYS_PURSUE] = true
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALLOW_DISENGAGE] = true
         fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORES_OTHER_FLEETS] = true
         fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORED_BY_OTHER_FLEETS] = true
 

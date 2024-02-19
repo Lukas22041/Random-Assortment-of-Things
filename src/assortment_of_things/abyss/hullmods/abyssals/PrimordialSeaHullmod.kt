@@ -40,8 +40,6 @@ class PrimordialSeaHullmod : BaseHullMod() {
         super.applyEffectsAfterShipCreation(ship, id)
         if (ship == null) return
         ActivatorManager.addActivator(ship, PrimordialSeaActivator(ship))
-
-        //Global.getCombatEngine().addLayeredRenderingPlugin(GenesisBossScript(ship))
     }
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  width: Float, isForModSpec: Boolean) {
 

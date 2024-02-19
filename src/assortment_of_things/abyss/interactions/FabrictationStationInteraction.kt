@@ -4,7 +4,9 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATInteractionPlugin
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.*
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 
@@ -17,6 +19,11 @@ import kotlin.collections.ArrayList
 class FabrictationStationInteraction : RATInteractionPlugin() {
 
     override fun init() {
+
+       /* var path = "graphics/illustrations/rat_abyss_wreckage.jpg"
+        var sprite = Global.getSettings().getAndLoadSprite(path)
+        var interactionImage = InteractionDialogImageVisual(path, sprite.width, sprite.height)
+        visualPanel.showImageVisual(interactionImage)*/
 
         if (AbyssUtils.isAnyFleetTargetingPlayer())
         {

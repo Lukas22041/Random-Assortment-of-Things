@@ -1,6 +1,7 @@
 package assortment_of_things.misc
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.characters.FullName
@@ -63,7 +64,12 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
 
         if (dialog.interactionTarget.customInteractionDialogImageVisual != null)
         {
-            visualPanel.showImageVisual(dialog.interactionTarget.customInteractionDialogImageVisual)
+            var path = dialog.interactionTarget.customInteractionDialogImageVisual.spriteName
+            var sprite = Global.getSettings().getAndLoadSprite(path)
+            var interactionImage = InteractionDialogImageVisual(path, sprite.width, sprite.height)
+            visualPanel.showImageVisual(interactionImage)
+
+            //visualPanel.showImageVisual(dialog.interactionTarget.customInteractionDialogImageVisual)
         }
         init()
     }
