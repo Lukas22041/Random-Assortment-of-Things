@@ -111,7 +111,7 @@ class GenesisInteraction : RATInteractionPlugin() {
             textPanel.addPara("The nearby abyssal matter becomes turbolent, moving the fleet around on a whim, when suddenly, " +
                     "the matter concentrates on to your ship, bleeding through the hull, creating a sight not unlike an ocean of blood.")
 
-            textPanel.addPara("Time begins to freeze, only you appear to be able to take note. You try to speak but to no avail. " +
+            textPanel.addPara("Time comes to a still, only you appear to be able to take note. You try to speak but to no avail. " +
                     "Your senses weaken, but a new one peaks through, one that you havent felt before.")
 
             textPanel.addPara("Acquired a new skill.", AbyssUtils.ABYSS_COLOR, AbyssUtils.ABYSS_COLOR)

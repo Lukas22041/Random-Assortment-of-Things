@@ -1,5 +1,6 @@
 package assortment_of_things
 
+import assortment_of_things.abyss.AbyssCampaignListener
 import assortment_of_things.scripts.ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
@@ -167,6 +168,7 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().addTransientScript(ForceNegAbyssalRep())
         Global.getSector().addTransientListener(HullmodRemoverListener())
+        Global.getSector().addTransientListener(AbyssCampaignListener())
 
         Global.getSector().addTransientScript(AddArtifactHullmod())
 

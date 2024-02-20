@@ -1,13 +1,16 @@
 package assortment_of_things.abyss.procgen.types
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.procgen.*
 import assortment_of_things.misc.fixVariant
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.FleetAssignment
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.listeners.FleetEventListener
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
@@ -57,6 +60,9 @@ class FinalAbyssType : BaseAbyssType() {
         boss.variant.addTag(Tags.VARIANT_UNBOARDABLE)
         boss.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
 
+        var core = PrimordialCore().createPerson(RATItems.PRIMORDIAL, "rat_abyssals_primordials", Random())
+        boss.captain = core
+
         fleet.addTag("rat_genesis_fleet")
         fleet.memoryWithoutUpdate.set("\$defenderFleet", fleet)
 
@@ -78,9 +84,9 @@ class FinalAbyssType : BaseAbyssType() {
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_PURSUE_PLAYER] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALWAYS_PURSUE] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALLOW_DISENGAGE] = true
-        fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORES_OTHER_FLEETS] = true
+        /*fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORES_OTHER_FLEETS] = true
         fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORED_BY_OTHER_FLEETS] = true
-
+*/
         fleet.addScript(PrimFleetScript(fleet, token))
 
 

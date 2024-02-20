@@ -18,11 +18,11 @@ import java.util.*
 
 class PrimordialCore : AICoreOfficerPlugin {
 
-    var automatedPointsMult = 3f
+    var automatedPointsMult = 4f
 
     override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI? {
         var core = AICoreUtil.createCorePerson(aiCoreId, factionId)
-        core.stats.level = 7
+        core.stats.level = 8
         core.setPersonality(Personalities.RECKLESS)
         core.setRankId(Ranks.SPACE_CAPTAIN)
 
