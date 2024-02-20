@@ -286,6 +286,7 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
     var wormhole2 = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
 
     var systemGlow: SpriteAPI = Global.getSettings().getAndLoadSprite(ship.hullSpec.spriteName.replace(".png", "") + "_glow.png")
+    var systemGlow2: SpriteAPI = Global.getSettings().getAndLoadSprite(ship.hullSpec.spriteName.replace(".png", "") + "_glow_secondary.png")
     var fader = FaderUtil(1f, 2f, 1.5f, false, false)
     var lastJitterLocations = ArrayList<Vector2f>()
     var lastSecondJitterLocations = ArrayList<Vector2f>()
@@ -334,9 +335,19 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
         var radius = activator.getCurrentRange()
         var segments = 100
 
+        systemGlow2.setNormalBlend()
+        systemGlow2.alphaMult = (0.8f + (0.2f * fader.brightness))
+        systemGlow2.angle = ship.facing - 90
+        systemGlow2.renderAtCenter(ship.location.x, ship.location.y)
+
+        systemGlow2.setNormalBlend()
+        systemGlow2.alphaMult = ((0.5f * fader.brightness))
+        systemGlow2.angle = ship.facing - 90
+        systemGlow2.renderAtCenter(ship.location.x, ship.location.y)
+
         startStencil(ship!!, radius, segments)
 
-        systemGlow.setNormalBlend()
+        systemGlow.setAdditiveBlend()
         systemGlow.alphaMult = (0.8f + (0.2f * fader.brightness))
         systemGlow.angle = ship.facing - 90
         systemGlow.renderAtCenter(ship.location.x, ship.location.y)
