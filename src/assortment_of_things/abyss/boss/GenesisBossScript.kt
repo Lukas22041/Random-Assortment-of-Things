@@ -56,6 +56,9 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     var lastJitterLocations = ArrayList<Vector2f>()
     var lastSecondJitterLocations = ArrayList<Vector2f>()
 
+    var hasSeenBoss = false
+    var healthBar = GenesisHealthBar(this, ship)
+
     enum class Phases {
         P1, P2, P3
     }
@@ -67,6 +70,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
     override fun init(entity: CombatEntityAPI?) {
         ship.addListener(this)
+
+        Global.getCombatEngine().addPlugin(healthBar)
     }
 
     override fun cleanup() {
@@ -90,6 +95,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         if (viewport.isNearViewport(ship.location, ship.collisionRadius + 100f) && !startedMusic && Global.getCombatEngine().getTotalElapsedTime(false) >= 1f) {
             soundplayer.playCustomMusic(1, 1, "rat_abyss_genesis1", true)
             startedMusic = true
+            hasSeenBoss = true
         }
 
         if (phase == Phases.P2) {
@@ -497,6 +503,38 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         // <draw the lines>
 
+    }
+
+    fun startBarStencil(x: Float, y: Float, width: Float, height: Float, percent: Float) {
+        GL11.glClearStencil(0);
+        GL11.glStencilMask(0xff);
+        //set everything to 0
+        GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
+
+        //disable drawing colour, enable stencil testing
+        GL11.glColorMask(false, false, false, false); //disable colour
+        GL11.glEnable(GL11.GL_STENCIL_TEST); //enable stencil
+
+        // ... here you render the part of the scene you want masked, this may be a simple triangle or square, or for example a monitor on a computer in your spaceship ...
+        //begin masking
+        //put 1s where I want to draw
+        GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xff); // Do not test the current value in the stencil buffer, always accept any value on there for drawing
+        GL11.glStencilMask(0xff);
+        GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE); // Make every test succeed
+
+        // <draw a quad that dictates you want the boundaries of the panel to be>
+
+        GL11.glRectf(x, y, x + (width * percent), y + height)
+
+        //GL11.glRectf(x, y, x + width, y + height)
+
+        GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP); // Make sure you will no longer (over)write stencil values, even if any test succeeds
+        GL11.glColorMask(true, true, true, true); // Make sure we draw on the backbuffer again.
+
+        GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF); // Now we will only draw pixels where the corresponding stencil buffer value equals 1
+        //Ref 0 causes the content to not display in the specified area, 1 causes the content to only display in that area.
+
+        // <draw the lines>
     }
 
     fun endStencil() {

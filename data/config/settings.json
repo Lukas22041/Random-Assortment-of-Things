@@ -47,6 +47,8 @@
 			
 			"rat_exo_shield_inner":"graphics/fx/rat_exo_shields256.png",
 			"rat_exo_shield_outer":"graphics/fx/rat_exo_shields256ring.png",
+			"rat_primordial_shield_inner":"graphics/fx/rat_primordial_shields256.png",
+			"rat_primordial_shield_outer":"graphics/fx/rat_primordial_shields256ring.png",
 		},
 		
 		"rat_terrain": {

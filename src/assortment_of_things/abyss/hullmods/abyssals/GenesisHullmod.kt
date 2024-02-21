@@ -75,6 +75,10 @@ class GenesisHullmod : BaseHullMod() {
 
             Global.getCombatEngine().addLayeredRenderingPlugin(GenesisBossScript(ship))
         }
+
+        if (ship.shield != null) {
+            ship.shield.setRadius(ship.shieldRadiusEvenIfNoShield, "graphics/fx/rat_primordial_shields256.png", "graphics/fx/rat_primordial_shields256ring.png")
+        }
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?,  ship: ShipAPI?,   isForModSpec: Boolean): Boolean {
