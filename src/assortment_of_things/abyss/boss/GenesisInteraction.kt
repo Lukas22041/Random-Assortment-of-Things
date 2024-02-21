@@ -142,7 +142,6 @@ class GenesisInteraction : RATInteractionPlugin() {
 
         }
 
-        addLeaveOption()
 
     }
 

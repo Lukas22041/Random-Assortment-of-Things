@@ -33,7 +33,6 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
     @Transient
     var wormhole2 = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
 
-    @Transient
     var font: LazyFont? = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
 
    /* override fun isInAbyss(other: SectorEntityToken?): Boolean {

@@ -22,6 +22,7 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
     var mainBarMaximumProgress = 0f
     var lowestFlashbarPercent = 0f
 
+
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
 
         if (!Global.getCombatEngine().isPaused) {
@@ -30,7 +31,7 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
                 mainbarAlpha = MathUtils.clamp(mainbarAlpha, 0f, 1f)
             }
             else if (bossScript.hasSeenBoss) {
-                mainbarAlpha += 0.75f * amount
+                mainbarAlpha += 0.50f * amount
                 mainBarMaximumProgress += 0.16f * amount
 
                 mainbarAlpha = MathUtils.clamp(mainbarAlpha, 0f, 1f)
