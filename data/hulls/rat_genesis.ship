@@ -109,7 +109,7 @@
       "location": [-50, 59.5],
       "length": 40,
       "width": 20,
-      "angle": 180,
+      "angle": -175,
       "contrailSize": 30,
       "style": "CUSTOM",
       "styleId": "PRIMORDIAL"
@@ -118,7 +118,7 @@
       "location": [-50, -59.5],
       "length": 40,
       "width": 25,
-      "angle": -180,
+      "angle": 175,
       "contrailSize": 30,
       "style": "CUSTOM",
       "styleId": "PRIMORDIAL"
@@ -127,7 +127,7 @@
       "location": [-35, -80],
       "length": 70,
       "width": 40,
-      "angle": -180,
+      "angle": 175,
       "contrailSize": 30,
       "style": "CUSTOM",
       "styleId": "PRIMORDIAL"
@@ -136,7 +136,7 @@
       "location": [-35, 80],
       "length": 70,
       "width": 40,
-      "angle": 180,
+      "angle": -175,
       "contrailSize": 30,
       "style": "CUSTOM",
       "styleId": "PRIMORDIAL"

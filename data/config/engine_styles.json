@@ -108,7 +108,7 @@
 		#"glowSprite":"graphics/fx/rat_abyssal_glow.png",
 		#"glowOutline":"graphics/fx/rat_abyssal_flame.png",
 		
-		"contrailDuration":1.7,
+		"contrailDuration":1.0,
 		"contrailWidthMult":0.9,
 		"contrailWidthAddedFractionAtEnd":-0.2f,  # can be negative. makes trail spread out/narrow at the end
 		"contrailMinSeg":5, # min segment length, in pixels
@@ -125,7 +125,7 @@
 		"glowAlternateColor":[178, 36, 69,255],
 		
 		"engineColor":[178, 36, 69,255],
-		"contrailColor":[178, 36, 69,75],
+		"contrailColor":[145, 0, 51,75],
         "contrailCampaignColor":[178, 36, 69, 50],
 		
     },
