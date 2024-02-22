@@ -1,0 +1,22 @@
+{
+  "variantId": "rat_genesis_frigate_support_Standard",
+  "hullId": "rat_genesis_frigate_support",
+  "displayName": "Support Construct",
+  "goalVariant": false,
+  "fluxCapacitors": 0,
+  "fluxVents": 0,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [],
+  "weaponGroups": [
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0001": "rat_genesis_construct_beam"
+      }
+    }
+  ],
+  "modules": [],
+  "wings": []
+}

@@ -15,7 +15,20 @@
     "rat_genesis_construct_hullmod",
     "no_weapon_flux"
   ],
-  "weaponSlots": [],
+  "builtInWeapons": {
+    "WS0001": "rat_genesis_construct_beam"
+  },
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "MEDIUM",
+      "type": "BUILT_IN",
+      "mount": "TURRET",
+      "arc": 0,
+      "angle": 0,
+      "locations": [30, -0]
+    }
+  ],
   "engineSlots": [
     {
       "location": [-20, -20],

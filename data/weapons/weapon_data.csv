@@ -39,6 +39,9 @@ Regenerative Microlauncher,rat_sariel_launcher_right,1,,1200,2500,,150,,15,0,0,2
 Distortion Launcher,rat_genesis_motelauncher,,,,1000,,150,25,,,,,,,ENERGY,75,0,0,5,6,0.2,30,30,1,1,,400,100,3.5,1000,,,"SYSTEM, DO_NOT_AIM","no_sell, no_dealer, restricted",,Primordial,,General,,,,,%s on to nearby targets and can %s through missiles.,Homes | pierce,,,,38.25
 Distortion Launcher (PD),rat_genesis_motelauncher_pd,,,,800,,100,40,,,,,,,ENERGY,50,0,0,2,2,0.3,30,30,1,1,,800,100,1.5,1000,,,"SYSTEM, PD, PD_ONLY, DO_NOT_AIM","no_sell, no_dealer, restricted",,Primordial,,Point Defense,,,,,%s on to nearby targets and can %s through missiles. ,Homes | pierce,,,TRUE,38.25
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Construct Beam,rat_genesis_construct_beam,1,,0,800,600,,,0,20,0,,,,ENERGY,,700,0.5,0.25,1,1,,,,,3200,,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Abyssal,,Anti Armor,,,,,The beam deals an additional %s of damage as %s damage.,20% | fragmentation,,,,906
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Abyss Decos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Aboleth Cover Left,aboleth_cover_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
 Aboleth Cover Right,aboleth_cover_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43

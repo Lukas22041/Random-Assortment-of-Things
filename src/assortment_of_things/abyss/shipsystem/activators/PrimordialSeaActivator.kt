@@ -170,6 +170,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
             else {
                 apparation.isPhased = true
                 apparation.isHoldFireOneFrame = true
+                apparation.allWeapons.forEach { it.stopFiring() }
                 apparation.setShipSystemDisabled(true)
                 apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 0f)
             }
@@ -199,7 +200,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
     }
 
     fun spawnApparation() : ShipAPI{
-        var variant = Global.getSettings().getVariant("rat_genesis_frigate_support_Hull")
+        var variant = Global.getSettings().getVariant("rat_genesis_frigate_support_Standard")
         var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
         var obfManager = manager as CombatFleetManager
 
@@ -230,10 +231,12 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
 
         Global.getCombatEngine().addEntity(apparation)
 
-        apparation.shipAI = Global.getSettings().createDefaultShipAI(apparation, ShipAIConfig())
-        apparation.shipAI.forceCircumstanceEvaluation()
-
         apparation.captain.setPersonality(Personalities.RECKLESS)
+        apparation.shipAI = Global.getSettings().createDefaultShipAI(apparation, ShipAIConfig().apply { alwaysStrafeOffensively = true })
+        apparation.shipAI.forceCircumstanceEvaluation()
+        apparation.captain.setPersonality(Personalities.RECKLESS)
+
+
 
         return apparation
     }
@@ -344,7 +347,7 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
     }
 
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
-        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS, CombatEngineLayers.UNDER_SHIPS_LAYER)
+        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS, CombatEngineLayers.ABOVE_SHIPS_LAYER, CombatEngineLayers.UNDER_SHIPS_LAYER)
     }
 
     override fun getRenderRadius(): Float {
@@ -363,30 +366,34 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
         var radius = activator.getCurrentRange()
         var segments = 100
 
-        systemGlow2.setNormalBlend()
-        systemGlow2.alphaMult = (0.8f + (0.2f * fader.brightness))
-        systemGlow2.angle = ship.facing - 90
-        systemGlow2.renderAtCenter(ship.location.x, ship.location.y)
+        if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER) {
+            systemGlow2.setNormalBlend()
+            systemGlow2.alphaMult = (0.8f + (0.2f * fader.brightness))
+            systemGlow2.angle = ship.facing - 90
+            systemGlow2.renderAtCenter(ship.location.x, ship.location.y)
 
-        systemGlow2.setNormalBlend()
-        systemGlow2.alphaMult = ((0.5f * fader.brightness))
-        systemGlow2.angle = ship.facing - 90
-        systemGlow2.renderAtCenter(ship.location.x, ship.location.y)
+            systemGlow2.setNormalBlend()
+            systemGlow2.alphaMult = ((0.5f * fader.brightness))
+            systemGlow2.angle = ship.facing - 90
+            systemGlow2.renderAtCenter(ship.location.x, ship.location.y)
+        }
 
         startStencil(ship!!, radius, segments)
 
-        systemGlow.setAdditiveBlend()
-        systemGlow.alphaMult = (0.8f + (0.2f * fader.brightness))
-        systemGlow.angle = ship.facing - 90
-        systemGlow.renderAtCenter(ship.location.x, ship.location.y)
+        if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER) {
+            systemGlow.setAdditiveBlend()
+            systemGlow.alphaMult = (0.8f + (0.2f * fader.brightness))
+            systemGlow.angle = ship.facing - 90
+            systemGlow.renderAtCenter(ship.location.x, ship.location.y)
 
-        systemGlow.setAdditiveBlend()
-        systemGlow.alphaMult = ((0.5f * fader.brightness))
-        systemGlow.angle = ship.facing - 90
-        systemGlow.renderAtCenter(ship.location.x, ship.location.y)
+            systemGlow.setAdditiveBlend()
+            systemGlow.alphaMult = ((0.5f * fader.brightness))
+            systemGlow.angle = ship.facing - 90
+            systemGlow.renderAtCenter(ship.location.x, ship.location.y)
 
-        doJitter(systemGlow, 0.5f, lastJitterLocations, 5, 2f)
-        doJitter(systemGlow, 0.3f, lastSecondJitterLocations, 5, 12f)
+            doJitter(systemGlow, 0.5f, lastJitterLocations, 5, 2f)
+            doJitter(systemGlow, 0.3f, lastSecondJitterLocations, 5, 12f)
+        }
 
         if (layer == CombatEngineLayers.BELOW_PLANETS) {
 
@@ -435,10 +442,10 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
             apparation.spriteAPI.renderAtCenter(apparation.location.x, apparation.location.y)
             apparation.spriteAPI.color = Color(0, 0 ,0 ,0)
 
-            for (weapon in apparation.allWeapons) {
+            /*for (weapon in apparation.allWeapons) {
                 weapon.sprite?.alphaMult = 1f
                 weapon.sprite?.renderAtCenter(weapon.location.x, weapon.location.y)
-            }
+            }*/
         }
     }
 
