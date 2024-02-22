@@ -8,6 +8,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.graphics.SpriteAPI
+import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.combat.MineStrikeStats
 import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.IntervalUtil
@@ -143,14 +144,34 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
            // ReflectionUtils.set("visible", apparation, false)
           //  apparation.addTag("fx_drone")
 
+            for (engine in apparation.engineController.shipEngines) {
+
+                if (MathUtils.getDistance(engine.location, ship.location) <= range && apparation.isAlive) {
+                    //engine.repair()
+                    engine.engineSlot.color = Color(178, 36, 69, 255)
+                    engine.engineSlot.glowAlternateColor = Color(178, 36, 69,255)
+                    engine.engineSlot.glowSizeMult = 0.8f
+
+                }
+                else {
+                    engine.engineSlot.color = Color(0, 0, 0, 0)
+                    engine.engineSlot.glowAlternateColor = Color(0, 0, 0, 0)
+                    engine.engineSlot.glowSizeMult = 0f
+                    //engine.disable()
+                }
+
+            }
+
             if (MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius) {
                 apparation.isPhased = false
                 apparation.setShipSystemDisabled(false)
+                apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 1f)
             }
             else {
                 apparation.isPhased = true
                 apparation.isHoldFireOneFrame = true
                 apparation.setShipSystemDisabled(true)
+                apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 0f)
             }
         }
 
@@ -178,12 +199,13 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
     }
 
     fun spawnApparation() : ShipAPI{
-        var variant = Global.getSettings().getVariant("rat_makara_Strike")
+        var variant = Global.getSettings().getVariant("rat_genesis_frigate_support_Hull")
         var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
         var obfManager = manager as CombatFleetManager
 
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
         var apparation = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, Vector2f(100000f, 100000f), ship!!.facing)
+        apparation!!.fleetMember.id = Misc.genUID()
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
 
         apparation!!.captain = ship.captain
@@ -193,7 +215,11 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
         }
 
         apparation.isPhased = true
-        apparation.alphaMult = 0f
+        //apparation.alphaMult = 0f
+       // apparation.spriteAPI.alphaMult = 0f
+        apparation.spriteAPI.color = Color(0, 0 ,0 ,0)
+     /*   apparation.extraAlphaMult = 0f
+        apparation.setApplyExtraAlphaToEngines(false) //Disable to make engines not get way to small*/
         //apparation.addTag("module_no_status_bar")
         //Might be needed to hide bars on fighters, not sure
         //apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_prim_sea", 0f)
@@ -206,6 +232,8 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
 
         apparation.shipAI = Global.getSettings().createDefaultShipAI(apparation, ShipAIConfig())
         apparation.shipAI.forceCircumstanceEvaluation()
+
+        apparation.captain.setPersonality(Personalities.RECKLESS)
 
         return apparation
     }
@@ -316,7 +344,7 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
     }
 
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
-        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS, CombatEngineLayers.ABOVE_SHIPS_LAYER)
+        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS, CombatEngineLayers.UNDER_SHIPS_LAYER)
     }
 
     override fun getRenderRadius(): Float {
@@ -382,7 +410,7 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
             wormhole2.renderAtCenter(x + width / 2, y + height / 2)
         }
 
-        if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER) {
+        if (layer == CombatEngineLayers.UNDER_SHIPS_LAYER) {
             renderShips()
         }
 
@@ -396,9 +424,16 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
     }
 
     fun renderShips() {
-        for (apparation in apparations) {
+
+        var range = activator.getCurrentRange()
+        for (apparation in apparations ) {
+
+            if (!apparation.isAlive) continue
+
             apparation.spriteAPI.alphaMult = 1f
+            apparation.spriteAPI.color = Color(255, 255, 255, 255)
             apparation.spriteAPI.renderAtCenter(apparation.location.x, apparation.location.y)
+            apparation.spriteAPI.color = Color(0, 0 ,0 ,0)
 
             for (weapon in apparation.allWeapons) {
                 weapon.sprite?.alphaMult = 1f

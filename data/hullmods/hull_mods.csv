@@ -11,6 +11,7 @@ Sarakiels Blessing,rat_sarakiels_blessing,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,
 ,,,,,,,,,,,,,,,,,,,
 Primordial Serpent,rat_charybdis_hullmod,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.CharybdisHullmod,,,,graphics/hullmods/rat_abyssal_core.png
 Beginning and the End,rat_genesis_hullmod,0,,Primordial,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.GenesisHullmod,,,,graphics/hullmods/rat_genesis_hullmod.png
+Primordial Construct,rat_genesis_construct_hullmod,0,,Primordial,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.GenesisConstructHullmod,,,,graphics/hullmods/rat_genesis_hullmod.png
 Primordial Sea,rat_primordial_sea_hullmod,0,,Primordial,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.PrimordialSeaHullmod,,,,graphics/hullmods/rat_primordial_sea.png
 ,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,

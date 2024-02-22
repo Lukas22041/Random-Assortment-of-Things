@@ -1,0 +1,73 @@
+{
+  "hullName": "Primordial Support Construct",
+  "hullId": "rat_genesis_frigate_support",
+  "hullSize": "FIGHTER",
+  "spriteName": "graphics/ships/special/rat_genesis_frigate.png",
+  "style": "RAT_PRIMORDIAL",
+  "height": 130,
+  "width": 130,
+  "center": [65, 65],
+  "collisionRadius": 76.5,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 69.5,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_genesis_construct_hullmod",
+    "no_weapon_flux"
+  ],
+  "weaponSlots": [],
+  "engineSlots": [
+    {
+      "location": [-20, -20],
+      "length": 25,
+      "width": 20,
+      "angle": -135,
+      "contrailSize": 30,
+      "style": "PRIMORDIAL_CONSTRUCT"
+    },
+    {
+      "location": [-20, 20],
+      "length": 25,
+      "width": 20,
+      "angle": 135,
+      "contrailSize": 30,
+      "style": "PRIMORDIAL_CONSTRUCT"
+    }
+  ],
+  "bounds": [
+    -52, 1,
+    -32, 10,
+    -25.5, 15,
+    -19, 23,
+    -11.5, 26,
+    -5, 42.5,
+    -1, 27.5,
+    7.5, 31.5,
+    17.5, 58,
+    20, 56.5,
+    24, 33.5,
+    27, 29,
+    26, 24.5,
+    32, 22,
+    49, 26,
+    42, 13,
+    33, 4.5,
+    33, -4.5,
+    42, -13,
+    49, -26,
+    32, -22,
+    26, -24.5,
+    27, -29,
+    24, -33.5,
+    20, -56.5,
+    17.5, -58,
+    7.5, -31.5,
+    -1, -27.5,
+    -5, -42.5,
+    -11.5, -26,
+    -19, -23,
+    -25.5, -15,
+    -32, -10,
+    -52, -1
+  ]
+}
