@@ -1,0 +1,47 @@
+{
+	"id":"rat_genesis_construct_mote",
+	"specClass":"missile",	
+	"missileType":"MISSILE",
+	"onHitEffect":"assortment_of_things.abyss.weapons.GenesisMoteOnHit",
+	"sprite":"graphics/fx/rat_none.png",
+	"size":[4,4],	
+	"center":[2,2],
+	"collisionRadius":10,
+	"collisionClass":"MISSILE_NO_FF",
+	"explosionColor":[156, 40, 65,255],  # purely visual, will get a white additively blended core on top of this color
+	"explosionRadius":75, # purely visual
+	#"flameoutTime":1, # total time from flameout to full fadeout
+	#"noEngineGlowTime":0.5, # time spent without the engine glow being rendered
+	"fadeTime":0.5, # fadeout duration
+	"glowColor":[100,165,255,125],
+	"alwaysAccelerate":true,
+	"passThroughMissiles":true,
+	#"collisionClassAfterFlameout":"MISSILE_NO_FF",
+	#"behaviorSpec":{"behavior":"CUSTOM",
+	#				"effectRange":300,
+	#				"effectChance":0.3,
+	#			   },
+	"engineSpec":{"turnAcc":300,
+				  "turnRate":220,
+				  "acc":350,
+				  "dec":250},
+	"engineSlots":[
+					{"id":"ES1",
+					"loc":[0, 0],
+				    "style":"CUSTOM",
+					"styleSpec":{
+						"engineColor":[156, 40, 65,255],
+						"contrailParticleSizeMult":6,
+						"contrailParticleDuration":2,
+						"contrailMaxSpeedMult":-0.1,
+						"contrailAngularVelocityMult":0f,
+						"contrailColor":[156, 40, 65,25],
+						"type":"GLOW" # GLOW or SMOKE
+					},
+				    #"width":7.0,
+				    #"length":25.0,
+				    "width":8.0,
+				    "length":0.0,
+				    "angle":180.0},
+				   ]
+}
