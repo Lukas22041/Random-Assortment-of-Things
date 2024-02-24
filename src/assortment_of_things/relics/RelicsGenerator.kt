@@ -44,7 +44,7 @@ class RelicsGenerator {
             }
 
             var systems = Global.getSector().starSystems.filter { (it.hasTag(Tags.THEME_RUINS) || it.hasTag(Tags.THEME_DERELICT) || it.hasTag(Tags.THEME_REMNANT) || it.hasTag(Tags.THEME_MISC))
-                    && !it.hasTag(RelicsUtils.RELICS_SYSTEM_TAG) && !it.hasPulsar() }
+                    &&  !it.hasTag(RelicsUtils.RELICS_SYSTEM_TAG) && !it.hasTag(Tags.SYSTEM_ABYSSAL) && !it.hasPulsar() }
             if (systems.isEmpty()) continue
 
             systems = systems.filter { pick.systemFilter(it) }
