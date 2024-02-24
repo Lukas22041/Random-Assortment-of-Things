@@ -16,7 +16,9 @@
     "no_weapon_flux"
   ],
   "builtInWeapons": {
-    "WS0001": "rat_genesis_construct_beam"
+    "WS0001": "rat_genesis_construct_beam",
+    "WS0002": "rat_genesis_frigate_dem",
+    "WS0003": "rat_genesis_frigate_dem"
   },
   "weaponSlots": [
     {
@@ -27,6 +29,24 @@
       "arc": 0,
       "angle": 0,
       "locations": [30, -0]
+    },
+    {
+      "id": "WS0002",
+      "size": "SMALL",
+      "type": "BUILT_IN",
+      "mount": "TURRET",
+      "arc": 0,
+      "angle": 95.5,
+      "locations": [1, 28]
+    },
+    {
+      "id": "WS0003",
+      "size": "SMALL",
+      "type": "BUILT_IN",
+      "mount": "TURRET",
+      "arc": 0,
+      "angle": -95.5,
+      "locations": [1, -28]
     }
   ],
   "engineSlots": [

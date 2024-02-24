@@ -13,7 +13,9 @@
       "autofire": false,
       "mode": "LINKED",
       "weapons": {
-        "WS0001": "rat_genesis_construct_beam"
+        "WS0001": "rat_genesis_construct_beam",
+        "WS0002": "rat_genesis_frigate_dem",
+        "WS0003": "rat_genesis_frigate_dem"
       }
     }
   ],

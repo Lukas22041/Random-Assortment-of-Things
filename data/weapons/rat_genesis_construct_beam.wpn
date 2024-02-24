@@ -14,9 +14,9 @@
 	"turretAngleOffsets":[0],
 	"hardpointOffsets":[0, 0],
 	"hardpointAngleOffsets":[0],
-	"fringeColor":[178, 36, 69,255],
-	"coreColor":[187,233,150,255],
-	"glowColor":[178, 36, 69,255],
+	"fringeColor":[140, 0, 250,255],
+	"coreColor":[197, 150, 233,255],
+	"glowColor":[140, 0, 250,255],
 	"width":20.0,
 	"textureType":ROUGH,
 	"textureScrollSpeed":64.0,
@@ -24,6 +24,5 @@
 
 	#"fireSoundOne":"phase_beam_intro",
 	"fireSoundTwo":"phase_beam_loop",	
-	"beamEffect":"assortment_of_things.abyss.weapons.SeabreamEffect",
 	"pierceSet":[PROJECTILE_FF,PROJECTILE_NO_FF,PROJECTILE_FIGHTER,MISSILE_FF,MISSILE_NO_FF],
 }

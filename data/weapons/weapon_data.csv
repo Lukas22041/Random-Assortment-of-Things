@@ -36,10 +36,20 @@ Abyssal Wave Emitter,rat_merrow_beam,1,,1500,700,300,,10,0,20,0,,,,ENERGY,,100,1
 Regenerative Microlauncher,rat_sariel_launcher_left,1,,1200,2500,,150,,15,0,0,24,0,,ENERGY,0,,0,4,8,0.1,0,0,0,,,400,25,7,100,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted",,,,General,Medium,Medium,,,Every %s damage dealt by %s weapons on this ship recharge %s missiles for this weapon.,5000 | other | 8,,,TRUE,12
 Regenerative Microlauncher,rat_sariel_launcher_right,1,,1200,2500,,150,,15,0,0,24,0,,ENERGY,0,,0,4,8,0.1,0,0,0,,,400,25,7,100,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted",,,,General,Medium,Medium,,,Every %s damage dealt by %s weapons on this ship recharge %s missiles for this weapon.,5000 | other | 8,,,TRUE,12
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+#Genesis,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Distortion Launcher,rat_genesis_motelauncher,,,,1000,,150,25,,,,,,,ENERGY,75,0,0,5,6,0.2,30,30,1,1,,400,100,3.5,1000,,,"SYSTEM, DO_NOT_AIM","no_sell, no_dealer, restricted",,Primordial,,General,,,,,%s on to nearby targets and can %s through missiles.,Homes | pierce,,,,38.25
 Distortion Launcher (PD),rat_genesis_motelauncher_pd,,,,800,,100,40,,,,,,,ENERGY,50,0,0,2,2,0.3,30,30,1,1,,800,100,1.5,1000,,,"SYSTEM, PD, PD_ONLY, DO_NOT_AIM","no_sell, no_dealer, restricted",,Primordial,,Point Defense,,,,,%s on to nearby targets and can %s through missiles. ,Homes | pierce,,,TRUE,38.25
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Construct Beam,rat_genesis_construct_beam,1,,0,800,600,,,0,20,0,,,,ENERGY,,700,0.5,0.25,1,1,,,,,3200,,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Abyssal,,Anti Armor,,,,,The beam deals an additional %s of damage as %s damage.,20% | fragmentation,,,,906
+Construct DEM,rat_genesis_frigate_dem,2,,0,1000,,200,0,15,30,0,1,,,ENERGY,0,,0.5,10,2,1,0,0,0,0,,150,140,12,250,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted, damage_special, damage_soft_flux",,Exo-Tech,,Suppression,Slow,Good,,,"The missile fires a beam at the target, dealing approximately %s kinetic and %s emp damage over the course of %s seconds. This damage is affected by missile damage modifiers and not energy weapon ones.",1000 | 750 | 10,,,TRUE,11.94
+    Construct DEM - Payload,rat_genesis_frigate_dem_payload,2,,0,900,400,,,20,30,0,,,,ENERGY,0,,0,0.75,0.25,0.5,,,,,1000000,,,,,,,SYSTEM,,,,,,,,,,,,,,,11.95
+    Construct DEM - Minelayer,rat_genesis_frigate_dem_minelayer,0,,,,,1000,,25,,,,,,ENERGY,0,,,,1,,,,,,,0,0,20,1000,,,SYSTEM,,,Unknown,,,,,,,,,,,,38.5
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Abyss Decos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

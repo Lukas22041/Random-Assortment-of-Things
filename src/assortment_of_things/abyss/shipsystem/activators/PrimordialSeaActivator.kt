@@ -162,10 +162,14 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
 
             }
 
+            //Hides that square that appears around opposing ships
+            apparation.isForceHideFFOverlay = true
+
             if (MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius) {
                 apparation.isPhased = false
                 apparation.setShipSystemDisabled(false)
                 apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 1f)
+                apparation.alphaMult = 1f
             }
             else {
                 apparation.isPhased = true
@@ -391,8 +395,8 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
             systemGlow.angle = ship.facing - 90
             systemGlow.renderAtCenter(ship.location.x, ship.location.y)
 
-            doJitter(systemGlow, 0.5f, lastJitterLocations, 5, 2f)
-            doJitter(systemGlow, 0.3f, lastSecondJitterLocations, 5, 12f)
+            doJitter(ship, systemGlow, 0.5f, lastJitterLocations, 5, 2f)
+            doJitter(ship, systemGlow, 0.3f, lastSecondJitterLocations, 5, 12f)
         }
 
         if (layer == CombatEngineLayers.BELOW_PLANETS) {
@@ -421,6 +425,9 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
             renderShips()
         }
 
+        if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER) {
+            renderApparationGlow()
+        }
 
         endStencil()
 
@@ -437,19 +444,66 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
 
             if (!apparation.isAlive) continue
 
-            apparation.spriteAPI.alphaMult = 1f
-            apparation.spriteAPI.color = Color(255, 255, 255, 255)
-            apparation.spriteAPI.renderAtCenter(apparation.location.x, apparation.location.y)
-            apparation.spriteAPI.color = Color(0, 0 ,0 ,0)
+            var inRange = MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius
+
+            if (inRange) {
+                apparation.spriteAPI.color = Color(255, 255, 255, 255)
+            }
+            else {
+                apparation.spriteAPI.color = Color(255, 255, 255, 255)
+                apparation.spriteAPI.renderAtCenter(apparation.location.x, apparation.location.y)
+                apparation.spriteAPI.color = Color(0, 0 ,0 ,0)
+            }
+
+
+
+
 
             /*for (weapon in apparation.allWeapons) {
                 weapon.sprite?.alphaMult = 1f
                 weapon.sprite?.renderAtCenter(weapon.location.x, weapon.location.y)
+                weapon.sprite?.alphaMult = 0f
             }*/
         }
     }
 
-    fun doJitter(sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>, jitterCount: Int, jitterMaxRange: Float) {
+    fun renderApparationGlow() {
+
+        var range = activator.getCurrentRange()
+
+        for (apparation in apparations ) {
+
+            var inRange = MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius
+
+            apparation.spriteAPI.color = Color(255, 255, 255, 255)
+            var apparationGlow =
+                Global.getSettings().getAndLoadSprite(apparation.hullSpec.spriteName.replace(".png", "") + "_glow.png")
+
+            var lastLocation = apparation.customData.get("rat_apparation_glow_locations") as ArrayList<Vector2f>?
+            if (lastLocation == null) {
+                lastLocation = ArrayList<Vector2f>()
+                apparation.setCustomData("rat_apparation_glow_locations", lastLocation)
+            }
+
+            apparationGlow.setAdditiveBlend()
+            apparationGlow.alphaMult = (0.5f + (0.2f * fader.brightness))
+            apparationGlow.angle = apparation.facing - 90
+            apparationGlow.renderAtCenter(apparation.location.x, apparation.location.y)
+
+            apparationGlow.setAdditiveBlend()
+            apparationGlow.alphaMult = ((0.3f * fader.brightness))
+            apparationGlow.angle = apparation.facing - 90
+            apparationGlow.renderAtCenter(apparation.location.x, apparation.location.y)
+
+            doJitter(apparation, apparationGlow, 0.5f, lastLocation, 5, 3f)
+
+            if (!inRange) {
+                apparation.spriteAPI.color = Color(0, 0, 0, 0)
+            }
+        }
+    }
+
+    fun doJitter(ship: ShipAPI, sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>, jitterCount: Int, jitterMaxRange: Float) {
 
         var paused = Global.getCombatEngine().isPaused
         var jitterAlpha = 0.2f
