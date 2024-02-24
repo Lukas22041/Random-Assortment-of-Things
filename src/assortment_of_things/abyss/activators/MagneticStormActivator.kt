@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.activators
 
-import activators.CombatActivator
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.DamagingProjectileAPI
@@ -8,9 +7,10 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.combat.CombatUtils
+import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
 
-class MagneticStormActivator(ship: ShipAPI?) : CombatActivator(ship) {
+class MagneticStormActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
 
     var id = "rat_magnetic_storm"
 
@@ -36,8 +36,8 @@ class MagneticStormActivator(ship: ShipAPI?) : CombatActivator(ship) {
         return 15f
     }
 
-    override fun advance(amount: Float) {
-        super.advance(amount)
+    override fun advance(amount: Float, isPaused: Boolean) {
+        super.advance(amount, isPaused)
 
         if (!ship.isAlive || ship.isHulk) return
 

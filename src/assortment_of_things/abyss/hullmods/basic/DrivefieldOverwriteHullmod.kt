@@ -1,7 +1,5 @@
 package assortment_of_things.abyss.hullmods.basic
 
-import activators.ActivatorManager
-import assortment_of_things.abyss.activators.ParticleStreamActivator
 import assortment_of_things.abyss.hullmods.BaseAlteration
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI

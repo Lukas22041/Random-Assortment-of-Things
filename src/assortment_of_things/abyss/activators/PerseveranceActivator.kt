@@ -1,13 +1,13 @@
 package assortment_of_things.abyss.activators
 
-import activators.CombatActivator
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipCommand
 import com.fs.starfarer.api.util.IntervalUtil
+import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
 
-class PerseveranceActivator(ship: ShipAPI?) : CombatActivator(ship) {
+class PerseveranceActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
 
     var id = "rat_perseverance"
 
@@ -32,8 +32,8 @@ class PerseveranceActivator(ship: ShipAPI?) : CombatActivator(ship) {
         return 15f
     }
 
-    override fun advance(amount: Float) {
-        super.advance(amount)
+    override fun advance(amount: Float, isPaused: Boolean) {
+        super.advance(amount, isPaused)
 
         if (!ship.isAlive || ship.isHulk) return
 

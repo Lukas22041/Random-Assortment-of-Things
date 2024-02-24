@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.hullmods.fightersystems
 
-import activators.ActivatorManager
 import assortment_of_things.abyss.activators.MagneticStormActivator
 import assortment_of_things.abyss.activators.PlasmaticShieldActivator
 import assortment_of_things.abyss.activators.TemporalAssaultActivator
@@ -12,6 +11,7 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.combat.CombatUtils
+import org.magiclib.subsystems.MagicSubsystemsManager
 
 class PlasmaticShieldHullmod : BaseAlteration() {
 
@@ -21,7 +21,7 @@ class PlasmaticShieldHullmod : BaseAlteration() {
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         super.applyEffectsToFighterSpawnedByShip(fighter, ship, id)
         if (fighter == null) return
-        ActivatorManager.addActivator(fighter, PlasmaticShieldActivator(fighter))
+        MagicSubsystemsManager.addSubsystemToShip(fighter, PlasmaticShieldActivator(fighter))
     }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {

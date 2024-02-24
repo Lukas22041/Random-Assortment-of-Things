@@ -1,6 +1,5 @@
 package assortment_of_things.relics.skills
 
-import activators.ActivatorManager
 import assortment_of_things.campaign.skills.RATBaseShipSkill
 import assortment_of_things.relics.activators.HyperlinkActivator
 import com.fs.starfarer.api.Global
@@ -12,6 +11,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.magiclib.subsystems.MagicSubsystemsManager
 
 class HyperlinkSkill : RATBaseShipSkill() {
 
@@ -59,8 +59,8 @@ class HyperlinkScript() : AdvanceableListener {
             var playership = engine.ships.find { it.fleetMember?.captain != null && it.fleetMember?.captain == player } ?: return
             var aiship = engine.ships.find { it.fleetMember?.captain != null && it.fleetMember.captain.isAICore && it.fleetMember.captain.aiCoreId == "rat_neuro_core" } ?: return
 
-            ActivatorManager.addActivator(playership, HyperlinkActivator(playership, aiship))
-            ActivatorManager.addActivator(aiship, HyperlinkActivator(aiship, playership))
+            MagicSubsystemsManager.addSubsystemToShip(playership, HyperlinkActivator(playership, aiship))
+            MagicSubsystemsManager.addSubsystemToShip(aiship, HyperlinkActivator(aiship, playership))
 
             applied = true
         }

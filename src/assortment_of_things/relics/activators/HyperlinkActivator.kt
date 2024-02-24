@@ -1,7 +1,5 @@
 package assortment_of_things.relics.activators
 
-import activators.ActivatorManager
-import activators.CombatActivator
 import assortment_of_things.combat.TemporarySlowdown
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.ShipAPI
@@ -11,9 +9,11 @@ import com.fs.starfarer.api.mission.FleetSide
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lwjgl.input.Mouse
+import org.magiclib.subsystems.MagicSubsystem
+import org.magiclib.subsystems.MagicSubsystemsManager
 import java.awt.Color
 
-class HyperlinkActivator(ship: ShipAPI, var other: ShipAPI) : CombatActivator(ship) {
+class HyperlinkActivator(ship: ShipAPI, var other: ShipAPI) : MagicSubsystem(ship) {
 
     var color = Color(255, 125, 0)
     var id = "rat_hyperlink"
@@ -41,7 +41,7 @@ class HyperlinkActivator(ship: ShipAPI, var other: ShipAPI) : CombatActivator(sh
     }
 
 
-    override fun advance(amount: Float) {
+    override fun advance(amount: Float, isPaused: Boolean) {
 
     }
 
@@ -60,7 +60,7 @@ class HyperlinkActivator(ship: ShipAPI, var other: ShipAPI) : CombatActivator(sh
         var engine = Global.getCombatEngine()
         var playerShip = engine.playerShip
 
-        var otherActivator = ActivatorManager.getActivators(other)?.find { it::class.java == HyperlinkActivator::class.java }
+        var otherActivator = MagicSubsystemsManager.getSubsystemsForShipCopy(other)?.find { it::class.java == HyperlinkActivator::class.java }
         if (otherActivator != null) {
             otherActivator.setState(State.COOLDOWN)
 

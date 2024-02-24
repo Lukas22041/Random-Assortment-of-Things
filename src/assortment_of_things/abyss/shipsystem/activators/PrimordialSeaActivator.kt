@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.shipsystem.activators
 
-import activators.CombatActivator
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.getAndLoadSprite
@@ -19,11 +18,12 @@ import com.fs.starfarer.combat.entities.Ship
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
+class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
 
     var deactivated = false
@@ -136,7 +136,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : CombatActivator(ship) {
         apparations.clear()
     }
 
-    override fun advance(amount: Float) {
+    override fun advance(amount: Float, isPaused: Boolean) {
 
         var range = getCurrentRange()
         for (apparation in apparations) {

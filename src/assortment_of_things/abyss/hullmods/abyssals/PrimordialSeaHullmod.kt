@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
-import activators.ActivatorManager
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.activators.PerseveranceActivator
 import assortment_of_things.abyss.boss.GenesisBossScript
@@ -23,6 +22,7 @@ import lunalib.lunaExtensions.addLunaElement
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
+import org.magiclib.subsystems.MagicSubsystemsManager
 
 class PrimordialSeaHullmod : BaseHullMod() {
 
@@ -39,7 +39,7 @@ class PrimordialSeaHullmod : BaseHullMod() {
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)
         if (ship == null) return
-        ActivatorManager.addActivator(ship, PrimordialSeaActivator(ship))
+        MagicSubsystemsManager.addSubsystemToShip(ship, PrimordialSeaActivator(ship))
     }
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?,  width: Float, isForModSpec: Boolean) {
 

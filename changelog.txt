@@ -1,4 +1,9 @@
-RAT Version 2.0.8 Part 1
+Version 2.0.9 Part 1
+
+-> Replaced every usage of Combat Activators with the new Magiclib Subsystems. 
+-> Requires the latest version of MagicLib.
+
+Version 2.0.8 Part 1
 NOT SAVE COMPATIBLE WITH PRIOR VERSIONS
 
 -> Fixed storms not appearing in the abyss.
@@ -11,7 +16,7 @@ NOT SAVE COMPATIBLE WITH PRIOR VERSIONS
 
 
 
-RAT Version 2.0.7 Part 1
+Version 2.0.7 Part 1
 Not Save compatible with versions prior to 2.0.0
 
 -> Fixed the Abyssal Depths having the wrong background colors in combat.
@@ -20,14 +25,14 @@ Not Save compatible with versions prior to 2.0.0
 
 
 
-RAT Version 2.0.6 Part 1
+Version 2.0.6 Part 1
 Not Save compatible with versions prior to 2.0.0
 
 -> Reverted a change in the code of the tylos shipsystem, maybe fixing a specific crash when viewing the tactical map.
 
 
 
-RAT Version 2.0.5 Part 1
+Version 2.0.5 Part 1
 Not Save compatible with versions prior to 2.0.0
 
 -> Fixed Starsystems being able to spawn to close to the vanilla abyss
@@ -35,7 +40,7 @@ Not Save compatible with versions prior to 2.0.0
 
 
 
-RAT Version 2.0.4 Part 1
+Version 2.0.4 Part 1
 Not Save compatible with versions prior to 2.0.0
 
 -> Fixed crash when entering sim with 2nd tylos state
@@ -43,21 +48,21 @@ Not Save compatible with versions prior to 2.0.0
 
 
 
-RAT Version 2.0.3 Part 1
+Version 2.0.3 Part 1
 Not Save compatible with versions prior to 2.0.0
 
 -> Fixes a crash that happens when running out of fuel in hyperspace
 
 
 
-RAT Version 2.0.2 Part 1
+Version 2.0.2 Part 1
 Not Save compatible with versions prior to 2.0.0
 
 -> Fixed a Crash on Mac & Linux if you had the minimap enabled
 
 
 
-RAT Version 2.0.1 Part 1
+Version 2.0.1 Part 1
 Not Save compatible with versions prior to 2.0.0
 
 -> Fixed Crash when interacting with some entities.

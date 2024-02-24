@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
-import activators.ActivatorManager
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.activators.PerseveranceActivator
 import assortment_of_things.abyss.boss.GenesisBossScript

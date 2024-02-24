@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.activators
 
-import activators.CombatActivator
 import assortment_of_things.combat.PidController
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.DamageType
@@ -14,9 +13,10 @@ import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.combat.CombatUtils
 import org.magiclib.kotlin.setAlpha
+import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
 
-class PlasmaticShieldActivator(ship: ShipAPI?) : CombatActivator(ship) {
+class PlasmaticShieldActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
 
     var id = "rat_plasmatic_shield"
 
@@ -43,8 +43,8 @@ class PlasmaticShieldActivator(ship: ShipAPI?) : CombatActivator(ship) {
         return 15f
     }
 
-    override fun advance(amount: Float) {
-        super.advance(amount)
+    override fun advance(amount: Float, isPaused: Boolean) {
+        super.advance(amount, isPaused)
 
         if (!ship.isAlive || ship.isHulk)
         {
