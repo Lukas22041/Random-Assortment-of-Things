@@ -206,7 +206,6 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
     fun spawnApparation() : ShipAPI{
         var variant = Global.getSettings().getVariant("rat_genesis_frigate_support_Standard")
         var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
-        var obfManager = manager as CombatFleetManager
 
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
         var apparation = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, Vector2f(100000f, 100000f), ship!!.facing)
@@ -215,11 +214,10 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
         apparation!!.captain = ship.captain
 
-        if (apparation is Ship) {
-            obfManager.removeDeployed(apparation as Ship, true)
-        }
+        manager.removeDeployed(apparation, true)
 
         apparation.isPhased = true
+        apparation.isHoldFireOneFrame = true
         //apparation.alphaMult = 0f
        // apparation.spriteAPI.alphaMult = 0f
         apparation.spriteAPI.color = Color(0, 0 ,0 ,0)
@@ -486,12 +484,12 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
             }
 
             apparationGlow.setAdditiveBlend()
-            apparationGlow.alphaMult = (0.5f + (0.2f * fader.brightness))
+            apparationGlow.alphaMult = (0.8f + (0.2f * fader.brightness))
             apparationGlow.angle = apparation.facing - 90
             apparationGlow.renderAtCenter(apparation.location.x, apparation.location.y)
 
             apparationGlow.setAdditiveBlend()
-            apparationGlow.alphaMult = ((0.3f * fader.brightness))
+            apparationGlow.alphaMult = ((0.5f * fader.brightness))
             apparationGlow.angle = apparation.facing - 90
             apparationGlow.renderAtCenter(apparation.location.x, apparation.location.y)
 

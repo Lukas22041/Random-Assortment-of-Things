@@ -116,6 +116,45 @@
       "arc": 130,
       "angle": 135,
       "locations": [-50, 29]
+    },
+    {
+      "id": "LB 1",
+      "size": "LARGE",
+      "type": "LAUNCH_BAY",
+      "mount": "HIDDEN",
+      "arc": 360,
+      "angle": 0,
+      "locations": [
+        4.5, 57.5,
+        -4, 69.5,
+        -12, 80.5
+      ]
+    },
+    {
+      "id": "LB 2",
+      "size": "LARGE",
+      "type": "LAUNCH_BAY",
+      "mount": "HIDDEN",
+      "arc": 360,
+      "angle": 0,
+      "locations": [
+        3, -60,
+        -4, -68,
+        -11, -78
+      ]
+    },
+    {
+      "id": "LB 3",
+      "size": "LARGE",
+      "type": "LAUNCH_BAY",
+      "mount": "HIDDEN",
+      "arc": 360,
+      "angle": 0,
+      "locations": [
+        -68.5, 0.5,
+        -83, 0.5,
+        -98.5, -0
+      ]
     }
   ],
   "engineSlots": [

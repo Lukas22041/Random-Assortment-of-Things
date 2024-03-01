@@ -3,7 +3,6 @@ package assortment_of_things.exotech.hullmods
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 class ApheidasHullmod : BaseHullMod() {
@@ -13,7 +12,7 @@ class ApheidasHullmod : BaseHullMod() {
         stats!!.empDamageTakenMult.modifyMult(id, 0.75f)
         stats.weaponDamageTakenMult.modifyMult(id, 0.75f)
 
-        stats.energyWeaponRangeBonus.modifyPercent(id, 33f)
+        stats.energyWeaponRangeBonus.modifyPercent(id, 20f)
         //stats.missileWeaponRangeBonus.modifyPercent(id, 33f)
 
         stats.weaponTurnRateBonus.modifyMult(id, 2f)
@@ -23,23 +22,55 @@ class ApheidasHullmod : BaseHullMod() {
         stats.recoilPerShotMult.modifyMult(id, 0.5f)
         stats.maxRecoilMult.modifyMult(id, 0.5f)
 
-        stats.maxSpeed.modifyMult(id, 0f)
+        //stats.maxSpeed.modifyMult(id, 0f)
     }
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
 
-        ship!!.velocity.set(Vector2f(ship!!.velocity.x * 0.99f, ship.velocity.y * 0.99f))
-        ship!!.giveCommand(ShipCommand.TURN_RIGHT, null, 0);
+       /* ship!!.velocity.set(Vector2f(ship!!.velocity.x * 0.99f, ship.velocity.y * 0.99f))
+        ship!!.giveCommand(ShipCommand.TURN_RIGHT, null, 0);*/
 
-        ship.blockCommandForOneFrame(ShipCommand.VENT_FLUX)
+
+        ship!!.blockCommandForOneFrame(ShipCommand.VENT_FLUX)
         ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_VENT)
 
-        ship.blockCommandForOneFrame(ShipCommand.ACCELERATE)
+       /* ship.blockCommandForOneFrame(ShipCommand.ACCELERATE)
         ship.blockCommandForOneFrame(ShipCommand.TURN_LEFT)
         ship.blockCommandForOneFrame(ShipCommand.DECELERATE)
         ship.blockCommandForOneFrame(ShipCommand.STRAFE_LEFT)
-        ship.blockCommandForOneFrame(ShipCommand.STRAFE_RIGHT)
+        ship.blockCommandForOneFrame(ShipCommand.STRAFE_RIGHT)*/
+
+        var contr = ship!!.engineController
+        var engines = contr.shipEngines
+        var botLeftEngine = engines[1]
+        var botRightEngine = engines[0]
+        var topRightEngine = engines[2]
+        var topLeftEngine = engines[3]
+
+        for (engine in engines) {
+            contr.setFlameLevel(engine.engineSlot, 0.7f)
+            contr.extendWidthFraction.shift(this, 0f, 0f, 0f, 0f)
+        }
+
+        if (contr.isAccelerating) {
+            contr.setFlameLevel(botLeftEngine.engineSlot, 1f)
+            contr.setFlameLevel(botRightEngine.engineSlot, 1f)
+        }
+        else if (contr.isAcceleratingBackwards) {
+            contr.setFlameLevel(topLeftEngine.engineSlot, 0.95f)
+            contr.setFlameLevel(topRightEngine.engineSlot, 0.95f)
+        }
+        else if (contr.isStrafingLeft && !contr.isStrafingRight) {
+            contr.setFlameLevel(topRightEngine.engineSlot, 0.95f)
+            contr.setFlameLevel(botRightEngine.engineSlot, 0.95f)
+        }
+        else if (contr.isStrafingRight && !contr.isStrafingLeft) {
+            contr.setFlameLevel(topLeftEngine.engineSlot, 0.95f)
+            contr.setFlameLevel(botLeftEngine.engineSlot, 0.95f)
+        }
+
     }
+
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
         tooltip!!.addSpacer(10f)
@@ -50,14 +81,14 @@ class ApheidasHullmod : BaseHullMod() {
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("Build with this unique nature in mind, the platform comes without any propulsion. " +
-                "Instead it is equipped with a unique targeting system that extends the range of energy weapons by 33%% while also having much improved weapon targeting and turn rate.\n\n" +
+        tooltip.addPara("Build with this unique nature in mind, the platform comes with limited propulsion. " +
+                "In exchange it is equipped with a unique targeting system that extends the range of energy weapons by 20%% while also having much improved weapon targeting and turn rate.\n\n" +
                 "Missile weapons restore 20%% (or atleast 1) of their missiles per deployment. ", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "propulsion", "33%", "weapon targeting and turn rate", "20%", "1")
+            Misc.getTextColor(), Misc.getHighlightColor(), "propulsion", "20%", "weapon targeting and turn rate", "20%", "1")
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("Due to not having systems like engine components exposed to the outer hull, the platform is able to have more consistent plating covering the ship, increasing the EMP resistance by 25%%.", 0f,
+        tooltip.addPara("Due to having a limited amount of engine components exposed to the outer hull, the platform is able to have more consistent plating covering the ship, increasing the EMP resistance by 25%%.", 0f,
                 Misc.getTextColor(), Misc.getHighlightColor(), "25%")
     }
 

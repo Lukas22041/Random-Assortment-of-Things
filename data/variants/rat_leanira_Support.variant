@@ -1,11 +1,12 @@
 {
     "displayName": "Support",
-    "fluxCapacitors": 30,
+    "fluxCapacitors": 25,
     "fluxVents": 6,
     "goalVariant": true,
     "hullId": "rat_leanira",
     "hullMods": [
         "hardenedshieldemitter",
+        "rat_controller",
         "targetingunit",
     ],
     "permaMods": [],
@@ -48,6 +49,7 @@
     "wings": [
         "rat_dawnblade_wing",
         "rat_protostar_wing",
+        "rat_nightblade_wing",
     ],
     "modules": [
         {"APHEIDAS_SLOT": "rat_apheidas_Support"},

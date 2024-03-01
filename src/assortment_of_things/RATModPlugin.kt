@@ -11,6 +11,7 @@ import assortment_of_things.abyss.scripts.*
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
+import assortment_of_things.campaign.scripts.AICoreDropReplacerScript
 import assortment_of_things.campaign.scripts.ApplyRATControllerToPlayerFleet
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
@@ -39,6 +40,7 @@ import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import org.lazywizard.lazylib.MathUtils
+import assortment_of_things.campaign.scripts.AICoreReplacerScript
 import java.util.*
 
 
@@ -105,6 +107,8 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
+        Global.getSector().addTransientScript(AICoreReplacerScript())
+        Global.getSector().addTransientListener(AICoreDropReplacerScript())
         Global.getSector().addTransientScript(ApplyRATControllerToPlayerFleet())
 
         initFrontiers()

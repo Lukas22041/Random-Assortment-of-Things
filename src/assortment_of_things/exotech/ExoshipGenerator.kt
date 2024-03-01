@@ -64,7 +64,7 @@ object ExoshipGenerator {
 
         if (name == "Daybreak") {
 
-            cargo.addCommodity("rat_exo_processor", 2f)
+            //cargo.addCommodity("rat_exo_processor", 2f)
 
             cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_autonomous_bays"), 1f)
             cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_overtuned_targeting"), 3f)

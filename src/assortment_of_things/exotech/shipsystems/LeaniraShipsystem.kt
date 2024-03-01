@@ -44,7 +44,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
         if (platform != null) {
             var level = (platform!!.hitpoints - 0f) / (platform!!.maxHitpoints - 0f)
             level = 1 - level
-            var mult = 1 + (2 * level)
+            var mult = 1 + (1 * level)
 
             ship!!.system.cooldown = ship!!.system.specAPI.getCooldown(ship!!.mutableStats) * mult
 
@@ -79,7 +79,8 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             platform!!.setCustomData("rat_apheidas_parent", ship)
             ship!!.setCustomData("rat_leanira_children", platform)
 
-            Global.getCombatEngine().removeEntity(platform)
+            Global.getCombatEngine().getFleetManager(ship!!.owner).removeDeployed(platform, true)
+            //Global.getCombatEngine().removeEntity(platform)
            // Global.getCombatEngine().getFleetManager(ship!!.owner).addToReserves(platform!!.fleetMember)
 
         }
