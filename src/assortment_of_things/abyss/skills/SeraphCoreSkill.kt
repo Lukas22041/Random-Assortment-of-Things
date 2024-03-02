@@ -26,16 +26,18 @@ class SeraphCoreSkill : RATBaseShipSkill() {
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?,  skill: SkillSpecAPI?, info: TooltipMakerAPI?,  width: Float) {
         info!!.addSpacer(2f)
 
-        info.addPara("The ship recovers a small amount of hull whenever it deals damage to opponents hull or armor, up to 50%% of its maximum hitpoints per deployment.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info.addPara("The ship recovers a small amount of hull whenever it deals damage to opponents hull or armor, up to 50%% of its maximum hitpoints per deployment.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "recovers", "hull or armor", "50%")
 
         info.addSpacer(10f)
 
         info.addPara("The ship deals up to 25%% more non-missile damage based on how much damage it has dealt towards hull or armor so far. The maximum damage is 75000/125000/175000 based on hullsize. " +
-                "", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "25%", "non-missile", "hull or armor", "75000", "125000", "175000")
 
         info.addSpacer(10f)
 
-        info.addPara("If the maximum is reached, the ship gains the zero-flux speed boost for the remainder of the deployment.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info.addPara("If the maximum is reached, the ship gains the zero-flux speed boost for the remainder of the deployment.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "zero-flux")
 
         info.addSpacer(10f)
 

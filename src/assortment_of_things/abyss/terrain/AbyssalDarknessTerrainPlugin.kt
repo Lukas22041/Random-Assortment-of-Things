@@ -33,8 +33,11 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
     @Transient
     var halo: SpriteAPI? = null
 
+    @Transient
     var font: LazyFont? = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
 
+    @Transient
+    var fractureText:LazyFont.DrawableString = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
 
 
     var id = Misc.genUID()
@@ -65,6 +68,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+            fractureText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
         if (halo == null) {
@@ -128,11 +132,13 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             if ((destination is StarSystemAPI && !destination.isEnteredByPlayer)) continue
 
             var destinationName = destination.nameWithNoType ?: continue
-            var text = font!!.createText(destinationName, AbyssUtils.ABYSS_COLOR.setAlpha((225 * alphaMult).toInt()), 400f * factor)
-            text.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            text.blendSrc = GL11.GL_SRC_ALPHA
+            fractureText.text = destinationName
+            fractureText.fontSize = 400f * factor
+            fractureText.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+            fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            fractureText.blendSrc = GL11.GL_SRC_ALPHA
 
-            text.drawOutlined(fracture.location.x * factor - (text.width / 2), (fracture.location.y + 600) * factor + (text.height))
+            fractureText.drawOutlined(fracture.location.x * factor - (fractureText.width / 2), (fracture.location.y + 600) * factor + (fractureText.height))
 
         }
     }
@@ -141,6 +147,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         super.renderOnRadar(radarCenter, factor, alphaMult)
 
         var system = AbyssUtils.getSystemData(entity.starSystem) ?: return
+
 
         if (halo == null) {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
@@ -205,6 +212,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+            fractureText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
         for (fracture in system.system.customEntities) {
@@ -219,10 +227,12 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             if ((destination is StarSystemAPI && !destination.isEnteredByPlayer)) continue
 
             var destinationName = destination.nameWithNoType ?: continue
-            var text = font!!.createText(destinationName, AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt()), 800f * factor)
-            text.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            text.blendSrc = GL11.GL_SRC_ALPHA
-            text.drawOutlined((fracture.location.x - radarCenter.x) * factor - (text.width / 2), (fracture.location.y - radarCenter.y + 800) * factor + (text.height))
+            fractureText.text = destinationName
+            fractureText.fontSize = 800f * factor
+            fractureText.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+            fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            fractureText.blendSrc = GL11.GL_SRC_ALPHA
+            fractureText.drawOutlined((fracture.location.x - radarCenter.x) * factor - (fractureText.width / 2), (fracture.location.y - radarCenter.y + 800) * factor + (fractureText.height))
         }
     }
 

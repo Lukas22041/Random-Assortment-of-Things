@@ -15,4 +15,4 @@ Partnership Deed,rat_exo_deed,,,,500000,1000,1,,graphics/icons/cargo/rat_exo_dee
 #Other,,,,,,,,,,,,,,,
 Artifact,rat_artifact,,Artifact,,50000,1000,1,,graphics/icons/rat_empty.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ArtifactItem,,"An ancient artifact that can be integrated into a fleet to provide additional benefits. Only one can be active at a time. More information will be provided via the ""Artifacts"" intel tab (located in the ""Personal"" section) when integrating for the first time.",5000
 ,,,,,,,,,,,,,,,
-AI Core Special,rat_ai_core_special,,,0,25000,1000,0,,,ui_chip_pickup,ui_modspec_drop,assortment_of_things.campaign.items.AICoreSpecialItemPlugin,,,700
+AI Core Special,rat_ai_core_special,,,0,25000,1000,1,,,ui_chip_pickup,ui_modspec_drop,assortment_of_things.campaign.items.AICoreSpecialItemPlugin,,,700

@@ -2,7 +2,7 @@
 	"id":"rat_hyperlink",
 	"governingAptitude":"technology",
 	"elite":true,
-	"scope":"SHIP_FIGHTERS", 
+	"scope":"PILOTED_SHIP", 
 	"effectGroups":[
 		{
 			"requiredSkillLevel":1,

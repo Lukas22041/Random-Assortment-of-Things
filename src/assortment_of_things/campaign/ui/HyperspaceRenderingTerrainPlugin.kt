@@ -3,15 +3,10 @@ package assortment_of_things.campaign.ui
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
-import com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo
-import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.StarGenDataSpec
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.ui.Fonts
-import com.fs.starfarer.api.util.Misc
-import lunalib.lunaExtensions.getCustomEntitiesWithType
 import org.lazywizard.lazylib.ui.LazyFont
-import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.bounty.ui.drawOutlined
@@ -21,21 +16,27 @@ import java.util.*
 
 class HyperspaceRenderingTerrainPlugin : BaseTerrain() {
 
+    @Transient
     var font: LazyFont? = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+
+    @Transient
+    var fractureText:LazyFont.DrawableString = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
 
     override fun renderOnMapAbove(factor: Float, alphaMult: Float) {
         super.renderOnMapAbove(factor, alphaMult)
 
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+            fractureText = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
         var fracture = AbyssUtils.getAbyssData().hyperspaceFracture
         if (fracture != null) {
-            var text = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt()), 800f * factor)
-            text.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            text.blendSrc = GL11.GL_SRC_ALPHA
-            text.drawOutlined(fracture.location.x * factor - (text.width / 2), (fracture.location.y + 700) * factor + (text.height))
+            fractureText.fontSize = 800f * factor
+            fractureText.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+            fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            fractureText.blendSrc = GL11.GL_SRC_ALPHA
+            fractureText.drawOutlined(fracture.location.x * factor - (fractureText.width / 2), (fracture.location.y + 700) * factor + (fractureText.height))
         }
 
        /* val font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
@@ -93,14 +94,16 @@ class HyperspaceRenderingTerrainPlugin : BaseTerrain() {
 
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+            fractureText = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
         var fracture = AbyssUtils.getAbyssData().hyperspaceFracture
         if (fracture != null) {
-            var text = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt()), 800f * factor)
-            text.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            text.blendSrc = GL11.GL_SRC_ALPHA
-            text.drawOutlined((fracture.location.x - radarCenter!!.x) * factor - (text.width / 2), (fracture.location.y + 1000 - radarCenter.y) * factor + (text.height))
+            fractureText.fontSize = 800f * factor
+            fractureText.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+            fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            fractureText.blendSrc = GL11.GL_SRC_ALPHA
+            fractureText.drawOutlined((fracture.location.x - radarCenter!!.x) * factor - (fractureText.width / 2), (fracture.location.y + 1000 - radarCenter.y) * factor + (fractureText.height))
         }
     }
 
