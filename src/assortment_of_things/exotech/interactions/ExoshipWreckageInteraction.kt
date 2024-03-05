@@ -69,10 +69,10 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
         createOption("Loot Wreckage") {
             var loot = Global.getFactory().createCargo(true)
 
-            loot.addCommodity("rat_exo_processor", 1f)
+            //loot.addCommodity("rat_exo_processor", 1f)
+            loot.addSpecial(SpecialItemData("rat_ai_core_special", "rat_exo_processor"), 1f)
+
             loot.addSpecial(SpecialItemData("rat_alteration_install", "rat_autonomous_bays"), 1f)
-            loot.addSpecial(SpecialItemData("rat_alteration_install", "rat_overtuned_targeting"), 2f)
-            loot.addSpecial(SpecialItemData("rat_alteration_install", "rat_unstopable_force"), 2f)
 
             loot.addWeapons("rat_hyper_javelin", 1)
             loot.addWeapons("rat_hyper_dart", 2)
