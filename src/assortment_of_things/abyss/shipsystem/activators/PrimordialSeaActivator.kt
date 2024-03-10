@@ -118,8 +118,15 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         GraphicLibEffects.CustomRippleDistortion(ship!!.location, Vector2f(), ship.collisionRadius + 500, 75f, true, ship!!.facing, 360f, 1f
             ,0.5f, 3f, 1f, 1f, 1f)
 
-        for (i in 0 until 6) {
-            var apparation = spawnApparation()
+
+        var variants = mutableListOf<String>()
+
+        variants += generateSequence { "rat_genesis_frigate_support_Standard" }.take(3)
+        variants += generateSequence { "rat_genesis_frigate_attack_Standard" }.take(3)
+
+        for (variant in variants) {
+
+            var apparation = spawnApparation(variant)
             apparations.add(apparation)
         }
 
@@ -165,9 +172,9 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
             //Hides that square that appears around opposing ships
             apparation.isForceHideFFOverlay = true
 
-            if (MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius) {
+            if (MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius && state != State.OUT ) {
                 apparation.isPhased = false
-                apparation.setShipSystemDisabled(false)
+                apparation.isHoldFire = false
                 apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 1f)
                 apparation.alphaMult = 1f
             }
@@ -175,8 +182,12 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
                 apparation.isPhased = true
                 apparation.isHoldFireOneFrame = true
                 apparation.allWeapons.forEach { it.stopFiring() }
-                apparation.setShipSystemDisabled(true)
                 apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 0f)
+
+                for (weapon in apparation.allWeapons) {
+                    weapon.stopFiring()
+                    weapon.setRemainingCooldownTo(0.5f)
+                }
             }
         }
 
@@ -203,8 +214,8 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         return maxRange * effectLevel * effectLevel
     }
 
-    fun spawnApparation() : ShipAPI{
-        var variant = Global.getSettings().getVariant("rat_genesis_frigate_support_Standard")
+    fun spawnApparation(variantId: String) : ShipAPI{
+        var variant = Global.getSettings().getVariant(variantId)
         var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
 
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
@@ -214,10 +225,18 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
         apparation!!.captain = ship.captain
 
+      /*  apparation.isPhased = true
+        apparation.isHoldFireOneFrame = true
+        apparation.isHoldFire = true
+
+        for (weapon in apparation.allWeapons) {
+            weapon.stopFiring()
+            weapon.setForceNoFireOneFrame(true)
+            weapon.setRemainingCooldownTo(0.3f)
+        }
+*/
         manager.removeDeployed(apparation, true)
 
-        apparation.isPhased = true
-        apparation.isHoldFireOneFrame = true
         //apparation.alphaMult = 0f
        // apparation.spriteAPI.alphaMult = 0f
         apparation.spriteAPI.color = Color(0, 0 ,0 ,0)
@@ -227,16 +246,23 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         //Might be needed to hide bars on fighters, not sure
         //apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_prim_sea", 0f)
 
+        Global.getCombatEngine().addEntity(apparation)
+
         var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 1600f))
         loc = findClearLocation(apparation, loc)
         apparation.location.set(loc)
 
-        Global.getCombatEngine().addEntity(apparation)
 
         apparation.captain.setPersonality(Personalities.RECKLESS)
         apparation.shipAI = Global.getSettings().createDefaultShipAI(apparation, ShipAIConfig().apply { alwaysStrafeOffensively = true })
         apparation.shipAI.forceCircumstanceEvaluation()
         apparation.captain.setPersonality(Personalities.RECKLESS)
+
+        //Randomise range a little so that constructs dont all orbit on the same radius as eachother.
+        var rangeMod = MathUtils.getRandomNumberInRange(0.85f, 1.15f)
+        apparation.mutableStats.energyWeaponRangeBonus.modifyMult("apparation_range", rangeMod)
+        apparation.mutableStats.ballisticWeaponRangeBonus.modifyMult("apparation_range", rangeMod)
+        apparation.mutableStats.missileWeaponRangeBonus.modifyMult("apparation_range", rangeMod)
 
 
 

@@ -1,0 +1,106 @@
+{
+  "hullName": "Primordial Attack Construct",
+  "hullId": "rat_genesis_frigate_attack",
+  "hullSize": "FIGHTER",
+  "spriteName": "graphics/ships/special/rat_genesis_frigate2.png",
+  "style": "RAT_PRIMORDIAL",
+  "height": 130,
+  "width": 130,
+  "center": [65, 65],
+  "collisionRadius": 70,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 66.5,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_genesis_construct_hullmod",
+    "no_weapon_flux"
+  ],
+  "builtInWeapons": {
+    "WS0001": "rat_genesis_construct_flamer",
+    "WS0002": "rat_genesis_construct_mote",
+    "WS0003": "rat_genesis_construct_mote"
+  },
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "MEDIUM",
+      "type": "BUILT_IN",
+      "mount": "HARDPOINT",
+      "arc": 0,
+      "angle": 0,
+      "locations": [35, -0]
+    },
+    {
+      "id": "WS0002",
+      "size": "SMALL",
+      "type": "BUILT_IN",
+      "mount": "HARDPOINT",
+      "arc": 0,
+      "angle": 79.5,
+      "locations": [20, 29.5]
+    },
+    {
+      "id": "WS0003",
+      "size": "SMALL",
+      "type": "BUILT_IN",
+      "mount": "HARDPOINT",
+      "arc": 0,
+      "angle": -79.5,
+      "locations": [20, -29.5]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-9, -27],
+      "length": 25,
+      "width": 20,
+      "angle": -175,
+      "contrailSize": 30,
+      "style": "PRIMORDIAL_CONSTRUCT"
+    },
+    {
+      "location": [-9, 27],
+      "length": 25,
+      "width": 20,
+      "angle": 175,
+      "contrailSize": 30,
+      "style": "PRIMORDIAL_CONSTRUCT"
+    }
+  ],
+  "bounds": [
+    -53.5, 2,
+    -38.5, 5,
+    -51, 9.5,
+    -31, 13.5,
+    -18, 23,
+    -18, 25,
+    20, 52,
+    20, 44,
+    16.5, 37,
+    17.5, 29,
+    31.5, 32.5,
+    40, 25.5,
+    55, 21.5,
+    49.5, 17,
+    42.5, 11,
+    42.5, 5,
+    35, 2,
+    35, -2,
+    42.5, -5,
+    42.5, -11,
+    49.5, -17,
+    55, -21.5,
+    40, -25.5,
+    31.5, -32.5,
+    17.5, -29,
+    16.5, -37,
+    20, -44,
+    20, -52,
+    -18, -25,
+    -18, -23,
+    -31, -13.5,
+    -51, -9.5,
+    -38.5, -5,
+    -53.5, -2
+  ]
+}

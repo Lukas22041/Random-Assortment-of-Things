@@ -1,0 +1,24 @@
+{
+  "variantId": "rat_genesis_frigate_attack_Standard",
+  "hullId": "rat_genesis_frigate_attack",
+  "displayName": "Attack",
+  "goalVariant": false,
+  "fluxCapacitors": 0,
+  "fluxVents": 0,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [],
+  "weaponGroups": [
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0001": "rat_genesis_construct_flamer",
+        "WS0002": "rat_genesis_construct_mote",
+        "WS0003": "rat_genesis_construct_mote"
+      }
+    }
+  ],
+  "modules": [],
+  "wings": []
+}

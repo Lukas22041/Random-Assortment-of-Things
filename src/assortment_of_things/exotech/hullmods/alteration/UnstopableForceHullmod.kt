@@ -42,8 +42,7 @@ class UnstopableForceHullmod : BaseAlteration() {
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
-        var ai = AICoreOfficerPluginImpl().createPerson(Commodities.GAMMA_CORE, Factions.PLAYER, Random())
-        fighter!!.captain = ai
+
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?, isForModSpec: Boolean): Boolean {
