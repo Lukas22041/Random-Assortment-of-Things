@@ -17,8 +17,10 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager
 import com.fs.starfarer.combat.CombatEngine
 import data.campaign.procgen.themes.RemnantThemeGenerator
+import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.makeImportant
+import java.awt.Color
 import java.util.Random
 
 class FinalAbyssType : BaseAbyssType() {
@@ -91,6 +93,25 @@ class FinalAbyssType : BaseAbyssType() {
 
 
         return fleet
+    }
+
+    override fun setupColor(data: AbyssSystemData) {
+        var h = MathUtils.getRandomNumberInRange(0.925f, 1f)
+        if (Random().nextFloat() > 0.5f) h = MathUtils.getRandomNumberInRange(0.0f, 0.035f)
+        var color = Color.getHSBColor(h, 1f, 1f)
+
+        var depth = data.depth
+        var s = 1f
+        var b = 1f
+        b = when (depth) {
+            AbyssDepth.Shallow ->  0.3f
+            AbyssDepth.Deep -> 0.2f
+        }
+
+        var darkColor = Color.getHSBColor(h, s, b)
+
+        data.baseColor = color
+        data.baseDarkColor = darkColor
     }
 
     class PrimFleetScript(var fleet: CampaignFleetAPI, var token: SectorEntityToken) : EveryFrameScript {

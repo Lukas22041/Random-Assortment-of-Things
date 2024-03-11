@@ -151,6 +151,7 @@ class RATModPlugin : BaseModPlugin() {
       //  Global.getSector().playerFleet.fleetData.officersCopy.random().person.stats.setSkillLevel("rat_auto_engineer", 1f)*/
 
 
+        Global.getSector().addTransientScript(DisableTransverseScript())
         Global.getSector().addTransientScript(AbyssAmbientSoundPlayer())
         Global.getSector().addTransientListener(AbyssDoctrineListener(false))
         Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)

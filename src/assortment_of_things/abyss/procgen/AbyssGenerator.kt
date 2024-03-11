@@ -59,7 +59,7 @@ class  AbyssGenerator {
         var twilightSystem = Global.getSector().createStarSystem("Sea of Twilight")
         twilightSystem.name = "Sea of Twilight"
         abyssData.rootSystem = twilightSystem
-        AbyssProcgen.setupSystem(twilightSystem, 0.35f, AbyssDepth.Shallow)
+        AbyssProcgen.setupSystem(twilightSystem, DefaultAbyssType(), AbyssDepth.Shallow)
         var systemData = AbyssUtils.getSystemData(twilightSystem)
         AbyssProcgen.addAbyssParticles(twilightSystem)
 
@@ -193,7 +193,7 @@ class  AbyssGenerator {
                isFinal = true
            }
 
-           AbyssProcgen.setupSystem(system, type.getTerrainFraction(), depth, isFinal)
+           AbyssProcgen.setupSystem(system, type, depth, isFinal)
            var systemData = AbyssUtils.getSystemData(system)
 
            if (step == systemsOnMainBranch || step == systemsOnMainBranch - 1 || step == systemsOnMainBranch - 2) {
@@ -285,7 +285,7 @@ class  AbyssGenerator {
 
                 var system = Global.getSector().createStarSystem(name)
                 system.name = name
-                AbyssProcgen.setupSystem(system, type.getTerrainFraction(), depth)
+                AbyssProcgen.setupSystem(system, type, depth)
                 var systemData = AbyssUtils.getSystemData(system)
 
                 system.addTag(branchTag)

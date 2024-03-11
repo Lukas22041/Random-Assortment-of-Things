@@ -3,6 +3,7 @@ package assortment_of_things.abyss.terrain
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssBorder
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
+import assortment_of_things.misc.addPara
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
@@ -203,6 +204,11 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
         tooltip!!.addPara("Due to a unique interaction between the fleets sensors and the abyssal matter, it is possible to detect structures at further distances than normal, but without any identifying data. " +
                 "" +
                 "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "detect", "structures")
+
+        tooltip.addSpacer(5f)
+
+        tooltip.addPara("The Fracture Jump ability can not be used due to spatial interference. However the unique bending of the surrounding space allows the exit of this location by flying outside of its perceived bounds. This area is marked by a circle on the tripads map.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Fracture Jump", "exit", "map")
 
         if (isInClouds(player))
         {

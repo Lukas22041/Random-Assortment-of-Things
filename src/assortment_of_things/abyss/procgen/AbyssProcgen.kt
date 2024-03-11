@@ -18,8 +18,6 @@ import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
-import com.fs.starfarer.api.impl.campaign.terrain.BaseTiledTerrain
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
@@ -35,7 +33,7 @@ object AbyssProcgen {
 
 
     //Sets up important tags, like "HIDDEN" to prevent the systems from being used by other mods.
-    fun setupSystem(system: StarSystemAPI, fraction: Float, depth: AbyssDepth, final: Boolean = false)
+    fun setupSystem(system: StarSystemAPI, type: BaseAbyssType, depth: AbyssDepth, final: Boolean = false)
     {
         var data = AbyssUtils.getSystemData(system)
         data.depth = depth
@@ -64,7 +62,9 @@ object AbyssProcgen {
         system.addCustomEntity("${system.name}", "", "rat_abyss_border", Factions.NEUTRAL)
 
 
-        var color = generateAbyssColor(system, depth)
+        type.setupColor(data)
+        system.lightColor = data.getDarkColor()
+
         if (!final) {
             var warper = AbyssBackgroundWarper(system, 8, 0.33f)
             warper.overwriteColor = data.getDarkColor()
@@ -72,7 +72,7 @@ object AbyssProcgen {
 
 
 
-        AbyssProcgen.generateAbyssTerrain(system, fraction)
+        AbyssProcgen.generateAbyssTerrain(system, type.getTerrainFraction())
         AbyssProcgen.generateAbyssDarkness(system)
 
         if (final) {
@@ -223,45 +223,6 @@ object AbyssProcgen {
         plugin.radius = radius
         plugin.color = color
         return plugin
-    }
-
-    fun generateAbyssColor(system: StarSystemAPI, depth: AbyssDepth){
-
-        var data = AbyssUtils.getSystemData(system)
-
-
-
-
-
-        var h = MathUtils.getRandomNumberInRange(0.925f, 1f)
-        if (Random().nextFloat() > 0.5f) h = MathUtils.getRandomNumberInRange(0.0f, 0.035f)
-        //var h = MathUtils.getRandomNumberInRange(0.935f, 1f)
-       // if (Random().nextFloat() > 0.75f) h = MathUtils.getRandomNumberInRange(0.0f, 0.025f)
-
-        var lightColor = Color.WHITE
-
-        var s = 1f
-        var b = 1f
-        when (depth) {
-            AbyssDepth.Shallow -> {
-                lightColor = Color.gray
-                b = 0.3f
-            }
-            AbyssDepth.Deep -> {
-                lightColor = Color.DARK_GRAY
-                b = 0.2f
-            }
-        }
-
-        system.lightColor = lightColor
-
-        var color = Color.getHSBColor(h, 1f, 1f)
-        data.baseColor = color
-
-        var darkColor = Color.getHSBColor(h, s, b)
-        data.baseDarkColor = darkColor
-
-        system.lightColor = darkColor
     }
 
     fun generateCircularPoints(system: StarSystemAPI) {
