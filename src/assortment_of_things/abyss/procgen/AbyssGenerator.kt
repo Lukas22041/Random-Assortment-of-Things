@@ -3,6 +3,7 @@ package assortment_of_things.abyss.procgen
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.intel.map.AbyssMap
+import assortment_of_things.abyss.procgen.types.DarkAbyssType
 import assortment_of_things.abyss.procgen.types.DefaultAbyssType
 import assortment_of_things.abyss.procgen.types.FinalAbyssType
 import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
@@ -39,7 +40,7 @@ class  AbyssGenerator {
 
     var usedNames = ArrayList<String>()
 
-    var types = listOf<BaseAbyssType>(DefaultAbyssType(), IonicStormAbyssType())
+    var types = listOf<BaseAbyssType>(DefaultAbyssType(), IonicStormAbyssType(), DarkAbyssType())
 
     fun beginGeneration() {
 
@@ -85,7 +86,7 @@ class  AbyssGenerator {
         //Generate Slots for the twilight system.
         AbyssProcgen.generateCircularPoints(twilightSystem)
         AbyssProcgen.generateMinorPoints(twilightSystem)
-        AbyssEntityGenerator.generatePhotospheres(twilightSystem, 1, 1f)
+        AbyssEntityGenerator.generateMajorLightsource(twilightSystem, 1, 1f)
         AbyssEntityGenerator.generateMinorEntity(twilightSystem, "rat_abyss_transmitter", 1, 1f)
         AbyssEntityGenerator.generateMinorEntityWithDefenses(twilightSystem, "rat_abyss_fabrication", 1, 0.9f, 0.7f)
         AbyssEntityGenerator.generateMinorEntity(twilightSystem, "rat_abyss_drone", 3, 0.8f)
@@ -356,13 +357,13 @@ class  AbyssGenerator {
             AbyssEntityGenerator.generateMinorEntityWithDefenses(system.system, "rat_abyss_research", 1, 1f, 1f)
         }
 
-        var spheresInDeep = systems.filter { it.depth == AbyssDepth.Deep }.flatMap { it.system.customEntities.filter { it.customEntitySpec.id == "rat_abyss_photosphere" } }.toMutableList()
-        if (spheresInDeep.isNotEmpty()) {
-            var photosphere = spheresInDeep.random()
-            spheresInDeep.remove(photosphere)
+        var majorLightSourceInDeep = systems.filter { it.depth == AbyssDepth.Deep }.flatMap { it.system.customEntities.filter { it.hasTag("rat_abyss_major_lightsource") } }.toMutableList()
+        if (majorLightSourceInDeep.isNotEmpty()) {
+            var majorLightsource = majorLightSourceInDeep.random()
+            majorLightSourceInDeep.remove(majorLightsource)
 
-            var entity = AbyssEntityGenerator.spawnMinorEntity(photosphere.starSystem, "rat_sariel_outpost")
-            entity.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(600f, 700f), 120f)
+            var entity = AbyssEntityGenerator.spawnMinorEntity(majorLightsource.starSystem, "rat_sariel_outpost")
+            entity.setCircularOrbit(majorLightsource, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(600f, 700f), 120f)
         }
 
 

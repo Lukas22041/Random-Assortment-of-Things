@@ -1,8 +1,6 @@
 package assortment_of_things.abyss.procgen.types
 
 import assortment_of_things.abyss.procgen.*
-import com.fs.starfarer.api.Global
-import com.fs.starfarer.combat.CombatEngine
 import org.lazywizard.lazylib.MathUtils
 import java.awt.Color
 import java.util.*
@@ -33,7 +31,7 @@ class DefaultAbyssType : BaseAbyssType() {
 
 
 
-        AbyssEntityGenerator.generatePhotospheres(system, 3, 0.8f)
+        AbyssEntityGenerator.generateMajorLightsource(system, 3, 0.8f)
         AbyssEntityGenerator.generateMinorEntity(system, "rat_abyss_transmitter", 1, 1f)
         AbyssEntityGenerator.generateMinorEntityWithDefenses(system, "rat_abyss_fabrication", fabricators, 0.9f, 0.7f)
         AbyssEntityGenerator.generateMinorEntity(system, "rat_abyss_drone", 4, 0.6f)

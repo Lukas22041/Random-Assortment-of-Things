@@ -4,6 +4,7 @@ import assortment_of_things.scripts.RATBaseCampaignEventListener
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.FleetEncounterContextPlugin
+import com.fs.starfarer.api.campaign.SpecialItemData
 
 class AbyssCampaignListener : RATBaseCampaignEventListener() {
 
@@ -11,7 +12,7 @@ class AbyssCampaignListener : RATBaseCampaignEventListener() {
         super.reportEncounterLootGenerated(plugin, loot)
 
         if (plugin?.loser?.faction?.id == "rat_abyssals_primordials") {
-            loot?.addCommodity(RATItems.PRIMORDIAL, 1f)
+            loot?.addSpecial(SpecialItemData("rat_ai_core_special", RATItems.PRIMORDIAL), 1f)
         }
 
     }

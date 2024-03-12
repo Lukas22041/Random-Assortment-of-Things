@@ -58,6 +58,10 @@ class CombatHandler : EveryFrameCombatPlugin
 
                 Global.getCombatEngine().addLayeredRenderingPlugin(AbyssCombatHueApplier(color, depth, darkness!!))
 
+                if (data.system.hasTag(IonicStormAbyssType.STORM_TAG)) {
+                    Global.getCombatEngine().addLayeredRenderingPlugin(IonicStormCombatRenderer())
+                }
+
                 ResetBackgroundScript.resetBackground = true
 
                /* if (darkness!!.containsEntity(Global.getSector().playerFleet)) {

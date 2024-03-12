@@ -186,7 +186,7 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
     }
 
     override fun advanceImpl(amount: Float) {
-        super.advanceImpl(amount)
+        //super.advanceImpl(amount) Causes issues for some reason when the abyss generates after save load? weird stuff
         applyFleetEffects()
     }
 

@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.entities.AbyssalBeacon
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.entities.AbyssalLightsource
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
@@ -68,7 +69,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
-            fractureText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+            fractureText = font!!.createText("", system.getColor().setAlpha(255), 800f)
         }
 
         if (halo == null) {
@@ -123,6 +124,30 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             halo!!.renderAtCenter(loc.x, loc.y)
         }
 
+        var beacons = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalBeacon }
+        for (source in beacons)
+        {
+            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
+            var loc = Vector2f(source.location.x * factor, source.location.y * factor)
+
+            var plugin = source.customPlugin as AbyssalBeacon
+            var radius = plugin.radius * factor
+
+            halo!!.alphaMult = 0.6f * alphaMult
+            halo!!.color = color.setAlpha(75)
+
+            halo!!.setSize(radius / 20, radius / 20)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+
+            halo!!.alphaMult = 0.8f * alphaMult
+            halo!!.color = color.setAlpha(55)
+
+            halo!!.setSize(radius / 2, radius / 2)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+        }
+
         for (fracture in system.system.customEntities) {
             if (fracture.customEntitySpec.id != "rat_abyss_fracture") continue
             var plugin = fracture.customPlugin
@@ -134,7 +159,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             var destinationName = destination.nameWithNoType ?: continue
             fractureText.text = destinationName
             fractureText.fontSize = 400f * factor
-            fractureText.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+            fractureText.baseColor = system.getColor().setAlpha((255 * alphaMult).toInt())
             fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
             fractureText.blendSrc = GL11.GL_SRC_ALPHA
 
@@ -183,6 +208,34 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             halo!!.renderAtCenter(loc.x, loc.y)
         }
 
+        var beacons = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalBeacon }
+
+        for (beacon in beacons)
+        {
+            if (MathUtils.getDistance(beacon.location, radarCenter) >= radarRadius) continue
+
+            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
+            var loc = Vector2f((beacon.location.x - radarCenter.x) * factor, (beacon.location.y - radarCenter.y) * factor)
+
+            var plugin = beacon.customPlugin as AbyssalBeacon
+            var radius = plugin.radius * factor
+
+            halo!!.alphaMult = 1f * alphaMult
+            halo!!.color = color.setAlpha(75)
+
+            halo!!.setSize(radius / 20, radius / 20)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+
+            halo!!.alphaMult = 1f * alphaMult
+            halo!!.color = color.setAlpha(55)
+
+            halo!!.setSize(radius / 2, radius / 2)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(loc.x, loc.y)
+        }
+
+
         var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLightsource }
         for (source in lightsources)
         {
@@ -212,7 +265,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
-            fractureText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+            fractureText = font!!.createText("", system.getColor().setAlpha(255), 800f)
         }
 
         for (fracture in system.system.customEntities) {
@@ -229,7 +282,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             var destinationName = destination.nameWithNoType ?: continue
             fractureText.text = destinationName
             fractureText.fontSize = 800f * factor
-            fractureText.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+            fractureText.baseColor = system.getColor().setAlpha((255 * alphaMult).toInt())
             fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
             fractureText.blendSrc = GL11.GL_SRC_ALPHA
             fractureText.drawOutlined((fracture.location.x - radarCenter.x) * factor - (fractureText.width / 2), (fracture.location.y - radarCenter.y + 800) * factor + (fractureText.height))
@@ -271,6 +324,17 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         for (source in photospheres)
         {
             var plugin = source.customPlugin as AbyssalPhotosphere
+            if (MathUtils.getDistance(source.location, point) < (plugin.radius / 10) - 10)
+            {
+                withinLight = true
+                break
+            }
+        }
+
+        var beacons = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalBeacon }
+        for (source in beacons)
+        {
+            var plugin = source.customPlugin as AbyssalBeacon
             if (MathUtils.getDistance(source.location, point) < (plugin.radius / 10) - 10)
             {
                 withinLight = true

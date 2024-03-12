@@ -25,7 +25,7 @@ Charybdis Segment,rat_charybdis_tail,,Abyssal,,0,15000,2000,10000,12500,700,165,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Genesis,rat_genesis,Protector,Primordial,rat_spatial_disturbance,40,18000,1400,16000,30000,1400,250,,45,50,50,15,25,2400,FRONT,,270,0.4,0.9,,,0,0,220,600,8,50,8,1000000,3,50,600,0.25,75,75,,,,,,,HIDE_IN_CODEX,"auto_rec, no_autofit",,0.4,2,3,,510
 Primordial Support Construct,rat_genesis_frigate_support,,Primordial,,0,1000,150,5000,2500,1000,0,,120,160,140,40,100,250,NONE,,,,,,,0,0,0,0,1,40,11,0,5,10,360,0.25,0,0,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX",,,0.5,2,2,,3101
-Primordial Attack Construct,rat_genesis_frigate_attack,,Primordial,,0,1000,150,5000,2500,1000,0,,150,170,150,45,110,250,NONE,,,,,,,0,0,0,0,1,40,11,0,5,10,360,0.25,0,0,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX",,,0.5,2,2,,3101
+Primordial Attack Construct,rat_genesis_frigate_attack,,Primordial,,0,1400,175,5000,2500,1000,0,,150,170,150,45,110,250,NONE,,,,,,,0,0,0,0,1,40,11,0,5,10,360,0.25,0,0,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX",,,0.5,2,2,,3101
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#Good,#Good,,,,,,,,,,,,,,,,,,,,,,

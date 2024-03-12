@@ -1,10 +1,13 @@
 package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.entities.AbyssalBeacon
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
+import assortment_of_things.abyss.intel.event.DiscoveredBeacon
 import assortment_of_things.abyss.intel.event.DiscoveredPhotosphere
 import assortment_of_things.abyss.intel.event.SignificantEntityDiscoveredFactor
 import assortment_of_things.abyss.misc.AbyssTags
+import assortment_of_things.abyss.procgen.types.DarkAbyssType
 import assortment_of_things.abyss.scripts.AbyssDistantIconScript
 import assortment_of_things.abyss.scripts.AbyssalDefendingFleetManager
 import assortment_of_things.misc.randomAndRemove
@@ -17,13 +20,10 @@ import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
 import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
-import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
-import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.getSalvageSeed
 import java.util.*
 import kotlin.collections.ArrayList
@@ -104,7 +104,7 @@ object AbyssEntityGenerator {
         }
     }
 
-    fun generatePhotospheres(system: StarSystemAPI, max: Int, chanceToAddPer: Float, typePicker: WeightedRandomPicker<String>? = null) {
+    fun generateMajorLightsource(system: StarSystemAPI, max: Int, chanceToAddPer: Float, typePicker: WeightedRandomPicker<String>? = null) {
 
         var data = AbyssUtils.getSystemData(system)
         var first = true
@@ -116,15 +116,32 @@ object AbyssEntityGenerator {
             if (data.majorPoints.isEmpty()) return
             var pos = data.majorPoints.randomAndRemove()
 
-            var photosphere = system.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere", Factions.NEUTRAL)
-            photosphere.setLocation(pos.x, pos.y)
-            photosphere.radius = 100f
-            photosphere.addScript(DiscoveredPhotosphere(10, photosphere))
+            var lightsource: CustomCampaignEntityAPI? = null
+            if (system.hasTag(DarkAbyssType.DARK_TAG)) {
+                lightsource = system.addCustomEntity("rat_abyss_beacon_${Misc.genUID()}", "Abyssal Beacon", "rat_abyss_beacon", Factions.NEUTRAL)
+                lightsource.setLocation(pos.x, pos.y)
+                //lightsource.radius = 100f
+               lightsource.addScript(DiscoveredBeacon(10, lightsource))
 
-            var plugin = photosphere.customPlugin as AbyssalPhotosphere
-            // plugin.radius = 15000f
-            plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
-            plugin.color = data.getColor()
+                var plugin = lightsource.customPlugin as AbyssalBeacon
+                // plugin.radius = 15000f
+                plugin.extraRadius = MathUtils.getRandomNumberInRange(10000f, 11000f)
+                plugin.color = data.getColor()
+            }
+            else {
+                lightsource = system.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere", Factions.NEUTRAL)
+                lightsource.setLocation(pos.x, pos.y)
+                lightsource.radius = 100f
+                lightsource.addScript(DiscoveredPhotosphere(10, lightsource))
+
+                var plugin = lightsource.customPlugin as AbyssalPhotosphere
+                // plugin.radius = 15000f
+                plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
+                plugin.color = data.getColor()
+            }
+
+            lightsource.addTag("rat_abyss_major_lightsource")
+
 
             var picker = WeightedRandomPicker<String>()
             if (typePicker != null) {
@@ -154,7 +171,7 @@ object AbyssEntityGenerator {
                     var entityType = picker.pickAndRemove()
                     var entity = spawnMinorEntity(system, entityType)
 
-                    entity.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), orbit, days)
+                    entity.setCircularOrbit(lightsource, MathUtils.getRandomNumberInRange(0f, 360f), orbit, days)
                     added++
                 }
             }
@@ -164,16 +181,16 @@ object AbyssEntityGenerator {
                 var entityType = picker.pickAndRemove()
                 var entity = spawnMinorEntity(system, entityType)
 
-                entity.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(300f, 1000f), 90f)
+                entity.setCircularOrbit(lightsource, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(300f, 1000f), 90f)
             }
 
             var defenseChance = 0.75f
 
-            addDefenseFleetManager(photosphere, 2, defenseChance)
+            addDefenseFleetManager(lightsource, 2, defenseChance)
 
             if (data.depth == AbyssDepth.Deep) {
                 var token = system.addCustomEntity("rat_abyss_token${Misc.genUID()}", "", "rat_abyss_token", Factions.NEUTRAL)
-                token.setCircularOrbit(photosphere, 0f, 0f, 0f)
+                token.setCircularOrbit(lightsource, 0f, 0f, 0f)
 
                 token.radius = 1000f
                 token.addScript(object : EveryFrameScript {

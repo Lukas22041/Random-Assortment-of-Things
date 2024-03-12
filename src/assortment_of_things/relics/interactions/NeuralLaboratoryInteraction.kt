@@ -3,6 +3,7 @@ package assortment_of_things.relics.interactions
 import assortment_of_things.misc.RATInteractionPlugin
 import assortment_of_things.relics.items.cores.NeuroCore
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.loading.Description
@@ -101,7 +102,9 @@ class NeuralLaboratoryInteraction : RATInteractionPlugin() {
 
                     textPanel.addPara("\"Im glad to be of your assistance.\"")
 
-                    Global.getSector().playerFleet.cargo.addCommodity("rat_neuro_core", 1f)
+                    //Global.getSector().playerFleet.cargo.addCommodity("rat_neuro_core", 1f)
+                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_ai_core_special", "rat_neuro_core"), 1f)
+
                     AddRemoveCommodity.addCommodityGainText("rat_neuro_core", 1, textPanel)
 
                     createOption("Leave") {

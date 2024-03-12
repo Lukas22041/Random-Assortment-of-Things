@@ -143,7 +143,12 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         apparations.clear()
     }
 
+    override fun getAdvancesWhileDead(): Boolean {
+        return true
+    }
+
     override fun advance(amount: Float, isPaused: Boolean) {
+
 
         var range = getCurrentRange()
         for (apparation in apparations) {

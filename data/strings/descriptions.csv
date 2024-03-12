@@ -23,6 +23,8 @@ rat_military_outpost,CUSTOM,A small military outpost that doesnt appear on any s
 rat_sariel_outpost,CUSTOM,A small outpost suspended within the depths. Such structures have been used to accommodate those that stayed within the area for an extended period of time.  Scans indicate that there may be worthwhile remains within its docks.,,,,
 ,,,,,,
 rat_abyss_photosphere,CUSTOM,"This anomalous object appears to perform active fusion with abyssal matter gathered from around its vicinity. It doesnt appear to generate much heat or radiation, but emits a steady amount of light.",,,,
+rat_abyss_beacon,CUSTOM,"A manmade beacon to illuminate the depths of the abyss in areas devoid of photospheres or other sources of natural light. Unlike other sources, it is unable to produce a constant amount of light, making it less reliable for nearby operations, but still being a better solution than nothing at all.",,,,
+,,,,,,
 ,,,,,,
 rat_chronos_core,RESOURCE,"A core resembling that of an alpha-level ai. It appears heavily altered, though by what remains unknown, as the core refuses to respond to any such matter. It has a high affinity for time-manipulating machinery. ",,,,
 rat_cosmos_core,RESOURCE,"A core resembling that of an alpha-level ai. It appears heavily altered, though by what remains unknown, as the core refuses to respond to any such matter. It has a high affinity for space-bending mechanisms. ",,,,
