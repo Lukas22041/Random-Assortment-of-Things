@@ -18,14 +18,12 @@ class SpaceCoreSkill : RATBaseShipSkill() {
     }
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?,  skill: SkillSpecAPI?, info: TooltipMakerAPI?,  width: Float) {
-        info!!.addSpacer(2f)
 
-        info!!.addPara("The ships max speed and maneuverability is reduced by 25%% and the weapon fire rate is reduced by 20%%.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info.addSpacer(5f)
-        info!!.addPara("+15%% range for ballistic and energy weapons.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info!!.addPara("+10%% damage to ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info!!.addPara("-10%% shield, armor & hull damage taken.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("The ships max speed and maneuverability is reduced by 25%% and the weapon fire rate is reduced by 20%%. " +
+                "In exchange it gains an 15%% increase in ballistic and energy weapon range, 10%% increased damage towards ships, and takes 10%% less damage from all sources.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "25%", "20%", "15%", "10%", "10%")
         info.addSpacer(2f)
+
     }
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {

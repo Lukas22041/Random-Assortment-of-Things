@@ -22,9 +22,10 @@ class ExoProcessorSkill : RATBaseShipSkill() {
     }
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?,  skill: SkillSpecAPI?, info: TooltipMakerAPI?,  width: Float) {
-        info!!.addSpacer(2f)
 
-        info.addPara("+200%% more hardflux required to reach minimum phase-speed.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("Increases the required hardflux to reach the minimum phase speed by 200%%. " +
+                "This effectively reduces the maximum amount of speed reduction from phase coil stress, while also making it take longer to get to that point.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "200%", "speed reduction")
         //info.addPara("+25%% missile weapon ammo capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
        // info.addPara("+33%% missile speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 

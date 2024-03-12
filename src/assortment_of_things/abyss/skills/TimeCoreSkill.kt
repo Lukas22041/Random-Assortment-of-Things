@@ -24,12 +24,9 @@ class TimeCoreSkill : RATBaseShipSkill() {
     }
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?,  skill: SkillSpecAPI?, info: TooltipMakerAPI?,  width: Float) {
-        info!!.addSpacer(2f)
-        info.addPara("Ballistic & Energy base weapon ranges can no longer go beyond 500/600/700 units and weapon ranges are decreased by an additional 20%%.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info.addSpacer(5f)
-        info!!.addPara("+15%% timeflow", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info!!.addPara("+25%% maneuverability", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        info!!.addPara("+10 su/second to the ships max speed.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("The base range of ballistic & energy weapons can no longer go beyond 500/600/700 units and weapon ranges are decreased by an additional 20%%. " +
+                "In exchange the ship receives a 15%% increase in timeflow, 25%% more maneuverability and has its maximum speed increased by 10 units.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "ballistic", "energy", "500", "600", "700", "20%", "15%", "25%", "10")
         info.addSpacer(2f)
     }
 

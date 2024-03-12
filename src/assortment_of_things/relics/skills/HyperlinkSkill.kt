@@ -20,13 +20,16 @@ class HyperlinkSkill : RATBaseShipSkill() {
     }
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
-        info!!.addSpacer(2f)
 
-        info.addPara("This core is able to connect towards the human targets brainwaves. This allows it to perform communication with them in combat. Through this, if both the targets ship and this cores ship are deployed at the same time, they can swap control without delay.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info!!.addPara("This core is able to connect towards the human targets brainwaves. " +
+                "This allows it to perform communication with them in combat. " +
+                "Through this, if both the flagship and the ship that this core pilots are deployed at the same time, they can swap control without delay.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "flagship", "ship that this core pilots")
 
         info.addSpacer(5f)
 
-        info.addPara("The cooldown is 2.5/5/10/15 seconds based on the size of the ship that was switched to.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        info.addPara("The cooldown is 3/5/10/15 seconds based on the size of the ship that was switched to.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "3", "5", "10", "15")
 
 
         info!!.addSpacer(2f)

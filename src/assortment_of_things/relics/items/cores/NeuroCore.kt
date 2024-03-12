@@ -1,6 +1,8 @@
 package assortment_of_things.relics.items.cores
 
 import assortment_of_things.abyss.items.cores.AICoreUtil
+import assortment_of_things.exotech.skills.ExoProcessorSkill
+import assortment_of_things.relics.skills.HyperlinkSkill
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
 import com.fs.starfarer.api.characters.PersonAPI
@@ -8,6 +10,8 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.campaign.ids.Ranks
 import com.fs.starfarer.api.impl.campaign.ids.Skills
+import com.fs.starfarer.api.loading.Description
+import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import java.util.*
@@ -31,6 +35,7 @@ class NeuroCore : AICoreOfficerPlugin {
 
         var existingCore = Global.getSector().memoryWithoutUpdate.get("\$rat_neuro_core") as PersonAPI?
         if (existingCore != null) {
+            existingCore.setFaction(Factions.PLAYER)
             return existingCore
         }
 
@@ -59,16 +64,31 @@ class NeuroCore : AICoreOfficerPlugin {
         val opad = 10f
         val text = person!!.faction.baseUIColor
         val bg = person.faction.darkUIColor
+        val spec = Global.getSettings().getCommoditySpec(person.aiCoreId)
+        var desc = Global.getSettings().getDescription(spec.id, Description.Type.RESOURCE)
+
+        var skill = Global.getSettings().getSkillSpec("rat_hyperlink")
+
+        tooltip.addSpacer(10f)
+        var img = tooltip.beginImageWithText(spec.iconName, 64f)
+        img.addPara(desc.text1, 0f)
+
+        img.addSpacer(5f)
+
+        img.addPara("Automated Points Multiplier: ${(person.memoryWithoutUpdate.get(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT) as Float).toInt()}x", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "Automated Points Multiplier")
+
+        tooltip.addImageWithText(0f)
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("This experimental alpha-core is able to communicate with a human targets brainwaves directly, this allows it near instant communication in combat.", 0f)
+        tooltip.addSectionHeading("Signature Skill: ${skill.name}", Alignment.MID, 0f)
+        tooltip.addSpacer(10f)
 
-        tooltip.addSpacer(5f)
+        var skillImg = tooltip.beginImageWithText(skill.spriteName, 48f)
+        HyperlinkSkill().createCustomDescription(null, null, skillImg, tooltip.widthSoFar)
 
-        tooltip.addPara("Automated Points Multiplier: ${(person.memoryWithoutUpdate.get(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT) as Float).toInt()}x", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "Automated Points Multiplier")
-
+        tooltip.addImageWithText(0f)
 
         AICoreUtil.addPersonalityTooltip(person, tooltip)
     }

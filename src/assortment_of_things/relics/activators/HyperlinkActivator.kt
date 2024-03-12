@@ -65,7 +65,7 @@ class HyperlinkActivator(ship: ShipAPI, var other: ShipAPI) : MagicSubsystem(shi
             otherActivator.setState(State.COOLDOWN)
 
             var cooldown = when (other.hullSize) {
-                ShipAPI.HullSize.FRIGATE -> 2.5f
+                ShipAPI.HullSize.FRIGATE -> 3f
                 ShipAPI.HullSize.DESTROYER -> 5f
                 ShipAPI.HullSize.CRUISER -> 10f
                 ShipAPI.HullSize.CAPITAL_SHIP -> 15f
