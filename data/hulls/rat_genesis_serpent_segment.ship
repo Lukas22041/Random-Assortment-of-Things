@@ -14,7 +14,7 @@
   "builtInMods": [
     "reduced_explosion",
     "always_detaches",
-    "no_weapon_flux"
+    "rat_genesis_construct_hullmod"
   ],
   "weaponSlots": [
     {
@@ -25,6 +25,15 @@
       "arc": 90,
       "angle": 0,
       "locations": [-70, -0]
+    },
+    {
+      "id": "WS0001",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": 0,
+      "locations": [2.5, -0]
     }
   ],
   "engineSlots": [

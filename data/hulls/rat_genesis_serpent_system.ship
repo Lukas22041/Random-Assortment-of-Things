@@ -1,7 +1,7 @@
 {
   "hullName": "Primordial Serpent",
   "hullId": "rat_genesis_serpent_system",
-  "hullSize": "FRIGATE",
+  "hullSize": "DESTROYER",
   "spriteName": "graphics/ships/special/rat_genesis_serpent_system.png",
   "style": "RAT_PRIMORDIAL",
   "height": 220,
@@ -14,7 +14,7 @@
   "builtInMods": [
     "reduced_explosion",
     "always_detaches",
-    "no_weapon_flux"
+    "rat_genesis_construct_hullmod"
   ],
   "weaponSlots": [
     {
@@ -25,6 +25,15 @@
       "arc": 90,
       "angle": 0,
       "locations": [-126, 1]
+    },
+    {
+      "id": "WS0001",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 360,
+      "angle": 0,
+      "locations": [26.5, -0]
     }
   ],
   "engineSlots": [

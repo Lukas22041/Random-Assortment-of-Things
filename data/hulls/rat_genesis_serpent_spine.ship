@@ -14,7 +14,7 @@
   "builtInMods": [
     "reduced_explosion",
     "always_detaches",
-    "no_weapon_flux"
+    "rat_genesis_construct_hullmod"
   ],
   "weaponSlots": [
     {

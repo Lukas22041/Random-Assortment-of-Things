@@ -1,7 +1,7 @@
 {
   "hullName": "Primordial Serpent",
   "hullId": "rat_genesis_serpent_head",
-  "hullSize": "FRIGATE",
+  "hullSize": "CRUISER",
   "spriteName": "graphics/ships/special/rat_genesis_serpent_head.png",
   "style": "RAT_PRIMORDIAL",
   "height": 240,
@@ -12,8 +12,7 @@
   "shieldRadius": 110.5,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_genesis_serpent_hullmod",
-    "no_weapon_flux"
+    "rat_genesis_serpent_hullmod"
   ],
   "builtInWeapons": {
     "WS0001": "rat_genesis_construct_flamer_large"
@@ -63,6 +62,24 @@
       "arc": 25,
       "angle": 0,
       "locations": [33, -0]
+    },
+    {
+      "id": "WS0002",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 80,
+      "angle": 90,
+      "locations": [8, 53]
+    },
+    {
+      "id": "WS0003",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 80,
+      "angle": -90,
+      "locations": [8, -53]
     }
   ],
   "engineSlots": [

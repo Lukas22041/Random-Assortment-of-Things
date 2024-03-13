@@ -3,6 +3,9 @@ package assortment_of_things.abyss.hullmods.abyssals
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
+import com.fs.starfarer.api.impl.campaign.ids.HullMods
+import com.fs.starfarer.api.impl.campaign.ids.Skills
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.util.IntervalTracker
 import org.lazywizard.lazylib.MathUtils
@@ -30,11 +33,26 @@ class GenesisSerpentHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: HullSize, stats: MutableShipStatsAPI, id: String) {
         var member = stats.fleetMember
 
-        /*if (member != null && (member.captain == null || member?.captain.isDefault)) {
-            var core = PrimordialCore().createPerson(RATItems.PRIMORDIAL, AbyssUtils.FACTION_ID , Random())
-            member.captain = core
-            //Misc.setUnremovable(core, true)
-        }*/
+        if (!stats!!.variant.hasHullMod("rat_abyssal_conversion") && !stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats!!.variant.hasHullMod("rat_seraph_conversion")  && !stats.variant.hasHullMod(
+                HullMods.AUTOMATED)) {
+            stats.variant.addPermaMod(HullMods.AUTOMATED)
+        }
+
+        if (stats.fleetMember?.fleetData?.fleet?.faction?.id == "rat_abyssals_primordials") {
+            stats.crewLossMult.modifyMult("test", 0f)
+            stats.crLossPerSecondPercent.modifyMult("test", 0f)
+        } else {
+            if (Global.getSector()?.characterData?.person != null) {
+                if (Global.getSector().characterData.person!!.stats.hasSkill(Skills.AUTOMATED_SHIPS)
+                    || stats!!.variant.hasHullMod("rat_abyssal_conversion") ||
+                    stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion") || stats!!.variant.hasHullMod("rat_seraph_conversion")) {
+                    stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
+                }
+                else {
+                    stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
+                }
+            }
+        }
 
         stats.energyWeaponDamageMult.modifyMult(id, 1.2f)
         stats.energyRoFMult.modifyMult(id, 1.2f)
@@ -42,13 +60,15 @@ class GenesisSerpentHullmod : BaseHullMod() {
 
         stats!!.energyWeaponRangeBonus.modifyFlat(id, 200f)
 
-        stats.weaponDamageTakenMult.modifyMult(id, 0f)
-        stats.engineDamageTakenMult.modifyMult(id, 0f)
-        stats.empDamageTakenMult.modifyMult(id, 0f)
+        stats.weaponDamageTakenMult.modifyMult(id, 0.5f)
+        stats.engineDamageTakenMult.modifyMult(id, 0.5f)
+        stats.empDamageTakenMult.modifyMult(id, 0.5f)
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String) {
-
+        if (ship.shield != null) {
+            ship.shield.setRadius(ship.shieldRadiusEvenIfNoShield, "graphics/fx/rat_primordial_shields256.png", "graphics/fx/rat_primordial_shields256ring.png")
+        }
     }
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
