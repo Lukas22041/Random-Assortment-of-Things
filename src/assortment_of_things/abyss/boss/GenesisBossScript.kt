@@ -71,7 +71,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     override fun init(entity: CombatEntityAPI?) {
         ship.addListener(this)
 
-        Global.getCombatEngine().addPlugin(healthBar)
+       // Global.getCombatEngine().addPlugin(healthBar)
     }
 
     override fun cleanup() {

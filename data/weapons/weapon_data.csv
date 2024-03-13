@@ -43,6 +43,7 @@ Distortion Launcher,rat_genesis_motelauncher,,,,1000,,150,25,,,,,,,ENERGY,75,0,0
 Distortion Launcher (PD),rat_genesis_motelauncher_pd,,,,800,,100,40,,,,,,,FRAGMENTATION,50,0,0,2,2,0.3,30,30,1,1,,800,100,2,1000,,,"SYSTEM, PD, PD_ONLY, DO_NOT_AIM","no_sell, no_dealer, restricted",,Primordial,,Point Defense,,,,,%s on to nearby targets and can %s through missiles. ,Homes | pierce,,,TRUE,38.25
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Construct Flamer,rat_genesis_construct_flamer,3,,100000,400,,70,,3,60,,120,6,60,ENERGY,50,,,0.05,2,0.05,0,0,0,0,,500,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,General,,,,,,,,,,
+Construct Flamer Large,rat_genesis_construct_flamer_large,3,,100000,400,,140,,3,60,,,,,ENERGY,50,,,0.05,2,0.05,0,0,0,0,,500,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,General,,,,,,,,,,
 Construct Beam,rat_genesis_construct_beam,1,,0,800,500,,,0,20,,,,,ENERGY,0,0,0.5,0.25,1,1,,,,,3200,,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,Anti Armor,,,,,,,,,,906
 Construct Mote Launcher,rat_genesis_construct_mote,,,,800,,100,20,,,,,,,ENERGY,0,0,0,6,1,0.3,30,30,1,1,,300,10,3,1000,,,"SYSTEM, DO_NOT_AIM","no_sell, no_dealer, restricted",,Primordial,,Point Defense,,,,,,,,,TRUE,38.25
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

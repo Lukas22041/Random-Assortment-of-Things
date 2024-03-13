@@ -1,0 +1,61 @@
+{
+  "hullName": "Primordial Serpent",
+  "hullId": "rat_genesis_serpent_spine",
+  "hullSize": "FRIGATE",
+  "spriteName": "graphics/ships/special/rat_genesis_serpent_spine.png",
+  "style": "RAT_PRIMORDIAL",
+  "height": 100,
+  "width": 120,
+  "center": [60, 50],
+  "collisionRadius": 79.5,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 75,
+  "viewOffset": 0,
+  "builtInMods": [
+    "reduced_explosion",
+    "always_detaches",
+    "no_weapon_flux"
+  ],
+  "weaponSlots": [
+    {
+      "id": "SEGMENT",
+      "size": "LARGE",
+      "type": "STATION_MODULE",
+      "mount": "HARDPOINT",
+      "arc": 90,
+      "angle": 0,
+      "locations": [-70, -0]
+    }
+  ],
+  "engineSlots": [],
+  "bounds": [
+    34.5, -1.5,
+    38, -12,
+    38, -36,
+    34, -36,
+    35, -46,
+    27, -40,
+    23, -46,
+    19, -46,
+    21, -56.5,
+    18, -56.5,
+    10, -44,
+    5.5, -43.5,
+    -35, -12,
+    -37, -7,
+    -37, 7,
+    -35, 12,
+    5.5, 43.5,
+    10, 44,
+    18, 56.5,
+    21, 56.5,
+    19, 46,
+    23, 46,
+    27, 40,
+    35, 46,
+    34, 36,
+    38, 36,
+    38, 12,
+    34.5, 1.5
+  ]
+}

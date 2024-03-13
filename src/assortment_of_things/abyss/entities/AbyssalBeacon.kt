@@ -23,7 +23,7 @@ class AbyssalBeacon : BaseCustomEntityPlugin() {
     var radius = baseRadius + extraRadius
     var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
 
-    var fader = FaderUtil(1f, 15f, 15f, false, false)
+    var fader = FaderUtil(1f, 15f, MathUtils.getRandomNumberInRange(14f, 15f), false, false)
 
     @Transient
     var halo: SpriteAPI? = null
@@ -58,6 +58,8 @@ class AbyssalBeacon : BaseCustomEntityPlugin() {
     fun easeInOutSine(x: Float): Float {
         return (-(Math.cos(Math.PI * x) - 1) / 2).toFloat();
     }
+
+
 
     fun initSpritesIfNull()
     {

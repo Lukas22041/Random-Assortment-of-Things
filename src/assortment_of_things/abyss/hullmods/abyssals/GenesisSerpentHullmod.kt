@@ -1,25 +1,18 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
-import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.items.cores.officer.PrimordialCore
-import assortment_of_things.misc.addNegativePara
-import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
-import com.fs.starfarer.api.impl.campaign.ids.HullMods
-import com.fs.starfarer.api.impl.campaign.ids.Skills
-import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.util.IntervalTracker
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.VectorUtils
 import org.lazywizard.lazylib.combat.CombatUtils
-import java.util.*
 import kotlin.collections.ArrayList
 
-class CharybdisHullmod : BaseHullMod() {
+//Based on Code from ED-Shipyards, which is based on KT_SinuousBody by Sinosauropteryx in Kingdom of Terra
+
+class GenesisSerpentHullmod : BaseHullMod() {
 
     private val parentInterval = IntervalTracker(.15f, .25f)
     private val repulseInterval = IntervalTracker(.1f, .1f)
@@ -27,41 +20,31 @@ class CharybdisHullmod : BaseHullMod() {
     val ZEROFLUXSPEED_MOD = 0.30f
     val PROFILE_MOD = 150f
 
-    //Based on KT_SinuousBody by Sinosauropteryx (Kingdom of Terra mod)
-    val NUMBER_OF_SEGMENTS = 5
-    var RANGE = 70f // Flexibility constant. Range of movement of each segment.
-    var REALIGNMENT_CONSTANT = 1.5f // Elasticity constant. How quickly the body unfurls after being curled up.
-    private val SEGMENT_NAMES = arrayOf("SEGMENT1", "SEGMENT2", "SEGMENT3", "SEGMENT4", "SEGMENT5")
+    val NUMBER_OF_SEGMENTS = 4
+    var RANGE = 60f // Flexibility constant. Range of movement of each segment.
+    var REALIGNMENT_CONSTANT = 100f // Elasticity constant. How quickly the body unfurls after being curled up.
+    private val SEGMENT_NAMES = arrayOf("SEGMENT1", "SEGMENT2", "SEGMENT3", "SEGMENT4")
 
     //NOTE! Careful trying to optimize this code, things can easily stop working
 
     override fun applyEffectsBeforeShipCreation(hullSize: HullSize, stats: MutableShipStatsAPI, id: String) {
         var member = stats.fleetMember
 
-        if (Global.getSector()?.characterData?.person != null) {
-            if (Global.getSector().characterData.person!!.stats.hasSkill(Skills.AUTOMATED_SHIPS)
-                || stats!!.variant.hasHullMod("rat_abyssal_conversion") || stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion")) {
-                stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
-            }
-            else {
-                stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
-            }
-        }
-
-        if (!stats!!.variant.hasHullMod("rat_abyssal_conversion") && !stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats.variant.hasHullMod(HullMods.AUTOMATED))      {
-            stats.variant.addPermaMod(HullMods.AUTOMATED)
-
-            for (moduleString in stats.variant.moduleSlots) {
-                var module = stats.variant.getModuleVariant(moduleString)
-                module.addPermaMod(HullMods.AUTOMATED)
-            }
-        }
-
         /*if (member != null && (member.captain == null || member?.captain.isDefault)) {
             var core = PrimordialCore().createPerson(RATItems.PRIMORDIAL, AbyssUtils.FACTION_ID , Random())
             member.captain = core
             //Misc.setUnremovable(core, true)
         }*/
+
+        stats.energyWeaponDamageMult.modifyMult(id, 1.2f)
+        stats.energyRoFMult.modifyMult(id, 1.2f)
+        stats!!.energyWeaponFluxCostMod.modifyMult(id, 0.8f)
+
+        stats!!.energyWeaponRangeBonus.modifyFlat(id, 200f)
+
+        stats.weaponDamageTakenMult.modifyMult(id, 0f)
+        stats.engineDamageTakenMult.modifyMult(id, 0f)
+        stats.empDamageTakenMult.modifyMult(id, 0f)
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String) {
@@ -71,7 +54,7 @@ class CharybdisHullmod : BaseHullMod() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
-        tooltip!!.addNegativePara("Unfinished Content, it will not work correctly, if at all.")
+
     }
 
     override fun isApplicableToShip(ship: ShipAPI): Boolean {
@@ -134,7 +117,7 @@ class CharybdisHullmod : BaseHullMod() {
                 if (angleOffset > RANGE * 0.5) angle = normalizeAngle(RANGE * 0.5f + localMod)
 
                 // Tail returns to straight position, moving faster the more bent it is - spring approximation
-                angle -= angleOffset / RANGE * 0.5f * REALIGNMENT_CONSTANT
+                angle -= angleOffset / RANGE * 0.5f * (REALIGNMENT_CONSTANT * amount)
                 tw.ship!!.stationSlot.angle = angle
             } catch (ignored: Exception) {
                 // This covers the gap between when a segment and its dependents die
@@ -193,7 +176,7 @@ class CharybdisHullmod : BaseHullMod() {
                     }
 
                     // exempt both the front and the wagons
-                    if (near.hullSpec.baseHullId.startsWith("rat_charybdis")) {
+                    if (near.hullSpec.baseHullId.startsWith("rat_genesis_serpent")) {
                         continue
                     }
 
@@ -328,7 +311,7 @@ class CharybdisHullmod : BaseHullMod() {
         var previousSegment: TrainWagon? = null
 
         val isFirst: Boolean
-            get() = previousSegment != null && previousSegment!!.ship!!.hullSpec.baseHullId == "rat_charybdis_head"
+            get() = previousSegment != null && previousSegment!!.ship!!.hullSpec.baseHullId == "rat_genesis_serpent_head"
     }
 
 

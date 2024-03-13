@@ -1,6 +1,6 @@
 {
-  "variantId": "rat_charybdis_large_standard",
-  "hullId": "rat_charybdis_large",
+  "variantId": "rat_genesis_serpent_spine_Standard",
+  "hullId": "rat_genesis_serpent_spine",
   "displayName": "New Variant",
   "goalVariant": false,
   "fluxCapacitors": 0,

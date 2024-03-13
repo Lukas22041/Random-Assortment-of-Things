@@ -1,0 +1,35 @@
+{
+  "variantId": "rat_genesis_serpent_head_Standard",
+  "hullId": "rat_genesis_serpent_head",
+  "displayName": "New Variant",
+  "goalVariant": false,
+  "fluxCapacitors": 0,
+  "fluxVents": 0,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [],
+  "weaponGroups": [
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0001": "rat_genesis_construct_flamer_large"
+      }
+    }
+  ],
+  "modules": [
+    {
+      "SEGMENT1": "rat_genesis_serpent_spine_Standard"
+    },
+    {
+      "SEGMENT2": "rat_genesis_serpent_segment_Standard"
+    },
+    {
+      "SEGMENT3": "rat_genesis_serpent_spine_Standard"
+    },
+    {
+      "SEGMENT4": "rat_genesis_serpent_system_Standard"
+    }
+  ],
+  "wings": []
+}
