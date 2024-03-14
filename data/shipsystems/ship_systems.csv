@@ -13,9 +13,7 @@ Temporal Dash,rat_raguel_system,,,,,,,,3,0,0.1,2,0.1,0.5,,,,,,,,,,,,,graphics/ic
 Offensive Override,rat_sariel_system,,,,,,,,,,1,7.5,1,15,,,,,,,,,TRUE,,,,graphics/icons/hullsys/ammo_feeder.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Spatial Disturbance,rat_spatial_disturbance,,,,,,,,3,0.075,0.5,1,0.5,1.5,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
-,,,,,,,,,,,,,,,,,,,,,,,,,,,
-#Charybdis Phase,rat_charybdis_head_system,,,,,,,,,,0.5,10,0.5,10,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
-Primordial Shift,rat_charybdis_head_system,,,,,,,,,,0.5,,0.5,2,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,,TRUE,,graphics/icons/hullsys/phase_cloak.png
+Primordial Cloak,rat_primordial_cloak,,,,,,,,,,1.5,6,0.5,15,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,

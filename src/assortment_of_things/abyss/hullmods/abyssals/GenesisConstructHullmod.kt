@@ -30,12 +30,7 @@ class GenesisConstructHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
 
-        if (stats!!.fleetMember?.fleetData?.fleet?.faction?.id == "rat_abyssals_primordials") {
-            stats.crewLossMult.modifyMult("test", 0f)
-            stats.crLossPerSecondPercent.modifyMult("test", 0f)
-        }
-
-        stats.energyWeaponDamageMult.modifyMult(id, 1.2f)
+        stats!!.energyWeaponDamageMult.modifyMult(id, 1.2f)
         stats.energyRoFMult.modifyMult(id, 1.2f)
         stats!!.energyWeaponFluxCostMod.modifyMult(id, 0.8f)
 
@@ -55,6 +50,31 @@ class GenesisConstructHullmod : BaseHullMod() {
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?,  ship: ShipAPI?,   isForModSpec: Boolean): Boolean {
         return false
+    }
+
+    override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
+
+        var initialHeight = tooltip!!.heightSoFar
+        var particleSpawner = HullmodTooltipAbyssParticles(tooltip, initialHeight, AbyssUtils.GENESIS_COLOR.brighter())
+        var element = tooltip!!.addLunaElement(0f, 0f).apply {
+            advance { particleSpawner.advance(this, it) }
+            render { particleSpawner.renderBelow(this, it) }
+        }
+
+        tooltip!!.addSpacer(5f)
+        tooltip.addPara("" +
+                "Energy weapons operate at 20%% increased damage, fire rate, and lower flux cost. They also have an increased base range of 200 units." +
+                "\n\n" +
+                "The ships distorted grid takes 50%% less emp damage and has full immunity against abyssal storms and similar hazards." +
+                "",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "\"Primordial Sea\"","Energy weapons", "20%", "200", "2", "4", "6", "50%", "abyssal storms")
+
+
+
+        tooltip!!.addLunaElement(0f, 0f).apply {
+            render {particleSpawner.renderForeground(element, it)  }
+        }
     }
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {

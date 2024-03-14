@@ -61,12 +61,6 @@ class PrimordialSeaHullmod : BaseHullMod() {
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "Primordial Sea", "infinite", "frigates", "unable to operate", "controlled by the same core")
 
-
-        tooltip.addSpacer(10f)
-        tooltip.addSectionHeading("Ordnance", Alignment.MID, 0f)
-        tooltip.addSpacer(10f)
-
-
         tooltip!!.addLunaElement(0f, 0f).apply {
             render {particleSpawner.renderForeground(element, it)  }
         }

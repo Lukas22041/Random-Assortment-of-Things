@@ -12,7 +12,8 @@
   "shieldRadius": 110.5,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_genesis_serpent_hullmod"
+    "rat_genesis_serpent_hullmod",
+    "rat_genesis_construct_hullmod"
   ],
   "builtInWeapons": {
     "WS0001": "rat_genesis_construct_flamer_large"
