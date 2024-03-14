@@ -46,7 +46,7 @@ Construct Flamer,rat_genesis_construct_flamer,3,,,400,,70,,3,60,,120,6,60,ENERGY
 Construct Beam,rat_genesis_construct_beam,1,,,800,500,,,0,20,,,,,ENERGY,0,0,0.5,0.25,1,1,,,,,3200,,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,Anti Armor,,,,,,,,,,906
 Construct Mote Launcher,rat_genesis_construct_mote,,,,800,,100,20,,,,,,,ENERGY,0,0,0,6,1,0.3,30,30,1,1,,300,10,3,1000,,,"SYSTEM, DO_NOT_AIM","no_sell, no_dealer, restricted",,Primordial,,Point Defense,,,,,,,,,TRUE,38.25
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Primordial Flame,rat_genesis_construct_flamer_large,3,,,600,,140,5,3,60,,80,3.3333,80,ENERGY,40,,,0.05,2,0.05,0,0,0,0,,500,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,General,,,,,The maximum charges and the recharge rate of ammunition can not be increased.,charges | recharge rate,,,,
+Primordial Flame,rat_genesis_construct_flamer_large,3,,,600,,140,5,3,60,,80,3.3333,80,ENERGY,60,,,0.05,2,0.05,0,0,0,0,,500,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,General,,,,,The maximum charges and the recharge rate of ammunition can not be increased.,charges | recharge rate,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Abyss Decos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

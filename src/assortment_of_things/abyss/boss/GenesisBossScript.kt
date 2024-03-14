@@ -2,16 +2,24 @@ package assortment_of_things.abyss.boss
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalStormParticleManager
+import assortment_of_things.abyss.items.cores.officer.ChronosCore
+import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.StateBasedTimer
 import assortment_of_things.misc.getAndLoadSprite
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
+import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.graphics.SpriteAPI
+import com.fs.starfarer.api.impl.campaign.ids.Personalities
+import com.fs.starfarer.api.impl.combat.MineStrikeStats
 import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.dark.shaders.distortion.RippleDistortion
 import org.dark.shaders.post.PostProcessShader
 import org.lazywizard.lazylib.MathUtils
@@ -21,6 +29,7 @@ import org.lazywizard.lazylib.ext.rotate
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
+import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
 import java.util.*
 import kotlin.math.max
@@ -58,6 +67,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
     var hasSeenBoss = false
     var healthBar = GenesisHealthBar(this, ship)
+
+    var apparations = ArrayList<ShipAPI>()
 
     enum class Phases {
         P1, P2, P3
@@ -102,6 +113,37 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
             var realAmount = amount / Global.getCombatEngine().timeMult.modifiedValue
 
+
+            //Stats
+            var shield = ship.shield
+            ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.KEEP_SHIELDS_ON)
+            if (shield.isOff) {
+                shield.toggleOn()
+            }
+            shield.arc = 360f
+            shield.activeArc = 360f * (1- transitionTimer.level)
+
+            ship.system.cooldownRemaining = 10f
+
+            ship.mutableStats.shieldDamageTakenMult.modifyMult("genesis_phase_2", 0f)
+            ship.mutableStats.hullDamageTakenMult.modifyMult("genesis_phase_2", 0f)
+            ship.mutableStats.armorDamageTakenMult.modifyMult("genesis_phase_2", 0f)
+
+            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.5f)
+            ship.mutableStats.turnAcceleration.modifyMult("genesis_phase_2", 0.75f)
+
+            ship.mutableStats.energyRoFMult.modifyMult("genesis_phase_2", 0.75f)
+            ship.mutableStats.ballisticRoFMult.modifyMult("genesis_phase_2", 0.75f)
+            ship.mutableStats.missileRoFMult.modifyMult("genesis_phase_2", 0.75f)
+
+            var color = AbyssUtils.GENESIS_COLOR.setAlpha(75)
+            var jitterColor = color.setAlpha(55)
+            var jitterUnderColor = color.setAlpha(150)
+
+            ship!!.setJitter(this, jitterColor, (1- transitionTimer.level), 3, 0f, 0f )
+            ship!!.setJitterUnder(this, jitterUnderColor, (1- transitionTimer.level), 25, 0f, 10f)
+
+
             if (!transitionDone) {
 
                 ship.system.forceState(ShipSystemAPI.SystemState.COOLDOWN, 1f)
@@ -138,6 +180,9 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     ripple = GraphicLibEffects.CustomRippleDistortion(ship!!.location, Vector2f(), ship.collisionRadius + 500, 75f, true, ship!!.facing, 360f, 1f
                         ,0.5f, 3f, 1f, 1f, 1f)
 
+
+                   // var apparation = spawnApparation("rat_genesis_serpent_head_Standard")
+
                 }
 
                 if (ripple != null) {
@@ -149,6 +194,67 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     ship.mutableStats.timeMult.modifyMult("rat_boss_timemult", 1f)
                     Global.getCombatEngine().timeMult.modifyMult("rat_boss_timemult", 1f)
                     PostProcessShader.resetDefaults()
+                }
+            }
+
+
+
+
+            //handle worms
+            var range = getPhase2Range()
+            for (apparation in apparations) {
+
+
+
+
+
+                for (weapon in apparation.allWeapons) {
+
+                    if (MathUtils.getDistance(weapon.location, ship.location) <= range && apparation.isAlive && activateZone) {
+                        weapon.sprite.color = Color(255, 255, 255, 255)
+                        weapon.barrelSpriteAPI?.color =  Color(255, 255, 255, 255)
+                    }
+                    else {
+                        weapon.sprite.color = Color(0, 0, 0, 0)
+                        weapon.barrelSpriteAPI?.color = Color(0, 0, 0, 0)
+                    }
+                }
+
+                for (engine in apparation.engineController.shipEngines) {
+
+                    if (MathUtils.getDistance(engine.location, ship.location) <= range && apparation.isAlive && activateZone)  {
+                        //engine.repair()
+                        engine.engineSlot.color = Color(178, 36, 69, 255)
+                        engine.engineSlot.glowAlternateColor = Color(178, 36, 69,255)
+                        engine.engineSlot.glowSizeMult = 0.8f
+                    }
+                    else {
+                        engine.engineSlot.color = Color(0, 0, 0, 0)
+                        engine.engineSlot.glowAlternateColor = Color(0, 0, 0, 0)
+                        engine.engineSlot.glowSizeMult = 0f
+                        //engine.disable()
+                    }
+                }
+
+                //Hides that square that appears around opposing ships
+                apparation.isForceHideFFOverlay = true
+
+                if (MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius) {
+                    apparation.isPhased = false
+                    apparation.isHoldFire = false
+                    apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 1f)
+                    apparation.alphaMult = 1f
+                }
+                else {
+                    apparation.isPhased = true
+                    apparation.isHoldFireOneFrame = true
+                    apparation.allWeapons.forEach { it.stopFiring() }
+                    apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 0f)
+
+                    for (weapon in apparation.allWeapons) {
+                        weapon.stopFiring()
+                        weapon.setRemainingCooldownTo(0.5f)
+                    }
                 }
             }
 
@@ -205,8 +311,127 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         }
     }
 
+    fun spawnApparation(variantId: String, captain: PersonAPI) : ShipAPI{
+        var variant = Global.getSettings().getVariant(variantId)
+        var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
+
+        Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
+        var apparation = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, Vector2f(100000f, 100000f), ship!!.facing)
+        apparation!!.fleetMember.id = Misc.genUID()
+        Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
+
+        apparation!!.captain = captain
+
+        //manager.removeDeployed(apparation, true)
+
+
+
+        var segments = mutableListOf(apparation)
+        segments.addAll(apparation.childModulesCopy)
+
+        apparation.system.cooldownRemaining = 10f
+
+        for (segment in segments) {
+            segment.spriteAPI.color = Color(0, 0 ,0 ,0)
+
+            for (weapon in segment.allWeapons) {
+                weapon.sprite.color = Color(0, 0, 0, 0)
+                weapon.barrelSpriteAPI?.color = Color(0, 0, 0, 0)
+            }
+
+            for (engine in segment.engineController.shipEngines) {
+                engine.engineSlot.color = Color(0, 0, 0, 0)
+                engine.engineSlot.glowAlternateColor = Color(0, 0, 0, 0)
+                engine.engineSlot.glowSizeMult = 0f
+            }
+
+            apparations.add(segment)
+        }
+
+        //Global.getCombatEngine().addEntity(apparation)
+
+        var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(1400f, 2000f))
+        loc = findClearLocation(apparation, loc)
+        apparation.location.set(loc)
+
+
+        apparation.captain.setPersonality(Personalities.RECKLESS)
+        apparation.shipAI = Global.getSettings().createDefaultShipAI(apparation, ShipAIConfig().apply { alwaysStrafeOffensively = true })
+        apparation.shipAI.forceCircumstanceEvaluation()
+        apparation.captain.setPersonality(Personalities.RECKLESS)
+
+        return apparation
+    }
+
+    fun spawnShipOrWingDirectly(variant: ShipVariantAPI?, type: FleetMemberType?, owner: Int, combatReadiness: Float, location: Vector2f?, facing: Float): ShipAPI? {
+        val member = Global.getFactory().createFleetMember(type, variant)
+        member.owner = owner
+        member.crewComposition.addCrew(member.neededCrew)
+
+        val ship = Global.getCombatEngine().getFleetManager(owner).spawnFleetMember(member, location, facing, 0f)
+        ship.crAtDeployment = combatReadiness
+        ship.currentCR = combatReadiness
+        ship.owner = owner
+        ship.shipAI.forceCircumstanceEvaluation()
+
+        return ship
+    }
+
+
+    private fun findClearLocation(apparation: ShipAPI, dest: Vector2f): Vector2f? {
+        if (isLocationClear(apparation, dest)) return dest
+        val incr = 50f
+        val tested = WeightedRandomPicker<Vector2f>()
+        var distIndex = 1f
+        while (distIndex <= 32f) {
+            val start = Math.random().toFloat() * 360f
+            var angle = start
+            while (angle < start + 360) {
+                val loc = Misc.getUnitVectorAtDegreeAngle(angle)
+                loc.scale(incr * distIndex)
+                Vector2f.add(dest, loc, loc)
+                tested.add(loc)
+                if (isLocationClear(apparation, loc)) {
+                    return loc
+                }
+                angle += 60f
+            }
+            distIndex *= 2f
+        }
+        return if (tested.isEmpty) dest else tested.pick() // shouldn't happen
+    }
+
+    private fun isLocationClear(apparation: ShipAPI, loc: Vector2f): Boolean {
+        for (other in Global.getCombatEngine().ships) {
+            if (other.isShuttlePod) continue
+            //if (other.isFighter) continue
+
+            var otherLoc = other.shieldCenterEvenIfNoShield
+            var otherR = other.shieldRadiusEvenIfNoShield
+            if (other.isPiece) {
+                otherLoc = other.location
+                otherR = other.collisionRadius
+            }
+
+
+            val dist = Misc.getDistance(loc, otherLoc)
+            val r = otherR
+            var checkDist = apparation.shieldRadiusEvenIfNoShield * 5
+            if (dist < r + checkDist) {
+                return false
+            }
+        }
+        for (other in Global.getCombatEngine().asteroids) {
+            val dist = Misc.getDistance(loc, other.location)
+            if (dist < other.collisionRadius + MineStrikeStats.MIN_SPAWN_DIST) {
+                return false
+            }
+        }
+        return true
+    }
+
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
-        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS, CombatEngineLayers.JUST_BELOW_WIDGETS, CombatEngineLayers.ABOVE_SHIPS_LAYER)
+        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS, CombatEngineLayers.UNDER_SHIPS_LAYER, CombatEngineLayers.JUST_BELOW_WIDGETS, CombatEngineLayers.ABOVE_SHIPS_LAYER)
     }
 
     override fun getRenderRadius(): Float {
@@ -238,6 +463,10 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             vignetteLevel = transitionTimer.level
         }*/
 
+        var segments = 100
+        var radius = getPhase2Range()
+
+
         if (layer == CombatEngineLayers.BELOW_PLANETS) {
             darken.color = Color(0, 0, 0)
             darken.alphaMult = vignetteLevel * 0.7f
@@ -246,9 +475,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
             if (activateZone) {
 
-                var segments = 100
                 var zoneLevel = 1 - transitionTimer.level
-                var radius = getPhase2Range()
 
                 startStencil(ship!!, radius, segments)
 
@@ -285,6 +512,18 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                 endStencil()
 
                 renderBorder(ship!!, radius, color, segments)
+            }
+        }
+
+        if (activateZone) {
+            if (layer == CombatEngineLayers.UNDER_SHIPS_LAYER) {
+
+                startStencil(ship!!, radius, segments)
+
+                renderShips()
+
+                endStencil()
+
             }
         }
 
@@ -349,11 +588,40 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         }
     }
 
+    fun renderShips() {
+
+        var range = getPhase2Range()
+        for (apparation in apparations ) {
+
+            if (!apparation.isAlive) continue
+
+            var inRange = MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius
+
+            if (inRange) {
+                apparation.spriteAPI.color = Color(255, 255, 255, 255)
+            }
+            else {
+                apparation.spriteAPI.color = Color(255, 255, 255, 255)
+                apparation.spriteAPI.renderAtCenter(apparation.location.x, apparation.location.y)
+                apparation.spriteAPI.color = Color(0, 0 ,0 ,0)
+            }
+
+
+
+
+
+            /*for (weapon in apparation.allWeapons) {
+                weapon.sprite?.alphaMult = 1f
+                weapon.sprite?.renderAtCenter(weapon.location.x, weapon.location.y)
+                weapon.sprite?.alphaMult = 0f
+            }*/
+        }
+    }
 
     override fun notifyAboutToTakeHullDamage(param: Any?, ship: ShipAPI?, point: Vector2f?, damageAmount: Float): Boolean {
 
         //remove "transitionDone" from here at some point after testing
-        if ((phase == Phases.P1 || phase == Phases.P2) && !transitionDone) {
+        if ((phase == Phases.P1 || phase == Phases.P2)/* && !transitionDone*/) {
 
             if (phase == Phases.P2 ) {
                 return true
@@ -393,6 +661,9 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                     //Global.getSoundPlayer().pauseCustomMusic()
                     Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
+
+                    var apparation1 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
+                    var apparation2 = spawnApparation("rat_genesis_serpent_head_Standard", CosmosCore().createPerson(RATItems.COSMOS_CORE, "rat_abyssals_primordials", Random()))
 
                 }
 
