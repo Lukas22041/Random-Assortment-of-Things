@@ -532,7 +532,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         if (layer == CombatEngineLayers.JUST_BELOW_WIDGETS) {
             vignette.color = AbyssUtils.GENESIS_COLOR.darker()
-            vignette.alphaMult = 0.5f * vignetteLevel
+            vignette.alphaMult = 0.3f * vignetteLevel
 
             var offset = 300
             vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)
@@ -663,7 +663,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
 
                     var apparation1 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
-                    var apparation2 = spawnApparation("rat_genesis_serpent_head_Standard", CosmosCore().createPerson(RATItems.COSMOS_CORE, "rat_abyssals_primordials", Random()))
+                    var apparation2 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
+                    //var apparation2 = spawnApparation("rat_genesis_serpent_head_Standard", CosmosCore().createPerson(RATItems.COSMOS_CORE, "rat_abyssals_primordials", Random()))
 
                 }
 

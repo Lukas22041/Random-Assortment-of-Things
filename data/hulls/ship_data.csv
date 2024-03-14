@@ -22,10 +22,10 @@ Genesis,rat_genesis,Protector,Primordial,rat_spatial_disturbance,40,18000,1400,1
 Primordial Support Construct,rat_genesis_frigate_support,,Primordial,,0,1000,150,5000,2500,1000,0,,120,160,140,40,100,250,NONE,,,,,,,0,0,0,0,1,40,11,0,5,10,360,0.25,0,0,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX",,,0.5,2,2,,3101
 Primordial Attack Construct,rat_genesis_frigate_attack,,Primordial,,0,1400,175,5000,2500,1000,0,,150,170,150,45,110,250,NONE,,,,,,,0,0,0,0,1,40,11,0,5,10,360,0.25,0,0,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX",,,0.5,2,2,,3101
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Azazel,rat_genesis_serpent_head,,Primordial,rat_primordial_cloak,30,16000,1600,10000,12500,900,100,0,120,120,100,20,20,3000,FRONT,,270,0.3,0.8,0.05,0.05,0,0,120,90,3,30,9,140000,5,15,540,0.25,35,35,,,,,,,"HIDE_IN_CODEX, SHIP_WITH_MODULES","auto_rec, no_autofit",,0.5,2,3,,3103
-Azazel Segment,rat_genesis_serpent_segment,,Primordial,,0,16000,1500,8000,12500,500,60,0,0,0,0,0,0,2000,NONE,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,0,0,,,,,,,"HIDE_IN_CODEX, UNBOARDABLE",,,0.5,2,3,,3103
-Azazel Spine,rat_genesis_serpent_spine,,Primordial,,0,16000,1400,8000,12500,500,0,0,0,0,0,0,0,2000,NONE,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,0,0,,,,,,,"HIDE_IN_CODEX, UNBOARDABLE, UNDER_PARENT",,,0.5,2,3,,3103
-Azazel Tail,rat_genesis_serpent_system,,Primordial,,0,16000,1800,6000,12500,400,50,0,0,0,0,0,0,2000,NONE,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,0,0,,,,,,,"HIDE_IN_CODEX, UNBOARDABLE",,,0.5,2,3,,3103
+Azazel,rat_genesis_serpent_head,,Primordial,rat_primordial_cloak,30,16000,1600,10000,12500,700,100,0,120,120,100,20,20,3000,FRONT,,270,0.3,0.8,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,35,35,,,,,,,"HIDE_IN_CODEX, SHIP_WITH_MODULES","auto_rec, no_autofit",,0.5,2,3,,3103
+Azazel Segment,rat_genesis_serpent_segment,,Primordial,,0,16000,1500,8000,12500,400,60,0,0,0,0,0,0,2000,NONE,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,0,0,,,,,,,"HIDE_IN_CODEX, UNBOARDABLE",,,0.5,2,3,,3103
+Azazel Spine,rat_genesis_serpent_spine,,Primordial,,0,16000,1300,8000,12500,400,0,0,0,0,0,0,0,2000,NONE,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,0,0,,,,,,,"HIDE_IN_CODEX, UNBOARDABLE, UNDER_PARENT",,,0.5,2,3,,3103
+Azazel Tail,rat_genesis_serpent_system,,Primordial,,0,16000,1800,6000,12500,300,50,0,0,0,0,0,0,2000,NONE,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,0,0,,,,,,,"HIDE_IN_CODEX, UNBOARDABLE",,,0.5,2,3,,3103
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#Good,#Good,,,,,,,,,,,,,,,,,,,,,,

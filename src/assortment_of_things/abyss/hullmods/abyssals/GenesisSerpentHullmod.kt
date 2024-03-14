@@ -7,6 +7,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
 import com.fs.starfarer.api.combat.listeners.AdvanceableListener
+import com.fs.starfarer.api.combat.listeners.WeaponRangeModifier
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.impl.campaign.ids.Tags
@@ -69,6 +70,7 @@ class GenesisSerpentHullmod : BaseHullMod() {
 
             flamer.maxAmmo = 80
             flamer.ammo = MathUtils.clamp(flamer!!.ammo, 0, 80)
+
         }
 
 
@@ -105,7 +107,6 @@ class GenesisSerpentHullmod : BaseHullMod() {
     override fun isApplicableToShip(ship: ShipAPI): Boolean {
         return true
     }
-
 
     //Based on Code from ED-Shipyards, which is based on KT_SinuousBody by Sinosauropteryx in Kingdom of Terra
     class GenesisSerpentWormBehavior(var ship: ShipAPI) : AdvanceableListener {
