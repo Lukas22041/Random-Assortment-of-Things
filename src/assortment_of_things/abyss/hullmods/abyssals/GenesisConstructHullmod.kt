@@ -30,6 +30,8 @@ class GenesisConstructHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
 
+        stats!!.weaponTurnRateBonus.modifyMult(id, 1.5f)
+
         stats!!.energyWeaponDamageMult.modifyMult(id, 1.2f)
         stats.energyRoFMult.modifyMult(id, 1.2f)
         stats!!.energyWeaponFluxCostMod.modifyMult(id, 0.8f)
