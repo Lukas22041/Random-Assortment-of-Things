@@ -141,8 +141,9 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         if (phase == Phases.P3) {
 
 
-            phase3HealthLevel -= 0.05f * amount
-            var healthLevel = ship.hitpoints / ship.maxHitpoints
+            phase3HealthLevel -= 0.5f * amount
+            var healthLevel = (ship.hitpoints / ship.maxHitpoints)
+            phase3HealthLevel = MathUtils.clamp(phase3HealthLevel, 0f, 1f)
             phase3HealthLevel = MathUtils.clamp(phase3HealthLevel, healthLevel, maxPhas3HealthLevel)
             maxPhas3HealthLevel = phase3HealthLevel
 
@@ -389,6 +390,10 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                 }
             }
         }
+    }
+
+    fun easeInOutSine(x: Float): Float {
+        return (-(Math.cos(Math.PI * x) - 1) / 2).toFloat();
     }
 
     fun spawnApparation(variantId: String, captain: PersonAPI) : ShipAPI{
