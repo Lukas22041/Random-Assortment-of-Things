@@ -22,6 +22,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.makeImportant
 import java.util.*
@@ -91,6 +92,7 @@ class GenesisInteraction : RATInteractionPlugin() {
         visualPanel.fadeVisualOut()
 
         generateWreck()
+        generateWormWreck()
 
         textPanel.addPara("Following the fight, an eerie silence befell the fleets the center of command, even the most experienced crew trying to make sense of what they just experienced.")
 
@@ -150,6 +152,17 @@ class GenesisInteraction : RATInteractionPlugin() {
         val entity = BaseThemeGenerator.addSalvageEntity(Random(), interactionTarget.starSystem, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
 
         entity.location.set(Vector2f(interactionTarget.location))
+        entity.addTag(AbyssTags.ABYSS_WRECK)
+        entity.addTag("Dont_Show_Salvage_Option")
+        entity.makeImportant("")
+    }
+
+    fun generateWormWreck() {
+        val params = DerelictShipEntityPlugin.createVariant("rat_genesis_serpent_head_Hull", Random(), DerelictShipEntityPlugin.getDefaultSModProb())
+        val entity = BaseThemeGenerator.addSalvageEntity(Random(), interactionTarget.starSystem, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
+
+        var loc = MathUtils.getRandomPointOnCircumference(interactionTarget.location, 100f)
+        entity.location.set(loc)
         entity.addTag(AbyssTags.ABYSS_WRECK)
         entity.addTag("Dont_Show_Salvage_Option")
         entity.makeImportant("")

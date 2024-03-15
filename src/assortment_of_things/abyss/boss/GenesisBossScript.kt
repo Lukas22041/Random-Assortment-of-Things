@@ -70,6 +70,13 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
     var apparations = ArrayList<ShipAPI>()
 
+
+    var azazel1: ShipAPI? = null
+    var azazel2: ShipAPI? = null
+    var phase3TransitionTimer = StateBasedTimer(2f, 1f, 0f)
+    var phase3HealthLevel = 1f
+    var maxPhas3HealthLevel = 1f
+
     enum class Phases {
         P1, P2, P3
     }
@@ -109,9 +116,73 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             hasSeenBoss = true
         }
 
+        if (azazel1?.isAlive == false && azazel2?.isAlive == false && phase == Phases.P2) {
+            phase = Phases.P3
+            ship.hitpoints = ship.maxHitpoints
+            ship.fluxTracker.currFlux = 0f
+            ship.fluxTracker.hardFlux = 0f
+
+            var armorGrid = ship.armorGrid
+            for (x in armorGrid.grid.indices) {
+                for (y in armorGrid.grid.indices) {
+                    armorGrid.setArmorValue(x, y, armorGrid.maxArmorInCell)
+                }
+            }
+
+            ship.syncWithArmorGridState()
+
+            GraphicLibEffects.CustomRippleDistortion(Vector2f(ship.location), Vector2f(), 3000f, 10f, true, ship.facing, 360f, 1f
+                ,1f, 1f, 1f, 1f, 1f)
+
+            GraphicLibEffects.CustomBubbleDistortion(Vector2f(ship.location), Vector2f(), 1000f + ship.collisionRadius, 25f, true, ship.facing, 360f, 1f
+                ,0.1f, 0.1f, 1f, 0.3f, 1f)
+        }
+
+        if (phase == Phases.P3) {
+
+
+            phase3HealthLevel -= 0.05f * amount
+            var healthLevel = ship.hitpoints / ship.maxHitpoints
+            phase3HealthLevel = MathUtils.clamp(phase3HealthLevel, healthLevel, maxPhas3HealthLevel)
+            maxPhas3HealthLevel = phase3HealthLevel
+
+            phase3TransitionTimer.advance(amount)
+            var level = 1f
+            if (phase3TransitionTimer.state == StateBasedTimer.TimerState.In) {
+                level = phase3TransitionTimer.level
+            }
+
+
+            Global.getCombatEngine().timeMult.modifyMult("genesis_phase_3_transition", 0.2f + (0.8f * level))
+
+            var shield = ship.shield
+            shield.arc = 270 + (90 * (1-level))
+
+            ship.mutableStats.fluxDissipation.modifyMult("genesis_phase3", 1 + (0.25f * level))
+
+            ship.mutableStats.shieldDamageTakenMult.modifyMult("genesis_phase_2", 0.75f * level)
+            ship.mutableStats.hullDamageTakenMult.modifyMult("genesis_phase_2", 0.75f * level)
+            ship.mutableStats.armorDamageTakenMult.modifyMult("genesis_phase_2", 0.75f * level)
+
+            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.5f + (0.75f * level))
+            ship.mutableStats.turnAcceleration.modifyMult("genesis_phase_2", 0.75f  + (0.50f * level))
+
+            ship.mutableStats.energyRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.45f * level))
+            ship.mutableStats.ballisticRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.45f * level))
+            ship.mutableStats.missileRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.45f * level))
+
+            var color = AbyssUtils.GENESIS_COLOR.setAlpha(75)
+            var jitterColor = color.setAlpha(55)
+            var jitterUnderColor = color.setAlpha(150)
+
+            ship!!.setJitter(this, jitterColor, (1- transitionTimer.level), 3, 0f, 0f )
+            ship!!.setJitterUnder(this, jitterUnderColor, (1- transitionTimer.level), 25, 0f, 10f)
+        }
+
+        var realAmount = amount / Global.getCombatEngine().timeMult.modifiedValue
+
         if (phase == Phases.P2) {
 
-            var realAmount = amount / Global.getCombatEngine().timeMult.modifiedValue
 
 
             //Stats
@@ -213,10 +284,14 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     if (MathUtils.getDistance(weapon.location, ship.location) <= range && apparation.isAlive && activateZone) {
                         weapon.sprite.color = Color(255, 255, 255, 255)
                         weapon.barrelSpriteAPI?.color =  Color(255, 255, 255, 255)
+                        weapon.glowSpriteAPI?.color = weapon.glowSpriteAPI?.color!!.setAlpha(255)
+
                     }
                     else {
                         weapon.sprite.color = Color(0, 0, 0, 0)
                         weapon.barrelSpriteAPI?.color = Color(0, 0, 0, 0)
+                        weapon.glowSpriteAPI?.color =  weapon.glowSpriteAPI?.color!!.setAlpha(0)
+
                     }
                 }
 
@@ -232,6 +307,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                         engine.engineSlot.color = Color(0, 0, 0, 0)
                         engine.engineSlot.glowAlternateColor = Color(0, 0, 0, 0)
                         engine.engineSlot.glowSizeMult = 0f
+
                         //engine.disable()
                     }
                 }
@@ -258,6 +334,10 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                 }
             }
 
+
+        }
+
+        if (phase == Phases.P2 || phase == Phases.P3) {
             particleInterval.advance(realAmount)
             if (particleInterval.intervalElapsed()) {
 
@@ -337,6 +417,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             for (weapon in segment.allWeapons) {
                 weapon.sprite.color = Color(0, 0, 0, 0)
                 weapon.barrelSpriteAPI?.color = Color(0, 0, 0, 0)
+                weapon.glowSpriteAPI?.color = weapon.glowSpriteAPI!!.color.setAlpha(0)
             }
 
             for (engine in segment.engineController.shipEngines) {
@@ -441,9 +522,14 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     fun getPhase2Range() : Float {
         var zoneLevel = 1 - transitionTimer.level
         var radius = 10000 * (zoneLevel * zoneLevel)
-        if (zoneLevel >= 0.95f) {
+        if (zoneLevel >= 0.95f && phase != Phases.P3) {
             radius = 30000 * (zoneLevel * zoneLevel)
         }
+
+        if (phase == Phases.P3) {
+            radius *= phase3HealthLevel
+        }
+
         return radius
     }
 
@@ -662,8 +748,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     //Global.getSoundPlayer().pauseCustomMusic()
                     Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
 
-                    var apparation1 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
-                    var apparation2 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
+                    azazel1 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
+                    azazel2 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
                     //var apparation2 = spawnApparation("rat_genesis_serpent_head_Standard", CosmosCore().createPerson(RATItems.COSMOS_CORE, "rat_abyssals_primordials", Random()))
 
                 }
