@@ -23,11 +23,11 @@
 	"githubRepo":"Random-Assortment-of-Things",
 	
 	#Generates a changelog based on the releases on the linked github. Overwrites changelogURL.
-	"automaticGithubChangelog":true, 
+	"automaticGithubChangelog":false, 
 	
 	#Automaticly handles versioning by comparing the latest release tag with the version in the mods mod_info.json
 	#The version format in both tag & mod_info.json has to match:
 	#major.minor.patch 
 	#major & minor must be a number, patch can be any kind of number or string.
-	"automaticGithubVersioning":true, 
+	"automaticGithubVersioning":false, 
 }
