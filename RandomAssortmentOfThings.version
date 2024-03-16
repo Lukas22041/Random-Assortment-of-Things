@@ -17,6 +17,7 @@
 
 
 	#WIP/Experimental, automaticly pull data from github releases. Read from Remote file. 
+	#Not functional until Lunalib releases for the starsector update that includes Java17.
 	"modId":"assortment_of_things", #Mod ID of the mod. Required.
 	"githubOwner":"Lukas22041",
 	"githubRepo":"Random-Assortment-of-Things",
