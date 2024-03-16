@@ -16,7 +16,17 @@
 	"changelogURL":"https://raw.githubusercontent.com/Lukas22041/Random-Assortment-of-Things/main/changelog.txt",
 
 
-	#WIP, automaticly generate changelog based on github releases. Read from Remote file. Overwrites changelogURL
+	### WIP/Experimental, automaticly pull versioning from github releases. Read from Remote file. Overwrites changelogURL
 	"githubOwner":"Lukas22041",
 	"githubRepo":"Random-Assortment-of-Things",
+	"modId":"assortment_of_things", #Mod ID of the mod.
+	
+	#Generates a changelog based on the releases on the linked github.
+	"automaticChangelog":true, 
+	
+	#Automaticly handles versioning by comparing the latest release tag with the version in the mods mod_info.json
+	#The version format in both tag & mod_info.json has to match:
+	#major.minor.patch 
+	#major & minor must be a number, patch can be any kind of number or string.
+	"automaticVersioning":true, 
 }

@@ -569,6 +569,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         var y = viewport.lly
 
         var color = Color(100, 0, 255)
+        color = Misc.interpolateColor(color, Color(200, 0, 50), phase3TransitionTimer.level * 0.2f)
 
         vignetteLevel = max(transitionTimer.level, vignetteLevel)
         vignetteLevel = MathUtils.clamp(vignetteLevel, 0f, 1f)
