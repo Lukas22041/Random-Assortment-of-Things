@@ -82,7 +82,15 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     }
 
 
+    init {
+        ship.maxHitpoints += 1.33f
+        ship.hitpoints = ship.maxHitpoints
 
+        var stats = ship.mutableStats
+        stats.weaponDamageTakenMult.modifyMult("boss_def_boost", 0.5f)
+        stats.engineDamageTakenMult.modifyMult("boss_def_boost", 0.5f)
+
+    }
 
 
 
@@ -105,6 +113,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     override fun advance(amount: Float) {
 
         handleParticles(amount)
+
+
 
 
         var soundplayer = Global.getSoundPlayer()
@@ -141,15 +151,15 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         if (phase == Phases.P3) {
 
 
-            phase3HealthLevel -= 0.5f * amount
+            phase3HealthLevel -= 0.1f * amount
             var healthLevel = (ship.hitpoints / ship.maxHitpoints)
             phase3HealthLevel = MathUtils.clamp(phase3HealthLevel, 0f, 1f)
             phase3HealthLevel = MathUtils.clamp(phase3HealthLevel, healthLevel, maxPhas3HealthLevel)
             maxPhas3HealthLevel = phase3HealthLevel
 
-            phase3TransitionTimer.advance(amount)
             var level = 1f
             if (phase3TransitionTimer.state == StateBasedTimer.TimerState.In) {
+                phase3TransitionTimer.advance(amount)
                 level = phase3TransitionTimer.level
             }
 
@@ -159,18 +169,23 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             var shield = ship.shield
             shield.arc = 270 + (90 * (1-level))
 
-            ship.mutableStats.fluxDissipation.modifyMult("genesis_phase3", 1 + (0.25f * level))
+            ship.mutableStats.timeMult.modifyMult("genesis_phase3", 1 + (0.1f * level))
+            ship.mutableStats.fluxDissipation.modifyMult("genesis_phase3", 1 + (0.10f * level))
 
             ship.mutableStats.shieldDamageTakenMult.modifyMult("genesis_phase_2", 0.75f * level)
             ship.mutableStats.hullDamageTakenMult.modifyMult("genesis_phase_2", 0.75f * level)
             ship.mutableStats.armorDamageTakenMult.modifyMult("genesis_phase_2", 0.75f * level)
 
-            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.5f + (0.75f * level))
-            ship.mutableStats.turnAcceleration.modifyMult("genesis_phase_2", 0.75f  + (0.50f * level))
+            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.5f + (0.55f * level))
+            ship.mutableStats.turnAcceleration.modifyMult("genesis_phase_2", 0.50f  + (0.55f * level))
 
-            ship.mutableStats.energyRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.45f * level))
-            ship.mutableStats.ballisticRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.45f * level))
-            ship.mutableStats.missileRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.45f * level))
+            ship.mutableStats.energyRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.35f * level))
+            ship.mutableStats.ballisticRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.35f * level))
+            ship.mutableStats.missileRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.35f * level))
+
+            ship.mutableStats.energyWeaponRangeBonus.modifyMult("genesis_phase_2", 0.60f + (0.40f * level))
+            ship.mutableStats.ballisticWeaponRangeBonus.modifyMult("genesis_phase_2", 0.60f + (0.40f * level))
+            ship.mutableStats.missileWeaponRangeBonus.modifyMult("genesis_phase_2", 0.60f + (0.40f * level))
 
             var color = AbyssUtils.GENESIS_COLOR.setAlpha(75)
             var jitterColor = color.setAlpha(55)
@@ -202,11 +217,16 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship.mutableStats.armorDamageTakenMult.modifyMult("genesis_phase_2", 0f)
 
             ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.5f)
-            ship.mutableStats.turnAcceleration.modifyMult("genesis_phase_2", 0.75f)
+            ship.mutableStats.turnAcceleration.modifyMult("genesis_phase_2", 0.50f)
 
             ship.mutableStats.energyRoFMult.modifyMult("genesis_phase_2", 0.75f)
             ship.mutableStats.ballisticRoFMult.modifyMult("genesis_phase_2", 0.75f)
             ship.mutableStats.missileRoFMult.modifyMult("genesis_phase_2", 0.75f)
+
+
+            ship.mutableStats.energyWeaponRangeBonus.modifyMult("genesis_phase_2", 0.60f)
+            ship.mutableStats.ballisticWeaponRangeBonus.modifyMult("genesis_phase_2", 0.60f)
+            ship.mutableStats.missileWeaponRangeBonus.modifyMult("genesis_phase_2", 0.60f)
 
             var color = AbyssUtils.GENESIS_COLOR.setAlpha(75)
             var jitterColor = color.setAlpha(55)
@@ -407,6 +427,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         apparation!!.captain = captain
 
+        apparation.mutableStats.maxSpeed.modifyMult("speed_debuff", 0.9f)
+
         //manager.removeDeployed(apparation, true)
 
 
@@ -577,14 +599,14 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                 wormhole.setSize(width * 1.3f, width *  1.3f)
                 wormhole.setAdditiveBlend()
-                wormhole.alphaMult = 0.2f
+                wormhole.alphaMult = 0.2f + (0.2f * phase3TransitionTimer.level)
                 if (!Global.getCombatEngine().isPaused) wormhole.angle += 0.075f
                 wormhole.color = Color(200, 0, 50)
                 wormhole.renderAtCenter(x + width / 2, y + height / 2)
 
                 wormhole2.setSize(width * 1.35f, width *  1.35f)
                 wormhole2.setAdditiveBlend()
-                wormhole2.alphaMult = 0.2f
+                wormhole2.alphaMult = 0.2f + (0.1f * phase3TransitionTimer.level)
                 if (!Global.getCombatEngine().isPaused) wormhole2.angle += 0.05f
                 wormhole2.color = Color(50, 0, 255)
                 wormhole2.renderAtCenter(x + width / 2, y + height / 2)
@@ -623,14 +645,14 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         if (layer == CombatEngineLayers.JUST_BELOW_WIDGETS) {
             vignette.color = AbyssUtils.GENESIS_COLOR.darker()
-            vignette.alphaMult = 0.3f * vignetteLevel
+            vignette.alphaMult = (0.3f * vignetteLevel) + (0.2f * phase3TransitionTimer.level)
 
             var offset = 300
             vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)
             vignette.render(viewport!!.llx - (offset * 0.5f), viewport!!.lly - (offset * 0.5f))
         }
 
-        if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER && (phase == Phases.P2 || phase == Phases.P3)) {
+        if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER && (phase == Phases.P2 || phase == Phases.P3) && ship.isAlive) {
             systemGlow.setNormalBlend()
             systemGlow.alphaMult = (0.8f + (0.2f * fader.brightness)) * vignetteLevel
             systemGlow.angle = ship.facing - 90

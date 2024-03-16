@@ -1,7 +1,6 @@
 package assortment_of_things.abyss.shipsystem
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
@@ -105,7 +104,6 @@ class PrimordialCloakShipsystem : BaseShipSystemScript() {
         stats.fluxDissipation.unmodify(id)
         stats.hardFluxDissipationFraction.unmodify(id)
 
-        AbyssalsAdaptabilityHullmod.getRenderer(ship).disableBlink()
     }
 
     override fun getStatusData(index: Int, state: ShipSystemStatsScript.State, effectLevel: Float): StatusData? {

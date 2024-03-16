@@ -1,0 +1,68 @@
+{
+    "displayName": "Standard",
+    "fluxCapacitors": 34,
+    "fluxVents": 50,
+    "goalVariant": true,
+    "hullId": "rat_genesis",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "heavyarmor",
+        "targetingunit",
+        "unstable_injector",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_genesis_Standard",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_haddock",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "rat_leviathan",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "rat_seabream",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "rat_cecaelia",
+                "WS0004": "rat_cecaelia",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0007": "rat_genesis_motelauncher",
+                "WS0006": "rat_genesis_motelauncher",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0009": "rat_genesis_motelauncher_pd",
+                "WS0008": "rat_genesis_motelauncher_pd",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

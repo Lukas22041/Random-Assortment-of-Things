@@ -46,7 +46,7 @@
       "type": "ENERGY",
       "mount": "TURRET",
       "arc": 360,
-      "angle": 180,
+      "angle": 0,
       "locations": [-53, -0]
     },
     {

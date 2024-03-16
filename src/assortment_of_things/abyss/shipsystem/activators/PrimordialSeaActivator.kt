@@ -13,9 +13,8 @@ import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
-import com.fs.starfarer.combat.CombatFleetManager
-import com.fs.starfarer.combat.entities.Ship
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.combat.CombatUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.subsystems.MagicSubsystem
@@ -124,9 +123,20 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         variants += generateSequence { "rat_genesis_frigate_support_Standard" }.take(3)
         variants += generateSequence { "rat_genesis_frigate_attack_Standard" }.take(3)
 
+        var takenTargets = ArrayList<ShipAPI>()
+
         for (variant in variants) {
 
-            var apparation = spawnApparation(variant)
+            var targetShips = CombatUtils.getShipsWithinRange(ship.location, maxRange - 300).filter { !takenTargets.contains(it) }
+            var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 1600f))
+
+            var target = targetShips.randomOrNull()
+            if (target != null) {
+                takenTargets.add(target)
+                loc = MathUtils.getRandomPointOnCircumference(target.location, target.collisionRadius + MathUtils.getRandomNumberInRange(400f, 600f))
+            }
+
+            var apparation = spawnApparation(variant, loc)
             apparations.add(apparation)
         }
 
@@ -219,7 +229,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         return maxRange * effectLevel * effectLevel
     }
 
-    fun spawnApparation(variantId: String) : ShipAPI{
+    fun spawnApparation(variantId: String, targetLoc: Vector2f) : ShipAPI{
         var variant = Global.getSettings().getVariant(variantId)
         var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
 
@@ -253,8 +263,8 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
         Global.getCombatEngine().addEntity(apparation)
 
-        var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 1600f))
-        loc = findClearLocation(apparation, loc)
+        /*var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 1600f))*/
+        var loc = findClearLocation(apparation, targetLoc)
         apparation.location.set(loc)
 
 

@@ -148,7 +148,7 @@ class GenesisInteraction : RATInteractionPlugin() {
     }
 
     fun generateWreck() {
-        val params = DerelictShipEntityPlugin.createVariant("rat_genesis_Hull", Random(), DerelictShipEntityPlugin.getDefaultSModProb())
+        val params = DerelictShipEntityPlugin.createVariant("rat_genesis_Standard", Random(), DerelictShipEntityPlugin.getDefaultSModProb())
         val entity = BaseThemeGenerator.addSalvageEntity(Random(), interactionTarget.starSystem, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
 
         entity.location.set(Vector2f(interactionTarget.location))
@@ -158,7 +158,7 @@ class GenesisInteraction : RATInteractionPlugin() {
     }
 
     fun generateWormWreck() {
-        val params = DerelictShipEntityPlugin.createVariant("rat_genesis_serpent_head_Hull", Random(), DerelictShipEntityPlugin.getDefaultSModProb())
+        val params = DerelictShipEntityPlugin.createVariant("rat_genesis_serpent_head_Standard", Random(), DerelictShipEntityPlugin.getDefaultSModProb())
         val entity = BaseThemeGenerator.addSalvageEntity(Random(), interactionTarget.starSystem, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
 
         var loc = MathUtils.getRandomPointOnCircumference(interactionTarget.location, 100f)

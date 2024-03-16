@@ -55,7 +55,7 @@ class FinalAbyssType : BaseAbyssType() {
         var token = data.system.createToken(Vector2f())
         data.system.addEntity(token)
 
-        var boss = fleet.fleetData.addFleetMember("rat_genesis_Hull")
+        var boss = fleet.fleetData.addFleetMember("rat_genesis_Standard")
         boss.fixVariant()
 
         boss.variant.addTag(Tags.TAG_NO_AUTOFIT)
