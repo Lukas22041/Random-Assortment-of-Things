@@ -14,9 +14,9 @@ import com.fs.starfarer.api.util.Misc
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
-class AbyssalLightsource : BaseCustomEntityPlugin() {
+class AbyssalLightsource : BaseCustomEntityPlugin(), AbyssalLight {
 
-    var radius = 2000f
+    override var radius = 2000f
     var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
 
     @Transient

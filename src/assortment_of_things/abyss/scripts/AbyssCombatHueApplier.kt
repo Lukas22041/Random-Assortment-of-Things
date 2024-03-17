@@ -16,13 +16,9 @@ import java.util.*
 class AbyssCombatHueApplier(var color: Color, var depth: AbyssDepth, var darkness: AbyssalDarknessTerrainPlugin) : BaseCombatLayeredRenderingPlugin() {
 
 
-    var sprite: SpriteAPI
+    var sprite: SpriteAPI = Global.getSettings().getAndLoadSprite("graphics/fx/rat_darkener.png")
 
     var alpha = 25
-
-    init {
-        sprite = Global.getSettings().getAndLoadSprite("graphics/fx/rat_darkener.png")
-    }
 
     override fun init(entity: CombatEntityAPI?) {
         super.init(entity)
@@ -32,7 +28,7 @@ class AbyssCombatHueApplier(var color: Color, var depth: AbyssDepth, var darknes
             AbyssDepth.Deep -> 75
         }
 
-        if (!darkness.containsEntity(Global.getSector().playerFleet)) {
+        if (darkness.getDarknessMult() <= 0.5f) {
             alpha = when(depth) {
                 AbyssDepth.Shallow -> 80
                 AbyssDepth.Deep -> 85

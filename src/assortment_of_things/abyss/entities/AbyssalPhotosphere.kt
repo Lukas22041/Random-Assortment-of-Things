@@ -13,9 +13,9 @@ import com.fs.starfarer.campaign.DynamicRingBand
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
-class AbyssalPhotosphere : BaseCustomEntityPlugin() {
+class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
 
-    var radius = 20000f
+    override var radius = 20000f
     var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
 
     @Transient

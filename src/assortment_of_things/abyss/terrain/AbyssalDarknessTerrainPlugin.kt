@@ -1,10 +1,8 @@
 package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssalBeacon
-import assortment_of_things.abyss.entities.AbyssalFracture
-import assortment_of_things.abyss.entities.AbyssalLightsource
-import assortment_of_things.abyss.entities.AbyssalPhotosphere
+import assortment_of_things.abyss.entities.*
+import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
 import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.Global
@@ -76,37 +74,14 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
         }
 
-        var photospheres = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalPhotosphere }
-        for (photosphere in photospheres)
-        {
-            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
-            var loc = Vector2f(photosphere.location.x * factor, photosphere.location.y * factor)
 
-            var plugin = photosphere.customPlugin as AbyssalPhotosphere
-            var radius = plugin.radius * factor
-
-            halo!!.alphaMult = 1f * alphaMult
-            halo!!.color = color.setAlpha(75)
-
-            halo!!.setSize(radius / 20, radius / 20)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
-
-            halo!!.alphaMult = 1f * alphaMult
-            halo!!.color = color.setAlpha(55)
-
-            halo!!.setSize(radius / 2, radius / 2)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
-        }
-
-        var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLightsource }
+        var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
         for (source in lightsources)
         {
             var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
             var loc = Vector2f(source.location.x * factor, source.location.y * factor)
 
-            var plugin = source.customPlugin as AbyssalLightsource
+            var plugin = source.customPlugin as AbyssalLight
             var radius = plugin.radius * factor
 
             halo!!.alphaMult = 0.6f * alphaMult
@@ -124,29 +99,6 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             halo!!.renderAtCenter(loc.x, loc.y)
         }
 
-        var beacons = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalBeacon }
-        for (source in beacons)
-        {
-            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
-            var loc = Vector2f(source.location.x * factor, source.location.y * factor)
-
-            var plugin = source.customPlugin as AbyssalBeacon
-            var radius = plugin.radius * factor
-
-            halo!!.alphaMult = 0.6f * alphaMult
-            halo!!.color = color.setAlpha(75)
-
-            halo!!.setSize(radius / 20, radius / 20)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
-
-            halo!!.alphaMult = 0.8f * alphaMult
-            halo!!.color = color.setAlpha(55)
-
-            halo!!.setSize(radius / 2, radius / 2)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
-        }
 
         for (fracture in system.system.customEntities) {
             if (fracture.customEntitySpec.id != "rat_abyss_fracture") continue
@@ -180,45 +132,19 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
 
         val radarRadius = Global.getSettings().getFloat("campaignRadarRadius") + 2000
-        var photospheres = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalPhotosphere }
+        var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
 
-        for (photosphere in photospheres)
+        for (sources in lightsources)
         {
-            if (MathUtils.getDistance(photosphere.location, radarCenter) >= radarRadius) continue
+            if (MathUtils.getDistance(sources.location, radarCenter) >= radarRadius) continue
 
             var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
-            var loc = Vector2f((photosphere.location.x - radarCenter.x) * factor, (photosphere.location.y - radarCenter.y) * factor)
+            var loc = Vector2f((sources.location.x - radarCenter.x) * factor, (sources.location.y - radarCenter.y) * factor)
 
 
-            var plugin = photosphere.customPlugin as AbyssalPhotosphere
+            var plugin = sources.customPlugin as AbyssalLight
             var radius = plugin.radius * factor
-
-            halo!!.alphaMult = 1f * alphaMult
-            halo!!.color = color.setAlpha(75)
-
-            halo!!.setSize(radius / 20, radius / 20)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
-
-            halo!!.alphaMult = 1f * alphaMult
-            halo!!.color = color.setAlpha(55)
-
-            halo!!.setSize(radius / 2, radius / 2)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
-        }
-
-        var beacons = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalBeacon }
-
-        for (beacon in beacons)
-        {
-            if (MathUtils.getDistance(beacon.location, radarCenter) >= radarRadius) continue
-
-            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
-            var loc = Vector2f((beacon.location.x - radarCenter.x) * factor, (beacon.location.y - radarCenter.y) * factor)
-
-            var plugin = beacon.customPlugin as AbyssalBeacon
-            var radius = plugin.radius * factor
+            if (plugin.radius >= 50000) continue
 
             halo!!.alphaMult = 1f * alphaMult
             halo!!.color = color.setAlpha(75)
@@ -236,31 +162,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         }
 
 
-        var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLightsource }
-        for (source in lightsources)
-        {
-            if (MathUtils.getDistance(source.location, radarCenter) >= radarRadius) continue
 
-            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
-            var loc = Vector2f((source.location.x - radarCenter.x) * factor, (source.location.y - radarCenter.y) * factor)
-
-            var plugin = source.customPlugin as AbyssalLightsource
-            var radius = plugin.radius * factor
-
-            halo!!.alphaMult = 0.8f * alphaMult
-            halo!!.color = color.setAlpha(75)
-
-            halo!!.setSize(radius / 20, radius / 20)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
-
-            halo!!.alphaMult = 1f * alphaMult
-            halo!!.color = color.setAlpha(55)
-
-            halo!!.setSize(radius / 2, radius / 2)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
-        }
 
 
         if (font == null) {
@@ -289,60 +191,59 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         }
     }
 
-    fun containingPhotosphere(other: SectorEntityToken): SectorEntityToken? {
-        var photospheres = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalPhotosphere }
-        for (source in photospheres)
+
+    override fun containsPoint(point: Vector2f?, radius: Float): Boolean {
+       /* var system = entity.starSystem
+        var data = AbyssUtils.getSystemData(system)
+        var depth = data.depth
+
+        var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
+        var withinLight = false
+        for (source in lightsources)
         {
-            var plugin = source.customPlugin as AbyssalPhotosphere
-            if (MathUtils.getDistance(source.location, other.location) < (plugin.radius / 10) - 10)
+            var plugin = source.customPlugin as AbyssalLight
+            if (MathUtils.getDistance(source.location, point) < (plugin.radius / 10) - 10)
             {
-                return source
+                withinLight = true
+                break
             }
         }
 
-        return null
+        return !withinLight*/
+        return true
     }
 
-    override fun containsPoint(point: Vector2f?, radius: Float): Boolean {
+    fun getDarknessMult() : Float {
+        var point = Global.getSector().playerFleet.location
         var system = entity.starSystem
         var data = AbyssUtils.getSystemData(system)
         var depth = data.depth
 
-        var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLightsource }
-        var withinLight = false
+        var highestMult = 0f
+        var inAny = false
+        var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
         for (source in lightsources)
         {
-            var plugin = source.customPlugin as AbyssalLightsource
-            if (MathUtils.getDistance(source.location, point) < (plugin.radius / 10) - 10)
-            {
-                withinLight = true
-                break
+            var plugin = source.customPlugin as AbyssalLight
+
+            var maxRadius = (plugin.radius / 10) + 10 + (Global.getSector().playerFleet.radius / 2)
+            var minRadius = maxRadius * 0.85f
+
+            var distance = MathUtils.getDistance(source.location, point)
+            if (distance < maxRadius) {
+                inAny = true
+                var level = (distance - minRadius) / (maxRadius - minRadius)
+                if (level >= highestMult) {
+                    highestMult = level
+                }
             }
         }
 
-        var photospheres = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalPhotosphere }
-        for (source in photospheres)
-        {
-            var plugin = source.customPlugin as AbyssalPhotosphere
-            if (MathUtils.getDistance(source.location, point) < (plugin.radius / 10) - 10)
-            {
-                withinLight = true
-                break
-            }
+        if (!inAny) {
+            return 1f
         }
 
-        var beacons = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalBeacon }
-        for (source in beacons)
-        {
-            var plugin = source.customPlugin as AbyssalBeacon
-            if (MathUtils.getDistance(source.location, point) < (plugin.radius / 10) - 10)
-            {
-                withinLight = true
-                break
-            }
-        }
-
-        return !withinLight
+        return highestMult
     }
 
     override fun applyEffect(entity: SectorEntityToken?, days: Float) {
@@ -356,15 +257,22 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         {
             var fleet = entity
 
-            if (depth == AbyssDepth.Shallow) {
-                fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Darkness", 0.75f, fleet.stats.detectedRangeMod)
+            var darknessMult = getDarknessMult()
 
+            if (darknessMult != 0f) {
+                if (depth == AbyssDepth.Shallow) {
+                    fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Darkness", 1 - (0.25f * darknessMult), fleet.stats.detectedRangeMod)
+
+                }
+
+                if (depth == AbyssDepth.Deep) {
+                    fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Extreme Darkness", 1 -(0.50f * darknessMult), fleet.stats.detectedRangeMod)
+                }
+
+                if (AbyssalDepthsEventIntel.get()?.isStageActive(AbyssalDepthsEventIntel.Stage.IN_THE_DARK) == true) {
+                    fleet.stats.addTemporaryModMult(0.1f, id,  "In the Dark",  1 - (0.10f * darknessMult), fleet.stats.detectedRangeMod)
+                }
             }
-
-            if (depth == AbyssDepth.Deep) {
-                fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Extreme Darkness", 0.50f, fleet.stats.detectedRangeMod)
-            }
-
         }
     }
 
@@ -373,8 +281,11 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         var data = AbyssUtils.getSystemData(system)
         var depth = data.depth
 
-        if (depth == AbyssDepth.Shallow) return "Darkness"
-        if (depth == AbyssDepth.Deep) return "Extreme Darkness"
+        var mult = (getDarknessMult() * 100).toInt()
+
+
+        if (depth == AbyssDepth.Shallow) return "Darkness ($mult%)"
+        if (depth == AbyssDepth.Deep) return "Extreme Darkness ($mult%)"
 
         return ""
     }
@@ -394,12 +305,12 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         tooltip.addSpacer(5f)
 
         if (depth == AbyssDepth.Shallow) {
-            tooltip!!.addPara("The density of the abyssal matter makes barely any radiation able to get past it. Decreases the Sensor Detection range by 25%%" +
+            tooltip!!.addPara("The density of the abyssal matter makes barely any radiation able to get past it. Decreases the Sensor Detection range by up to 25%%" +
                     "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Detection", "25%")
             tooltip.addSpacer(5f)
         }
         if (depth == AbyssDepth.Deep) {
-            tooltip!!.addPara("The density of the abyssal matter causes any light or other type of radiation to diminish close to its source. Decreases the Sensor Detection range by 50%%" +
+            tooltip!!.addPara("The density of the abyssal matter causes any light or other type of radiation to diminish close to its source. Decreases the Sensor Detection range by up to 50%%" +
                     "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Detection", "50%")
             tooltip.addSpacer(5f)
         }

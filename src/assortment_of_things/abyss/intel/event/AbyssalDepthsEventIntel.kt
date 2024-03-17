@@ -210,14 +210,14 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
 
         if (isStageActive(Stage.IN_THE_DARK)) {
 
-            if (fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) {
+            /*if (fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) {
                 var plugin = AbyssProcgen.getAbyssDarknessTerrainPlugin(fleet.starSystem)
                 if (plugin != null) {
                     if (plugin.containsPoint(fleet.location, fleet.radius)) {
                         fleet.stats.addTemporaryModMult(0.1f, id,  "In the Dark", 0.90f, fleet.stats.detectedRangeMod)
                     }
                 }
-            }
+            }*/
         }
 
         if (isStageActive(Stage.PERSISTANCE))  {

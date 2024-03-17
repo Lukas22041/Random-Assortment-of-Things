@@ -140,17 +140,17 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
     override fun pickAICoreOfficerPlugin(commodityId: String?): PluginPick<AICoreOfficerPlugin>? {
 
-        if (commodityId == RATItems.COSMOS_CORE) return PluginPick(CosmosCore(), CampaignPlugin.PickPriority.HIGHEST)
-        if (commodityId == RATItems.CHRONOS_CORE) return PluginPick(ChronosCore(), CampaignPlugin.PickPriority.HIGHEST)
-        if (commodityId == RATItems.SERAPH_CORE) return PluginPick(SeraphCore(), CampaignPlugin.PickPriority.HIGHEST)
-        if (commodityId == RATItems.PRIMORDIAL) return PluginPick(PrimordialCore(), CampaignPlugin.PickPriority.HIGHEST)
+        if (commodityId == RATItems.COSMOS_CORE) return PluginPick(CosmosCore(), CampaignPlugin.PickPriority.MOD_SPECIFIC)
+        if (commodityId == RATItems.CHRONOS_CORE) return PluginPick(ChronosCore(), CampaignPlugin.PickPriority.MOD_SPECIFIC)
+        if (commodityId == RATItems.SERAPH_CORE) return PluginPick(SeraphCore(), CampaignPlugin.PickPriority.MOD_SPECIFIC)
+        if (commodityId == RATItems.PRIMORDIAL) return PluginPick(PrimordialCore(), CampaignPlugin.PickPriority.MOD_SPECIFIC)
 
         if (commodityId == "rat_neuro_core") {
-            return PluginPick(NeuroCore(), CampaignPlugin.PickPriority.HIGHEST)
+            return PluginPick(NeuroCore(), CampaignPlugin.PickPriority.MOD_SPECIFIC)
         }
 
         if (commodityId == "rat_exo_processor") {
-            return PluginPick(ExoProcessor(), CampaignPlugin.PickPriority.HIGHEST)
+            return PluginPick(ExoProcessor(), CampaignPlugin.PickPriority.MOD_SPECIFIC)
         }
 
         return null

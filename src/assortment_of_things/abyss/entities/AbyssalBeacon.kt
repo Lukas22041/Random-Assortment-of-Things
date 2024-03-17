@@ -16,11 +16,11 @@ import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
-class AbyssalBeacon : BaseCustomEntityPlugin() {
+class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
 
     var baseRadius = 3000f
     var extraRadius = 12000f
-    var radius = baseRadius + extraRadius
+    override var radius = baseRadius + extraRadius
     var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
 
     var fader = FaderUtil(1f, 15f, MathUtils.getRandomNumberInRange(14f, 15f), false, false)

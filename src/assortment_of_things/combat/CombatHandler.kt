@@ -10,6 +10,7 @@ import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.input.InputEventAPI
@@ -101,6 +102,13 @@ class CombatHandler : EveryFrameCombatPlugin
                     engine!!.addLayeredRenderingPlugin(CombatPhotosphereRenderer(150f, photosphere))
                 }
 
+                var collosal = system.planets.find { it.spec.planetType == "rat_colossal_photosphere" }
+                if (collosal != null) {
+                    if (MathUtils.getDistance(collosal, Global.getSector().playerFleet.location) <= 9000) {
+                        engine!!.addLayeredRenderingPlugin(CombatColossalPhotosphereRenderer(350f, collosal as PlanetAPI))
+
+                    }
+                }
 
 
 
@@ -142,7 +150,7 @@ class CombatHandler : EveryFrameCombatPlugin
 
                 if (darkness != null) {
 
-                    if (darkness.containsEntity(Global.getSector().playerFleet))
+                    if (darkness.getDarknessMult() >= 0.9)
                     {
 
                         var path = "graphics/icons/hullsys/high_energy_focus.png"

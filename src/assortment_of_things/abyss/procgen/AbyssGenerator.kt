@@ -3,10 +3,7 @@ package assortment_of_things.abyss.procgen
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.intel.map.AbyssMap
-import assortment_of_things.abyss.procgen.types.DarkAbyssType
-import assortment_of_things.abyss.procgen.types.DefaultAbyssType
-import assortment_of_things.abyss.procgen.types.FinalAbyssType
-import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
+import assortment_of_things.abyss.procgen.types.*
 import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
@@ -40,7 +37,7 @@ class  AbyssGenerator {
 
     var usedNames = ArrayList<String>()
 
-    var types = listOf<BaseAbyssType>(DefaultAbyssType(), IonicStormAbyssType(), DarkAbyssType())
+    var types = listOf<BaseAbyssType>(DefaultAbyssType(), IonicStormAbyssType(), DarkAbyssType(), ColossalPhotosphereType())
 
     fun beginGeneration() {
 

@@ -14,7 +14,7 @@ class IonicStormAbyssType : BaseAbyssType() {
     }
 
     override fun getWeight() : Float{
-        return 0.5f
+        return 0.4f
     }
 
     override fun getTerrainFraction(): Float {
