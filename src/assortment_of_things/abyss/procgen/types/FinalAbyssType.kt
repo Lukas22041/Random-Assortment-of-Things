@@ -86,9 +86,8 @@ class FinalAbyssType : BaseAbyssType() {
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_PURSUE_PLAYER] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALWAYS_PURSUE] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALLOW_DISENGAGE] = true
-        /*fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORES_OTHER_FLEETS] = true
+        fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORES_OTHER_FLEETS] = true
         fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORED_BY_OTHER_FLEETS] = true
-*/
         fleet.addScript(PrimFleetScript(fleet, token))
 
 
@@ -126,7 +125,7 @@ class FinalAbyssType : BaseAbyssType() {
 
         override fun advance(amount: Float) {
 
-            if (fleet.isAlive && !fleet.memoryWithoutUpdate.contains(MemFlags.ENTITY_MISSION_IMPORTANT)) {
+            if (fleet.isAlive && !fleet.isDespawning && !fleet.memoryWithoutUpdate.contains(MemFlags.ENTITY_MISSION_IMPORTANT)) {
                 fleet.makeImportant("")
             }
 

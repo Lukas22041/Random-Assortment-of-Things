@@ -28,7 +28,8 @@ class CrewConversionRemoveIntegratedRefitButton : BaseRefitButton() {
     }
 
     override fun shouldShow(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
-        return !variant!!.hasHullMod("rat_abyssal_conversion") && (variant.hasHullMod("rat_chronos_conversion") || variant.hasHullMod("rat_cosmos_conversion") || variant.hasHullMod("rat_seraph_conversion"))
+        return !variant!!.hasHullMod("rat_abyssal_conversion") &&
+                (variant.hasHullMod("rat_chronos_conversion") || variant.hasHullMod("rat_cosmos_conversion") || variant.hasHullMod("rat_seraph_conversion") || variant.hasHullMod("rat_primordial_conversion"))
     }
 
     override fun hasTooltip(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
@@ -64,6 +65,11 @@ class CrewConversionRemoveIntegratedRefitButton : BaseRefitButton() {
             if (variant.hasHullMod("rat_seraph_conversion")) {
                 variant!!.removeMod("rat_seraph_conversion")
                 Global.getSector().playerFleet.cargo.addCommodity(RATItems.SERAPH_CORE, 1f)
+            }
+
+            if (variant.hasHullMod("rat_primordial_conversion")) {
+                variant!!.removeMod("rat_primordial_conversion")
+                Global.getSector().playerFleet.cargo.addCommodity(RATItems.PRIMORDIAL, 1f)
             }
 
             variant!!.addMod("rat_abyssal_conversion")

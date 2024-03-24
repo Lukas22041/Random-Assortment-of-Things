@@ -76,6 +76,7 @@ class RATModPlugin : BaseModPlugin() {
         LunaRefitManager.addRefitButton(CrewConversionChronosRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionCosmosRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionSeraphRefitButton())
+        LunaRefitManager.addRefitButton(CrewConversionPrimordialRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionRemoveIntegratedRefitButton())
 
         LunaRefitManager.addRefitButton(DeltaAIRefitButton())
@@ -107,6 +108,7 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
+        Global.getSector().addTransientScript(ChangeMainMenuColorScript())
         Global.getSector().addTransientScript(AICoreReplacerScript())
         Global.getSector().addTransientListener(AICoreDropReplacerScript())
         Global.getSector().addTransientScript(ApplyRATControllerToPlayerFleet())
@@ -160,8 +162,13 @@ class RATModPlugin : BaseModPlugin() {
 
         if (RATSettings.relicsEnabled!! && Global.getSector().memoryWithoutUpdate.get("\$rat_relics_generated") == null) {
             var generator = RelicsGenerator()
-            generator.generateStations()
-            generator.generateConditions()
+
+            if (RATSettings.relicsEnabledStations!!) {
+                generator.generateStations()
+            }
+            if (RATSettings.relicsEnabledConditions!!) {
+                generator.generateConditions()
+            }
         }
 
         Global.getSector().addTransientScript(ChangeExoIntelState())

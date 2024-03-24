@@ -23,6 +23,8 @@ object RATSettings : LunaSettingsListener
 
     //Relics
     var relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
+    var relicsEnabledStations = LunaSettings.getBoolean(modID, "rat_enableRelicsStations")
+    var relicsEnabledConditions = LunaSettings.getBoolean(modID, "rat_enableRelicsConditions")
 
     //Frontiers
     var enableFrontiers = LunaSettings.getBoolean(modID, "rat_frontiersEnabled")
@@ -78,15 +80,14 @@ object RATSettings : LunaSettingsListener
         exoEnabled = LunaSettings.getBoolean(modID, "rat_exotechEnabled")
 
         relicsEnabled = LunaSettings.getBoolean(modID, "rat_relicsEnabled")
+        relicsEnabledStations = LunaSettings.getBoolean(modID, "rat_enableRelicsStations")
+        relicsEnabledConditions = LunaSettings.getBoolean(modID, "rat_enableRelicsConditions")
 
         enableFrontiers = LunaSettings.getBoolean(modID, "rat_frontiersEnabled")
         frontiersIncomeMult = LunaSettings.getFloat(modID, "rat_frontiersIncomeMult")
         frontiersCostMult = LunaSettings.getFloat(modID, "rat_frontiersCostMult")
 
-
         backgroundsEnabled = LunaSettings.getBoolean(modID, "rat_backgroundsEnabled")
-
-
 
         procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
         procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")

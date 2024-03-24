@@ -62,6 +62,7 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             if (isSeraphCore(ship)) return true
             if (isChronosCore(ship)) return true
             if (isCosmosCore(ship)) return true
+            if (isPrimordialCore(ship)) return true
             return false
         }
 
@@ -69,6 +70,23 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             if (isSeraphCore(ship)) return true
             if (isChronosCore(ship)) return true
             if (isCosmosCore(ship)) return true
+            if (isPrimordialCore(ship)) return true
+            return false
+        }
+
+        fun isPrimordialCore(ship: ShipAPI) : Boolean
+        {
+            if (ship.variant.hasHullMod("rat_primordial_conversion")) return true
+            if (ship.captain == null) return false
+            if (ship.captain.aiCoreId == RATItems.PRIMORDIAL) return true
+            return false
+        }
+
+        fun isPrimordialCore(ship: FleetMemberAPI) : Boolean
+        {
+            if (ship.variant.hasHullMod("rat_primordial_conversion")) return true
+            if (ship.captain == null) return false
+            if (ship.captain.aiCoreId == RATItems.PRIMORDIAL) return true
             return false
         }
 

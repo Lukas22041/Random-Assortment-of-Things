@@ -1,6 +1,7 @@
 package assortment_of_things.campaign.items
 
 import assortment_of_things.RATCampaignPlugin
+import assortment_of_things.abyss.skills.PrimordialCoreSkill
 import assortment_of_things.abyss.skills.SeraphCoreSkill
 import assortment_of_things.abyss.skills.SpaceCoreSkill
 import assortment_of_things.abyss.skills.TimeCoreSkill
@@ -33,7 +34,7 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
             "rat_chronos_core" to "rat_core_time",
             "rat_cosmos_core" to "rat_core_space",
             "rat_seraph_core"  to "rat_core_seraph",
-            "rat_primordial_core"  to "rat_core_time",
+            "rat_primordial_core"  to "rat_core_primordial",
             "rat_neuro_core"  to "rat_hyperlink",
             "rat_exo_processor"  to "rat_exo_processor",
         )
@@ -115,6 +116,7 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
             "rat_core_time" -> TimeCoreSkill().createCustomDescription(null, null, tooltip, tooltip.widthSoFar)
             "rat_core_space" -> SpaceCoreSkill().createCustomDescription(null, null, tooltip, tooltip.widthSoFar)
             "rat_core_seraph" -> SeraphCoreSkill().createCustomDescription(null, null, tooltip, tooltip.widthSoFar)
+            "rat_core_primordial" -> PrimordialCoreSkill().createCustomDescription(null, null, tooltip, tooltip.widthSoFar)
             "rat_hyperlink" -> HyperlinkSkill().createCustomDescription(null, null, tooltip, tooltip.widthSoFar)
             "rat_exo_processor" -> ExoProcessorSkill().createCustomDescription(null, null, tooltip, tooltip.widthSoFar)
         }

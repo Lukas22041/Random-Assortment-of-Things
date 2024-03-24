@@ -6,16 +6,20 @@ import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
 import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
+import assortment_of_things.abyss.scripts.ChangeMainMenuColorScript
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.combat.CombatEngine
 import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.util.vector.Vector2f
 
 
 class CombatHandler : EveryFrameCombatPlugin
@@ -44,6 +48,15 @@ class CombatHandler : EveryFrameCombatPlugin
             engine.addPlugin(DPSMeter())
         }*/
 
+        if (ChangeMainMenuColorScript.isInAbyss) {
+            Global.getCombatEngine().backgroundColor = ChangeMainMenuColorScript.lastAbyssColor
+            ChangeMainMenuColorScript.isInAbyss = false
+
+        }
+
+
+
+     //   Global.getCombatEngine().setPlayerShipExternal(ship)
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {
@@ -119,7 +132,6 @@ class CombatHandler : EveryFrameCombatPlugin
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
     }
 
-
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?)
     {
         /*if (ArtifactUtils.getActiveArtifact() != null)
@@ -134,7 +146,6 @@ class CombatHandler : EveryFrameCombatPlugin
             if (ship == playership) continue
             ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.ESCORT_OTHER_SHIP, 1f, playership)
         }*/
-
 
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)

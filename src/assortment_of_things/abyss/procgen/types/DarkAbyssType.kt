@@ -14,7 +14,7 @@ class DarkAbyssType : BaseAbyssType() {
     }
 
     override fun getWeight() : Float{
-        return 0.33f
+        return 0.40f
     }
 
     override fun getTerrainFraction(): Float {

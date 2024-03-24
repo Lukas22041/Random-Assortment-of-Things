@@ -31,7 +31,7 @@ rat_abyss_beacon,CUSTOM,"A manmade beacon to illuminate the depths of the abyss 
 rat_chronos_core,RESOURCE,"A core resembling that of an alpha-level ai. It appears heavily altered, though by what remains unknown, as the core refuses to respond to any such matter. It has a high affinity for time-manipulating machinery. ",,,,
 rat_cosmos_core,RESOURCE,"A core resembling that of an alpha-level ai. It appears heavily altered, though by what remains unknown, as the core refuses to respond to any such matter. It has a high affinity for space-bending mechanisms. ",,,,
 rat_seraph_core,RESOURCE,"An odd core from the abyssal depths. It is unable to process normal speech patterns, but appears to be capable of understanding commands. Even in the context of artificial intelligence, it seems especialy reckless. ",,,,
-rat_primordial_core,RESOURCE,Placeholder,,,,
+rat_primordial_core,RESOURCE,"An utterly incomprehensible ai core, appearing to give a glimpse in to a different space alltogether if observed directly. When interfaced with an automated ship, part of this property is transfered over.",,,,
 ,,,,,,
 rat_ceto,SHIP,A small and fast fighter that packs a strong shield. Its weapons can temporarily decrease the effectiveness of the opponents armor.,,,,
 ,,,,,,

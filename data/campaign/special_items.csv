@@ -9,7 +9,7 @@ Forge-Assisted Industry BP,rat_consumeable_industry,,Forge-Assisted,,20000,1000,
 #Exo,,,,,,,,,,,,,,,
 Exo-Tech Blueprint Package,rat_exo_package,"package_bp, no_drop",,,650000,1000,1,,graphics/icons/cargo/rat_blueprint_exo.png,ui_chip_pickup,ui_bp_package_drop,com.fs.starfarer.api.campaign.impl.items.MultiBlueprintItemPlugin,rat_exotech_bp,"Enables heavy industry to construct the more common ship hulls, weapons, and fighter LPCs from the ""exo-tech"" school of design. A doctrine focused on phase ships and their supporting lineup.",270
 ,,,,,,,,,,,,,,,
-Partnership Deed,rat_exo_deed,,,,500000,1000,1,,graphics/icons/cargo/rat_exo_deed.png,ui_chip_pickup,ui_modspec_drop,assortment_of_things.exotech.items.PartnershipDeed,,,-1000
+Partnership Deed,rat_exo_deed,,,,100000,1000,1,,graphics/icons/cargo/rat_exo_deed.png,ui_chip_pickup,ui_modspec_drop,assortment_of_things.exotech.items.PartnershipDeed,,,-1000
 #Drone Replicator,rat_drone_replicator,,,,500000,1000,1,,graphics/icons/cargo/rat_hangar_forge.png,ui_chip_pickup,ui_modspec_drop,assortment_of_things.exotech.items.PartnershipDeed,,,-1000
 ,,,,,,,,,,,,,,,
 #Other,,,,,,,,,,,,,,,

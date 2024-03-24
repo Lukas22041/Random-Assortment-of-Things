@@ -55,7 +55,7 @@ class DoctrineReportAbyssal() : BaseIntelPlugin() {
         var chronosCore = ChronosCore().createPerson(RATItems.CHRONOS_CORE, AbyssUtils.FACTION_ID, Random())
         var chronosCoreIMG = info.beginImageWithText(chronosCore.portraitSprite, 48f)
         chronosCoreIMG.addPara(chronosCore.nameString, 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        chronosCoreIMG.addPara("The Chronos Core allows ships a faster timeflow and often activates time-related shipsystems on abyssal hulls.", 0f)
+        chronosCoreIMG.addPara("The Chronos Core allows ships a faster timeflow but comes at the cost of heavily reducing their engagement range.", 0f)
         info.addImageWithText(0f)
 
         info.addSpacer(10f)
@@ -63,7 +63,7 @@ class DoctrineReportAbyssal() : BaseIntelPlugin() {
         var cosmosCore = CosmosCore().createPerson(RATItems.COSMOS_CORE, AbyssUtils.FACTION_ID, Random())
         var cosmosCoreIMG = info.beginImageWithText(cosmosCore.portraitSprite, 48f)
         cosmosCoreIMG.addPara(cosmosCore.nameString, 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        cosmosCoreIMG.addPara("The Cosmos Core increases the weapon damage and range. It also decreases the damage the ship receives. It activates more defensive or burst focused shipsystems.", 0f)
+        cosmosCoreIMG.addPara("The Cosmos Core increases the weapon damage and range. It also decreases the damage the ship receives. In exchange, the ships speed and fire rate is heavily reduced.", 0f)
         info.addImageWithText(0f)
 
         info.addSpacer(10f)
@@ -73,7 +73,7 @@ class DoctrineReportAbyssal() : BaseIntelPlugin() {
         var synergyHullmodSpec = Global.getSettings().getHullModSpec("rat_abyssal_core")
         var synergyIMG = info.beginImageWithText(synergyHullmodSpec.spriteName, 48f)
         synergyIMG.addPara(synergyHullmodSpec.displayName, 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        synergyIMG.addPara("The ship are capable of adjusting between two different shipsystems each. This is toggled through the type of AI core piloting the ship. A ship without a core or a core from outside of this enviroment seem inable of activating the ships system.", 0f)
+        synergyIMG.addPara("The ships appears very synergetic with their ai-cores. Ships without ai cores have trouble using their shipsystem, and each ai core seems to give the ship its own advantage.", 0f)
         info.addImageWithText(0f)
 
         info.addSpacer(10f)

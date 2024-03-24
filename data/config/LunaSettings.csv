@@ -26,6 +26,10 @@ rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the di
 
 Hard mode greatly increases the strength of fleets found within the Abyss. Also adds slight player fleet scaling.",,,Expansion
 ,,,,,,,,
+rat_relicsHeader,Relics of the Past,Header,Relics of the Past,,,,,Expansion
+rat_enableRelicsStations,Spawn Stations,Boolean,true,,"Spawn the stations from ""Relics of the Past""",,,Expansion
+rat_enableRelicsConditions,Spawn Planetary Conditions,Boolean,true,,"Spawn the planetary conditions from ""Relics of the Past""",,,Expansion
+,,,,,,,,
 rat_frontiersHeader,Frontiers,Header,Frontiers,,,,,Expansion
 rat_frontiersIncomeMult,Income Multiplier,Double,1,,Multiplies the amount of passive income that settlements provide.,0.5,3.0,Expansion
 rat_frontiersCostMult,Cost Multiplier,Double,1,,"Changes the cost of all settlement related expanses, like establishing one and paying for the construction of facilities.",0.5,3.0,Expansion
