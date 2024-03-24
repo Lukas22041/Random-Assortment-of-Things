@@ -85,7 +85,7 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
     }
 
     override fun getIntelTags(map: SectorMapAPI?): MutableSet<String> {
-        return mutableSetOf("Abyss", Tags.INTEL_MAJOR_EVENT)
+        return mutableSetOf("Abyssal Depths", Tags.INTEL_MAJOR_EVENT)
     }
 
 

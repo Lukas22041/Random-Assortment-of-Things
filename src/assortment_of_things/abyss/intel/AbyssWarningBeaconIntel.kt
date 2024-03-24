@@ -43,6 +43,7 @@ class AbyssWarningBeaconIntel(var beacon: SectorEntityToken, var faction: Factio
     override fun getIntelTags(map: SectorMapAPI?): MutableSet<String> {
         val tags = super.getIntelTags(map)
         tags.add(Tags.INTEL_BEACON)
+        tags.add("Abyssal Depths")
 
         return tags
     }

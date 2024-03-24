@@ -95,7 +95,7 @@ class DoctrineReportAbyssal() : BaseIntelPlugin() {
     }
 
     override fun getIntelTags(map: SectorMapAPI?): Set<String>? {
-        return mutableSetOf("Abyss")
+        return mutableSetOf("Abyssal Depths")
     }
 
 

@@ -174,7 +174,7 @@ class AbyssMap : BaseIntelPlugin() {
     }
 
     override fun getIntelTags(map: SectorMapAPI?): MutableSet<String> {
-        return mutableSetOf("Abyss")
+        return mutableSetOf("Abyssal Depths")
     }
 
     override fun getIcon(): String {
