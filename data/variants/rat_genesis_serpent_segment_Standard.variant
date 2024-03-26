@@ -1,22 +1,28 @@
 {
-  "variantId": "rat_genesis_serpent_segment_Standard",
-  "hullId": "rat_genesis_serpent_segment",
-  "displayName": "Standard",
-  "goalVariant": false,
-  "fluxCapacitors": 0,
-  "fluxVents": 0,
-  "quality": 1,
-  "permaMods": [],
-  "hullMods": [],
-  "weaponGroups": [
-    {
-      "autofire": false,
-      "mode": "LINKED",
-      "weapons": {
-        "WS0001": "rat_humpback"
-      }
-    }
-  ],
-  "modules": [],
-  "wings": []
+    "displayName": "Standard",
+    "fluxCapacitors": 10,
+    "fluxVents": 8,
+    "goalVariant": false,
+    "hullId": "rat_genesis_serpent_segment",
+    "hullMods": [
+        "fluxbreakers",
+        "fluxdistributor",
+        "heavyarmor",
+        "targetingunit",
+    ],
+    "permaMods": [],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_genesis_serpent_segment_Standard",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_humpback",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
 }

@@ -129,7 +129,7 @@ class FinalAbyssType : BaseAbyssType() {
                 fleet.makeImportant("")
             }
 
-            if (!fleet.isCurrentAssignment(FleetAssignment.ORBIT_PASSIVE)) {
+            if (fleet.isAlive && !fleet.isDespawning &&!fleet.isCurrentAssignment(FleetAssignment.ORBIT_PASSIVE)) {
                 fleet.clearAssignments()
                 fleet.addAssignment(FleetAssignment.ORBIT_PASSIVE, token, 9999999f, "Waiting")
                 fleet.facing = Random().nextFloat() * 360f

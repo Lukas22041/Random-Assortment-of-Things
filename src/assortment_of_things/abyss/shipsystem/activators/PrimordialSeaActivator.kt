@@ -266,7 +266,14 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         /*var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 1600f))*/
         var loc = findClearLocation(apparation, targetLoc)
         apparation.location.set(loc)
-
+        var closest = CombatUtils.getShipsWithinRange(loc, 600f).filter { it != apparation }.randomOrNull()
+        if (closest != null) {
+            var angle = Misc.getAngleInDegrees(apparation.location, closest.location)
+            apparation.facing = angle
+        }
+        else {
+            apparation.facing = ship.facing
+        }
 
         apparation.captain.setPersonality(Personalities.RECKLESS)
         apparation.shipAI = Global.getSettings().createDefaultShipAI(apparation, ShipAIConfig().apply { alwaysStrafeOffensively = true })
@@ -511,6 +518,8 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
         var range = activator.getCurrentRange()
 
         for (apparation in apparations ) {
+
+            if (!apparation.isAlive) continue
 
             var inRange = MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius
 

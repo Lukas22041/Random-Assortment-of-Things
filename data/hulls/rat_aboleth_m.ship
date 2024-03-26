@@ -7,13 +7,13 @@
   "height": 280,
   "width": 230,
   "center": [115, 140],
-  "collisionRadius": 175,
+  "collisionRadius": 195.5,
   "shieldCenter": [0, 0],
   "shieldRadius": 162.5,
   "viewOffset": 0,
   "builtInMods": [
     "rat_abyssal_core",
-    "rat_abyssal_grid",
+    "rat_abyssal_grid"
   ],
   "builtInWeapons": {
     "WS0014": "aboleth_cover_left",

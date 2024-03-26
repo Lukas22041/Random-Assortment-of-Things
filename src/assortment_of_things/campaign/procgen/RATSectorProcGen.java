@@ -13,6 +13,8 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.*;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceAbyssPlugin;
 import data.campaign.procgen.SectorProcGenMod;
 import data.campaign.procgen.themes.SectorThemeGenerator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.fs.starfarer.api.Global;
@@ -78,9 +80,11 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 
 		Boolean adjustedEnabled = Global.getSettings().getModManager().isModEnabled("Adjusted Sector");
 
-
 		if (Global.getSettings().getModManager().isModEnabled("Adjusted Sector"))
 		{
+			Logger logger = Global.getLogger(this.getClass());
+			logger.setLevel(Level.ALL);
+			logger.debug("RAT: Delegating Procgen Configuration to Adjusted Sector due to load order. If there is a crash right below, its caused by an issue with Adjusted Sector.");
 			new SectorProcGenMod().generate(data, progress);
 			return;
 		}

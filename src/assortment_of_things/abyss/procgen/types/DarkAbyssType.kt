@@ -39,7 +39,7 @@ class DarkAbyssType : BaseAbyssType() {
 
 
 
-        AbyssEntityGenerator.generateMajorLightsource(system, 3, 0.7f)
+        AbyssEntityGenerator.generateMajorLightsource(system, 3, 0.8f)
         //AbyssEntityGenerator.generateMinorEntity(system, "rat_abyss_beacon", 3, 1f)
         AbyssEntityGenerator.generateMinorEntity(system, "rat_abyss_transmitter", 1, 1f)
         AbyssEntityGenerator.generateMinorEntityWithDefenses(system, "rat_abyss_fabrication", fabricators, 0.9f, 0.7f)
