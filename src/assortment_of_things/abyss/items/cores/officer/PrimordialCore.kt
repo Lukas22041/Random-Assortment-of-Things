@@ -37,7 +37,7 @@ class PrimordialCore : AICoreOfficerPlugin {
         core.stats.setSkillLevel(Skills.FIELD_MODULATION, 2f)
         core.stats.setSkillLevel(Skills.GUNNERY_IMPLANTS, 2f)
         core.stats.setSkillLevel(Skills.COMBAT_ENDURANCE, 2f)
-        core.stats.setSkillLevel(Skills.SYSTEMS_EXPERTISE, 2f)
+        core.stats.setSkillLevel(Skills.DAMAGE_CONTROL, 2f)
         core.stats.setSkillLevel("rat_core_primordial", 1f)
 
         core.memoryWithoutUpdate.set(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT, automatedPointsMult)
