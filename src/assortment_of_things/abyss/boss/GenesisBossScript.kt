@@ -83,12 +83,18 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
 
     init {
-        ship.maxHitpoints += 1.33f
+        ship.maxHitpoints *= 1.15f
         ship.hitpoints = ship.maxHitpoints
 
         var stats = ship.mutableStats
-        stats.weaponDamageTakenMult.modifyMult("boss_def_boost", 0.5f)
-        stats.engineDamageTakenMult.modifyMult("boss_def_boost", 0.5f)
+        stats.weaponDamageTakenMult.modifyMult("rat_genesis_permanent_boss_buff", 0.5f)
+        stats.engineDamageTakenMult.modifyMult("rat_genesis_permanent_boss_buff", 0.5f)
+
+        stats.energyWeaponRangeBonus.modifyMult("rat_genesis_permanent_boss_buff", 1.10f)
+        stats.ballisticWeaponRangeBonus.modifyMult("rat_genesis_permanent_boss_buff", 1.10f)
+
+       /* stats.maxSpeed.modifyMult("rat_genesis_permanent_boss_buff", 1.1f)
+        stats.systemCooldownBonus.modifyMult("rat_genesis_permanent_boss_buff", 0.9f)*/
 
     }
 
@@ -222,7 +228,6 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship.mutableStats.energyRoFMult.modifyMult("genesis_phase_2", 0.75f)
             ship.mutableStats.ballisticRoFMult.modifyMult("genesis_phase_2", 0.75f)
             ship.mutableStats.missileRoFMult.modifyMult("genesis_phase_2", 0.75f)
-
 
             ship.mutableStats.energyWeaponRangeBonus.modifyMult("genesis_phase_2", 0.60f)
             ship.mutableStats.ballisticWeaponRangeBonus.modifyMult("genesis_phase_2", 0.60f)
@@ -427,7 +432,10 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         apparation!!.captain = captain
 
-        apparation.mutableStats.maxSpeed.modifyMult("speed_debuff", 0.9f)
+        apparation.mutableStats.maxSpeed.modifyMult("rat_azazel_boss_buff", 1f)
+        apparation.mutableStats.fluxDissipation.modifyMult("rat_azazel_boss_buff", 1.2f)
+        apparation.mutableStats.fluxCapacity.modifyMult("rat_azazel_boss_buff", 1.2f)
+        apparation.mutableStats.armorBonus.modifyMult("rat_azazel_boss_buff", 1.2f)
 
         //manager.removeDeployed(apparation, true)
 
@@ -458,7 +466,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         //Global.getCombatEngine().addEntity(apparation)
 
-        var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(1400f, 2000f))
+        var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(2000f, 3000f))
         loc = findClearLocation(apparation, loc)
         apparation.location.set(loc)
 

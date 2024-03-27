@@ -5,6 +5,7 @@ import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
@@ -63,7 +64,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
     override fun shouldActivateAI(amount: Float): Boolean {
         var targetsInRange = false
-        var iterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship.location, 2000f, 2000f)
+        var iterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship.location, 4000f, 4000f)
         for (other in iterator) {
             if (other !is ShipAPI) continue
             if (other == ship) continue

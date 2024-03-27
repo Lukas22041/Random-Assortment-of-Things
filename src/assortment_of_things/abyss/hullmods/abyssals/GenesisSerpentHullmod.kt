@@ -6,6 +6,7 @@ import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
+import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.combat.listeners.WeaponRangeModifier
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
@@ -72,6 +73,10 @@ class GenesisSerpentHullmod : BaseHullMod() {
             flamer.ammo = MathUtils.clamp(flamer!!.ammo, 0, 80)
 
         }
+
+
+        var flags = ship.aiFlags
+        flags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_BACK_OFF)
 
 
     }
