@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.procgen.types
 
-import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.procgen.*
 import assortment_of_things.misc.fixVariant
@@ -10,18 +9,15 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.FleetAssignment
 import com.fs.starfarer.api.campaign.SectorEntityToken
-import com.fs.starfarer.api.campaign.listeners.FleetEventListener
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager
-import com.fs.starfarer.combat.CombatEngine
-import data.campaign.procgen.themes.RemnantThemeGenerator
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.makeImportant
 import java.awt.Color
-import java.util.Random
+import java.util.*
 
 class FinalAbyssType : BaseAbyssType() {
     override fun getWeight() : Float{
@@ -72,20 +68,24 @@ class FinalAbyssType : BaseAbyssType() {
 
         RemnantSeededFleetManager.addRemnantInteractionConfig(fleet)
 
-        fleet.clearAssignments()
+        /*fleet.clearAssignments()
         fleet.addAssignment(FleetAssignment.ORBIT_PASSIVE, token, 9999999f, "Waiting")
         fleet.setLocation(token.location.x, token.location.y)
-        fleet.facing = Random().nextFloat() * 360f
+        fleet.facing = Random().nextFloat() * 360f*/
         fleet.stats.sensorProfileMod.modifyMult("rat_genesis", 3f)
 
         fleet.makeImportant("")
 
-        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_SAW_PLAYER_WITH_TRANSPONDER_ON] = true
+        fleet.setAI(null)
+        fleet.setCircularOrbit(token, MathUtils.getRandomNumberInRange(0f, 360f), 300f, 120f)
+
+        /*fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_SAW_PLAYER_WITH_TRANSPONDER_ON] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER] = true
-        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOSTILE] = true
+        *//*fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOSTILE] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_PURSUE_PLAYER] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALWAYS_PURSUE] = true
-        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALLOW_DISENGAGE] = true
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALLOW_DISENGAGE] = true*//*
+        fleet.memoryWithoutUpdate[MemFlags] = true*/
         fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORES_OTHER_FLEETS] = true
         fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORED_BY_OTHER_FLEETS] = true
         fleet.addScript(PrimFleetScript(fleet, token))
