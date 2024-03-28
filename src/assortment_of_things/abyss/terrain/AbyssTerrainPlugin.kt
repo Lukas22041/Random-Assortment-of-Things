@@ -207,8 +207,8 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
 
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("The Fracture Jump ability can not be used due to spatial interference. However the unique bending of the surrounding space allows the exit of this location by flying outside of its perceived bounds. This area is marked by a circle on the tripads map.",
-            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Fracture Jump", "exit", "map")
+        tooltip.addPara("The Transverse Jump ability can not be used due to spatial interference. However the unique bending of the surrounding space allows the exit of this location by flying outside of its perceived bounds. This area is marked by a circle on the tripads map.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Transverse Jump", "exit", "map")
 
         if (isInClouds(player))
         {

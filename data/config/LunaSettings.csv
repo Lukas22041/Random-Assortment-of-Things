@@ -2,11 +2,11 @@ fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValu
 ,,,,,,,,
 #Expansion,,,,,,,,
 rat_expansionsHeader,Expansions,Header,Expansions,,,,,Expansion
-rat_abyssEnabled,"Enable ""The Abyss""",Boolean,true,,"The Abyss is a new area focused on [Exploration]. It adds a variety of ships, weapons, and unique loot to find.
+rat_abyssEnabled,"Enable ""The Abyssal Depths""",Boolean,true,,"The Abyssal Depths is a new area focused on [Exploration]. It adds a variety of ships, weapons, and unique loot to find.
 
 The entrance can be found in the bottom left corner of the sector.
 
-Enabling ""the Abyss"" generates content for both new and existing saves upon game load.",,,Expansion
+If enabled, it generates content for both new and existing saves upon game load.",,,Expansion
 rat_exotechEnabled,"Enable ""Exo-Tech""",Boolean,true,,"Adds a faction called ""Exo-Tech"" to the sector. The faction can not be started with, and instead hides within the fringe-worlds of the sector, where it may have some oppertunities for trade with rare-technologies.
 
 Can be enabled mid-save",,,Expansion
@@ -20,7 +20,7 @@ rat_backgroundsEnabled,"Enable ""Backgrounds""",Boolean,true,,"Adds more unique 
 
 Requires [Nexerelin v0.11.0x] or newer.",,,Expansion
 ,,,,,,,,
-rat_abyssHeader,The Abyss,Header,The Abyss,,,,,Expansion
+rat_abyssHeader,The Abyssal Depths,Header,The Abyssal Depths,,,,,Expansion
 rat_abyssBrighter,Brighter Abyss,Boolean,false,,"Makes the abyss less dark, recommended if it turns out to be too dark on your screen.",,,Expansion
 rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the Abyss.
 

@@ -36,8 +36,10 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
     var font: LazyFont? = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
 
     @Transient
-    var fractureText:LazyFont.DrawableString = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+    var fractureText:LazyFont.DrawableString? = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
 
+    @Transient
+    var exitText:LazyFont.DrawableString? = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
 
     var id = Misc.genUID()
 
@@ -70,9 +72,32 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             fractureText = font!!.createText("", system.getColor().setAlpha(255), 800f)
         }
 
+        if (exitText == null) {
+            exitText = font!!.createText("", system.getColor().setAlpha(255), 800f)
+        }
+
         if (halo == null) {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
         }
+
+        var border = system.system.customEntities.find { it.customEntitySpec.id == "rat_abyss_border" } ?: return
+        var plugin = border.customPlugin
+        if (exitText != null && plugin is AbyssBorder) {
+            var radius = plugin.radius * factor
+
+            exitText!!.text = "Exit"
+            exitText!!.fontSize = 600f * factor
+            exitText!!.baseColor = system.getColor().setAlpha((255 * alphaMult).toInt())
+            exitText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            exitText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+            exitText!!.drawOutlined(-exitText!!.width / 2, radius + (exitText!!.height / 2))
+            exitText!!.drawOutlined(-exitText!!.width / 2, -radius + (exitText!!.height / 2))
+            exitText!!.drawOutlined(-radius - (exitText!!.width / 2), exitText!!.height / 2)
+            exitText!!.drawOutlined(radius - (exitText!!.width / 2), exitText!!.height / 2)
+        }
+
+
 
 
         var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
@@ -109,13 +134,13 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             if ((destination is StarSystemAPI && !destination.isEnteredByPlayer)) continue
 
             var destinationName = destination.nameWithNoType ?: continue
-            fractureText.text = destinationName
-            fractureText.fontSize = 400f * factor
-            fractureText.baseColor = system.getColor().setAlpha((255 * alphaMult).toInt())
-            fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            fractureText.blendSrc = GL11.GL_SRC_ALPHA
+            fractureText!!.text = destinationName
+            fractureText!!.fontSize = 400f * factor
+            fractureText!!.baseColor = system.getColor().setAlpha((255 * alphaMult).toInt())
+            fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
 
-            fractureText.drawOutlined(fracture.location.x * factor - (fractureText.width / 2), (fracture.location.y + 600) * factor + (fractureText.height))
+            fractureText!!.drawOutlined(fracture.location.x * factor - (fractureText!!.width / 2), (fracture.location.y + 600) * factor + (fractureText!!.height))
 
         }
     }
@@ -182,12 +207,12 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             if ((destination is StarSystemAPI && !destination.isEnteredByPlayer)) continue
 
             var destinationName = destination.nameWithNoType ?: continue
-            fractureText.text = destinationName
-            fractureText.fontSize = 800f * factor
-            fractureText.baseColor = system.getColor().setAlpha((255 * alphaMult).toInt())
-            fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            fractureText.blendSrc = GL11.GL_SRC_ALPHA
-            fractureText.drawOutlined((fracture.location.x - radarCenter.x) * factor - (fractureText.width / 2), (fracture.location.y - radarCenter.y + 800) * factor + (fractureText.height))
+            fractureText!!.text = destinationName
+            fractureText!!.fontSize = 800f * factor
+            fractureText!!.baseColor = system.getColor().setAlpha((255 * alphaMult).toInt())
+            fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+            fractureText!!.drawOutlined((fracture.location.x - radarCenter.x) * factor - (fractureText!!.width / 2), (fracture.location.y - radarCenter.y + 800) * factor + (fractureText!!.height))
         }
     }
 
