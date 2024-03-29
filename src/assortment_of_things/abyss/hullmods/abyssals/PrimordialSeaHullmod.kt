@@ -57,7 +57,7 @@ class PrimordialSeaHullmod : BaseHullMod() {
                 "This dimension is home to exotic matter that the ship is able to freely shape in to small formations, spawning an infinite amount of frigates within. " +
                 "This matter however is unable to exist within real space, and as such the ships are unable to operate outside of the overwriten reality." +
                 "\n\n" +
-                "Those frigates are controlled by the same core as the ship.",
+                "Those frigates are controlled by the same core as the ships.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "Primordial Sea", "infinite", "frigates", "unable to operate", "controlled by the same core")
 
