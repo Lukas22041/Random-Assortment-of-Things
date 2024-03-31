@@ -99,11 +99,11 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
         } else {
             text.addPara("You approach the young archivist, upon seeing you she can barely hold the excitement. ")
 
-            text.addPara("\"Lets make it quick, i'm in the process of documenting the history of several long depopulated starsystems. " +
-                    "I've come across a rumor with some large implications for the field, but i want to confirm the validity of those before going on with my research.")
+            text.addPara("\"Let's make it quick, I'm in the process of documenting the history of several long depopulated star systems. " +
+                    "I've come across a rumor with some larger implications for the field, but I want to confirm the validity of those before going on with my research.")
 
-            text.addPara("This is where you come in to play, i want you to confirm the existance of the rumors subject for me. " +
-                    "This profession isn't one with much credits to spare, so i can't put a reward on it, but i can promise you that if this finding is real, it will be worth for both you and me.\"")
+            text.addPara("This is where you come in to play, I want you to confirm the existence of the rumors subject for me. " +
+                    "This profession isn't one with much credits to spare, so I can't put a reward on it, but I can promise you that if this finding is real, it will be worth it for both you and me.\"")
 
         }
 
@@ -124,7 +124,7 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
             if (optionData == "LEAVE")
             {
                 finished = true
-                text.addPara("Thats dissapointing, however if you were to change your mind, i'l still be here.")
+                text.addPara("That's disappointing, however if you were to change your mind, I'll still be here.")
             }
 
             var known = person?.memoryWithoutUpdate?.getBoolean("\$rat_knownByPlayer") ?: false
@@ -145,18 +145,18 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
 
 
                 if (known) {
-                    text.addPara("\"Great! The rumor i want to confirm is the existance of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
+                    text.addPara("\"Great! The rumor I want to confirm is the existance of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
                             "Confirming the rumors validity would be a gateway in to learning much more about the history of this system.",
                         Misc.getTextColor(), Misc.getHighlightColor(), "${entity.name}", "${entity.starSystem.nameWithNoType}")
                 }
                 else {
-                    text.addPara("\"Thank you! The rumor i want to confirm is the existance of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
+                    text.addPara("\"Thank you! The rumor I want to confirm is the existence of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
                             "Confirming the rumors validity would be a gateway in to learning much more about the history of this system.",
                         Misc.getTextColor(), Misc.getHighlightColor(), "${entity.name}", "${entity.starSystem.nameWithNoType}")
                 }
 
-                text.addPara("Since there are no previous records of it, so it would be quite likely that none or few salvagers have yet set foot on it. " +
-                        "I dont care about what happens with the structure, aslong as you send me the data i want.\"")
+                text.addPara("Since there are no previous records of it, it would be quite likely that none or few salvagers have yet set foot on it. " +
+                        "I don't care about what happens with the structure, as long as you send me the data I want.\"")
 
                 dialog.visualPanel.showMapMarker(entity, "Desination: ${entity.starSystem}", Misc.getHighlightColor(), false, "", "", setOf())
 
