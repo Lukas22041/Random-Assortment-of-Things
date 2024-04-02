@@ -42,7 +42,9 @@ class GenesisHullmod : BaseHullMod() {
                 if (Global.getSector().characterData.person!!.stats.hasSkill(Skills.AUTOMATED_SHIPS)
                     || stats!!.variant.hasHullMod("rat_abyssal_conversion") ||
                     stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion") || stats!!.variant.hasHullMod("rat_seraph_conversion")) {
-                    stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
+                    if (!stats.variant.hasTag("rat_really_not_recoverable")) {
+                        stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
+                    }
                 }
                 else {
                     stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)

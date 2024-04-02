@@ -11,6 +11,7 @@ import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.impl.combat.MineStrikeStats
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
+import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
@@ -29,6 +30,8 @@ class LeaniraShipsystem : BaseShipSystemScript() {
     var platform: ShipAPI? = null
 
     var activated = false
+
+    var moduleDespawnInterval = IntervalUtil(0.1f, 0.1f)
 
     companion object {
         var range = 600f
@@ -68,10 +71,45 @@ class LeaniraShipsystem : BaseShipSystemScript() {
 
 
         for (module in ship!!.childModulesCopy) {
-            if (!module.isAlive) continue
+
+            module.alphaMult = 0f
+            module.collisionClass = CollisionClass.NONE
+
+            module.location.set(Vector2f(100000f, 100000f))
+            module.extraAlphaMult = 0f
+            module.extraAlphaMult2 = 0f
+            module.spriteAPI.color = Color(0, 0, 0,0)
+            module.mutableStats.hullDamageTakenMult.modifyMult("rat_module_to_be_despawned", 0f)
+            module.mutableStats.armorDamageTakenMult.modifyMult("rat_module_to_be_despawned", 0f)
+
+            module.isPhased = true
+            module.isHoldFireOneFrame = true
+
+            for (weapon in module.allWeapons) {
+                weapon.sprite?.color = Color(0, 0, 0, 0)
+                weapon.barrelSpriteAPI?.color = Color(0, 0, 0, 0)
+                weapon.glowSpriteAPI?.color = Color(0, 0, 0, 0)
+                weapon.underSpriteAPI?.color = Color(0, 0, 0, 0)
+            }
+
+            for (engine in module.engineController.shipEngines) {
+                engine.engineSlot.color = Color(0, 0, 0, 0)
+                engine.engineSlot.contrailColor = Color(0, 0, 0, 0)
+                engine.engineSlot.glowAlternateColor = Color(0, 0, 0, 0)
+            }
+
+            if (!Global.getCombatEngine().combatUI.isShowingCommandUI) {
+                moduleDespawnInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
+            }
+
+            if (module.hasTag("copied_variant")) continue
+            if (!moduleDespawnInterval.intervalElapsed()) continue
+
+            module.addTag("copied_variant")
+
             variant = module.variant
-            Global.getCombatEngine().removeEntity(module)
-            module.hitpoints = 0f
+            /*Global.getCombatEngine().removeEntity(module)
+            module.hitpoints = 0f*/
             Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
             platform = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, 1f, Vector2f(), ship!!.facing)
             Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false

@@ -1,0 +1,22 @@
+{
+	"id":"rat_grappling_hook_shot",
+	"specClass":"projectile",
+	"spawnType":"BALLISTIC_AS_BEAM",
+	"collisionClass":"RAY",
+	"collisionClassByFighter":"RAY_FIGHTER",
+	"length":30.0,
+	"width":7.5,
+	"glowRadius":20,
+	"hitGlowRadius":75,
+	"fadeTime":0.25,
+	"fringeColor":[235, 159, 19,255],
+	"coreColor":[235, 159, 19,255],
+	"glowColor":[235, 159, 19, 75],
+	#"coreColor":[255,255,255,50],
+	"textureType":"SMOOTH",  # only needed for BEAM spawnType
+	"textureScrollSpeed":-256,
+	"pixelsPerTexel":5.0,
+	#"bulletSprite":"graphics/weapons/abyss/proj/burst_energy_projectile.png"
+	"onHitEffect":"assortment_of_things.exotech.weapons.grapple.GrapplingEffect",
+	"onFireEffect":"assortment_of_things.exotech.weapons.grapple.GrapplingEffect",
+}

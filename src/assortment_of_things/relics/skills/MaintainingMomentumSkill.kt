@@ -36,7 +36,7 @@ class MaintainingMomentumSkill : RATBaseShipSkill() {
 
             if (Global.getCombatEngine()?.listenerManager?.hasListenerOfClass(MaintaningMomentumListener::class.java) != true) {
                 var listener = MaintaningMomentumListener(ship)
-                Global.getCombatEngine().listenerManager.addListener(listener)
+                Global.getCombatEngine()?.listenerManager?.addListener(listener)
                 ship.addListener(listener)
             }
         }

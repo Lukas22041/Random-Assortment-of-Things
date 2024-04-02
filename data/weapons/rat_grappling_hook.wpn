@@ -1,0 +1,35 @@
+{
+	"id":"rat_grappling_hook",  # this id must match what's in the spreadsheet
+	"specClass":"projectile",
+	"type":"ENERGY",
+	"size":"MEDIUM",
+	#"displayArcRadius":300,
+	
+	"turretSprite":"graphics/weapons/abyss/rat_humpback_turret.png",
+	"turretGlowSprite":"graphics/weapons/abyss/rat_humpback_turret_glow.png",
+
+	"hardpointSprite":"graphics/weapons/abyss/rat_humpback_hardpoint.png",
+	"hardpointGlowSprite":"graphics/weapons/abyss/rat_humpback_hardpoint_glow.png",
+	
+	"turretOffsets":[12, 0],
+	"turretAngleOffsets":[0],
+	"hardpointOffsets":[17, 0],
+	"hardpointAngleOffsets":[0],
+	"specialWeaponGlowWidth":15,
+	"specialWeaponGlowHeight":25,
+	"barrelMode":"ALTERNATING_BURST", # or LINKED.  whether barrels fire at the same time or alternate.
+	"animationType":"GLOW_AND_FLASH",
+	"muzzleFlashSpec":{"length":15.0,   # only used if animationType = MUZZLE_FLASH
+					   "spread":6.0,
+					   "particleSizeMin":8.0,
+					   "particleSizeRange":12.0,
+					   "particleDuration":0.1,
+					   "particleCount":12,
+					   "particleColor":[91, 169, 236, 100]},
+	"projectileSpecId":"rat_grappling_hook_shot",  # projectile that will be fired
+	"stopPreviousFireSound":false,
+	#"fireSoundOne":"heavy_machinegun_intro",
+	"fireSoundTwo":"abyss_haddock",
+	#"fireSoundTwo":"plasma_cannon_fire",
+
+}

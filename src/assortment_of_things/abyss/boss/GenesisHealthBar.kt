@@ -6,6 +6,7 @@ import com.fs.starfarer.api.combat.BaseEveryFrameCombatPlugin
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
+import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.input.InputEventAPI
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.opengl.GL11
@@ -22,6 +23,7 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
     var mainBarMaximumProgress = 0f
     var lowestFlashbarPercent = 0f
 
+    var lastJitterlocations = ArrayList<Vector2f>()
 
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
 
@@ -59,8 +61,8 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
 
         var scale = Global.getSettings().screenScaleMult
 
-        var width = 250f * scale
-        var height = 20f * scale
+        var width = 278 * scale
+        var height = 34 * scale
 
         var posX = screenWidth / 2
         var posY = screenHeight - 40f
@@ -75,7 +77,7 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
         var flashBarPercent = lowestFlashbarPercent
         flashBarPercent = MathUtils.clamp(flashBarPercent, 0f, mainBarMaximumProgress)
 
-        startBarStencil(posX - width / 2, posY - height / 2, width, height, flashBarPercent)
+        startBarStencil(posX - width / 2, posY - height , width, height * 2, flashBarPercent)
 
         mainBarBlashSprite.setSize(width, height)
         mainBarBlashSprite.alphaMult = mainbarAlpha
@@ -83,11 +85,14 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
 
         endStencil()
 
-        startBarStencil(posX - width / 2, posY - height / 2, width, height, mainBarPercent)
+        startBarStencil(posX - width / 2, posY - height, width, height * 2, mainBarPercent)
 
+        mainHealthBarFillSprite.setNormalBlend()
         mainHealthBarFillSprite.setSize(width, height)
         mainHealthBarFillSprite.alphaMult = mainbarAlpha
         mainHealthBarFillSprite.renderAtCenter(posX, posY)
+
+        doJitter(mainHealthBarFillSprite, mainbarAlpha, lastJitterlocations, 15, 10f, Vector2f(posX, posY))
 
         endStencil()
 
@@ -133,5 +138,36 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
         // <draw the lines>
     }
 
+    fun doJitter(sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>, jitterCount: Int, jitterMaxRange: Float, pos: Vector2f) {
+
+        var paused = Global.getCombatEngine().isPaused
+        var jitterAlpha = 0.1f
+
+        if (!paused) {
+            lastLocations.clear()
+        }
+
+        for (i in 0 until jitterCount) {
+
+            var jitterLoc = Vector2f()
+
+            if (!paused) {
+                var x = MathUtils.getRandomNumberInRange(-jitterMaxRange, jitterMaxRange)
+                var y = MathUtils.getRandomNumberInRange(-jitterMaxRange, jitterMaxRange)
+
+                jitterLoc = Vector2f(x, y)
+                lastLocations.add(jitterLoc)
+            }
+            else {
+                jitterLoc = lastLocations.getOrElse(i) {
+                    Vector2f()
+                }
+            }
+
+            sprite.setAdditiveBlend()
+            sprite.alphaMult = level * jitterAlpha
+            sprite.renderAtCenter(pos.x + jitterLoc.x, pos.y + jitterLoc.y)
+        }
+    }
 
 }

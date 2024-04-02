@@ -83,7 +83,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
 
     init {
-        ship.maxHitpoints *= 1.15f
+        ship.maxHitpoints *= 1.5f
+        ship.mutableStats.armorBonus.modifyMult("rat_genesis_hp_for_more_armor_dmg", 1.4f)
         ship.hitpoints = ship.maxHitpoints
 
         var stats = ship.mutableStats
@@ -103,7 +104,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     override fun init(entity: CombatEntityAPI?) {
         ship.addListener(this)
 
-       // Global.getCombatEngine().addPlugin(healthBar)
+        Global.getCombatEngine().addPlugin(healthBar)
     }
 
     override fun cleanup() {
@@ -126,11 +127,11 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         var soundplayer = Global.getSoundPlayer()
 
         var viewport = Global.getCombatEngine().viewport
-        /*if (viewport.isNearViewport(ship.location, ship.collisionRadius + 100f) && !startedMusic && Global.getCombatEngine().getTotalElapsedTime(false) >= 1f) {
+        if (viewport.isNearViewport(ship.location, ship.collisionRadius + 100f) && !startedMusic && Global.getCombatEngine().getTotalElapsedTime(false) >= 1f) {
             soundplayer.playCustomMusic(1, 1, "rat_abyss_genesis1", true)
             startedMusic = true
             hasSeenBoss = true
-        }*/
+        }
 
         if (azazel1?.isAlive == false && azazel2?.isAlive == false && phase == Phases.P2) {
             phase = Phases.P3
@@ -781,7 +782,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     GraphicLibEffects.CustomBubbleDistortion(Vector2f(ship.location), Vector2f(), 1000f + ship.collisionRadius, 25f, true, ship.facing, 360f, 1f
                         ,0.1f, 0.1f, 1f, 0.3f, 1f)
 
-                    //Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
+                    Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
 
                     azazel1 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
                     azazel2 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))

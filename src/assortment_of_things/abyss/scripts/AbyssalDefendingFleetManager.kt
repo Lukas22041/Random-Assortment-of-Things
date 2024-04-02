@@ -26,7 +26,6 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import java.util.*
-import kotlin.collections.ArrayList
 
 //Spawns a single defensive fleet that attempts to orbit around a single location.
 
@@ -223,6 +222,11 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
        // fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_ALLOW_LONG_PURSUIT] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOSTILE] = true
+        fleet.memoryWithoutUpdate[MemFlags.DO_NOT_TRY_TO_AVOID_NEARBY_FLEETS] = true
+
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE] = true
+        fleet.memoryWithoutUpdate[MemFlags.FLEET_DO_NOT_IGNORE_PLAYER] = true
+        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALWAYS_PURSUE] = true
 
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_NO_JUMP] = true
 

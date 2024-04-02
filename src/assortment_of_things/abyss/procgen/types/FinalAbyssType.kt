@@ -57,6 +57,7 @@ class FinalAbyssType : BaseAbyssType() {
         boss.variant.addTag(Tags.TAG_NO_AUTOFIT)
         boss.variant.addTag(Tags.VARIANT_UNBOARDABLE)
         boss.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
+        boss!!.variant.addTag("rat_really_not_recoverable")
 
         var core = PrimordialCore().createPerson(RATItems.PRIMORDIAL, "rat_abyssals_primordials", Random())
         boss.captain = core
