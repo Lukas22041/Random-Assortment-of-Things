@@ -74,6 +74,24 @@
 # collapseclose
 	},
 
+	"rat_raguel_system_concordshift_fire":[
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_01.ogg","pitch":0.9,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_01.ogg","pitch":1.1,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_01.ogg","pitch":1.0,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_02.ogg","pitch":0.9,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_02.ogg","pitch":1.1,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_02.ogg","pitch":1.0,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_03.ogg","pitch":0.9,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_03.ogg","pitch":1.1,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_03.ogg","pitch":1.0,"volume":0.8},
+                
+		#{"file":"sounds/sfx_wpn_energy/rift_explosion_01.ogg","pitch":1,"volume":1.0},
+		#{"file":"sounds/sfx_wpn_energy/rift_explosion_02.ogg","pitch":1,"volume":1.0},
+		#{"file":"sounds/sfx_wpn_energy/rift_explosion_03.ogg","pitch":1,"volume":1.0},
+		#{"file":"sounds/sfx_wpn_energy/rift_explosion_04.ogg","pitch":1,"volume":1.0},
+		#{"file":"sounds/sfx_wpn_energy/rift_explosion_05.ogg","pitch":1,"volume":1.0},
+	],
+
 	"rat_abyss_ambient_sounds":[
 		{"file":"sounds/sfx_abyss/rat_abyss_sound_1.ogg","pitch":1.0,"volume":1},
 		{"file":"sounds/sfx_abyss/rat_abyss_sound_2.ogg","pitch":1.0,"volume":1},

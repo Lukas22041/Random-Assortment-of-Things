@@ -49,8 +49,17 @@ class SeraphLensflareEffect : BaseCombatLayeredRenderingPlugin(CombatEngineLayer
 
         var point = weapon!!.location
 
-        if (!ship.system.isActive) return
+
+        var overwrite = ship.customData.get("rat_lensflare_level_overwrite") as Float? ?: 0f
+
+        if (ship.system.canBeActivated())
+        if (!ship.system.isActive && overwrite < 0.01) return
         var alphaMult = ship.system.effectLevel
+
+        if (overwrite > 0.01 && ship.system.state != ShipSystemAPI.SystemState.IN && ship.system.state != ShipSystemAPI.SystemState.ACTIVE) {
+            alphaMult = overwrite
+        }
+
 
         var point1 = MathUtils.getRandomPointInCircle(point, MathUtils.getRandomNumberInRange(0f, 1.5f))
         var point2 = MathUtils.getRandomPointInCircle(point, MathUtils.getRandomNumberInRange(0f, 1.5f))

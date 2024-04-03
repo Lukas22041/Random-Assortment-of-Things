@@ -1,0 +1,41 @@
+{
+	"id":"rat_raphael_launcher_missile",
+	"specClass":"missile",	
+	"missileType":"MISSILE",
+	"sprite":"graphics/weapons/abyss/builtin/rat_raphael_missile.png",
+	"size":[5,5],	
+	"center":[2,2],
+	"collisionRadius":5,
+	"collisionClass":"MISSILE_NO_FF",
+	"explosionColor":[205,155,255,150],  # purely visual, will get a white additively blended core on top of this color
+	"explosionRadius":40, # purely visual
+	"alwaysAccelerate":true,
+#	"engineSpec":{"turnAcc":140,
+#				  "turnRate":35,
+#				  "acc":1000,
+#				  "dec":500},
+	"engineSpec":{"turnAcc":200,
+				  "turnRate":150,
+				  "acc":800,
+				  "dec":400},
+	"engineSlots":[{"id":"ES1",
+					"loc":[0, 0],
+				    #"style":"MISSILE_HIGH_TECH",
+				    "style":"CUSTOM",
+					"styleSpec":{
+						"mode":"QUAD_STRIP", # PARTICLES or QUAD_STRIP, determines which params are used
+						"engineColor":[205,155,255,255],
+						"contrailDuration":0.2,
+						"contrailWidthMult":1,
+						"contrailWidthAddedFractionAtEnd":0.5,  # can be negative. makes trail spread out/narrow at the end
+						"contrailMinSeg":5, # min segment length, in pixels
+						"contrailMaxSpeedMult":1f,
+						"contrailAngularVelocityMult":1f,
+						"contrailColor":[205,155,255,75],
+						"type":"SMOKE" # GLOW or SMOKE; additive or regular blend mode
+					},
+				    "width":3.0,
+				    "length":10.0,
+				    "angle":180.0},
+				    ]
+}

@@ -1,0 +1,36 @@
+{
+	"id":"rat_raphael_system",
+	"type":"PHASE_CLOAK",
+	"aiType":"PHASE_CLOAK",
+	
+	"statsScript":"assortment_of_things.abyss.shipsystem.RaphaelShipsystem",
+	"runScriptWhilePaused":true, # only for the player's ship
+	"runScriptWhileIdle":true,
+	"blockActionsWhileChargingDown":false,
+	
+    "phaseHighlight":"_glow1",
+	"phaseDiffuse":"_glow2",
+	
+	"effectColor1":[200,175,255,200],
+	"effectColor2":[200,0,255,120],
+	
+	"clampTurnRateAfter":true,
+	"clampMaxSpeedAfter":true,
+	
+	"engineGlowColor":[0,0,0,0],
+	"engineGlowContrailColor":[0,0,0,0],
+	"engineGlowLengthMult":1,
+	"engineGlowWidthMult":1,
+	"engineGlowGlowMult":2,
+	
+	"soundFilterType":"LOWPASS",
+	"soundFilterGain":0.8,
+	"soundFilterGainHF":0.25,
+	
+	"shipAlpha":1, # handled in stats script
+	#"shipAlpha":0.25,
+	
+	"useSound":"rat_raguel_system_concordshift_fire",
+	"deactivateSound":"riftcascade_windup",
+	"outOfUsesSound":"system_phase_cloak_collision",
+}
