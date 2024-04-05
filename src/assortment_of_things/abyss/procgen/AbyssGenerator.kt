@@ -2,16 +2,24 @@ package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
+import assortment_of_things.abyss.entities.AbyssalPhotosphere
+import assortment_of_things.abyss.intel.event.DiscoveredPhotosphere
 import assortment_of_things.abyss.intel.map.AbyssMap
 import assortment_of_things.abyss.procgen.types.*
 import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
+import com.fs.starfarer.api.impl.campaign.ghosts.BaseSensorGhost
+import com.fs.starfarer.api.impl.campaign.ghosts.GBDartAround
+import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
 import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.util.Misc
@@ -19,7 +27,7 @@ import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
-import kotlin.collections.ArrayList
+import java.util.*
 
 class  AbyssGenerator {
 
@@ -361,6 +369,64 @@ class  AbyssGenerator {
 
             var entity = AbyssEntityGenerator.spawnMinorEntity(majorLightsource.starSystem, "rat_sariel_outpost")
             entity.setCircularOrbit(majorLightsource, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(600f, 700f), 120f)
+        }
+
+        if (Global.getSettings().modManager.isModEnabled("secretsofthefrontier")) {
+            var systemsWithMajorPoints = systems.filter { it.system != AbyssUtils.getAbyssData().rootSystem && it.depth == AbyssDepth.Shallow && it.majorPoints.isNotEmpty() && it.system.customEntities.any { it.customPlugin is AbyssalPhotosphere }}
+
+            if (systemsWithMajorPoints.isEmpty()) {
+                systemsWithMajorPoints = systems.filter { it.system != AbyssUtils.getAbyssData().rootSystem && it.majorPoints.isNotEmpty() && it.system.customEntities.any { it.customPlugin is AbyssalPhotosphere }}
+            }
+
+            if (systemsWithMajorPoints.isNotEmpty()) {
+
+                var system = systemsWithMajorPoints.random()
+                var pos = system.majorPoints.randomAndRemove()
+
+                var photosphere = system.system.addCustomEntity("rat_abyss_photosphere_sierra_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere_sierra", Factions.NEUTRAL)
+                photosphere.setLocation(pos.x, pos.y)
+                photosphere.radius = 100f
+                photosphere.addScript(DiscoveredPhotosphere(10, photosphere))
+
+                var plugin = photosphere.customPlugin as AbyssalPhotosphere
+                // plugin.radius = 15000f
+                plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
+                plugin.color = AbyssUtils.SIERRA_COLOR
+
+
+                photosphere.memoryWithoutUpdate.set("\$rat_photosphere_color_overwrite", AbyssUtils.SIERRA_COLOR)
+                photosphere.addTag("rat_abyss_sierra")
+
+                // sensor ghosts
+                for (i in 0 until 3) {
+                    val g = BaseSensorGhost(null, 0)
+                    g.initEntity(g.genMediumSensorProfile(), g.genSmallRadius(), 0, system.system)
+                    g.addBehavior(GBDartAround(photosphere,
+                        9999f,
+                        8 + Misc.random.nextInt(4),
+                        photosphere.radius + 200f,
+                        2500f))
+                    g.despawnRange = -1f
+                    g.entity.addTag("sotf_AMDancingGhost")
+                    g.setLoc(Misc.getPointAtRadius(photosphere.location, 1200f))
+                    //g.placeNearEntity(tia.getHyperspaceAnchor(), 800, 3200);
+                    system.system.addScript(g)
+
+
+                }
+
+                val params = DerelictShipEntityPlugin.createVariant("rat_raphael_Hull", Random(), DerelictShipEntityPlugin.getDefaultSModProb())
+                val raphael = BaseThemeGenerator.addSalvageEntity(Random(), system.system, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
+                raphael.setDiscoverable(true)
+
+                raphael.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), 280f, 90f)
+
+                raphael.addTag("rat_abyss_sierra_raphael")
+
+                var drone = AbyssEntityGenerator.spawnMinorEntity(system.system, "rat_abyss_drone")
+                drone.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), 550f, 120f)
+            }
+
         }
 
 

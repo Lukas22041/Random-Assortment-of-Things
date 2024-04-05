@@ -21,7 +21,7 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
     var baseRadius = 3000f
     var extraRadius = 12000f
     override var radius = baseRadius + extraRadius
-    var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
+    override var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
 
     var fader = FaderUtil(1f, 15f, MathUtils.getRandomNumberInRange(14f, 15f), false, false)
 

@@ -99,9 +99,15 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
             var id = interactionTarget.customEntitySpec.id
 
+            if (interactionTarget.hasTag("rat_abyss_sierra_raphael")) {
+                return PluginPick(AbyssalRaphaelInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
+
             if (interactionTarget.hasTag(AbyssTags.ABYSS_WRECK)) {
                 return PluginPick(AbyssalWreckInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
+
+
 
             when (id) {
                 "rat_abyss_rift_station" -> return PluginPick(RiftStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)

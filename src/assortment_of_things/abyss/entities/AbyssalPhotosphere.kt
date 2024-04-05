@@ -16,7 +16,7 @@ import java.awt.Color
 class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
 
     override var radius = 20000f
-    var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
+    override var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
 
     @Transient
     var halo: SpriteAPI? = null
@@ -44,6 +44,11 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         if (band1 != null && halo != null) return
 
         color = AbyssUtils.getSystemData(entity.starSystem).getColor()
+        var overwrite = entity.memoryWithoutUpdate.get("\$rat_photosphere_color_overwrite") as Color?
+        if (overwrite != null) {
+            color = overwrite
+            entity.customEntitySpec
+        }
         halo = Global.getSettings().getSprite("rat_terrain", "halo")
 
         val var1: Float = radius * 0.45f
@@ -127,7 +132,7 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
     override fun createMapTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
         super.createMapTooltip(tooltip, expanded)
 
-        tooltip!!.addPara("Photosphere", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "Photosphere")
+        tooltip!!.addPara("Photosphere", 0f, Misc.getTextColor(), color, "Photosphere")
 
     }
 }

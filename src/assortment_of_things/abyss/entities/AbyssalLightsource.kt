@@ -17,7 +17,7 @@ import java.awt.Color
 class AbyssalLightsource : BaseCustomEntityPlugin(), AbyssalLight {
 
     override var radius = 2000f
-    var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
+    override var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
 
     @Transient
     var halo: SpriteAPI? = null

@@ -103,11 +103,11 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
         for (source in lightsources)
         {
-            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
             var loc = Vector2f(source.location.x * factor, source.location.y * factor)
 
             var plugin = source.customPlugin as AbyssalLight
             var radius = plugin.radius * factor
+            var color = plugin.color
 
             halo!!.alphaMult = 0.6f * alphaMult
             halo!!.color = color.setAlpha(75)
@@ -163,12 +163,12 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         {
             if (MathUtils.getDistance(sources.location, radarCenter) >= radarRadius) continue
 
-            var color = AbyssUtils.getSystemData(entity.starSystem).getColor()
             var loc = Vector2f((sources.location.x - radarCenter.x) * factor, (sources.location.y - radarCenter.y) * factor)
 
 
             var plugin = sources.customPlugin as AbyssalLight
             var radius = plugin.radius * factor
+            var color = plugin.color
             if (plugin.radius >= 50000) continue
 
             halo!!.alphaMult = 1f * alphaMult
