@@ -126,9 +126,9 @@ class FinalAbyssType : BaseAbyssType() {
 
         override fun advance(amount: Float) {
 
-            if (fleet.isAlive && !fleet.isDespawning && !fleet.memoryWithoutUpdate.contains(MemFlags.ENTITY_MISSION_IMPORTANT)) {
+            /*if (fleet.isAlive && !fleet.isDespawning && !fleet.memoryWithoutUpdate.contains(MemFlags.ENTITY_MISSION_IMPORTANT)) {
                 fleet.makeImportant("")
-            }
+            }*/
 
            /* if (fleet.isAlive && !fleet.isDespawning &&!fleet.isCurrentAssignment(FleetAssignment.ORBIT_PASSIVE)) {
                 fleet.clearAssignments()

@@ -31,10 +31,10 @@ class AbyssalCloakShipsystem : BaseShipSystemScript() {
         ship = stats!!.entity as ShipAPI
 
         if (state == ShipSystemStatsScript.State.ACTIVE) {
-            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).enableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!)?.enableBlink()
         }
         else {
-            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).disableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!)?.disableBlink()
         }
 
         var ship = stats.entity as ShipAPI

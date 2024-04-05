@@ -9,11 +9,13 @@ import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.campaign.FleetMemberPickerListener
+import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.*
+import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 
 import com.fs.starfarer.api.loading.Description
@@ -86,6 +88,21 @@ class AbyssSarielOutpostInteraction : RATInteractionPlugin() {
 
                         }
                     })
+                }
+
+                createOption("Extract the conversion components without ship recovery." ) {
+                    clearOptions()
+
+                    textPanel.addPara("You order the crew to rip the relevant components out without much care, leaving the ship in an unuseable state, but allowing the recovery of the conversion kit without much effort.")
+
+                    var special = SpecialItemData("rat_alteration_install", "rat_abyssal_conversion")
+                    AddRemoveCommodity.addItemGainText(special, 1, textPanel)
+                    Global.getSector().playerFleet.cargo.addSpecial(special, 1f)
+
+                    createOption("Leave") {
+                        closeDialog()
+                        Misc.fadeAndExpire(interactionTarget)
+                    }
                 }
 
                 addLeaveOption()
