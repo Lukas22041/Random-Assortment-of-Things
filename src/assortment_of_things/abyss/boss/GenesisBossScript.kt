@@ -37,7 +37,7 @@ import kotlin.math.max
 class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullDamageAboutToBeTakenListener {
 
     var phase = Phases.P1
-    var transitionTimer = StateBasedTimer(1.5f, 2f, 3f)
+    var transitionTimer = StateBasedTimer(1.5f, 2f, 4f)
     var transitionDone = false
 
     var empInterval = IntervalUtil(2f, 2f)
@@ -83,7 +83,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
 
     init {
-        ship.maxHitpoints *= 1.5f
+        ship.maxHitpoints *= 1.75f
         ship.mutableStats.armorBonus.modifyMult("rat_genesis_hp_for_more_armor_dmg", 1.4f)
         ship.hitpoints = ship.maxHitpoints
 
@@ -263,8 +263,10 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                 PostProcessShader.setSaturation(false, 1f + (0.2f * level))
                 Global.getSoundPlayer().applyLowPassFilter(1f, 1 - (0.3f * level))
 
-                ship.hitpoints += (ship.maxHitpoints * 0.33f) * realAmount
-                ship.hitpoints = MathUtils.clamp(ship.hitpoints, 0f, ship.maxHitpoints)
+                if (transitionTimer.state == StateBasedTimer.TimerState.Out) {
+                    ship.hitpoints += (ship.maxHitpoints * 0.33f) * realAmount
+                    ship.hitpoints = MathUtils.clamp(ship.hitpoints, 0f, ship.maxHitpoints)
+                }
 
                 var percentPerSecond = 0.1f
                 if (ship.fluxLevel > 0f) {
@@ -273,7 +275,9 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                 if (transitionTimer.state == StateBasedTimer.TimerState.Out && !activateZone) {
                     activateZone = true
-                    Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.7f, 1.3f, ship.location, ship.velocity)
+                    Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.7f, 1.4f, ship.location, ship.velocity)
+                    Global.getSoundPlayer().resumeCustomMusic()
+                    Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
 
                     ripple = GraphicLibEffects.CustomRippleDistortion(ship!!.location, Vector2f(), ship.collisionRadius + 500, 75f, true, ship!!.facing, 360f, 1f
                         ,0.5f, 3f, 1f, 1f, 1f)
@@ -287,7 +291,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     ripple!!.advance(realAmount)
                 }
 
-                if (transitionTimer.done) {
+                if (transitionTimer.done && ship.hitpoints >= ship.maxHitpoints) {
                     transitionDone = true
                     ship.mutableStats.timeMult.modifyMult("rat_boss_timemult", 1f)
                     Global.getCombatEngine().timeMult.modifyMult("rat_boss_timemult", 1f)
@@ -782,7 +786,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     GraphicLibEffects.CustomBubbleDistortion(Vector2f(ship.location), Vector2f(), 1000f + ship.collisionRadius, 25f, true, ship.facing, 360f, 1f
                         ,0.1f, 0.1f, 1f, 0.3f, 1f)
 
-                    Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
+                    //Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
+                    Global.getSoundPlayer().pauseCustomMusic()
 
                     azazel1 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
                     azazel2 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))

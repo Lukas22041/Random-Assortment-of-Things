@@ -543,11 +543,11 @@ class FIDOverride(defenders: CampaignFleetAPI, dialog: InteractionDialogAPI, plu
                 }
                 if (persistDefenders) {
                     if (!entity.hasScriptOfClass(FleetAdvanceScript::class.java)) {
-                        defenders.setDoNotAdvanceAI(true)
+                     /*   defenders.setDoNotAdvanceAI(true)
                         defenders.setContainingLocation(entity.getContainingLocation())
                         // somewhere far off where it's not going to be in terrain or whatever
                         defenders.setLocation(1000000f, 1000000f)
-                        entity.addScript(FleetAdvanceScript(defenders))
+                        entity.addScript(FleetAdvanceScript(defenders))*/
                     }
                     memory.expire("\$defenderFleet", 10f) // defenders may have gotten damaged; persist them for a bit
                 }

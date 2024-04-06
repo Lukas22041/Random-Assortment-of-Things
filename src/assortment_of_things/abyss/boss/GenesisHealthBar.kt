@@ -5,7 +5,6 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseEveryFrameCombatPlugin
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ViewportAPI
-import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.input.InputEventAPI
 import org.lazywizard.lazylib.MathUtils
@@ -77,7 +76,11 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
         var flashBarPercent = lowestFlashbarPercent
         flashBarPercent = MathUtils.clamp(flashBarPercent, 0f, mainBarMaximumProgress)
 
-        startBarStencil(posX - width / 2, posY - height , width, height * 2, flashBarPercent)
+        var stencilOffsetLeft = 43f * scale
+        var stencilOffsetRight = 55f * scale
+
+        startBarStencil(posX + stencilOffsetLeft - width / 2, posY - height, width - stencilOffsetRight, height * 2, flashBarPercent)
+
 
         mainBarBlashSprite.setSize(width, height)
         mainBarBlashSprite.alphaMult = mainbarAlpha
@@ -85,7 +88,7 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
 
         endStencil()
 
-        startBarStencil(posX - width / 2, posY - height, width, height * 2, mainBarPercent)
+        startBarStencil(posX + stencilOffsetLeft - width / 2, posY - height, width - stencilOffsetRight, height * 2, mainBarPercent)
 
         mainHealthBarFillSprite.setNormalBlend()
         mainHealthBarFillSprite.setSize(width, height)

@@ -42,10 +42,10 @@ class ApheidasHullmod : BaseHullMod() {
 
         var contr = ship!!.engineController
         var engines = contr.shipEngines
-        var botLeftEngine = engines[1]
-        var botRightEngine = engines[0]
-        var topRightEngine = engines[2]
-        var topLeftEngine = engines[3]
+        var botLeftEngine = engines.getOrNull(1)
+        var botRightEngine = engines.getOrNull(0)
+        var topRightEngine = engines.getOrNull(2)
+        var topLeftEngine = engines.getOrNull(3)
 
         for (engine in engines) {
             contr.setFlameLevel(engine.engineSlot, 0.7f)
@@ -53,20 +53,20 @@ class ApheidasHullmod : BaseHullMod() {
         }
 
         if (contr.isAccelerating) {
-            contr.setFlameLevel(botLeftEngine.engineSlot, 1f)
-            contr.setFlameLevel(botRightEngine.engineSlot, 1f)
+            if (botLeftEngine!= null) contr.setFlameLevel(botLeftEngine.engineSlot, 1f)
+            if (botRightEngine != null) contr.setFlameLevel(botRightEngine.engineSlot, 1f)
         }
         else if (contr.isAcceleratingBackwards) {
-            contr.setFlameLevel(topLeftEngine.engineSlot, 0.95f)
-            contr.setFlameLevel(topRightEngine.engineSlot, 0.95f)
+            if (topLeftEngine != null) contr.setFlameLevel(topLeftEngine.engineSlot, 0.95f)
+            if (topRightEngine != null) contr.setFlameLevel(topRightEngine.engineSlot, 0.95f)
         }
         else if (contr.isStrafingLeft && !contr.isStrafingRight) {
-            contr.setFlameLevel(topRightEngine.engineSlot, 0.95f)
-            contr.setFlameLevel(botRightEngine.engineSlot, 0.95f)
+            if (topRightEngine != null) contr.setFlameLevel(topRightEngine.engineSlot, 0.95f)
+            if (botRightEngine != null) contr.setFlameLevel(botRightEngine.engineSlot, 0.95f)
         }
         else if (contr.isStrafingRight && !contr.isStrafingLeft) {
-            contr.setFlameLevel(topLeftEngine.engineSlot, 0.95f)
-            contr.setFlameLevel(botLeftEngine.engineSlot, 0.95f)
+            if (topLeftEngine != null) contr.setFlameLevel(topLeftEngine.engineSlot, 0.95f)
+            if (botLeftEngine!= null) contr.setFlameLevel(botLeftEngine.engineSlot, 0.95f)
         }
 
     }

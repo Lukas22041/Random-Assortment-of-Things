@@ -111,6 +111,8 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
     }
 
     override fun onActivate() {
+        if (!ship.isAlive) return
+
         deactivated = false
 
         Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.7f, 1f, ship.location, ship.velocity)
@@ -121,8 +123,14 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
         var variants = mutableListOf<String>()
 
-        variants += generateSequence { "rat_genesis_frigate_support_Standard" }.take(3)
-        variants += generateSequence { "rat_genesis_frigate_attack_Standard" }.take(3)
+        var extra = 0
+
+        /*if (ship.mutableStats?.fleetMember?.fleetData?.fleet?.faction?.id == "rat_abyssals_primordials") {
+            extra += 1
+        }*/
+
+        variants += generateSequence { "rat_genesis_frigate_support_Standard" }.take(3+extra)
+        variants += generateSequence { "rat_genesis_frigate_attack_Standard" }.take(3+extra)
 
         var takenTargets = ArrayList<ShipAPI>()
 
@@ -138,9 +146,10 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
             }
 
             var apparation = spawnApparation(variant, loc)
-            apparations.add(apparation)
+            if (apparation != null) {
+                apparations.add(apparation)
+            }
         }
-
     }
 
 
@@ -230,12 +239,12 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         return maxRange * effectLevel * effectLevel
     }
 
-    fun spawnApparation(variantId: String, targetLoc: Vector2f) : ShipAPI{
+    fun spawnApparation(variantId: String, targetLoc: Vector2f) : ShipAPI?{
         var variant = Global.getSettings().getVariant(variantId)
         var manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
 
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
-        var apparation = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, Vector2f(100000f, 100000f), ship!!.facing)
+        var apparation = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, Vector2f(100000f, 100000f), ship!!.facing) ?: return null
         apparation!!.fleetMember.id = Misc.genUID()
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
 

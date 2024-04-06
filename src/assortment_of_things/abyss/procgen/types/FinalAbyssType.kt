@@ -78,7 +78,7 @@ class FinalAbyssType : BaseAbyssType() {
         fleet.makeImportant("")
 
         fleet.setAI(null)
-        fleet.setCircularOrbit(token, MathUtils.getRandomNumberInRange(0f, 360f), 300f, 120f)
+        fleet.setCircularOrbit(token, MathUtils.getRandomNumberInRange(0f, 360f), 300f, 90f)
 
         /*fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_SAW_PLAYER_WITH_TRANSPONDER_ON] = true
         fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER] = true
