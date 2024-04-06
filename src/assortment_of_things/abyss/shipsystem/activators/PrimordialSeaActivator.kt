@@ -136,13 +136,15 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
         for (variant in variants) {
 
-            var targetShips = CombatUtils.getShipsWithinRange(ship.location, maxRange - 300).filter { !takenTargets.contains(it) }
+            var targetShips = CombatUtils.getShipsWithinRange(ship.location, maxRange - 500).filter { !takenTargets.contains(it) }
             var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 1600f))
 
-            var target = targetShips.randomOrNull()
-            if (target != null) {
-                takenTargets.add(target)
-                loc = MathUtils.getRandomPointOnCircumference(target.location, target.collisionRadius + MathUtils.getRandomNumberInRange(400f, 600f))
+            if (takenTargets.size < 3) {
+                var target = targetShips.randomOrNull()
+                if (target != null) {
+                    takenTargets.add(target)
+                    loc = MathUtils.getRandomPointOnCircumference(target.location, target.collisionRadius + MathUtils.getRandomNumberInRange(400f, 600f))
+                }
             }
 
             var apparation = spawnApparation(variant, loc)
