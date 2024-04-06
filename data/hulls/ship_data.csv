@@ -15,7 +15,7 @@ Morkoth,rat_morkoth,Drone Battleship,Abyssal,rat_abyssal_charge,30,18000,1300,22
 #Seraphs,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Raguel,rat_raguel,Droneship,Seraph,rat_raguel_system,14,4000,400,4500,6250,450,65,,110,160,150,45,100,250,FRONT,,270,0.4,0.75,,,0,0,10,15,1,15,10,45000,5,10,360,0.25,14,14,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, rat_seraph",,0.5,2,3,,3111
 Sariel,rat_sariel,Heavy Droneship,Seraph,rat_sariel_system,18,7000,750,8000,8000,500,115,,80,70,50,20,25,650,FRONT,,270,0.4,0.8,,,0,0,80,60,2,30,10,75000,5,15,420,0.25,18,18,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals, rat_seraph",,0.5,2,3,,3112
-Raphael,rat_raphael,Destroyer,Anomalous Phase-Tech,rat_raphael_system,24,7000,750,8000,8000,500,115,,80,70,50,20,25,650,FRONT,,270,0.4,0.8,,,0,15,80,60,2,30,10,125000,5,15,420,0.25,20,20,,,,,,,"HIDE_IN_CODEX, NO_NEURAL_LINK, PHASE","restricted, no_sell, no_dealer",,0.5,2,3,,3112
+Raphael,rat_raphael,Destroyer,Anomalous Phase-Tech,rat_raphael_system,24,7000,750,8000,8000,500,115,,80,70,50,20,25,650,FRONT,,270,0.4,0.8,,,0,15,80,60,2,30,10,125000,5,15,420,0.25,20,20,,,,,,,"HIDE_IN_CODEX, NO_NEURAL_LINK","restricted, no_sell, no_dealer",,0.5,2,3,,3112
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Primordials,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Genesis,rat_genesis,Protector,Primordial,rat_spatial_disturbance,40,18000,1400,16000,30000,1400,280,,40,50,50,15,25,2400,FRONT,,270,0.4,0.9,,,0,0,220,600,8,50,8,1000000,3,50,600,0.25,75,75,,,,,,,HIDE_IN_CODEX,"auto_rec, no_autofit",,0.4,2,3,,510
