@@ -99,15 +99,16 @@ class AbyssalRaphaelInteraction : RATInteractionPlugin() {
                 clearOptions()
                 visualPanel.showPersonInfo(sierra, true)
 
-                textPanel.addPara("Her avatar appears on your tripad without delay. \"How is this possible?\" she asks in a confused tone. \n\n" +
-                        "\"I have a strong feel i've seen this ship before.\" She says and pauses for a bit. \"Or rather, i feel as if i've piloted it before. " +
-                        "But it cant't be, i have no memories of entering this space before. It creeps me out.\" \n\n" +
-                        "She continues in a worried manner \"Commander...please keep the channel open, and provide the crew with a word of warning, i have a bad feeling somethings is off.\"",
+                var name = Global.getSector().memoryWithoutUpdate.get("\$sotf_Kindred")
+
+                textPanel.addPara("Her avatar appears on your TriPad without delay. \"How is this possible?\" she asks confusedly. \n\n" +
+                        "\"It feels like I've seen this ship before.\" She pauses a moment. \"Or rather, like I've flown it, felt its interfaces... but I've never been in this place before, right?\" \n\n" +
+                        "\"Can you keep the channel open, $name? And tell the crews to be careful? This all creeps me out.\"",
                     Misc.getTextColor(), AbyssUtils.SIERRA_COLOR,
                     "\"How is this possible?\"",
-                    "\"I have a strong feel i've seen this ship before.\"",
-                    "\"Or rather, i feel as if i've piloted it before. But it cant't be, i have no memories of entering this space before. It creeps me out.\"",
-                    "\"Commander...please keep the channel open, and provide the crew with a word of warning, i have a bad feeling somethings is off.\""
+                    "\"It feels like I've seen this ship before.\"",
+                    "\"Or rather, like I've flown it, felt its interfaces... but I've never been in this place before, right?\"",
+                    "\"Can you keep the channel open, $name? And tell the crews to be careful? This all creeps me out.\""
                     )
 
 
@@ -125,12 +126,17 @@ class AbyssalRaphaelInteraction : RATInteractionPlugin() {
                         clearOptions()
 
                         textPanel.addPara(
-                            "You call her name, and after a moment of thought she answers back \"Alright, now i'm just confused.\" she spurts out, the moment of thought appearing to have brought her no answer.\n\n" + "She goes on \"Not a fan of the implications, but i can think more of it later - at the moment we have more important topics to consider.\". \n\n" + "She continues \"This ship appears to be of heavy ordnance for its size and has specs unlike those seen elsewhere in the sector...\" " + "she leaves a short pause, and her tone changes as if she already forgot our previous conversation \"...and it looks as if it would be fun to dance with! \" she exerts excitedly.",
+                            "You call her name, and she takes a long moment to think. \"Alright, now I'm just confused,\" she finally answers, no explanation having come to mind.\n\n" +
+                                    "\"Not a fan of the implications here,\" she continues, \"But I can think on that later - there's more important matters at hand.\" \n\n" +
+                                    "\"Heavy ordnance for its size,\" she mutters, her tone gradually shifting as she fawns over the vessel, \"High-spec interdimensional warship, sourced from an extradimensional space exhibiting exotic physical properties...\" " +
+                                    "Her concerns drain away and she speaks almost giddily. \"Well, it might be cursed, but there's only one way to know for sure, right?\"",
                             Misc.getTextColor(), AbyssUtils.SIERRA_COLOR,
-                            "\"Alright, now i'm just confused.\"",
-                            "\"Not a fan of the implications, but i can think more of it later - at the moment we have more important topics to consider.\"",
-                            "\"This ship appears to be of heavy ordnance for its size and has specs unlike those seen elsewhere in the sector...\"",
-                            "\"...and it looks as if it would be fun to dance with! \"",
+                            "\"Alright, now I'm just confused,\"",
+                            "\"Not a fan of the implications here,\"",
+                            "\"But I can think on that later - there's more important matters at hand.\"",
+                            "\"Heavy ordnance for its size,\"",
+                            "\"High-spec interdimensional warship, sourced from an extradimensional space exhibiting exotic physical properties...\"",
+                            "\"Well, it might be cursed, but there's only one way to know for sure, right?\"",
                         )
 
                         textPanel.addPara("Understanding what she is getting at, you ready the crew for Sierras transfer.")
