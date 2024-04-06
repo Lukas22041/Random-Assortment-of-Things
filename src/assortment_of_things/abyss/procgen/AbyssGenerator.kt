@@ -372,16 +372,16 @@ class  AbyssGenerator {
         }
 
         if (Global.getSettings().modManager.isModEnabled("secretsofthefrontier")) {
-            var systemsWithMajorPoints = systems.filter { it.system != AbyssUtils.getAbyssData().rootSystem && it.depth == AbyssDepth.Shallow && it.majorPoints.isNotEmpty() && it.system.customEntities.any { it.customPlugin is AbyssalPhotosphere }}
+            var systemsWithUniquePoints = systems.filter { it.system != AbyssUtils.getAbyssData().rootSystem && it.depth == AbyssDepth.Shallow && it.uniquePoints.isNotEmpty() && it.system.customEntities.any { it.customPlugin is AbyssalPhotosphere }}
 
-            if (systemsWithMajorPoints.isEmpty()) {
-                systemsWithMajorPoints = systems.filter { it.system != AbyssUtils.getAbyssData().rootSystem && it.majorPoints.isNotEmpty() && it.system.customEntities.any { it.customPlugin is AbyssalPhotosphere }}
+            if (systemsWithUniquePoints.isEmpty()) {
+                systemsWithUniquePoints = systems.filter { it.system != AbyssUtils.getAbyssData().rootSystem && it.uniquePoints.isNotEmpty() && it.system.customEntities.any { it.customPlugin is AbyssalPhotosphere }}
             }
 
-            if (systemsWithMajorPoints.isNotEmpty()) {
+            if (systemsWithUniquePoints.isNotEmpty()) {
 
-                var system = systemsWithMajorPoints.random()
-                var pos = system.majorPoints.randomAndRemove()
+                var system = systemsWithUniquePoints.random()
+                var pos = system.uniquePoints.randomAndRemove()
 
                 var photosphere = system.system.addCustomEntity("rat_abyss_photosphere_sierra_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere_sierra", Factions.NEUTRAL)
                 photosphere.setLocation(pos.x, pos.y)
@@ -411,8 +411,6 @@ class  AbyssGenerator {
                     g.setLoc(Misc.getPointAtRadius(photosphere.location, 1200f))
                     //g.placeNearEntity(tia.getHyperspaceAnchor(), 800, 3200);
                     system.system.addScript(g)
-
-
                 }
 
                 val params = DerelictShipEntityPlugin.createVariant("rat_raphael_Hull", Random(), DerelictShipEntityPlugin.getDefaultSModProb())
