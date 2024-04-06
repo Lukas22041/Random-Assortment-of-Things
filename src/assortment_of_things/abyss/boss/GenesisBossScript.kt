@@ -246,6 +246,11 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                 ship.system.forceState(ShipSystemAPI.SystemState.COOLDOWN, 1f)
                 ship.isHoldFireOneFrame = true
+
+                for (weapon in ship.allWeapons) {
+                    weapon.setForceNoFireOneFrame(true)
+                }
+
                 transitionTimer.advance(realAmount)
                 var level = transitionTimer.level
                 var timeMult = 50f

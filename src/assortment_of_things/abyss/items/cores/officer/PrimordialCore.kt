@@ -36,7 +36,7 @@ class PrimordialCore : AICoreOfficerPlugin {
         core.stats.setSkillLevel(Skills.IMPACT_MITIGATION, 2f)
         core.stats.setSkillLevel(Skills.FIELD_MODULATION, 2f)
         core.stats.setSkillLevel(Skills.GUNNERY_IMPLANTS, 2f)
-        core.stats.setSkillLevel(Skills.COMBAT_ENDURANCE, 2f)
+        core.stats.setSkillLevel(Skills.ENERGY_WEAPON_MASTERY, 2f)
         core.stats.setSkillLevel(Skills.DAMAGE_CONTROL, 2f)
         core.stats.setSkillLevel("rat_core_primordial", 1f)
 

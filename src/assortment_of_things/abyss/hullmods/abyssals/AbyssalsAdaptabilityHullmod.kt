@@ -153,7 +153,7 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             stats.variant.addPermaMod(HullMods.AUTOMATED)
         }
 
-        if (!hasAbyssalCore(stats.fleetMember)) {
+        if (stats.fleetMember.captain == null || stats.fleetMember.captain.isDefault) {
             stats.systemCooldownBonus.modifyMult(id, 1.50f)
             stats.systemRegenBonus.modifyMult(id, 0.5f)
         }
@@ -239,9 +239,9 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
 
         tooltip!!.addSpacer(5f)
         tooltip.addPara("This type of hull is sensitive to the kind of ai core that controls it. " +
-                "Without an abyssal ai-core, the shipsystems cooldown and time to restore charges is worsened by 50%%." +
+                "Without an ai-core, the shipsystems cooldown and time to restore charges is worsened by 50%%." +
                 "\n\n" +
-                "Additionaly, certain mechanisms react differently to each core when installed in to the hull.", 0f,
+                "Additionaly, certain mechanisms react differently to abyssal cores when installed in to the hull.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "50%")
 
 
