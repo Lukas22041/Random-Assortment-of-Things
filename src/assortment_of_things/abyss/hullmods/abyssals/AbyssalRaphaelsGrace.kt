@@ -89,7 +89,7 @@ class AbyssalRaphaelsGrace : BaseHullMod() {
         }
 
 
-        ship!!.addListener(SeraphsGraceListener(ship))
+        ship!!.addListener(RaphaelsGraceListener(ship))
     }
 
     override fun isApplicableToShip(ship: ShipAPI?): Boolean {
@@ -112,14 +112,14 @@ class AbyssalRaphaelsGrace : BaseHullMod() {
         return AbyssUtils.SIERRA_COLOR
     }
 
-    class SeraphsGraceListener(var ship: ShipAPI) : AdvanceableListener, DamageListener {
+    class RaphaelsGraceListener(var ship: ShipAPI) : AdvanceableListener, DamageListener {
 
-        class SeraphsGraceStack(var duration: Float)
+        class RaphaelsGraceStack(var duration: Float)
 
         var damagePerStack = 100f
         var stackDuration = 15f
         var damageSoFar = 0f
-        var stacks = ArrayList<SeraphsGraceStack>()
+        var stacks = ArrayList<RaphaelsGraceStack>()
 
         var maxStacks = 30
 
@@ -176,14 +176,14 @@ class AbyssalRaphaelsGrace : BaseHullMod() {
             for (i in 0 until dividedInt) {
 
                 if (stacks.size < maxStacks) {
-                    stacks.add(SeraphsGraceStack(stackDuration))
+                    stacks.add(RaphaelsGraceStack(stackDuration))
                 }
                 else if (stacks.isNotEmpty()) {
                     var stack = stacks.sortedBy { it.duration }.first()
 
                     stacks.remove(stack)
 
-                    stacks.add(SeraphsGraceStack(stackDuration))
+                    stacks.add(RaphaelsGraceStack(stackDuration))
                 }
             }
 

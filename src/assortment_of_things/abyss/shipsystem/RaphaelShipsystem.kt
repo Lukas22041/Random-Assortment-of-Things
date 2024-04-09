@@ -132,7 +132,7 @@ class RaphaelShipsystem : BaseShipSystemScript() {
 
             for (weapon in ship.allWeapons) {
                 if (weapon.id.contains("raphael_launcher")) {
-                    var extra = weapon.ammo + 8
+                    var extra = weapon.ammo + 4
                     extra = MathUtils.clamp(extra, 0, weapon.maxAmmo)
                     weapon.ammo = extra
                 }

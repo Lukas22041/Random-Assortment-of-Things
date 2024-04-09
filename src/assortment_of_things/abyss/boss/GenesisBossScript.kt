@@ -476,7 +476,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         //Global.getCombatEngine().addEntity(apparation)
 
-        var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(2000f, 3000f))
+        var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(1800f, 2500f))
         loc = findClearLocation(apparation, loc)
         apparation.location.set(loc)
 
