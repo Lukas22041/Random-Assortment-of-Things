@@ -2,13 +2,12 @@ package assortment_of_things.abyss.hullmods.abyssals
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.hullmods.HullmodTooltipAbyssParticles
-import assortment_of_things.misc.addPara
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
-import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import com.fs.starfarer.api.combat.listeners.AdvanceableListener
-import com.fs.starfarer.api.combat.listeners.WeaponRangeModifier
+import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.impl.campaign.ids.Tags
@@ -16,9 +15,14 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.util.IntervalTracker
 import lunalib.lunaExtensions.addLunaElement
+import org.lazywizard.lazylib.FastTrig
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.VectorUtils
 import org.lazywizard.lazylib.combat.CombatUtils
+import org.lazywizard.lazylib.ext.plus
+import org.lwjgl.util.vector.Vector2f
+import java.awt.Color
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -60,6 +64,7 @@ class GenesisSerpentHullmod : BaseHullMod() {
             ship.shield.setRadius(ship.shieldRadiusEvenIfNoShield, "graphics/fx/rat_primordial_shields256.png", "graphics/fx/rat_primordial_shields256ring.png")
         }
 
+        Global.getCombatEngine()?.addLayeredRenderingPlugin(GenesisSerpentRenderer(ship))
         ship.addListener(GenesisSerpentWormBehavior(ship))
     }
 
@@ -111,6 +116,129 @@ class GenesisSerpentHullmod : BaseHullMod() {
 
     override fun isApplicableToShip(ship: ShipAPI): Boolean {
         return true
+    }
+
+
+    class GenesisSerpentRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
+
+        var weaponGlow = Global.getSettings().getAndLoadSprite("graphics/weapons/abyss/genesis/rat_genesis_flamer_large.png")
+        var weaponAlpha = 0f
+        var lastWeaponJitterLocation = ArrayList<Vector2f>()
+
+        override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
+            return EnumSet.of(CombatEngineLayers.ABOVE_SHIPS_LAYER)
+        }
+
+        override fun getRenderRadius(): Float {
+            return 100000f
+        }
+
+        override fun advance(amount: Float) {
+            var flamer = ship.allWeapons.find { it.spec.weaponId == "rat_genesis_construct_flamer_large" } ?: return
+            if (flamer!!.isFiring) {
+                weaponAlpha += 10f * amount
+            }
+            else {
+              weaponAlpha -= 1f  * amount
+            }
+            weaponAlpha = weaponAlpha.coerceIn(0f, 1f)
+        }
+
+        override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
+
+            var flamer = ship.allWeapons.find { it.spec.weaponId == "rat_genesis_construct_flamer_large" } ?: return
+
+
+            var loc = MathUtils.getPointOnCircumference(flamer.location, 12f, ship.facing)
+
+            weaponGlow.alphaMult = weaponAlpha * ship.alphaMult
+            weaponGlow.angle = ship.facing - 90
+            weaponGlow.setAdditiveBlend()
+            weaponGlow.renderAtCenter(loc.x , loc.y)
+
+            doJitter(weaponGlow, weaponAlpha, lastWeaponJitterLocation, loc, 5, 4f)
+
+            renderSystemGlow()
+        }
+
+        fun renderSystemGlow() {
+
+
+            var level = ship.system.effectLevel
+
+            var modules = listOf(ship) + ship.childModulesCopy
+            for (module in modules) {
+
+                if (!module.isAlive) continue
+
+
+                var moduleGlow = module.customData.get("rat_ship_glow") as SpriteAPI?
+                if (moduleGlow == null) {
+                    moduleGlow = Global.getSettings().getAndLoadSprite(module.hullSpec.spriteName.replace(".png", "") + "_glow.png")
+                    module.setCustomData("rat_ship_glow", moduleGlow)
+                }
+
+                var lastLocation = module.customData.get("rat_apparation_glow_locations") as ArrayList<Vector2f>?
+                if (lastLocation == null) {
+                    lastLocation = ArrayList<Vector2f>()
+                    module.setCustomData("rat_apparation_glow_locations", lastLocation)
+                }
+
+                val sprite = module.spriteAPI
+                val offsetX = sprite.width / 2 - sprite.centerX
+                val offsetY = sprite.height / 2 - sprite.centerY
+                val trueOffsetX = FastTrig.cos(Math.toRadians((ship.facing - 90f).toDouble()))
+                    .toFloat() * offsetX - FastTrig.sin(Math.toRadians((module.facing - 90f).toDouble()))
+                    .toFloat() * offsetY
+                val trueOffsetY = FastTrig.sin(Math.toRadians((ship.facing - 90f).toDouble()))
+                    .toFloat() * offsetX + FastTrig.cos(Math.toRadians((module.facing - 90f).toDouble()))
+                    .toFloat() * offsetY
+
+                var trueLoc = Vector2f(trueOffsetX, trueOffsetY)
+                trueLoc = module.location.plus(trueLoc)
+
+                moduleGlow.setAdditiveBlend()
+                moduleGlow.alphaMult = 1f * level
+                moduleGlow.angle = module.facing - 90
+                moduleGlow.renderAtCenter(trueLoc.x, trueLoc.y)
+
+
+
+                doJitter(moduleGlow, level * 0.5f, lastLocation, trueLoc, 15, 8f)
+            }
+        }
+
+        fun doJitter(sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>, loc: Vector2f, jitterCount: Int, jitterMaxRange: Float) {
+
+            var paused = Global.getCombatEngine().isPaused
+            var jitterAlpha = 0.2f
+
+            if (!paused) {
+                lastLocations.clear()
+            }
+
+            for (i in 0 until jitterCount) {
+
+                var jitterLoc = Vector2f()
+
+                if (!paused) {
+                    var x = MathUtils.getRandomNumberInRange(-jitterMaxRange, jitterMaxRange)
+                    var y = MathUtils.getRandomNumberInRange(-jitterMaxRange, jitterMaxRange)
+
+                    jitterLoc = Vector2f(x, y)
+                    lastLocations.add(jitterLoc)
+                }
+                else {
+                    jitterLoc = lastLocations.getOrElse(i) {
+                        Vector2f()
+                    }
+                }
+
+                sprite.setAdditiveBlend()
+                sprite.alphaMult = level * jitterAlpha
+                sprite.renderAtCenter(loc.x + jitterLoc.x, loc.y + jitterLoc.y)
+            }
+        }
     }
 
     //Based on Code from ED-Shipyards, which is based on KT_SinuousBody by Sinosauropteryx in Kingdom of Terra

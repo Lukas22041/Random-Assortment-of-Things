@@ -3,6 +3,7 @@ package assortment_of_things
 import assortment_of_things.abyss.AbyssCampaignListener
 import assortment_of_things.scripts.ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.boss.GenesisReencounterInteractionPlugin
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.AbyssProcgen
@@ -41,6 +42,7 @@ import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import org.lazywizard.lazylib.MathUtils
 import assortment_of_things.campaign.scripts.AICoreReplacerScript
+import com.fs.starfarer.api.EveryFrameScript
 import java.util.*
 
 
@@ -205,6 +207,46 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getLogger(this.javaClass).error("Failed to disable help pop-ups.")
             }
         }
+
+
+       /* var script = object : EveryFrameScript {
+            var done = false
+
+            var timer = 3f
+
+            *//**
+             * @return true when the script is finished and can be cleaned up by the engine.
+             *//*
+            override fun isDone(): Boolean {
+                return done
+            }
+
+            *//**
+             * @return whether advance() should be called while the campaign engine is paused.
+             *//*
+            override fun runWhilePaused(): Boolean {
+                return false
+            }
+
+
+            *//**
+             * Use SectorAPI.getClock() to convert to campaign days.
+             * @param amount seconds elapsed during the last frame.
+             *//*
+            override fun advance(amount: Float) {
+
+                timer -= 1f * amount
+
+
+                if (Global.getSector().campaignUI?.isShowingDialog == false && timer <= 0 && !done) {
+                    Global.getSector().campaignUI.showInteractionDialog(GenesisReencounterInteractionPlugin(), Global.getSector().playerFleet)
+                    done = true
+                }
+            }
+
+        }
+
+        Global.getSector().addScript(script)*/
     }
 
     fun generateAbyss() {

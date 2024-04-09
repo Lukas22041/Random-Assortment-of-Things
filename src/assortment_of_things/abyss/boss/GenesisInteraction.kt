@@ -139,6 +139,10 @@ class GenesisInteraction : RATInteractionPlugin() {
                 textPanel.addPara("And in a flash, your back standing within your ship, the hull devoid of any abyssal matter, and the crew still at the silence that befell after disabling the ship. " +
                         "You are unsure of what has happened, but you sense that something has plans for you.", Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "something")
 
+               /* var intel = GenesisRefightintel()
+                Global.getSector().intelManager.addIntel(intel)
+                Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)*/
+
                 addLeaveOption()
             }
 

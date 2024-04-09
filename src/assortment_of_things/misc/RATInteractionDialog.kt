@@ -268,6 +268,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
         dialog.plugin = plugin
         plugin.init(dialog)
 
+
     }
 
     /**
@@ -502,6 +503,7 @@ class FIDOverride(defenders: CampaignFleetAPI, dialog: InteractionDialogAPI, plu
     var plugin = plugin
     var originalPlugin = originalPlugin
 
+
     override fun notifyLeave(dialog: InteractionDialogAPI) {
         // nothing in there we care about keeping; clearing to reduce savefile size
         val entity = dialog.interactionTarget
@@ -512,6 +514,8 @@ class FIDOverride(defenders: CampaignFleetAPI, dialog: InteractionDialogAPI, plu
         var memory = dialog.interactionTarget.memoryWithoutUpdate
         dialog.plugin = originalPlugin
         dialog.interactionTarget = entity
+
+
 
         //Global.getSector().getCampaignUI().clearMessages();
         if (plugin.getContext() is FleetEncounterContext) {

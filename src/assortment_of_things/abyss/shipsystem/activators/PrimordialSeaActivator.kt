@@ -536,8 +536,12 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
             var inRange = MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius
 
             apparation.spriteAPI.color = Color(255, 255, 255, 255)
-            var apparationGlow =
-                Global.getSettings().getAndLoadSprite(apparation.hullSpec.spriteName.replace(".png", "") + "_glow.png")
+
+            var apparationGlow = apparation.customData.get("rat_ship_glow") as SpriteAPI?
+            if (apparationGlow == null) {
+                apparationGlow = Global.getSettings().getAndLoadSprite(apparation.hullSpec.spriteName.replace(".png", "") + "_glow.png")
+                apparation.setCustomData("rat_ship_glow", apparationGlow)
+            }
 
             var lastLocation = apparation.customData.get("rat_apparation_glow_locations") as ArrayList<Vector2f>?
             if (lastLocation == null) {

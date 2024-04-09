@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.boss
 
+import assortment_of_things.misc.StateBasedTimer
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseEveryFrameCombatPlugin
@@ -17,16 +18,30 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
     var mainHealthBarSprite = Global.getSettings().getAndLoadSprite("graphics/ui/rat_genesis_bar.png")
     var mainHealthBarFillSprite = Global.getSettings().getAndLoadSprite("graphics/ui/rat_genesis_bar_fill.png")
     var mainBarBlashSprite = Global.getSettings().getAndLoadSprite("graphics/ui/rat_genesis_bar_flashy.png")
+    var mainBarLocked = Global.getSettings().getAndLoadSprite("graphics/ui/rat_genesis_bar_locked.png")
+
+
 
     var mainbarAlpha = 0f
     var mainBarMaximumProgress = 0f
     var lowestFlashbarPercent = 0f
+
+    var lockAlpha = 0f
 
     var lastJitterlocations = ArrayList<Vector2f>()
 
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
 
         if (!Global.getCombatEngine().isPaused) {
+
+            if (bossScript.transitionTimer.state == StateBasedTimer.TimerState.Out) {
+                lockAlpha += 0.33f * (amount / Global.getCombatEngine().timeMult.modifiedValue)
+            }
+            if (bossScript.phase == GenesisBossScript.Phases.P3) {
+                lockAlpha -= 3f * amount
+            }
+            lockAlpha = MathUtils.clamp(lockAlpha, 0f, 1f)
+
             if (!ship.isAlive) {
                 mainbarAlpha -= 2f * amount
                 mainbarAlpha = MathUtils.clamp(mainbarAlpha, 0f, 1f)
@@ -95,11 +110,14 @@ class GenesisHealthBar(var bossScript: GenesisBossScript, var ship: ShipAPI) : B
         mainHealthBarFillSprite.alphaMult = mainbarAlpha
         mainHealthBarFillSprite.renderAtCenter(posX, posY)
 
-        doJitter(mainHealthBarFillSprite, mainbarAlpha, lastJitterlocations, 15, 10f, Vector2f(posX, posY))
+        doJitter(mainHealthBarFillSprite, mainbarAlpha * (1-lockAlpha), lastJitterlocations, 15, 10f, Vector2f(posX, posY))
 
         endStencil()
 
-
+        mainBarLocked.setNormalBlend()
+        mainBarLocked.setSize(width, height)
+        mainBarLocked.alphaMult = lockAlpha
+        mainBarLocked.renderAtCenter(posX, posY)
 
 
     }
