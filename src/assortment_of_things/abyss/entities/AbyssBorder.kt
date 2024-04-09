@@ -10,7 +10,11 @@ import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
+import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.opengl.GL11
+import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.getDistance
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
@@ -53,7 +57,31 @@ class AbyssBorder : BaseCustomEntityPlugin() {
 
         if (!playerfleet.isInHyperspaceTransition) {
             if (playerfleet.getDistance(entity) >= radius) {
-                Global.getSector().doHyperspaceTransition(playerfleet, playerfleet, JumpPointAPI.JumpDestination(AbyssUtils.getAbyssData().hyperspaceFracture, ""), 0f)
+
+                var abyssData = AbyssUtils.getAbyssData()
+
+                if (abyssData.lastExitFracture != null) {
+                    Misc.fadeAndExpire(abyssData.lastExitFracture, 0f)
+                }
+
+
+                var hyperspace = Global.getSector().hyperspace
+                var angle = Misc.getAngleInDegrees(Vector2f(), playerfleet.location)
+                var distance = MathUtils.getDistance(playerfleet.location, Vector2f())
+
+                var loc = MathUtils.getPointOnCircumference(Vector2f(), distance - playerfleet.radius - 100f, angle)
+
+                var tear = hyperspace.addCustomEntity("rat_abyss_last_exit", "Spatial Tear", "rat_abyss_fracture_small", Factions.NEUTRAL)
+
+                tear.setCircularOrbit(abyssData.hyperspaceFracture, angle, 450f, 999f)
+
+                abyssData.lastExitFracture = tear
+                abyssData.lastExitFractureDestination = loc
+                abyssData.lastExitFractureSystem = playerfleet.starSystem
+
+                Global.getSector().doHyperspaceTransition(playerfleet, playerfleet, JumpPointAPI.JumpDestination(tear, ""), 0f)
+
+                //Global.getSector().doHyperspaceTransition(playerfleet, playerfleet, JumpPointAPI.JumpDestination(AbyssUtils.getAbyssData().hyperspaceFracture, ""), 0f)
             }
         }
 

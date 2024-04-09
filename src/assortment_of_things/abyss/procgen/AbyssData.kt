@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.procgen
 
+import assortment_of_things.abyss.entities.AbyssalFractureSmall
 import assortment_of_things.abyss.scripts.AbyssDoctrineLearnedListener
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
@@ -15,8 +16,9 @@ class AbyssData {
     var systemsData = ArrayList<AbyssSystemData>()
     var generatedSteps = 0
 
-
-
+    var lastExitFracture: SectorEntityToken? = null
+    var lastExitFractureDestination: Vector2f? = null
+    var lastExitFractureSystem: StarSystemAPI? = null
 
     var abyssalsDestroyed = 0
     var hasAbyssalDoctrine = false

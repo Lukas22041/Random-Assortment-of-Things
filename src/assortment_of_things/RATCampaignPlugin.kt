@@ -1,7 +1,9 @@
 package assortment_of_things
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.boss.GenesisInteraction
 import assortment_of_things.abyss.entities.AbyssalFracture
+import assortment_of_things.abyss.entities.AbyssalFractureSmall
 import assortment_of_things.abyss.interactions.*
 import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
@@ -85,6 +87,14 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                     Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(plugin.connectedEntity, ""), 0.01f)
                 }
             }
+        }
+        if (plugin is AbyssalFractureSmall)  {
+
+            var system = AbyssUtils.getAbyssData().lastExitFractureSystem
+            var token = system!!.createToken(AbyssUtils.getAbyssData().lastExitFractureDestination)
+
+            Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(token, ""), 0.01f)
+
         }
         if (interactionTarget.hasTag("rat_abyss_entrance")) {
 
