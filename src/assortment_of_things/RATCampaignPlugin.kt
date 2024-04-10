@@ -2,6 +2,7 @@ package assortment_of_things
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.boss.GenesisInteraction
+import assortment_of_things.abyss.boss.GenesisReencounterInteractionPlugin
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.entities.AbyssalFractureSmall
 import assortment_of_things.abyss.interactions.*
@@ -74,6 +75,10 @@ class RATCampaignPlugin : BaseCampaignPlugin()
             if (interactionTarget.hasTag("rat_genesis_fleet")) {
                 return PluginPick(GenesisInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
+        }
+
+        if (interactionTarget.hasTag("rat_genesis_refight")) {
+            return PluginPick(GenesisReencounterInteractionPlugin(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
         var plugin = interactionTarget.customPlugin

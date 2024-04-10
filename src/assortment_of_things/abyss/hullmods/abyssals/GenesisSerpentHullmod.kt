@@ -151,7 +151,11 @@ class GenesisSerpentHullmod : BaseHullMod() {
 
             var loc = MathUtils.getPointOnCircumference(flamer.location, 12f, ship.facing)
 
-            weaponGlow.alphaMult = weaponAlpha * ship.alphaMult
+            var mult = 1f
+            if (ship.isPhased) mult = 0f
+
+            weaponGlow.color = flamer.sprite.color
+            weaponGlow.alphaMult = weaponAlpha * mult
             weaponGlow.angle = ship.facing - 90
             weaponGlow.setAdditiveBlend()
             weaponGlow.renderAtCenter(loc.x , loc.y)

@@ -143,6 +143,17 @@ class GenesisInteraction : RATInteractionPlugin() {
                 Global.getSector().intelManager.addIntel(intel)
                 Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)*/
 
+
+                var fracture = AbyssUtils.getAbyssData().hyperspaceFracture
+                var probe = fracture!!.containingLocation.addCustomEntity("rat_genesis_refight", "Unknown Memorial", "rat_genesis_memorial", Factions.NEUTRAL)
+
+                probe.setCircularOrbit(fracture, MathUtils.getRandomNumberInRange(0f, 360f), 350f, 150f)
+                probe.addTag("rat_genesis_refight")
+
+                Misc.makeImportant(probe, null)
+
+
+
                 addLeaveOption()
             }
 
