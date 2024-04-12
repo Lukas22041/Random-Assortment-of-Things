@@ -124,6 +124,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         var variants = mutableListOf<String>()
 
         var extra = 0
+        if (ship.variant.hasTag("rat_challenge_mode")) extra+=2
 
         /*if (ship.mutableStats?.fleetMember?.fleetData?.fleet?.faction?.id == "rat_abyssals_primordials") {
             extra += 1

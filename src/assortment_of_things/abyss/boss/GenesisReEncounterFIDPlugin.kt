@@ -21,6 +21,7 @@ class GenesisReEncounterFIDPlugin(config: FIDConfig, var originalPlugin: RATInte
             cleanUpBattle()
         }*/
 
+
         b.leave(Global.getSector().getPlayerFleet(), false)
 
         context.isAutoresolve = false

@@ -24,6 +24,8 @@ import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.achievements.MagicAchievement
+import org.magiclib.achievements.MagicAchievementManager
 import org.magiclib.kotlin.makeImportant
 import java.util.*
 
@@ -153,8 +155,13 @@ class GenesisInteraction : RATInteractionPlugin() {
                 Misc.makeImportant(probe, null)
 
 
+                createOption("Leave") {
+                    closeDialog()
+                    MagicAchievementManager.getInstance().completeAchievement("rat_beatSingularity")
+                }
 
-                addLeaveOption()
+
+
             }
 
         }

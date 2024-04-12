@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalStormParticleManager
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
+import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaActivator
 import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.StateBasedTimer
 import assortment_of_things.misc.getAndLoadSprite
@@ -30,6 +31,7 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import org.magiclib.subsystems.MagicSubsystem
+import org.magiclib.subsystems.MagicSubsystemsManager
 import java.awt.Color
 import java.util.*
 import kotlin.math.max
@@ -73,6 +75,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
     var azazel1: ShipAPI? = null
     var azazel2: ShipAPI? = null
+    var azazel3: ShipAPI? = null
+    var azazel4: ShipAPI? = null
     var phase3TransitionTimer = StateBasedTimer(2f, 1f, 0f)
     var phase3HealthLevel = 1f
     var maxPhas3HealthLevel = 1f
@@ -119,21 +123,47 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
     override fun advance(amount: Float) {
 
+        var hard = ship.variant.hasTag("rat_challenge_mode")
+
+        if (hard && phase == Phases.P3 && ship.hitpoints <= 0) {
+            Global.getSector().memoryWithoutUpdate.set("\$defeated_singularity_on_hard", true, 1f)
+        }
+
         handleParticles(amount)
-
-
-
 
         var soundplayer = Global.getSoundPlayer()
 
+        var subsystems = MagicSubsystemsManager.getSubsystemsForShipCopy(ship)
+        var primSea = subsystems!!.find { it is PrimordialSeaActivator }
+
+        var isPrimSeaActive = false
+        if (primSea != null) {
+            isPrimSeaActive = primSea.state == MagicSubsystem.State.ACTIVE
+        }
+
         var viewport = Global.getCombatEngine().viewport
-        if (viewport.isNearViewport(ship.location, ship.collisionRadius + 100f) && !startedMusic && Global.getCombatEngine().getTotalElapsedTime(false) >= 1f) {
+        if ((viewport.isNearViewport(ship.location, ship.collisionRadius + 100f) || isPrimSeaActive) && phase == Phases.P1 && !startedMusic && Global.getCombatEngine().getTotalElapsedTime(false) >= 1f) {
             soundplayer.playCustomMusic(1, 1, "rat_abyss_genesis1", true)
             startedMusic = true
             hasSeenBoss = true
         }
 
-        if (azazel1?.isAlive == false && azazel2?.isAlive == false && phase == Phases.P2) {
+
+        var skipToPhase3 = false
+        if (hard && azazel1 != null) {
+            var count = 0
+            if (!azazel1!!.isAlive) count += 1
+            if (!azazel2!!.isAlive) count += 1
+            if (!azazel3!!.isAlive) count += 1
+            if (!azazel4!!.isAlive) count += 1
+
+            if (count >= 2) {
+                skipToPhase3 = true
+            }
+        }
+
+
+        if (((azazel1?.isAlive == false && azazel2?.isAlive == false) || skipToPhase3) && phase == Phases.P2) {
             phase = Phases.P3
             ship.hitpoints = ship.maxHitpoints
             ship.fluxTracker.currFlux = 0f
@@ -204,7 +234,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         var realAmount = amount / Global.getCombatEngine().timeMult.modifiedValue
 
-        if (phase == Phases.P2) {
+        if (phase == Phases.P2 ) {
 
 
 
@@ -242,7 +272,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship!!.setJitterUnder(this, jitterUnderColor, (1- transitionTimer.level), 25, 0f, 10f)
 
 
-            if (!transitionDone) {
+            if (!transitionDone && ship.isAlive) {
 
                 ship.system.forceState(ShipSystemAPI.SystemState.COOLDOWN, 1f)
                 ship.isHoldFireOneFrame = true
@@ -288,7 +318,11 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                         ,0.5f, 3f, 1f, 1f, 1f)
 
 
-                   // var apparation = spawnApparation("rat_genesis_serpent_head_Standard")
+                    //Work around as spawning moduled ships can randomly cause ConcurrentModificationExceptions when called from advances and listeners attached to ships
+                    Global.getCombatEngine().addPlugin(AzazelSpawnPlugin(this))
+
+                    /*azazel1 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
+                    azazel2 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))*/
 
                 }
 
@@ -476,7 +510,12 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         //Global.getCombatEngine().addEntity(apparation)
 
-        var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(1800f, 2500f))
+        var hard = ship.variant.hasTag("rat_challenge_mode")
+
+        var extraRange = 0f
+        if (hard) extraRange = 250f
+
+        var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(1800f + extraRange, 2500f + extraRange))
         loc = findClearLocation(apparation, loc)
         apparation.location.set(loc)
 
@@ -759,7 +798,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                 return true
             }
 
-            if (ship!!.hitpoints - damageAmount <= 0) {
+            if (ship!!.hitpoints - damageAmount <= 100) {
 
                 if (phase == Phases.P1) {
 
@@ -794,13 +833,15 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     //Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
                     Global.getSoundPlayer().pauseCustomMusic()
 
-                    azazel1 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
-                    azazel2 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
+                    /*azazel1 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
+                    azazel2 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))*/
+
                     //var apparation2 = spawnApparation("rat_genesis_serpent_head_Standard", CosmosCore().createPerson(RATItems.COSMOS_CORE, "rat_abyssals_primordials", Random()))
 
                 }
 
                 return true
+
             }
 
         }

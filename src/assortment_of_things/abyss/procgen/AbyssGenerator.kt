@@ -372,11 +372,7 @@ class  AbyssGenerator {
         }
 
         if (Global.getSettings().modManager.isModEnabled("secretsofthefrontier")) {
-            var systemsWithUniquePoints = systems.filter { it.system != AbyssUtils.getAbyssData().rootSystem && it.depth == AbyssDepth.Shallow && it.uniquePoints.isNotEmpty() && it.system.customEntities.any { it.customPlugin is AbyssalPhotosphere }}
-
-            if (systemsWithUniquePoints.isEmpty()) {
-                systemsWithUniquePoints = systems.filter { it.system != AbyssUtils.getAbyssData().rootSystem && it.uniquePoints.isNotEmpty() && it.system.customEntities.any { it.customPlugin is AbyssalPhotosphere }}
-            }
+            var systemsWithUniquePoints = systems.filter { it.system != AbyssUtils.getAbyssData().rootSystem && it.uniquePoints.isNotEmpty() && it.system.customEntities.any { it.customPlugin is AbyssalPhotosphere }}
 
             if (systemsWithUniquePoints.isNotEmpty()) {
 

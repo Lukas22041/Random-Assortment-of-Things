@@ -12,6 +12,7 @@ import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.util.Misc
+import org.magiclib.achievements.MagicAchievementManager
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -19,6 +20,7 @@ class GenesisReencounterInteractionPlugin : RATInteractionPlugin() {
 
     var originalCr = HashMap<FleetMemberAPI, Float>()
     var originalCHull = HashMap<FleetMemberAPI, Float>()
+
 
     override fun init() {
 
@@ -47,70 +49,81 @@ class GenesisReencounterInteractionPlugin : RATInteractionPlugin() {
         textPanel.addTooltip()
 
         createOption("Relive the singularity encounter") {
-
-            clearOptions()
-
-            //Fleet Creation
-            var enemyFleet = Global.getFactory().createEmptyFleet("rat_abyssals_primordials", "Singularity", true)
-            enemyFleet.isNoFactionInName = true
-
-            var boss = enemyFleet.fleetData.addFleetMember("rat_genesis_Standard")
-            boss.fixVariant()
-
-            boss.variant.addTag(Tags.TAG_NO_AUTOFIT)
-            boss.variant.addTag(Tags.VARIANT_UNBOARDABLE)
-            boss.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
-            boss.repairTracker.cr = 0.7f
-            boss!!.variant.addTag("rat_really_not_recoverable")
-
-            var core = PrimordialCore().createPerson(RATItems.PRIMORDIAL, "rat_abyssals_primordials", Random())
-            boss.captain = core
-
-            enemyFleet.addTag("rat_genesis_fleet")
-            enemyFleet.memoryWithoutUpdate.set("\$defenderFleet", enemyFleet)
-
-            var config = FleetInteractionDialogPluginImpl.FIDConfig()
-
-            config.leaveAlwaysAvailable = true
-            config.showCommLinkOption = false
-            config.showEngageText = false
-            config.showFleetAttitude = false
-            config.showTransponderStatus = false
-            config.showWarningDialogWhenNotHostile = false
-            config.alwaysAttackVsAttack = true
-            config.impactsAllyReputation = true
-            config.impactsEnemyReputation = false
-            config.pullInAllies = false
-            config.pullInEnemies = false
-            config.pullInStations = false
-            config.lootCredits = false
-
-            config.firstTimeEngageOptionText = "Engage the defenses"
-            config.afterFirstTimeEngageOptionText = "Re-engage the defenses"
-            config.noSalvageLeaveOptionText = "Continue"
-
-            config.dismissOnLeave = false
-            config.printXPToDialog = true
-            config.withSalvage = false
-            config.leaveAlwaysAvailable = true
-            config.dismissOnLeave = false
-
-            val seed = Random().nextLong()
-            config.salvageRandom = Misc.getRandom(seed, 75)
-
-            var originalPlugin = dialog.plugin
-
-            //Plugin
-            var plugin = GenesisReEncounterFIDPlugin(config, this);
-
-            config.delegate = FIDOverride(enemyFleet!!, dialog, plugin, originalPlugin, this)
-
-            dialog.setPlugin(plugin);
-            dialog.setInteractionTarget(enemyFleet);
-            plugin.init(dialog);
+            beginFight(false)
         }
+        createOption("Experience a more challenging encounter") {
+            beginFight(true)
+        }
+        optionPanel.setTooltip("Experience a more challenging encounter", "Fight a genesis with stronger stats and slight difference in behaviour. Rewards an achievement for defeating it.")
 
         addLeaveOption()
+    }
+
+    fun beginFight(challenge: Boolean) {
+        clearOptions()
+
+        //Fleet Creation
+        var enemyFleet = Global.getFactory().createEmptyFleet("rat_abyssals_primordials", "Singularity", true)
+        enemyFleet.isNoFactionInName = true
+
+        var boss = enemyFleet.fleetData.addFleetMember("rat_genesis_Standard")
+        boss.fixVariant()
+
+        boss.variant.addTag(Tags.TAG_NO_AUTOFIT)
+        boss.variant.addTag(Tags.VARIANT_UNBOARDABLE)
+        boss.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
+        boss.repairTracker.cr = 0.7f
+        boss!!.variant.addTag("rat_really_not_recoverable")
+        if (challenge) {
+            boss.variant.addTag("rat_challenge_mode")
+        }
+        enemyFleet.addTag("rat_challenge_mode")
+
+        var core = PrimordialCore().createPerson(RATItems.PRIMORDIAL, "rat_abyssals_primordials", Random())
+        boss.captain = core
+
+        enemyFleet.addTag("rat_genesis_fleet")
+        enemyFleet.memoryWithoutUpdate.set("\$defenderFleet", enemyFleet)
+
+        var config = FleetInteractionDialogPluginImpl.FIDConfig()
+
+        config.leaveAlwaysAvailable = true
+        config.showCommLinkOption = false
+        config.showEngageText = false
+        config.showFleetAttitude = false
+        config.showTransponderStatus = false
+        config.showWarningDialogWhenNotHostile = false
+        config.alwaysAttackVsAttack = true
+        config.impactsAllyReputation = true
+        config.impactsEnemyReputation = false
+        config.pullInAllies = false
+        config.pullInEnemies = false
+        config.pullInStations = false
+        config.lootCredits = false
+
+        config.firstTimeEngageOptionText = "Engage the defenses"
+        config.afterFirstTimeEngageOptionText = "Re-engage the defenses"
+        config.noSalvageLeaveOptionText = "Continue"
+
+        config.dismissOnLeave = false
+        config.printXPToDialog = true
+        config.withSalvage = false
+        config.leaveAlwaysAvailable = true
+        config.dismissOnLeave = false
+
+        val seed = Random().nextLong()
+        config.salvageRandom = Misc.getRandom(seed, 75)
+
+        var originalPlugin = dialog.plugin
+
+        //Plugin
+        var plugin = GenesisReEncounterFIDPlugin(config, this);
+
+        config.delegate = FIDOverride(enemyFleet!!, dialog, plugin, originalPlugin, this)
+
+        dialog.setPlugin(plugin);
+        dialog.setInteractionTarget(enemyFleet);
+        plugin.init(dialog);
     }
 
     override fun defeatedDefenders() {
@@ -121,12 +134,21 @@ class GenesisReencounterInteractionPlugin : RATInteractionPlugin() {
             member.repairTracker.performRepairsFraction(1f)
         }
 
+        var defeatedOnHard = false
+        if (Global.getSector().memoryWithoutUpdate.get("\$defeated_singularity_on_hard") == true) {
+            defeatedOnHard = true
+        }
+
         dialog.plugin = this
 
 
 
-
-        addLeaveOption()
+        createOption("Leave") {
+            closeDialog()
+            if (defeatedOnHard) {
+                MagicAchievementManager.getInstance().completeAchievement("rat_beatSingularityChallenge")
+            }
+        }
 
         /*closeDialog()*/
     }
