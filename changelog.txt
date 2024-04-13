@@ -1,3 +1,40 @@
+Version 2.1.0
+NOT SAVE COMPATIBLE WITH PRIOR VERSIONS
+
+-> Added a boss to the the end of the abyss.
+-> Added more variety to abyss terrain.
+-> Added a new variation of an abyss ship if you have "Secrets of the Frontiers" installed.
+-> Transverse Jump can no longer be used within the abyssal depths. You now need to leave it by flying outwards instead.
+-> The abyssal depths now let you re-enter them from where you last left.
+-> Unique AI Cores now have much more descriptive inventory tooltips.
+
+-> The "Abyssal Requiem" Skill has been changed to be rewarded from somewhere else.
+-> The "Abyssal Crew Conversion" is now a unique reward instead of a random drop.
+-> The Darkness terrain is now more gradual in applying its stat changes, rather than going from 0 to 25/50% immidiately.
+-> Added a small abyss related bar event.
+-> Added two magiclib achivements.
+-> Abyss Fleets now have fewer alterations on them than before.
+-> Added configs that allow enabling or disabling the spawning of "Relics of the Past" Stations or Conditions.
+-> Reduced the exo-tech partnership deed price from 5000 to 1000 tokens.
+-> The Exo-Processor is no longer available to buy.
+-> Arkas Phantoms now deal 50% less damage rather than 60%.
+-> Increased Arkas speed from 70 to 75.
+-> Increased Leanira Deployment cost from 26 to 30 and gave it another fighter bay.
+-> Increased Leaniras speed from 60 to 70.
+-> Leaniras Apheidas Platform now has stronger mounts & can move slightly.
+-> Reduced Tylos DP cost from 16 to 14.
+-> Reduced Thestia DP cost from 14 to 12.
+-> Increased thestia speed from 70 to 80.
+-> Increased the Dawnblades weapon, the "Dawnlance" from 200 to 250 dps.
+-> Other AI cores no longer have the 50% system cooldown debuff on abyssal ships.
+-> Performance improvement in Hyperspace and Abyss systems.
+-> Fixed Unstopable Force giving effects of Autonomous bays
+-> Fixed the Abyssal Doctrine Report being outdated.
+
+-> Bunch of other stuff & fixes i probably forgot.
+
+
+
 Version 2.0.9 Part 1
 
 -> Replaced every usage of Combat Activators with the new Magiclib Subsystems. 
