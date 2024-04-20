@@ -53,10 +53,10 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
         availableFP = setFPBudget()
 
         daysToLaunch = when(availableFP) {
-            in 0..50 -> 10f
+            in 0..50 -> 7f
             in 51..80 -> 15f
-            in 81..120-> 25f
-            in 121..180-> 40f
+            in 81..120-> 20f
+            in 121..180-> 35f
             else -> 50f
         }
 

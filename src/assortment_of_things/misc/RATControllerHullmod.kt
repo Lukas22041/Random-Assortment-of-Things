@@ -10,6 +10,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.skills.HullRestoration
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
+import exerelin.campaign.backgrounds.CharacterBackgroundUtils
 
 class RATControllerHullmod : BaseHullMod() {
 
@@ -28,6 +29,12 @@ class RATControllerHullmod : BaseHullMod() {
                     }
 
                     member.variant.addMod("rat_controller")
+
+                    var moduleSlots = member.variant.moduleSlots
+                    for (slot in moduleSlots) {
+                        var module = member.variant.getModuleVariant(slot)
+                        module.addMod("rat_controller")
+                    }
                 }
             }
         }
@@ -69,6 +76,38 @@ class RATControllerHullmod : BaseHullMod() {
             if (settlement.hasFacility("logistics_base")) {
                 stats.cargoMod.modifyMult("logistics_base", 1.25f)
                 stats.fuelMod.modifyMult("logistics_base", 1.25f)
+            }
+        }
+
+        if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
+            if (CharacterBackgroundUtils.isBackgroundActive("rat_force_in_numbers")) {
+                if (hullSize == ShipAPI.HullSize.FRIGATE || hullSize == ShipAPI.HullSize.DESTROYER) {
+                    stats.maxCombatReadiness.modifyFlat("rat_force_in_numbers", 0.15f, "Force in numbers")
+                    stats.peakCRDuration.modifyFlat("rat_force_in_numbers", 60f)
+
+                    stats.maxSpeed.modifyMult("rat_force_in_numbers", 1.2f)
+                    stats.acceleration.modifyMult("rat_force_in_numbers", 1.2f)
+                    stats.deceleration.modifyMult("rat_force_in_numbers", 1.2f)
+                    stats.turnAcceleration.modifyMult("rat_force_in_numbers", 1.2f)
+                    stats.maxTurnRate.modifyMult("rat_force_in_numbers", 1.2f)
+
+                    stats.fluxDissipation.modifyMult("rat_force_in_numbers", 1.1f)
+                    stats.energyRoFMult.modifyMult("rat_force_in_numbers", 1.1f)
+                    stats.ballisticRoFMult.modifyMult("rat_force_in_numbers", 1.1f)
+                    stats.missileRoFMult.modifyMult("rat_force_in_numbers", 1.1f)
+                    stats.energyAmmoRegenMult.modifyMult("rat_force_in_numbers", 1.1f)
+                    stats.ballisticAmmoRegenMult.modifyMult("rat_force_in_numbers", 1.1f)
+                    stats.missileAmmoRegenMult.modifyMult("rat_force_in_numbers", 1.1f)
+
+                    stats.armorBonus.modifyMult("rat_force_in_numbers", 1.15f)
+                }
+                if (hullSize == ShipAPI.HullSize.CRUISER || hullSize == ShipAPI.HullSize.CAPITAL_SHIP) {
+                    stats.maxCombatReadiness.modifyFlat("rat_force_in_numbers", -0.15f, "Force in numbers")
+                    stats.maxCombatReadiness.modifyMult("rat_force_in_numbers", 0.333f, "Force in numbers")
+                    stats.peakCRDuration.modifyMult("rat_force_in_numbers", 0.333f)
+                    stats.suppliesPerMonth.modifyMult("rat_force_in_numbers", 1.5f)
+                    stats.maxBurnLevel.modifyFlat("rat_force_in_numbers", -1f)
+                }
             }
         }
 

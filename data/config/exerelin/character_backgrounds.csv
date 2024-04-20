@@ -1,5 +1,6 @@
 id,name,shortDescription,longDescription,order,iconPath,plugin
 #rat_station_commander,Station Commander,,,20,graphics/icons/markets/orbital_station.png,assortment_of_things.backgrounds.CommanderBackground
 rat_comradery,Comradery,"None of your achivements were made alone, but together with your trusted partner, the only person you feel equal to.",,50,graphics/icons/backgrounds/rat_comradery.png,assortment_of_things.backgrounds.ComraderyBackground
-rat_bounty,Bounty on your head,Some factions are less than happy with your continued influence on the sector.,,51,graphics/icons/missions/pirate_system_bounty.png,assortment_of_things.backgrounds.BountyBackground
-rat_exotech,Exo-Tech Partner,Test,,52,graphics/factions/rat_exo_crest.png,assortment_of_things.backgrounds.ExoBackground
+rat_bounty,High Value Target,Some factions are less than happy with your continued influence on the sector.,,51,graphics/icons/missions/pirate_system_bounty.png,assortment_of_things.backgrounds.BountyBackground
+rat_force_in_numbers,Force in numbers,You are renowned all over the sector for your unique style of wolfpack-like fleet strategies.,,52,graphics/icons/backgrounds/rat_force.png,assortment_of_things.backgrounds.ForceBackground
+rat_exotech,Exo-Tech Partner,Test,,53,graphics/factions/rat_exo_crest.png,assortment_of_things.backgrounds.ExoBackground

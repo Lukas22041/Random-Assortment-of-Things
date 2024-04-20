@@ -1,3 +1,12 @@
+RAT Version 2.1.1
+Save compatible with 2.1.0
+
+-> Added 3 new nexerelin backgrounds.
+-> Removed the exotech start and replaced it with a background.
+-> Fixed Artifacts and some skills not applying to modules on moduled ships.
+
+
+
 Version 2.1.0
 NOT SAVE COMPATIBLE WITH PRIOR VERSIONS
 
