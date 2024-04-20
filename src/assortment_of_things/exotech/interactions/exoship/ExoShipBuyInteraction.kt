@@ -17,6 +17,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Strings
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaUtil.LunaCommons
 
 class ExoShipBuyInteraction(var exoDialog: ExoshipInteractions, var data: ExoData) {
 
@@ -202,6 +203,9 @@ class ExoShipBuyInteraction(var exoDialog: ExoshipInteractions, var data: ExoDat
             Global.getSector().intelManager.addIntelToTextPanel(intel, exoDialog.textPanel)
         }*/
         unlockExoIntel(exoDialog.textPanel, false)
+
+        //Unlock Background
+        LunaCommons.set("assortment_of_things", "rat_exo_start", true)
 
         exoDialog.createOption("Back") {
             exoDialog.clearOptions()

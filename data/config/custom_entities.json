@@ -385,6 +385,17 @@
 		"renderCircleIndicatorSelectionFlash":false,
 	},
 	
+	"rat_abyss_hyperspace_background":{
+		"defaultName":"", # used if name=null in addCustomEntity()
+		"defaultRadius":0, # used if radius<0 in addCustomEntity()
+		"showInCampaign":true,
+		"showIconOnMap":false,
+		"scaleIconWithZoom":true,
+		"tags":[],
+		"layers":[TERRAIN_4], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"pluginClass":"assortment_of_things.abyss.entities.AbyssHyperspaceEnviromentRenderer",
+	},
+	
 	"rat_abyss_particle_spawner":{
 		"defaultName":"", # used if name=null in addCustomEntity()
 		"defaultRadius":0, # used if radius<0 in addCustomEntity()

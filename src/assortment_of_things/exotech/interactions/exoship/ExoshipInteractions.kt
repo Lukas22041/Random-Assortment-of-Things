@@ -154,7 +154,7 @@ class ExoshipInteractions : RATInteractionPlugin() {
 
     fun firstInteraction() {
 
-        textPanel.addPara("A rare sight within the current cycle, a collosal machine that had once dominated smaller factions and communities within the early post-domain era sector. " +
+        textPanel.addPara("A rare sight within the current cycle, a colossal machine that had once dominated smaller factions and communities within the early post-domain era sector. " +
                 "Originaly constructed for logistical purposes in fringe sectors, but when the gate network eventualy failed the company that designed and constructed the exoships, going by \"Exo-Tech\", found new use for them. ")
 
 
