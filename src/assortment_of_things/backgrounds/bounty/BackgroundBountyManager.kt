@@ -2,6 +2,7 @@ package assortment_of_things.backgrounds.bounty
 
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.getMarketsInLocation
 
@@ -58,7 +59,7 @@ class BackgroundBountyManager : EveryFrameScript {
 
             if (hasEnteredPopulatedSystem) {
                 var daysSinceEnteredSystem = Global.getSector().clock.getElapsedDaysSince(timestampEnteredPopulatedSystem)
-                if (daysSinceEnteredSystem >= daysToWait) {
+                if (daysSinceEnteredSystem >= daysToWait && !Global.getSector().playerFleet.containingLocation.hasTag(Tags.THEME_HIDDEN)) {
                     var hostileMarkets = Global.getSector().economy.marketsCopy.filter { it.faction.relToPlayer.isHostile && !it.isHidden && it.size >= 3 }
                     if (hostileMarkets.isNotEmpty()) {
                         var market = hostileMarkets.random()
