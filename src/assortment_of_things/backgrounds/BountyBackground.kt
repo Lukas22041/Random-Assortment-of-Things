@@ -1,5 +1,6 @@
 package assortment_of_things.backgrounds
 
+import assortment_of_things.backgrounds.bounty.BackgroundBountyManager
 import assortment_of_things.backgrounds.bounty.BountyFleetIntel
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.interactions.exoship.ExoShipBuyInteraction
@@ -13,6 +14,7 @@ import com.fs.starfarer.api.util.Misc
 import exerelin.campaign.backgrounds.BaseCharacterBackground
 import exerelin.utilities.NexFactionConfig
 import lunalib.lunaUtil.LunaCommons
+import org.magiclib.kotlin.isDecentralized
 
 class BountyBackground : BaseCharacterBackground() {
 
@@ -37,12 +39,14 @@ class BountyBackground : BaseCharacterBackground() {
     override fun onNewGameAfterTimePass(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?) {
         super.onNewGameAfterTimePass(factionSpec, factionConfig)
 
-        var markets = Global.getSector().economy.marketsCopy.filter { it.faction.relToPlayer.isHostile && !it.isHidden && it.size >= 3}
+       /* var markets = Global.getSector().economy.marketsCopy.filter { it.faction.relToPlayer.isHostile && !it.isHidden && it.size >= 3 }
         var market = markets.randomOrNull()
         if (market != null) {
             var bountyFleet = BountyFleetIntel(market.factionId, market)
             bountyFleet.startEvent()
-        }
+        }*/
+
+        Global.getSector().addScript(BackgroundBountyManager())
     }
 
     override fun addTooltipForSelection(tooltip: TooltipMakerAPI?, factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?, expanded: Boolean) {
@@ -50,11 +54,19 @@ class BountyBackground : BaseCharacterBackground() {
         getTooltip(tooltip!!)
     }
 
-    override fun addTooltipForIntel(tooltip: TooltipMakerAPI?,
-                                    factionSpec: FactionSpecAPI?,
-                                    factionConfig: NexFactionConfig?) {
+    override fun addTooltipForIntel(tooltip: TooltipMakerAPI?, factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?) {
         super.addTooltipForIntel(tooltip, factionSpec, factionConfig)
+
+        var manager = Global.getSector().scripts.find { it is BackgroundBountyManager } as BackgroundBountyManager?
+        if (manager != null && manager.finished) {
+            tooltip!!.addSpacer(10f)
+            tooltip!!.addPara("Your repeated feats have scared the opposing parties in to further retaliation, no more bounties should be put on your head beyond this point.")
+            return
+        }
+
         getTooltip(tooltip!!)
+
+
     }
 
 }

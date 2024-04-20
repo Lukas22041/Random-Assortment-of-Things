@@ -17,6 +17,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 import kotlin.math.max
 import kotlin.math.min
@@ -39,8 +40,9 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
     var duration: Int = 0
     var fleet: CampaignFleetAPI? = null
     var foundPlayerYet: Boolean = false
-    val interval: IntervalUtil = IntervalUtil(0.4f, 0.6f)
-    val interval2: IntervalUtil = IntervalUtil(1f, 2f)
+    val interval: IntervalUtil = IntervalUtil(0.3f, 0.5f)
+    val interval2: IntervalUtil = IntervalUtil(1f, 1.5f)
+    val locationTokenInterval = IntervalUtil(5f, 15f)
     var timeSpentLooking: Float = 0f
     var trackingMode: Boolean = false
     var locationToken: SectorEntityToken? = null
@@ -51,9 +53,9 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
         availableFP = setFPBudget()
 
         daysToLaunch = when(availableFP) {
-            in 0..80 -> 10f
-            in 81..100 -> 15f
-            in 101..120-> 25f
+            in 0..50 -> 10f
+            in 51..80 -> 15f
+            in 81..120-> 25f
             in 121..180-> 40f
             else -> 50f
         }
@@ -66,10 +68,10 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
 
     fun setFPBudget() : Int {
         var fp = 0f
-        var minimum = MathUtils.getRandomNumberInRange(70f, 90f)
+        var minimum = MathUtils.getRandomNumberInRange(40f, 50f)
         var maximum = MathUtils.getRandomNumberInRange(200f, 240f)
         var player = Global.getSector().playerFleet
-        var playerPoints = player.fleetPoints * MathUtils.getRandomNumberInRange(0.7f, 1f)
+        var playerPoints = player.fleetPoints * MathUtils.getRandomNumberInRange(0.8f, 1.2f)
 
         fp = playerPoints
         fp = fp.coerceIn(minimum, maximum)
@@ -78,8 +80,12 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
 
     fun getFaction() = Global.getSector().getFaction(factionId)
 
+    override fun getName(): String {
+        return "${getFaction().displayName} - Bounty Fleet"
+    }
+
     override fun getSmallDescriptionTitle(): String {
-        return "${getFaction().displayName} Bounty Fleet"
+        return "${getFaction().displayName} - Bounty Fleet"
     }
 
     override fun addBulletPoints(info: TooltipMakerAPI, mode: ListInfoMode?, isUpdate: Boolean, tc: Color?,initPad: Float) {
@@ -87,7 +93,7 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
 
         val pad = 0f
         val name = Misc.ucFirst(faction.displayName)
-        info.addPara(name, initPad, tc, faction.baseUIColor, name)
+        info.addPara("A bounty has been put on you.", initPad,tc, faction.baseUIColor, "bounty")
 
         var bullet = ""
 
@@ -98,20 +104,20 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
                 EndReason.EXPIRED -> bullet = "Mission over"
                 EndReason.NO_LONGER_HOSTILE -> bullet = "Cancelled: No longer hostile"
             }
-            info.addPara(bullet, 0f, Misc.getGrayColor(), Misc.getGrayColor())
+            info.addPara(bullet, 0f, tc, Misc.getGrayColor())
         } else if (assembling) {
             val dtl = getDays(daysToLaunch) + " " + getDaysString(daysToLaunch)
-            bullet = "The fleet will launch from $market in $dtl."
+            bullet = "The fleet will launch from ${market.name} in $dtl."
             if (!isMarketKnown()) {
-                bullet += "Launching in $dtl"
-                info.addPara(bullet, 0f, Misc.getGrayColor(), Misc.getGrayColor())
+                bullet = "Launching in $dtl"
+                info.addPara(bullet, 0f, tc, Misc.getHighlightColor(), "$dtl")
 
             } else {
-                info.addPara(bullet, 0f, Misc.getGrayColor(), Misc.getGrayColor())
+                info.addPara(bullet, 0f, tc, Misc.getHighlightColor(), "${market.name}", "$dtl")
             }
         } else {
-            bullet += "Fleet launched from $market"
-            info.addPara(bullet, 0f, Misc.getGrayColor(), Misc.getGrayColor())
+            bullet += "Fleet launched from ${market.name}"
+            info.addPara(bullet, 0f, tc, Misc.getHighlightColor(), "${market.name}")
         }
     }
 
@@ -149,13 +155,13 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
 
         } else if (assembling) {
             var dtl = getDays(daysToLaunch) + " " + getDaysString(daysToLaunch)
-            text = "The fleet will launch from $market in $dtl."
+            text = "The fleet will launch from ${market.name} in $dtl."
 
             if (!isMarketKnown()) {
                 text = "The fleet will launch from an unknown location in $dtl."
             }
 
-            info.addPara(text, opad, Misc.getTextColor(), Misc.getHighlightColor(), "$market", "$dtl")
+            info.addPara(text, opad, Misc.getTextColor(), Misc.getHighlightColor(), "${market.name}", "$dtl")
 
         } else {
             val durStr = Misc.getAtLeastStringForDays(duration)
@@ -167,7 +173,7 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
         if (fleet != null && Global.getSettings().isDevMode) {
             info.addPara("Debug information", opad)
             bullet(info)
-            info.addPara(String.format("Current location: %s", fleet!!.containingLocation), 0f)
+            info.addPara(String.format("Current location: %s", fleet!!.containingLocation.name), 0f)
             if (fleet!!.assignmentsCopy.isNotEmpty()) {
                 val assign = fleet!!.assignmentsCopy[0]
                 info.addPara(String.format("Current assignment: %s, %s, target %s",
@@ -212,7 +218,7 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
     }
 
     fun handleFleetAssignment(playerFleet: CampaignFleetAPI) {
-        updateLocationToken()
+        //updateLocationToken()
 
         var playerVisible = false
         var fleetVisible = false
@@ -227,10 +233,21 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
 
         // player and enemy fleet are close to each other, deactivate tracking mode
         if (trackingMode && fleet!!.containingLocation == playerFleet.containingLocation) {
+
+            var detectRange = (1.5f * max(fleet!!.getMaxSensorRangeToDetect(playerFleet).toDouble(), playerFleet.getMaxSensorRangeToDetect(fleet).toDouble()))
+
             if (Misc.getDistance(fleet!!.location,
-                    playerFleet.location) <= 1000f + 1.5f * max(fleet!!.getMaxSensorRangeToDetect(playerFleet)
-                    .toDouble(), playerFleet.getMaxSensorRangeToDetect(fleet).toDouble())) {
+                    playerFleet.location) <= 1000f + detectRange) {
                 trackingMode = false
+            }
+        }
+
+        if (fleet!!.containingLocation == playerFleet.containingLocation) {
+            //2f, originaly 1.5f
+            var detectRange = (2f * max(fleet!!.getMaxSensorRangeToDetect(playerFleet).toDouble(), playerFleet.getMaxSensorRangeToDetect(fleet).toDouble()))
+
+            if (Misc.getDistance(fleet!!.location, playerFleet.location) <= 1000f + detectRange) {
+                foundPlayerYet = true //Set to true to cause the fleet to not home on to the player.
             }
         }
 
@@ -250,17 +267,18 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
                 // as long as player doesn't leave the system, player is safe
                 if (fleet!!.containingLocation == playerFleet.containingLocation && !trackingMode) {
                     if (fleet!!.ai.currentAssignmentType != FleetAssignment.PATROL_SYSTEM) {
+
                         fleet!!.clearAssignments()
                         fleet!!.addAssignment(FleetAssignment.PATROL_SYSTEM,
                             locationToken,
                             1000f,
                             "hunting $targetName")
                         fleet!!.getAbility(Abilities.EMERGENCY_BURN).activate()
-                        (fleet!!.ai as ModularFleetAIAPI).tacticalModule.setPriorityTarget(playerFleet, 1000f, false)
+                        (fleet!!.ai as ModularFleetAIAPI).tacticalModule.setPriorityTarget(playerFleet, MathUtils.getRandomNumberInRange(5f, 7f), false)
                     }
                     // not in same system, or currently tracking; activate tracking mode
                 } else {
-                    trackingMode = true
+                     trackingMode = true
                     if (fleet!!.containingLocation == playerFleet.containingLocation) {
                         // tracking in same system, intercept
                         // 0.95: intercept only works if we can see player
@@ -387,9 +405,15 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
             }
         }
 
+        locationTokenInterval.advance(amount)
+        if (locationTokenInterval.intervalElapsed()) {
+            updateLocationToken()
+        }
+
         if (!interval.intervalElapsed()) {
             return
         }
+
 
         handleFleetAssignment(playerFleet)
     }
@@ -424,14 +448,14 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
         val distBonus = 30 + distance * 1.5f // don't crank it up too much, I don't think this is the important component
 
         duration = when (availableFP) {
-            in 0..100 -> max(60.0,
-                min(120.0, Math.round(distBonus * MathUtils.getRandomNumberInRange(0.75f, 1f)).toDouble())).toInt()
+            in 0..80 -> max(60.0,
+                min(90.0, Math.round(distBonus * MathUtils.getRandomNumberInRange(0.75f, 1f)).toDouble())).toInt()
 
-            in 101..180 -> max(90.0,
-                min(150.0, Math.round(distBonus * MathUtils.getRandomNumberInRange(1.25f, 1.75f)).toDouble())).toInt()
+            in 81..180 -> max(90.0,
+                min(100.0, Math.round(distBonus * MathUtils.getRandomNumberInRange(1.25f, 1.75f)).toDouble())).toInt()
 
             else -> max(120.0,
-                min(180.0, Math.round(distBonus * MathUtils.getRandomNumberInRange(2f, 2.5f)).toDouble())).toInt()
+                min(120.0, Math.round(distBonus * MathUtils.getRandomNumberInRange(2f, 2.5f)).toDouble())).toInt()
         }
         duration += 15
 
@@ -445,7 +469,7 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
         Global.getSector().addScript(this)
     }
 
-    protected fun spawnFleet(): CampaignFleetAPI? {
+    fun spawnFleet(): CampaignFleetAPI? {
         if (market.factionId != factionId) return null
         if (!market.isInEconomy || !market.primaryEntity.isAlive) return null
 
@@ -458,7 +482,7 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
         val total = combat + freighter + tanker + utility
 
         val params = FleetParamsV3(market,  // market
-            FleetTypes.PERSON_BOUNTY_FLEET, combat,  // combatPts
+            FleetTypes.MERC_BOUNTY_HUNTER, combat,  // combatPts
             freighter,  // freighterPts
             tanker,  // tankerPts
             0f,  // transportPts
@@ -479,6 +503,8 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
             return null
         }
 
+        fleet!!.memoryWithoutUpdate["\$startingFP"] = fleet!!.fleetPoints
+        fleet!!.memoryWithoutUpdate["\$clearCommands_no_remove"] = true
 
         market.primaryEntity.containingLocation.addEntity(fleet)
         fleet!!.setLocation(market.primaryEntity.location.x, market.primaryEntity.location.y)
@@ -488,11 +514,14 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
             3f + Math.random().toFloat() * 2f,
             "orbiting ${market.name}")
 
+        fleet!!.stats.fleetwideMaxBurnMod.modifyFlat("rat_bounty_fleet", -1f)
 
         fleet!!.memoryWithoutUpdate[MemFlags.MEMORY_KEY_SAW_PLAYER_WITH_TRANSPONDER_ON] = true
         fleet!!.memoryWithoutUpdate[MemFlags.MEMORY_KEY_LOW_REP_IMPACT] = true
         //fleet.getMemoryWithoutUpdate().set(MemFlags.MEMORY_KEY_PATROL_FLEET, true);
         fleet!!.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE] = true
+
+        fleet!!.addEventListener(BountyFleetListener())
 
         return fleet
     }
@@ -515,9 +544,23 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
             (fleet!!.ai as ModularFleetAIAPI).tacticalModule.forceTargetReEval()
         }
 
+        if (reason == EndReason.DEFEATED) {
+            if (fleet!!.memoryWithoutUpdate.contains("\$fought_player_in_battle")) {
+                var manager = Global.getSector().scripts.find { it is BackgroundBountyManager } as BackgroundBountyManager?
+
+                if (manager != null) {
+                    var startingPoints  = fleet!!.memoryWithoutUpdate.getInt("\$startingFP") ?: 60
+                    manager.totalFPDefeated += startingPoints
+                    manager.defeated += 1
+                }
+            }
+
         sendUpdateIfPlayerHasIntel(null, false)
 
         endAfterDelay(time)
+
+
+        }
     }
 
 }
