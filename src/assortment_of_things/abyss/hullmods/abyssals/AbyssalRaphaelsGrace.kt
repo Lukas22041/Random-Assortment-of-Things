@@ -126,9 +126,11 @@ class AbyssalRaphaelsGrace : BaseHullMod() {
         override fun advance(amount: Float) {
 
             for (stack in ArrayList(stacks)) {
-                stack.duration -= 1 * amount
-                if (stack.duration < 0) {
-                    stacks.remove(stack)
+                if (!ship.isPhased) {
+                    stack.duration -= 1 * amount
+                    if (stack.duration < 0) {
+                        stacks.remove(stack)
+                    }
                 }
             }
 

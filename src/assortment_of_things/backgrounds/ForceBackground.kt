@@ -25,7 +25,7 @@ class ForceBackground : BaseCharacterBackground() {
 
 
     override fun getLongDescription(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?): String {
-        return "Small crafts exceed within your fleet, but the use of of larger craft is severely limited."
+        return "Small crafts exceed within your fleet, but the use of larger craft is severely limited."
     }
 
     fun getTooltip(tooltip: TooltipMakerAPI) {
