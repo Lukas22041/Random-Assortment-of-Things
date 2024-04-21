@@ -6,6 +6,7 @@ import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.ids.Tags
@@ -59,7 +60,9 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             module.alphaMult = 0f
             module.collisionClass = CollisionClass.NONE
 
-            module.location.set(Vector2f(100000f, 100000f))
+            module.shipAI = null
+            //module.location.set(ship!!.location)
+            module.location.set(Vector2f(100000f + ship!!.location.x, 100000f + ship!!.location.y))
             module.extraAlphaMult = 0f
             module.extraAlphaMult2 = 0f
             module.spriteAPI.color = Color(0, 0, 0,0)
@@ -67,7 +70,8 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
             module.mutableStats.armorDamageTakenMult.modifyMult("rat_module_to_be_despawned", 0f)
             module.addTag("rat_module_to_be_despawned")
 
-            module.isPhased = true
+
+            //module.isPhased = true
             module.isHoldFireOneFrame = true
 
             for (weapon in module.allWeapons) {
@@ -75,6 +79,8 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
                 weapon.barrelSpriteAPI?.color = Color(0, 0, 0, 0)
                 weapon.glowSpriteAPI?.color = Color(0, 0, 0, 0)
                 weapon.underSpriteAPI?.color = Color(0, 0, 0, 0)
+
+                weapon.setRemainingCooldownTo(999f)
             }
 
             for (engine in module.engineController.shipEngines) {
@@ -87,10 +93,20 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
                 moduleDespawnInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
             }
 
+
             if (module.hasTag("copied_variant")) continue
             if (!moduleDespawnInterval.intervalElapsed()) continue
 
             module.addTag("copied_variant")
+
+            module.addListener(object: AdvanceableListener {
+                override fun advance(amount: Float) {
+                    for (weapon in module.allWeapons) {
+                        weapon.setRemainingCooldownTo(999f)
+                        //module.location.set(ship!!.location)
+                    }
+                }
+            })
 
             var variant = module.variant.clone()
             variant.addTag("tylos_no_refit_sprite")

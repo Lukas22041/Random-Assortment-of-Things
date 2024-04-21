@@ -5,6 +5,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipSystemAPI.SystemState
 import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
+import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
@@ -75,7 +76,8 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             module.alphaMult = 0f
             module.collisionClass = CollisionClass.NONE
 
-            module.location.set(Vector2f(100000f, 100000f))
+            module.shipAI = null
+            module.location.set(Vector2f(100000f + ship!!.location.x, 100000f + ship!!.location.y))
             module.extraAlphaMult = 0f
             module.extraAlphaMult2 = 0f
             module.spriteAPI.color = Color(0, 0, 0,0)
@@ -106,6 +108,15 @@ class LeaniraShipsystem : BaseShipSystemScript() {
             if (!moduleDespawnInterval.intervalElapsed()) continue
 
             module.addTag("copied_variant")
+
+            module.addListener(object: AdvanceableListener {
+                override fun advance(amount: Float) {
+                    for (weapon in module.allWeapons) {
+                        weapon.setRemainingCooldownTo(999f)
+                        //module.location.set(ship!!.location)
+                    }
+                }
+            })
 
             variant = module.variant
             /*Global.getCombatEngine().removeEntity(module)

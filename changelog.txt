@@ -1,4 +1,9 @@
-RAT Version 2.1.1
+Version 2.1.1
+Save compatible with 2.1.1
+
+-> Potentialy fixed an issue that caused weird behaviour with the tylos and leanira, but since i cant replicate it myself anyhow im not so sure.
+
+Version 2.1.1
 Save compatible with 2.1.0
 
 -> Added 3 new nexerelin backgrounds.
