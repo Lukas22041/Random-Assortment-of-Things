@@ -1,7 +1,20 @@
-Version 2.1.1
+Version 2.1.3
+Likely not save compatible this time.
+
+-> Made the "High Value Target" background harsher.
+-> The "High Value Target" background can now spawn bounties even if you have zero hostilities.
+-> DEMs fired by Arkas clones are no longer unaffected by the damage reduction.
+-> Raphaels Grace stacks no longer reduce while phased.
+-> The "Force in numbers" background now also debuffs the fuel useage of large craft.
+
+
+
+Version 2.1.2
 Save compatible with 2.1.1
 
 -> Potentialy fixed an issue that caused weird behaviour with the tylos and leanira, but since i cant replicate it myself anyhow im not so sure.
+
+
 
 Version 2.1.1
 Save compatible with 2.1.0

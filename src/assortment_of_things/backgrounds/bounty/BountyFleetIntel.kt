@@ -1,5 +1,6 @@
 package assortment_of_things.backgrounds.bounty
 
+import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.FactionAPI.ShipPickMode
@@ -23,7 +24,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 //Based on VengeanceFleetIntel from Nexerelin
-class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntelPlugin() {
+class BountyFleetIntel(var factionId: String, var market: MarketAPI, var nonHostile: Boolean) : BaseIntelPlugin() {
 
     enum class EndReason {
         FAILED_TO_SPAWN, DEFEATED, EXPIRED, NO_LONGER_HOSTILE, OTHER
@@ -68,7 +69,7 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
 
     fun setFPBudget() : Int {
         var fp = 0f
-        var minimum = MathUtils.getRandomNumberInRange(40f, 50f)
+        var minimum = MathUtils.getRandomNumberInRange(50f, 60f)
         var maximum = MathUtils.getRandomNumberInRange(200f, 240f)
         var player = Global.getSector().playerFleet
         var playerPoints = player.fleetPoints * MathUtils.getRandomNumberInRange(0.8f, 1.2f)
@@ -131,9 +132,14 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
         //else
         info.addImage(faction.logo, width, 128f, opad)
 
-        val para = info.addPara("${getFaction().displayNameWithArticle} set a bounty on your head due to your continued influence on sector politics. A fleet will soon try to claim it.", opad, Misc.getTextColor(), getFaction().color, getFaction().displayNameWithArticle)
+        val para = info.addPara("Someone within ${getFaction().displayNameWithArticle} set a bounty on your head due to your continued influence on sector politics. A fleet will soon try to claim it.", opad, Misc.getTextColor(), getFaction().color, getFaction().displayNameWithArticle)
         para.setHighlight(faction.displayNameWithArticleWithoutArticle)
         para.setHighlightColor(faction.baseUIColor)
+
+        if (nonHostile) {
+            info.addSpacer(10f)
+            info.addPara("This fleet operates without official support of its governing faction. Defeating it is unlikely to cause reductions in reputations.")
+        }
 
         info.addSectionHeading("Status",
             faction.baseUIColor,
@@ -209,7 +215,7 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
     }
 
     override fun getBaseDaysAfterEnd(): Float {
-        return 30f
+        return 7f
     }
 
     override fun getMapLocation(map: SectorMapAPI?): SectorEntityToken? {
@@ -349,7 +355,7 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
             return
         }
 
-        if (getFaction().isAtWorst(Factions.PLAYER, RepLevel.INHOSPITABLE)) {
+        if (getFaction().isAtWorst(Factions.PLAYER, RepLevel.INHOSPITABLE) && !nonHostile) {
             endEvent(EndReason.NO_LONGER_HOSTILE)
             return
         }
@@ -448,13 +454,13 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
         val distBonus = 30 + distance * 1.5f // don't crank it up too much, I don't think this is the important component
 
         duration = when (availableFP) {
-            in 0..80 -> max(60.0,
+            in 0..80 -> max(70.0,
                 min(90.0, Math.round(distBonus * MathUtils.getRandomNumberInRange(0.75f, 1f)).toDouble())).toInt()
 
-            in 81..180 -> max(90.0,
+            in 81..180 -> max(100.0,
                 min(100.0, Math.round(distBonus * MathUtils.getRandomNumberInRange(1.25f, 1.75f)).toDouble())).toInt()
 
-            else -> max(120.0,
+            else -> max(130.0,
                 min(120.0, Math.round(distBonus * MathUtils.getRandomNumberInRange(2f, 2.5f)).toDouble())).toInt()
         }
         duration += 15
@@ -522,6 +528,11 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI) : BaseIntel
         fleet!!.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE] = true
 
         fleet!!.addEventListener(BountyFleetListener())
+
+        if (nonHostile) {
+            fleet!!.memoryWithoutUpdate[MemFlags.MEMORY_KEY_NO_REP_IMPACT] = true
+            fleet!!.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_HOSTILE] = true
+        }
 
         return fleet
     }

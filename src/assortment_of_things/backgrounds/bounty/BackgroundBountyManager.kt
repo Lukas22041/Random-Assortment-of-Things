@@ -2,19 +2,18 @@ package assortment_of_things.backgrounds.bounty
 
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.ids.Tags
+import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
+import org.magiclib.kotlin.getDistance
 import org.magiclib.kotlin.getMarketsInLocation
 
 class BackgroundBountyManager : EveryFrameScript {
 
     var finished = false
     var timestampSinceLastBounty = Global.getSector().clock.timestamp
-    var daysTilNextBounty = MathUtils.getRandomNumberInRange(30f, 60f)
-
-    var hasEnteredPopulatedSystem = true
-    var timestampEnteredPopulatedSystem = Global.getSector().clock.timestamp
-    var daysToWait = MathUtils.getRandomNumberInRange(9f, 20f)
+    var daysTilNextBounty = MathUtils.getRandomNumberInRange(20f, 40f)
 
     var bounties = ArrayList<BountyFleetIntel>()
     var maxBounties = 3
@@ -22,6 +21,7 @@ class BackgroundBountyManager : EveryFrameScript {
     var defeated = 0
     var totalFPDefeated = 0
 
+    var interval = IntervalUtil(5f, 20f)
 
     override fun isDone(): Boolean {
         return false
@@ -33,7 +33,7 @@ class BackgroundBountyManager : EveryFrameScript {
 
     override fun advance(amount: Float) {
 
-        if (defeated >= 3 && totalFPDefeated >= 700) {
+        if (defeated >= 3 && totalFPDefeated >= 800) {
             finished = true
         }
 
@@ -46,35 +46,40 @@ class BackgroundBountyManager : EveryFrameScript {
         var daysSinceLastBounty = Global.getSector().clock.getElapsedDaysSince(timestampSinceLastBounty)
         if (!finished && bounties.size < 3 && daysSinceLastBounty >= daysTilNextBounty) {
 
-            if (!hasEnteredPopulatedSystem) {
 
-                var location = Global.getSector().playerFleet.containingLocation
-                var markets = location.getMarketsInLocation()
+            var location = Global.getSector().playerFleet.containingLocation
+            var markets = location.getMarketsInLocation()
 
-                if (markets.any { !it.isHidden && it.isInEconomy && it.size >= 3 }) {
-                    timestampEnteredPopulatedSystem = Global.getSector().clock.timestamp
-                    hasEnteredPopulatedSystem = true
-                }
-            }
+            var hasMarkets = markets.isNotEmpty()
+            var nearMarket = markets.any { it.primaryEntity.getDistance(Global.getSector().playerFleet) <= 3000 && !it.isHidden && it.size >= 3}
 
-            if (hasEnteredPopulatedSystem) {
-                var daysSinceEnteredSystem = Global.getSector().clock.getElapsedDaysSince(timestampEnteredPopulatedSystem)
-                if (daysSinceEnteredSystem >= daysToWait && !Global.getSector().playerFleet.containingLocation.hasTag(Tags.THEME_HIDDEN)) {
-                    var hostileMarkets = Global.getSector().economy.marketsCopy.filter { it.faction.relToPlayer.isHostile && !it.isHidden && it.size >= 3 }
-                    if (hostileMarkets.isNotEmpty()) {
-                        var market = hostileMarkets.random()
-                        var bounty = BountyFleetIntel(market.factionId, market)
-                        bounty.startEvent()
-                        bounties.add(bounty)
+            if (nearMarket) {
 
-                        hasEnteredPopulatedSystem = false
-                        timestampSinceLastBounty = Global.getSector().clock.timestamp
-                        daysToWait = MathUtils.getRandomNumberInRange(2f, 25f)
-                        daysTilNextBounty = MathUtils.getRandomNumberInRange(10f, 90f)
+                interval.advance(amount)
+                if (interval.intervalElapsed()) {
+                    if (!Global.getSector().playerFleet.containingLocation.hasTag(Tags.THEME_HIDDEN)) {
+
+                        var marketsToSpawnFrom = Global.getSector().economy.marketsCopy.filter {
+                            it.faction.relToPlayer.isHostile && !it.isHidden && it.size >= 3 && it.containingLocation != Global.getSector().playerFleet.containingLocation }
+
+                        var noHostiles = marketsToSpawnFrom.isEmpty()
+                        if (noHostiles) {
+                            marketsToSpawnFrom =  Global.getSector().economy.marketsCopy.filter {
+                               !it.isHidden && it.size >= 3 && it.containingLocation != Global.getSector().playerFleet.containingLocation }
+                        }
+
+                        if (marketsToSpawnFrom.isNotEmpty()) {
+                            var market = marketsToSpawnFrom.random()
+                            var bounty = BountyFleetIntel(market.factionId, market, noHostiles)
+                            bounty.startEvent()
+                            bounties.add(bounty)
+
+                            timestampSinceLastBounty = Global.getSector().clock.timestamp
+                            daysTilNextBounty = MathUtils.getRandomNumberInRange(20f, 60f)
+                        }
                     }
                 }
             }
         }
     }
-
 }
