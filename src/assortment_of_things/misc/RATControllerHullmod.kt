@@ -7,7 +7,6 @@ import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.campaign.skills.HullRestoration
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import exerelin.campaign.backgrounds.CharacterBackgroundUtils
@@ -109,6 +108,17 @@ class RATControllerHullmod : BaseHullMod() {
                     stats.fuelUseMod.modifyMult("rat_force_in_numbers", 1.5f)
                     stats.maxBurnLevel.modifyFlat("rat_force_in_numbers", -1f)
                 }
+            }
+
+            if (CharacterBackgroundUtils.isBackgroundActive("rat_personal_army")) {
+                var flat = when(hullSize) {
+                    ShipAPI.HullSize.FRIGATE -> 10f
+                    ShipAPI.HullSize.DESTROYER -> 20f
+                    ShipAPI.HullSize.CRUISER -> 35f
+                    ShipAPI.HullSize.CAPITAL_SHIP -> 50f
+                    else -> 10f
+                }
+                stats.dynamic.getMod(Stats.FLEET_GROUND_SUPPORT).modifyFlat(id, flat)
             }
         }
 
