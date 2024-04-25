@@ -42,12 +42,12 @@ class NeuralShardBackground : BaseCharacterBackground() {
                 "All non-automated ships in your fleet without an officer receive a shard of yourself as their pilot. " +
                         "Those shards share two to three of your own combat skills. Every shard, and yourself, has aggressive behaviour. \n\n" +
                         "" +
-                        "You can switch to any ship with a shard immediately by holding \"R\" while hovering over the ship. The ship currently controlled has access to all of your skills. \n\n" +
+                        "You can switch to any ship with a shard immediately by pressing right click while hovering over the ship. The ship currently controlled has access to all of your skills. \n\n" +
                         "" +
                         "The maximum number of officers able to join your fleet is halved, and you have a harder time finding anyone wanting to join you.", 0f)
 
 
-        label.setHighlight("receive a shard of yourself as their pilot", "two to three", "aggressive", "switch", "R", "all of your skills.", "halved")
+        label.setHighlight("receive a shard of yourself as their pilot", "two to three", "aggressive", "switch", "right click", "all of your skills.", "halved")
         label.setHighlightColors(hc, hc, hc, hc, hc, hc, nc)
 
     }

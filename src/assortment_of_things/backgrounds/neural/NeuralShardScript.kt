@@ -1,18 +1,23 @@
 package assortment_of_things.backgrounds.neural
 
+import assortment_of_things.combat.TemporarySlowdown
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin
-import com.fs.starfarer.api.combat.BaseEveryFrameCombatPlugin
-import com.fs.starfarer.api.combat.CombatEngineLayers
-import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.combat.ViewportAPI
+import com.fs.starfarer.api.characters.PersonAPI
+import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.input.InputEventAPI
+import com.fs.starfarer.api.mission.FleetSide
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.combat.CombatUtils
+import org.lazywizard.lazylib.ext.minus
+import org.lazywizard.lazylib.ext.plus
+import org.lwjgl.input.Keyboard
+import org.lwjgl.input.Mouse
+import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.isAutomated
 import java.awt.Color
 import java.util.*
@@ -39,19 +44,41 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
         }
 
 
+
         if (interval.intervalElapsed()) {
             var shipsWithoutOfficer = Global.getCombatEngine().ships.filter { it.owner == 0 && !it.isFighter && !it.isAutomated() && (it.captain == null || it.captain.isDefault) }
 
             for (ship in shipsWithoutOfficer) {
                 addShardOfficer(ship)
             }
+
+            for (ship in Global.getCombatEngine().ships) {
+                if (ship.captain == Global.getSector().playerPerson) {
+                    if (ship != Global.getCombatEngine().playerShip) {
+                        addShardOfficer(ship)
+                    }
+                }
+            }
+
+        }
+
+        var playership = Global.getCombatEngine().playerShip
+        if (playership != null && !playership.isAlive) {
+            var others = Global.getCombatEngine().ships.filter { it.owner == 0 && it.captain != null && it.captain.hasTag("rat_neuro_shard") }
+            var closest = others.sortedBy { MathUtils.getDistance(playership.location, it.location) }.firstOrNull()
+
+            if (closest != null) {
+                switchShip(playership, closest)
+            }
+
         }
 
         var person = Global.getSector().playerPerson.setPersonality(Personalities.AGGRESSIVE)
 
-        var playership = Global.getCombatEngine().playerShip
-        if (playership != null && playership.mouseTarget != null) {
-            var shipsNearMouse = Global.getCombatEngine().shipGrid.getCheckIterator(playership.mouseTarget, 2000f, 2000f).iterator()
+        if (playership != null) {
+
+            var mouseLoc = playership.mouseTarget
+            var shipsNearMouse = Global.getCombatEngine().shipGrid.getCheckIterator(mouseLoc, 2000f, 2000f).iterator()
 
             var any = false
             var closest = 10000000f
@@ -59,10 +86,11 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
                 var ship = shipObj as ShipAPI
 
                 if (ship.owner != 0) continue
-                if (ship.owner != 0) continue
+                if (ship == playership) continue
+                if (ship.captain?.hasTag("rat_neuro_shard") != true) continue
 
                 var distance = MathUtils.getDistance(playership.mouseTarget, ship.shieldCenterEvenIfNoShield)
-                if (distance <= ship.shieldRadiusEvenIfNoShield * 0.95f) {
+                if (distance <= ship.shieldRadiusEvenIfNoShield * 1.1f) {
                     if (distance <= closest) {
                         closest = distance
                         selectedShip = ship
@@ -84,6 +112,55 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
             alpha -= 4f * amount
         }
         alpha = alpha.coerceIn(0f, 1f)
+
+    }
+
+
+
+    override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
+        super.processInputPreCoreControls(amount, events)
+
+        var playership = Global.getCombatEngine().playerShip
+
+        for (event in events!!) {
+            if (!event.isConsumed) {
+                if (event.isMouseDownEvent && event.isRMBDownEvent) {
+                    if (selectedShip != null && playership != null) {
+
+                        switchShip(playership, selectedShip!!)
+
+                        event.consume()
+                        break
+                    }
+                }
+            }
+        }
+    }
+
+    fun switchShip(current: ShipAPI, new: ShipAPI) {
+
+        saveControlState(current)
+
+        Global.getSoundPlayer().playUISound("ui_neural_transfer_complete", 1f, 1f)
+        Global.getCombatEngine().combatUI.reFanOutShipInfo()
+
+        Global.getCombatEngine().setPlayerShipExternal(new)
+        new!!.captain = Global.getSector().playerPerson
+
+
+        var shard = current.customData.get("rat_neuro_shard") as PersonAPI?
+        if (shard != null) {
+            current.captain = shard
+        }
+        else {
+            addShardOfficer(current)
+        }
+
+        restoreControlState(new)
+
+        Global.getCombatEngine().addPlugin(TemporarySlowdown(3f, 0.25f))
+
+        selectedShip = null
     }
 
 
@@ -98,18 +175,50 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
         person.gender = player.gender
         person.portraitSprite = player.portraitSprite
 
-        var skills = player.stats.skillsCopy.filter { it.skill.isCombatOfficerSkill && !it.skill.hasTag("npc_only") }
-        var count = MathUtils.getRandomNumberInRange(2, 3)
-        for (i in 0 until count) {
+        var level = MathUtils.getRandomNumberInRange(2, 3)
+        person.stats.level = level
+
+        var skills = player.stats.skillsCopy.filter { it.skill.isCombatOfficerSkill && !it.skill.hasTag("npc_only") && it.level >= 0.5f }.toMutableList()
+        for (i in 0 until  level) {
             var skill = skills.randomOrNull() ?: continue
 
+            skills.remove(skill)
             person.stats.setSkillLevel(skill.skill.id, skill.level)
         }
 
-        person.addTag("rat_player_shard")
+        person.addTag("rat_neuro_shard")
 
         ship.captain = person
-        ship.resetOriginalOwner()
+        ship.setCustomData("rat_neuro_shard", person)
+    }
+
+    fun saveControlState(ship: ShipAPI) {
+
+        var controllState = ShipControllState()
+        for (group in ship.weaponGroupsCopy) {
+            controllState!!.autofiring.put(group, group.isAutofiring)
+        }
+        controllState!!.selected = ship.selectedGroupAPI
+
+        ship.setCustomData("rat_neuro_state", controllState)
+    }
+
+    fun restoreControlState(ship: ShipAPI) {
+        var controllState = ship.customData.get("rat_neuro_state") as ShipControllState? ?: return
+
+        for (group in ship.weaponGroupsCopy) {
+            var auto: Boolean? = controllState!!.autofiring.get(group)
+            if (auto == null) auto = false
+            if (auto) {
+                group.toggleOn()
+            } else {
+                group.toggleOff()
+            }
+        }
+        val index = ship.weaponGroupsCopy.indexOf(controllState!!.selected)
+        if (index > 0) {
+            ship.giveCommand(ShipCommand.SELECT_GROUP, null, index)
+        }
     }
 
     override fun renderInWorldCoords(viewport: ViewportAPI?) {
@@ -141,4 +250,10 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
         }
     }
 
+    class ShipControllState {
+        var autofiring: MutableMap<WeaponGroupAPI, Boolean> = LinkedHashMap()
+        var selected: WeaponGroupAPI? = null
+    }
+
 }
+
