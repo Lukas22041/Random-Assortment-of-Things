@@ -8,6 +8,7 @@ import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
 import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
 import assortment_of_things.abyss.scripts.ChangeMainMenuColorScript
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
+import assortment_of_things.backgrounds.neural.NeuralShardScript
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.GameState
@@ -18,6 +19,7 @@ import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.combat.CombatEngine
+import exerelin.campaign.backgrounds.CharacterBackgroundUtils
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 
@@ -60,6 +62,13 @@ class CombatHandler : EveryFrameCombatPlugin
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {
+
+            if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
+                if (CharacterBackgroundUtils.isBackgroundActive("rat_neural_shard")) {
+                    engine.addPlugin(NeuralShardScript())
+                }
+            }
+
             var system = Global.getSector()?.playerFleet?.starSystem ?: return
             if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
             {

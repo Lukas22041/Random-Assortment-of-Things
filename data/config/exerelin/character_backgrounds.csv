@@ -4,4 +4,5 @@ rat_comradery,Comradery,"None of your achivements were made alone, but together 
 rat_bounty,High Value Target,Some factions are less than happy with your continued influence on the sector.,,51,graphics/icons/missions/pirate_system_bounty.png,assortment_of_things.backgrounds.BountyBackground
 rat_force_in_numbers,Force in numbers,You are renowned all over the sector for your unique style of wolfpack-like fleet strategies.,,52,graphics/icons/backgrounds/rat_force.png,assortment_of_things.backgrounds.ForceBackground
 rat_personal_army,Personal Army,Your experience as a military official assists your endeavours to this day.,,53,graphics/icons/backgrounds/rat_army.png,assortment_of_things.backgrounds.ArmyBackground
-rat_exotech,Exo-Tech Partner,Test,,54,graphics/factions/rat_exo_crest.png,assortment_of_things.backgrounds.ExoBackground
+rat_neural_shard,Neural Shard,"You once salvaged a powerful, experimental neural device, creating a one-man army from your persona alone.",,54,graphics/icons/backgrounds/rat_neural_shard.png,assortment_of_things.backgrounds.NeuralShardBackground
+rat_exotech,Exo-Tech Partner,,,55,graphics/factions/rat_exo_crest.png,assortment_of_things.backgrounds.ExoBackground

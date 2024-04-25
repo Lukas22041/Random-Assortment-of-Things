@@ -19,7 +19,7 @@ import exerelin.utilities.NexFactionConfig
 import lunalib.lunaUtil.LunaCommons
 import org.magiclib.kotlin.isDecentralized
 
-class ArmyBackground : BaseCharacterBackground() {
+class NeuralShardBackground : BaseCharacterBackground() {
 
 
     override fun shouldShowInSelection(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?): Boolean {
@@ -28,7 +28,7 @@ class ArmyBackground : BaseCharacterBackground() {
 
 
     override fun getLongDescription(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?): String {
-        return "You are experienced in leading multiple squadrons and their officers."
+        return "You can take control of all ships within your fleet, but the mental exhaustion from the chip makes it hard to work with others."
     }
 
     fun getTooltip(tooltip: TooltipMakerAPI) {
@@ -38,17 +38,17 @@ class ArmyBackground : BaseCharacterBackground() {
         var hc = Misc.getHighlightColor()
         var nc = Misc.getNegativeHighlightColor()
 
-        var label = tooltip.addPara(
-                "The amount of maximum officers within your fleet is doubled, but their maximum level is reduced by 2, and they can not have more than one elite skill. " +
-                        "You are also much more likely to find officers on colonies. \n\n" +
+        var label = tooltip!!.addPara(
+                "All non-automated ships in your fleet without an officer receive a shard of yourself as their pilot. " +
+                        "Those shards share two to three of your own combat skills. Every shard, and yourself, has aggressive behaviour. \n\n" +
                         "" +
-                        "All ships with officers also provide an effective increase of strength in planetary raids of 10/20/35/50 depending on their hullsize and the total number of marines in the fleet.  \n\n" +
+                        "You can switch to any ship with a shard immediately by holding \"R\" while hovering over the ship. The ship currently controlled has access to all of your skills. \n\n" +
                         "" +
-                        "The reduction in officer capability may not apply to some special officers.", 0f)
+                        "The maximum number of officers able to join your fleet is halved, and you have a harder time finding anyone wanting to join you.", 0f)
 
 
-        label.setHighlightColors(hc, nc, nc, hc, hc, hc, hc)
-        label.setHighlight("doubled", "2", "can not have more than one elite skill", "10", "20", "35", "50")
+        label.setHighlight("receive a shard of yourself as their pilot", "two to three", "aggressive", "switch", "R", "all of your skills.", "halved")
+        label.setHighlightColors(hc, hc, hc, hc, hc, hc, nc)
 
     }
 
@@ -62,32 +62,22 @@ class ArmyBackground : BaseCharacterBackground() {
         getTooltip(tooltip!!)
 
 
+
+
     }
 
     override fun onNewGameAfterTimePass(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?) {
         super.onNewGameAfterTimePass(factionSpec, factionConfig)
 
         var stats = Global.getSector().characterData.person.stats
+        stats.officerNumber.modifyMult("rat_neural_shard", 0.5f)
 
-        stats.officerNumber.modifyMult("rat_army_mod", 2f)
 
-        stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("rat_army_mod", -2f)
-        //stats.dynamic.getMod(Stats.OFFICER_MAX_ELITE_SKILLS_MOD).modifyFlat("rat_army_mod", -10000f, "Personal Army")
-        stats.dynamic.getMod(Stats.OFFICER_MAX_ELITE_SKILLS_MOD).modifyMult("rat_army_mod", 0f, "Personal Army")
-        Global.getSector().addScript(PersonalArmyScript())
-
-        for (officer in Global.getSector().playerFleet.fleetData.officersCopy) {
-            for (skill in officer.person.stats.skillsCopy) {
-                if (skill.level >= 2f) {
-                    skill.level = 1f
-                }
-            }
-        }
+        Global.getSector().addScript(NeuralShardOfficerScript())
     }
-
 }
 
-class PersonalArmyScript : EveryFrameScript {
+class NeuralShardOfficerScript : EveryFrameScript {
 
     var interval = IntervalUtil(1f, 1f)
 
@@ -103,11 +93,8 @@ class PersonalArmyScript : EveryFrameScript {
         interval.advance(amount)
         if (interval.intervalElapsed()) {
             for (market in Global.getSector().economy.marketsCopy) {
-                market.stats.dynamic.getMod(Stats.OFFICER_PROB_MOD).modifyFlat("rat_army_mod", 0.1f)
-                market.stats.dynamic.getMod(Stats.OFFICER_ADDITIONAL_PROB_MULT_MOD).modifyFlat("rat_army_mod", 0.1f)
-                
-                market.stats.dynamic.getMod(Stats.OFFICER_PROB_MOD).modifyMult("rat_army_mod", 1.2f)
-                market.stats.dynamic.getMod(Stats.OFFICER_ADDITIONAL_PROB_MULT_MOD).modifyMult("rat_army_mod", 1.2f)
+                market.stats.dynamic.getMod(Stats.OFFICER_PROB_MOD).modifyMult("rat_army_mod", 0.5f)
+                market.stats.dynamic.getMod(Stats.OFFICER_ADDITIONAL_PROB_MULT_MOD).modifyMult("rat_army_mod", 0.5f)
             }
         }
     }
