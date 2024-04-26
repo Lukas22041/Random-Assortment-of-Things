@@ -1,4 +1,4 @@
-package assortment_of_things.backgrounds.neural
+package assortment_of_things.backgrounds.zero_day
 
 import assortment_of_things.combat.TemporarySlowdown
 import assortment_of_things.misc.getAndLoadSprite
@@ -19,12 +19,14 @@ import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.isAutomated
+import org.magiclib.kotlin.setAlpha
+import org.magiclib.util.MagicUI
 import java.awt.Color
 import java.util.*
 
-class NeuralShardScript : BaseEveryFrameCombatPlugin() {
+class ZeroDayScript : BaseEveryFrameCombatPlugin() {
 
-    var sprite = Global.getSettings().getAndLoadSprite("graphics/ui/rat_ship_marker.png")
+    var sprite = Global.getSettings().getAndLoadSprite("graphics/ui/rat_ship_marker_hostile.png")
 
     var selectedShip: ShipAPI? = null
     var lastSelectedShip: ShipAPI? = null
@@ -33,10 +35,35 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
     var rotation = MathUtils.getRandomNumberInRange(0f, 90f)
     var alpha = 0f
 
+    var maxDp = 35f
+
+    var previous: ShipAPI? = null
+    var controlled: ShipAPI? = null
+
+    var duration = 0f
+    var relativeMaxDuration = 1f
+    var maxDuration = 20f
+    var cooldown = 0f
+    var maxCooldown = 20f
+
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
         interval.advance(amount)
 
-        if (!Global.getCombatEngine().isPaused) {
+        var playership = Global.getCombatEngine().playerShip
+
+        var paused = Global.getCombatEngine().isPaused
+        if (cooldown > 0f) {
+            if (!paused) cooldown -= 1 * amount
+
+            var level = 1-(cooldown/maxCooldown)
+            var color = Misc.interpolateColor(Misc.getNegativeHighlightColor(), Misc.getPositiveHighlightColor(), level)
+
+            MagicUI.drawInterfaceStatusBar(playership, level , color, color, 1f, "Hack", cooldown.toInt())
+
+            return
+        }
+
+        if (!paused) {
             rotation -= 10f * amount
             if (rotation >= 360f) {
                 rotation = 0f
@@ -44,38 +71,27 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
         }
 
 
-
-        if (interval.intervalElapsed()) {
-            var shipsWithoutOfficer = Global.getCombatEngine().ships.filter { it.owner == 0 && !it.isFighter && !it.isAutomated() && (it.captain == null || it.captain.isDefault) }
-
-            for (ship in shipsWithoutOfficer) {
-                addShardOfficer(ship)
-            }
-
-            for (ship in Global.getCombatEngine().ships) {
-                if (ship.captain == Global.getSector().playerPerson) {
-                    if (ship != Global.getCombatEngine().playerShip) {
-                        addShardOfficer(ship)
-                    }
-                }
-            }
-
-        }
-
-        var playership = Global.getCombatEngine().playerShip
-        if (playership != null && !playership.isAlive) {
-            var others = Global.getCombatEngine().ships.filter { it.owner == 0 && it.captain != null && it.captain.hasTag("rat_neuro_shard") }
-            var closest = others.sortedBy { MathUtils.getDistance(playership.location, it.location) }.firstOrNull()
-
-            if (closest != null) {
-                switchShip(playership, closest)
-            }
-
-        }
-
         var person = Global.getSector().playerPerson.setPersonality(Personalities.AGGRESSIVE)
 
-        if (playership != null) {
+        if (controlled != null) {
+            if (!paused) duration -= 1f * amount
+
+            var level = duration/relativeMaxDuration
+            var color = Misc.interpolateColor(Misc.getNegativeHighlightColor(), Misc.getPositiveHighlightColor(), level)
+
+            MagicUI.drawInterfaceStatusBar(controlled,duration/relativeMaxDuration, color, color, 1f, "Hack", duration.toInt())
+
+            if (duration <= 0f || !controlled!!.isAlive) {
+                switchBack()
+            }
+        }
+        else {
+            if (!Global.getCombatEngine().combatUI.isShowingCommandUI) {
+                MagicUI.drawInterfaceStatusBar(playership, 1f , Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor(), 1f, "Hack", 0)
+            }
+        }
+
+        if (playership != null && controlled == null) {
 
             var mouseLoc = playership.mouseTarget
             var shipsNearMouse = Global.getCombatEngine().shipGrid.getCheckIterator(mouseLoc, 2000f, 2000f).iterator()
@@ -85,10 +101,9 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
             for (shipObj in shipsNearMouse) {
                 var ship = shipObj as ShipAPI
 
-                if (ship.owner != 0) continue
+                if (ship.owner != 1) continue
                 if (ship.isFighter) continue
-                if (ship == playership) continue
-                if (ship.captain?.hasTag("rat_neuro_shard") != true) continue
+                if (ship.fleetMember.deploymentPointsCost > 35) continue
 
                 var distance = MathUtils.getDistance(playership.mouseTarget, ship.shieldCenterEvenIfNoShield)
                 if (distance <= ship.shieldRadiusEvenIfNoShield * 1.1f) {
@@ -121,6 +136,8 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
         super.processInputPreCoreControls(amount, events)
 
+        if (cooldown > 0f) return
+
         var playership = Global.getCombatEngine().playerShip
 
         for (event in events!!) {
@@ -128,7 +145,20 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
                 if (event.isMouseDownEvent && event.isRMBDownEvent) {
                     if (selectedShip != null && playership != null) {
 
-                        switchShip(playership, selectedShip!!)
+                        previous = playership
+                        controlled = selectedShip
+                        controlled!!.owner = 0
+                        controlled!!.originalOwner = 0
+                        selectedShip = null
+
+                        var level = (controlled!!.fleetMember.deploymentPointsCost - 0f) / (maxDp - 0f)
+                        level = 1 - level
+
+                        duration = maxDuration * level
+                        duration = duration.coerceIn(10f, maxDuration)
+                        relativeMaxDuration = duration
+
+                        switchShip(playership, controlled!!)
 
                         event.consume()
                         break
@@ -146,52 +176,30 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
         Global.getCombatEngine().combatUI.reFanOutShipInfo()
 
         Global.getCombatEngine().setPlayerShipExternal(new)
-        new!!.captain = Global.getSector().playerPerson
-
-
-        var shard = current.customData.get("rat_neuro_shard") as PersonAPI?
-        if (shard != null) {
-            current.captain = shard
-        }
-        else {
-            addShardOfficer(current)
-        }
 
         restoreControlState(new)
 
-        Global.getCombatEngine().addPlugin(TemporarySlowdown(3f, 0.25f))
+        Global.getCombatEngine().addPlugin(TemporarySlowdown(3f, 0.5f))
 
         selectedShip = null
     }
 
+    fun switchBack() {
 
-    fun addShardOfficer(ship: ShipAPI) {
-
-        var person = Global.getFactory().createPerson()
-        person.setPersonality(Personalities.AGGRESSIVE)
-
-        var player = Global.getSector().playerPerson
-
-        person.name = player.name
-        person.gender = player.gender
-        person.portraitSprite = player.portraitSprite
-
-        var level = MathUtils.getRandomNumberInRange(2, 3)
-        person.stats.level = level
-
-        var skills = player.stats.skillsCopy.filter { it.skill.isCombatOfficerSkill && !it.skill.hasTag("npc_only") && it.level >= 0.5f }.toMutableList()
-        for (i in 0 until  level) {
-            var skill = skills.randomOrNull() ?: continue
-
-            skills.remove(skill)
-            person.stats.setSkillLevel(skill.skill.id, skill.level)
+        if (controlled!!.isAlive) {
+            controlled!!.owner = 1
+            controlled!!.originalOwner = 1
         }
 
-        person.addTag("rat_neuro_shard")
+        switchShip(controlled!!, previous!!)
 
-        ship.captain = person
-        ship.setCustomData("rat_neuro_shard", person)
+        cooldown = maxCooldown
+
+        controlled = null
+        previous = null
     }
+
+
 
     fun saveControlState(ship: ShipAPI) {
 
@@ -226,12 +234,11 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
         super.renderInWorldCoords(viewport)
 
         if (lastSelectedShip != null) {
-            sprite.color = Misc.getPositiveHighlightColor()
-            sprite.color = Color(255, 150, 0)
+            sprite.color = Misc.getNegativeHighlightColor()
             sprite.alphaMult = alpha
 
             var degrees = rotation
-            for (i in 0 until 3) {
+            for (i in 0 until 5) {
 
                 var maxRadius = 600f
                 var radius = lastSelectedShip!!.collisionRadius
@@ -246,7 +253,7 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
                 sprite.angle = degrees
                 sprite.renderAtCenter(loc.x, loc.y)
 
-                degrees += 120f
+                degrees += 72
             }
         }
     }

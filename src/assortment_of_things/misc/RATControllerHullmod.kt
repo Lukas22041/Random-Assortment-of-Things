@@ -104,9 +104,13 @@ class RATControllerHullmod : BaseHullMod() {
                     stats.maxCombatReadiness.modifyFlat("rat_force_in_numbers", -0.15f, "Force in numbers")
                     stats.maxCombatReadiness.modifyMult("rat_force_in_numbers", 0.333f, "Force in numbers")
                     stats.peakCRDuration.modifyMult("rat_force_in_numbers", 0.333f)
+
                     stats.suppliesPerMonth.modifyMult("rat_force_in_numbers", 1.5f)
                     stats.fuelUseMod.modifyMult("rat_force_in_numbers", 1.5f)
                     stats.maxBurnLevel.modifyFlat("rat_force_in_numbers", -1f)
+
+                    stats.cargoMod.modifyMult("rat_force_in_numbers", 0.8f)
+                    stats.fuelMod.modifyMult("rat_force_in_numbers", 0.8f)
                 }
             }
 

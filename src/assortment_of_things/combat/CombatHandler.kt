@@ -9,6 +9,7 @@ import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
 import assortment_of_things.abyss.scripts.ChangeMainMenuColorScript
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.backgrounds.neural.NeuralShardScript
+import assortment_of_things.backgrounds.zero_day.ZeroDayScript
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.GameState
@@ -66,6 +67,10 @@ class CombatHandler : EveryFrameCombatPlugin
             if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
                 if (CharacterBackgroundUtils.isBackgroundActive("rat_neural_shard")) {
                     engine.addPlugin(NeuralShardScript())
+                }
+
+                if (CharacterBackgroundUtils.isBackgroundActive("rat_zero_day")) {
+                    engine.addPlugin(ZeroDayScript())
                 }
             }
 
