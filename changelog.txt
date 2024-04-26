@@ -1,7 +1,7 @@
 Version 2.1.4
 Maybe save compatible
 
--> Added the "Personaly Army" Background.
+-> Added the "Personal Army" Background.
 -> Added the "Neural Shard" Background.
 -> Added the "Zero Day Exploit" Background.
 -> made Logistic Stats for large ships on the "Force in numbers" background worse.
