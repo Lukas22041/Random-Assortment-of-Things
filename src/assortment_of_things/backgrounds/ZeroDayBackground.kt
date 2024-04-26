@@ -28,7 +28,7 @@ class ZeroDayBackground : BaseCharacterBackground() {
 
 
     override fun getLongDescription(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?): String {
-        return "You can temporarly hack in to opponents ship and take over control."
+        return "You can temporarly hack in to opponents ships and take over control."
     }
 
     fun getTooltip(tooltip: TooltipMakerAPI) {

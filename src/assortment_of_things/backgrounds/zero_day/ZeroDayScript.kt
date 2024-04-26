@@ -103,7 +103,7 @@ class ZeroDayScript : BaseEveryFrameCombatPlugin() {
 
                 if (ship.owner != 1) continue
                 if (ship.isFighter) continue
-                if (ship.fleetMember.deploymentPointsCost > 35) continue
+                if ((ship.fleetMember?.deploymentPointsCost ?: ship.hullSpec.suppliesToRecover) > 35) continue
 
                 var distance = MathUtils.getDistance(playership.mouseTarget, ship.shieldCenterEvenIfNoShield)
                 if (distance <= ship.shieldRadiusEvenIfNoShield * 1.1f) {
@@ -151,7 +151,9 @@ class ZeroDayScript : BaseEveryFrameCombatPlugin() {
                         controlled!!.originalOwner = 0
                         selectedShip = null
 
-                        var level = (controlled!!.fleetMember.deploymentPointsCost - 0f) / (maxDp - 0f)
+                        var dp = (controlled!!.fleetMember?.deploymentPointsCost ?: controlled!!.hullSpec.suppliesToRecover)
+
+                        var level = (dp - 0f) / (maxDp - 0f)
                         level = 1 - level
 
                         duration = maxDuration * level

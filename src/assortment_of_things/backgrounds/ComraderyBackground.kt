@@ -55,7 +55,7 @@ class ComraderyBackground : BaseCharacterBackground() {
         super.addTooltipForSelection(tooltip, factionSpec, factionConfig, expanded)
 
         tooltip!!.addSpacer(10f)
-        tooltip.addPara("Your partner has a max level of 8, can select from 6 skills at level up and can have 3 elite skills", 0f,
+        tooltip.addPara("Your partner has a max level of 8, can select from 6 skills at level up and can have 3 elite skills.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "8", "6", "3")
 
     }
