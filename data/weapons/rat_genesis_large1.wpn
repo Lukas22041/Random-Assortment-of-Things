@@ -1,0 +1,50 @@
+{
+  "id": "rat_genesis_large1",
+  "specClass": "projectile",
+  "projectileSpecId": "rat_genesis_large1_shot",
+  "type": "ENERGY",
+  "size": "LARGE",
+  "turretSprite": "graphics/weapons/abyss/genesis/rat_genesis_large1_turret.png",
+  "turretGlowSprite": "graphics/weapons/abyss/genesis/rat_genesis_large1_turret_glow.png",
+  "hardpointSprite": "graphics/weapons/abyss/genesis/rat_genesis_large1_turret.png",
+  "hardpointGlowSprite": "graphics/weapons/abyss/genesis/rat_genesis_large1_turret_glow.png",
+  "glowColor": [
+    255,
+    255,
+    255,
+    255
+  ],
+  "specialWeaponGlowHeight": 25,
+  "specialWeaponGlowWidth": 15,
+  "turretOffsets": [
+    28,
+    0
+  ],
+  "turretAngleOffsets": [
+    0
+  ],
+  "hardpointOffsets": [
+    38,
+    0
+  ],
+  "hardpointAngleOffsets": [
+    0
+  ],
+  "barrelMode": "ALTERNATING_BURST",
+  "animationType": "GLOW_AND_FLASH",
+  "autocharge": true,
+  "muzzleFlashSpec": {
+    "length": 50,
+    "spread": 20,
+    "particleSizeMin": 15,
+    "particleSizeRange": 20,
+    "particleDuration": 0.5,
+    "particleCount": 20,
+    "particleColor": [
+      156, 40, 65,
+      100
+    ]
+  },
+  "fireSoundTwo": "abyss_leviathan",
+  "everyFrameEffect":"assortment_of_things.abyss.weapons.GenesisLarge1Effect",
+}
