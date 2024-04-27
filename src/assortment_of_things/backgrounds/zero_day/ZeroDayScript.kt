@@ -76,6 +76,10 @@ class ZeroDayScript : BaseEveryFrameCombatPlugin() {
         if (controlled != null) {
             if (!paused) duration -= 1f * amount
 
+            if (controlled!!.isRetreating) {
+                controlled!!.setRetreating(false, false)
+            }
+
             var level = duration/relativeMaxDuration
             var color = Misc.interpolateColor(Misc.getNegativeHighlightColor(), Misc.getPositiveHighlightColor(), level)
 
@@ -188,7 +192,7 @@ class ZeroDayScript : BaseEveryFrameCombatPlugin() {
 
     fun switchBack() {
 
-        if (controlled!!.isAlive) {
+        if (!controlled!!.isHulk) {
             controlled!!.owner = 1
             controlled!!.originalOwner = 1
         }

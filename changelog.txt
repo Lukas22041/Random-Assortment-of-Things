@@ -1,3 +1,12 @@
+Version 2.1.6
+Save compatible
+
+-> Made ships fire seadragons more aggressively.
+-> Fixed bug where the tylos could be permanently captured with the zero day background.
+-> Controlled ships can no longer be commanded to retreat.
+
+
+
 Version 2.1.5
 Save compatible
 
