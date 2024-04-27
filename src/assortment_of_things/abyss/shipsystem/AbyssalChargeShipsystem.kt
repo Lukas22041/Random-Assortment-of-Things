@@ -42,11 +42,11 @@ class AbyssalChargeShipsystem : BaseShipSystemScript() {
 
         if (ship!!.system.isActive)
         {
-            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).enableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!)?.enableBlink()
         }
         else
         {
-            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).disableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!)?.disableBlink()
         }
 
         var emitters = ship.allWeapons.filter { it.spec?.weaponId == "rat_morkoth_coils_location" }
@@ -139,7 +139,7 @@ class AbyssalChargeShipsystem : BaseShipSystemScript() {
         var ship = stats!!.entity as ShipAPI
 
         if (ship != null) {
-            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).disableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!)?.disableBlink()
         }
 
         activated = false

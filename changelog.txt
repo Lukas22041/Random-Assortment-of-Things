@@ -1,3 +1,13 @@
+Version 2.1.7
+Save compatible
+
+-> Fixed odd issue with the Neural Shard Background when fighting together with allied fleets.
+-> Fixed being able to select modules from automated ships with the neural shard background.
+-> Neural Shard can now let you control Arkas-Phantoms.
+-> Fixed rare crash with abyssal ships.
+
+
+
 Version 2.1.6
 Save compatible
 

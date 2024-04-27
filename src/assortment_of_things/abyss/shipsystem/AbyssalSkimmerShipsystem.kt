@@ -52,10 +52,10 @@ class AbyssalSkimmerShipsystem : BaseShipSystemScript() {
         }*/
 
         if (ship!!.system.isActive) {
-            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).enableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!)?.enableBlink()
         } else
         {
-            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).disableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!)?.disableBlink()
         }
 
         var color = AbyssalsAdaptabilityHullmod.getColorForCore(ship!!).setAlpha(100)

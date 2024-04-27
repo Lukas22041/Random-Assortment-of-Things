@@ -123,7 +123,7 @@ class ArkasShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
                 var distance = MathUtils.getDistance(phantom.location, ship!!.location)
                 phantom.setCustomData("rat_phantom_distance", distance)
 
-                if (phantom!!.shipAI == null) {
+                if (phantom!!.shipAI == null && phantom != Global.getCombatEngine().playerShip) {
                     phantom.shipAI = Global.getSettings().createDefaultShipAI(phantom, ShipAIConfig())
                     phantom.shipAI.forceCircumstanceEvaluation()
                 }

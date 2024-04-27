@@ -21,8 +21,8 @@ import java.util.*
 class AbyssalsAdaptabilityHullmod : BaseHullMod() {
 
     companion object {
-        fun getRenderer(ship: ShipAPI) : AbyssalCoreRenderer {
-            return ship.customData.get("abyssal_glow_renderer") as AbyssalCoreRenderer
+        fun getRenderer(ship: ShipAPI) : AbyssalCoreRenderer? {
+            return ship.customData.get("abyssal_glow_renderer") as AbyssalCoreRenderer?
         }
 
         fun getColorForCore(ship: ShipAPI) : Color

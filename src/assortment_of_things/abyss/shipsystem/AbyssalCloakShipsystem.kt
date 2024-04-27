@@ -124,7 +124,7 @@ class AbyssalCloakShipsystem : BaseShipSystemScript() {
         stats.fluxDissipation.unmodify(id)
         stats.hardFluxDissipationFraction.unmodify(id)
 
-        AbyssalsAdaptabilityHullmod.getRenderer(ship).disableBlink()
+        AbyssalsAdaptabilityHullmod.getRenderer(ship)?.disableBlink()
     }
 
     override fun getStatusData(index: Int, state: ShipSystemStatsScript.State, effectLevel: Float): StatusData? {

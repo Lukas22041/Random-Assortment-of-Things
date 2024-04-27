@@ -33,6 +33,7 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
     var rotation = MathUtils.getRandomNumberInRange(0f, 90f)
     var alpha = 0f
 
+
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
         interval.advance(amount)
 
@@ -46,12 +47,18 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
 
 
         if (interval.intervalElapsed()) {
-            var shipsWithoutOfficer = Global.getCombatEngine().ships.filter { it.owner == 0 && !it.isFighter && !it.isAutomated() && (it.captain == null || it.captain.isDefault) }
+            var shipsWithoutOfficer = Global.getCombatEngine().ships.filter { it.owner == 0 && !it.isAlly && !it.isFighter && !it.isAutomated() && (it.captain == null || it.captain.isDefault) }
 
             for (ship in shipsWithoutOfficer) {
+
+                if (ship.parentStation != null) {
+                    if (ship.parentStation.isAutomated()) continue
+                }
+
                 addShardOfficer(ship)
             }
 
+            //Replace player with shard if they swapped
             for (ship in Global.getCombatEngine().ships) {
                 if (ship.captain == Global.getSector().playerPerson) {
                     if (ship != Global.getCombatEngine().playerShip) {
@@ -62,6 +69,7 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
 
         }
 
+        //Switch to closest ship on ship death.
         var playership = Global.getCombatEngine().playerShip
         if (playership != null && !playership.isAlive) {
             var others = Global.getCombatEngine().ships.filter { it.owner == 0 && it.captain != null && it.captain.hasTag("rat_neuro_shard") }

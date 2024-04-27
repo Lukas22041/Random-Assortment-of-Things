@@ -21,11 +21,11 @@ class AbyssalCurrentShipsystem : BaseShipSystemScript() {
 
         if (ship!!.system.isActive)
         {
-            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).enableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!)?.enableBlink()
         }
         else
         {
-            AbyssalsAdaptabilityHullmod.getRenderer(ship!!).disableBlink()
+            AbyssalsAdaptabilityHullmod.getRenderer(ship!!)?.disableBlink()
         }
 
         var weapon = ship!!.allWeapons.find { it.spec?.weaponId == "rat_merrow_beam" } ?: return
