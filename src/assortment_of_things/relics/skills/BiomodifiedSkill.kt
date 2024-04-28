@@ -79,7 +79,7 @@ class BiomodifiedSkill : RATBaseShipSkill() {
 
         stats.hullDamageTakenMult.modifyMult(id, 0.9f)
         stats.shieldDamageTakenMult.modifyMult(id, 0.9f)
-        stats.armorBonus.modifyMult(id, 0.9f)
+        stats.armorDamageTakenMult.modifyMult(id, 0.9f)
 
         stats.maxCombatReadiness.modifyFlat(id, -0.1f, "Biomutant")
 

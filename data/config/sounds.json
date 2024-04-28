@@ -152,6 +152,18 @@
 		{"file":"sounds/sfx_wpn_energy/rift_explosion_03.ogg","pitch":1.0,"volume":0.8},
 	],
 	
+	"rat_abyss_genesis_large1":[
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_01.ogg","pitch":0.7,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_01.ogg","pitch":0.8,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_01.ogg","pitch":0.7,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_02.ogg","pitch":0.9,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_02.ogg","pitch":0.8,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_02.ogg","pitch":0.7,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_03.ogg","pitch":0.7,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_03.ogg","pitch":0.9,"volume":0.8},
+		{"file":"sounds/sfx_wpn_energy/rift_explosion_03.ogg","pitch":0.7,"volume":0.8},
+	],
+	
 	 "seadragon_payload_fire":
     [
             {"file":"sounds/sfx_wpn_missiles/dragonfire_dem_payload_01.ogg","pitch":1.0,"volume":0.3},

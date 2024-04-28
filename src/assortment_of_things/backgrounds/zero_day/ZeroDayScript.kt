@@ -56,6 +56,7 @@ class ZeroDayScript : BaseEveryFrameCombatPlugin() {
             if (!paused) cooldown -= 1 * amount
 
             var level = 1-(cooldown/maxCooldown)
+            level = level.coerceIn(0f, 1f)
             var color = Misc.interpolateColor(Misc.getNegativeHighlightColor(), Misc.getPositiveHighlightColor(), level)
 
             MagicUI.drawInterfaceStatusBar(playership, level , color, color, 1f, "Hack", cooldown.toInt())
@@ -81,6 +82,7 @@ class ZeroDayScript : BaseEveryFrameCombatPlugin() {
             }
 
             var level = duration/relativeMaxDuration
+            level = level.coerceIn(0f, 1f)
             var color = Misc.interpolateColor(Misc.getNegativeHighlightColor(), Misc.getPositiveHighlightColor(), level)
 
             MagicUI.drawInterfaceStatusBar(controlled,duration/relativeMaxDuration, color, color, 1f, "Hack", duration.toInt())

@@ -17,14 +17,14 @@
   "specialWeaponGlowHeight": 25,
   "specialWeaponGlowWidth": 15,
   "turretOffsets": [
-    28,
+    30,
     0
   ],
   "turretAngleOffsets": [
     0
   ],
   "hardpointOffsets": [
-    38,
+    40,
     0
   ],
   "hardpointAngleOffsets": [
@@ -41,10 +41,10 @@
     "particleDuration": 0.5,
     "particleCount": 20,
     "particleColor": [
-      156, 40, 65,
+      54, 40, 156,
       100
     ]
   },
-  "fireSoundTwo": "abyss_leviathan",
-  "everyFrameEffect":"assortment_of_things.abyss.weapons.GenesisLarge1Effect",
+  "fireSoundTwo": "rat_abyss_genesis_large1",
+  "everyFrameEffect":"assortment_of_things.abyss.weapons.genesis.GenesisLarge1Effect",
 }

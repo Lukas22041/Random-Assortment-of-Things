@@ -1,4 +1,4 @@
-package assortment_of_things.abyss.weapons
+package assortment_of_things.abyss.weapons.genesis
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.getAndLoadSprite
@@ -11,6 +11,7 @@ import org.lazywizard.lazylib.combat.entities.SimpleEntity
 import org.lazywizard.lazylib.ext.plus
 import org.lazywizard.lazylib.ext.rotate
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
 
@@ -22,19 +23,23 @@ class GenesisLarge1Effect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeapon
     var particleSprite = Global.getSettings().getAndLoadSprite("graphics/fx/particlealpha64sq.png")
     var energyBallSprite = Global.getSettings().getAndLoadSprite("graphics/fx/genesis_weapon_glow.png")
 
-    class BallGlow(var angle: Float, var speed: Float, var sizeMult: Float)
+    class BallGlow(var angle: Float, var speed: Float, var sizeMult: Float, var color: Color)
 
     class WeaponParticle(var location: Vector2f, var velocity: Vector2f, var maxLifetime: Float, var lifetime: Float)
 
     var ballGlows = ArrayList<BallGlow>()
 
     var empInterval = IntervalUtil(0.2f, 0.2f)
+    var explosionInterval = IntervalUtil(1f, 1f)
+
+    var projectile: DamagingProjectileAPI? = null
 
     init {
         Global.getCombatEngine().addLayeredRenderingPlugin(this)
 
         for (i in 0..10) {
-            var glow = BallGlow(MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(10f, 60f), MathUtils.getRandomNumberInRange(0.5f, 1.2f))
+            var color = Misc.interpolateColor(AbyssUtils.GENESIS_COLOR, Color(47, 111, 237), MathUtils.getRandomNumberInRange(0.25f, 1f))
+            var glow = BallGlow(MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(10f, 60f), MathUtils.getRandomNumberInRange(0.5f, 1.6f), color)
             ballGlows.add(glow)
 
         }
@@ -51,8 +56,27 @@ class GenesisLarge1Effect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeapon
     override fun advance(amount: Float, engine: CombatEngineAPI?, weapon: WeaponAPI?) {
         this.weapon = weapon
 
+
+        if (weapon!!.isFiring && projectile == null) {
+            projectile = engine!!.projectiles.find { it.weapon == weapon }
+        }
+        if (!weapon.isFiring)   {
+            projectile = null
+        }
+
+
+
+
         for (ball in ballGlows) {
             ball.angle += ball.speed * amount
+        }
+
+        weapon!!.ensureClonedSpec()
+        if (weapon!!.isFiring && weapon.cooldownRemaining <= 0) {
+            weapon.spec.turnRate = 60f
+        }
+        else {
+            weapon.spec.turnRate = 20f
         }
 
         var loc = weapon!!.location.plus(Vector2f(weapon!!.spec.turretFireOffsets.get(0)).rotate(weapon!!.currAngle))
@@ -72,17 +96,28 @@ class GenesisLarge1Effect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeapon
 
 
             var color = Misc.interpolateColor(AbyssUtils.GENESIS_COLOR, Color(156, 40, 65), MathUtils.getRandomNumberInRange(0f, 1f) * 0.5f)
+            color = color.darker()
+            color = color.setAlpha(150)
 
             Global.getCombatEngine().spawnEmpArcVisual(loc, weapon.ship, to, SimpleEntity(to),
                 MathUtils.getRandomNumberInRange(1f, 5f), color, color)
 
-            Global.getCombatEngine()!!.spawnExplosion(loc, weapon!!.ship.velocity, color, 5f, 5f)
+            Global.getSoundPlayer().playSound("tachyon_lance_emp_impact", MathUtils.getRandomNumberInRange(0.75f, 0.85f), 0.6f, loc, Vector2f())
+
+           // Global.getCombatEngine()!!.spawnExplosion(loc, weapon!!.ship.velocity, color, 5f, 5f)
 
         }
 
 
+        explosionInterval.advance(intervalAmount)
+        if (explosionInterval.intervalElapsed()) {
 
+            var color = Misc.interpolateColor(AbyssUtils.GENESIS_COLOR, Color(156, 40, 65), MathUtils.getRandomNumberInRange(0f, 1f) * 0.5f)
+            color = color.darker()
+            color = color.setAlpha(150)
 
+            Global.getCombatEngine()!!.spawnExplosion(loc, weapon!!.ship.velocity, color, 5f, 5f)
+        }
 
     }
 
@@ -92,18 +127,22 @@ class GenesisLarge1Effect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeapon
         var loc = weapon!!.location.plus(Vector2f(weapon!!.spec.turretFireOffsets.get(0)).rotate(weapon!!.currAngle))
         if (!weapon!!.slot.isHardpoint) weapon!!.location.plus(Vector2f(weapon!!.spec.hardpointFireOffsets.get(0)).rotate(weapon!!.currAngle))
 
+        if (projectile != null) {
+            loc = projectile!!.location
+        }
+
         for (ball in ballGlows) {
 
             var level = weapon!!.chargeLevel * 1.5f
             level = level.coerceIn(0f, 1f)
 
-            if (weapon!!.cooldownRemaining > 0) level = 0f
+            if (weapon!!.cooldownRemaining > 0 && (projectile == null ||  projectile!!.isFading)) level = 0f
 
             var sizeMult = ball.sizeMult * level
 
 
-            energyBallSprite.color = color
-            energyBallSprite.alphaMult = level * 0.33f
+            energyBallSprite.color = ball.color
+            energyBallSprite.alphaMult = level * 0.2f
             energyBallSprite.setAdditiveBlend()
             energyBallSprite.setSize(60f * sizeMult, 60f * sizeMult)
             energyBallSprite.angle = ball.angle
