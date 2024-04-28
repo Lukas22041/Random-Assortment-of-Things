@@ -14,7 +14,7 @@ import java.awt.Color
 
 class GenesisLarge1OnHit : OnHitEffectPlugin {
 
-    var range = 700f
+    var range = 1000f
 
     override fun onHit(projectile: DamagingProjectileAPI?, target: CombatEntityAPI?, point: Vector2f?, shieldHit: Boolean, damageResult: ApplyDamageResultAPI?, engine: CombatEngineAPI?) {
 

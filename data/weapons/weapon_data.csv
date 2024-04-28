@@ -50,7 +50,7 @@ Construct Mote Launcher,rat_genesis_construct_mote,,,,800,,100,20,,,,,,,ENERGY,0
 Primordial Flame,rat_genesis_construct_flamer_large,3,,,600,,160,5,3,60,,80,3.3333,80,ENERGY,60,,,0.05,2,0.05,0,0,0,0,,500,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,General,,,,,The maximum charges and the recharge rate of ammunition can not be increased.,charges | recharge rate,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Genesis Weapons Useable,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Primordial Current,rat_genesis_large1,3,,4000,1000,,5000,100,500,20,30,,,,ENERGY,4500,,5,5,1,0.1,0,0,0,0,,4000,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,Annihilation,,,,,Discharges %s on to the target and all nearby opponents on collission. Those strikes deal %s of the weapons total damage. The weapons turn speed is less disrupted than usual during charging.,three shield piercing emp strikes | 5%,,,,902
+Primordial Current,rat_genesis_large1,3,,4000,1000,,4000,100,500,20,30,,,,ENERGY,3600,,5,5,1,0.1,0,0,0,0,,4000,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,Annihilation,,,,,Discharges %s on to the target and all nearby opponents on collission. Those strikes deal %s of the weapons total damage. The weapons turn speed is less disrupted than usual during charging.,three shield piercing emp strikes | 5%,,,,902
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Abyss Decos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Aboleth Cover Left,aboleth_cover_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43

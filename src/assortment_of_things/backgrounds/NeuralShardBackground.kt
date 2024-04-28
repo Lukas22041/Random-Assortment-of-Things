@@ -17,6 +17,7 @@ import com.fs.starfarer.api.util.Misc
 import exerelin.campaign.backgrounds.BaseCharacterBackground
 import exerelin.utilities.NexFactionConfig
 import lunalib.lunaUtil.LunaCommons
+import org.lwjgl.input.Keyboard
 import org.magiclib.kotlin.isDecentralized
 
 class NeuralShardBackground : BaseCharacterBackground() {
@@ -38,16 +39,19 @@ class NeuralShardBackground : BaseCharacterBackground() {
         var hc = Misc.getHighlightColor()
         var nc = Misc.getNegativeHighlightColor()
 
+        var key = Keyboard.getKeyName(RATSettings.backgroundsAbilityKeybind!!)
+        if (RATSettings.backgroundsAbilityKeybind == 0) key = "right click"
+
         var label = tooltip!!.addPara(
                 "All non-automated ships in your fleet without an officer receive a shard of yourself as their pilot. " +
                         "Those shards share two to three of your own combat skills. Every shard, and yourself, has aggressive behaviour. \n\n" +
                         "" +
-                        "You can switch to any ship with a shard immediately by pressing right click while hovering over the ship. The ship currently controlled has access to all of your skills. \n\n" +
+                        "You can switch to any ship with a shard immediately by pressing $key while hovering over the ship. The ship currently controlled has access to all of your skills. \n\n" +
                         "" +
                         "The maximum number of officers able to join your fleet is halved, and you have a harder time finding anyone wanting to join you.", 0f)
 
 
-        label.setHighlight("receive a shard of yourself as their pilot", "two to three", "aggressive", "switch", "right click", "all of your skills.", "halved")
+        label.setHighlight("receive a shard of yourself as their pilot", "two to three", "aggressive", "switch", "$key", "all of your skills.", "halved")
         label.setHighlightColors(hc, hc, hc, hc, hc, hc, nc)
 
     }

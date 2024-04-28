@@ -34,6 +34,9 @@ rat_frontiersHeader,Frontiers,Header,Frontiers,,,,,Expansion
 rat_frontiersIncomeMult,Income Multiplier,Double,1,,Multiplies the amount of passive income that settlements provide.,0.5,3.0,Expansion
 rat_frontiersCostMult,Cost Multiplier,Double,1,,"Changes the cost of all settlement related expanses, like establishing one and paying for the construction of facilities.",0.5,3.0,Expansion
 ,,,,,,,,
+rat_backgroundsHeader,Backgrounds,Header,Backgrounds,,,,,Expansion
+rat_backgroundSpecialHotkey,Ability Hotkey,Keycode,0,,"Some Backgrounds have special abilities. The hotkey for them can be set here, if the setting is not changed, it will default to [right click] instead. Keys used by other parts of the game will likely not work correctly.",,,Expansion
+,,,,,,,,
 rat_creditsHeader,Credits,Header,Credits,,,,,Expansion
 rat_creditsText,,Text,"[Credits:]
 [Lukas04] - Code & Concepts

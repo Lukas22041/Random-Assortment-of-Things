@@ -1,6 +1,7 @@
 package assortment_of_things.backgrounds.neural
 
 import assortment_of_things.combat.TemporarySlowdown
+import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.PersonAPI
@@ -133,7 +134,16 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
 
         for (event in events!!) {
             if (!event.isConsumed) {
-                if (event.isMouseDownEvent && event.isRMBDownEvent) {
+                if (RATSettings.backgroundsAbilityKeybind == 0 && event.isMouseDownEvent && event.isRMBDownEvent) {
+                    if (selectedShip != null && playership != null) {
+
+                        switchShip(playership, selectedShip!!)
+
+                        event.consume()
+                        break
+                    }
+                }
+                else if (event.isKeyDownEvent && event.eventValue == RATSettings.backgroundsAbilityKeybind) {
                     if (selectedShip != null && playership != null) {
 
                         switchShip(playership, selectedShip!!)

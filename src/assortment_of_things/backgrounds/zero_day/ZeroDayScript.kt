@@ -1,6 +1,7 @@
 package assortment_of_things.backgrounds.zero_day
 
 import assortment_of_things.combat.TemporarySlowdown
+import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.PersonAPI
@@ -137,43 +138,75 @@ class ZeroDayScript : BaseEveryFrameCombatPlugin() {
 
     }
 
-
+    var doubleTimer = 0f
+    var doubleTimerMax = 1f
 
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
         super.processInputPreCoreControls(amount, events)
 
         if (cooldown > 0f) return
 
+        doubleTimer -= 1 * amount
+        doubleTimer = doubleTimer.coerceIn(0f, doubleTimerMax)
+
         var playership = Global.getCombatEngine().playerShip
 
         for (event in events!!) {
             if (!event.isConsumed) {
-                if (event.isMouseDownEvent && event.isRMBDownEvent) {
-                    if (selectedShip != null && playership != null) {
-
-                        previous = playership
-                        controlled = selectedShip
-                        controlled!!.owner = 0
-                        controlled!!.originalOwner = 0
-                        selectedShip = null
-
-                        var dp = (controlled!!.fleetMember?.deploymentPointsCost ?: controlled!!.hullSpec.suppliesToRecover)
-
-                        var level = (dp - 0f) / (maxDp - 0f)
-                        level = 1 - level
-
-                        duration = maxDuration * level
-                        duration = duration.coerceIn(10f, maxDuration)
-                        relativeMaxDuration = duration
-
-                        switchShip(playership, controlled!!)
-
-                        event.consume()
-                        break
-                    }
+                var triggered = false
+                if (RATSettings.backgroundsAbilityKeybind == 0 && event.isMouseDownEvent && event.isRMBDownEvent) {
+                    triggered = true
                 }
+                else if (event.isKeyDownEvent && event.eventValue == RATSettings.backgroundsAbilityKeybind) {
+                    triggered = true
+                }
+
+                if (triggered && event.isDoubleClick && controlled != null) {
+                    switchBack()
+                    event.consume()
+                    continue
+                }
+
+                if (triggered && controlled != null) {
+
+                    if (doubleTimer > 0) {
+                        switchBack()
+                        event.consume()
+                        continue
+                    }
+
+                    doubleTimer = doubleTimerMax
+                }
+
+                if (triggered && selectedShip != null && playership != null) {
+
+                    previous = playership
+                    controlled = selectedShip
+                    controlled!!.owner = 0
+                    controlled!!.originalOwner = 0
+                    selectedShip = null
+
+                    var dp = (controlled!!.fleetMember?.deploymentPointsCost ?: controlled!!.hullSpec.suppliesToRecover)
+
+                    var level = (dp - 0f) / (maxDp - 0f)
+                    level = 1 - level
+
+                    duration = maxDuration * level
+                    duration = duration.coerceIn(10f, maxDuration)
+                    relativeMaxDuration = duration
+
+                    switchShip(playership, controlled!!)
+
+                    event.consume()
+                    break
+                }
+
+
             }
         }
+
+
+
     }
 
     fun switchShip(current: ShipAPI, new: ShipAPI) {

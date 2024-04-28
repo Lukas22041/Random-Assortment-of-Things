@@ -1,3 +1,13 @@
+Version 2.1.8
+Save compatible
+
+-> The zero day exploits background ability can now be canceled by pressing the key twice.
+-> Added a config for changing the keybind for Background abilities.
+-> Fixed a crash with the "Zero Day Exploit" Background
+-> Fixed the Bio skill reducing armor by 10%
+
+
+
 Version 2.1.7
 Save compatible
 

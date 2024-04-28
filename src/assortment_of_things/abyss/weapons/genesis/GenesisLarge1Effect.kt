@@ -73,7 +73,7 @@ class GenesisLarge1Effect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeapon
 
         weapon!!.ensureClonedSpec()
         if (weapon!!.isFiring && weapon.cooldownRemaining <= 0) {
-            weapon.spec.turnRate = 60f
+            weapon.spec.turnRate = 40f
         }
         else {
             weapon.spec.turnRate = 20f
