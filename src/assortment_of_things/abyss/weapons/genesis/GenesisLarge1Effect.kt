@@ -64,6 +64,9 @@ class GenesisLarge1Effect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeapon
             projectile = null
         }
 
+        if (projectile != null && projectile!!.isExpired) {
+            GenesisLarge1OnHit.spawnExplosion(projectile, projectile!!.location)
+        }
 
 
 

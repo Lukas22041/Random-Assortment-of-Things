@@ -11,33 +11,51 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
+import java.util.*
 
 class GenesisLarge1OnHit : OnHitEffectPlugin {
 
-    var range = 1000f
+    companion object {
+        fun spawnExplosion(projectile: DamagingProjectileAPI?, point: Vector2f?) {
+            if (projectile!!.customData.containsKey("rat_charge_exploded")) return
+            projectile!!.setCustomData("rat_charge_exploded", true)
+
+            val dam = projectile!!.damageAmount * 0.10f
+
+            var explosion = DamagingExplosionSpec(1f, 1200f, 600f, dam, dam * 0.5f,
+                // minDamage
+                CollisionClass.PROJECTILE_FF, // collisionClass,
+                CollisionClass.PROJECTILE_FIGHTER, // collisionClassByFighter,
+                5f, 10f, 5f, 100,
+                AbyssUtils.GENESIS_COLOR.setAlpha(150), Color(20, 45, 90))
+
+            Global.getCombatEngine().spawnDamagingExplosion(explosion, projectile!!.weapon.ship, projectile.location, false)
+
+            Global.getSoundPlayer().playSound("rat_abyss_genesis_large1_explosion", 0.8f, 0.9f, point, Vector2f())
+        }
+    }
 
     override fun onHit(projectile: DamagingProjectileAPI?, target: CombatEntityAPI?, point: Vector2f?, shieldHit: Boolean, damageResult: ApplyDamageResultAPI?, engine: CombatEngineAPI?) {
 
-        if (target is ShipAPI && target.isFighter) return
         if (target is Missile) return
 
-        var explosion = DamagingExplosionSpec(6f, 1000f, 100f, 100f, 10f,
-            CollisionClass.HITS_SHIPS_AND_ASTEROIDS,
-            CollisionClass.HITS_SHIPS_AND_ASTEROIDS,
-            5f, 10f, 1f, 100,
-            AbyssUtils.GENESIS_COLOR, Color(15, 30, 60))
-
-        Global.getCombatEngine().spawnDamagingExplosion(explosion, projectile!!.weapon.ship, projectile.location, false)
+        spawnExplosion(projectile, point)
 
 
-        val emp = projectile.empAmount * 0.05f
+       /* val emp = projectile.empAmount * 0.05f
         val dam = projectile.damageAmount * 0.05f
 
-        var targetsNearby = Global.getCombatEngine().ships.filter { it.owner != projectile.weapon.ship.owner && MathUtils.getDistance(it, projectile) <= range }
+        var targetsNearby = Global.getCombatEngine().ships.filter { it.owner != projectile.weapon.ship.owner && MathUtils.getDistance(it, projectile) <= range && !it.isHulk}
 
         for (otherTarget in targetsNearby) {
 
-            for (i in 0 until 3) {
+            var count = 3
+            if (otherTarget.isFighter) {
+                if (Random().nextFloat() >= 0.8f) continue
+                count = 2
+            }
+
+            for (i in 0 until 1) {
                 var color = Misc.interpolateColor(AbyssUtils.GENESIS_COLOR, Color(47, 111, 237), MathUtils.getRandomNumberInRange(0f, 1f))
                 color = color.setAlpha(220)
 
@@ -46,7 +64,7 @@ class GenesisLarge1OnHit : OnHitEffectPlugin {
                     "tachyon_lance_emp_impact", 25f,  // thickness
                     color, color)
             }
-        }
+        }*/
     }
 
 }
