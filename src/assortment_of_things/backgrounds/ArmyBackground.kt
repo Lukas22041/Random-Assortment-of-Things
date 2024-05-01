@@ -67,13 +67,9 @@ class ArmyBackground : BaseCharacterBackground() {
     override fun onNewGameAfterTimePass(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?) {
         super.onNewGameAfterTimePass(factionSpec, factionConfig)
 
-        var stats = Global.getSector().characterData.person.stats
 
-        stats.officerNumber.modifyMult("rat_army_mod", 2f)
 
-        stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("rat_army_mod", -2f)
-        //stats.dynamic.getMod(Stats.OFFICER_MAX_ELITE_SKILLS_MOD).modifyFlat("rat_army_mod", -10000f, "Personal Army")
-        stats.dynamic.getMod(Stats.OFFICER_MAX_ELITE_SKILLS_MOD).modifyMult("rat_army_mod", 0f, "Personal Army")
+
         Global.getSector().addScript(PersonalArmyScript())
 
         for (officer in Global.getSector().playerFleet.fleetData.officersCopy) {
@@ -102,6 +98,15 @@ class PersonalArmyScript : EveryFrameScript {
     override fun advance(amount: Float) {
         interval.advance(amount)
         if (interval.intervalElapsed()) {
+
+            var stats = Global.getSector().characterData.person.stats
+
+            stats.officerNumber.modifyMult("rat_army_mod", 2f)
+
+            stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("rat_army_mod", -2f)
+            //stats.dynamic.getMod(Stats.OFFICER_MAX_ELITE_SKILLS_MOD).modifyFlat("rat_army_mod", -10000f, "Personal Army")
+            stats.dynamic.getMod(Stats.OFFICER_MAX_ELITE_SKILLS_MOD).modifyMult("rat_army_mod", 0f, "Personal Army")
+
             for (market in Global.getSector().economy.marketsCopy) {
                 market.stats.dynamic.getMod(Stats.OFFICER_PROB_MOD).modifyFlat("rat_army_mod", 0.1f)
                 market.stats.dynamic.getMod(Stats.OFFICER_ADDITIONAL_PROB_MULT_MOD).modifyFlat("rat_army_mod", 0.1f)

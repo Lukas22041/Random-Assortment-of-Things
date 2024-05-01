@@ -5,15 +5,12 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
-import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.combat.entities.Missile
-import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
-import java.util.*
 
-class GenesisLarge1OnHit : OnHitEffectPlugin {
+class AbaddonLanceOnHit : OnHitEffectPlugin {
 
     companion object {
         fun spawnExplosion(projectile: DamagingProjectileAPI?, point: Vector2f?) {

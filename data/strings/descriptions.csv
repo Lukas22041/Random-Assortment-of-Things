@@ -117,7 +117,7 @@ rat_asterina,WEAPON,"A small beam weapon that is capable of reliably supressing 
 rat_asterias,WEAPON,"A beam weapon that is capable of reliably supressing enemy shields, however it's effectiveness falls of as the targets flux level rises.",,,,
 rat_seabream,WEAPON,A burst beam weapon that can do effective damage against the targets armor. It can store multiple charges to fire again in quick succession.,,,,
 ,,,,,,
-rat_genesis_large1,WEAPON,"A railcannon like no other in the known universe. After it finishes charging up, theres almost no target that escape unharmed.",,,,
+rat_abaddon_lance,WEAPON,"A weapon like no other in the known universe. During its chargeup process it compresses an incredible amount of energy that it is then capable of discharging within milliseconds, sending an immense explosive force towards its target.",,,,
 ,,,,,,
 #Abyss Logs,,,,,,
 rat_abyss_log0,CUSTOM,Abyssal Matter,"There are lots of unique aspects about this environment, but one of the defining factors is the exotic matter that engulfs its entirety. Unlike the vacuum of space, moving through it causes constant drag on the hulls surface, and even though the forces at play are rather weak, the persistance of it increases the maintenance required drasticly.  

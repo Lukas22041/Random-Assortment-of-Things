@@ -1,7 +1,7 @@
 {
-  "id": "rat_genesis_large1",
+  "id": "rat_abaddon_lance",
   "specClass": "projectile",
-  "projectileSpecId": "rat_genesis_large1_shot",
+  "projectileSpecId": "rat_abaddon_lance_shot",
   "type": "ENERGY",
   "size": "LARGE",
   "turretSprite": "graphics/weapons/abyss/genesis/rat_genesis_large1_turret.png",
@@ -46,5 +46,5 @@
     ]
   },
   "fireSoundTwo": "rat_abyss_genesis_large1",
-  "everyFrameEffect":"assortment_of_things.abyss.weapons.genesis.GenesisLarge1Effect",
+  "everyFrameEffect":"assortment_of_things.abyss.weapons.genesis.AbaddonLanceEffect",
 }

@@ -64,11 +64,11 @@ Rat-Ceto1,rat_ceto_shot,base_trail_smooth,10,0.1,0,0.05,7.5,3,"[150,0,255]","[15
 #Genesis-Mote1,rat_genesis_mote,base_trail_smoke,10,0.1,0,0.2,32,4,"[178,36,69]","[140,0,250]",0.1,-128,-256,TRUE,15,10,1,0,TRUE,FALSE,TRUE,50,0,0,0,180,180,true,true
 #Genesis-Mote2,rat_genesis_mote,base_trail_smoke,10,0.2,0,0.2,48,4,"[178,36,69]","[140,0,250]",0.05,-128,-256,TRUE,15,10,1,0,TRUE,FALSE,TRUE,50,0,0,0,180,180,true,true
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-GenesisLarge1,rat_genesis_large1_shot,base_trail_zapWithCore,10,0.2,0.1,2.5,40,7.5,"[140,0,250]","[47,111,237]",0.4,-128,-256,TRUE,20,0,0.5,0,TRUE,FALSE,TRUE,50,0,0,0,0,0,true,false
-GenesisLarge11,rat_genesis_large1_shot,base_trail_zapWithCore,10,0.2,0.1,2.5,20,5,"[27,135,250]","[47,111,237]",0.3,-128,-256,TRUE,20,0,0.5,0,TRUE,FALSE,TRUE,50,0,0,0,0,0,true,false
-GenesisLarge2,rat_genesis_large1_shot,base_trail_zap,10,0.1,0.1,0.6,15,5,"[27,135,250]","[47,111,237]",0.7,-128,-256,TRUE,20,10,0.5,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
-GenesisLarge3,rat_genesis_large1_shot,base_trail_zap,10,0.2,0.1,0.4,20,7.5,"[140,0,250]","[47,111,237]",0.5,-128,-256,TRUE,20,0,0.5,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
-GenesisLarge4,rat_genesis_large1_shot,base_trail_aura,10,0.1,0.1,1.2,15,1,"[27,135,250]","[47,111,237]",0.3,-128,-256,TRUE,20,10,0.5,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
+GenesisLarge1,rat_abaddon_lance_shot,base_trail_zapWithCore,10,0.2,0.1,2.5,40,7.5,"[140,0,250]","[47,111,237]",0.4,-128,-256,TRUE,20,0,0.5,0,TRUE,FALSE,TRUE,50,0,0,0,0,0,true,false
+GenesisLarge11,rat_abaddon_lance_shot,base_trail_zapWithCore,10,0.2,0.1,2.5,20,5,"[27,135,250]","[47,111,237]",0.3,-128,-256,TRUE,20,0,0.5,0,TRUE,FALSE,TRUE,50,0,0,0,0,0,true,false
+GenesisLarge2,rat_abaddon_lance_shot,base_trail_zap,10,0.1,0.1,0.6,15,5,"[27,135,250]","[47,111,237]",0.7,-128,-256,TRUE,20,10,0.5,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
+GenesisLarge3,rat_abaddon_lance_shot,base_trail_zap,10,0.2,0.1,0.4,20,7.5,"[140,0,250]","[47,111,237]",0.5,-128,-256,TRUE,20,0,0.5,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
+GenesisLarge4,rat_abaddon_lance_shot,base_trail_aura,10,0.1,0.1,1.2,15,1,"[27,135,250]","[47,111,237]",0.3,-128,-256,TRUE,20,10,0.5,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

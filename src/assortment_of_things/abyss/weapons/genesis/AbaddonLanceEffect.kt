@@ -15,7 +15,7 @@ import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
 
-class GenesisLarge1Effect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeaponEffectPlugin {
+class AbaddonLanceEffect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeaponEffectPlugin {
 
     var weapon: WeaponAPI? = null
 
@@ -65,7 +65,7 @@ class GenesisLarge1Effect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeapon
         }
 
         if (projectile != null && projectile!!.isExpired) {
-            GenesisLarge1OnHit.spawnExplosion(projectile, projectile!!.location)
+            AbaddonLanceOnHit.spawnExplosion(projectile, projectile!!.location)
         }
 
 

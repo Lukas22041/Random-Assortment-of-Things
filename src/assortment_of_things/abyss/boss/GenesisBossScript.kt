@@ -21,6 +21,7 @@ import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
+import org.apache.log4j.Level
 import org.dark.shaders.distortion.RippleDistortion
 import org.dark.shaders.post.PostProcessShader
 import org.lazywizard.lazylib.MathUtils
@@ -34,6 +35,7 @@ import org.magiclib.subsystems.MagicSubsystem
 import org.magiclib.subsystems.MagicSubsystemsManager
 import java.awt.Color
 import java.util.*
+import kotlin.math.log
 import kotlin.math.max
 
 class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullDamageAboutToBeTakenListener {
@@ -72,6 +74,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
     var apparations = ArrayList<ShipAPI>()
 
+    var logger = Global.getLogger(this::class.java)
 
     var azazel1: ShipAPI? = null
     var azazel2: ShipAPI? = null
@@ -87,6 +90,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
 
     init {
+        logger.level = Level.ALL
+
         ship.maxHitpoints *= 1.75f
         ship.mutableStats.armorBonus.modifyMult("rat_genesis_hp_for_more_armor_dmg", 1.4f)
         ship.hitpoints = ship.maxHitpoints
@@ -143,8 +148,10 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
         var viewport = Global.getCombatEngine().viewport
         if ((viewport.isNearViewport(ship.location, ship.collisionRadius + 100f) || isPrimSeaActive) && phase == Phases.P1 && !startedMusic && Global.getCombatEngine().getTotalElapsedTime(false) >= 1f) {
+            logger.debug("Starting Genesis Phase 1 Music. If the game freezes past this point, please make sure to increase the allocated ram, or change from Java23 to Java8 instead to fix the issue from happening again.")
             soundplayer.playCustomMusic(1, 1, "rat_abyss_genesis1", true)
             startedMusic = true
+
             hasSeenBoss = true
         }
 
@@ -311,6 +318,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                 if (transitionTimer.state == StateBasedTimer.TimerState.Out && !activateZone) {
                     activateZone = true
                     Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.7f, 1.4f, ship.location, ship.velocity)
+                    logger.debug("Starting Genesis Phase 2 Music. If the game freezes past this point, please make sure to increase the allocated ram, or change from Java23 to Java8 instead to fix the issue from happening again.")
                     Global.getSoundPlayer().resumeCustomMusic()
                     Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
 
