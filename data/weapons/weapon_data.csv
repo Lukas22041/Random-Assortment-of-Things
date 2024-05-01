@@ -50,7 +50,9 @@ Construct Mote Launcher,rat_genesis_construct_mote,,,,800,,100,20,,,,,,,ENERGY,0
 Primordial Flame,rat_genesis_construct_flamer_large,3,,,600,,160,5,3,60,,80,3.3333,80,ENERGY,60,,,0.05,2,0.05,0,0,0,0,,500,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,General,,,,,The maximum charges and the recharge rate of ammunition can not be increased.,charges | recharge rate,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Genesis Weapons Useable,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Abaddon's Lance,rat_abaddon_lance,3,,4000,1000,,4500,300,500,20,30,,,,ENERGY,4050,,5,5,1,0.1,0,0,0,0,,4000,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Primordial,,Annihilation,,,,,"On impact or at its maximum distance, the projectile explodes in to a %s range %s explosion. It deals between %s to %s of the weapons damage based on the distance to the explosion. The weapons turn speed is less disrupted than usual during charging.",1200 | kinetic | 5% | 10%,,,,902
+Azazel's Blade,rat_azazel_blade,2,,2500,600,,150,10,5,15,15,,,,KINETIC,150,,0.1,0.5,1,0,0,0,0,0,,500,,,,,,DO_NOT_AIM,"no_sell, no_dealer, restricted",,Primordial,,Anti Shield,,,,,"Fires %s projectiles that each deal %s of the weapons total damage. The projectiles are capable of %s on to their targets, enabling the weapon to fire without having to aim first.",4 | 1/4th | homing,,,,5001
+Abaddon's Lance,rat_abaddon_lance,3,,50000,1000,,4500,300,500,20,30,,,,ENERGY,4050,,5,5,1,0.1,0,0,0,0,,4000,,,,,,,"no_sell, no_dealer, restricted",,Primordial,,Annihilation,,,,,"On impact or at its maximum distance, the projectile explodes in to a %s range %s explosion. It deals between %s to %s of the weapons damage based on the distance to the explosion. The weapons turn speed is less disrupted than usual during charging.",1200 | kinetic | 5% | 10%,,,,902
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Abyss Decos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Aboleth Cover Left,aboleth_cover_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43

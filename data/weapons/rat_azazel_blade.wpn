@@ -1,0 +1,69 @@
+{
+  "id": "rat_azazel_blade",
+  "specClass": "projectile",
+  "projectileSpecId": "rat_azazel_blade_shot",
+  "type": "ENERGY",
+  "size": "MEDIUM",
+  "turretSprite": "graphics/weapons/abyss/genesis/rat_azazel_blade_turret.png",
+  "turretGlowSprite": "graphics/weapons/abyss/genesis/rat_azazel_blade_turret_glow.png",
+  "hardpointSprite": "graphics/weapons/abyss/genesis/rat_azazel_blade_turret.png",
+  "hardpointGlowSprite": "graphics/weapons/abyss/genesis/rat_azazel_blade_turret_glow.png",
+  "glowColor": [
+    255,
+    255,
+    255,
+    255
+  ],
+  "specialWeaponGlowHeight": 25,
+  "specialWeaponGlowWidth": 15,
+  "turretOffsets": [
+    0,
+    0,
+    4,
+    -5,
+    4,
+    5,
+    8,
+    0
+  ],
+  "turretAngleOffsets": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "hardpointOffsets": [
+    0,
+    0,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000
+  ],
+  "hardpointAngleOffsets": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "barrelMode": "ALTERNATING_BURST",
+  "animationType": "GLOW_AND_FLASH",
+  "autocharge": true,
+  "muzzleFlashSpec": {
+    "length": 15,
+    "spread": 360,
+    "particleSizeMin": 3,
+    "particleSizeRange": 20,
+    "particleDuration": 1.5,
+    "particleCount": 10,
+    "particleColor": [
+      21,
+      170,
+      212,
+      40
+    ]
+  },
+  "fireSoundTwo": "mjolnir_fire"
+}

@@ -1,0 +1,22 @@
+{
+	"id":"rat_azazel_blade_shot",
+	"specClass":"projectile",
+	"spawnType":"BALLISTIC_AS_BEAM",
+	"collisionClass":"RAY",
+	"collisionClassByFighter":"RAY_FIGHTER",
+	"length":5.0,
+	"width":5,
+	"glowRadius":25,
+	"hitGlowRadius":50,
+	"fadeTime":1,
+	"fringeColor":[21, 170, 212,150],
+	"coreColor":[21, 170, 212,150],
+	"glowColor":[21, 170, 212, 25],
+	#"coreColor":[255,255,255,50],
+	"textureType":"SMOOTH",  # only needed for BEAM spawnType
+	"textureScrollSpeed":-256,
+	"pixelsPerTexel":5.0,
+	#"bulletSprite":"graphics/weapons/abyss/proj/burst_energy_projectile.png"
+	#"onHitEffect":"assortment_of_things.abyss.weapons.SpatialInstabilityOnHit",
+	"onFireEffect":"assortment_of_things.abyss.weapons.genesis.AzazelsBladeOnFire",
+}
