@@ -76,7 +76,7 @@ class AbaddonLanceEffect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeaponE
 
         weapon!!.ensureClonedSpec()
         if (weapon!!.isFiring && weapon.cooldownRemaining <= 0) {
-            weapon.spec.turnRate = 40f
+            weapon.spec.turnRate = 60f
         }
         else {
             weapon.spec.turnRate = 20f

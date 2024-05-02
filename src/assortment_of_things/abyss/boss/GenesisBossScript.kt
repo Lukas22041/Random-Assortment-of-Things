@@ -319,7 +319,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                     activateZone = true
                     Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.7f, 1.4f, ship.location, ship.velocity)
                     logger.debug("Starting Genesis Phase 2 Music. If the game freezes past this point, please make sure to increase the allocated ram, or change from Java23 to Java8 instead to fix the issue from happening again.")
-                    Global.getSoundPlayer().resumeCustomMusic()
+                    //Global.getSoundPlayer().resumeCustomMusic()
                     Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
 
                     ripple = GraphicLibEffects.CustomRippleDistortion(ship!!.location, Vector2f(), ship.collisionRadius + 500, 75f, true, ship!!.facing, 360f, 1f

@@ -17,7 +17,7 @@ class AbaddonLanceOnHit : OnHitEffectPlugin {
             if (projectile!!.customData.containsKey("rat_charge_exploded")) return
             projectile!!.setCustomData("rat_charge_exploded", true)
 
-            val dam = projectile!!.damageAmount * 0.10f
+            val dam = projectile!!.damageAmount * 0.15f
 
             var explosion = DamagingExplosionSpec(1f, 1200f, 600f, dam, dam * 0.5f,
                 // minDamage

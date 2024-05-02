@@ -1,3 +1,13 @@
+Version 2.2.0
+Not Save compatible
+
+-> Added four weapons for the abyss boss that can also be acquired by the player by beating it.
+-> Fixed the "Personal Army" Background stat reseting its changes on save reload and other cases.
+-> Potentialy fixed, or atleast reduced, cases of Java23 freezing on the phase 2 transition of the abyss boss.
+-> Fixed a crash between the neuro core and neural shard background.
+
+
+
 Version 2.1.8
 Save compatible
 

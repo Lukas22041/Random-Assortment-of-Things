@@ -219,11 +219,11 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
         }
         controllState!!.selected = ship.selectedGroupAPI
 
-        ship.setCustomData("rat_neuro_state", controllState)
+        ship.setCustomData("rat_neural_shard_state", controllState)
     }
 
     fun restoreControlState(ship: ShipAPI) {
-        var controllState = ship.customData.get("rat_neuro_state") as ShipControllState? ?: return
+        var controllState = ship.customData.get("rat_neural_shard_state") as ShipControllState? ?: return
 
         for (group in ship.weaponGroupsCopy) {
             var auto: Boolean? = controllState!!.autofiring.get(group)
