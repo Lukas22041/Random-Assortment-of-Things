@@ -1,11 +1,10 @@
 {
     "displayName": "Standard",
-    "fluxCapacitors": 4,
-    "fluxVents": 5,
+    "fluxCapacitors": 5,
+    "fluxVents": 7,
     "goalVariant": false,
     "hullId": "rat_genesis_serpent_system",
     "hullMods": [
-        "fluxbreakers",
         "heavyarmor",
         "targetingunit",
     ],
@@ -18,7 +17,7 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0001": "rat_cecaelia",
+                "WS0001": "rat_azazel_blade",
             }
         },
     ],

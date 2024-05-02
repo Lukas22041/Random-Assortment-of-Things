@@ -1,0 +1,59 @@
+{
+  "id": "rat_lucifers_wrath",
+  "specClass": "beam",
+  "type": "ENERGY",
+  "size": "LARGE",
+  "collisionClass": "RAY",
+  "collisionClassByFighter": "RAY_FIGHTER",
+  "turretSprite": "graphics/weapons/abyss/genesis/rat_lucifers_wrath_turret.png",
+  "turretGlowSprite": "graphics/weapons/abyss/genesis/rat_lucifers_wrath_turret_glow.png",
+  "hardpointSprite": "graphics/weapons/abyss/genesis/rat_lucifers_wrath_hardpoint.png",
+  "hardpointGlowSprite": "graphics/weapons/abyss/genesis/rat_lucifers_wrath_hardpoint_glow.png",
+  "glowColor": [
+    255,
+    255,
+    255,
+    255
+  ],
+  "hitGlowRadius": 0,
+  "turretOffsets": [
+    16,
+    0
+  ],
+  "turretAngleOffsets": [
+    0
+  ],
+  "hardpointOffsets": [
+    14,
+    0
+  ],
+  "hardpointAngleOffsets": [
+    0
+  ],
+  "fringeColor": [
+    254,
+    127,
+    195,
+    255
+  ],
+  "coreColor": [
+    255,
+    255,
+    255,
+    255
+  ],
+  "width": 30,
+  "textureType": ROUGH,
+  "textureScrollSpeed": 64,
+  "pixelsPerTexel": 5,
+  "pierceSet": [
+    PROJECTILE_FF,
+    PROJECTILE_NO_FF,
+    PROJECTILE_FIGHTER,
+    MISSILE_FF,
+    MISSILE_NO_FF
+  ],
+  "beamEffect":"assortment_of_things.abyss.weapons.genesis.LucifersWrathEffect",
+  "fireSoundTwo": "riftbeam_loop",
+  "coreWidthMult": 0.8
+}

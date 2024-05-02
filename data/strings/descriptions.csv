@@ -118,6 +118,8 @@ rat_asterias,WEAPON,"A beam weapon that is capable of reliably supressing enemy 
 rat_seabream,WEAPON,A burst beam weapon that can do effective damage against the targets armor. It can store multiple charges to fire again in quick succession.,,,,
 ,,,,,,
 rat_azazel_blade,WEAPON,"It emits dozens of tiny, but energetic shards that appear to be attracted to nearby flux signatures. Their bright, blue glow may appear beautiful on optical sensors, but lose their beauty when they break through the ships shields.",,,,
+rat_apollyons_end,WEAPON,"Fires fast and heavily charged clumps of energy towards its targets. Its shots are accurate and hard to avoid, and make an easy dent within most armor.",,,,
+rat_lucifers_wrath,WEAPON,Fires a massive stream of hyperdimensional plasma that sends anything it comes in contact with in to turmoil. All things within its grasp may never again escape.,,,,
 rat_abaddon_lance,WEAPON,"A weapon like no other in the known universe. During its chargeup process it compresses an incredible amount of energy that it is then capable of discharging within milliseconds, sending an immense explosive force towards its target.",,,,
 ,,,,,,
 #Abyss Logs,,,,,,

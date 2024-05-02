@@ -70,6 +70,12 @@ Abaddon's Lance3,rat_abaddon_lance_shot,base_trail_zap,10,0.1,0.1,0.6,15,5,"[27,
 Abaddon's Lance4,rat_abaddon_lance_shot,base_trail_zap,10,0.2,0.1,0.4,20,7.5,"[140,0,250]","[47,111,237]",0.5,-128,-256,TRUE,20,0,0.5,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
 Abaddon's Lance5,rat_abaddon_lance_shot,base_trail_aura,10,0.1,0.1,1.2,15,1,"[27,135,250]","[47,111,237]",0.3,-128,-256,TRUE,20,10,0.5,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Apollyon's End1,rat_apollyons_end_shot,base_trail_zapWithCore,10,0.1,0.1,0.1,15,5,"[250,102,102]","[250,102,102]",0.8,-128,-256,TRUE,20,0,1,0,TRUE,FALSE,TRUE,50,0,0,0,0,0,true,false
+Apollyon's End2,rat_apollyons_end_shot,base_trail_zapWithCore,10,0.1,0.1,0.05,7.5,4,"[250,102,102]","[250,102,102]",0.3,-128,-256,TRUE,20,0,1,0,TRUE,FALSE,TRUE,50,0,0,0,0,0,true,false
+Apollyon's End3,rat_apollyons_end_shot,base_trail_zap,10,0.1,0.1,0.20,5,3,"[250,102,102]","[250,117,102]",0.3,-128,-256,TRUE,20,50,1,0,TRUE,FALSE,TRUE,50,0,2,0,20,20,true,false
+Apollyon's End4,rat_apollyons_end_shot,base_trail_zap,10,0.1,0.1,0.20,4,3,"[250,102,102]","[250,117,102]",0.2,-128,-256,TRUE,20,50,1,0,TRUE,FALSE,TRUE,50,0,2,0,20,20,true,false
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Azazel's Blade1,rat_azazel_blade_shot,base_trail_smooth,10,0.1,0.1,0.5,7.5,3,"[21,170,212]","[21,212,177]",0.2,-128,-256,TRUE,20,0,1,0,TRUE,FALSE,TRUE,50,0,0,0,0,0,true,false
 Azazel's Blade2,rat_azazel_blade_shot,base_trail_zap,10,0.1,0.1,0.20,5,2,"[21,170,212]","[21,212,177]",0.2,-128,-256,TRUE,20,50,1,0,TRUE,FALSE,TRUE,50,0,2,0,0,0,true,false
 Azazel's Blade3,rat_azazel_blade_shot,base_trail_zap,10,0.1,0.1,0.20,5,2,"[21,212,177]","[21,212,177]",0.2,-128,-256,TRUE,20,50,1,0,TRUE,FALSE,TRUE,50,0,2,0,20,20,true,false

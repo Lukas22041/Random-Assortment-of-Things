@@ -4,10 +4,11 @@
   "projectileSpecId": "rat_abaddon_lance_shot",
   "type": "ENERGY",
   "size": "LARGE",
-  "turretSprite": "graphics/weapons/abyss/genesis/rat_genesis_large1_turret.png",
-  "turretGlowSprite": "graphics/weapons/abyss/genesis/rat_genesis_large1_turret_glow.png",
-  "hardpointSprite": "graphics/weapons/abyss/genesis/rat_genesis_large1_turret.png",
-  "hardpointGlowSprite": "graphics/weapons/abyss/genesis/rat_genesis_large1_turret_glow.png",
+  "everyFrameEffect": "assortment_of_things.abyss.weapons.genesis.AbaddonLanceEffect",
+  "turretSprite": "graphics/weapons/abyss/genesis/rat_abaddons_lance_turret.png",
+  "turretGlowSprite": "graphics/weapons/abyss/genesis/rat_abaddons_lance_turret_glow.png",
+  "hardpointSprite": "graphics/weapons/abyss/genesis/rat_abaddons_lance_hardpoint.png",
+  "hardpointGlowSprite": "graphics/weapons/abyss/genesis/rat_abaddons_lance_hardpoint_glow.png",
   "glowColor": [
     255,
     255,
@@ -17,14 +18,14 @@
   "specialWeaponGlowHeight": 25,
   "specialWeaponGlowWidth": 15,
   "turretOffsets": [
-    30,
+    27,
     0
   ],
   "turretAngleOffsets": [
     0
   ],
   "hardpointOffsets": [
-    40,
+    32,
     0
   ],
   "hardpointAngleOffsets": [
@@ -41,10 +42,11 @@
     "particleDuration": 0.5,
     "particleCount": 20,
     "particleColor": [
-      54, 40, 156,
+      54,
+      40,
+      156,
       100
     ]
   },
-  "fireSoundTwo": "rat_abyss_genesis_large1",
-  "everyFrameEffect":"assortment_of_things.abyss.weapons.genesis.AbaddonLanceEffect",
+  "fireSoundTwo": "rat_abyss_genesis_large1"
 }

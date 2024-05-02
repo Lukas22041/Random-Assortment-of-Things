@@ -125,6 +125,16 @@
 		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.8,"volume":0.75},
 	],
 	
+	"rat_azazels_blade":[
+		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.7,"volume":0.50},
+	],
+	
+	"rat_apollyons_end":
+    [
+            {"file":"sounds/sfx_wpn_energy/kinetic_blaster_01.ogg","pitch":0.6,"volume":0.4},
+            {"file":"sounds/sfx_wpn_energy/kinetic_blaster_02.ogg","pitch":0.6,"volume":0.4},
+    ],
+	
 	"abyss_lusca":[
 		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.9,"volume":0.45},
 	],
@@ -168,6 +178,7 @@
 		
 		{"file":"sounds/sfx_impacts/explosion_secondary_02.ogg","pitch":0.9,"volume":1},
 	],
+	
 	
 	 "seadragon_payload_fire":
     [

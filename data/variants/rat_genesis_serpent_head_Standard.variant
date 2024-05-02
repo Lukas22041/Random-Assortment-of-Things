@@ -1,12 +1,11 @@
 {
     "displayName": "Standard",
-    "fluxCapacitors": 18,
-    "fluxVents": 21,
+    "fluxCapacitors": 20,
+    "fluxVents": 20,
     "goalVariant": true,
     "hullId": "rat_genesis_serpent_head",
     "hullMods": [
         "hardenedshieldemitter",
-        "magazines",
         "unstable_injector",
     ],
     "permaMods": [
@@ -27,8 +26,8 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0003": "rat_seabream",
-                "WS0002": "rat_seabream",
+                "WS0003": "rat_apollyons_end",
+                "WS0002": "rat_apollyons_end",
             }
         },
     ],

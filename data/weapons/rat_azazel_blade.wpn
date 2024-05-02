@@ -4,10 +4,10 @@
   "projectileSpecId": "rat_azazel_blade_shot",
   "type": "ENERGY",
   "size": "MEDIUM",
-  "turretSprite": "graphics/weapons/abyss/genesis/rat_azazel_blade_turret.png",
-  "turretGlowSprite": "graphics/weapons/abyss/genesis/rat_azazel_blade_turret_glow.png",
-  "hardpointSprite": "graphics/weapons/abyss/genesis/rat_azazel_blade_turret.png",
-  "hardpointGlowSprite": "graphics/weapons/abyss/genesis/rat_azazel_blade_turret_glow.png",
+  "turretSprite": "graphics/weapons/abyss/genesis/rat_azazels_blade_turret.png",
+  "turretGlowSprite": "graphics/weapons/abyss/genesis/rat_azazels_blade_turret_glow.png",
+  "hardpointSprite": "graphics/weapons/abyss/genesis/rat_azazels_blade_hardpoint.png",
+  "hardpointGlowSprite": "graphics/weapons/abyss/genesis/rat_azazels_blade_hardpoint_glow.png",
   "glowColor": [
     255,
     255,
@@ -33,14 +33,14 @@
     0
   ],
   "hardpointOffsets": [
+    6.5,
     0,
-    0,
-    1000,
-    1000,
-    1000,
-    1000,
-    1000,
-    1000
+    10.5,
+    -5,
+    10.5,
+    5,
+    14.5,
+    0
   ],
   "hardpointAngleOffsets": [
     0,
@@ -65,5 +65,5 @@
       40
     ]
   },
-  "fireSoundTwo": "mjolnir_fire"
+  "fireSoundTwo": "rat_azazels_blade"
 }

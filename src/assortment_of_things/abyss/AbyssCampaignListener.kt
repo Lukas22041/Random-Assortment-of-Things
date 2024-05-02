@@ -13,6 +13,13 @@ class AbyssCampaignListener : RATBaseCampaignEventListener() {
 
         if (plugin?.loser?.faction?.id == "rat_abyssals_primordials") {
             loot?.addSpecial(SpecialItemData("rat_ai_core_special", RATItems.PRIMORDIAL), 1f)
+
+            loot!!.addWeapons("rat_abaddon_lance", 1)
+            loot!!.addWeapons("rat_lucifers_wrath", 1)
+
+            loot!!.addWeapons("rat_azazel_blade", 4)
+            loot!!.addWeapons("rat_apollyons_end", 3)
+
         }
 
     }

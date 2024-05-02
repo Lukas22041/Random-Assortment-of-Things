@@ -1,6 +1,6 @@
 {
     "displayName": "Standard",
-    "fluxCapacitors": 34,
+    "fluxCapacitors": 35,
     "fluxVents": 50,
     "goalVariant": true,
     "hullId": "rat_genesis",
@@ -8,7 +8,6 @@
         "hardenedshieldemitter",
         "heavyarmor",
         "targetingunit",
-        "unstable_injector",
     ],
     "permaMods": [
         "automated",
@@ -21,29 +20,29 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0001": "rat_haddock",
+                "WS0001": "rat_lucifers_wrath",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0002": "rat_leviathan",
+                "WS0002": "rat_abaddon_lance",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0003": "rat_seabream",
+                "WS0003": "rat_apollyons_end",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0005": "rat_cecaelia",
-                "WS0004": "rat_cecaelia",
+                "WS0005": "rat_azazel_blade",
+                "WS0004": "rat_azazel_blade",
             }
         },
         {

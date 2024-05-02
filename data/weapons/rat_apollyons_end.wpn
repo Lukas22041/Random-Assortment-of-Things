@@ -1,0 +1,48 @@
+{
+  "id": "rat_apollyons_end",
+  "specClass": "projectile",
+  "projectileSpecId": "rat_apollyons_end_shot",
+  "type": "ENERGY",
+  "size": "MEDIUM",
+  "turretSprite": "graphics/weapons/abyss/genesis/rat_apollyons_end_turret.png",
+  "turretGlowSprite": "graphics/weapons/abyss/genesis/rat_apollyons_end_turret_glow.png",
+  "hardpointSprite": "graphics/weapons/abyss/genesis/rat_apollyons_end_hardpoint.png",
+  "hardpointGlowSprite": "graphics/weapons/abyss/genesis/rat_apollyons_end_hardpoint_glow.png",
+  "glowColor": [
+    255,
+    255,
+    255,
+    255
+  ],
+  "specialWeaponGlowHeight": 25,
+  "specialWeaponGlowWidth": 15,
+  "turretOffsets": [
+    7,
+    0
+  ],
+  "turretAngleOffsets": [
+    0
+  ],
+  "hardpointOffsets": [
+    8.5,
+    0
+  ],
+  "hardpointAngleOffsets": [
+    0
+  ],
+  "barrelMode": "ALTERNATING_BURST",
+  "animationType": "GLOW_AND_FLASH",
+  "muzzleFlashSpec": {
+    "length": 25,
+    "spread": 30,
+    "particleSizeMin": 8,
+    "particleSizeRange": 12,
+    "particleDuration":1.5,
+    "particleCount": 12,
+    "particleColor": [
+      250,102,102,
+      50
+    ]
+  },
+  "fireSoundTwo": "rat_azazels_blade"
+}
