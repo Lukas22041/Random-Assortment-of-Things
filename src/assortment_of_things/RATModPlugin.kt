@@ -9,6 +9,7 @@ import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.procgen.AbyssalFleetInflationListener
 import assortment_of_things.abyss.scripts.*
+import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
@@ -379,6 +380,11 @@ class RATModPlugin : BaseModPlugin() {
                 abyssPlugin.save()
             }
         }
+        var hyperTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is AbyssTerrainInHyperspacePlugin }
+        if (hyperTerrain != null) {
+            (hyperTerrain.plugin as AbyssTerrainInHyperspacePlugin ).save()
+        }
+
     }
 
     override fun onNewGameAfterTimePass() {

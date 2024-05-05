@@ -108,6 +108,10 @@ object AbyssProcgen {
             var plugin1 = addLightsource(fracture1, 10000f)
             plugin1.color = AbyssUtils.getSystemData(system1 as StarSystemAPI).getColor().setAlpha(50)
         }
+        else {
+            var plugin1 = addLightsource(fracture1, 15000f)
+            plugin1.color = AbyssUtils.ABYSS_COLOR.setAlpha(40)
+        }
         var plugin2 = addLightsource(fracture2, 10000f)
         plugin2.color = AbyssUtils.getSystemData(system2 as StarSystemAPI).getColor().setAlpha(50)
 

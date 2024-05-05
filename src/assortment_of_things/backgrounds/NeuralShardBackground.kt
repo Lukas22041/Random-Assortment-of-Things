@@ -73,8 +73,7 @@ class NeuralShardBackground : BaseCharacterBackground() {
     override fun onNewGameAfterTimePass(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?) {
         super.onNewGameAfterTimePass(factionSpec, factionConfig)
 
-        var stats = Global.getSector().characterData.person.stats
-        stats.officerNumber.modifyMult("rat_neural_shard", 0.5f)
+
 
 
         Global.getSector().addScript(NeuralShardOfficerScript())
@@ -96,6 +95,10 @@ class NeuralShardOfficerScript : EveryFrameScript {
     override fun advance(amount: Float) {
         interval.advance(amount)
         if (interval.intervalElapsed()) {
+
+            var stats = Global.getSector().characterData.person.stats
+            stats.officerNumber.modifyMult("rat_neural_shard", 0.5f)
+
             for (market in Global.getSector().economy.marketsCopy) {
                 market.stats.dynamic.getMod(Stats.OFFICER_PROB_MOD).modifyMult("rat_army_mod", 0.5f)
                 market.stats.dynamic.getMod(Stats.OFFICER_ADDITIONAL_PROB_MULT_MOD).modifyMult("rat_army_mod", 0.5f)

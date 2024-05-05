@@ -11,6 +11,20 @@
 			"stormSound":"rat_abyss_storm_sounds",
 		},
 	},
+	
+	"rat_depths_in_hyper":{
+		"plugin":"assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin",
+		
+		
+		"loopTwo":"terrain_hyperspace_deep",
+		
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
+
+			"stormSound":"rat_abyss_storm_sounds",
+		},
+	},
+	
 	"rat_depths_darkness":{
 		"plugin":"assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin",
 	},

@@ -13,7 +13,7 @@ rat_abyss_warning_beacon,CUSTOM,"A fully autonomous warning beacon. Contains a s
 The astute starship captain will heed well its warning.",,"A fully autonomous warning beacon. Contains a solid-state power system which enables theoretical operation and station-keeping half-life with an upwards range in the hundreds of thousands of cycles.
 
 The astute starship captain will heed well its warning.",,
-,,,,,,
+rat_abyss_gate,CUSTOM,"A silent ring of adamantine material, derelict of a former age. This gate has the unique property of once having served active connections within a hyperspace-like medium. Somehow, unlike all other locations in hyperspace, the depths dont appear to interfere with a gates components.",,,,
 rat_genesis_memorial,CUSTOM,"A small probe orbiting the abyss, the fleet has never before taken note of it.",,,,
 ,,,,,,
 rat_abyss_fabrication,CUSTOM,An abandoned station equipped with the tools required to manufacture components from local abyssal matter. Scans indicate that it has been dead for ages.,,,,
@@ -35,7 +35,7 @@ rat_abyss_beacon,CUSTOM,"A manmade beacon to illuminate the depths of the abyss 
 rat_chronos_core,RESOURCE,"A core resembling that of an alpha-level ai. It appears heavily altered, though by what remains unknown, as the core refuses to respond to any such matter. It has a high affinity for time-manipulating machinery. ",,,,
 rat_cosmos_core,RESOURCE,"A core resembling that of an alpha-level ai. It appears heavily altered, though by what remains unknown, as the core refuses to respond to any such matter. It has a high affinity for space-bending mechanisms. ",,,,
 rat_seraph_core,RESOURCE,"An odd core from the abyssal depths. It is unable to process normal speech patterns, but appears to be capable of understanding commands. Even in the context of artificial intelligence, it seems especialy reckless. ",,,,
-rat_primordial_core,RESOURCE,"An utterly incomprehensible ai core, appearing to give a glimpse in to a different space alltogether if observed directly. When interfaced with an automated ship, part of this property is transfered over.",,,,
+rat_primordial_core,RESOURCE,"An utterly incomprehensible AI core, appearing to give a glimpse in to a different space alltogether if observed directly. When interfaced with an automated ship, part of this property is transfered over.",,,,
 ,,,,,,
 rat_ceto,SHIP,A small and fast fighter that packs a strong shield. Its weapons can temporarily decrease the effectiveness of the opponents armor.,,,,
 ,,,,,,

@@ -31,7 +31,9 @@ class AbyssalLightsource : BaseCustomEntityPlugin(), AbyssalLight {
     fun initSpritesIfNull()
     {
         if (halo == null) {
-            color = AbyssUtils.getSystemData(entity.starSystem).getColor().setAlpha(50)
+            if (entity.starSystem != null) {
+                color = AbyssUtils.getSystemData(entity.starSystem).getColor().setAlpha(50)
+            }
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
         }
     }

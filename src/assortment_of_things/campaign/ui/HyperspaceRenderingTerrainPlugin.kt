@@ -3,6 +3,7 @@ package assortment_of_things.campaign.ui
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
+import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.impl.campaign.procgen.StarGenDataSpec
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.ui.Fonts
@@ -21,6 +22,7 @@ class HyperspaceRenderingTerrainPlugin : BaseTerrain() {
 
     @Transient
     var fractureText:LazyFont.DrawableString = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+
 
     override fun renderOnMapAbove(factor: Float, alphaMult: Float) {
         super.renderOnMapAbove(factor, alphaMult)
