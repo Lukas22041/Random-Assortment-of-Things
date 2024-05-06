@@ -2,6 +2,7 @@ package assortment_of_things.combat
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalStormParticleManager
+import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin
 import com.fs.starfarer.api.combat.CombatEngineLayers
@@ -22,12 +23,19 @@ class IonicStormCombatRenderer() : BaseCombatLayeredRenderingPlugin() {
 
     var vignette = Global.getSettings().getSprite("graphics/fx/rat_darkness_vignette_reversed.png")
 
+    var color = AbyssUtils.ABYSS_COLOR
+    var darkColor = AbyssUtils.ABYSS_COLOR.darker()
+
     override fun advance(amount: Float) {
         super.advance(amount)
 
         handleParticles(amount)
 
-        var data = AbyssUtils.getSystemData(Global.getSector().playerFleet.starSystem)
+        if (Global.getCurrentState() != GameState.TITLE) {
+            var data = AbyssUtils.getSystemData(Global.getSector().playerFleet.starSystem)
+            color = data.getColor()
+            darkColor = data.getDarkColor()
+        }
         var viewport = Global.getCombatEngine().viewport
 
         particleInterval.advance(amount)
@@ -70,7 +78,7 @@ class IonicStormCombatRenderer() : BaseCombatLayeredRenderingPlugin() {
                 particles.add(AbyssalStormParticleManager.AbyssalLightParticle(fadeIn,
                     duration,
                     fadeOut,
-                    data.getColor(),
+                    color,
                     alpha,
                     size,
                     spawnLocation,
@@ -141,8 +149,6 @@ class IonicStormCombatRenderer() : BaseCombatLayeredRenderingPlugin() {
 
     override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
 
-        var data = AbyssUtils.getSystemData(Global.getSector().playerFleet.starSystem)
-
         if (layer == CombatEngineLayers.BELOW_PLANETS) {
             for (particle in particles) {
 
@@ -157,7 +163,7 @@ class IonicStormCombatRenderer() : BaseCombatLayeredRenderingPlugin() {
         }
 
         if (layer == CombatEngineLayers.JUST_BELOW_WIDGETS) {
-            vignette.color = data.getColor().darker()
+            vignette.color = darkColor.darker()
             vignette.alphaMult = 0.05f
 
             var offset = 300

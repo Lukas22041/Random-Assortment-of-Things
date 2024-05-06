@@ -86,7 +86,9 @@ class AbyssTerrainInHyperspacePlugin() : OldHyperspaceTerrainPlugin() {
                 var offset = 400f
 
 
-                vignette.alphaMult = 0.4f
+                vignette.alphaMult = 0.9f
+                if (RATSettings.brighterAbyss!!) vignette.alphaMult = 0.6f
+                //vignette.alphaMult = 0.4f
                 vignette.alphaMult *= level
 
                 vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)

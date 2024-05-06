@@ -1,5 +1,6 @@
 package assortment_of_things.combat
 
+import assortment_of_things.RATModPlugin
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import assortment_of_things.abyss.procgen.AbyssDepth
@@ -11,18 +12,14 @@ import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.backgrounds.neural.NeuralShardScript
 import assortment_of_things.backgrounds.zero_day.ZeroDayScript
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.*
-import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.input.InputEventAPI
-import com.fs.starfarer.combat.CombatEngine
 import exerelin.campaign.backgrounds.CharacterBackgroundUtils
 import org.lazywizard.lazylib.MathUtils
-import org.lwjgl.util.vector.Vector2f
 
 
 class CombatHandler : EveryFrameCombatPlugin
@@ -31,6 +28,19 @@ class CombatHandler : EveryFrameCombatPlugin
 
     override fun init(engine: CombatEngineAPI)  {
 
+
+        if (RATSettings.enableAbyss!! && Global.getCurrentState() == GameState.TITLE) {
+            if (RATModPlugin.gameStartedForTitleScene) {
+                RATModPlugin.gameStartedForTitleScene = false
+
+                var random = MathUtils.getRandomNumberInRange(1, 50)
+
+                if (random == 1) {
+                    engine.addPlugin(AbyssTitleScreen())
+                }
+
+            }
+        }
 
        /* engine!!.addPlugin(object : BaseEveryFrameCombatPlugin() {
             var played = false
@@ -52,7 +62,8 @@ class CombatHandler : EveryFrameCombatPlugin
         }*/
 
         if (ChangeMainMenuColorScript.isInAbyss) {
-            Global.getCombatEngine().backgroundColor = ChangeMainMenuColorScript.lastAbyssColor
+            //Global.getCombatEngine().backgroundColor = ChangeMainMenuColorScript.lastAbyssColor
+            engine.addPlugin(AbyssTitleScreen())
             ChangeMainMenuColorScript.isInAbyss = false
 
         }

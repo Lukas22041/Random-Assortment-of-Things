@@ -52,11 +52,14 @@ class RATModPlugin : BaseModPlugin() {
     companion object {
         var added = false
 
+        var gameStartedForTitleScene = false
 
     }
 
     override fun onApplicationLoad() {
         super.onApplicationLoad()
+
+        gameStartedForTitleScene = true
 
        /* Global.getSettings().loadFont("graphics/fonts/monocraft24.fnt")
         Fonts.DEFAULT_SMALL = "graphics/fonts/monocraft24.fnt"*/
