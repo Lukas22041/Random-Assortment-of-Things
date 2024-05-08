@@ -196,7 +196,7 @@
 	},	
 	"fleetTypeNames":{
 		"patrolSmall":"Lookout",
-		"patrolMedium":"Defenders",
+		"patrolMedium":"Vanguard",
 		"patrolLarge":"Eradicators",
 		"battlestation":"Nexus",
 	},

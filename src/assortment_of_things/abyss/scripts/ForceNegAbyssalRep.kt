@@ -17,7 +17,11 @@ class ForceNegAbyssalRep : EveryFrameScript {
 
         Global.getSector().getFaction("rat_abyssals")?.setRelationship(player.id, -1f)
         Global.getSector().getFaction("rat_abyssals_deep")?.setRelationship(player.id, -1f)
+        Global.getSector().getFaction("rat_abyssals_deep_seraph")?.setRelationship(player.id, -1f)
         Global.getSector().getFaction("rat_abyssals_primordials")?.setRelationship(player.id, -1f)
+
+        Global.getSector().getFaction("rat_abyssals_deep")?.setRelationship("rat_abyssals_deep_seraph", 1f)
+
     }
 
 }
