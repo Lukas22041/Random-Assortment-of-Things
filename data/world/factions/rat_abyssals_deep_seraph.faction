@@ -1,5 +1,5 @@
 {
-	id:"rat_abyssals_deep",
+	id:"rat_abyssals_deep_seraph",
 	"displayName":"Abyssal",
 	"displayNameWithArticle":"the abyssals",
 	"displayNameLong":"Abyssal",
@@ -42,12 +42,12 @@
 	},
 	# ships the faction gets access to when importing S&W out-of-faction
 	"shipsWhenImporting":{
-		"tags":["rat_abyssals", "rat_seraph"],
+		"tags":["rat_seraph"],
 		"hulls":[
 		],
 	},
 	"knownShips":{
-		"tags":["rat_abyssals", "rat_seraph"],
+		"tags":["rat_seraph"],
 		"hulls":[
 		],
 	},

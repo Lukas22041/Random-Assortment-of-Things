@@ -61,7 +61,7 @@ class CombatHandler : EveryFrameCombatPlugin
             engine.addPlugin(DPSMeter())
         }*/
 
-        if (ChangeMainMenuColorScript.isInAbyss) {
+        if (ChangeMainMenuColorScript.isInAbyss && Global.getCurrentState() == GameState.TITLE) {
             //Global.getCombatEngine().backgroundColor = ChangeMainMenuColorScript.lastAbyssColor
             engine.addPlugin(AbyssTitleScreen())
             ChangeMainMenuColorScript.isInAbyss = false
