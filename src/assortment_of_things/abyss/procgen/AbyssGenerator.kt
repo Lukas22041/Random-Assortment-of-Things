@@ -36,13 +36,16 @@ import java.util.*
 
 class  AbyssGenerator {
 
-    var noBranchTag = "rat_no_branch"
-    var branchTag = "rat_abyss_branch"
-    var finalTag = "rat_abyss_final"
+    companion object {
+        var noBranchTag = "rat_no_branch"
+        var branchTag = "rat_abyss_branch"
+        var finalTag = "rat_abyss_final"
 
-    var systemsOnMainBranch = 8
-    var deepSystemsBeginAt = 4
-    var branches = 2
+        var systemsOnMainBranch = 8
+        var deepSystemsBeginAt = 4
+        var branches = 2
+    }
+
 
     var totalSystems = 0
 
@@ -261,6 +264,7 @@ class  AbyssGenerator {
 
            AbyssProcgen.setupSystem(system, type, depth, isFinal)
            var systemData = AbyssUtils.getSystemData(system)
+           systemData.step = step
 
            if (step == systemsOnMainBranch || step == systemsOnMainBranch - 1 || step == systemsOnMainBranch - 2) {
                system.addTag(noBranchTag)
@@ -353,6 +357,7 @@ class  AbyssGenerator {
                 system.name = name
                 AbyssProcgen.setupSystem(system, type, depth)
                 var systemData = AbyssUtils.getSystemData(system)
+                systemData.step = current.step
 
                 system.addTag(branchTag)
 

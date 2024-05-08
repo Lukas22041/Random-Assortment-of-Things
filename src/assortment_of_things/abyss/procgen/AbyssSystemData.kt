@@ -13,6 +13,7 @@ import kotlin.collections.ArrayList
 
 class AbyssSystemData(var system: StarSystemAPI) {
 
+    var step: Int = 0
     var depth: AbyssDepth = AbyssDepth.Shallow
 
     var baseColor = AbyssUtils.ABYSS_COLOR

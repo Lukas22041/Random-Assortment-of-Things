@@ -47,7 +47,7 @@
 		],
 	},
 	"knownShips":{
-		"tags":["rat_abyssals"],
+		"tags":[],
 		"hulls":[
 		],
 	},
