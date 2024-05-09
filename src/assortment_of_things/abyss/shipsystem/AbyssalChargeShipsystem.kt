@@ -60,10 +60,10 @@ class AbyssalChargeShipsystem : BaseShipSystemScript() {
                 if (!ally.isAlive) continue
                 ally.removeListenerOfClass(AbyssalChargeBuffListener::class.java)
                 ally.addListener(AbyssalChargeBuffListener(ally, color, secondaryColor))
-                Global.getSoundPlayer().playSound("system_emp_emitter_impact", 0.9f, 1.5f, ally.location, ally.velocity)
+                Global.getSoundPlayer().playSound("system_emp_emitter_impact", 0.9f, 1.1f, ally.location, ally.velocity)
             }
 
-            Global.getSoundPlayer().playSound("disabled_large_crit", 0.9f, 1.3f, ship.location, ship.velocity)
+            Global.getSoundPlayer().playSound("disabled_large_crit", 0.9f, 0.9f, ship.location, ship.velocity)
 
         }
 
