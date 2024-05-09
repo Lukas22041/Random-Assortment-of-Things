@@ -150,6 +150,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         return null
     }
 
+
    /* override fun pickAICoreAdminPlugin(commodityId: String?): PluginPick<AICoreAdminPlugin>? {
         if (commodityId == RATItems.JEFF) return PluginPick(JeffCoreAdmin(), CampaignPlugin.PickPriority.HIGHEST)
         return null

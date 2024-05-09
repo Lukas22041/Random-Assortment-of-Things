@@ -2,6 +2,7 @@ package assortment_of_things.abyss.skills
 
 import assortment_of_things.campaign.skills.RATBaseShipSkill
 import assortment_of_things.misc.addPara
+import assortment_of_things.relics.skills.MaintaningMomentumListener
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.LevelBasedEffect
 import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
@@ -39,7 +40,14 @@ class PrimordialCoreSkill : RATBaseShipSkill() {
         var ship = stats!!.entity
         if (ship is ShipAPI) {
 
-            if (Global.getCombatEngine()?.listenerManager?.hasListenerOfClass(PrimordialCoreListener::class.java) != true) {
+            var hasMomentum = false
+            if (ship.captain != null) {
+                if (ship.captain.stats.hasSkill("rat_maintaining_momentum")) {
+                    hasMomentum = true
+                }
+            }
+
+            if (ship.listenerManager?.hasListenerOfClass(PrimordialCoreListener::class.java) != true && !hasMomentum) {
                 var listener = PrimordialCoreListener(ship)
                 Global.getCombatEngine().listenerManager.addListener(listener)
                 ship.addListener(listener)
@@ -48,6 +56,18 @@ class PrimordialCoreSkill : RATBaseShipSkill() {
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
+
+        var ship = stats!!.entity
+        if (ship is ShipAPI) {
+            if (ship.listenerManager?.hasListenerOfClass(PrimordialCoreListener::class.java) == true) {
+                var listener = ship.listenerManager.getListeners(PrimordialCoreListener::class.java).first()
+                listener.stacks.clear()
+                listener.advance(0f)
+
+                Global.getCombatEngine().listenerManager.removeListener(listener)
+                ship.removeListener(listener)
+            }
+        }
 
     }
 

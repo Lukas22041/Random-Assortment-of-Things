@@ -105,6 +105,14 @@
 		{"file":"sounds/sfx_abyss/rat_abyss_sound_10.ogg","pitch":1.0,"volume":1},
 	],
 
+	"rat_temporal_prison_activate":[
+            {"file":"sounds/rat/systems/time_lock.ogg","pitch":1,"volume":0.9},
+    ],
+	
+	"rat_temporal_prison_loop":[
+            {"file":"sounds/rat/systems/time_lock_loop.ogg","pitch":1,"volume":0.4},
+    ],
+
 	"rat_genesis_system_sound":[
             {"file":"sounds/sfx_systems/mote_attractor_targeted_ship_01.ogg","pitch":0.8,"volume":0.6},
     ],

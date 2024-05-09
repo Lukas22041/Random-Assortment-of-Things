@@ -34,7 +34,7 @@ class MaintainingMomentumSkill : RATBaseShipSkill() {
         var ship = stats!!.entity
         if (ship is ShipAPI) {
 
-            if (Global.getCombatEngine()?.listenerManager?.hasListenerOfClass(MaintaningMomentumListener::class.java) != true) {
+            if (ship.listenerManager?.hasListenerOfClass(MaintaningMomentumListener::class.java) != true) {
                 var listener = MaintaningMomentumListener(ship)
                 Global.getCombatEngine()?.listenerManager?.addListener(listener)
                 ship.addListener(listener)
@@ -44,6 +44,18 @@ class MaintainingMomentumSkill : RATBaseShipSkill() {
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
 
+        var ship = stats!!.entity
+        if (ship is ShipAPI) {
+            if (ship.listenerManager?.hasListenerOfClass(MaintaningMomentumListener::class.java) == true) {
+                var listener = ship.listenerManager.getListeners(MaintaningMomentumListener::class.java).first()
+                listener.stacks.clear()
+                listener.advance(0f)
+
+                Global.getCombatEngine().listenerManager.removeListener(listener)
+                ship.removeListener(listener)
+
+            }
+        }
     }
 
 }

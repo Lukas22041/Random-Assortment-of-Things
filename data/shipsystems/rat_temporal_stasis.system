@@ -1,0 +1,40 @@
+{
+	"id":"rat_temporal_stasis",
+	"type":"STAT_MOD",
+	"aiType":"CUSTOM",
+	"aiScript":"assortment_of_things.abyss.shipsystem.ai.TemporalStasisSystemAI",
+	
+	"statsScript":"assortment_of_things.abyss.shipsystem.TemporalStasisShipsystem",
+	"runScriptWhilePaused":true, # only for the player's ship
+	"runScriptWhileIdle":true,  # this means unapply() never gets called
+	"blockActionsWhileChargingDown":false,
+
+	"canUseWhileRightClickSystemOn":true,	
+	"canNotCauseOverload":true,
+	
+	#"phaseHighlight":"_glow1",
+	#"phaseDiffuse":"_glow2",
+	
+	
+	"effectColor1":[255,175,255,255],
+	"effectColor2":[255,0,255,150],
+	
+	"clampTurnRateAfter":true,
+	"clampMaxSpeedAfter":true,
+	
+
+	
+	"soundFilterType":"LOWPASS",
+	"soundFilterGain":0.8,
+	"soundFilterGainHF":0.25,
+	
+	"shipAlpha":1, # handled in stats script
+	#"shipAlpha":0.25,
+	
+	"fadeActivationSoundOnChargedown":true,
+	"useSound":"rat_temporal_prison_activate",
+	#"loopSound":"rat_temporal_prison_loop",
+	#"deactivateSound":"system_phase_cloak_deactivate",
+	"deactivateSound":"system_phase_cloak_deactivate",
+	"outOfUsesSound":"system_phase_cloak_collision",
+}

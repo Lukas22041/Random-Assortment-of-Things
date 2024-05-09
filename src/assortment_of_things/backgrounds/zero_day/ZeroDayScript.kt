@@ -182,8 +182,8 @@ class ZeroDayScript : BaseEveryFrameCombatPlugin() {
 
                     previous = playership
                     controlled = selectedShip
-                    controlled!!.owner = 0
-                    controlled!!.originalOwner = 0
+                   /* controlled!!.owner = 0
+                    controlled!!.originalOwner = 0*/
                     selectedShip = null
 
                     var dp = (controlled!!.fleetMember?.deploymentPointsCost ?: controlled!!.hullSpec.suppliesToRecover)
@@ -228,8 +228,8 @@ class ZeroDayScript : BaseEveryFrameCombatPlugin() {
     fun switchBack() {
 
         if (!controlled!!.isHulk) {
-            controlled!!.owner = 1
-            controlled!!.originalOwner = 1
+            /*controlled!!.owner = 1
+            controlled!!.originalOwner = 1*/
         }
 
         switchShip(controlled!!, previous!!)

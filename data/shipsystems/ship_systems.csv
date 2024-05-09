@@ -12,7 +12,7 @@ Abyssal Charge,rat_abyssal_charge,,,,,,,,,,0.5,0.5,1.5,22,,,,,,,,,,,,,graphics/i
 Temporal Dash,rat_raguel_system,,,,,,,,3,0,0.1,2,0.1,0.5,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 Offensive Override,rat_sariel_system,,,,,,,,,,1,7.5,1,15,,,,,,,,,TRUE,,,,graphics/icons/hullsys/ammo_feeder.png
 Abyssal Shift,rat_raphael_system,,,,,,,,2,0.1,0.2,3,0.25,0.25,,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,restricted,graphics/icons/hullsys/phase_cloak.png
-,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Temporal Stasis,rat_temporal_stasis,,,,,,,,,,2,8,2,18,,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Spatial Disturbance,rat_spatial_disturbance,,,,,,,,3,0.075,0.5,1,0.5,1.5,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 Primordial Cloak,rat_primordial_cloak,,,,,,,,,,1.5,6,0.5,15,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
