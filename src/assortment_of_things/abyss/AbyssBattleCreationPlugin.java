@@ -529,13 +529,15 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
 
     public WeightedRandomPicker<String> getAvailableObjectives() {
         WeightedRandomPicker<String> objectivePicker = new WeightedRandomPicker<>();
+
         objectivePicker.add(SENSOR, 1f);
         objectivePicker.add(SENSOR, 1f);
         objectivePicker.add(NAV, 1f);
         objectivePicker.add(NAV, 1f);
         objectivePicker.add(COMM, 1f);
 
-        objectivePicker.add("rat_deactivated_drone", 0.9f);
+        objectivePicker.add("rat_deactivated_drone", 0.8f);
+        objectivePicker.add("rat_deactivated_drone", 0.2f);
 
         return objectivePicker;
     }

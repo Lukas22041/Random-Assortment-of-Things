@@ -6,6 +6,6 @@
 		"spriteScale":1,
 		"captureTime":15,
 		"battleSizeFractionBonus":0,
-		"effectClass":"assortment_of_things.abyss.objectives.DeactivatedDroneObjective",
+		"effectClass":"assortment_of_things.abyss.objectives.DeactivatedDronesObjective",
 	},
 }

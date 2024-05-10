@@ -21,7 +21,7 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.util.*
 
-class DeactivatedDroneObjective : BaseBattleObjectiveEffect() {
+class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
 
     var drones = ArrayList<ShipAPI>()
     var activated = false
