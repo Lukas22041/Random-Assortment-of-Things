@@ -1,5 +1,6 @@
 package assortment_of_things.abyss;
 
+import assortment_of_things.abyss.procgen.AbyssDepth;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.combat.*;
@@ -22,7 +23,6 @@ import org.lwjgl.util.vector.Vector2f;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -504,26 +504,32 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
         }
     }
 
-
-    protected void setRandomBackground(MissionDefinitionAPI loader, Random random) {
-        // these have to be loaded using the graphics section in settings.json
-        String [] bgs = new String [] {
-                "graphics/backgrounds/background1.jpg",
-                "graphics/backgrounds/background2.jpg",
-                "graphics/backgrounds/background3.jpg",
-                "graphics/backgrounds/background4.jpg"
-        };
-        String pick = bgs[Math.min(bgs.length - 1, (int)(random.nextDouble() * bgs.length))];
-        loader.setBackgroundSpriteName(pick);
-    }
-
     protected static String COMM = "comm_relay";
     protected static String SENSOR = "sensor_array";
     protected static String NAV = "nav_buoy";
 
-    public String pickObjective(WeightedRandomPicker<String> picker) {
-        String pick = picker.pick();
-        picker.remove(pick);
+    public String pickObjective(WeightedRandomPicker<String> nonCentral) {
+        String pick = nonCentral.pick();
+        nonCentral.remove(pick);
+        return pick;
+    }
+
+    //For places close or at center which can have more strong objects spawn.
+    public String pickObjectiveCentral(WeightedRandomPicker<String> nonCentral, WeightedRandomPicker<String> central) {
+        WeightedRandomPicker<String> combined = new WeightedRandomPicker<>();
+
+        combined.addAll(nonCentral);
+        combined.addAll(central);
+
+        String pick = combined.pick();
+        combined.remove(pick);
+
+        if (central.getItems().contains(pick)) {
+            central.remove(pick);
+        } else {
+            nonCentral.remove(pick);
+        }
+
         return pick;
     }
 
@@ -535,9 +541,21 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
         objectivePicker.add(NAV, 1f);
         objectivePicker.add(NAV, 1f);
         objectivePicker.add(COMM, 1f);
+        objectivePicker.add("rat_deactivated_drone", 0.9f);
+        objectivePicker.add("rat_deactivated_drone", 0.1f);
 
-        objectivePicker.add("rat_deactivated_drone", 0.8f);
-        objectivePicker.add("rat_deactivated_drone", 0.2f);
+        return objectivePicker;
+    }
+
+    public WeightedRandomPicker<String> getAvailableCentralObjectives() {
+        WeightedRandomPicker<String> objectivePicker = new WeightedRandomPicker<>();
+
+        float chance = 0.2f;
+        if (AbyssUtils.INSTANCE.getSystemData(Global.getSector().getPlayerFleet().getStarSystem()).getDepth() == AbyssDepth.Deep) {
+            chance += 0.3f;
+        }
+
+        objectivePicker.add("rat_deactivated_drone_large", chance);
 
         return objectivePicker;
     }
@@ -545,28 +563,29 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
     protected void addObjectives(MissionDefinitionAPI loader, int num, Random random) {
 
         WeightedRandomPicker<String> objectivePicker = getAvailableObjectives();
+        WeightedRandomPicker<String> centralObjectivePicker = getAvailableCentralObjectives();
 
         if (num == 2) { // minimum is 3 now, so this shouldn't happen
-            addObjectiveAt(0.25f, 0.5f, 0f, 0f, pickObjective(objectivePicker), random);
-            addObjectiveAt(0.75f, 0.5f, 0f, 0f, pickObjective(objectivePicker), random);
+            addObjectiveAt(0.25f, 0.5f, 0f, 0f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
+            addObjectiveAt(0.75f, 0.5f, 0f, 0f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
         } else if (num == 3) {
             float r = random.nextFloat();
             if (r < 0.33f) {
                 addObjectiveAt(0.25f, 0.7f, 1f, 1f, pickObjective(objectivePicker), random);
                 addObjectiveAt(0.25f, 0.3f, 1f, 1f, pickObjective(objectivePicker), random);
-                addObjectiveAt(0.75f, 0.5f, 1f, 1f, pickObjective(objectivePicker), random);
+                addObjectiveAt(0.75f, 0.5f, 1f, 1f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
             } else if (r < 0.67f) {
                 addObjectiveAt(0.75f, 0.7f, 1f, 1f, pickObjective(objectivePicker), random);
                 addObjectiveAt(0.75f, 0.3f, 1f, 1f, pickObjective(objectivePicker), random);
-                addObjectiveAt(0.25f, 0.5f, 1f, 1f, pickObjective(objectivePicker), random);
+                addObjectiveAt(0.25f, 0.5f, 1f, 1f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
             } else {
                 if (random.nextFloat() < 0.5f) {
                     addObjectiveAt(0.22f, 0.7f, 1f, 1f, pickObjective(objectivePicker), random);
-                    addObjectiveAt(0.5f, 0.5f, 1f, 1f, pickObjective(objectivePicker), random);
+                    addObjectiveAt(0.5f, 0.5f, 1f, 1f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
                     addObjectiveAt(0.78f, 0.3f, 1f, 1f, pickObjective(objectivePicker), random);
                 } else {
                     addObjectiveAt(0.22f, 0.3f, 1f, 1f, pickObjective(objectivePicker), random);
-                    addObjectiveAt(0.5f, 0.5f, 1f, 1f, pickObjective(objectivePicker), random);
+                    addObjectiveAt(0.5f, 0.5f, 1f, 1f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
                     addObjectiveAt(0.78f, 0.7f, 1f, 1f, pickObjective(objectivePicker), random);
                 }
             }
@@ -578,20 +597,20 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
                 addObjectiveAt(0.75f, 0.25f, 2f, 1f, pickObjective(objectivePicker), random);
                 addObjectiveAt(0.75f, 0.75f, 2f, 1f, pickObjective(objectivePicker), random);
             } else if (r < 0.67f) {
-                addObjectiveAt(0.25f, 0.5f, 1f, 1f, pickObjective(objectivePicker), random);
+                addObjectiveAt(0.25f, 0.5f, 1f, 1f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
                 addObjectiveAt(0.5f, 0.75f, 1f, 1f,  pickObjective(objectivePicker), random);
-                addObjectiveAt(0.75f, 0.5f, 1f, 1f, pickObjective(objectivePicker), random);
+                addObjectiveAt(0.75f, 0.5f, 1f, 1f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
                 addObjectiveAt(0.5f, 0.25f, 1f, 1f, pickObjective(objectivePicker), random);
             } else {
                 if (random.nextFloat() < 0.5f) {
                     addObjectiveAt(0.25f, 0.25f, 1f, 0f, pickObjective(objectivePicker), random);
-                    addObjectiveAt(0.4f, 0.6f, 1f, 0f, pickObjective(objectivePicker), random);
-                    addObjectiveAt(0.6f, 0.4f, 1f, 0f, pickObjective(objectivePicker), random);
+                    addObjectiveAt(0.4f, 0.6f, 1f, 0f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
+                    addObjectiveAt(0.6f, 0.4f, 1f, 0f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
                     addObjectiveAt(0.75f, 0.75f, 1f, 0f, pickObjective(objectivePicker), random);
                 } else {
                     addObjectiveAt(0.25f, 0.75f, 1f, 0f, pickObjective(objectivePicker), random);
-                    addObjectiveAt(0.4f, 0.4f, 1f, 0f, pickObjective(objectivePicker), random);
-                    addObjectiveAt(0.6f, 0.6f, 1f, 0f, pickObjective(objectivePicker), random);
+                    addObjectiveAt(0.4f, 0.4f, 1f, 0f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
+                    addObjectiveAt(0.6f, 0.6f, 1f, 0f, pickObjectiveCentral(objectivePicker, centralObjectivePicker), random);
                     addObjectiveAt(0.75f, 0.25f, 1f, 0f, pickObjective(objectivePicker), random);
                 }
             }

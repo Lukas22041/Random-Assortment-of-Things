@@ -5,6 +5,7 @@ import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
 import assortment_of_things.abyss.procgen.AbyssDepth
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.PersonAPI
@@ -12,6 +13,7 @@ import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.DModManager
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.combat.BaseBattleObjectiveEffect
 import com.fs.starfarer.api.impl.combat.MineStrikeStats
 import com.fs.starfarer.api.loading.VariantSource
@@ -32,83 +34,148 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
         var system = Global.getSector().playerFleet.starSystem
         var data = AbyssUtils.getSystemData(system)
 
-        var typePicker = WeightedRandomPicker<String>()
-        typePicker.add("small", 1f)
-        typePicker.add("medium", 0.75f)
-        typePicker.add("large", 0.5f)
 
-        var corePicker = WeightedRandomPicker<PersonAPI>()
+        var corePicker = WeightedRandomPicker<PersonAPI?>()
         corePicker.add(ChronosCore().createPerson(RATItems.CHRONOS_CORE, Factions.NEUTRAL, Random()), 1f)
         corePicker.add(CosmosCore().createPerson(RATItems.COSMOS_CORE, Factions.NEUTRAL, Random()), 1f)
+        corePicker.add(null, 1.5f)
 
         if (data.depth == AbyssDepth.Deep) {
             corePicker.add(SeraphCore().createPerson(RATItems.SERAPH_CORE, Factions.NEUTRAL, Random()), 0.5f)
         }
 
-        var pick = typePicker.pick()
-
         var count = 1
+        var central = false
+        var extraRange = 0f
 
         var variantPicker = WeightedRandomPicker<String>()
 
-        if (pick == "small") {
-            count = MathUtils.getRandomNumberInRange(3, 5)
+        if (objective!!.type == "rat_deactivated_drone") {
+            var typePicker = WeightedRandomPicker<String>()
+            typePicker.add("small", 1f)
+            typePicker.add("medium", 0.75f)
+            typePicker.add("large", 0.5f)
+            var pick = typePicker.pick()
 
-            variantPicker.add("rat_merrow_Attack", 1f)
-            variantPicker.add("rat_merrow_Support", 0.5f)
-            variantPicker.add("rat_makara_Attack", 1f)
-            variantPicker.add("rat_makara_Strike", 1f)
-            variantPicker.add("rat_chuul_Attack", 0.15f)
-            variantPicker.add("rat_chuul_Strike", 0.15f)
+            if (pick == "small") {
+                count = MathUtils.getRandomNumberInRange(3, 4)
+
+                variantPicker.add("rat_merrow_Attack", 1f)
+                variantPicker.add("rat_merrow_Support", 0.5f)
+                variantPicker.add("rat_makara_Attack", 1f)
+                variantPicker.add("rat_makara_Strike", 1f)
+                variantPicker.add("rat_chuul_Attack", 0.15f)
+                variantPicker.add("rat_chuul_Strike", 0.15f)
+
+                if (data.depth == AbyssDepth.Deep) {
+                    variantPicker.add("rat_raguel_Attack", 0.1f)
+                    variantPicker.add("rat_raguel_Strike", 0.1f)
+                }
+
+            }
+            else if (pick == "medium") {
+                count = MathUtils.getRandomNumberInRange(2, 3)
+
+                variantPicker.add("rat_merrow_Attack", 0.5f)
+                variantPicker.add("rat_merrow_Support", 0.25f)
+                variantPicker.add("rat_makara_Attack", 0.5f)
+                variantPicker.add("rat_makara_Strike", 0.5f)
+                variantPicker.add("rat_chuul_Attack", 1f)
+                variantPicker.add("rat_chuul_Strike", 1f)
+
+                if (data.depth == AbyssDepth.Deep) {
+                    variantPicker.add("rat_raguel_Attack", 0.2f)
+                    variantPicker.add("rat_raguel_Strike", 0.2f)
+
+                    variantPicker.add("rat_sariel_Attack", 0.1f)
+                    variantPicker.add("rat_sariel_Strike", 0.1f)
+                }
+            }
+            else if (pick == "large") {
+                count = 1
+
+                variantPicker.add("rat_aboleth_Attack", 1f)
+                variantPicker.add("rat_aboleth_Strike", 1f)
+
+                variantPicker.add("rat_aboleth_m_Attack", 1f)
+                variantPicker.add("rat_aboleth_m_Strike", 1f)
+                variantPicker.add("rat_aboleth_m_Overdriven", 0.25f)
+
+                if (data.depth == AbyssDepth.Deep) {
+                    variantPicker.add("rat_sariel_Attack", 0.2f)
+                    variantPicker.add("rat_sariel_Strike", 0.2f)
+                }
+            }
+        }
+        //Huge only
+        else {
+            var typePicker = WeightedRandomPicker<String>()
+            typePicker.add("morkoth", 1f)
+            typePicker.add("pack", 1f)
 
             if (data.depth == AbyssDepth.Deep) {
-                variantPicker.add("rat_raguel_Attack", 0.1f)
-                variantPicker.add("rat_raguel_Strike", 0.1f)
+                typePicker.add("seraph", 1f)
+                // typePicker.add("seraph_large", 0.75f) once cruiser is done
+            }
+
+            var pick = typePicker.pick()
+
+            if (pick == "morkoth") {
+                count = 1
+
+                //central = true
+                variantPicker.add("rat_morkoth_Attack", 1f)
+                variantPicker.add("rat_morkoth_Anchor", 0.75f)
+                variantPicker.add("rat_morkoth_Support", 0.5f)
+            }
+            else if (pick == "pack") {
+                count = MathUtils.getRandomNumberInRange(6, 7)
+
+                extraRange += 300
+
+                variantPicker.add("rat_merrow_Attack", 1f)
+                variantPicker.add("rat_merrow_Support", 0.5f)
+                variantPicker.add("rat_makara_Attack", 1f)
+                variantPicker.add("rat_makara_Strike", 1f)
+                variantPicker.add("rat_chuul_Attack", 0.15f)
+                variantPicker.add("rat_chuul_Strike", 0.15f)
+
+                if (data.depth == AbyssDepth.Deep) {
+                    variantPicker.add("rat_raguel_Attack", 0.1f)
+                    variantPicker.add("rat_raguel_Strike", 0.1f)
+                }
+            }
+            else if (pick == "seraph") {
+                count = MathUtils.getRandomNumberInRange(2, 3)
+
+                variantPicker.add("rat_sariel_Attack", 0.5f)
+                variantPicker.add("rat_sariel_Strike", 0.5f)
+
+                variantPicker.add("rat_raguel_Attack", 1f)
+                variantPicker.add("rat_raguel_Strike", 1f)
             }
 
         }
-        else if (pick == "medium") {
-            count = MathUtils.getRandomNumberInRange(2, 3)
 
-            variantPicker.add("rat_merrow_Attack", 0.5f)
-            variantPicker.add("rat_merrow_Support", 0.25f)
-            variantPicker.add("rat_makara_Attack", 0.5f)
-            variantPicker.add("rat_makara_Strike", 0.5f)
-            variantPicker.add("rat_chuul_Attack", 1f)
-            variantPicker.add("rat_chuul_Strike", 1f)
 
-            if (data.depth == AbyssDepth.Deep) {
-                variantPicker.add("rat_raguel_Attack", 0.2f)
-                variantPicker.add("rat_raguel_Strike", 0.2f)
 
-                variantPicker.add("rat_sariel_Attack", 0.1f)
-                variantPicker.add("rat_sariel_Strike", 0.1f)
-            }
-        }
-        else if (pick == "large") {
-            count = 1
 
-            variantPicker.add("rat_aboleth_Attack", 1f)
-            variantPicker.add("rat_aboleth_Strike", 1f)
-
-            variantPicker.add("rat_aboleth_m_Attack", 1f)
-            variantPicker.add("rat_aboleth_m_Strike", 1f)
-            variantPicker.add("rat_aboleth_m_Overdriven", 0.25f)
-
-            if (data.depth == AbyssDepth.Deep) {
-                variantPicker.add("rat_sariel_Attack", 0.2f)
-                variantPicker.add("rat_sariel_Strike", 0.2f)
-            }
-        }
 
         for (i in 0 until count) {
             var pick = variantPicker.pick()
-            createFromVariant(pick, count)
+            var drone = createFromVariant(pick, count, extraRange, central)
+
+            var corePick = corePicker.pick()
+            if (corePick != null) {
+                drone.captain = corePicker.pick()
+            }
+
+            if (drone.captain != null) {
+                drone.captain.setPersonality(Personalities.RECKLESS)
+            }
         }
 
-        var shipWithCore = drones.random()
-        var core = corePicker.pick()
-        shipWithCore.captain = core
+
     }
 
     /**
@@ -126,6 +193,10 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
                     weapon.setRemainingCooldownTo(weapon.cooldown)
                 }
 
+                drone.mutableStats.armorDamageTakenMult.modifyMult("rat_deactivated_drone", 0.75f)
+                drone.mutableStats.hullDamageTakenMult.modifyMult("rat_deactivated_drone", 0.75f)
+                drone.mutableStats.empDamageTakenMult.modifyMult("rat_deactivated_drone", 0.75f)
+
                 drone!!.velocity.set(Vector2f(drone!!.velocity.x * (1f - (0.25f * amount)), drone.velocity.y * (1f - (0.25f * amount))))
                 drone!!.angularVelocity = drone.angularVelocity * (1f - (0.20f * amount))
                 drone.isHoldFire = true
@@ -142,6 +213,10 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
                     drone.owner = objective.owner
                     drone.originalOwner = objective.owner
                     if (objective.owner == 0) drone.isAlly = true
+
+                    drone.mutableStats.armorDamageTakenMult.unmodify("rat_deactivated_drone")
+                    drone.mutableStats.hullDamageTakenMult.unmodify("rat_deactivated_drone")
+                    drone.mutableStats.empDamageTakenMult.unmodify("rat_deactivated_drone")
 
                     drone.shipAI = Global.getSettings().createDefaultShipAI(drone, ShipAIConfig())
                     drone.shipAI.forceCircumstanceEvaluation()
@@ -173,16 +248,20 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
     }
 
     override fun getLongDescription(): String {
-        return "Deactivated drones that could be brought back online through capturing them by either side. \n\n" +
-                "Once captured, it can no longer be re-captured and the objective dissapears. \n\n" +
-                "Due to strong internal damage, the drone can only support its side for this encounter."
+
+        var extra = ""
+        if (objective.type == "rat_deactivated_drone_large") extra = "This field appears to hold stronger ships."
+
+        return "Deactivated drones that could be brought back online through capturing them by either side. $extra\n\n" +
+                "Once captured, it can no longer be re-captured and the objective dissapears. The drones do not count towards your Deployment Points.\n\n" +
+                "Due to strong internal damage, the drones can only support its side for this encounter. "
     }
 
 
 
 
 
-    fun createFromVariant(variant: String, count: Int) : ShipAPI {
+    fun createFromVariant(variant: String, count: Int, extraRange: Float, centralSpawn: Boolean) : ShipAPI {
         var variant = Global.getSettings().getVariant(variant)
 
         variant = variant.clone();
@@ -201,13 +280,20 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
         drone!!.shipAI = null
         //drone.isHulk = true
 
-        var extraRadius = 0f
-        if (count >= 3) extraRadius + 500
-        var start = MathUtils.getRandomPointOnCircumference(objective.location, 250f + drone.collisionRadius)
-        var destination = MathUtils.getRandomPointInCircle(start, 1000f + extraRadius)
+        if (!centralSpawn) {
+            var extraRadius = 0f
+            if (count >= 3) extraRadius + 500
+            extraRadius += extraRange
+            var start = MathUtils.getRandomPointOnCircumference(objective.location, 350f + drone.collisionRadius)
+            var destination = MathUtils.getRandomPointInCircle(start, 1000f + extraRadius)
 
-        var location = findClearLocation(destination)
-        drone.location.set(location)
+            var location = findClearLocation(destination)
+            drone.location.set(location)
+        }
+        else {
+            drone.location.set(objective.location)
+        }
+
         drones.add(drone)
 
         for (weapon in drone.allWeapons) {
@@ -216,6 +302,14 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
 
         for (engine in drone.engineController.shipEngines) {
             engine.disable(true)
+        }
+
+        var healthLevel = MathUtils.getRandomNumberInRange(0.75f, 0.90f)
+        drone.hitpoints *= healthLevel
+
+        if (drone.baseOrModSpec().hasTag("rat_seraph")) {
+            var core = SeraphCore().createPerson(RATItems.SERAPH_CORE, Factions.NEUTRAL, Random())
+            drone.captain = core
         }
 
         return drone
@@ -275,7 +369,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
             if (other.isFighter) continue
 
             var otherLoc = other.shieldCenterEvenIfNoShield
-            var otherR = other.shieldRadiusEvenIfNoShield
+            var otherR = other.shieldRadiusEvenIfNoShield * 1.2f
             if (other.isPiece) {
                 otherLoc = other.location
                 otherR = other.collisionRadius

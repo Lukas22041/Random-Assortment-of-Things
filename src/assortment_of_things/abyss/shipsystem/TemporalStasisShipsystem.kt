@@ -87,6 +87,11 @@ class TemporalStasisShipsystem : BaseShipSystemScript() {
                     target!!.mutableStats.hullDamageTakenMult.unmodify(id)
                 }
 
+                //Remove the stat mod a bit earlier than everything else so that nearby ships notice & target the ship as the duration ends
+                if (state == ShipSystemStatsScript.State.OUT) {
+                    target!!.mutableStats.hullDamageTakenMult.unmodify(id)
+                }
+
                 var player = target == Global.getCombatEngine().playerShip
                 var targetStats = target!!.mutableStats
 

@@ -8,4 +8,14 @@
 		"battleSizeFractionBonus":0,
 		"effectClass":"assortment_of_things.abyss.objectives.DeactivatedDronesObjective",
 	},
+	
+	"rat_deactivated_drone_large":{
+		"name":"Deactivated Droneships",
+		"icon":"graphics/warroom/rat_objective_deactivated_drone_large.png",
+		"sprite":"graphics/fx/rat_none.png",
+		"spriteScale":1,
+		"captureTime":25,
+		"battleSizeFractionBonus":0,
+		"effectClass":"assortment_of_things.abyss.objectives.DeactivatedDronesObjective",
+	},
 }
