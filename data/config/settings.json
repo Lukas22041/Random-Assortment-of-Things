@@ -63,6 +63,9 @@
 		  "depths1_glow":"graphics/terrain/rat_depths1_glow.png",
 		  "depths1_map":"graphics/terrain/rat_depths1_map.png",
 		  
+		  "depths1_combat":"graphics/terrain/rat_combat_depths1.png",
+		  "depths1_map_combat":"graphics/terrain/rat_combat_depths1_map.png",
+		  
 		  #"depths2":"graphics/terrain/rat_depths2.png",
 		  #"depths2_glow":"graphics/terrain/rat_depths2_glow.png",
 		  #"depths2_map":"graphics/terrain/rat_depths2_map.png",

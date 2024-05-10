@@ -1,5 +1,6 @@
 package assortment_of_things
 
+import assortment_of_things.abyss.AbyssBattleCreationPlugin
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.boss.GenesisInteraction
 import assortment_of_things.abyss.boss.GenesisReencounterInteractionPlugin
@@ -27,6 +28,15 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
     override fun isTransient(): Boolean {
         return true
+    }
+
+    override fun pickBattleCreationPlugin(opponent: SectorEntityToken?): PluginPick<BattleCreationPlugin>? {
+
+        if (opponent?.containingLocation?.hasTag(AbyssUtils.SYSTEM_TAG) == true) {
+            return PluginPick<BattleCreationPlugin>(AbyssBattleCreationPlugin(), CampaignPlugin.PickPriority.HIGHEST)
+        }
+
+        return super.pickBattleCreationPlugin(opponent)
     }
 
     override fun pickInteractionDialogPlugin(interactionTarget: SectorEntityToken?): PluginPick<InteractionDialogPlugin>? {

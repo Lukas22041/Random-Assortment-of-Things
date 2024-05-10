@@ -85,7 +85,7 @@ class AssemblyStationInteraction : RATInteractionPlugin() {
                                 }
                             }
 
-                            textPanel.addPara("The Assembly Station whirs into life, quickly processing your order as it hungrily slurps away your credits to Ludd knows where. In mere days your new ships emerge, ready to have their internal systems thoroughly cleaned of infuriating advertisements. Once the ships are free the station crunks ominously into inertness - you're not sure if something fundamental has broken, or whatever nanofroge inside has gone rampant, but regardless of cause this station is now useless.")
+                            textPanel.addPara("The Assembly Station whirs into life, quickly processing your order as it hungrily slurps away your credits to Ludd knows where. In mere days your new ships emerge, ready to have their internal systems thoroughly cleaned of infuriating advertisements. Once the ships are free the station crunks ominously into inertness - you're not sure if something fundamental has broken, or whatever nanoforge inside has gone rampant, but regardless of cause this station is now useless.")
 
                             Global.getSoundPlayer().playUISound(Sounds.STORY_POINT_SPEND, 1f, 1f)
                             var cost = production.totalCurrentCost
