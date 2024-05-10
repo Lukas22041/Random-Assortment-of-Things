@@ -137,8 +137,8 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
                 variantPicker.add("rat_merrow_Support", 0.5f)
                 variantPicker.add("rat_makara_Attack", 1f)
                 variantPicker.add("rat_makara_Strike", 1f)
-                variantPicker.add("rat_chuul_Attack", 0.15f)
-                variantPicker.add("rat_chuul_Strike", 0.15f)
+                variantPicker.add("rat_chuul_Attack", 0.33f)
+                variantPicker.add("rat_chuul_Strike", 0.33f)
 
                 if (data.depth == AbyssDepth.Deep) {
                     variantPicker.add("rat_raguel_Attack", 0.1f)
@@ -284,8 +284,10 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
             var extraRadius = 0f
             if (count >= 3) extraRadius + 500
             extraRadius += extraRange
-            var start = MathUtils.getRandomPointOnCircumference(objective.location, 350f + drone.collisionRadius)
-            var destination = MathUtils.getRandomPointInCircle(start, 1000f + extraRadius)
+            /*var start = MathUtils.getRandomPointOnCircumference(objective.location, 250f + drone.collisionRadius)
+            var destination = MathUtils.getRandomPointInCircle(start, 1000f + extraRadius)*/
+
+            var destination = MathUtils.getRandomPointOnCircumference(objective.location, MathUtils.getRandomNumberInRange(drone.collisionRadius + 250f, 1000f + extraRadius))
 
             var location = findClearLocation(destination)
             drone.location.set(location)

@@ -379,7 +379,9 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
             loader.addNebula(x, y, radius);
         }
 
-        float numAsteroidsWithinRange = countNearbyAsteroids(playerFleet);
+        //Dont need asteroids in the abyss
+
+      /*  float numAsteroidsWithinRange = countNearbyAsteroids(playerFleet);
 
         int numAsteroids = Math.min(400, (int)((numAsteroidsWithinRange + 1f) * 20f));
 
@@ -394,7 +396,7 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
             }
             loader.addRingAsteroids(0, 0, random.nextFloat() * 360f, width,
                     100f, 200f, numRingAsteroids);
-        }
+        }*/
 
         //setRandomBackground(loader);
         loader.setBackgroundSpriteName(playerFleet.getContainingLocation().getBackgroundTextureFilename());
