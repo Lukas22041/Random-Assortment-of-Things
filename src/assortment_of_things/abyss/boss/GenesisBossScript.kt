@@ -97,8 +97,9 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         ship.hitpoints = ship.maxHitpoints
 
         var stats = ship.mutableStats
-        stats.weaponDamageTakenMult.modifyMult("rat_genesis_permanent_boss_buff", 0.5f)
-        stats.engineDamageTakenMult.modifyMult("rat_genesis_permanent_boss_buff", 0.5f)
+        stats.weaponDamageTakenMult.modifyMult("rat_genesis_permanent_boss_buff", 0.25f)
+        stats.engineDamageTakenMult.modifyMult("rat_genesis_permanent_boss_buff", 0.25f)
+        stats.empDamageTakenMult.modifyMult("rat_genesis_permanent_boss_buff", 0.25f)
 
         stats.energyWeaponRangeBonus.modifyMult("rat_genesis_permanent_boss_buff", 1.10f)
         stats.ballisticWeaponRangeBonus.modifyMult("rat_genesis_permanent_boss_buff", 1.10f)
