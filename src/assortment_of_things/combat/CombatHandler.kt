@@ -33,7 +33,7 @@ class CombatHandler : EveryFrameCombatPlugin
             if (RATModPlugin.gameStartedForTitleScene) {
                 RATModPlugin.gameStartedForTitleScene = false
 
-                var random = MathUtils.getRandomNumberInRange(1, 50)
+                var random = MathUtils.getRandomNumberInRange(1, 100)
 
                 if (random == 1) {
                     engine.addPlugin(AbyssTitleScreen())

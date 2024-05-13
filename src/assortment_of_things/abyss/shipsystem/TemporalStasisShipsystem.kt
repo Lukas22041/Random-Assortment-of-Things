@@ -1,11 +1,13 @@
 package assortment_of_things.abyss.shipsystem
 
 import assortment_of_things.combat.AfterImageRenderer
+import assortment_of_things.exotech.shipsystems.ArkasShipsystem
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipSystemAPI
 import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
+import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
@@ -15,7 +17,7 @@ import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
-class TemporalStasisShipsystem : BaseShipSystemScript() {
+class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
 
     var ship: ShipAPI? = null
     var target: ShipAPI? = null
@@ -24,10 +26,16 @@ class TemporalStasisShipsystem : BaseShipSystemScript() {
 
     var color = Color(196, 20, 35, 255)
 
+    var timer = 0f
+    var isCountingTimer = false
+    var actualIn = 2f
+    var actualActive = 10f
+    var maxTime = actualActive + actualIn
+
     companion object {
 
         fun getMaxRange() : Float {
-            if (Global.getSettings().isDevMode) return 2000f
+           // if (Global.getSettings().isDevMode) return 2000f
             var maxRange = 900f
             return maxRange
         }
@@ -38,6 +46,10 @@ class TemporalStasisShipsystem : BaseShipSystemScript() {
         ship = stats!!.entity as ShipAPI
         var id = id + "_" + ship!!.getId()
         var system = ship!!.system
+
+        if (!ship!!.hasListenerOfClass(TemporalStasisShipsystem::class.java)) {
+            ship!!.addListener(this)
+        }
 
         if (!system.isActive) {
 
@@ -52,21 +64,32 @@ class TemporalStasisShipsystem : BaseShipSystemScript() {
                     }
                 }
 
+                isCountingTimer = false
                 target = null
             }
 
 
         }
 
+        var levelForLens = 0f
+
         if (system.isActive) {
             if (target == null) {
                 target = findTarget()
                 if (target != null) {
                     Global.getCombatEngine().addFloatingText(target!!.location, system.displayName, 22f, color, target, 0f, 0f)
+                    isCountingTimer = true
                 }
             }
 
-            var effectLevel = easeInOutSine(effectLevel)
+            var stateLevel = timer / actualIn
+            stateLevel = MathUtils.clamp(stateLevel, 0f, 1f)
+            if (state == ShipSystemStatsScript.State.OUT || state == ShipSystemStatsScript.State.ACTIVE) {
+                stateLevel = effectLevel
+            }
+
+            var effectLevel = easeInOutSine(stateLevel)
+            levelForLens = effectLevel
 
             if (target != null) {
                 Global.getSoundPlayer().playLoop("rat_temporal_prison_loop", target, 1f, 1f, target!!.location, target!!.velocity)
@@ -155,6 +178,10 @@ class TemporalStasisShipsystem : BaseShipSystemScript() {
                         targetComponent!!.isHoldFireOneFrame = true
                         targetComponent!!.mutableStats.hullDamageTakenMult.modifyMult(id, 0f)
                         targetComponent!!.isPhased = true
+
+                        for (weapon in targetComponent.allWeapons) {
+                            weapon.stopFiring()
+                        }
                     }
                     else {
                         targetComponent!!.isPhased = false
@@ -176,6 +203,28 @@ class TemporalStasisShipsystem : BaseShipSystemScript() {
                     targetComponent!!.engineController.fadeToOtherColor(this, color, color.setAlpha(5) ,effectLevel,1f)
                     targetComponent!!.engineController.extendFlame(this, -0.25f, -0.25f, -0.25f)
                 }
+            }
+        }
+
+        if (ship!!.phaseCloak.effectLevel >= levelForLens) {
+            levelForLens = ship!!.phaseCloak.effectLevel
+        }
+        ship!!.setCustomData("rat_lensflare_level_overwrite", levelForLens)
+
+    }
+
+    override fun advance(amount: Float) {
+        if (isCountingTimer && ship!!.system.state != ShipSystemAPI.SystemState.OUT) {
+            timer += 1f * amount / ship!!.mutableStats.timeMult.modifiedValue
+            var stateLevel = timer / maxTime
+            if (stateLevel >= 1) {
+                //ship!!.system.forceState(ShipSystemAPI.SystemState.ACTIVE, maxTime - 1f)
+                isCountingTimer = false
+                timer = 0f
+            }
+            else {
+                var level = stateLevel
+                ship!!.system.forceState(ShipSystemAPI.SystemState.IN, level)
             }
         }
     }
@@ -201,7 +250,7 @@ class TemporalStasisShipsystem : BaseShipSystemScript() {
         var target = findTarget()
         if (target != null) {
             var distance = MathUtils.getDistance(ship, target)
-            if (distance <= getMaxRange() && !target.isStation && target.parentStation == null && target.owner != ship!!.owner) {
+            if (distance <= getMaxRange() && !target.isStation && target.parentStation == null && target.owner != ship!!.owner && !target.isHulk && target.isAlive) {
                 return true
             }
         }
@@ -217,6 +266,7 @@ class TemporalStasisShipsystem : BaseShipSystemScript() {
         if (target.owner == ship.owner) return "Can not target friendly ships"
         if (target.isStation) return "Does not work on Stations"
         if (target.parentStation != null) return "Only works on the core part of the ship"
+        if (target.isHulk) return "Does not work on hulks"
 
         var distance = MathUtils.getDistance(ship, target)
         if (distance >= getMaxRange()) return "Target out of Range"

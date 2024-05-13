@@ -55,7 +55,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
     var randomSeed = Random().nextLong()
 
     enum class AbyssFleetType(var weight: Float, var deep: Boolean) {
-        Normal(1f, false),
+        Normal(1.5f, false),
         Wolfpack(0.20f, false),
         MonoChronos(0.10f, false),
         MonoCosmos(0.10f, false),
@@ -175,6 +175,9 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
         if (type == AbyssFleetType.Supersized) {
             fleet.stats.fleetwideMaxBurnMod.modifyFlat("rat_supersize_debuff", -2f)
+        }
+        if (type == AbyssFleetType.MonoSeraphShips) {
+            fleet.stats.fleetwideMaxBurnMod.modifyFlat("rat_supersize_debuff", -1f)
         }
 
         for (member in fleet.fleetData.membersListCopy) {

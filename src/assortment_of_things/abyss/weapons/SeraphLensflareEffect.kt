@@ -1,11 +1,10 @@
 package assortment_of_things.abyss.weapons
 
-import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.graphics.SpriteAPI
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.ext.rotate
 import java.awt.Color
 
 class SeraphLensflareEffect : BaseCombatLayeredRenderingPlugin(CombatEngineLayers.ABOVE_SHIPS_LAYER), EveryFrameWeaponEffectPlugin {
@@ -74,15 +73,20 @@ class SeraphLensflareEffect : BaseCombatLayeredRenderingPlugin(CombatEngineLayer
         flare3!!.setAdditiveBlend()
 
 
-
+        var extraWidth = 0f
+        var extraHeight = 0f
+        if (ship.baseOrModSpec().hullId == "rat_gabriel") {
+            extraWidth += 0
+            extraHeight += 0
+        }
 
         flare1!!.alphaMult = 0.3f * alphaMult
         flare2!!.alphaMult = 0.3f * alphaMult
         flare3!!.alphaMult = 0.4f * alphaMult
 
-        flare1!!.setSize(50f, 7f)
-        flare2!!.setSize(50f, 5f)
-        flare3!!.setSize(25f, 2f)
+        flare1!!.setSize(50f + extraWidth, 7f + extraHeight)
+        flare2!!.setSize(50f + extraWidth, 5f + extraHeight)
+        flare3!!.setSize(25f + extraWidth, 2f + extraHeight)
 
         flare1!!.angle = ship.facing + 90
         flare2!!.angle = ship.facing + 90

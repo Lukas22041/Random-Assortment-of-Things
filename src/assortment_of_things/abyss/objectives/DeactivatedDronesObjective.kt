@@ -252,7 +252,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
         var extra = ""
         if (objective.type == "rat_deactivated_drone_large") extra = "This field appears to hold stronger ships."
 
-        return "Deactivated drones that could be brought back online through capturing them by either side. $extra\n\n" +
+        return "Deactivated drones that could be brought back online through capture by either side. $extra\n\n" +
                 "Once captured, it can no longer be re-captured and the objective dissapears. The drones do not count towards your Deployment Points.\n\n" +
                 "Due to strong internal damage, the drones can only support its side for this encounter. "
     }

@@ -8,14 +8,16 @@ Ceto,rat_ceto,,Abyssal,,,600,80,800,,100,0,,250,380,360,120,240,20,OMNI,,270,0,1
 Merrow,rat_merrow,Droneship,Abyssal,rat_abyssal_current,7,1250,250,2500,2500,300,45,,130,180,170,75,230,150,OMNI,,200,0.3,0.55,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,7,7,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,2,,3101
 Makara,rat_makara,Droneship,Abyssal,rat_abyssal_cloak,9,1300,225,2750,2500,300,55,,95,140,130,50,120,150,OMNI,,270,0.3,0.6,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,8,8,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,2,,3101
 Chuul,rat_chuul,Droneship,Abyssal,rat_abyssal_skimmer,12,5000,450,5000,3750,400,110,,90,75,50,30,50,500,OMNI,,190,0.3,0.6,,,0,0,80,60,2,30,10,50000,5,15,420,0.25,11,11,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,3,,3102
-Aboleth (F),rat_aboleth,Droneship Cruiser,Abyssal,rat_abyssal_cloak,22,8000,900,10000,12500,700,165,2,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,"HIDE_IN_CODEX, CARRIER, COMBAT","auto_rec, rat_abyssals",,0.5,2,3,,3103
+Aboleth (F),rat_aboleth,Droneship Cruiser,Abyssal,rat_abyssal_cloak,22,8000,900,10000,12500,700,165,2,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,"HIDE_IN_CODEX, CARRIER, COMBAT, NO_AUTO_ESCORT","auto_rec, rat_abyssals",,0.5,2,3,,3103
 Aboleth (M),rat_aboleth_m,Droneship Cruiser,Abyssal,rat_abyssal_cloak,22,8000,900,10000,12500,700,165,,65,35,30,20,25,2000,OMNI,,270,0.3,0.7,,,0,0,120,90,3,30,9,140000,5,15,540,0.25,28,28,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.5,2,3,,3103
 Morkoth,rat_morkoth,Drone Battleship,Abyssal,rat_abyssal_charge,30,18000,1300,22000,37500,1500,300,,50,30,25,15,20,3500,OMNI,,270,0.3,0.75,,,0,0,250,400,10,40,8,500000,3,15,720,0.25,60,60,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_abyssals",,0.4,2,4,,3104
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Seraphs,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Raguel,rat_raguel,Droneship,Seraph,rat_raguel_system,14,4000,400,4500,6250,450,65,,110,160,150,45,100,250,FRONT,,270,0.4,0.75,,,0,0,10,15,1,15,10,45000,5,10,360,0.25,14,14,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_seraph",,0.5,2,3,,3111
-Sariel,rat_sariel,Heavy Droneship,Seraph,rat_sariel_system,18,7000,750,8000,8000,500,115,,80,70,50,20,25,650,FRONT,,270,0.4,0.8,,,0,0,80,60,2,30,10,75000,5,15,420,0.25,18,18,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_seraph",,0.5,2,3,,3112
-Raphael,rat_raphael,Destroyer,Anomalous Phase-Tech,rat_raphael_system,24,7000,750,8000,8000,500,115,,80,70,50,20,25,650,FRONT,,270,0.4,0.8,,,0,15,80,60,2,30,10,125000,5,15,420,0.25,20,20,,,,,,,"HIDE_IN_CODEX, NO_NEURAL_LINK","restricted, no_sell, no_dealer",,0.5,2,3,,3112
+Sariel,rat_sariel,Heavy Droneship,Seraph,rat_sariel_system,18,7000,750,8000,8000,500,115,,85,70,50,20,25,650,FRONT,,270,0.4,0.8,,,0,0,80,60,2,30,10,75000,5,15,420,0.25,18,18,,,,,,,HIDE_IN_CODEX,"auto_rec, rat_seraph",,0.5,2,3,,3112
+Raphael,rat_raphael,Destroyer,Anomalous Phase-Tech,rat_raphael_system,24,7000,750,8000,8000,500,115,,85,70,50,20,25,650,FRONT,,270,0.4,0.8,0.02,0.04,0,15,80,60,2,30,10,125000,5,15,420,0.25,20,20,,,,,,,"HIDE_IN_CODEX, NO_NEURAL_LINK","restricted, no_sell, no_dealer",,0.5,2,3,,3112
+Gabriel,rat_gabriel,Phase Droneship,Seraph,rat_temporal_stasis,25,9000,1250,11000,18000,900,180,2,75,50,40,20,20,1450,PHASE,rat_seraphim_drive,,,,0.05,0.05,0,0,130,160,3,50,8,320000,4,30,420,0.25,35,35,,,,,,,"HIDE_IN_CODEX, CARRIER, COMBAT, NO_AUTO_ESCORT, PHASE","auto_rec, rat_seraph",,0.5,2,3,,3113
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Primordials,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Genesis,rat_genesis,Protector,Primordial,rat_spatial_disturbance,40,18000,1400,18000,30000,1500,280,,40,50,50,15,25,2400,FRONT,,270,0.4,0.9,,,0,0,220,600,8,50,8,1000000,3,50,600,0.25,75,75,,,,,,,HIDE_IN_CODEX,"auto_rec, no_autofit",,0.4,2,3,,510
