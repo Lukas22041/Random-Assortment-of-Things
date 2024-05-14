@@ -12,6 +12,7 @@ import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.backgrounds.neural.NeuralShardScript
 import assortment_of_things.backgrounds.zero_day.ZeroDayScript
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.PlanetAPI
@@ -190,7 +191,7 @@ class CombatHandler : EveryFrameCombatPlugin
                     {
 
                         var path = "graphics/icons/hullsys/high_energy_focus.png"
-                        Global.getSettings().loadTexture(path)
+                        Global.getSettings().getAndLoadSprite(path)
 
                         if (depth == AbyssDepth.Shallow) {
                             Global.getCombatEngine().maintainStatusForPlayerShip("rat_darkness",

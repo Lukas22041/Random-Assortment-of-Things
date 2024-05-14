@@ -1,7 +1,9 @@
 package assortment_of_things.abyss.shipsystem
 
+import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.exotech.shipsystems.ArkasShipsystem
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -11,6 +13,7 @@ import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
+import org.dark.shaders.post.PostProcessShader
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
@@ -31,6 +34,8 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
     var actualIn = 2f
     var actualActive = 10f
     var maxTime = actualActive + actualIn
+
+    var changedPostProcess = false
 
     companion object {
 
@@ -66,6 +71,11 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
 
                 isCountingTimer = false
                 target = null
+
+                if (changedPostProcess) {
+                    changedPostProcess = false
+                    PostProcessShader.resetDefaults()
+                }
             }
 
 
@@ -122,6 +132,27 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
 
                 //target!!.setJitter(this, color.setAlpha(25), 1f * effectLevel, 3, 0f, 5 * effectLevel)
                 target!!.setJitterUnder(this, color, 1f * effectLevel, 25, 0f, 6 * effectLevel)
+
+                if (player) {
+                    var path = "graphics/icons/hullsys/high_energy_focus.png"
+                    Global.getSettings().getAndLoadSprite(path)
+
+                    Global.getCombatEngine().maintainStatusForPlayerShip("rat_temporal_stasis",
+                        path,
+                        "Temporal Stasis",
+                        "Stuck in time",
+                        true)
+
+                    PostProcessShader.setNoise(false, 0.4f * effectLevel)
+
+                    PostProcessShader.setSaturation(false, 1f + (0.3f * effectLevel))
+
+                    changedPostProcess = true
+                } else if (changedPostProcess) {
+                    changedPostProcess = false
+                    PostProcessShader.resetDefaults()
+                }
+
 
                 val shipTimeMult = 1f - (0.666f * effectLevel)
                 targetStats.timeMult.modifyMult(id, shipTimeMult)
