@@ -63,9 +63,14 @@
 		"rat_aboleth_m_Overdriven":0.5,
 		"rat_aboleth_m_Support":0.5,
 		
+		"rat_gabriel_Attack":0.5,
+		"rat_gabriel_Burst":0.5,
+		
+		
 		#Exo
 		"rat_arkas_Strike":5,
 		"rat_leanira_Support":5,
+
 		
 	},
 	"combatCapital":{		

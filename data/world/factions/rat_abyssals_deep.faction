@@ -42,12 +42,12 @@
 	},
 	# ships the faction gets access to when importing S&W out-of-faction
 	"shipsWhenImporting":{
-		"tags":["rat_abyssals", "rat_seraph"],
+		"tags":["rat_abyssals"],
 		"hulls":[
 		],
 	},
 	"knownShips":{
-		"tags":["rat_abyssals", "rat_seraph"],
+		"tags":["rat_abyssals"],
 		"hulls":[
 		],
 	},

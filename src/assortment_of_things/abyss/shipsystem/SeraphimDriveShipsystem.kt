@@ -228,7 +228,8 @@ class SeraphimDriveShipsystem : BaseShipSystemScript() {
             fighter.engineController.fadeToOtherColor(this, Color(128, 41, 47, 200), Color(128, 41, 47, 200), 1f * effectLevel, 1f)
             fighter.engineController.extendFlame(this, -0.1f * effectLevel, -0.1f * effectLevel, 0f)
 
-            fighter.mutableStats.timeMult.modifyMult(id, shipTimeMult)
+            val fighterTimeMult = 1f + (getMaxTimeMult(stats) - 1f) * levelForAlpha * (1f - extra) * 0.5f
+            fighter.mutableStats.timeMult.modifyMult(id, fighterTimeMult)
 
 
         }

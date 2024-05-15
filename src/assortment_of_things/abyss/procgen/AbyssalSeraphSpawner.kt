@@ -24,6 +24,9 @@ object AbyssalSeraphSpawner {
         picker.add("rat_sariel_Attack", 5f)
         picker.add("rat_sariel_Strike", 2f)
 
+        picker.add("rat_gabriel_Attack", 1.25f)
+        picker.add("rat_gabriel_Burst", 1.25f)
+
 
         var amount = MathUtils.getRandomNumberInRange(min, max)
         for (i in 0 until amount) {

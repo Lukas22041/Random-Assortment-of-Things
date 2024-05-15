@@ -31,7 +31,7 @@ class AbyssalSeraphimDriveHullmod : BaseHullMod() {
         tooltip!!.addSpacer(5f)
         tooltip.addPara("The ships drivesystem is connected to a unique type of phase-coil. It enables the ship to enter phase-space while being affected by abyssal phenonema. \n\n" +
                 "Stacks of \"Saving Grace\" from the \"Seraphs Grace\" hullmod affect the amount of stress the ships coils can take. The speed reduction from phase coil stress is reduced by up to 50%% at 30 stacks.\n\n" +
-                "All deployed fighters are also interconnected to this shipsystem and are forced in to phase-space whenever the ship is aswell. \n\n" +
+                "All deployed fighters are also interconnected to this shipsystem and are forced in to phase-space whenever the ship is aswell, but only receive a fraction of the increase in timeflow. \n\n" +
                 "The ships sensor profile is decreased by 50%%. ",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "Saving Grace", "Seraphs Grace", "speed reduction", "50%", "30", "deployed fighters", "50%")

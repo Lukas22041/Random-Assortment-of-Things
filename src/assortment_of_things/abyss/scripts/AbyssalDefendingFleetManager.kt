@@ -10,6 +10,7 @@ import assortment_of_things.abyss.items.cores.officer.SeraphCore
 import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.AbyssSystemData
+import assortment_of_things.abyss.procgen.AbyssalSeraphSpawner
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.fixVariant
 import assortment_of_things.strings.RATItems
@@ -169,6 +170,24 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
         val fleet = FleetFactoryV3.createFleet(params)
         fleet.inflateIfNeeded()
+
+        if (factionID != "rat_abyssals_deep_seraph") {
+            var minSeraphs = 0
+            var maxSeraphs = 0
+            if (depth == AbyssDepth.Deep) minSeraphs += 2
+            if (depth == AbyssDepth.Deep) maxSeraphs += 3
+            if (difficulty == AbyssDifficulty.Hard) minSeraphs += 1
+            if (difficulty == AbyssDifficulty.Hard) maxSeraphs += 2
+
+            AbyssalSeraphSpawner.addSeraphsToFleet(fleet, random, minSeraphs, maxSeraphs)
+            AbyssalSeraphSpawner.sortWithSeraphs(fleet)
+
+            for (member in fleet.fleetData.membersListCopy) {
+                member.variant.addTag(Tags.TAG_NO_AUTOFIT)
+            }
+        }
+
+
 
 
         fleet.addTag("rat_fleet_type_${type!!.name}")
@@ -575,19 +594,19 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
         minPoints = 84f
         if (difficulty == AbyssDifficulty.Hard) minPoints += 50f
-        minPoints += 104 * level
+        minPoints += 84 * level
 
         return minPoints
     }
 
-    fun getMMaxPointsForDepth(data: AbyssSystemData) : Float {
+    fun getMaxPointsForDepth(data: AbyssSystemData) : Float {
         var maxPoints = 0f
         var difficulty = AbyssUtils.getDifficulty()
         var level = getStrengthLevelForStep(data)
 
         maxPoints = 148f
         if (difficulty == AbyssDifficulty.Hard) maxPoints += 70f
-        maxPoints += 104 * level
+        maxPoints += 84 * level
 
         return maxPoints
     }
@@ -627,7 +646,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
     fun generateFleetPoints(data: AbyssSystemData) : Float {
         var min = getMinPointsForDepth(data)
-        var max = getMMaxPointsForDepth(data)
+        var max = getMaxPointsForDepth(data)
         var result = MathUtils.getRandomNumberInRange(min, max)
 
         result += getFleetScalingPoints(data, result)

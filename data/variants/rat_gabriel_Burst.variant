@@ -1,0 +1,59 @@
+{
+    "displayName": "Burst",
+    "fluxCapacitors": 20,
+    "fluxVents": 11,
+    "goalVariant": true,
+    "hullId": "rat_gabriel",
+    "hullMods": [
+        "heavyarmor",
+        "phase_anchor",
+        "rat_controller",
+        "unstable_injector",
+    ],
+    "permaMods": [
+        "automated",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_gabriel_Burst",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "rat_seabream",
+                "WS0002": "rat_seabream",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "rat_calypso",
+                "WS0004": "rat_calypso",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0011": "rat_lusca",
+                "WS0010": "rat_lusca",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0012": "rat_shortfin",
+                "WS0013": "rat_shortfin",
+                "WS0009": "rat_shortfin",
+                "WS0008": "rat_shortfin",
+                "WS0007": "rat_shortfin",
+                "WS0006": "rat_shortfin",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}
