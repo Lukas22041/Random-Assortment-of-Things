@@ -202,7 +202,9 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
         }
     }
 
-
+    override fun getDisplaySortOrder(): Int {
+        return 1
+    }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)

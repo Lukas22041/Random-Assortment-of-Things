@@ -189,6 +189,10 @@ class AbyssalSeraphsGrace : BaseHullMod() {
         ship!!.addListener(SeraphsGraceListener(ship, isInAbyss))
     }
 
+    override fun getDisplaySortOrder(): Int {
+        return 1
+    }
+
     override fun isApplicableToShip(ship: ShipAPI?): Boolean {
         return false
     }

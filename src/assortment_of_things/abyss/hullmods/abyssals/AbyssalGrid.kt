@@ -76,7 +76,9 @@ class AbyssalGrid : BaseHullMod() {
 
     }
 
-
+    override fun getDisplaySortOrder(): Int {
+        return 2
+    }
 
 
     override fun isApplicableToShip(ship: ShipAPI?): Boolean {

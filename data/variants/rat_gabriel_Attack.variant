@@ -1,7 +1,7 @@
 {
     "displayName": "Attack",
-    "fluxCapacitors": 20,
-    "fluxVents": 17,
+    "fluxCapacitors": 21,
+    "fluxVents": 20,
     "goalVariant": true,
     "hullId": "rat_gabriel",
     "hullMods": [

@@ -14,7 +14,8 @@
   "builtInMods": [
     "rat_abyssal_grid",
     "rat_seraphs_grace",
-    "rat_seraphim_drive"
+    "rat_seraphim_drive",
+    "rat_fighter_configuration"
   ],
   "builtInWeapons": {
     "WS0001": "rat_seraph_lensflare"

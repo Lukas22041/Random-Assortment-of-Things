@@ -87,6 +87,9 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
             if (target == null) {
                 target = findTarget()
                 if (target != null) {
+                    if (target == ship!!.shipTarget) {
+                        ship!!.shipTarget = null
+                    }
                     Global.getCombatEngine().addFloatingText(target!!.location, system.displayName, 22f, color, target, 0f, 0f)
                     isCountingTimer = true
                 }
