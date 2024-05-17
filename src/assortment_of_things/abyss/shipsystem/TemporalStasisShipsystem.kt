@@ -110,9 +110,10 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
 
                 if (effectLevel >= 0.5f) {
 
-                    /*for (weapon in target!!.allWeapons) {
-                        weapon.setRemainingCooldownTo(weapon.cooldown)
-                    }*/
+                    for (weapon in target!!.allWeapons) {
+                        //weapon.setRemainingCooldownTo(weapon.cooldown)
+                        weapon.stopFiring()
+                    }
 
                     target!!.isHoldFireOneFrame = true
                     target!!.mutableStats.hullDamageTakenMult.modifyMult(id, 0f)
@@ -205,9 +206,10 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
                 for (targetComponent in others) {
                     if (effectLevel >= 0.2f) {
 
-                       /* for (weapon in target!!.allWeapons) {
-                            weapon.setRemainingCooldownTo(weapon.cooldown)
-                        }*/
+                        for (weapon in targetComponent!!.allWeapons) {
+                            weapon.setRemainingCooldownTo(weapon.cooldown * 0.5f)
+                            weapon.stopFiring()
+                        }
 
                         targetComponent!!.isHoldFireOneFrame = true
                         targetComponent!!.mutableStats.hullDamageTakenMult.modifyMult(id, 0f)

@@ -214,7 +214,9 @@ class SeraphimDriveShipsystem : BaseShipSystemScript() {
             if (state == ShipSystemStatsScript.State.IN || state == ShipSystemStatsScript.State.ACTIVE) {
                 fighter.isPhased = true
                 fighter.isHoldFireOneFrame = true
+
                 for (weapon in fighter.allWeapons) {
+                    weapon.setRemainingCooldownTo(weapon.cooldown * 0.5f)
                     weapon.stopFiring()
                 }
 
@@ -225,7 +227,7 @@ class SeraphimDriveShipsystem : BaseShipSystemScript() {
             fighter.extraAlphaMult = 1f - (1f - SHIP_ALPHA_MULT) * levelForAlpha
             fighter.setApplyExtraAlphaToEngines(false) //Disable to make engines not get way to small
 
-            fighter.engineController.fadeToOtherColor(this, Color(128, 41, 47, 200), Color(128, 41, 47, 200), 1f * effectLevel, 1f)
+            fighter.engineController.fadeToOtherColor(this, Color(128, 41, 47, 200), Color(128, 41, 47, 20), 1f * effectLevel, 1f)
             fighter.engineController.extendFlame(this, -0.1f * effectLevel, -0.1f * effectLevel, 0f)
 
             val fighterTimeMult = 1f + (getMaxTimeMult(stats) - 1f) * levelForAlpha * (1f - extra) * 0.5f
