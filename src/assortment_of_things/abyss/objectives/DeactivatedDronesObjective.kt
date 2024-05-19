@@ -115,7 +115,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
 
             if (data.depth == AbyssDepth.Deep) {
                 typePicker.add("seraph", 1f)
-                // typePicker.add("seraph_large", 0.75f) once cruiser is done
+                typePicker.add("seraph_large", 0.75f)
             }
 
             var pick = typePicker.pick()
@@ -127,6 +127,13 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
                 variantPicker.add("rat_morkoth_Attack", 1f)
                 variantPicker.add("rat_morkoth_Anchor", 0.75f)
                 variantPicker.add("rat_morkoth_Support", 0.5f)
+            }
+            else if (pick == "seraph_large") {
+                count = 1
+
+                //central = true
+                variantPicker.add("rat_gabriel_Attack", 1f)
+                variantPicker.add("rat_gabriel_Burst", 1f)
             }
             else if (pick == "pack") {
                 count = MathUtils.getRandomNumberInRange(6, 7)

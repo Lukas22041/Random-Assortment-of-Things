@@ -1,3 +1,22 @@
+Version 2.3.0
+Not Save compatible
+
+-> Added the "Gabriel-Class" seraph phase cruiser to the abyssal depths.
+-> Reworked the generator for abyss fleets to provide a little more variety and makes difficulty more gradual.
+-> Improved the aesthetic of the area surrounding the abyssal depths entrance.
+-> Added a unique battle objective that appears in the abyss.
+-> A special abyss title screen is now displayed rarely on game launch or if you exit to title while in the abyssal depths.
+-> Nebula in abyss combat now actually share the correct texture and color as the campaign terrain.
+-> Asteroids no longer spawn in abyss combat.
+-> Added some tips.
+-> Moved the Abyss gate towards the hyerspace entrance.
+-> The Aboleth (F) should now be more aggressive.
+-> Fixed the Raphael missing its flux cost for entering phase.
+-> The "Maintaing Momentum" skill should no longer apply if the player switches to the officers ship in combat.
+-> The Primordial cores skill no longer actives if the ship is piloted by an officer with the Maintaining Momentum skill.
+
+
+
 Version 2.2.0
 Not Save compatible
 

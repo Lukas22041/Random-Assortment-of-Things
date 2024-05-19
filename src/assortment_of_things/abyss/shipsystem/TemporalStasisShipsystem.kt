@@ -242,8 +242,10 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
             }
         }
 
-        if (ship!!.phaseCloak.effectLevel >= levelForLens) {
-            levelForLens = ship!!.phaseCloak.effectLevel
+        var phaseLevel = ship!!.customData.get("rat_phase_level") as Float? ?: 0f
+
+        if (phaseLevel >= levelForLens) {
+            levelForLens = phaseLevel
         }
         ship!!.setCustomData("rat_lensflare_level_overwrite", levelForLens)
 
