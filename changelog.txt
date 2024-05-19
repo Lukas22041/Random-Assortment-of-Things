@@ -9,7 +9,7 @@ Not Save compatible
 -> Nebula in abyss combat now actually share the correct texture and color as the campaign terrain.
 -> Asteroids no longer spawn in abyss combat.
 -> Added some tips.
--> Moved the Abyss gate towards the hyerspace entrance.
+-> Moved the Abyss gate towards the hyperspace entrance.
 -> The Aboleth (F) should now be more aggressive.
 -> Fixed the Raphael missing its flux cost for entering phase.
 -> The "Maintaing Momentum" skill should no longer apply if the player switches to the officers ship in combat.
