@@ -17,15 +17,17 @@ import java.awt.Color
 
 class SeraphimDriveShipsystem : BaseShipSystemScript() {
 
-    var JITTER_COLOR = Color(255, 175, 255, 255)
-    var JITTER_FADE_TIME = 0.5f
 
-    var SHIP_ALPHA_MULT = 0.25f
+    companion object {
+        var SHIP_ALPHA_MULT = 0.25f
+        var MAX_TIME_MULT = 3f
+        var ENGINE_COLOR = Color(128, 41, 47, 200)
+    }
+
 
     var VULNERABLE_FRACTION = 0f
     var INCOMING_DAMAGE_MULT = 0.25f
 
-    var MAX_TIME_MULT = 3f
 
     var FLUX_LEVEL_AFFECTS_SPEED = true
     //var MIN_SPEED_MULT = 0.75f
@@ -135,6 +137,10 @@ class SeraphimDriveShipsystem : BaseShipSystemScript() {
             return
         }
 
+        if (ship.travelDrive.isActive) {
+            return
+        }
+
         if (player) {
             maintainStatus(ship, state, effectLevel)
         }
@@ -227,7 +233,7 @@ class SeraphimDriveShipsystem : BaseShipSystemScript() {
             fighter.extraAlphaMult = 1f - (1f - SHIP_ALPHA_MULT) * levelForAlpha
             fighter.setApplyExtraAlphaToEngines(false) //Disable to make engines not get way to small
 
-            fighter.engineController.fadeToOtherColor(this, Color(128, 41, 47, 200), Color(128, 41, 47, 20), 1f * effectLevel, 1f)
+            fighter.engineController.fadeToOtherColor(this, ENGINE_COLOR, ENGINE_COLOR, 1f * effectLevel, 1f)
             fighter.engineController.extendFlame(this, -0.1f * effectLevel, -0.1f * effectLevel, 0f)
 
             val fighterTimeMult = 1f + (getMaxTimeMult(stats) - 1f) * levelForAlpha * (1f - extra) * 0.5f

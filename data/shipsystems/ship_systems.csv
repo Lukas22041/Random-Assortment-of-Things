@@ -29,3 +29,10 @@ Phased Deployment,rat_leanira_system,,,,,,,,,,1,,1,20,TRUE,,,,,,,,,,,,graphics/i
 Superposition,rat_tylos_system,,,,,,,,,,1,0.1,1,5,FALSE,,,,,,,,,,,,graphics/icons/hullsys/infernium_injector.png
 Aftershadows,rat_thestia_system,,,,,,,,,,1,10,1.5,20,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+#Traveldrives,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Exodrive,rat_traveldrive_exo,1,,,,,,,,,2,,3,0,TRUE,,,,TRUE,TRUE,TRUE,TRUE,TRUE,,,,graphics/icons/hullsys/burn_drive.png
+Seraphim Drive,rat_traveldrive_seraphim_drive,1,,,,,,,,,2,,3,0,TRUE,,,,TRUE,TRUE,TRUE,TRUE,TRUE,,,,graphics/icons/hullsys/burn_drive.png
+,,,,,,,,,,,,,,,,,,,,,,,,,,,

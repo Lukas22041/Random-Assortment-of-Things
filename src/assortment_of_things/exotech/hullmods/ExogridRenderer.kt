@@ -59,6 +59,16 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         var phaseState = ship.phaseCloak?.state ?: ShipSystemAPI.SystemState.IDLE
         var exogridOverload = ship.variant.hasHullMod("rat_exogrid_overload")
 
+        if (ship.phaseCloak != null) {
+            if (ship.travelDrive.isActive) {
+                phaseState = ship.travelDrive.state
+            }
+        }
+        else {
+            if (ship.travelDrive.isActive) {
+                systemState = ship.travelDrive.state
+            }
+        }
 
         if (ship.baseOrModSpec().hullId == "rat_apheidas") {
             renderLeaniraModule()
@@ -108,6 +118,10 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         }
 
         var systemState = ship.system.state
+        if (ship.travelDrive.isActive) {
+            systemState = ship.travelDrive.state
+            level = ship.travelDrive.effectLevel
+        }
 
         var baseAlpha = 0.2f
         var extraRangeMult = 1.2f
@@ -153,6 +167,11 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         }
 
         var systemState = ship.phaseCloak.state
+
+        if (ship.travelDrive.isActive) {
+            systemState = ship.travelDrive.state
+            level = ship.travelDrive.effectLevel
+        }
 
         phaseGlow.setNormalBlend()
         phaseGlow.alphaMult = level

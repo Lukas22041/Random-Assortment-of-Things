@@ -18,7 +18,7 @@ class AbyssalSeraphimDriveHullmod : BaseHullMod() {
 
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
-        stats!!.sensorProfile.modifyMult(id, 0.5f)
+        stats!!.sensorProfile.modifyMult(id, 0f)
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String?) {
@@ -43,9 +43,9 @@ class AbyssalSeraphimDriveHullmod : BaseHullMod() {
         tooltip.addPara("The ships drivesystem is connected to a unique type of phase-coil. It enables the ship to enter phase-space while being affected by abyssal phenonema. \n\n" +
                 "Stacks of \"Saving Grace\" from the \"Seraphs Grace\" hullmod affect the amount of stress the ships coils can take. The speed reduction from phase coil stress is reduced by up to 50%% at 30 stacks.\n\n" +
                 "All deployed fighters are also interconnected to this shipsystem and are forced in to phase-space whenever the ship is aswell, but only receive a fraction of the increase in timeflow. \n\n" +
-                "The ships sensor profile is decreased by 50%%. ",
+                "The ships is capable of hiding from most modern phase detectors outside of combat, essentially resulting in an undetectable sensor profile.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "Saving Grace", "Seraphs Grace", "speed reduction", "50%", "30", "deployed fighters", "50%")
+            "Saving Grace", "Seraphs Grace", "speed reduction", "50%", "30", "deployed fighters", "undetectable sensor profile")
 
         tooltip!!.addLunaElement(0f, 0f).apply {
             render {particleSpawner.renderForeground(element, it)  }
@@ -101,6 +101,12 @@ class SeraphimDriveRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugi
             var cooldownLevel = (ship.phaseCloak.cooldownRemaining - 0f) / (ship.phaseCloak.cooldown - 0f)
             level = cooldownLevel * (1 - outPercent)
             extraRange += 20 * (1-level)
+        }
+
+        if (ship.travelDrive.isActive) {
+            level = ship.travelDrive.effectLevel
+            var inLevel = ship.customData.get("rat_burndrive_level_overwrite_in") as Float? ?: 1f
+            level *= inLevel
         }
 
         level = easeOutSine(level)

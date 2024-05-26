@@ -16,10 +16,12 @@ import java.awt.Color
 
 class ExophaseShipsystem : BaseShipSystemScript() {
 
-    var JITTER_COLOR = Color(255, 175, 255, 255)
-    var JITTER_FADE_TIME = 0.5f
+    companion object {
+        var SHIP_ALPHA_MULT = 0.25f
+        var MAX_TIME_MULT = 3f
+        var ENGINE_COLOR = Color(255, 177, 127, 200)
+    }
 
-    var SHIP_ALPHA_MULT = 0.25f
 
     var VULNERABLE_FRACTION = 0f
     var INCOMING_DAMAGE_MULT = 0.25f
@@ -123,6 +125,8 @@ class ExophaseShipsystem : BaseShipSystemScript() {
             return
         }
 
+        if (ship.travelDrive.isActive) return
+
         if (ship.variant.hasTag("Arkas-Phantom")) return
 
         if (player) {
@@ -182,7 +186,7 @@ class ExophaseShipsystem : BaseShipSystemScript() {
         ship.extraAlphaMult = 1f - (1f - SHIP_ALPHA_MULT) * levelForAlpha
         ship.setApplyExtraAlphaToEngines(false) //Disable to make engines not get way to small
 
-        ship.engineController.fadeToOtherColor(this, Color(255, 177, 127, 200), Color(255, 177, 127, 200), 1f * effectLevel, 1f)
+        ship.engineController.fadeToOtherColor(this, ENGINE_COLOR, ENGINE_COLOR, 1f * effectLevel, 1f)
         ship.engineController.extendFlame(this, -0.1f * effectLevel, -0.1f * effectLevel, 0f)
 
         /*var thrusterID = 1000
