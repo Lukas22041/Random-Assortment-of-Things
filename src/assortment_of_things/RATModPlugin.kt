@@ -41,6 +41,7 @@ import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import org.lazywizard.lazylib.MathUtils
 import assortment_of_things.campaign.scripts.AICoreReplacerScript
+import com.thoughtworks.xstream.XStream
 import java.util.*
 
 
@@ -108,6 +109,10 @@ class RATModPlugin : BaseModPlugin() {
 
 
 
+    override fun configureXStream(x: XStream?) {
+        super.configureXStream(x)
+    }
+
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
@@ -117,6 +122,9 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(ApplyRATControllerToPlayerFleet())
 
         initFrontiers()
+
+
+
 
         //Fixes a dumb crash in 0.97 for non-new saves
         for (jumppoint in Global.getSector().hyperspace.jumpPoints) {
@@ -385,6 +393,8 @@ class RATModPlugin : BaseModPlugin() {
         }
 
     }
+
+
 
     override fun onNewGameAfterTimePass() {
         super.onNewGameAfterTimePass()

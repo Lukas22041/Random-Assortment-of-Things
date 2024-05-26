@@ -11,6 +11,7 @@ import com.fs.starfarer.api.combat.ShipHullSpecAPI.ShipTypeHints
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 import java.awt.Color
 
 class ExogridHullmod : BaseHullMod() {
@@ -123,6 +124,12 @@ class ExogridHullmod : BaseHullMod() {
     }
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
+
+        var sprite = Global.getSettings().getAndLoadSprite("graphics/ui/rat_exo_hmod.png")
+
+        var initialHeight = tooltip!!.heightSoFar
+        var element = tooltip!!.addLunaElement(0f, 0f)
+
         tooltip.addSpacer(10f)
 
         tooltip.addPara("A unique approach at a flux grid that heavily integrates phase-components, enhancing both shipsystems and cloaks. This direct integration allows the speed of phase-cloaks to be much less effected by rising flux levels. " +
@@ -144,6 +151,12 @@ class ExogridHullmod : BaseHullMod() {
 
         tooltip.addPara("The internal components of this ship are poorly understood by your crew. Without an Exo-Tech partnership, the ship can not be restored to remove d-mods.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "restored")
+
+        element.render {
+            sprite.setSize(tooltip.widthSoFar + 20, tooltip.heightSoFar + 10)
+            sprite.setAdditiveBlend()
+            sprite.render(tooltip.position.x, tooltip.position.y)
+        }
     }
 
     /*override fun hasSModEffect(): Boolean {

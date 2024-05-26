@@ -1,9 +1,12 @@
 package assortment_of_things.exotech.hullmods
 
+import assortment_of_things.misc.getAndLoadSprite
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
@@ -21,6 +24,12 @@ class TylosHullmod : BaseHullMod() {
     }
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
+
+        var sprite = Global.getSettings().getAndLoadSprite("graphics/ui/rat_exo_hmod.png")
+
+        var initialHeight = tooltip!!.heightSoFar
+        var element = tooltip!!.addLunaElement(0f, 0f)
+
         tooltip!!.addSpacer(10f)
 
         tooltip!!.addPara("The ship is in a constant state of superposition. Most compartments exist in two states, which can be toggled between. " +
@@ -48,6 +57,12 @@ class TylosHullmod : BaseHullMod() {
         tooltip.addPara("The AI will attempt to switch towards the currently most suitable state. " +
                 "If one state is build for kinetic, and one is build for explosive damage, the AI changes to the most effective state at the moment.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "kinetic", "explosive")
+
+        element.render {
+            sprite.setSize(tooltip.widthSoFar + 20, tooltip.heightSoFar + 10)
+            sprite.setAdditiveBlend()
+            sprite.render(tooltip.position.x, tooltip.position.y)
+        }
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?, isForModSpec: Boolean): Boolean {

@@ -1,8 +1,11 @@
 package assortment_of_things.exotech.hullmods
 
+import assortment_of_things.misc.getAndLoadSprite
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 import java.awt.Color
 
 class ApheidasHullmod : BaseHullMod() {
@@ -73,6 +76,12 @@ class ApheidasHullmod : BaseHullMod() {
 
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
+
+        var sprite = Global.getSettings().getAndLoadSprite("graphics/ui/rat_exo_hmod.png")
+
+        var initialHeight = tooltip!!.heightSoFar
+        var element = tooltip!!.addLunaElement(0f, 0f)
+
         tooltip!!.addSpacer(10f)
 
         tooltip!!.addPara("The apheidas-class platform does not operate like a normal ship. " +
@@ -90,6 +99,12 @@ class ApheidasHullmod : BaseHullMod() {
 
         tooltip.addPara("Due to having a limited amount of engine components exposed to the outer hull, the platform is able to have more consistent plating covering the ship, increasing the EMP resistance by 25%%.", 0f,
                 Misc.getTextColor(), Misc.getHighlightColor(), "25%")
+
+        element.render {
+            sprite.setSize(tooltip.widthSoFar + 20, tooltip.heightSoFar + 10)
+            sprite.setAdditiveBlend()
+            sprite.render(tooltip.position.x, tooltip.position.y)
+        }
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?, isForModSpec: Boolean): Boolean {
