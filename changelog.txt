@@ -1,3 +1,14 @@
+Version 2.3.1
+Save compatible
+
+-> Added special battle-entry burn drives for some ships.
+-> Added more detailed & individual descriptions for every abyss ship.
+-> Gave Exotech hullmods tooltips a simple background effect.
+-> Reduced the Gabriels Sensor Profile from 45 to 0.
+-> The Frigates spawned by the Genesis system should no longer be as focused on fighters as before.
+
+
+
 Version 2.3.0
 Not Save compatible
 
