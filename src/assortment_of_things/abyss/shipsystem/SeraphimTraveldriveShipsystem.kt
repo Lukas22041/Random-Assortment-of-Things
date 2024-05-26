@@ -54,7 +54,7 @@ class SeraphimTraveldriveShipsystem : BaseShipSystemScript() {
 
         ship.extraAlphaMult = 1f - (1f - alpha) * levelForAlpha
 
-        if (inLevel < 0.25f) {
+        if (inLevel < 0.1f) {
             ship.setApplyExtraAlphaToEngines(true) //Disable to make engines not get way to small
         }
         else {
