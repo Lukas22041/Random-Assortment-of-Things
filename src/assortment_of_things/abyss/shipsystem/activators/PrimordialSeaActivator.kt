@@ -137,7 +137,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
         for (variant in variants) {
 
-            var targetShips = CombatUtils.getShipsWithinRange(ship.location, maxRange - 500).filter { !takenTargets.contains(it) }
+            var targetShips = CombatUtils.getShipsWithinRange(ship.location, maxRange - 500).filter { !takenTargets.contains(it) && !it.isFighter}
             var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 1600f))
 
             if (takenTargets.size < 3) {
