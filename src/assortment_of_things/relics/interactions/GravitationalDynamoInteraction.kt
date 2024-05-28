@@ -29,9 +29,9 @@ class GravitationalDynamoInteraction : RATInteractionPlugin() {
             createOption("Continue") {
                 clearOptions()
 
-                textPanel.addPara("As you approach the location, the bridge sounds an alert as a previously undifferentiated shape detach itself from the superstructure and smoothly accelerate towards your fleet.")
+                textPanel.addPara("As you approach the dynamo, bridge alarms go off as a previously undifferentiated shapes detach themselves from the superstructure and smoothly accelerate towards your fleet.")
 
-                textPanel.addPara("The stations magnetic field should be able to protect the fleet from the black holes harmful radiation, but the unidentified targets appear to a pose a large threat non the less.")
+                textPanel.addPara("The station's magnetic field should be able to protect the fleet from black hole's harmful radiation, but the unindentified vessels appear to pose a large threat nonetheless.")
 
                 triggerDefenders()
 
