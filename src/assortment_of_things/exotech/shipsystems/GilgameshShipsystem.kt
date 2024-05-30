@@ -299,6 +299,14 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
         drone.mutableStats.timeMult.applyMods(ship!!.mutableStats.timeMult)
 
+        drone.mutableStats.ballisticAmmoBonus.applyMods(ship!!.mutableStats.ballisticAmmoBonus)
+        drone.mutableStats.energyAmmoBonus.applyMods(ship!!.mutableStats.energyAmmoBonus)
+        drone.mutableStats.missileAmmoBonus.applyMods(ship!!.mutableStats.missileAmmoBonus)
+
+        drone.mutableStats.ballisticAmmoRegenMult.applyMods(ship!!.mutableStats.ballisticAmmoRegenMult)
+        drone.mutableStats.energyAmmoRegenMult.applyMods(ship!!.mutableStats.energyAmmoRegenMult)
+        drone.mutableStats.missileAmmoRegenMult.applyMods(ship!!.mutableStats.missileAmmoRegenMult)
+
         drone.getMutableStats().damageToFrigates.applyMods(ship!!.mutableStats.damageToFrigates)
         drone.getMutableStats().damageToDestroyers.applyMods(ship!!.mutableStats.damageToDestroyers)
         drone.getMutableStats().damageToCruisers.applyMods(ship!!.mutableStats.damageToCruisers)
@@ -308,6 +316,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         drone.getMutableStats().getEnergyWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.50f)
         drone.getMutableStats().getMissileWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.50f)
         drone.getMutableStats().getBallisticWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.50f)
+
 
         drone.getMutableStats().ballisticWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 200f)
         drone.getMutableStats().energyWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 200f)
