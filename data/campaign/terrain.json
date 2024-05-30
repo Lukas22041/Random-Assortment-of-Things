@@ -37,5 +37,20 @@
 		"plugin":"assortment_of_things.campaign.ui.HyperspaceRenderingTerrainPlugin",
 	},
 	
+	
+	
+	"rat_exo_nebula":{
+		"plugin":"assortment_of_things.exotech.terrain.ExotechHyperNebula",
+		
+		
+		"loopTwo":"terrain_hyperspace_deep",
+		
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
+
+			"stormSound":"rat_abyss_storm_sounds",
+		},
+	},
+	
 }
 

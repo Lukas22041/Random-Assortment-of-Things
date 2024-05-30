@@ -15,7 +15,6 @@ import assortment_of_things.campaign.scripts.AICoreDropReplacerScript
 import assortment_of_things.campaign.scripts.ApplyRATControllerToPlayerFleet
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
-import assortment_of_things.exotech.ExoshipGenerator
 import assortment_of_things.exotech.scripts.ChangeExoIntelState
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.misc.RATSettings
@@ -26,7 +25,6 @@ import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.JumpPointAPI
-import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
@@ -41,6 +39,8 @@ import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import org.lazywizard.lazylib.MathUtils
 import assortment_of_things.campaign.scripts.AICoreReplacerScript
+import assortment_of_things.exotech.ExotechGenerator
+import assortment_of_things.exotech.terrain.ExotechHyperNebula
 import com.thoughtworks.xstream.XStream
 import java.util.*
 
@@ -115,6 +115,10 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
+
+
+        //TestFactor(1)
+
 
         Global.getSector().addTransientScript(ChangeMainMenuColorScript())
         Global.getSector().addTransientScript(AICoreReplacerScript())
@@ -283,7 +287,7 @@ class RATModPlugin : BaseModPlugin() {
 
             var data = ExoUtils.getExoData()
 
-            var person = Global.getSector().getFaction("rat_exotech").createRandomPerson(FullName.Gender.FEMALE)
+           /* var person = Global.getSector().getFaction("rat_exotech").createRandomPerson(FullName.Gender.FEMALE)
             person.portraitSprite = "graphics/portraits/rat_exo_comm.png"
 
            // person.name = FullName("Janssen", "", FullName.Gender.FEMALE)
@@ -300,7 +304,9 @@ class RATModPlugin : BaseModPlugin() {
                 data.exoships.add(exoship)
             }
 
-            generateBrokenExoship()
+            generateBrokenExoship()*/
+
+            ExotechGenerator.setup()
 
             Global.getSector().memoryWithoutUpdate.set("\$rat_exo_generated", true)
         }
@@ -390,6 +396,11 @@ class RATModPlugin : BaseModPlugin() {
         var hyperTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is AbyssTerrainInHyperspacePlugin }
         if (hyperTerrain != null) {
             (hyperTerrain.plugin as AbyssTerrainInHyperspacePlugin ).save()
+        }
+
+        var hyperExoTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is ExotechHyperNebula }
+        if (hyperExoTerrain != null) {
+            (hyperExoTerrain.plugin as ExotechHyperNebula ).save()
         }
 
     }

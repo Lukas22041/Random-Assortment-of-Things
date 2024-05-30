@@ -1,4 +1,4 @@
-package assortment_of_things.abyss.entities
+package assortment_of_things.exotech.entities
 
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
@@ -8,14 +8,13 @@ import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
 import org.magiclib.kotlin.setAlpha
 
-class AbyssalLightsource : BaseCustomEntityPlugin(), AbyssalLight {
+class ExoLightsource : BaseCustomEntityPlugin() {
 
-    override var radius = 2000f
-    override var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
+    var radius = 2000f
+    var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
 
     @Transient
     var halo: SpriteAPI? = null
-
 
     override fun advance(amount: Float) {
         super.advance(amount)
