@@ -122,7 +122,9 @@ class ExotechHyperNebula() : OldHyperspaceTerrainPlugin() {
 
         if (isInClouds(Global.getSector().playerFleet)) {
             for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
-                member.repairTracker.cr -= 0.015f * amount
+                if (member.repairTracker.cr > 0f) {
+                    member.repairTracker.cr -= 0.015f * amount
+                }
             }
         }
 
@@ -210,7 +212,7 @@ class ExotechHyperNebula() : OldHyperspaceTerrainPlugin() {
         tooltip!!.addTitle(terrainName)
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("An intensily radiated dust formation left from some kind of catastrophic event. Staying inside will hastily damage all ships within the fleet. Avoid extended stay at all cost",
+        tooltip.addPara("An intensily radiated dust formation left from some kind of catastrophic event. Staying inside will rapidly damage all ships within the fleet. Avoid extended stay at all cost.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(), "damage","Avoid extended stay at all cost")
 
         tooltip.addSpacer(5f)
@@ -223,7 +225,7 @@ class ExotechHyperNebula() : OldHyperspaceTerrainPlugin() {
         val player = Global.getSector().playerFleet
         val inCloud = this.isInClouds(player)
 
-        if (inCloud) return "Ionised Fog"
+        if (inCloud) return "Ionised Dust"
         return ""
     }
 

@@ -1,0 +1,324 @@
+{
+  "hullName": "Gilgamesh",
+  "hullId": "rat_gilgamesh",
+  "hullSize": "DESTROYER",
+  "spriteName": "graphics/ships/exo/rat_gilgamesh.png",
+  "style": "RAT_EXO",
+  "height": 200,
+  "width": 220,
+  "center": [110, 100],
+  "collisionRadius": 124.5,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 114.5,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_exogrid"
+  ],
+  "builtInWeapons": {
+    "WS0001": "rat_gilgamesh_wing_left",
+    "WS0002": "rat_gilgamesh_wing_right",
+    "WS0003": "rat_exo_coil_location"
+  },
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 0,
+      "angle": 25,
+      "locations": [-18.5, 33]
+    },
+    {
+      "id": "WS0002",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 0,
+      "angle": -25,
+      "locations": [-18.5, -33]
+    },
+    {
+      "id": "WS0003",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 0,
+      "angle": 0,
+      "locations": [3, -0]
+    },
+    {
+      "id": "WS0004",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 210,
+      "angle": 45,
+      "locations": [13.5, 37.5]
+    },
+    {
+      "id": "WS0005",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 210,
+      "angle": -45,
+      "locations": [13.5, -37.5]
+    },
+    {
+      "id": "WS0006",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 120,
+      "angle": -0,
+      "locations": [31, -21]
+    },
+    {
+      "id": "WS0007",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 120,
+      "angle": 0,
+      "locations": [31, 21]
+    },
+    {
+      "id": "WS0010",
+      "size": "MEDIUM",
+      "type": "MISSILE",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [54, -0]
+    },
+    {
+      "id": "WS0008",
+      "size": "SMALL",
+      "type": "SYNERGY",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [57, 11]
+    },
+    {
+      "id": "WS0009",
+      "size": "SMALL",
+      "type": "SYNERGY",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": -0,
+      "locations": [57, -11]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-11.5, -65],
+      "length": 14,
+      "width": 6,
+      "angle": -165,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-11.5, 65],
+      "length": 14,
+      "width": 6,
+      "angle": 165,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-5, -71.5],
+      "length": 14,
+      "width": 6,
+      "angle": -165,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-5, 71.5],
+      "length": 14,
+      "width": 6,
+      "angle": 165,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-12, -63.5],
+      "length": 8,
+      "width": 4,
+      "angle": -164.5,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-12, 63.5],
+      "length": 8,
+      "width": 4,
+      "angle": 164.5,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-11, 67],
+      "length": 8,
+      "width": 4,
+      "angle": 165.5,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-11, -67],
+      "length": 8,
+      "width": 4,
+      "angle": -165.5,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-5, -70],
+      "length": 8,
+      "width": 4,
+      "angle": -165.5,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-5, 70],
+      "length": 8,
+      "width": 4,
+      "angle": 165.5,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-4, -73],
+      "length": 8,
+      "width": 4,
+      "angle": -165,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-4, 73],
+      "length": 8,
+      "width": 4,
+      "angle": 165,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-47.5, 16],
+      "length": 18,
+      "width": 8,
+      "angle": 180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-47.5, -16],
+      "length": 18,
+      "width": 8,
+      "angle": -180,
+      "contrailSize": 30,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-47.5, 18.5],
+      "length": 10,
+      "width": 4,
+      "angle": 180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-47.5, -18.5],
+      "length": 10,
+      "width": 4,
+      "angle": -180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-47.5, -14],
+      "length": 10,
+      "width": 4,
+      "angle": -180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-47.5, 14],
+      "length": 10,
+      "width": 4,
+      "angle": 180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    }
+  ],
+  "bounds": [
+    -90.5, 2,
+    -47, 11,
+    -47, 19.5,
+    -28, 22,
+    -24.5, 48.5,
+    -36, 55,
+    -35.5, 61.5,
+    -12, 59,
+    -11, 68,
+    -4, 68.5,
+    -1.5, 75.5,
+    4.5, 72.5,
+    5, 87,
+    16.5, 103.5,
+    24, 71,
+    28.5, 72.5,
+    38.5, 50.5,
+    42, 51,
+    59.5, 27,
+    80.5, 17,
+    74, 12.5,
+    59, 14,
+    59, -14,
+    74, -12.5,
+    80.5, -17,
+    59.5, -27,
+    42, -51,
+    38.5, -50.5,
+    28.5, -72.5,
+    24, -71,
+    16.5, -103.5,
+    5, -87,
+    4.5, -72.5,
+    -1.5, -75.5,
+    -4, -68.5,
+    -11, -68,
+    -12, -59,
+    -35.5, -61.5,
+    -36, -55,
+    -24.5, -48.5,
+    -28, -22,
+    -47, -19.5,
+    -47, -11,
+    -90.5, -2
+  ]
+}

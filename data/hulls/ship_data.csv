@@ -42,6 +42,9 @@ Arkas (Phantom),rat_arkas_phantom,Phase Cruiser,Exo-Tech,,20,100000,3000,12000,1
 Leanira,rat_leanira,Battlecarrier,Exo-Tech,rat_leanira_system,20,7500,1100,11000,12500,650,165,3,70,30,25,20,25,2000,OMNI,,270,0.25,0.8,,,110,200,160,130,2,30,9,175000,5,20,540,0.25,30,30,,,,,,,"CARRIER, COMBAT, SHIP_WITH_MODULES, DO_NOT_SHOW_MODULES_IN_FLEET_LIST","restricted, rat_exotech_bp",,0.5,2,3,rat_traveldrive_exo,4001
 Apheidas,rat_apheidas,Turret Platform,Exo-Tech,,0,5500,1150,3000,2500,300,50,,25,40,30,15,20,4000,NONE,,200,0.25,0.8,,,0,0,40,40,1,40,11,30000,5,10,360,0.25,0,0,,,,,,,"UNBOARDABLE, HIDE_IN_CODEX, UNDER_PARENT, ALWAYS_PANIC",restricted,,0.5,2,2,,4002
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Gilgamesh,rat_gilgamesh,Phase Destroyer,Exo-Tech,rat_gilgamesh_system,18,6000,900,6500,10000,650,120,,90,75,65,40,45,800,PHASE,rat_exocloak,,,,0.025,0.05,30,80,90,110,2,50,10,150000,5,20,360,0.25,24,24,,,,,,,PHASE,restricted,,0.5,2,3,rat_traveldrive_exo,4004
+,rat_gilgamesh_drone,,,,,10000000,0,100000,,100000,,,100,100,100,100,100,100,NONE,,,,,,,,,,,,,,,,,,,,,,,,,,,,"restricted, no_sell",,0,,,,8
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Protostar,rat_protostar,,Exo-Tech,,,300,50,400,,100,0,,180,280,230,80,160,20,FRONT,,270,0,0.8,,,1,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
 Nightblade,rat_nightblade,,Exo-Tech,,,350,60,450,,100,0,,220,300,250,120,250,20,FRONT,,270,0,0.8,,,1,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
 Dawnblade,rat_dawnblade,,Exo-Tech,,,750,120,1250,,100,0,,200,300,250,90,180,20,FRONT,,270,0,0.8,,,3,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
