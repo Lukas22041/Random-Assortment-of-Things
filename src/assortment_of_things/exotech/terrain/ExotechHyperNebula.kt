@@ -123,7 +123,7 @@ class ExotechHyperNebula() : OldHyperspaceTerrainPlugin() {
         if (isInClouds(Global.getSector().playerFleet)) {
             for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
                 if (member.repairTracker.cr > 0f) {
-                    member.repairTracker.cr -= 0.015f * amount
+                    member.repairTracker.cr -= 0.010f * amount
                 }
             }
         }

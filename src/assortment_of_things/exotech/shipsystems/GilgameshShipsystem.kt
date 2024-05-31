@@ -171,7 +171,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
                 var isInArc = Misc.isInArc(weapon.currAngle, weapon.arc, angle)
                 var isInRange = MathUtils.getDistance(weapon.location, target!!.location) <= weapon.range
 
-                if (isInArc && isInRange && droneLevel >= 0.7f && ship!!.system.state != ShipSystemAPI.SystemState.OUT) {
+                if (/*isInArc && */isInRange && droneLevel >= 0.7f && ship!!.system.state != ShipSystemAPI.SystemState.OUT) {
                     drone.giveCommand(ShipCommand.FIRE, target!!.location, 0)
                 }
 

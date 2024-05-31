@@ -1011,7 +1011,7 @@
 		"nameInText":"station",
 		"shortName":"station",
 		"customDescriptionId":"rat_exoship",
-		"interactionImage":"graphics/illustrations/orbital_construction.jpg",
+		"interactionImage":"graphics/illustrations/rat_exoship.jpg",
 		"icon":"graphics/icons/station0.png",
 		"iconWidth":20,
 		"iconHeight":20,
