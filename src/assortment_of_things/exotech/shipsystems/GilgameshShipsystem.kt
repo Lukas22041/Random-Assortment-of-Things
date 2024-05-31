@@ -5,7 +5,6 @@ import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
-import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.loading.BeamWeaponSpecAPI
@@ -13,9 +12,11 @@ import com.fs.starfarer.api.loading.ProjectileSpecAPI
 import com.fs.starfarer.api.loading.WeaponGroupSpec
 import com.fs.starfarer.api.loading.WeaponGroupType
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
+import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
 import kotlin.collections.ArrayList
@@ -32,6 +33,10 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
     var addedRenderer = false
 
     var gate = Global.getSettings().getAndLoadSprite("graphics/ships/exo/rat_gilgamesh_gate.png")
+    var nebulaInterval = IntervalUtil(0.05f, 0.1f)
+
+    var timingsList = listOf<Float>(0.2f, 0.4f, 0.6f, 0.8f, 0.10f, 0.12f, 0.14f, 0.16f, 0.18f, 0.20f).shuffled()
+    var timingsIndex = 0
 
     override fun apply(stats: MutableShipStatsAPI?, id: String?, state: ShipSystemStatsScript.State?, effectLevel: Float) {
         super.apply(stats, id, state, effectLevel)
@@ -48,6 +53,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         if (activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
             activated = false
             target = null
+            timingsList = timingsList.shuffled()
 
             for (drone in ArrayList(drones)) {
                 Global.getCombatEngine().removeEntity(drone)
@@ -65,7 +71,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
             var slotId = "WS0004"
 
-            for (i in 0 until 6) {
+            for (i in 0 until 12) {
                 var slot = ship!!.allWeapons.find { it.slot.id == slotId }
                 if (slot != null) {
                     var drone = spawnDrone(slot.spec.weaponId)
@@ -111,11 +117,27 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         positions.add(MathUtils.getPointOnCircumference(ship!!.location, 160f, facing - 60))
         positions.add(MathUtils.getPointOnCircumference(ship!!.location, 160f, facing + 60))
 
-        positions.add(MathUtils.getPointOnCircumference(ship!!.location, 170f, facing - 90))
-        positions.add(MathUtils.getPointOnCircumference(ship!!.location, 170f, facing + 90))
+        positions.add(MathUtils.getPointOnCircumference(ship!!.location, 240f, facing - 80))
+        positions.add(MathUtils.getPointOnCircumference(ship!!.location, 240f, facing + 80))
 
+        positions.add(MathUtils.getPointOnCircumference(ship!!.location, 220f, facing - 45))
+        positions.add(MathUtils.getPointOnCircumference(ship!!.location, 220f, facing + 45))
+
+        positions.add(MathUtils.getPointOnCircumference(ship!!.location, 240f, facing - 65))
+        positions.add(MathUtils.getPointOnCircumference(ship!!.location, 240f, facing + 65))
+
+        positions.add(MathUtils.getPointOnCircumference(ship!!.location, 200f, facing - 18))
+        positions.add(MathUtils.getPointOnCircumference(ship!!.location, 200f, facing + 18))
+
+
+        nebulaInterval.advance(amount)
+        var intervalElapsed = nebulaInterval.intervalElapsed()
         if (target != null) {
             for (drone in drones) {
+
+                updateDroneEntryLevel(drone)
+                var droneLevel = getDroneLevel(drone)
+
 
                 var pos = positions.getOrNull(posIndex) ?: break
                 posIndex += 1
@@ -146,30 +168,95 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
                 val angle = Misc.getAngleInDegrees(drone.location, target!!.location)
 
-               // var isInArc = Misc.isInArc(weapon.currAngle, weapon.arc + 10, angle)
+                var isInArc = Misc.isInArc(weapon.currAngle, weapon.arc, angle)
                 var isInRange = MathUtils.getDistance(weapon.location, target!!.location) <= weapon.range
 
-                if (/*isInArc && */isInRange && ship!!.system.effectLevel >= 0.7f && ship!!.system.state != ShipSystemAPI.SystemState.OUT) {
+                if (isInArc && isInRange && droneLevel >= 0.7f && ship!!.system.state != ShipSystemAPI.SystemState.OUT) {
                     drone.giveCommand(ShipCommand.FIRE, target!!.location, 0)
                 }
 
-                if (ship!!.system.state == ShipSystemAPI.SystemState.OUT && ship!!.system.effectLevel <= 0.8f) {
+                if (ship!!.system.state == ShipSystemAPI.SystemState.OUT && droneLevel <= 0.8f) {
                     for (weapon in drone.allWeapons) {
                         weapon.stopFiring()
                     }
                 }
 
+
+                val shipAngleToTarget = Misc.getAngleInDegrees(drone.location, target!!.location)
+                var isEnemyInShipArc = Misc.isInArc(ship!!.facing, 40f, shipAngleToTarget)
+
+
                 turnTowardsPointV2(drone, target!!.location, 0f)
+
+
+               /* if (droneLevel >= 0.9 && intervalElapsed) {
+
+                    Global.getCombatEngine().addNegativeNebulaParticle(drone.location, drone.velocity,
+                        60f, 0.1f, 1f, 1f, 1f,
+                       Color(20, 20, 20))
+
+                    Global.getCombatEngine().addNebulaParticle(drone.location, drone.velocity,
+                        60f, 0.1f, 1f, 1f, 1f,
+                        Misc.interpolateColor(ExoUtils.color1, ExoUtils.color2, MathUtils.getRandomNumberInRange(0f, 1f)).setAlpha((45 * droneLevel).toInt()))
+                }*/
+
+
             }
         }
     }
 
+    fun updateDroneEntryLevel(drone: ShipAPI) : Float {
+        var increase = drone.customData.get("rat_gilgamesh_drone_increase") as Float?
+        var level = drone.customData.get("rat_gilgamesh_drone_level") as Float?
+        if (increase == null || level == null) {
+
+            var timing = timingsList.get(timingsIndex)
+
+            timingsIndex += 1
+            if (timingsIndex >= timingsList.size) {
+                timingsIndex = 0
+            }
+
+            increase = timing + MathUtils.getRandomNumberInRange(0f, 0.1f)
+            level = 0f
+        }
+
+        if (ship!!.system.state == ShipSystemAPI.SystemState.IN || ship!!.system.state == ShipSystemAPI.SystemState.ACTIVE) {
+            level += increase * ship!!.system.effectLevel * Global.getCombatEngine().elapsedInLastFrame * ship!!.mutableStats.timeMult.modifiedValue
+        }
+
+        if (ship!!.system.state == ShipSystemAPI.SystemState.OUT) {
+            //level -= increase * Global.getCombatEngine().elapsedInLastFrame * ship!!.mutableStats.timeMult.modifiedValue
+            level = ship!!.system.effectLevel /** ship!!.system.effectLevel*/
+        }
+
+        level = MathUtils.clamp(level, 0f, 1f)
+
+        drone.setCustomData("rat_gilgamesh_drone_increase", increase)
+        drone.setCustomData("rat_gilgamesh_drone_level", level)
+
+
+        return level
+    }
+
+    fun getDroneLevel(drone: ShipAPI) : Float {
+        var level = drone.customData.get("rat_gilgamesh_drone_level") as Float?
+
+        if (level == null) {
+            level = updateDroneEntryLevel(drone)
+        }
+
+        level = easeInOutSine(level)
+        return level
+    }
 
     override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
 
         var system = ship!!.system
         var effectLevel = system.effectLevel
         for (drone in drones) {
+
+            var droneLevel = getDroneLevel(drone)
 
             var jitterLoc = drone.customData.get("rat_gilgamesh_jitter") as ArrayList<Vector2f>?
             if (jitterLoc == null) {
@@ -180,11 +267,13 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
             var weapon = drone.allWeapons.first()
 
             /*weapon.sprite?.color = Color(237, 120, 74)*/
-            doJitter(weapon.location, weapon.sprite, effectLevel * 0.25f, jitterLoc, 5, 6f)
+            doJitter(weapon.location, weapon.sprite, droneLevel * 0.25f, jitterLoc, 5, 6f)
             weapon.sprite?.setNormalBlend()
 
 
-            drone.alphaMult = 0.25f * effectLevel
+            drone.alphaMult = 0.25f * droneLevel
+
+            var gateAlpha = effectLevel * 0.5f
 
             gate.angle = drone.facing - 90
             gate.alphaMult = effectLevel * 0.5f
@@ -313,14 +402,14 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         drone.getMutableStats().damageToCapital.applyMods(ship!!.mutableStats.damageToCapital)
 
         //Damage reduction
-        drone.getMutableStats().getEnergyWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.50f)
-        drone.getMutableStats().getMissileWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.50f)
-        drone.getMutableStats().getBallisticWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.50f)
+        drone.getMutableStats().getEnergyWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.333f)
+        drone.getMutableStats().getMissileWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.333f)
+        drone.getMutableStats().getBallisticWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.333f)
 
 
-        drone.getMutableStats().ballisticWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 200f)
-        drone.getMutableStats().energyWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 200f)
-        drone.getMutableStats().missileWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 200f)
+        drone.getMutableStats().ballisticWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 250f)
+        drone.getMutableStats().energyWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 250f)
+        drone.getMutableStats().missileWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 250f)
 
 
         drone.setCollisionClass(CollisionClass.NONE)
