@@ -12,7 +12,9 @@
   "shieldRadius": 114.5,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_exogrid"
+    "rat_exogrid",
+    "rat_exo_experimental",
+    "phase_anchor"
   ],
   "builtInWeapons": {
     "WS0001": "rat_gilgamesh_wing_left",

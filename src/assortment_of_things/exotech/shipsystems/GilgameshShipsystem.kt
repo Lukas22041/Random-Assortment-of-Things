@@ -16,8 +16,6 @@ import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
-import org.magiclib.kotlin.setAlpha
-import java.awt.Color
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -35,8 +33,8 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
     var gate = Global.getSettings().getAndLoadSprite("graphics/ships/exo/rat_gilgamesh_gate.png")
     var nebulaInterval = IntervalUtil(0.05f, 0.1f)
 
-    var timingsList = listOf<Float>(0.2f, 0.4f, 0.6f, 0.8f, 0.10f, 0.12f, 0.14f, 0.16f, 0.18f, 0.20f).shuffled()
-    var timingsIndex = 0
+    var delaysList = listOf<Float>(0.25f, 0.5f, 0.75f, 1f, 1.25f, 1.5f, 1.75f, 2f, 2.25f, 2.5f, 2.75f, 3f).shuffled()
+    var delaysIndex = 0
 
     override fun apply(stats: MutableShipStatsAPI?, id: String?, state: ShipSystemStatsScript.State?, effectLevel: Float) {
         super.apply(stats, id, state, effectLevel)
@@ -53,7 +51,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         if (activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
             activated = false
             target = null
-            timingsList = timingsList.shuffled()
+            delaysList = delaysList.shuffled()
 
             for (drone in ArrayList(drones)) {
                 Global.getCombatEngine().removeEntity(drone)
@@ -85,6 +83,8 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
                     slotId = "WS0004"
                 }
             }
+
+            drones.shuffle()
 
            /* var left = ship!!.allWeapons.find { it.slot.id == "WS0004" }
             var right = ship!!.allWeapons.find { it.slot.id == "WS0005" }
@@ -206,23 +206,25 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
     }
 
     fun updateDroneEntryLevel(drone: ShipAPI) : Float {
-        var increase = drone.customData.get("rat_gilgamesh_drone_increase") as Float?
+        var delay = drone.customData.get("rat_gilgamesh_drone_increase") as Float?
         var level = drone.customData.get("rat_gilgamesh_drone_level") as Float?
-        if (increase == null || level == null) {
+        if (delay == null || level == null) {
 
-            var timing = timingsList.get(timingsIndex)
+            var timing = delaysList.get(delaysIndex)
 
-            timingsIndex += 1
-            if (timingsIndex >= timingsList.size) {
-                timingsIndex = 0
+            delaysIndex += 1
+            if (delaysIndex >= delaysList.size) {
+                delaysIndex = 0
             }
 
-            increase = timing + MathUtils.getRandomNumberInRange(0f, 0.1f)
+            delay = timing + MathUtils.getRandomNumberInRange(0f, 0.1f)
             level = 0f
         }
 
-        if (ship!!.system.state == ShipSystemAPI.SystemState.IN || ship!!.system.state == ShipSystemAPI.SystemState.ACTIVE) {
-            level += increase * ship!!.system.effectLevel * Global.getCombatEngine().elapsedInLastFrame * ship!!.mutableStats.timeMult.modifiedValue
+        delay -= 1f * Global.getCombatEngine().elapsedInLastFrame
+
+        if (delay <= 0 && (ship!!.system.state == ShipSystemAPI.SystemState.IN || ship!!.system.state == ShipSystemAPI.SystemState.ACTIVE)) {
+            level += 0.4f /** ship!!.system.effectLevel*/ * Global.getCombatEngine().elapsedInLastFrame * ship!!.mutableStats.timeMult.modifiedValue
         }
 
         if (ship!!.system.state == ShipSystemAPI.SystemState.OUT) {
@@ -232,7 +234,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
         level = MathUtils.clamp(level, 0f, 1f)
 
-        drone.setCustomData("rat_gilgamesh_drone_increase", increase)
+        drone.setCustomData("rat_gilgamesh_drone_increase", delay)
         drone.setCustomData("rat_gilgamesh_drone_level", level)
 
 
@@ -402,9 +404,9 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         drone.getMutableStats().damageToCapital.applyMods(ship!!.mutableStats.damageToCapital)
 
         //Damage reduction
-        drone.getMutableStats().getEnergyWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.333f)
-        drone.getMutableStats().getMissileWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.333f)
-        drone.getMutableStats().getBallisticWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.333f)
+        drone.getMutableStats().getEnergyWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.4f)
+        drone.getMutableStats().getMissileWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.4f)
+        drone.getMutableStats().getBallisticWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.4f)
 
 
         drone.getMutableStats().ballisticWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 250f)
