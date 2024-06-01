@@ -69,7 +69,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
         engineLeft2.flameTexSpanMult = 0.5f
         engineGlow!!.addEngine(engineLeft2)
 
-        val engineRight1 = CampaignEngineGlowIndividualEngine(90f, 55f, 15f, 40f, Vector2f(-38f, -17f), engineGlow)
+        val engineRight1 = CampaignEngineGlowIndividualEngine(90f, 55f, 15f, 40f, Vector2f(-40f, -17f), engineGlow)
         engineRight1.flameTexSpanMult = 0.5f
         engineGlow!!.addEngine(engineRight1)
 
