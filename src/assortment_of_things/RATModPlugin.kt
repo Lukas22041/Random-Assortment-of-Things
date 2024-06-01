@@ -312,15 +312,15 @@ class RATModPlugin : BaseModPlugin() {
         }
     }
 
-    fun generateBrokenExoship() {
+   /* fun generateBrokenExoship() {
         var location = findBrokenLocation()
         var system = location.orbit.focus.starSystem
 
         var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "Exoship Remains", "rat_exoship_broken", Factions.NEUTRAL)
         exoshipEntity.orbit = location.orbit
-    }
+    }*/
 
-    fun findBrokenLocation() : EntityLocation {
+   /* fun findBrokenLocation() : EntityLocation {
         var systems = Global.getSector().starSystems.filter { it.planets.filter { !it.isStar }.isNotEmpty() && it.hasBlackHole() && (it.hasTag(Tags.THEME_RUINS) || it.hasTag(Tags.THEME_MISC)) }
         if (systems.isEmpty()) {
             systems = Global.getSector().starSystems.filter { it.planets.filter { !it.isStar }.isNotEmpty() && (it.hasTag(Tags.THEME_RUINS) || it.hasTag(Tags.THEME_MISC)) }
@@ -338,7 +338,7 @@ class RATModPlugin : BaseModPlugin() {
         }
 
         return location
-    }
+    }*/
 
     fun initFrontiers() {
 

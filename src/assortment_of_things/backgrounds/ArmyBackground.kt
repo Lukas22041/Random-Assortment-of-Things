@@ -3,7 +3,6 @@ package assortment_of_things.backgrounds
 import assortment_of_things.backgrounds.bounty.BackgroundBountyManager
 import assortment_of_things.backgrounds.bounty.BountyFleetIntel
 import assortment_of_things.exotech.ExoUtils
-import assortment_of_things.exotech.interactions.exoship.ExoShipBuyInteraction
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.EveryFrameScript

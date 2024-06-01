@@ -1,6 +1,5 @@
 package assortment_of_things.exotech.entities
 
-import assortment_of_things.exotech.ExoShipData
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
@@ -9,23 +8,17 @@ import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
+import com.fs.starfarer.api.impl.campaign.entities.GateHaulerEntityPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.IntervalUtil
+import com.fs.starfarer.api.util.CampaignEngineGlowIndividualEngine
+import com.fs.starfarer.api.util.CampaignEngineGlowUtil
+import com.fs.starfarer.api.util.CampaignEntityMovementUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.ext.plus
-import org.lazywizard.lazylib.ext.rotate
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 class ExoshipEntity : BaseCustomEntityPlugin() {
-
-    class ExoshipThrusterParticle(var duration: Float, var color: Color, var size: Float, var location: Vector2f, var velocity: Vector2f) {
-        var maxDuration = duration
-    }
-
-    @Transient
-    var particleSprite: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/fx/explosion3.png")
 
     @Transient
     var glow: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_ext_lights.png")
@@ -35,12 +28,64 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     @Transient
     var jitter: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_jitter.png")
 
-    var particles = ArrayList<ExoshipThrusterParticle>()
-    var particleInterval = IntervalUtil(0.015f, 0.015f)
-
     var lastJitterLocations = ArrayList<Vector2f>()
 
-    var thrusterLevel = 0f
+    // implements EngineGlowControls {
+    var MAX_SPEED = 1000f
+    var ACCELERATION = 15f
+    var TURN_ACCELERATION = 2.5f
+    var MAX_TURNRATE = 18f
+
+    lateinit var movement: CampaignEntityMovementUtil
+    lateinit var engineGlow: CampaignEngineGlowUtil
+    var longBurn = false
+
+    var isActivated = true
+    var isActivating = false
+    var isInTransit = false
+    var getRemainingActivationDays = 0f
+
+    var delay = 8f
+    var active = false
+
+    override fun init(entity: SectorEntityToken?, pluginParams: Any?) {
+        super.init(entity, pluginParams)
+
+        val fringe = ExoUtils.color1
+        val flame = ExoUtils.color2
+        val core = Color(255, 255, 255, 255)
+
+        engineGlow = CampaignEngineGlowUtil(entity, fringe, core, flame, 0.25f)
+
+        val mainEngine = CampaignEngineGlowIndividualEngine(90f, 75f, 25f, 100f, Vector2f(-52f, 0f), engineGlow)
+        mainEngine.flameTexSpanMult = 0.5f
+        engineGlow!!.addEngine(mainEngine)
+
+        val engineLeft1 = CampaignEngineGlowIndividualEngine(90f, 55f, 15f, 40f, Vector2f(-40f, 17f), engineGlow)
+        engineLeft1.flameTexSpanMult = 0.5f
+        engineGlow!!.addEngine(engineLeft1)
+
+        val engineLeft2 = CampaignEngineGlowIndividualEngine(90f, 50f, 15f, 40f, Vector2f(-38f, 21f), engineGlow)
+        engineLeft2.flameTexSpanMult = 0.5f
+        engineGlow!!.addEngine(engineLeft2)
+
+        val engineRight1 = CampaignEngineGlowIndividualEngine(90f, 55f, 15f, 40f, Vector2f(-38f, -17f), engineGlow)
+        engineRight1.flameTexSpanMult = 0.5f
+        engineGlow!!.addEngine(engineRight1)
+
+        val engineRight2 = CampaignEngineGlowIndividualEngine(90f, 50f, 15f, 40f, Vector2f(-38f, -21f), engineGlow)
+        engineRight2.flameTexSpanMult = 0.5f
+        engineGlow!!.addEngine(engineRight2)
+
+        movement = CampaignEntityMovementUtil(entity, TURN_ACCELERATION, MAX_TURNRATE, ACCELERATION, MAX_SPEED)
+        movement.engineGlow = engineGlow
+
+        /*entity!!.orbit = null
+        entity!!.velocity.set(Vector2f())
+        movement.moveToLocation(Vector2f(0f, 0f))*/
+
+
+    }
 
     override fun getRenderRange(): Float {
         return 100000000f
@@ -48,83 +93,71 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
     override fun advance(amount: Float) {
 
-        for (particle in ArrayList(particles)) {
-            particle.duration -= 1 * amount
+        delay -= amount
+        if (delay <= 0 && !active) {
+            active = true
 
-            if (particle.duration < 0) {
-                particles.remove(particle)
-                continue
+            movement.moveInDirection(45f)
+            movement.setFaceInOppositeDirection(false)
+            movement.setTurnThenAccelerate(true)
+            longBurn = true
+
+            isInTransit = true
+        }
+
+        //Handle Movement
+        if (entity.isInCurrentLocation || isInTransit) {
+            engineGlow.advance(amount)
+            var soundVolume = engineGlow.lengthMult.curr * 0.5f
+            if (soundVolume > 0.5f) soundVolume = 0.5f
+
+            if (longBurn && movement.isDesiredFacingSet) {
+                val angleDiff = Misc.getAngleDiff(movement.desiredFacing, entity.facing)
+                if (angleDiff < 2f) {
+                    val dir = Misc.getUnitVectorAtDegreeAngle(movement.desiredFacing)
+                    var speedInDesiredDir = Vector2f.dot(dir, entity.velocity)
+                    if (movement.isFaceInOppositeDirection) {
+                        speedInDesiredDir *= -1f
+                    }
+                    val speed = entity.velocity.length()
+                    if (speedInDesiredDir > 10f && speedInDesiredDir > speed * 0.7f) {
+                        val speedForMaxEngineLength = 100f
+                        var f = speedInDesiredDir / speedForMaxEngineLength
+                        if (f < 0f) f = 0f
+                        if (f > 1f) f = 1f
+                        soundVolume = Math.min(soundVolume + f * 0.5f, 1f)
+
+                        //System.out.println("longBurn factor: " + f);
+                        val flickerZone = 0.5f
+                        if (f < flickerZone) {
+                            engineGlow.flickerRateMult.shift(this, 5f, 0f, 0.1f, 1f)
+                            engineGlow.flickerMult.shift(this, 0.33f - 0.33f * f / flickerZone, 0f, 0.1f, 1f)
+                        }
+                        engineGlow.glowMult.shift(this, 2f, 1f, 1f, f)
+                        engineGlow.lengthMult.shift(this, 5f, 1f, 1f, f)
+                        engineGlow.widthMult.shift(this, 3f, 1f, 1f, f)
+                    }
+                }
             }
 
-
-            var x = particle.velocity.x * amount
-            var y = particle.velocity.y * amount
-            var velocity = Vector2f(x, y)
-            particle.location = particle.location.plus(velocity)
-
-        }
-
-        var data = ExoUtils.getExoshipData(entity)
-        var state = data.state
-
-      /*  if (state == ExoShipData.State.Idle) {
-           thrusterLevel = 0f
-        }
-
-        if (state == ExoShipData.State.Travelling) {
-            thrusterLevel += 0.5f * amount
-        }
-
-        if (state == ExoShipData.State.Arriving) {
-            thrusterLevel -= 0.3f * amount
-        }*/
-
-        thrusterLevel = data.moveLevel + 0.2f
-        thrusterLevel = MathUtils.clamp(thrusterLevel, 0f, 1f)
-
-
-        if (state != ExoShipData.State.Idle && Global.getSector().playerFleet.containingLocation == entity.containingLocation) {
-            particleInterval.advance(amount)
-            if (particleInterval.intervalElapsed()) {
-                var spawnLocation = MathUtils.getPointOnCircumference(Vector2f(), 50f, entity.facing + 180)
-
-                var locLeft = spawnLocation.plus(Vector2f(10f, 20f).rotate(entity.facing))
-                var locRight = spawnLocation.plus(Vector2f(10f, -20f).rotate(entity.facing))
-
-                //Main Engine
-                addThrusterParticles(spawnLocation, 0.3f, 20, 2f, 6f, 10f)
-
-                addThrusterParticles(locLeft, 0.2f, 15, 2f, 3f, 8f)
-                addThrusterParticles(locRight, 0.2f, 15, 2f, 3f, 8f)
-
+            if (soundVolume > 0) {
+                if (entity.isInCurrentLocation && entity.isVisibleToPlayerFleet) {
+                    Global.getSoundPlayer()
+                        .playLoop("gate_hauler_engine_loop", entity, 1f, soundVolume, entity.location, entity.velocity)
+                }
             }
         }
 
-    }
+        movement.advance(amount)
 
-    fun addThrusterParticles(spawnLocation: Vector2f, duration: Float, amount: Int, width: Float, sizeMin: Float, sizeMax: Float) {
-        var velocity = Vector2f(0f, 0f)
-
-        velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), 200f * thrusterLevel, entity.facing + 180))
-
-        for (i in 0..amount) {
-
-
-            var randomX = MathUtils.getRandomNumberInRange(-width, width)
-            var randomY = MathUtils.getRandomNumberInRange(-width, width)
-            particles.add(ExoshipThrusterParticle(duration * thrusterLevel, Color(255, 155, 0), MathUtils.getRandomNumberInRange(sizeMin * thrusterLevel, sizeMax * thrusterLevel), Vector2f(spawnLocation.x + randomX, spawnLocation.y + randomY), velocity))
-        }
     }
 
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
-        if (particleSprite == null) {
-            particleSprite = Global.getSettings().getAndLoadSprite("graphics/fx/explosion3.png")
+        if (glow == null) {
             glow = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_ext_lights.png")
             lights = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_lights.png")
             jitter = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_jitter.png")
         }
-
-        particleSprite!!.setAdditiveBlend()
 
         glow!!.alphaMult = 1f
         glow!!.angle = entity.facing - 90
@@ -136,25 +169,19 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
         lights!!.setSize(95f, 140f)
         lights!!.renderAtCenter(entity.location.x, entity.location.y)
 
-        for (particle in particles) {
-            var level = (particle.duration - 0f) / (particle.maxDuration - 0f)
-            particleSprite!!.alphaMult = 0 + (0.1f * level )
-            var location = particle.location.plus(entity.location)
-
-            particleSprite!!.color = particle.color
-
-
-            particleSprite!!.setSize(particle.size, particle.size)
-
-            particleSprite!!.renderAtCenter(location.x, location.y)
-        }
-
         var data = ExoUtils.getExoshipData(entity)
 
-        if (data.state != ExoShipData.State.Idle && data.moveLevel >= 0.7f) {
+        /*if (data.state != ExoShipData.State.Idle && data.moveLevel >= 0.7f) {
             var level = (data.moveLevel -0.7f) * 3
             doJitter(jitter!!, level * level, lastJitterLocations, 15, 40f * level)
-        }
+        }*/
+
+        var alphaMult = viewport!!.alphaMult
+        alphaMult *= entity.sensorFaderBrightness
+        alphaMult *= entity.sensorContactFaderBrightness
+        if (alphaMult <= 0f) return
+
+        engineGlow.render(alphaMult)
     }
 
     fun doJitter(sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>, jitterCount: Int, jitterMaxRange: Float) {
