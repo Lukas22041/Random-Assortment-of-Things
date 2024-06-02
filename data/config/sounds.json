@@ -204,4 +204,14 @@
             {"file":"sounds/sfx_wpn_missiles/harpoon_fire_01.ogg","pitch":1.1,"volume":0.5},
     ],
 
+
+	"exoship_warp_chargeup":
+    [
+            {"file":"sounds/rat/campaign/exoship_warp_chargeup.ogg","pitch":1,"volume":2},
+    ],
+
+	"exoship_warp":
+    [
+            {"file":"sounds/rat/campaign/exoship_warp.ogg","pitch":1,"volume":3},
+    ],
 }

@@ -21,12 +21,12 @@ class RATCampaignRenderer : LunaCampaignRenderingPlugin {
         }
 
         fun getAfterimageRenderer() = getInstance().afterimageRenderer
-        fun getGlowsRenderer() = getInstance().lensflareRenderer
+        fun getFlashRenderer() = getInstance().flashRenderer
 
     }
 
     private var afterimageRenderer = RATCampaignAfterimageRenderer()
-    private var lensflareRenderer = RATCampaignGlowRenderer()
+    private var flashRenderer = RATCampaignFlashRenderer()
 
     override fun isExpired(): Boolean {
         return false
@@ -34,7 +34,7 @@ class RATCampaignRenderer : LunaCampaignRenderingPlugin {
 
     override fun advance(amount: Float) {
         getAfterimageRenderer().advanceAfterimages(amount)
-        getGlowsRenderer().advance(amount)
+        getFlashRenderer().advance(amount)
     }
 
     override fun getActiveLayers(): EnumSet<CampaignEngineLayers> {
@@ -48,7 +48,7 @@ class RATCampaignRenderer : LunaCampaignRenderingPlugin {
         getAfterimageRenderer().renderAfterimages(layer, viewport)
 
         if (layer == CampaignEngineLayers.ABOVE) {
-            getGlowsRenderer().render(layer, viewport)
+            getFlashRenderer().render(layer, viewport)
         }
     }
 

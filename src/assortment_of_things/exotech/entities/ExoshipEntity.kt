@@ -5,6 +5,7 @@ import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.SoundAPI
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
@@ -53,6 +54,8 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     var afterimageColor2 = Color(130,4,189, 0)
     var afterimageInterval = IntervalUtil(0.05f, 0.05f)
 
+    var chargeupSound: SoundAPI? = null
+    var startedPlaying = false
 
     override fun init(entity: SectorEntityToken?, pluginParams: Any?) {
         super.init(entity, pluginParams)
@@ -184,19 +187,51 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         }
 
+      /*  var viewport = Global.getSector().viewport
+        viewport.isExternalControl = true
+        var llx = viewport.llx
+        var lly = viewport.lly
+
+        var width = viewport.visibleWidth
+        var height = viewport.visibleHeight
+        viewport.set(entity.location.x - width / 2, entity.location.y - height / 2, width, height)
+
+        entity.starSystem.backgroundParticleColorShifter.shift(this, Color(0, 0, 0, 0), 5f, 5f, 1f)*/
+
+
+
         movement.advance(amount)
 
+        if (chargeupSound != null && chargeupSound!!.isPlaying) {
+            startedPlaying = true
+            chargeupSound!!.setLocation(entity.location.x, entity.location.y)
+        }
 
-        if (movement.movementUtil.velocity.length() >= 300f) {
-            RATCampaignRenderer.getGlowsRenderer().spawnGlow(Vector2f(entity.location), entity.containingLocation, ExoUtils.color1, 1000f, 18000f, 0.15f, 1f, 4f)
+        if (chargeupSound != null && ((!chargeupSound!!.isPlaying && startedPlaying) || entity.containingLocation != Global.getSector().playerFleet.containingLocation || movement.movementUtil.velocity.length() >= 400)) {
+
+            RATCampaignRenderer.getFlashRenderer().spawnFlash(Vector2f(entity.location), entity.containingLocation, ExoUtils.color1, Color(130,4,189, 255), 1000f, 18000f, 0.15f, 1f, 4f)
+
+            chargeupSound!!.stop()
+            chargeupSound = null
+            startedPlaying = false
+
 
             if (Global.getSector().playerFleet.containingLocation == entity.containingLocation) {
-                Global.getSoundPlayer().playSound("ui_interdict_off", 0.75f, 0.5f, entity.location, Vector2f())
-                Global.getSoundPlayer().playSound("ui_interdict_off", 1.25f, 0.5f, entity.location, Vector2f())
+                Global.getSoundPlayer().playSound("exoship_warp", 1f, 1f, entity.location, entity.velocity)
             }
 
             entity.containingLocation.removeEntity(entity)
         }
+
+        else if (movement.movementUtil.velocity.length() >= 150f && chargeupSound == null) {
+
+            if (Global.getSector().playerFleet.containingLocation == entity.containingLocation) {
+                chargeupSound = Global.getSoundPlayer().playSound("exoship_warp_chargeup", 1f, 1f, entity.location, Vector2f())
+            }
+
+        }
+
+
     }
 
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {

@@ -11,28 +11,28 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
-class RATCampaignGlowRenderer {
+class RATCampaignFlashRenderer {
 
 
-    data class CampaignGlow(var location: Vector2f, var containingLocation: LocationAPI, val color: Color, var minSize: Float, var additionalSize: Float,
-                            var inDuration: Float, var activeDuration: Float, var outDuration: Float,
-                            var maxInDuration: Float = inDuration, var maxActiveDuration: Float = activeDuration, var maxOutDuration: Float = outDuration,
-                            var level: Float = 0f, var isOut: Boolean = false, var angle1: Float = MathUtils.getRandomNumberInRange(0f, 360f), var angle2: Float = MathUtils.getRandomNumberInRange(0f, 360f))
+    data class CampaignFlash(var location: Vector2f, var containingLocation: LocationAPI, val color: Color, var secondaryColor: Color, var minSize: Float, var additionalSize: Float,
+                             var inDuration: Float, var activeDuration: Float, var outDuration: Float,
+                             var maxInDuration: Float = inDuration, var maxActiveDuration: Float = activeDuration, var maxOutDuration: Float = outDuration,
+                             var level: Float = 0f, var isOut: Boolean = false, var angle1: Float = MathUtils.getRandomNumberInRange(0f, 360f), var angle2: Float = MathUtils.getRandomNumberInRange(0f, 360f))
 
-    var glows = ArrayList<CampaignGlow>()
+    var flashes = ArrayList<CampaignFlash>()
     @Transient var sprite1: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/fx/explosion5.png")
     @Transient var sprite2: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/fx/explosion5.png")
     @Transient var sprite3: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/fx/explosion5.png")
 
-    fun spawnGlow(location: Vector2f, containingLocation: LocationAPI, color: Color, minSize: Float, additionalSize: Float, inDuration: Float, activeDuration: Float, outDuration: Float) {
+    fun spawnFlash(location: Vector2f, containingLocation: LocationAPI, color: Color, secondaryColor: Color, minSize: Float, additionalSize: Float, inDuration: Float, activeDuration: Float, outDuration: Float) {
 
-        var lensflare = CampaignGlow(location, containingLocation, color, minSize, additionalSize, inDuration, activeDuration, outDuration)
-        glows.add(lensflare)
+        var lensflare = CampaignFlash(location, containingLocation, color, secondaryColor, minSize, additionalSize, inDuration, activeDuration, outDuration)
+        flashes.add(lensflare)
     }
 
     fun advance(amount: Float) {
         if (Global.getSector().isPaused) return
-        for (flare in ArrayList(glows)) {
+        for (flare in ArrayList(flashes)) {
             if (flare.inDuration >= 0f) {
                 flare.inDuration -= 1 * amount
                 flare.level = 1 - flare.inDuration.levelBetween(0f, flare.maxInDuration)
@@ -47,7 +47,7 @@ class RATCampaignGlowRenderer {
                 flare.isOut = true
             }
             else {
-                glows.remove(flare)
+                flashes.remove(flare)
             }
 
             flare.angle1 += 3f * amount
@@ -71,7 +71,7 @@ class RATCampaignGlowRenderer {
             sprite3 = Global.getSettings().getAndLoadSprite("graphics/fx/explosion5.png")
         }
 
-        for (flare in glows) {
+        for (flare in flashes) {
 
             if (!flare.containingLocation.isCurrentLocation) return
 
@@ -84,14 +84,14 @@ class RATCampaignGlowRenderer {
             var alpha = 1f * flare.level
 
 
-            sprite1!!.color = flare.color
+            sprite1!!.color = flare.secondaryColor
             sprite1!!.setAdditiveBlend()
             sprite1!!.alphaMult = alpha  * 0.1f
             sprite1!!.setSize(size * 4, size * 4)
             sprite1!!.angle = 60f
             sprite1!!.renderAtCenter(flare.location.x, flare.location.y)
 
-            sprite1!!.color = flare.color
+            sprite1!!.color = flare.secondaryColor
             sprite1!!.setAdditiveBlend()
             sprite1!!.alphaMult = alpha  * 0.2f
             sprite1!!.setSize(size * 2, size * 2)
