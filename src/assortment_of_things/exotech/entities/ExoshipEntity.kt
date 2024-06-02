@@ -54,7 +54,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     var afterimageColor2 = Color(130,4,189, 0)
     var afterimageInterval = IntervalUtil(0.05f, 0.05f)
 
-    var chargeupSound: SoundAPI? = null
+    @Transient var chargeupSound: SoundAPI? = null
     var startedPlaying = false
 
     override fun init(entity: SectorEntityToken?, pluginParams: Any?) {

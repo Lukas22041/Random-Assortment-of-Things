@@ -23,7 +23,9 @@ class RATCampaignAfterimageRenderer {
         val layer: CampaignEngineLayers,
         val containinglocation: LocationAPI,
         val id: Long,
-        var sprite: SpriteAPI,
+        var scale: Float,
+        @Transient var sprite: SpriteAPI?,
+        var entity: SectorEntityToken,
         val location: Vector2f,
         val facing: Float,
         val colorIn: Color,
@@ -34,6 +36,11 @@ class RATCampaignAfterimageRenderer {
     ) {
         var lifetime = 0f
         var actualLoc = location
+
+        /*fun readResolve() {
+            sprite = Global.getSettings().getSprite(entity.customEntitySpec.spriteName)
+            sprite!!.setSize(entity.customEntitySpec.spriteWidth * scale, entity.customEntitySpec.spriteHeight * scale)
+        }*/
     }
 
 
@@ -53,7 +60,9 @@ class RATCampaignAfterimageRenderer {
         jitter = jitter,
         additive = additive,
         containinglocation = containingLocation,
-        layer = layer).also { afterimage ->
+        layer = layer,
+        entity = entity,
+        scale = scale).also { afterimage ->
 
         //val sprite = ship.spriteAPI
         val sprite = Global.getSettings().getSprite(entity.customEntitySpec.spriteName)
@@ -110,10 +119,17 @@ class RATCampaignAfterimageRenderer {
     private fun renderAfterimage(afterimage: CampaignAfterimage, view: ViewportAPI) {
         if (!view.isNearViewport(afterimage.location, view.visibleWidth)) return
 
-        // Sprite offset fuckery - Don't you love trigonometry?
+
+        if (afterimage.sprite == null) {
+            afterimage.sprite = Global.getSettings().getSprite(afterimage.entity.customEntitySpec.spriteName)
+            afterimage.sprite!!.setSize(afterimage.entity.customEntitySpec.spriteWidth * afterimage.scale, afterimage.entity.customEntitySpec.spriteHeight * afterimage.scale)
+        }
+
         val sprite = afterimage.sprite
 
-        sprite.angle = afterimage.facing - 90f
+
+
+        sprite!!.angle = afterimage.facing - 90f
         sprite.color = afterimage.colorIn.interpolateColor(afterimage.colorOut, afterimage.lifetime / afterimage.duration)
         sprite.alphaMult = 1 - afterimage.lifetime / afterimage.duration
         sprite.setAdditiveBlend()
