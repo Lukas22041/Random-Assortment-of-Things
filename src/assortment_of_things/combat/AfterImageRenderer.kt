@@ -68,8 +68,6 @@ class AfterImageRenderer : BaseEveryFrameCombatPlugin() {
         sprite.renderAtCenter(afterimage.actualLoc.x, afterimage.actualLoc.y)
     }
 
-    data class ActiveAfterImage(var duration: Float, var interval: IntervalUtil, var data: Afterimage)
-
     data class Afterimage(
         val id: Long,
         val sprite: SpriteAPI,

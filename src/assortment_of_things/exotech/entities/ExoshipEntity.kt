@@ -1,21 +1,20 @@
 package assortment_of_things.exotech.entities
 
+import assortment_of_things.campaign.scripts.render.RATCampaignRenderer
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.misc.getAndLoadSprite
+import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
-import com.fs.starfarer.api.impl.campaign.entities.GateHaulerEntityPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.CampaignEngineGlowIndividualEngine
-import com.fs.starfarer.api.util.CampaignEngineGlowUtil
-import com.fs.starfarer.api.util.CampaignEntityMovementUtil
-import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.util.*
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
 class ExoshipEntity : BaseCustomEntityPlugin() {
@@ -27,12 +26,14 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
     @Transient
     var jitter: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_jitter.png")
+    var jitterBelow: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_jitter.png")
 
     var lastJitterLocations = ArrayList<Vector2f>()
+    var lastJitterLocationsBelow = ArrayList<Vector2f>()
 
     // implements EngineGlowControls {
     var MAX_SPEED = 1000f
-    var ACCELERATION = 15f
+    var ACCELERATION = 10f
     var TURN_ACCELERATION = 2.5f
     var MAX_TURNRATE = 18f
 
@@ -47,6 +48,11 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
     var delay = 8f
     var active = false
+
+    var afterimageColor1 = Color(248,172,44, 75)
+    var afterimageColor2 = Color(130,4,189, 0)
+    var afterimageInterval = IntervalUtil(0.05f, 0.05f)
+
 
     override fun init(entity: SectorEntityToken?, pluginParams: Any?) {
         super.init(entity, pluginParams)
@@ -80,6 +86,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
         movement = CampaignEntityMovementUtil(entity, TURN_ACCELERATION, MAX_TURNRATE, ACCELERATION, MAX_SPEED)
         movement.engineGlow = engineGlow
 
+
         /*entity!!.orbit = null
         entity!!.velocity.set(Vector2f())
         movement.moveToLocation(Vector2f(0f, 0f))*/
@@ -104,6 +111,10 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
             isInTransit = true
         }
+
+        /*var logger = Global.getLogger(this::class.java)
+        logger.level = Level.ALL
+        logger.debug("${movement.movementUtil.velocity.length()}")*/
 
         //Handle Movement
         if (entity.isInCurrentLocation || isInTransit) {
@@ -148,8 +159,44 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             }
         }
 
+        var velLevel = movement.movementUtil.velocity.length().levelBetween(60f, 200f)
+        velLevel = velLevel.coerceIn(0f, 1f)
+        if (velLevel > 0f) {
+
+            afterimageInterval.advance(amount)
+            if (afterimageInterval.intervalElapsed() && !Global.getSector().isPaused) {
+
+                var level = (velLevel - 0.7f) * 3.5f
+
+
+
+                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, entity.containingLocation, entity,
+                    afterimageColor1.setAlpha((75 * velLevel).toInt()), afterimageColor2, 0.5f + 1.75f * level, 0f)
+
+                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, entity.containingLocation, entity,
+                    afterimageColor1.setAlpha((25 * velLevel).toInt()), afterimageColor2, 0.5f + 1f * level, 1f * level, scale = 2f)
+
+                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.ABOVE_STATIONS, entity.containingLocation, entity,
+                    afterimageColor1.setAlpha((50 * velLevel).toInt()), afterimageColor2, 0.5f + 0.75f * level, 2f * level, scale = 1.5f)
+            }
+
+
+
+        }
+
         movement.advance(amount)
 
+
+        if (movement.movementUtil.velocity.length() >= 300f) {
+            RATCampaignRenderer.getGlowsRenderer().spawnGlow(Vector2f(entity.location), entity.containingLocation, ExoUtils.color1, 1000f, 18000f, 0.15f, 1f, 4f)
+
+            if (Global.getSector().playerFleet.containingLocation == entity.containingLocation) {
+                Global.getSoundPlayer().playSound("ui_interdict_off", 0.75f, 0.5f, entity.location, Vector2f())
+                Global.getSoundPlayer().playSound("ui_interdict_off", 1.25f, 0.5f, entity.location, Vector2f())
+            }
+
+            entity.containingLocation.removeEntity(entity)
+        }
     }
 
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
@@ -157,31 +204,58 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             glow = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_ext_lights.png")
             lights = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_lights.png")
             jitter = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_jitter.png")
+            jitterBelow = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_jitter.png")
         }
 
-        glow!!.alphaMult = 1f
-        glow!!.angle = entity.facing - 90
-        glow!!.setSize(95f, 140f)
-        glow!!.renderAtCenter(entity.location.x, entity.location.y)
+        var velLevel = movement.movementUtil.velocity.length().levelBetween(60f, 200f)
+        velLevel = velLevel.coerceIn(0f, 1f)
 
-        lights!!.alphaMult = 1f
-        lights!!.angle = entity.facing - 90
-        lights!!.setSize(95f, 140f)
-        lights!!.renderAtCenter(entity.location.x, entity.location.y)
+        if (layer == CampaignEngineLayers.STATIONS) {
+            glow!!.alphaMult = 1f
+            glow!!.angle = entity.facing - 90
+            glow!!.setSize(95f, 140f)
+            glow!!.renderAtCenter(entity.location.x, entity.location.y)
 
-        var data = ExoUtils.getExoshipData(entity)
+            lights!!.alphaMult = 1f
+            lights!!.angle = entity.facing - 90
+            lights!!.setSize(95f, 140f)
+            lights!!.renderAtCenter(entity.location.x, entity.location.y)
 
-        /*if (data.state != ExoShipData.State.Idle && data.moveLevel >= 0.7f) {
-            var level = (data.moveLevel -0.7f) * 3
-            doJitter(jitter!!, level * level, lastJitterLocations, 15, 40f * level)
-        }*/
+            var data = ExoUtils.getExoshipData(entity)
 
-        var alphaMult = viewport!!.alphaMult
-        alphaMult *= entity.sensorFaderBrightness
-        alphaMult *= entity.sensorContactFaderBrightness
-        if (alphaMult <= 0f) return
 
-        engineGlow.render(alphaMult)
+           /* jitter!!.alphaMult = velLevel * 0.5f
+            jitter!!.angle = entity.facing - 90
+            jitter!!.setSize(95f, 140f)
+            jitter!!.renderAtCenter(entity.location.x, entity.location.y)*/
+
+            if (velLevel >= 0.7) {
+                var level = (velLevel - 0.7f) * 1.5f
+
+                jitter!!.setSize(104f, 154f)
+
+
+                doJitter(jitter!!, level * level, lastJitterLocations, 5, 2f * level)
+            }
+
+            var alphaMult = viewport!!.alphaMult
+            alphaMult *= entity.sensorFaderBrightness
+            alphaMult *= entity.sensorContactFaderBrightness
+            if (alphaMult <= 0f) return
+
+            engineGlow.render(alphaMult)
+        }
+
+        if (layer == CampaignEngineLayers.BELOW_STATIONS) {
+
+            if (velLevel >= 0.7) {
+
+                jitterBelow!!.setSize(104f, 154f)
+
+                var level = (velLevel - 0.7f) * 2
+                doJitter(jitterBelow!!, level * level, lastJitterLocationsBelow, 10, 4f * level)
+            }
+        }
     }
 
     fun doJitter(sprite: SpriteAPI, level: Float, lastLocations: ArrayList<Vector2f>, jitterCount: Int, jitterMaxRange: Float) {
@@ -216,7 +290,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             sprite.setAdditiveBlend()
             sprite.alphaMult = level * jitterAlpha
             sprite.angle = entity.facing - 90
-            sprite!!.setSize(95f, 140f)
+            //sprite!!.setSize(95f, 140f)
             sprite.renderAtCenter(entity.location.x + jitterLoc.x, entity.location.y + jitterLoc.y)
         }
     }

@@ -679,7 +679,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         var stats = commander.stats
         var variant = member.variant
 
-        var modsOnShip = variant.nonBuiltInHullmods.map { Global.getSettings().getHullModSpec(it) }.filter { it.id !=  HullMods.SAFETYOVERRIDES }
+        var modsOnShip = variant.nonBuiltInHullmods.map { Global.getSettings().getHullModSpec(it) }.filter { it.id != HullMods.SAFETYOVERRIDES && it.id != HullMods.PHASE_ANCHOR }
         var potentialSmods = WeightedRandomPicker<HullModSpecAPI>()
         for (mod in modsOnShip) {
             potentialSmods.add(mod, mod.getCostFor(variant.hullSize).toFloat())

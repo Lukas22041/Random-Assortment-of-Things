@@ -25,10 +25,6 @@ import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.JumpPointAPI
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
-import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.EntityLocation
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -37,11 +33,12 @@ import lunalib.lunaSettings.LunaSettings
 import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
-import org.lazywizard.lazylib.MathUtils
 import assortment_of_things.campaign.scripts.AICoreReplacerScript
+import assortment_of_things.campaign.scripts.render.RATCampaignRenderer
 import assortment_of_things.exotech.ExotechGenerator
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
 import com.thoughtworks.xstream.XStream
+import lunalib.lunaUtil.campaign.LunaCampaignRenderer
 import java.util.*
 
 
@@ -116,9 +113,11 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
-
         //TestFactor(1)
 
+        /*if (!LunaCampaignRenderer.hasRendererOfClass(RATCampaignRenderer::class.java)) {
+            LunaCampaignRenderer.addRenderer(RATCampaignRenderer())
+        }*/
 
         Global.getSector().addTransientScript(ChangeMainMenuColorScript())
         Global.getSector().addTransientScript(AICoreReplacerScript())

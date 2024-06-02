@@ -17,8 +17,15 @@ import com.fs.starfarer.api.ui.UIComponentAPI
 import com.fs.starfarer.api.util.Misc
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
+import org.lazywizard.lazylib.MathUtils
 
 var previouslyLoadedSprite = HashMap<String, Boolean>()
+
+fun Float.levelBetween(min: Float, max: Float) : Float {
+    var level = (this - min) / (max - min)
+    level = MathUtils.clamp(level, 0f, 1f)
+    return level
+}
 
 fun Any.logger() : Logger {
     return Global.getLogger(this::class.java).apply { level = Level.ALL }
