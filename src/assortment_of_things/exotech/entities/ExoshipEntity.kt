@@ -48,8 +48,8 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     var isInTransit = false
     var getRemainingActivationDays = 0f
 
-    var delay = 8f
-    var active = false
+    /*var delay = 8f
+    var active = false*/
 
     var afterimageColor1 = Color(248,172,44, 75)
     var afterimageColor2 = Color(130,4,189, 0)
@@ -105,7 +105,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
     override fun advance(amount: Float) {
 
-        delay -= amount
+       /* delay -= amount
         if (delay <= 0 && !active) {
             active = true
 
@@ -115,7 +115,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             longBurn = true
 
             isInTransit = true
-        }
+        }*/
 
         warpModule.advance(amount)
 

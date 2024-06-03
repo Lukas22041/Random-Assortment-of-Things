@@ -5,36 +5,90 @@ import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.util.vector.Vector2f
 
 class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEntityToken) {
+
+    enum class State {
+        Inactive, Departure, Arrival
+    }
 
     var destinationEntity: SectorEntityToken? = null
     var destinationSystem: StarSystemAPI? = null
 
+    var playerJoined = false
+    var parkingOrbit: SectorEntityToken? = null
+    var departureAngle: Float = 0f
+    var state = State.Inactive
+
     fun getMovementModule() = exoship.movement
 
-    fun advance(amount: Float) {
 
-    }
-
-    //warp to specific orbit
+    //warp to specific entity to orbit
     fun warp(entity: SectorEntityToken) {
-        warp(entity, entity.starSystem)
+
+        val loc = MathUtils.getRandomPointOnCircumference(entity.location, entity.radius + 400f)
+        var orbit = entity.containingLocation.createToken(Vector2f())
+
+        val orbitRadius = entity.radius + 250f
+        val orbitDays = orbitRadius / (20f + Misc.random.nextFloat() * 5f)
+        orbit.setCircularOrbit(entity, Misc.random.nextFloat() * 360f, orbitRadius, orbitDays)
+
+        warp(orbit, entity.starSystem)
     }
 
     //Warps to starsystem, selects random orbit
     fun warp(starSystem: StarSystemAPI) {
+        var orbit = findParkingOrbit(starSystem)
+        warp(orbit, starSystem)
+    }
+
+    private fun warp(orbit: SectorEntityToken?, starSystem: StarSystemAPI?) {
+        if (starSystem == null || starSystem === exoshipEntity.containingLocation || orbit == null) return
+        if (state != State.Inactive) return
+
+        if (parkingOrbit != null) {
+            exoshipEntity.containingLocation.removeEntity(parkingOrbit)
+            parkingOrbit = null
+        }
+
+        parkingOrbit = orbit
+        departureAngle = Misc.getAngleInDegrees(exoshipEntity.locationInHyperspace, starSystem.location)
+
+        getMovementModule().moveInDirection(45f)
+        getMovementModule().setFaceInOppositeDirection(false)
+        getMovementModule().setTurnThenAccelerate(true)
+        exoship.longBurn = true
+        exoship.isInTransit = true
+
+        state = State.Departure
+    }
+
+    fun advance(amount: Float) {
+
+        if (state == State.Departure) {
+            handleDeparture(amount)
+        }
+
+        if (state == State.Arrival) {
+            handleArrival(amount)
+        }
 
     }
 
-    private fun warp(entity: SectorEntityToken, starSystem: StarSystemAPI) {
+    fun handleDeparture(amount: Float) {
 
     }
 
-    private fun findParkingOrbit() {
+    fun handleArrival(amount: Float) {
+
+    }
+
+    private fun findParkingOrbit(destination: StarSystemAPI) : SectorEntityToken {
         val minDist = 4000f
         val maxDist = 8000f
-        parkingOrbit = null
+        var orbit: SectorEntityToken? = null
         var found: SectorEntityToken? = null
         for (curr in destination.getEntitiesWithTag(Tags.STABLE_LOCATION)) {
             val dist = curr.location.length()
@@ -55,40 +109,41 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         }
         if (found != null) {
             val loc = Misc.getPointAtRadius(found.location, found.radius + 400f)
-            parkingOrbit = destination.createToken(loc)
+            orbit = destination.createToken(loc)
             val orbitRadius = found.radius + 250f
             val orbitDays = orbitRadius / (20f + Misc.random.nextFloat() * 5f)
-            parkingOrbit.setCircularOrbit(found, Misc.random.nextFloat() * 360f, orbitRadius, orbitDays)
+            orbit!!.setCircularOrbit(found, Misc.random.nextFloat() * 360f, orbitRadius, orbitDays)
         } else {
             val gaps =
-                BaseThemeGenerator.findGaps(destination.getCenter(), minDist, maxDist, gateHauler.getRadius() + 50f)
+                BaseThemeGenerator.findGaps(destination.getCenter(), minDist, maxDist, exoshipEntity.getRadius() + 50f)
             if (!gaps.isEmpty()) {
                 val gap = gaps[0]
                 val orbitRadius = (gap.start + gap.end) * 0.5f
                 val loc = Misc.getPointAtRadius(destination.getCenter().getLocation(), orbitRadius)
-                parkingOrbit = destination.createToken(loc)
+                orbit = destination.createToken(loc)
                 if (!destination.isNebula()) {
                     val orbitDays = orbitRadius / (20f + Misc.random.nextFloat() * 5f)
-                    parkingOrbit.setCircularOrbit(destination.getCenter(),
+                    orbit!!.setCircularOrbit(destination.getCenter(),
                         Misc.random.nextFloat() * 360f,
                         orbitRadius,
                         orbitDays)
                 }
             }
         }
-        if (parkingOrbit == null) {
+        if (orbit == null) {
             val orbitRadius = minDist + (maxDist - minDist) * Misc.random.nextFloat()
             val loc = Misc.getPointAtRadius(destination.getCenter().getLocation(), orbitRadius)
-            parkingOrbit = destination.createToken(loc)
+            orbit = destination.createToken(loc)
             if (!destination.isNebula()) {
                 val orbitDays = orbitRadius / (20f + Misc.random.nextFloat() * 5f)
-                parkingOrbit.setCircularOrbit(destination.getCenter(),
+                orbit!!.setCircularOrbit(destination.getCenter(),
                     Misc.random.nextFloat() * 360f,
                     orbitRadius,
                     orbitDays)
             }
         }
-        destination.addEntity(parkingOrbit)
+        destination.addEntity(orbit)
+        return orbit!!
     }
 
 }

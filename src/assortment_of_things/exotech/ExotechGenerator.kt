@@ -52,7 +52,7 @@ object ExotechGenerator {
             false)
         market.isHidden = true
         
-
+        ExoUtils.getExoData().setExoship(exoshipEntity)
 
     }
 

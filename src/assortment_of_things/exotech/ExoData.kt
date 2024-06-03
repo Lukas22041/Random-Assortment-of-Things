@@ -14,6 +14,10 @@ class ExoData {
     var tokens = 0f
 
 
+    fun setExoship(exoship : SectorEntityToken) {
+        this.exoship = exoship
+    }
+
     fun getExoship() : SectorEntityToken {
         return exoship!!
     }
