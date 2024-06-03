@@ -38,6 +38,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     var TURN_ACCELERATION = 2.5f
     var MAX_TURNRATE = 18f
 
+    lateinit var warpModule: ExoshipWarpModule
     lateinit var movement: CampaignEntityMovementUtil
     lateinit var engineGlow: CampaignEngineGlowUtil
     var longBurn = false
@@ -89,6 +90,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
         movement = CampaignEntityMovementUtil(entity, TURN_ACCELERATION, MAX_TURNRATE, ACCELERATION, MAX_SPEED)
         movement.engineGlow = engineGlow
 
+        warpModule = ExoshipWarpModule(this, entity!!)
 
         /*entity!!.orbit = null
         entity!!.velocity.set(Vector2f())
@@ -114,6 +116,8 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
             isInTransit = true
         }
+
+        warpModule.advance(amount)
 
         /*var logger = Global.getLogger(this::class.java)
         logger.level = Level.ALL
@@ -214,6 +218,26 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             chargeupSound!!.stop()
             chargeupSound = null
             startedPlaying = false
+
+
+
+            var steps = 100
+            var distance = 33f
+            var duration = 0f
+            var alphaReduction = 75f / steps
+            var alpha = 75f
+            for (step in 0 until steps) {
+
+                alpha -= alphaReduction
+                alpha.coerceIn(0f, 1000f)
+                duration += 0.15f
+
+                var afterimageLoc = MathUtils.getPointOnCircumference(entity.location, distance * step, entity.facing)
+
+                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, entity.containingLocation, entity,
+                    afterimageColor1.setAlpha(alpha.toInt()) ,afterimageColor2, duration, 0f, location = afterimageLoc)
+            }
+
 
 
             if (Global.getSector().playerFleet.containingLocation == entity.containingLocation) {
