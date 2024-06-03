@@ -33,8 +33,9 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     var lastJitterLocationsBelow = ArrayList<Vector2f>()
 
     // implements EngineGlowControls {
-    var MAX_SPEED = 1000f
+    var MAX_SPEED = 450f
     var ACCELERATION = 10f
+    var DECELERATION = 30f
     var TURN_ACCELERATION = 2.5f
     var MAX_TURNRATE = 18f
 
@@ -55,8 +56,8 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     var afterimageColor2 = Color(130,4,189, 0)
     var afterimageInterval = IntervalUtil(0.05f, 0.05f)
 
-    @Transient var chargeupSound: SoundAPI? = null
-    var startedPlaying = false
+    var delay = 8f
+    var active = false
 
     override fun init(entity: SectorEntityToken?, pluginParams: Any?) {
         super.init(entity, pluginParams)
@@ -119,6 +120,12 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         warpModule.advance(amount)
 
+        delay -= 1 * amount
+        if (delay <= 0f && !active) {
+            active = true
+            warpModule.warp(Global.getSector().getStarSystem("Corvus"))
+        }
+
         /*var logger = Global.getLogger(this::class.java)
         logger.level = Level.ALL
         logger.debug("${movement.movementUtil.velocity.length()}")*/
@@ -171,7 +178,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
         if (velLevel > 0f) {
 
             afterimageInterval.advance(amount)
-            if (afterimageInterval.intervalElapsed() && !Global.getSector().isPaused) {
+            if (afterimageInterval.intervalElapsed() && !Global.getSector().isPaused && warpModule.state != ExoshipWarpModule.State.Arrival) {
 
                 var level = (velLevel - 0.7f) * 3.5f
 
@@ -206,54 +213,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         movement.advance(amount)
 
-        if (chargeupSound != null && chargeupSound!!.isPlaying) {
-            startedPlaying = true
-            chargeupSound!!.setLocation(entity.location.x, entity.location.y)
-        }
 
-        if (chargeupSound != null && ((!chargeupSound!!.isPlaying && startedPlaying) || entity.containingLocation != Global.getSector().playerFleet.containingLocation || movement.movementUtil.velocity.length() >= 400)) {
-
-            RATCampaignRenderer.getFlashRenderer().spawnFlash(Vector2f(entity.location), entity.containingLocation, ExoUtils.color1, Color(130,4,189, 255), 1000f, 18000f, 0.15f, 1f, 4f)
-
-            chargeupSound!!.stop()
-            chargeupSound = null
-            startedPlaying = false
-
-
-
-            var steps = 100
-            var distance = 33f
-            var duration = 0f
-            var alphaReduction = 75f / steps
-            var alpha = 75f
-            for (step in 0 until steps) {
-
-                alpha -= alphaReduction
-                alpha.coerceIn(0f, 1000f)
-                duration += 0.15f
-
-                var afterimageLoc = MathUtils.getPointOnCircumference(entity.location, distance * step, entity.facing)
-
-                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, entity.containingLocation, entity,
-                    afterimageColor1.setAlpha(alpha.toInt()) ,afterimageColor2, duration, 0f, location = afterimageLoc)
-            }
-
-
-
-            if (Global.getSector().playerFleet.containingLocation == entity.containingLocation) {
-                Global.getSoundPlayer().playSound("exoship_warp", 1f, 1f, entity.location, entity.velocity)
-            }
-
-            entity.containingLocation.removeEntity(entity)
-        }
-
-        else if (movement.movementUtil.velocity.length() >= 150f && chargeupSound == null) {
-
-            if (Global.getSector().playerFleet.containingLocation == entity.containingLocation) {
-                chargeupSound = Global.getSoundPlayer().playSound("exoship_warp_chargeup", 1f, 1f, entity.location, Vector2f())
-            }
-
-        }
 
 
     }

@@ -109,7 +109,7 @@ class RATCampaignAfterimageRenderer {
 
     fun renderAfterimages(layer: CampaignEngineLayers, view: ViewportAPI) {
         for (afterimage in afterimageData) {
-            if (Global.getSector().playerFleet.containingLocation != afterimage.value.containinglocation) return
+            if (Global.getSector().playerFleet.containingLocation != afterimage.value.containinglocation) continue
             if (afterimage.value.layer == layer) {
                 renderAfterimage(afterimage.value, view)
             }

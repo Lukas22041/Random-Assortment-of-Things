@@ -7,9 +7,11 @@ import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
+import org.apache.log4j.Level
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
+import kotlin.math.log
 
 class RATCampaignFlashRenderer {
 
@@ -71,9 +73,12 @@ class RATCampaignFlashRenderer {
             sprite3 = Global.getSettings().getAndLoadSprite("graphics/fx/explosion5.png")
         }
 
-        for (flare in flashes) {
+        for (flare in ArrayList(flashes)) {
 
-            if (!flare.containingLocation.isCurrentLocation) return
+            var logger = Global.getLogger(this::class.java)
+            logger.level = Level.ALL
+
+            if (flare.containingLocation != Global.getSector().playerFleet.containingLocation) continue
 
             var level = flare.level
             var size = flare.additionalSize
