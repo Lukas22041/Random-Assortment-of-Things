@@ -17,6 +17,7 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
+import java.lang.Exception
 
 class ExoshipEntity : BaseCustomEntityPlugin() {
 
@@ -39,6 +40,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     var TURN_ACCELERATION = 2.5f
     var MAX_TURNRATE = 18f
 
+    lateinit var playerModule: ExoshipPlayerModule
     lateinit var warpModule: ExoshipWarpModule
     lateinit var movement: CampaignEntityMovementUtil
     lateinit var engineGlow: CampaignEngineGlowUtil
@@ -49,15 +51,13 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     var isInTransit = false
     var getRemainingActivationDays = 0f
 
-    /*var delay = 8f
-    var active = false*/
 
     var afterimageColor1 = Color(248,172,44, 75)
     var afterimageColor2 = Color(130,4,189, 0)
     var afterimageInterval = IntervalUtil(0.05f, 0.05f)
 
-    var delay = 8f
-    var active = false
+  /*  var delay = 8f
+    var active = false*/
 
     override fun init(entity: SectorEntityToken?, pluginParams: Any?) {
         super.init(entity, pluginParams)
@@ -93,6 +93,8 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         warpModule = ExoshipWarpModule(this, entity!!)
 
+        playerModule = ExoshipPlayerModule()
+
         /*entity!!.orbit = null
         entity!!.velocity.set(Vector2f())
         movement.moveToLocation(Vector2f(0f, 0f))*/
@@ -120,11 +122,11 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         warpModule.advance(amount)
 
-        delay -= 1 * amount
+       /* delay -= 1 * amount
         if (delay <= 0f && !active) {
             active = true
             warpModule.warp(Global.getSector().getStarSystem("Corvus"))
-        }
+        }*/
 
         /*var logger = Global.getLogger(this::class.java)
         logger.level = Level.ALL

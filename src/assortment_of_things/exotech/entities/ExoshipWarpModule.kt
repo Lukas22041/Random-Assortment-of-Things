@@ -35,9 +35,11 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
 
     fun getMovementModule() = exoship.movement
 
+    var warpListener: (() -> Unit)? = {}
+
 
     //warp to specific entity to orbit
-    fun warp(entity: SectorEntityToken) {
+    fun warp(entity: SectorEntityToken, withPlayer: Boolean = false, listener: () -> Unit = {}) {
 
         val loc = MathUtils.getRandomPointOnCircumference(entity.location, entity.radius + 400f)
         var orbit = entity.containingLocation.createToken(Vector2f())
@@ -46,16 +48,16 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         val orbitDays = orbitRadius / (20f + Misc.random.nextFloat() * 5f)
         orbit.setCircularOrbit(entity, Misc.random.nextFloat() * 360f, orbitRadius, orbitDays)
 
-        warp(orbit, entity.starSystem)
+        warp(orbit, entity.starSystem, withPlayer, listener)
     }
 
     //Warps to starsystem, selects random orbit
-    fun warp(starSystem: StarSystemAPI) {
+    fun warp(starSystem: StarSystemAPI, withPlayer: Boolean = false, listener: () -> Unit = {}) {
         var orbit = findParkingOrbit(starSystem)
-        warp(orbit, starSystem)
+        warp(orbit, starSystem, withPlayer, listener)
     }
 
-    private fun warp(orbit: SectorEntityToken?, starSystem: StarSystemAPI?) {
+    private fun warp(orbit: SectorEntityToken?, starSystem: StarSystemAPI?, withPlayer: Boolean, listener: () -> Unit) {
         if (starSystem == null || starSystem === exoshipEntity.containingLocation || orbit == null) return
         if (state != State.Inactive) return
 
@@ -63,6 +65,9 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
             exoshipEntity.containingLocation.removeEntity(parkingOrbit)
             parkingOrbit = null
         }
+
+        playerJoined = withPlayer
+        warpListener = listener
 
         destinationSystem = starSystem
 
@@ -139,8 +144,9 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
                     afterimageColor1.setAlpha(alpha.toInt()) ,afterimageColor2, duration, 0f, location = afterimageLoc)
             }
 
-
-
+            if (Global.getSector().playerFleet.containingLocation == exoshipEntity.containingLocation) {
+                Global.getSoundPlayer().playSound("exoship_warp", 1f, 1f, exoshipEntity.location, exoshipEntity.velocity)
+            }
 
             //Transfer to new system
             exoshipEntity.containingLocation.removeEntity(exoshipEntity)
@@ -148,9 +154,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
             initiateArrival()
 
 
-            if (Global.getSector().playerFleet.containingLocation == exoshipEntity.containingLocation) {
-                Global.getSoundPlayer().playSound("exoship_warp", 1f, 1f, exoshipEntity.location, exoshipEntity.velocity)
-            }
+
 
         }
         //After it accelerated enough, activate Chargeup Sound
@@ -180,9 +184,9 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         Vector2f.add(spawnLoc, parkingOrbit!!.location, spawnLoc)
 
         exoshipEntity.setExpired(false)
-        exoshipEntity.removeTag(Tags.NON_CLICKABLE)
+       /* exoshipEntity.removeTag(Tags.NON_CLICKABLE)
         exoshipEntity.removeTag(Tags.FADING_OUT_AND_EXPIRING)
-        exoshipEntity.setAlwaysUseSensorFaderBrightness(null)
+        exoshipEntity.setAlwaysUseSensorFaderBrightness(null)*/
 
         if (!destinationSystem!!.getAllEntities().contains(exoshipEntity)) {
             destinationSystem!!.addEntity(exoshipEntity)
@@ -269,7 +273,19 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
             daysInArrival = 0f
 
             state = State.Inactive
+
+            exoshipEntity.removeTag(Tags.NON_CLICKABLE)
+            exoshipEntity.removeTag(Tags.FADING_OUT_AND_EXPIRING)
+            exoshipEntity.setAlwaysUseSensorFaderBrightness(null)
+
+            warpListener!!()
+
+            warpListener = null
         }
+    }
+
+    fun dealDamageInRangeOfFlash() {
+        Global.getSector().campaignUI.addMessage("Your fleet took light damage from being hit by the exhaust of a warpdrive.")
     }
 
     private fun findParkingOrbit(destination: StarSystemAPI) : SectorEntityToken {
@@ -277,13 +293,13 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         val maxDist = 8000f
         var orbit: SectorEntityToken? = null
         var found: SectorEntityToken? = null
-        for (curr in destination.getEntitiesWithTag(Tags.STABLE_LOCATION)) {
+       /* for (curr in destination.getEntitiesWithTag(Tags.STABLE_LOCATION)) {
             val dist = curr.location.length()
             if (dist >= minDist && dist <= 8000f) {
                 found = curr
                 break
             }
-        }
+        }*/
         if (found == null) {
             for (curr in destination.getPlanets()) {
                 if (curr.isMoon) continue

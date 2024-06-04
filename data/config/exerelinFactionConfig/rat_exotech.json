@@ -11,7 +11,7 @@
     "marketSpawnWeight":0.5,
     
 	"useConfigRelationshipsInNonRandomSector":true,
-    "startRelationships":{ "tritachyon":0.1, "hegemony": -0.1, "luddic_church":-0.3, "luddic_path":-0.4, "pirates":-0.2, "independent":-0.4, "persean":0.0, "sindrian_diktat":0.0 },
+    "startRelationships":{ "tritachyon":0.7, "hegemony": -0.1, "luddic_church":-0.3, "luddic_path":-0.4, "pirates":-0.2, "independent":-0.4, "persean":0.0, "sindrian_diktat":0.0 },
     "maxRelationships":{ "luddic_church":-0.1, "luddic_path":-0.4, "independent":-0.2 },
     "diplomacyPositiveChance":{ "luddic_church":0.8, "luddic_path":0.4 },
     "diplomacyNegativeChance":{ "luddic_church":1.2, "luddic_path":2.0 },

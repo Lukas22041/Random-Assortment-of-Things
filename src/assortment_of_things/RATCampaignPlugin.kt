@@ -12,7 +12,9 @@ import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
+import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.interactions.ExoshipWreckageInteraction
+import assortment_of_things.exotech.interactions.exoship.PlayerExoshipInteraction
 import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
@@ -42,7 +44,13 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         if (interactionTarget == null) return null
 
         if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship") {
-            //return PluginPick(ExoshipInteractions(), CampaignPlugin.PickPriority.HIGHEST)
+            var plugin = interactionTarget.customPlugin as ExoshipEntity
+            if (plugin.playerModule.isPlayerOwned) {
+                return PluginPick(PlayerExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
+            else {
+                //return PluginPick(ExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
         }
 
         if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship_broken") {
