@@ -36,6 +36,8 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
     var delaysList = listOf<Float>(0.25f, 0.5f, 0.75f, 1f, 1.25f, 1.5f, 1.75f, 2f, 2.25f, 2.5f, 2.75f, 3f).shuffled()
     var delaysIndex = 0
 
+    var noLongerTeleportDrones = false
+
     override fun apply(stats: MutableShipStatsAPI?, id: String?, state: ShipSystemStatsScript.State?, effectLevel: Float) {
         super.apply(stats, id, state, effectLevel)
         ship = stats!!.entity as ShipAPI? ?: return
@@ -51,6 +53,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         if (system.state == ShipSystemAPI.SystemState.ACTIVE && ship!!.phaseCloak.isActive) {
             ship!!.system.forceState(ShipSystemAPI.SystemState.OUT, 0f)
             controlWingPosition(effectLevel)
+            noLongerTeleportDrones = true
             return
         }
 
@@ -66,6 +69,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
             }
 
+            noLongerTeleportDrones = false
 
         }
 
@@ -74,7 +78,9 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
             target = findTarget()
 
-            ship!!.setCustomData("rat_dont_allow_phase", 7f)
+            if (ship!!.shipAI != null) {
+                ship!!.setCustomData("rat_dont_allow_phase", 7f)
+            }
 
             var slotId = "WS0004"
 
@@ -160,7 +166,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
                 var pos = positions.getOrNull(posIndex) ?: break
                 posIndex += 1
 
-                if (!ship!!.phaseCloak.isActive) {
+                if (!noLongerTeleportDrones) {
                     drone.location.set(pos)
                 }
 

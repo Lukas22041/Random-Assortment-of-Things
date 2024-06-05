@@ -12,7 +12,6 @@ class GilgameshSystemAI : ShipSystemAIScript {
     var maxCountdown = 1.5f
     var countdown = maxCountdown
 
-
     override fun init(ship: ShipAPI?, system: ShipSystemAPI?, flags: ShipwideAIFlags?, engine: CombatEngineAPI?) {
         this.ship = ship
     }
@@ -21,7 +20,7 @@ class GilgameshSystemAI : ShipSystemAIScript {
         if (ship == null) return
 
         //Allow phase use if the ship would otherwise get it while the system is active
-        if (hasNearbyDanger(amount, missileDangerDir, collisionDangerDir, target, 150f)) {
+        if (hasNearbyDanger(amount, missileDangerDir, collisionDangerDir, target, 100f)) {
             ship!!.setCustomData("rat_dont_allow_phase", -1f)
             return
         }
