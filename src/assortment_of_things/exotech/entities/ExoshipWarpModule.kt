@@ -10,6 +10,7 @@ import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.campaign.CampaignEngine
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
@@ -37,6 +38,8 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
 
     var warpListener: (() -> Unit)? = {}
 
+    var playWarpSoundNextFrame = false
+    var framesTilWarpSound = 10
 
     //warp to specific entity to orbit
     fun warp(entity: SectorEntityToken, withPlayer: Boolean = false, listener: () -> Unit = {}) {
@@ -47,6 +50,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         val orbitRadius = entity.radius + 250f
         val orbitDays = orbitRadius / (20f + Misc.random.nextFloat() * 5f)
         orbit.setCircularOrbit(entity, Misc.random.nextFloat() * 360f, orbitRadius, orbitDays)
+        entity.containingLocation.addEntity(orbit)
 
         warp(orbit, entity.starSystem, withPlayer, listener)
     }
@@ -84,10 +88,47 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         exoshipEntity.fadeOutIndicator()
         exoshipEntity.addTag(Tags.NON_CLICKABLE)
 
+
+        if (playerJoined) {
+            fixateViewportAndFadeStars()
+
+            Global.getSector().playerFleet.setLocation(300000f, 300000f)
+        }
+
         state = State.Departure
     }
 
+    fun fixateViewportAndFadeStars() {
+        var viewport = Global.getSector().viewport
+
+        var zoom = Global.getSector().campaignUI.zoomFactor
+
+        var width = Global.getSettings().screenWidth * zoom
+        var height = Global.getSettings().screenHeight * zoom
+
+        var x = exoshipEntity.location.x - width / 2
+        var y = exoshipEntity.location.y - height / 2
+
+        viewport.isExternalControl = true
+        viewport.set(x, y, width, height)
+
+        exoshipEntity.starSystem.backgroundParticleColorShifter.shift(this, Color(0, 0, 0, 0), 0.2f, 5f, 1f)
+    }
+
     fun advance(amount: Float) {
+
+        if (playWarpSoundNextFrame) {
+
+            framesTilWarpSound -= 1
+            if (framesTilWarpSound <= 0) {
+                playWarpSoundNextFrame = false
+                Global.getSoundPlayer().playSound("exoship_warp", 1f, 1f, exoshipEntity.location, Vector2f())
+                framesTilWarpSound = 10
+            }
+
+
+
+        }
 
         if (state == State.Departure) {
             handleDeparture(amount)
@@ -96,6 +137,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         if (state == State.Arrival) {
             handleArrival(amount)
         }
+
 
     }
 
@@ -144,7 +186,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
                     afterimageColor1.setAlpha(alpha.toInt()) ,afterimageColor2, duration, 0f, location = afterimageLoc)
             }
 
-            if (Global.getSector().playerFleet.containingLocation == exoshipEntity.containingLocation) {
+            if (Global.getSector().playerFleet.containingLocation == exoshipEntity.containingLocation && !playerJoined) {
                 Global.getSoundPlayer().playSound("exoship_warp", 1f, 1f, exoshipEntity.location, exoshipEntity.velocity)
             }
 
@@ -166,7 +208,9 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
 
         }
 
-
+        if (playerJoined) {
+            fixateViewportAndFadeStars()
+        }
     }
 
     fun initiateArrival() {
@@ -197,10 +241,10 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         getMovementModule().movementUtil.acceleration = exoship.DECELERATION
         getMovementModule().setLocation(spawnLoc)
         getMovementModule().setVelocity(spawnVel)
-        getMovementModule().setFacing(departureAngle + 180f)
+        getMovementModule().setFacing(departureAngle )
 
         getMovementModule().moveToLocation(parkingOrbit!!.location)
-        getMovementModule().setTurnThenAccelerate(true)
+        getMovementModule().setTurnThenAccelerate(false)
         getMovementModule().setFaceInOppositeDirection(true)
         exoship.longBurn = true
 
@@ -221,16 +265,35 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
 
             var afterimageColor1 = Color(248,172,44, 75)
             var afterimageColor2 = Color(130,4,189, 0)
-            var afterimageLoc = MathUtils.getPointOnCircumference(spawnLoc, distance * step, exoshipEntity.facing)
+            var afterimageLoc = MathUtils.getPointOnCircumference(spawnLoc, distance * step, exoshipEntity.facing + 180)
 
             RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, destinationSystem!!, exoshipEntity,
                 afterimageColor1.setAlpha(alpha.toInt()) ,afterimageColor2, duration, 0f, location = afterimageLoc)
         }
 
-        if (Global.getSector().playerFleet.containingLocation == exoshipEntity.containingLocation) {
+        if (Global.getSector().playerFleet.containingLocation == exoshipEntity.containingLocation && !playerJoined) {
             var angle = Misc.getAngleInDegrees(Global.getSector().playerFleet.location, spawnLoc)
             var soundLoc = MathUtils.getPointOnCircumference(Global.getSector().playerFleet.location, 500f, angle)
             Global.getSoundPlayer().playSound("exoship_warp", 1f, 1f, soundLoc, Vector2f())
+        }
+
+        if (playerJoined) {
+            fixateViewportAndFadeStars()
+
+            var playerFleet = Global.getSector().playerFleet
+            var currentLocation = playerFleet.containingLocation
+            var targetSystem = exoshipEntity.containingLocation
+
+            currentLocation.removeEntity(playerFleet)
+            targetSystem.addEntity(playerFleet)
+            Global.getSector().setCurrentLocation(targetSystem)
+           // playerFleet.setLocation(exoshipEntity.location.x, entity.location.y)
+
+           // CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
+
+            playWarpSoundNextFrame = true
+
+
         }
 
         state = State.Arrival
@@ -245,13 +308,13 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         val speed: Float = exoshipEntity.getVelocity().length()
         val dist = Misc.getDistance(parkingOrbit, exoshipEntity)
 
-        val overshot = Misc.isInArc(exoshipEntity.getFacing(), 270f, exoshipEntity.getLocation(), parkingOrbit!!.location)
+        /*val overshot = Misc.isInArc(exoshipEntity.getFacing(), 270f, exoshipEntity.getLocation(), parkingOrbit!!.location)
         if (overshot || dist < 700f) {
             getMovementModule().setTurnThenAccelerate(false)
             getMovementModule().setFaceInOppositeDirection(false)
-        }
-        var closeEnough = speed < 25f && dist < 100f + parkingOrbit!!.radius + exoshipEntity.getRadius()
-        if (dist < 200f + parkingOrbit!!.radius + exoshipEntity.getRadius() && daysInArrival > 30f) {
+        }*/
+        var closeEnough = speed < 30f && dist < 100f + parkingOrbit!!.radius + exoshipEntity.getRadius()
+        if (dist < 200f + parkingOrbit!!.radius + exoshipEntity.getRadius() && daysInArrival > 7f) {
             closeEnough = true
         }
         if (closeEnough) {
@@ -278,9 +341,22 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
             exoshipEntity.removeTag(Tags.FADING_OUT_AND_EXPIRING)
             exoshipEntity.setAlwaysUseSensorFaderBrightness(null)
 
+            if (playerJoined) {
+                Global.getSector().playerFleet.setLocation(exoshipEntity.location.x, exoshipEntity.location.y)
+                Global.getSector().playerFleet.setMoveDestination(exoshipEntity.location.x, exoshipEntity.location.y)
+                Global.getSector().viewport.isExternalControl = false
+            }
+
+
             warpListener!!()
 
             warpListener = null
+
+
+        }
+
+        else if (playerJoined) {
+            fixateViewportAndFadeStars()
         }
     }
 

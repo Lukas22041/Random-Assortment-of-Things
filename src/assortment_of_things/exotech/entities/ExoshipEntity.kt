@@ -176,11 +176,16 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
         }
 
         var velLevel = movement.movementUtil.velocity.length().levelBetween(60f, 200f)
+
+        if (warpModule.state == ExoshipWarpModule.State.Arrival) {
+            velLevel = movement.movementUtil.velocity.length().levelBetween(200f, MAX_SPEED)
+        }
+
         velLevel = velLevel.coerceIn(0f, 1f)
         if (velLevel > 0f) {
 
             afterimageInterval.advance(amount)
-            if (afterimageInterval.intervalElapsed() && !Global.getSector().isPaused && warpModule.state != ExoshipWarpModule.State.Arrival) {
+            if (afterimageInterval.intervalElapsed() && !Global.getSector().isPaused) {
 
                 var level = (velLevel - 0.7f) * 3.5f
 
@@ -229,6 +234,11 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
         }
 
         var velLevel = movement.movementUtil.velocity.length().levelBetween(60f, 200f)
+
+        if (warpModule.state == ExoshipWarpModule.State.Arrival) {
+            velLevel = movement.movementUtil.velocity.length().levelBetween(200f, MAX_SPEED)
+        }
+
         velLevel = velLevel.coerceIn(0f, 1f)
 
         if (layer == CampaignEngineLayers.STATIONS) {

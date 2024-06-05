@@ -68,6 +68,12 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
         }
 
         element.addSpacer(10f)
+        element.addSectionHeading("Fuel", Alignment.MID, 0f)
+        element.addSpacer(10f)
+
+        //Fuelbar here
+
+        element.addSpacer(10f)
         element.addSectionHeading("Management", Alignment.MID, 0f)
         element.addSpacer(10f)
 
@@ -101,7 +107,7 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
 
 
             var fuel = (250 + (1750 * slider.level)).toInt()
-            var cost = (0 + (50000 * (slider.level * slider.level))).toInt()
+            var cost = (1000 + (50000 * (slider.level * slider.level))).toInt()
 
             fuelInfoPara.text = "It currently produces $fuel units of fuel at a cost of $cost credits per month."
             fuelInfoPara.setHighlight("$fuel", "$cost")
@@ -203,5 +209,7 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
         else {
             exoship.warpModule.warp(playerData.selectedDestination!!, playerJoins)
         }
+
+        playerData.selectedDestination = null
     }
 }
