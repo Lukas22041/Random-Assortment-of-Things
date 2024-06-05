@@ -176,8 +176,10 @@ class TylosShipsystem : BaseShipSystemScript(), HullDamageAboutToBeTakenListener
         stats.maxTurnRate.modifyFlat(id, 15f * effectLevel)
         stats.maxTurnRate.modifyPercent(id, 100f * effectLevel)
 
-        ship!!.engineController.fadeToOtherColor(this, color, Color(0, 0, 0, 0), effectLevel, 0.67f)
+
+        //ship!!.engineController.fadeToOtherColor(this, color, Color(0, 0, 0, 0), effectLevel, 0.67f)
         ship!!.engineController.extendFlame(this, 1f * effectLevel, 1f * effectLevel, 0f * effectLevel)
+
 
         if (ship!!.hitpoints <= 0f && module != null) {
             var manager = Global.getCombatEngine().getFleetManager(module!!.owner)
