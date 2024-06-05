@@ -1,0 +1,27 @@
+id
+# NOTES
+# Ship IDs entered here will be allowed by the Engineering hub (Reverse Engineering ship hulls)
+# Ships that would break the game (Balance/Technical/Lore) if the player could produce them via blueprint should not be on this list.
+
+rat_merrow
+rat_makara
+rat_chuul
+rat_aboleth
+rat_aboleth_m
+rat_morkoth
+
+rat_raguel
+rat_sariel
+rat_gabriel
+
+rat_genesis_serpent_head
+
+rat_thestia
+rat_tylos
+rat_arkas
+rat_leanira
+
+
+
+
+

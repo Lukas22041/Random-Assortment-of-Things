@@ -169,7 +169,6 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         }
 
         val fleet = FleetFactoryV3.createFleet(params)
-        fleet.inflateIfNeeded()
 
         if (factionID != "rat_abyssals_deep_seraph") {
             var minSeraphs = 0
@@ -183,12 +182,10 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
             AbyssalSeraphSpawner.sortWithSeraphs(fleet)
 
             for (member in fleet.fleetData.membersListCopy) {
+                member.fixVariant()
                 member.variant.addTag(Tags.TAG_NO_AUTOFIT)
             }
         }
-
-
-
 
         fleet.addTag("rat_fleet_type_${type!!.name}")
 
@@ -203,6 +200,8 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
             member.fixVariant()
             member.variant.addTag(Tags.TAG_NO_AUTOFIT)
         }
+
+        fleet.inflateIfNeeded()
 
         addAICores(fleet, data, difficulty, random)
 

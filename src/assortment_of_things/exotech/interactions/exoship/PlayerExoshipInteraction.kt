@@ -142,7 +142,8 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
                 playClickSound()
 
                 var entities = Global.getSector().economy.marketsCopy.filter { !it.isHidden }.map { it.primaryEntity }.toMutableList()
-                var centers = entities.addAll(Global.getSector().starSystems.filter { !it.hasTag(Tags.THEME_HIDDEN) && !it.hasTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER) }.map { it.center })
+                var centers = entities.addAll(Global.getSector().starSystems.filter {
+                    !it.hasTag(Tags.THEME_HIDDEN) && !it.hasTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER) && !it.hasTag(Tags.SYSTEM_ABYSSAL) }.map { it.center }.filter { it != null })
 
                 dialog.showCampaignEntityPicker("Select a destination", "Destination", "Confirm", Global.getSector().getFaction("rat_exotech"),
                     entities, object : BaseCampaignEntityPickerListener() {
