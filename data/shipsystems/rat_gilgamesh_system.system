@@ -2,7 +2,7 @@
 	"id":"rat_gilgamesh_system",
 	"type":"STAT_MOD",
 	"aiType":"CUSTOM",
-	"aiScript":"assortment_of_things.exotech.shipsystems.ai.ThestiaSystemAI",
+	"aiScript":"assortment_of_things.exotech.shipsystems.ai.GilgameshSystemAI",
 	
 	"statsScript":"assortment_of_things.exotech.shipsystems.GilgameshShipsystem",
 	"runScriptWhilePaused":true, # only for the player's ship

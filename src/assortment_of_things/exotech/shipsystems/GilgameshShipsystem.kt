@@ -48,6 +48,12 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
         var system = ship!!.system
 
+        if (system.state == ShipSystemAPI.SystemState.ACTIVE && ship!!.phaseCloak.isActive) {
+            ship!!.system.forceState(ShipSystemAPI.SystemState.OUT, 0f)
+            controlWingPosition(effectLevel)
+            return
+        }
+
         if (activated && (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE)) {
             activated = false
             target = null
@@ -60,12 +66,15 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
             }
 
+
         }
 
         if (!activated && system.state == ShipSystemAPI.SystemState.IN) {
             activated = true
 
-            target = ship!!.shipTarget
+            target = findTarget()
+
+            ship!!.setCustomData("rat_dont_allow_phase", 7f)
 
             var slotId = "WS0004"
 
@@ -107,6 +116,15 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
     override fun advance(amount: Float) {
 
+        //Dont let it phase immediately after system activation
+        var disallowPhaseTimer = ship!!.customData.get("rat_dont_allow_phase") as Float?
+        if (disallowPhaseTimer != null) {
+            if (disallowPhaseTimer > 0f) {
+                disallowPhaseTimer -= 1f * amount
+                ship!!.setCustomData("rat_dont_allow_phase", disallowPhaseTimer)
+            }
+        }
+
         var positions = ArrayList<Vector2f>()
         var posIndex = 0
 
@@ -142,7 +160,10 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
                 var pos = positions.getOrNull(posIndex) ?: break
                 posIndex += 1
 
-                drone.location.set(pos)
+                if (!ship!!.phaseCloak.isActive) {
+                    drone.location.set(pos)
+                }
+
 
                 var weapon = drone.allWeapons.first()
                 weapon.ensureClonedSpec()
@@ -221,15 +242,17 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
             level = 0f
         }
 
-        delay -= 1f * Global.getCombatEngine().elapsedInLastFrame
+        delay -= 1.5f * Global.getCombatEngine().elapsedInLastFrame
 
         if (delay <= 0 && (ship!!.system.state == ShipSystemAPI.SystemState.IN || ship!!.system.state == ShipSystemAPI.SystemState.ACTIVE)) {
-            level += 0.4f /** ship!!.system.effectLevel*/ * Global.getCombatEngine().elapsedInLastFrame * ship!!.mutableStats.timeMult.modifiedValue
+            level += 0.6f /** ship!!.system.effectLevel*/ * Global.getCombatEngine().elapsedInLastFrame * ship!!.mutableStats.timeMult.modifiedValue
         }
 
         if (ship!!.system.state == ShipSystemAPI.SystemState.OUT) {
             //level -= increase * Global.getCombatEngine().elapsedInLastFrame * ship!!.mutableStats.timeMult.modifiedValue
+            var oldLevel = level
             level = ship!!.system.effectLevel /** ship!!.system.effectLevel*/
+            level = MathUtils.clamp(level, 0f, oldLevel)
         }
 
         level = MathUtils.clamp(level, 0f, 1f)
@@ -446,8 +469,20 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         rWing.currAngle = ship!!.facing + angle
     }
 
+    fun findTarget() : ShipAPI? {
+        if (ship == null) return null
+        var target = ship!!.shipTarget
+
+        var flags = ship!!.aiFlags
+        if (flags.hasFlag(AIFlags.TARGET_FOR_SHIP_SYSTEM)) {
+            target = flags.getCustom(AIFlags.TARGET_FOR_SHIP_SYSTEM) as ShipAPI?
+        }
+
+        return target
+    }
+
     override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
-        return ship!!.shipTarget != null
+        return findTarget() != null
     }
 
     override fun getInfoText(system: ShipSystemAPI?, ship: ShipAPI?): String? {

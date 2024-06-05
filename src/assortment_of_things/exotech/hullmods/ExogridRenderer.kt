@@ -178,7 +178,8 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         phaseGlow.angle = ship.facing - 90
         phaseGlow.renderAtCenter(ship.location.x, ship.location.y)
 
-        doJitter(phaseGlow, level, lastPhaseJitterLocations, 5, 2 + (2f * level))
+        //doJitter(phaseGlow, level, lastPhaseJitterLocations, 5, 2 + (2f * level))
+        doJitter(phaseGlow, 0.33f * level, lastPhaseJitterLocations, 5, 1 + (2f * level))
 
     }
 

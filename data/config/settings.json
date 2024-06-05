@@ -24,6 +24,7 @@
 		"Artifact":[97, 21, 212, 255],
 		"Forge-Assisted":[235, 164, 49, 255],
 		"Exo-Tech":[252, 190, 18, 255],
+		"Experimental Exo-Tech":[252, 190, 18, 255],
 	},		
 	
 	"rat_abyssColor":[255, 0, 50,255],

@@ -147,7 +147,7 @@
   ],
   "engineSlots": [
     {
-      "location": [-11.5, -65],
+      "location": [-11, -65.5],
       "length": 14,
       "width": 6,
       "angle": -165,
@@ -156,7 +156,7 @@
       "styleId": "EXO_TECH"
     },
     {
-      "location": [-11.5, 65],
+      "location": [-11, 65.5],
       "length": 14,
       "width": 6,
       "angle": 165,
@@ -183,7 +183,7 @@
       "styleId": "EXO_TECH"
     },
     {
-      "location": [-12, -63.5],
+      "location": [-12, -64],
       "length": 8,
       "width": 4,
       "angle": -164.5,
@@ -192,7 +192,7 @@
       "styleId": "EXO_TECH"
     },
     {
-      "location": [-12, 63.5],
+      "location": [-12, 64],
       "length": 8,
       "width": 4,
       "angle": 164.5,
@@ -201,7 +201,7 @@
       "styleId": "EXO_TECH"
     },
     {
-      "location": [-11, 67],
+      "location": [-10.5, 67.5],
       "length": 8,
       "width": 4,
       "angle": 165.5,
@@ -210,7 +210,7 @@
       "styleId": "EXO_TECH"
     },
     {
-      "location": [-11, -67],
+      "location": [-10.5, -67.5],
       "length": 8,
       "width": 4,
       "angle": -165.5,
@@ -256,8 +256,8 @@
     },
     {
       "location": [-50, 19],
-      "length": 25,
-      "width": 15,
+      "length": 20,
+      "width": 12,
       "angle": 180,
       "contrailSize": 30,
       "style": "CUSTOM",
@@ -265,8 +265,8 @@
     },
     {
       "location": [-50, -19],
-      "length": 25,
-      "width": 15,
+      "length": 20,
+      "width": 12,
       "angle": -180,
       "contrailSize": 30,
       "style": "CUSTOM",
@@ -274,8 +274,8 @@
     },
     {
       "location": [-50, 22],
-      "length": 14,
-      "width": 7,
+      "length": 12,
+      "width": 5,
       "angle": 180,
       "contrailSize": 15,
       "style": "CUSTOM",
@@ -283,8 +283,8 @@
     },
     {
       "location": [-50, -22],
-      "length": 14,
-      "width": 7,
+      "length": 12,
+      "width": 5,
       "angle": -180,
       "contrailSize": 15,
       "style": "CUSTOM",
@@ -292,8 +292,8 @@
     },
     {
       "location": [-50, -16],
-      "length": 14,
-      "width": 7,
+      "length": 12,
+      "width": 5,
       "angle": -180,
       "contrailSize": 15,
       "style": "CUSTOM",
@@ -301,8 +301,8 @@
     },
     {
       "location": [-50, 16],
-      "length": 14,
-      "width": 7,
+      "length": 12,
+      "width": 5,
       "angle": 180,
       "contrailSize": 15,
       "style": "CUSTOM",
