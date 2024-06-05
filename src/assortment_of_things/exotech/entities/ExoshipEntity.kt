@@ -194,11 +194,17 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
                 RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, entity.containingLocation, entity,
                     afterimageColor1.setAlpha((75 * velLevel).toInt()), afterimageColor2, 0.5f + 1.75f * level, 0f)
 
-                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, entity.containingLocation, entity,
-                    afterimageColor1.setAlpha((25 * velLevel).toInt()), afterimageColor2, 0.5f + 1f * level, 1f * level, scale = 2f)
 
-                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.ABOVE_STATIONS, entity.containingLocation, entity,
-                    afterimageColor1.setAlpha((50 * velLevel).toInt()), afterimageColor2, 0.5f + 0.75f * level, 2f * level, scale = 1.5f)
+
+                if (warpModule.state != ExoshipWarpModule.State.Arrival) {
+
+                    RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, entity.containingLocation, entity,
+                        afterimageColor1.setAlpha((25 * velLevel).toInt()), afterimageColor2, 0.5f + 1f * level, 1f * level, scale = 2f)
+
+                    RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.ABOVE_STATIONS, entity.containingLocation, entity,
+                        afterimageColor1.setAlpha((50 * velLevel).toInt()), afterimageColor2, 0.5f + 0.75f * level, 2f * level, scale = 1.5f)
+                }
+
             }
 
 

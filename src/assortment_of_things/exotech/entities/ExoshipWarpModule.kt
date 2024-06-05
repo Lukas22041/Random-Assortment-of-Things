@@ -224,7 +224,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
 
         spawnVel.scale(exoship.MAX_SPEED)
         spawnVel.negate()
-        spawnLoc.scale(brakeDist * 1f + 4000f)
+        spawnLoc.scale(brakeDist * 1f + 5000f)
         Vector2f.add(spawnLoc, parkingOrbit!!.location, spawnLoc)
 
         exoshipEntity.setExpired(false)
@@ -313,7 +313,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
             getMovementModule().setTurnThenAccelerate(false)
             getMovementModule().setFaceInOppositeDirection(false)
         }*/
-        var closeEnough = speed < 30f && dist < 100f + parkingOrbit!!.radius + exoshipEntity.getRadius()
+        var closeEnough = speed < 25f && dist < 100f + parkingOrbit!!.radius + exoshipEntity.getRadius()
         if (dist < 200f + parkingOrbit!!.radius + exoshipEntity.getRadius() && daysInArrival > 7f) {
             closeEnough = true
         }
