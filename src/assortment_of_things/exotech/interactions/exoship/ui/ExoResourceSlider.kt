@@ -43,6 +43,7 @@ class ExoResourceSlider(tooltip: TooltipMakerAPI, width: Float, height: Float, v
         }
 
 
+
     }
 
     fun setSliderPositionByValue(curValue: Float)

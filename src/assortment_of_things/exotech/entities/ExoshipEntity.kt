@@ -120,6 +120,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             isInTransit = true
         }*/
 
+        playerModule.advance(amount)
         warpModule.advance(amount)
 
        /* delay -= 1 * amount
