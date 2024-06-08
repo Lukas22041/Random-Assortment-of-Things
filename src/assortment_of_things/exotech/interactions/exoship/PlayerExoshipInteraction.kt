@@ -171,6 +171,7 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
 
         if (selectedDestination == null) {
             optionPanel.setEnabled("Warp", false)
+            optionPanel.setTooltip("Warp", "No destination selected.")
         } else {
             optionPanel.addOptionConfirmation("Warp", "Are you sure you want to warp the Exoship towards ${selectedDestination!!.starSystem.nameWithNoType}?", "Confirm", "Cancel")
         }
