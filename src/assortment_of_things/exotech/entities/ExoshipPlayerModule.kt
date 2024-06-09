@@ -1,6 +1,7 @@
 package assortment_of_things.exotech.entities
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.econ.MonthlyReport
 import com.fs.starfarer.api.impl.campaign.shared.SharedData
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -8,7 +9,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 
-class ExoshipPlayerModule {
+class ExoshipPlayerModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEntityToken) {
 
     var fuelProductionLevel = 0.25f
     var fuelPercentPerMonthMax = 20f / 100f
@@ -17,9 +18,9 @@ class ExoshipPlayerModule {
 
     var maxCost = 50000f
 
-    var fuelPerLightyear = 1f / 100f
+    var fuelPerLightyear = 1.2f / 100f
 
-    var playerJoinsWarp = false
+    var playerJoinsWarp = true
 
     var isPlayerOwned = true
 
@@ -27,6 +28,11 @@ class ExoshipPlayerModule {
     fun advance(amount: Float) {
         if (!Global.getSector().isPaused) {
             var days = Misc.getDays(amount)
+
+            if (!isPlayerOwned) return
+
+            //Dont run recharge code while moving
+            if (exoship.isInTransit) return
 
             currentFuelPercent += (fuelPercentPerMonthMax * fuelProductionLevel) / 30f * days
             currentFuelPercent = MathUtils.clamp(currentFuelPercent, 0f, maxFuelPercent)

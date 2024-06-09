@@ -93,7 +93,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         warpModule = ExoshipWarpModule(this, entity!!)
 
-        playerModule = ExoshipPlayerModule()
+        playerModule = ExoshipPlayerModule(this, entity)
 
         /*entity!!.orbit = null
         entity!!.velocity.set(Vector2f())
