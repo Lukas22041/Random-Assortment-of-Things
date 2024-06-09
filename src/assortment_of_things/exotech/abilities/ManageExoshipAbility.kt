@@ -101,7 +101,7 @@ class ManageExoshipAbility : BaseDurationAbility() {
     override fun isTooltipExpandable(): Boolean {
         return false
     }
-    
+
     override fun applyEffect(amount: Float, level: Float) {
 
     }
