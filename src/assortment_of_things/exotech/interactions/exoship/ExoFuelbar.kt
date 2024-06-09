@@ -18,6 +18,10 @@ class ExoFuelbar(var useage: Float, var current: Float, var max: Float, tooltip:
         renderBorder = false
         renderBackground = false
         enableTransparency = true
+
+        onHoverEnter {
+            playScrollSound()
+        }
     }
 
     override fun render(alphaMult: Float) {

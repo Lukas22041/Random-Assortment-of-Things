@@ -46,7 +46,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship") {
             var plugin = interactionTarget.customPlugin as ExoshipEntity
             if (plugin.playerModule.isPlayerOwned) {
-                return PluginPick(PlayerExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                return PluginPick(PlayerExoshipInteraction(false), CampaignPlugin.PickPriority.HIGHEST)
             }
             else {
                 //return PluginPick(ExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)

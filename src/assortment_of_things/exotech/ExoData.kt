@@ -10,6 +10,7 @@ class ExoData {
     var hasPartnership = false
     var commPerson = Global.getFactory().createPerson()
     private var exoship: SectorEntityToken? = null
+    private var playerExoship: SectorEntityToken? = null
 
     var tokens = 0f
 
@@ -24,5 +25,17 @@ class ExoData {
 
     fun getExoshipPlugin() : ExoshipEntity {
         return exoship!!.customPlugin as ExoshipEntity
+    }
+
+    fun setPlayerExoship(exoship : SectorEntityToken) {
+        this.playerExoship = exoship
+    }
+
+    fun getPlayerExoship() : SectorEntityToken {
+        return playerExoship!!
+    }
+
+    fun getPlayerExoshipPlugin() : ExoshipEntity {
+        return playerExoship!!.customPlugin as ExoshipEntity
     }
 }

@@ -21,11 +21,11 @@ import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaSpriteElement
 import lunalib.lunaUI.elements.LunaSpriteElement
 import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.input.Keyboard
 
-class PlayerExoshipInteraction : RATInteractionPlugin() {
+class PlayerExoshipInteraction(var openedFromAbility: Boolean) : RATInteractionPlugin() {
 
     var shownInteractionText = false
-    var openedFromAbility = false
 
     var scrollerY = 0f
 
@@ -33,14 +33,17 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
 
     override fun init() {
 
-        if (!shownInteractionText && !openedFromAbility) {
+        if (openedFromAbility) {
+            recreateManagementOptions()
+            return
+        }
+
+        if (!shownInteractionText) {
             textPanel.addPara("Your fleet approaches the Exoship.")
             shownInteractionText = true
 
             textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
         }
-
-
 
         createOption("Manage Exoship") {
             recreateManagementOptions()
@@ -100,8 +103,12 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
         element.addSectionHeading("Warp Configuration", Alignment.MID, 0f)
         element.addSpacer(10f)
 
-        var bringPlayerCheckbox = ExoCheckbox(playerData.playerJoinsWarp, element, 375f, 24f).apply {
-            var para = this.innerElement.addPara("Bring player along for the warp.", 0f, Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
+        var bringPlayerCheckbox = ExoCheckbox(playerData.playerJoinsWarp, element, 375f, 24f, !openedFromAbility).apply {
+            var color = Misc.getBasePlayerColor()
+            if (openedFromAbility) {
+                color = Misc.getGrayColor()
+            }
+            var para = this.innerElement.addPara("Bring player along for the warp.", 0f, color, color)
             para.position.inTL(24f + 10f,0f + para.computeTextHeight("") / 3)
 
             advance {
@@ -109,6 +116,11 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
             }
         }
 
+        if (openedFromAbility) {
+            element.addTooltip(bringPlayerCheckbox.innerElement, TooltipMakerAPI.TooltipLocation.BELOW, 400f) {
+                it.addPara("Can not be selected when the player is not docked to the exoship.", 0f)
+            }
+        }
 
         element.addSpacer(10f)
         element.addSectionHeading("Management", Alignment.MID, 0f)
@@ -145,10 +157,12 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
 
 
             var fuel = (0 + (playerData.fuelPercentPerMonthMax * slider.level) * 100).toInt()
-            var cost = (0 + (playerData.computeMonthlyCost(slider.level))).toInt()
+            var cost = (0 + (playerData.computeMonthlyCost(slider.level)))
 
-            fuelInfoPara.text = "At the selected rate, the ship recharges $fuel% of its total fuel tank at a cost of $cost credits per month."
-            fuelInfoPara.setHighlight("$fuel%", "$cost")
+            var costString = Misc.getDGSCredits(cost)
+
+            fuelInfoPara.text = "At the selected rate, the ship recharges $fuel% of its total fuel tank at a cost of $costString credits per month."
+            fuelInfoPara.setHighlight("$fuel%", "$costString")
 
             playerData.fuelProductionLevel = slider.level
         }
@@ -253,9 +267,17 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
                 })
         }
 
-        createOption("Back") {
-            clearOptions()
-            init(dialog)
+        if (openedFromAbility) {
+            createOption("Close") {
+                closeDialog()
+            }
+            optionPanel.setShortcut("Close", Keyboard.KEY_ESCAPE, false, false, false, false)
+        }
+        else {
+            createOption("Back") {
+                clearOptions()
+                init(dialog)
+            }
         }
     }
 
@@ -263,10 +285,13 @@ class PlayerExoshipInteraction : RATInteractionPlugin() {
         var exoship = interactionTarget.customPlugin as ExoshipEntity
         var playerData = exoship.playerModule
 
-
         if (selectedDestination == null) return
 
         var playerJoins = playerData.playerJoinsWarp
+        if (openedFromAbility) {
+            playerJoins = false
+        }
+
         var remaining = calculateFuelRemaining(interactionTarget.starSystem, selectedDestination!!.starSystem)
 
         remaining = MathUtils.clamp(remaining, 0f, 1f)

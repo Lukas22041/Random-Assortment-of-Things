@@ -88,6 +88,9 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         exoshipEntity.fadeOutIndicator()
         exoshipEntity.addTag(Tags.NON_CLICKABLE)
 
+        //Otherwise the exoship can still be interacted with if started from the ability
+        Global.getSector().campaignUI.clearLaidInCourse()
+
 
         if (playerJoined) {
             fixateViewportAndFadeStars()
@@ -224,7 +227,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
 
         spawnVel.scale(exoship.MAX_SPEED)
         spawnVel.negate()
-        spawnLoc.scale(brakeDist * 1f + 5000f)
+        spawnLoc.scale(brakeDist * 1f + 6000f)
         Vector2f.add(spawnLoc, parkingOrbit!!.location, spawnLoc)
 
         exoshipEntity.setExpired(false)

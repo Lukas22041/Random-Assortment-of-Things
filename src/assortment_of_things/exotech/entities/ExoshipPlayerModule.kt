@@ -8,6 +8,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
+import java.util.GregorianCalendar
 
 class ExoshipPlayerModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEntityToken) {
 
@@ -36,7 +37,6 @@ class ExoshipPlayerModule(var exoship: ExoshipEntity, var exoshipEntity: SectorE
 
             currentFuelPercent += (fuelPercentPerMonthMax * fuelProductionLevel) / 30f * days
             currentFuelPercent = MathUtils.clamp(currentFuelPercent, 0f, maxFuelPercent)
-
 
             if (currentFuelPercent < 1f) {
                 val report = SharedData.getData().currentReport

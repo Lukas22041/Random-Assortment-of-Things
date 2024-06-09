@@ -4,7 +4,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import exerelin.campaign.ui.NexLunaElement
 
-class ExoCheckbox(var value: Boolean, tooltip: TooltipMakerAPI, width: Float, height: Float) : NexLunaElement(tooltip, width, height) {
+class ExoCheckbox(var value: Boolean, tooltip: TooltipMakerAPI, width: Float, height: Float, var isDocked: Boolean) : NexLunaElement(tooltip, width, height) {
 
     var offSprite = Global.getSettings().getSprite("ui", "toggle20_off")
     var onSprite = Global.getSettings().getSprite("ui", "toggle20_on")
@@ -16,8 +16,10 @@ class ExoCheckbox(var value: Boolean, tooltip: TooltipMakerAPI, width: Float, he
         renderBorder = false
 
         onClick {
-            playClickSound()
-            value = !value
+            if (isDocked) {
+                playClickSound()
+                value = !value
+            }
         }
 
         onHoverEnter {
@@ -28,15 +30,20 @@ class ExoCheckbox(var value: Boolean, tooltip: TooltipMakerAPI, width: Float, he
     override fun render(alphaMult: Float) {
         super.render(alphaMult)
 
+        var totalAlpha = 1f
+        if (!isDocked) {
+            totalAlpha = 0.5f
+        }
+
         var alpha = 0f
         if (isHovering) alpha = 0.15f
 
-        glowSprite.alphaMult = alpha * alphaMult
+        glowSprite.alphaMult = alpha * alphaMult * totalAlpha
         glowSprite.setSize(24f, 24f)
         glowSprite.render(x, y)
 
-        if (value) {
-            onSprite.alphaMult = alphaMult
+        if (value && isDocked) {
+            onSprite.alphaMult = alphaMult * totalAlpha
             onSprite.setSize(24f, 24f)
             onSprite.render(x, y)
         }

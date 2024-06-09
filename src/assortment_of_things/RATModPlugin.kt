@@ -127,17 +127,8 @@ class RATModPlugin : BaseModPlugin() {
         initFrontiers()
 
 
-
-
-        //Fixes a dumb crash in 0.97 for non-new saves
-        for (jumppoint in Global.getSector().hyperspace.jumpPoints) {
-            if (jumppoint.hasTag("rat_abyss_entrance") && jumppoint is JumpPointAPI && jumppoint.destinations.isEmpty()) {
-                var system = AbyssUtils.getAbyssData().rootSystem
-
-                var fracture = system!!.customEntities.find { it.customPlugin is AbyssalFracture }
-
-                jumppoint.addDestination(JumpPointAPI.JumpDestination(fracture, "Failsafe"))
-            }
+        if (!Global.getSector().characterData.abilities.contains("rat_exoship_management")) {
+            Global.getSector().characterData.addAbility("rat_exoship_management")
         }
 
         //Global.getSector().intelManager.addIntel(DoctrineReportAbyssal())
