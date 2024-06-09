@@ -1,2 +1,2 @@
 name,id,type,tags,activationDays,activationCooldown,durationDays,deactivationDays,deactivationCooldown,unlockedAtStart,defaultForAIFleet,musicSuppression,uiOn,uiOff,uiLoop,worldOn,worldOff,worldLoop,icon,plugin,ai,desc,sortOrder
-Manage Exoship,rat_exoship_management,DURATION,,0,,0,,0,,,,,,,,,,graphics/icons/abilities/rat_exoship_management.png,assortment_of_things.exotech.abilities.ManageExoshipAbility,,,2222
+Manage Exoship,rat_exoship_management,DURATION,,0,,0,,0,,,,,,,,,,graphics/icons/abilities/rat_exoship_management_transit_frame1.png,assortment_of_things.exotech.abilities.ManageExoshipAbility,,,2222

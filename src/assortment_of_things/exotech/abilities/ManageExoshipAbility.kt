@@ -4,6 +4,7 @@ import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.interactions.exoship.ExoFuelbar
 import assortment_of_things.exotech.interactions.exoship.PlayerExoshipInteraction
 import assortment_of_things.misc.addNegativePara
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.StarSystemAPI
@@ -13,6 +14,7 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.MapParams
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
+import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 
 class ManageExoshipAbility : BaseDurationAbility() {
@@ -20,8 +22,18 @@ class ManageExoshipAbility : BaseDurationAbility() {
         var exoship = ExoUtils.getExoData().getPlayerExoship()
         var exoshipPlugin = ExoUtils.getExoData().getPlayerExoshipPlugin()
 
-        Global.getSector().campaignUI.showInteractionDialog(PlayerExoshipInteraction(true), exoship)
+        if (!exoshipPlugin.isInTransit) {
+            Global.getSector().campaignUI.showInteractionDialog(PlayerExoshipInteraction(true), exoship)
+        }
     }
+
+    var currentFrame = 1
+    var frameDirection = 1
+    var frameInterval = IntervalUtil(0.04f, 0.04f)
+    var currentFramePath = "graphics/icons/abilities/rat_exoship_management_transit_frame1.png"
+
+    var blinkInterval = IntervalUtil(0.5f, 0.5f)
+    var isBlinking = false
 
     @Transient var map: UIPanelAPI? = null
     var systemUsedForMap: LocationAPI? = null
@@ -60,7 +72,7 @@ class ManageExoshipAbility : BaseDurationAbility() {
         tooltip.addSectionHeading("Current Location", Alignment.MID, 0f)
         tooltip.addSpacer(10f)
 
-        if (systemUsedForMap != exoship.containingLocation) {
+        if (systemUsedForMap != exoship.containingLocation || map == null) {
             systemUsedForMap = exoship.containingLocation
 
             var mapP = MapParams()
@@ -86,6 +98,10 @@ class ManageExoshipAbility : BaseDurationAbility() {
     }
 
 
+    override fun isTooltipExpandable(): Boolean {
+        return false
+    }
+    
     override fun applyEffect(amount: Float, level: Float) {
 
     }
@@ -96,6 +112,47 @@ class ManageExoshipAbility : BaseDurationAbility() {
 
     override fun cleanupImpl() {
 
+    }
+
+    override fun advance(amount: Float) {
+        super.advance(amount)
+
+        var exoshipPlugin = ExoUtils.getExoData().getPlayerExoshipPlugin()
+        var realAmount = amount
+
+        if (Global.getSector().isFastForwardIteration) {
+            realAmount /= Global.getSettings().getFloat("campaignSpeedupMult")
+        }
+
+        if (!isBlinking && exoshipPlugin.isInTransit) {
+            blinkInterval.advance(realAmount)
+            if (blinkInterval.intervalElapsed()) {
+                isBlinking = true
+            }
+        }
+
+        if (isBlinking) {
+            frameInterval.advance(realAmount)
+            if (frameInterval.intervalElapsed()) {
+                currentFrame += frameDirection
+                if (currentFrame == 10) {
+                    frameDirection = -1
+                }
+                if (currentFrame == 1) {
+                    frameDirection = 1
+                    isBlinking = false
+                }
+            }
+        }
+
+        currentFramePath =  "graphics/icons/abilities/rat_exoship_management_transit_frame$currentFrame.png"
+    }
+
+    override fun getSpriteName(): String {
+        var path = currentFramePath
+
+      //  Global.getSettings().getAndLoadSprite(path)
+        return path
     }
 
     override fun isUsable(): Boolean {

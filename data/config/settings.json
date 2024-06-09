@@ -89,6 +89,19 @@
 		  "abyss_warning_beacon":"graphics/icons/intel/rat_abyss_warning_beacon.png",
 		},
 		
+		"rat_exo_ability": {
+		  "frame1":"graphics/icons/abilities/rat_exoship_management_transit_frame1.png",
+		  "frame2":"graphics/icons/abilities/rat_exoship_management_transit_frame2.png",
+		  "frame3":"graphics/icons/abilities/rat_exoship_management_transit_frame3.png",
+		  "frame4":"graphics/icons/abilities/rat_exoship_management_transit_frame4.png",
+		  "frame5":"graphics/icons/abilities/rat_exoship_management_transit_frame5.png",
+		  "frame6":"graphics/icons/abilities/rat_exoship_management_transit_frame6.png",
+		  "frame7":"graphics/icons/abilities/rat_exoship_management_transit_frame7.png",
+		  "frame8":"graphics/icons/abilities/rat_exoship_management_transit_frame8.png",
+		  "frame9":"graphics/icons/abilities/rat_exoship_management_transit_frame9.png",
+		  "frame10":"graphics/icons/abilities/rat_exoship_management_transit_frame10.png",
+		},
+		
 		"rat_preload": {
 		  "1":"graphics/icons/abilities/rat_singularity_jump_returnal.png",
 		  "2":"graphics/icons/intel/rat_archivist_intel.png",

@@ -27,6 +27,7 @@ class ExoshipPlayerModule(var exoship: ExoshipEntity, var exoshipEntity: SectorE
 
 
     fun advance(amount: Float) {
+        if (!isPlayerOwned) return
         if (!Global.getSector().isPaused) {
             var days = Misc.getDays(amount)
 
