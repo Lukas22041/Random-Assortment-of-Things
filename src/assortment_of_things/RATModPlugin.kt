@@ -6,6 +6,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.abyss.rework.AbyssGeneratorV2
 import assortment_of_things.abyss.scripts.*
 import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
 import assortment_of_things.artifacts.AddArtifactHullmod
@@ -267,6 +268,8 @@ class RATModPlugin : BaseModPlugin() {
 
                 AbyssGenerator().beginGeneration()
             }
+
+          //AbyssGeneratorV2.generate()
         }
     }
 
