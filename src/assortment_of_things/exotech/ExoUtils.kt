@@ -17,13 +17,4 @@ object ExoUtils {
         }
         return data
     }
-
-    fun getExoshipData(exoship: SectorEntityToken) : ExoShipData {
-        var data = exoship.memoryWithoutUpdate.get("\$rat_exoship_data") as ExoShipData?
-        if (data == null) {
-            data = ExoShipData()
-            exoship.memoryWithoutUpdate.set("\$rat_exoship_data", data)
-        }
-        return data
-    }
 }

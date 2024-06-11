@@ -3,17 +3,28 @@ package assortment_of_things.exotech
 import assortment_of_things.exotech.entities.ExoshipEntity
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.characters.FullName
+import com.fs.starfarer.api.characters.PersonAPI
 
 class ExoData {
 
-    var interactedWithExoship = false
-    var hasPartnership = false
-    var commPerson = Global.getFactory().createPerson()
     private var exoship: SectorEntityToken? = null
     private var playerExoship: SectorEntityToken? = null
 
-    var tokens = 0f
+    var showFactionInIntel = false
+    var canRepairShips = false
 
+    var amelie = Global.getFactory().createPerson()
+    var xander = Global.getFactory().createPerson()
+
+
+    //First Quest
+    var QuestBeginning_Active = true
+
+    var QuestBeginning_StartedFromExoship = false
+    var QuestBeginning_StartedFromRemains = false
+
+    var QuestBeginning_GaveExoProcessor = false
 
     fun setExoship(exoship : SectorEntityToken) {
         this.exoship = exoship

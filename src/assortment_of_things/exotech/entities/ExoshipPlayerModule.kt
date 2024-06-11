@@ -23,7 +23,7 @@ class ExoshipPlayerModule(var exoship: ExoshipEntity, var exoshipEntity: SectorE
 
     var playerJoinsWarp = true
 
-    var isPlayerOwned = true
+    var isPlayerOwned = false
 
 
     fun advance(amount: Float) {

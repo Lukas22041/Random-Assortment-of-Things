@@ -4,11 +4,13 @@ import assortment_of_things.abyss.entities.AbyssalLightsource
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import assortment_of_things.exotech.entities.ExoLightsource
+import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.util.Misc
@@ -20,10 +22,33 @@ import java.util.*
 object ExotechGenerator {
 
     fun setup() {
+        setupPeople()
 
         generateExoship()
 
         generateExoshipRemains()
+    }
+
+    fun setupPeople() {
+        var data = ExoUtils.getExoData()
+
+        //Amelie
+        var amelie = data.amelie
+        amelie.gender = FullName.Gender.FEMALE
+        amelie.name = FullName("Amelie", "", FullName.Gender.FEMALE)
+        amelie.portraitSprite = "graphics/portraits/rat_exo1.png"
+        amelie.postId = "rat_exo_fleetCommander"
+        amelie.setFaction("rat_exotech")
+
+        //Xander
+        var xander = data.xander
+        xander.gender = FullName.Gender.MALE
+        xander.name = FullName("Xander", "", FullName.Gender.MALE)
+        xander.portraitSprite = "graphics/portraits/rat_exo2.png"
+        xander.postId = "rat_exo_intelligence"
+        xander.setFaction("rat_exotech")
+
+
     }
 
     fun generateExoship() {
@@ -36,8 +61,7 @@ object ExotechGenerator {
         var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "Daybreak", "rat_exoship", "rat_exotech")
         exoshipEntity.orbit = location.orbit
 
-        var data = ExoUtils.getExoshipData(exoshipEntity)
-        data.name = "Daybreak"
+
 
         var market = addMarketplace("rat_exotech",
             exoshipEntity,
@@ -53,7 +77,11 @@ object ExotechGenerator {
         market.isHidden = true
 
         ExoUtils.getExoData().setExoship(exoshipEntity)
-        ExoUtils.getExoData().setPlayerExoship(exoshipEntity)
+        //ExoUtils.getExoData().setPlayerExoship(exoshipEntity)
+
+        var plugin = exoshipEntity.customPlugin as ExoshipEntity
+        plugin.playerModule.isPlayerOwned = false
+        plugin.npcModule.isPlayerOwned = false
 
     }
 
@@ -67,7 +95,7 @@ object ExotechGenerator {
 
         var exoshipEntity = hyper.addCustomEntity("exoship_${Misc.genUID()}", "Exoship Remains", "rat_exoship_broken", Factions.NEUTRAL)
 
-        var loc = Vector2f((width /2) * MathUtils.getRandomNumberInRange(0.4f, 0.6f), -height/2 - 6000)
+        var loc = Vector2f((width /2) * 0.55f, -height/2 - 6000)
         exoshipEntity.location.set(loc)
         exoshipEntity.facing = 35f
 

@@ -128,9 +128,9 @@ class RATModPlugin : BaseModPlugin() {
         initFrontiers()
 
 
-        if (!Global.getSector().characterData.abilities.contains("rat_exoship_management")) {
+       /* if (!Global.getSector().characterData.abilities.contains("rat_exoship_management")) {
             Global.getSector().characterData.addAbility("rat_exoship_management")
-        }
+        }*/
 
         //Global.getSector().intelManager.addIntel(DoctrineReportAbyssal())
 

@@ -102,15 +102,20 @@
 		  "frame10":"graphics/icons/abilities/rat_exoship_management_transit_frame10.png",
 		},
 		
+		"rat_exo_portraits": {
+		  "amelie":"graphics/portraits/rat_exo1.png",
+		  "amelie_holo":"graphics/portraits/rat_exo1_holo.png",
+		  "xander":"graphics/portraits/rat_exo2.png",
+		},
+		
 		"rat_preload": {
 		  "1":"graphics/icons/abilities/rat_singularity_jump_returnal.png",
 		  "2":"graphics/icons/intel/rat_archivist_intel.png",
 		  "3":"graphics/fx/rat_darkness_vignette.png",
 		  "4":"graphics/fx/rat_darkness_vignette_reversed.png",
 		  "5":"graphics/fx/rat_black.png",
-		  "6":"graphics/portraits/rat_exo_comm.png",
-		  "7":"graphics/icons/intel/rat_exoship_intel.png",
-		  "8":"graphics/icons/intel/rat_settlement.png",
+		  "6":"graphics/icons/intel/rat_exoship_intel.png",
+		  "7":"graphics/icons/intel/rat_settlement.png",
 		},
 		
  	}

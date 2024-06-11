@@ -12,9 +12,11 @@ import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
+import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.interactions.ExoshipWreckageInteraction
 import assortment_of_things.exotech.interactions.exoship.PlayerExoshipInteraction
+import assortment_of_things.exotech.interactions.quest1.BeginningAtExoshipInteraction
 import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
@@ -43,8 +45,18 @@ class RATCampaignPlugin : BaseCampaignPlugin()
     override fun pickInteractionDialogPlugin(interactionTarget: SectorEntityToken?): PluginPick<InteractionDialogPlugin>? {
         if (interactionTarget == null) return null
 
+        var exoData = ExoUtils.getExoData()
+
         if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship") {
             var plugin = interactionTarget.customPlugin as ExoshipEntity
+
+
+            if (exoData.QuestBeginning_Active && !exoData.QuestBeginning_StartedFromRemains) {
+                return PluginPick(BeginningAtExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            } else if (exoData.QuestBeginning_Active) {
+
+            }
+
             if (plugin.playerModule.isPlayerOwned) {
                 return PluginPick(PlayerExoshipInteraction(false), CampaignPlugin.PickPriority.HIGHEST)
             }

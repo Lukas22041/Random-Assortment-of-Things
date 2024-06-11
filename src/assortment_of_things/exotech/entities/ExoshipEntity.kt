@@ -41,6 +41,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     var MAX_TURNRATE = 18f
 
     lateinit var playerModule: ExoshipPlayerModule
+    lateinit var npcModule: ExoshipNPCModule
     lateinit var warpModule: ExoshipWarpModule
     lateinit var movement: CampaignEntityMovementUtil
     lateinit var engineGlow: CampaignEngineGlowUtil
@@ -95,6 +96,9 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         playerModule = ExoshipPlayerModule(this, entity)
 
+        npcModule = ExoshipNPCModule(this, entity)
+
+
         /*entity!!.orbit = null
         entity!!.velocity.set(Vector2f())
         movement.moveToLocation(Vector2f(0f, 0f))*/
@@ -121,6 +125,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
         }*/
 
         playerModule.advance(amount)
+        npcModule.advance(amount)
         warpModule.advance(amount)
 
        /* delay -= 1 * amount
@@ -259,7 +264,6 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             lights!!.setSize(95f, 140f)
             lights!!.renderAtCenter(entity.location.x, entity.location.y)
 
-            var data = ExoUtils.getExoshipData(entity)
 
 
            /* jitter!!.alphaMult = velLevel * 0.5f
@@ -336,16 +340,14 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     override fun appendToCampaignTooltip(tooltip: TooltipMakerAPI?, level: SectorEntityToken.VisibilityLevel?) {
 
         var exoData = ExoUtils.getExoData()
-        var shipData = ExoUtils.getExoshipData(entity)
 
-        if (exoData.hasPartnership) {
+      /*  if (exoData.hasPartnership) {
             tooltip!!.addSpacer(10f)
 
-            var days = shipData.getTimeTilNextMove().toInt()
 
             tooltip!!.addPara("The ship is preparing to move towards its next location in $days days", 0f,
                 Misc.getGrayColor(), Misc.getHighlightColor(), "$days")
-        }
+        }*/
     }
 
 

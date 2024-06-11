@@ -10,6 +10,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import java.awt.Color
 
+/*
 class ExoshipIntel(var exoship: SectorEntityToken) : BaseIntelPlugin() {
 
     var data = ExoUtils.getExoshipData(exoship)
@@ -44,4 +45,4 @@ class ExoshipIntel(var exoship: SectorEntityToken) : BaseIntelPlugin() {
         return exoship.starSystem.hyperspaceAnchor ?: exoship
     }
 
-}
+}*/

@@ -18,7 +18,7 @@ class ExogridHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI, id: String?) {
 
-        if (ExoUtils.getExoData().hasPartnership) {
+        if (ExoUtils.getExoData().canRepairShips) {
             stats.variant.removeTag(Tags.VARIANT_UNRESTORABLE)
         }
         else {
