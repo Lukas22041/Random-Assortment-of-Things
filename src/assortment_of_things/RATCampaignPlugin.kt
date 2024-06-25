@@ -14,9 +14,11 @@ import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.entities.ExoshipEntity
+import assortment_of_things.exotech.interactions.ExoshipLockedOutInteraction
 import assortment_of_things.exotech.interactions.ExoshipRemainsInteraction
 import assortment_of_things.exotech.interactions.exoship.PlayerExoshipInteraction
 import assortment_of_things.exotech.interactions.questBeginning.BeginningAtExoshipInteraction
+import assortment_of_things.exotech.interactions.questBeginning.BeginningQuestEndInteraction
 import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
@@ -50,15 +52,11 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship") {
             var plugin = interactionTarget.customPlugin as ExoshipEntity
 
-
-
-            if (exoData.foundExoshipRemains) {
-                if (exoData.QuestBeginning_StartedFromExoship) {
-
-                }
-                if (exoData.QuestBeginning_StartedFromRemains) {
-
-                }
+            if (exoData.lockedOutOfQuest) {
+                return PluginPick(ExoshipLockedOutInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
+            else if (exoData.foundExoshipRemains && exoData.QuestBeginning_Active && !exoData.QuestBeginning_Done) {
+                return PluginPick(BeginningQuestEndInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
             else if (!exoData.QuestBeginning_StartedFromRemains) {
                 return PluginPick(BeginningAtExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)

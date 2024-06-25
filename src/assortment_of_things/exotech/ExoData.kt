@@ -21,12 +21,14 @@ class ExoData {
     var amelie = Global.getFactory().createPerson()
     var xander = Global.getFactory().createPerson()
 
+    var lockedOutOfQuest = false
 
     //First Quest
+    var QuestBeginning_Active = true
     var QuestBeginning_StartedFromExoship = false
     var QuestBeginning_StartedFromRemains = false
 
-    var QuestBeginning_GaveExoProcessor = false
+    var QuestBeginning_Done = false
 
     fun setExoship(exoship : SectorEntityToken) {
         this.exoship = exoship

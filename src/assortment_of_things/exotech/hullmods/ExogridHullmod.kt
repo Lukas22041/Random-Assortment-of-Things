@@ -160,8 +160,11 @@ class ExogridHullmod : BaseHullMod() {
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("The internal components of this ship are poorly understood by your crew. Without an Exo-Tech partnership, the ship can not be restored to remove d-mods.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "restored")
+        var textColor = Misc.getTextColor()
+        if (ExoUtils.getExoData().canRepairShips) textColor = Misc.getGrayColor()
+
+        tooltip.addPara("The internal components of this ship are poorly understood by your crew. Without support from the exo-tech faction, the ship can not be restored to remove d-mods.", 0f,
+            textColor, Misc.getHighlightColor(), "restored")
 
         element.render {
             sprite.setSize(tooltip.widthSoFar + 20, tooltip.heightSoFar + 10)

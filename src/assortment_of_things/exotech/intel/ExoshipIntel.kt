@@ -40,8 +40,8 @@ class ExoshipIntel(var exoship: SectorEntityToken) : BaseIntelPlugin() {
     override fun createSmallDescription(info: TooltipMakerAPI?, width: Float, height: Float) {
         info!!.addSpacer(10f)
 
-        info.addPara("Your fleet managed to connect to remote and scattered communication beacons belonging to the Exotech faction. " +
-                "These enable predicting the current location and future travel of their own Exoship.", 0f)
+        info.addPara("Your fleet managed to connect to remote and scattered navigation network belonging to the Exotech faction. " +
+                "These enable predicting the current location and future destinations of their own Exoship.", 0f)
 
         info.addSpacer(10f)
         info.addSectionHeading("Data", Alignment.MID, 0f)

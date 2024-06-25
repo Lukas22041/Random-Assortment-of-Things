@@ -160,6 +160,7 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
                 var intel = Global.getSector().intelManager.getFirstIntel(ExoshipRemainsIntel::class.java)
                 if (intel == null) {
                     intel = ExoshipRemainsIntel()
+                    Global.getSector().intelManager.addIntel(intel)
                 }
 
                 Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)
