@@ -176,7 +176,7 @@ class RATModPlugin : BaseModPlugin() {
             }
         }
 
-        Global.getSector().addTransientScript(ChangeExoIntelState())
+        //Global.getSector().addTransientScript(ChangeExoIntelState())
         generateExo()
 
 

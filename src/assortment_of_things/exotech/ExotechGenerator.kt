@@ -37,6 +37,7 @@ object ExotechGenerator {
         amelie.gender = FullName.Gender.FEMALE
         amelie.name = FullName("Amelie", "", FullName.Gender.FEMALE)
         amelie.portraitSprite = "graphics/portraits/rat_exo1.png"
+        amelie.rankId = "spaceAdmiral"
         amelie.postId = "rat_exo_fleetCommander"
         amelie.setFaction("rat_exotech")
 
@@ -45,6 +46,7 @@ object ExotechGenerator {
         xander.gender = FullName.Gender.MALE
         xander.name = FullName("Xander", "", FullName.Gender.MALE)
         xander.portraitSprite = "graphics/portraits/rat_exo2.png"
+        xander.rankId = "specialAgent"
         xander.postId = "rat_exo_intelligence"
         xander.setFaction("rat_exotech")
 
@@ -88,12 +90,16 @@ object ExotechGenerator {
 
     fun generateExoshipRemains() {
 
+        var data = ExoUtils.getExoData()
+
         var hyper = Global.getSector().hyperspace
 
         var width = Global.getSettings().getFloat("sectorWidth")
         var height = Global.getSettings().getFloat("sectorHeight")
 
         var exoshipEntity = hyper.addCustomEntity("exoship_${Misc.genUID()}", "Exoship Remains", "rat_exoship_broken", Factions.NEUTRAL)
+
+        data.exoshipRemainsEntity = exoshipEntity
 
         var loc = Vector2f((width /2) * 0.55f, -height/2 - 6000)
         exoshipEntity.location.set(loc)

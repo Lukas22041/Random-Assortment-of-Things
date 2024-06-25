@@ -1,3 +1,4 @@
+/*
 package assortment_of_things.exotech.interactions
 
 import assortment_of_things.exotech.items.ExoProcessor
@@ -167,4 +168,4 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
         return fleet
     }
 
-}
+}*/

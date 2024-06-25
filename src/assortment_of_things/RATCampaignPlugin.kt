@@ -14,9 +14,9 @@ import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.entities.ExoshipEntity
-import assortment_of_things.exotech.interactions.ExoshipWreckageInteraction
+import assortment_of_things.exotech.interactions.ExoshipRemainsInteraction
 import assortment_of_things.exotech.interactions.exoship.PlayerExoshipInteraction
-import assortment_of_things.exotech.interactions.quest1.BeginningAtExoshipInteraction
+import assortment_of_things.exotech.interactions.questBeginning.BeginningAtExoshipInteraction
 import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
@@ -51,10 +51,17 @@ class RATCampaignPlugin : BaseCampaignPlugin()
             var plugin = interactionTarget.customPlugin as ExoshipEntity
 
 
-            if (exoData.QuestBeginning_Active && !exoData.QuestBeginning_StartedFromRemains) {
-                return PluginPick(BeginningAtExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-            } else if (exoData.QuestBeginning_Active) {
 
+            if (exoData.foundExoshipRemains) {
+                if (exoData.QuestBeginning_StartedFromExoship) {
+
+                }
+                if (exoData.QuestBeginning_StartedFromRemains) {
+
+                }
+            }
+            else if (!exoData.QuestBeginning_StartedFromRemains) {
+                return PluginPick(BeginningAtExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
             if (plugin.playerModule.isPlayerOwned) {
@@ -66,7 +73,8 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         }
 
         if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship_broken") {
-            return PluginPick(ExoshipWreckageInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            return PluginPick(ExoshipRemainsInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            //return PluginPick(ExoshipWreckageInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
 

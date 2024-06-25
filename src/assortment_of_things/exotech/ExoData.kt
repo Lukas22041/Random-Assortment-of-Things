@@ -11,7 +11,11 @@ class ExoData {
     private var exoship: SectorEntityToken? = null
     private var playerExoship: SectorEntityToken? = null
 
-    var showFactionInIntel = false
+    var exoshipRemainsEntity: SectorEntityToken? = null
+    var foundExoshipRemains = false
+    var defeatedRemainsDefenses = false
+
+    //var showFactionInIntel = false
     var canRepairShips = false
 
     var amelie = Global.getFactory().createPerson()
@@ -19,8 +23,6 @@ class ExoData {
 
 
     //First Quest
-    var QuestBeginning_Active = true
-
     var QuestBeginning_StartedFromExoship = false
     var QuestBeginning_StartedFromRemains = false
 

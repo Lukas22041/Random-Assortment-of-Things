@@ -1,10 +1,12 @@
-package assortment_of_things.exotech.interactions.quest1
+package assortment_of_things.exotech.interactions.questBeginning
 
 import assortment_of_things.exotech.ExoUtils
+import assortment_of_things.exotech.intel.ExoshipIntel
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.loading.Description
+import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 
 class BeginningAtExoshipInteraction : RATInteractionPlugin() {
@@ -57,8 +59,24 @@ class BeginningAtExoshipInteraction : RATInteractionPlugin() {
 
                         textPanel.addPara("And as abruptly as it started, the connection is immediately disrupted.")
 
+                        visualPanel.showMapMarker(ExoUtils.getExoData().exoshipRemainsEntity, "Destination: Persean Abyss", Misc.getBasePlayerColor(), false,
+                            "graphics/icons/intel/discovered_entity.png", null, setOf())
+
                         exoship.npcModule.findNewDestination(1.5f)
                         ExoUtils.getExoData().QuestBeginning_StartedFromExoship = true
+
+
+                        var tooltip = textPanel.beginTooltip()
+                        tooltip.addPara("New intel has been added to the tri-pad.", 0f, Misc.getGrayColor(), Misc.getGrayColor())
+                        textPanel.addTooltip()
+
+                        var intel1 = ExoshipRemainsIntel()
+                        Global.getSector().intelManager.addIntel(intel1)
+                        Global.getSector().intelManager.addIntelToTextPanel(intel1, textPanel)
+
+                        var intel2 = ExoshipIntel(ExoUtils.getExoData().getExoship())
+                        Global.getSector().intelManager.addIntel(intel2)
+                        Global.getSector().intelManager.addIntelToTextPanel(intel2, textPanel)
 
                         addLeaveOption()
                     }

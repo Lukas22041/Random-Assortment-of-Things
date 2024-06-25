@@ -39,6 +39,13 @@ fun SettingsAPI.getAndLoadSprite(filename: String) : SpriteAPI{
     return this.getSprite(filename)
 }
 
+fun SettingsAPI.loadTextureCached(filename: String){
+    if (!previouslyLoadedSprite.contains(filename)) {
+        this.loadTexture(filename)
+        previouslyLoadedSprite.put(filename, true)
+    }
+}
+
 fun TooltipMakerAPI.addPara(str: String) = this.addPara(str, 0f)
 
 fun TooltipMakerAPI.addNegativePara(str: String) = this.addPara(str, 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())

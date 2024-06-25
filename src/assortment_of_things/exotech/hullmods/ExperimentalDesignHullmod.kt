@@ -19,6 +19,10 @@ class ExperimentalDesignHullmod : BaseHullMod() {
 
     }
 
+    override fun getDisplaySortOrder(): Int {
+        return 1
+    }
+
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
         var sprite = Global.getSettings().getAndLoadSprite("graphics/ui/rat_exo_hmod.png")
