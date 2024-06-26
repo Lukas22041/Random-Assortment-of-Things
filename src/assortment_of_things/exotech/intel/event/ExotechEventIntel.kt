@@ -202,9 +202,15 @@ class ExotechEventIntel() : BaseEventIntel() {
     override fun notifyStageReached(stage: EventStageData?) {
         super.notifyStageReached(stage)
 
+        if (stage!!.id == Stage.SUPPLY_ACCESS)
+        {
+            ExoUtils.getExoData().canBuyItems = true
+        }
+
         if (stage!!.id == Stage.EXPANDED_SUPPLY)
         {
             ExoUtils.getExoData().canRepairShips = true
+            ExoUtils.getExoData().canBuyShips = true
         }
 
     }

@@ -6,6 +6,8 @@ import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import assortment_of_things.exotech.entities.ExoLightsource
 import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
+import assortment_of_things.misc.levelBetween
+import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -25,6 +27,8 @@ object ExotechGenerator {
         setupPeople()
 
         generateExoship()
+
+        generateBeacons()
 
         generateExoshipRemains()
     }
@@ -54,8 +58,7 @@ object ExotechGenerator {
     }
 
     fun generateExoship() {
-        var systems = Global.getSector().starSystems.filter { !it.hasTag(Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasBlackHole() && !it.hasPulsar() && !it.hasTag(
-            Tags.THEME_HIDDEN)}
+        var systems = Global.getSector().starSystems.filter { !it.hasTag(Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasPulsar() && !it.hasTag(Tags.THEME_HIDDEN)}
         var system = systems.random()
         var location = BaseThemeGenerator.getLocations(Random(), system, MathUtils.getRandomNumberInRange(300f, 400f), linkedMapOf(
             BaseThemeGenerator.LocationType.STAR_ORBIT to 5f, BaseThemeGenerator.LocationType.OUTER_SYSTEM to 1f)).pick()
@@ -71,8 +74,8 @@ object ExotechGenerator {
             "Daybreak",
             4,
             arrayListOf(Conditions.OUTPOST),
-            arrayListOf(Submarkets.SUBMARKET_OPEN),
-            arrayListOf(Industries.MEGAPORT, Industries.WAYSTATION, Industries.PATROLHQ, Industries.ORBITALWORKS),
+            arrayListOf("rat_exoship_market"),
+            arrayListOf(Industries.MEGAPORT),
             0.3f,
             false,
             false)
@@ -85,8 +88,31 @@ object ExotechGenerator {
         plugin.playerModule.isPlayerOwned = false
         plugin.npcModule.isPlayerOwned = false
 
+        market.stability.modifyFlat("rat_exoship", 10f, "Exoship")
+
     }
 
+    fun generateBeacons() {
+        var beacons = 2
+
+        var systemsUnfiltered = Global.getSector().starSystems.filter { !it.hasTag(Tags.THEME_HIDDEN)}
+        var systems = Global.getSector().starSystems.filter { it.planets.filter { planet -> !planet.isStar }.isNotEmpty() && !it.hasTag(Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasPulsar() && !it.hasTag(Tags.THEME_HIDDEN)}.toMutableList()
+
+
+        var count = systemsUnfiltered.count()
+        var level = count.toFloat().levelBetween(250f, 600f)
+        var extra = 4f * level
+
+        beacons += extra.toInt()
+
+        for (i in 0 until beacons) {
+            var system = systems.randomAndRemove()
+            var planet = system.planets.filter { !it.isStar }.randomOrNull() ?: return
+            var beacon = system.addCustomEntity("hypernavbeacon${Misc.genUID()}", null, "rat_hypernavigational_beacon", "rat_exotech")
+
+            beacon.setCircularOrbitWithSpin(planet, MathUtils.getRandomNumberInRange(0f, 360f,), planet.radius + beacon.radius + 50f, 60f, 10f, 15f)
+        }
+    }
 
     fun generateExoshipRemains() {
 

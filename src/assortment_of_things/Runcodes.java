@@ -18,6 +18,7 @@ public class Runcodes {
 
         SectorEntityToken gateHauler = null;
 
+
         for (StarSystemAPI system : Global.getSector().getStarSystems()) {
             for (CustomCampaignEntityAPI entity : system.getCustomEntities()) {
                 if (entity.getCustomEntityType().equals("derelict_gatehauler")) {

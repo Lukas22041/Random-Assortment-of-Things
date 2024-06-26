@@ -38,17 +38,16 @@ class ExoshipNPCModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnti
             currentWarp = findNewDestination()
         }
 
-        if (currentWarp != null) {
+        if (currentWarp != null && !exoship.isInTransit) {
 
-
-            if (!exoship.isInTransit) {
-                currentWarp!!.daysTilWarp -= days
-            }
+            currentWarp!!.daysTilWarp -= days
 
             if (currentWarp!!.daysTilWarp <= 0 && !exoship.isInTransit) {
-                exoship.warpModule.warp(currentWarp!!.destination, false)
+                exoship.warpModule.warp(currentWarp!!.destination, false) {
+                    currentWarp = null
+                }
 
-                currentWarp = null
+                //currentWarp = null
             }
         }
 
@@ -60,7 +59,7 @@ class ExoshipNPCModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnti
 
     fun findNewDestination(timeOverwrite: Float? = null) : WarpDestination? {
 
-        var systems = Global.getSector().starSystems.filter { !it.hasTag(Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasBlackHole() && !it.hasPulsar() && !it.hasTag(
+        var systems = Global.getSector().starSystems.filter { !it.hasTag(Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasPulsar() && !it.hasTag(
             Tags.THEME_HIDDEN)}
 
         var filtered = systems.filter { system ->

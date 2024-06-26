@@ -3,3 +3,4 @@ rat_settlement_storage,"Settlement
 Storage",player,"Storage space for ships and cargo. Shared with colony storage. Storing materials has a fee attached, this fee can be negated by either building the ""Stockpile"" facility, or by having a colony owned on this planet.",assortment_of_things.frontiers.submarkets.SettlementStoragePlugin,graphics/factions/storage.png,1001
 rat_settlement_market,Trade Post,,A small markets that has been established on this settlement. Trades in common wares and the occasional ordnance known to your faction. ,assortment_of_things.frontiers.submarkets.TradePostSubmarketPlugin,,1000
 ,,,,,,
+rat_exoship_market,Amelie's Supply,,A small market of special supplies that Amelie can gather through her own connections. All items still come at a cost. She may not be able to sell certain things until her influence increases.,assortment_of_things.exotech.submarkets.ExotechSubmarketPlugin,,0

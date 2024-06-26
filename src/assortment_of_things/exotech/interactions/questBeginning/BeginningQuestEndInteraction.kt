@@ -105,7 +105,7 @@ class BeginningQuestEndInteraction : RATInteractionPlugin() {
 
                     textPanel.addPara("\"So that is where you come in to play. My will is to be at charge of the sleeping construct once we manage to reactivate it, but i require an independent contractor to do the work, lest they discover the secret we are hiding.")
 
-                    textPanel.addPara("So, are you in? Is the promise of rare goods, and the potential to co-own a collossal, star-treading station enough to peak your interest?\"")
+                    textPanel.addPara("So, are you in? Is the promise of rare goods, and the potential to co-own a colossal, star-treading station enough to peak your interest?\"")
 
                     createOption("Accept the offer") {
                         clearOptions()

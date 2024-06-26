@@ -142,7 +142,7 @@
       "mount": "TURRET",
       "arc": 0,
       "angle": 0,
-      "locations": [52, -1]
+      "locations": [52, -0]
     }
   ],
   "engineSlots": [

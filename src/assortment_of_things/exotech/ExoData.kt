@@ -17,6 +17,8 @@ class ExoData {
 
     //var showFactionInIntel = false
     var canRepairShips = false
+    var canBuyItems = false
+    var canBuyShips = false
 
     var amelie = Global.getFactory().createPerson()
     var xander = Global.getFactory().createPerson()

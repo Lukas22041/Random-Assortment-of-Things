@@ -62,7 +62,7 @@ class BeginningAtExoshipInteraction : RATInteractionPlugin() {
                         visualPanel.showMapMarker(ExoUtils.getExoData().exoshipRemainsEntity, "Destination: Persean Abyss", Misc.getBasePlayerColor(), false,
                             "graphics/icons/intel/discovered_entity.png", null, setOf())
 
-                        exoship.npcModule.findNewDestination(1.5f)
+                        //exoship.npcModule.findNewDestination(1.5f)
                         ExoUtils.getExoData().QuestBeginning_StartedFromExoship = true
 
 

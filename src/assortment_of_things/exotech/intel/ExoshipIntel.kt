@@ -1,6 +1,7 @@
 package assortment_of_things.exotech.intel
 
 import assortment_of_things.exotech.ExoUtils
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin.ArrowData
@@ -10,17 +11,29 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
 import java.awt.Color
 
-class ExoshipIntel(var exoship: SectorEntityToken) : BaseIntelPlugin() {
+class ExoshipIntel(var exoship: SectorEntityToken, var temporary: Boolean = false) : BaseIntelPlugin() {
 
 
     init {
         isImportant = true
+        if (temporary) {
+            endAfterDelay(MathUtils.getRandomNumberInRange(45f, 70f))
+        }
+        Global.getSector().addScript(this)
+    }
+
+    override fun notifyEnded() {
+        super.notifyEnded()
+        Global.getSector().removeScript(this)
     }
 
     override fun getName(): String? {
-        return "Daybreak"
+        var name = "Daybreak"
+        if (temporary) name += " (Temporary)"
+        return name
     }
 
     override fun addBulletPoints(info: TooltipMakerAPI?, mode: IntelInfoPlugin.ListInfoMode?, isUpdate: Boolean, tc: Color?, initPad: Float) {
@@ -35,13 +48,26 @@ class ExoshipIntel(var exoship: SectorEntityToken) : BaseIntelPlugin() {
             info!!.addPara("Plans to relocate in ${warp.daysTilWarp.toInt()} days", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "${exoship.containingLocation.nameWithNoType}",
             "${warp.daysTilWarp.toInt()}")
         }
+
+        if (temporary) {
+            info.addPara("Intel expires in ${endingTimeRemaining.toInt()} days", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "${endingTimeRemaining.toInt()}")
+        }
     }
 
     override fun createSmallDescription(info: TooltipMakerAPI?, width: Float, height: Float) {
         info!!.addSpacer(10f)
 
-        info.addPara("Your fleet managed to connect to remote and scattered navigation network belonging to the Exotech faction. " +
-                "These enable predicting the current location and future destinations of their own Exoship.", 0f)
+
+        if (temporary) {
+            info.addPara("This piece of intel has been acquired from a single beacon, and after ${endingTimeRemaining.toInt()} days its data will become outdated, expiring this piece of information.",
+                0f, Misc.getTextColor(), Misc.getHighlightColor(), "${endingTimeRemaining.toInt()}")
+        }
+        else {
+            info.addPara("Your fleet managed to connect to remote and scattered navigation network belonging to the Exotech faction. " +
+                    "These enable predicting the current location and future destinations of their own Exoship.", 0f)
+        }
+
+
 
         info.addSpacer(10f)
         info.addSectionHeading("Data", Alignment.MID, 0f)
@@ -50,10 +76,10 @@ class ExoshipIntel(var exoship: SectorEntityToken) : BaseIntelPlugin() {
         var data = ExoUtils.getExoData().getExoshipPlugin()
 
         if (data.isInTransit) {
-            info.addPara("The exoship ${exoship.name} is currently active in the ${exoship.containingLocation.nameWithNoType} system. " +
-                    "It is currently in transit.", 0f,
+            info.addPara("The exoship ${exoship.name} is currently in transit towards the ${data.npcModule.currentWarp!!.destination.starSystem.nameWithNoType} system. " +
+                    "", 0f,
                 Misc.getTextColor(), Misc.getHighlightColor(),
-                "${exoship.name}", "${exoship.containingLocation.nameWithNoType}")
+                "${exoship.name}", "${data.npcModule.currentWarp!!.destination.starSystem.nameWithNoType}")
         }
 
         else if (data.npcModule.currentWarp == null) {
@@ -69,6 +95,8 @@ class ExoshipIntel(var exoship: SectorEntityToken) : BaseIntelPlugin() {
                 Misc.getTextColor(), Misc.getHighlightColor(),
                 "${exoship.name}", "${exoship.containingLocation.nameWithNoType}", "${data.npcModule.currentWarp!!.destination.starSystem.name}", "${data.npcModule.currentWarp!!.daysTilWarp.toInt()}")
         }
+
+
 
     }
 

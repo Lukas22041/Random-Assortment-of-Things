@@ -16,6 +16,8 @@ import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.interactions.ExoshipLockedOutInteraction
 import assortment_of_things.exotech.interactions.ExoshipRemainsInteraction
+import assortment_of_things.exotech.interactions.HyperNavBeaconInteraction
+import assortment_of_things.exotech.interactions.exoship.NPCExoshipInteraction
 import assortment_of_things.exotech.interactions.exoship.PlayerExoshipInteraction
 import assortment_of_things.exotech.interactions.questBeginning.BeginningAtExoshipInteraction
 import assortment_of_things.exotech.interactions.questBeginning.BeginningQuestEndInteraction
@@ -49,6 +51,10 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
         var exoData = ExoUtils.getExoData()
 
+        if (interactionTarget.hasTag("hypernav_beacon")) {
+            return PluginPick(HyperNavBeaconInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+        }
+
         if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship") {
             var plugin = interactionTarget.customPlugin as ExoshipEntity
 
@@ -58,15 +64,14 @@ class RATCampaignPlugin : BaseCampaignPlugin()
             else if (exoData.foundExoshipRemains && exoData.QuestBeginning_Active && !exoData.QuestBeginning_Done) {
                 return PluginPick(BeginningQuestEndInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
-            else if (!exoData.QuestBeginning_StartedFromRemains) {
+            else if (!exoData.QuestBeginning_StartedFromRemains && !exoData.QuestBeginning_Done) {
                 return PluginPick(BeginningAtExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
-
-            if (plugin.playerModule.isPlayerOwned) {
+            else if (plugin.playerModule.isPlayerOwned) {
                 return PluginPick(PlayerExoshipInteraction(false), CampaignPlugin.PickPriority.HIGHEST)
             }
             else {
-                //return PluginPick(ExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                return PluginPick(NPCExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
         }
 
