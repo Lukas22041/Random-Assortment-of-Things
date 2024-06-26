@@ -1,16 +1,10 @@
 package assortment_of_things.exotech.intel.event
 
-import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.exotech.ExoUtils
-import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.loadTextureCached
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
-import com.fs.starfarer.api.campaign.listeners.FleetEventListener
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseEventIntel
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseFactorTooltip
@@ -26,7 +20,7 @@ class ExotechEventIntel() : BaseEventIntel() {
     var faction = Global.getSector().getFaction("rat_exotech")
 
     enum class Stage(var progress: Int) {
-        CONTACT(0), SUPPLY_ACCESS(100), EXPANDED_SUPPLY(300), CONFIDENCE(500), TRUSTWORTHY(750)
+        CONTACT(0), SUPPLY_ACCESS(100), EXPANDED_SUPPLY(300), CONFIDENCE(500), LEADERSHIP(ExoUtils.getExoData().maximumInfluenceRequired)
     }
 
     companion object {
@@ -52,18 +46,18 @@ class ExotechEventIntel() : BaseEventIntel() {
     init {
         Global.getSector().getMemoryWithoutUpdate().set(KEY, this);
 
-        setMaxProgress(Stage.TRUSTWORTHY.progress);
+        setMaxProgress(Stage.LEADERSHIP.progress);
 
         addStage(Stage.CONTACT, Stage.CONTACT.progress, StageIconSize.SMALL);
         addStage(Stage.SUPPLY_ACCESS, Stage.SUPPLY_ACCESS.progress, StageIconSize.SMALL);
         addStage(Stage.EXPANDED_SUPPLY, Stage.EXPANDED_SUPPLY.progress, StageIconSize.MEDIUM);
         addStage(Stage.CONFIDENCE, Stage.CONFIDENCE.progress, StageIconSize.MEDIUM);
-        addStage(Stage.TRUSTWORTHY, Stage.TRUSTWORTHY.progress, StageIconSize.LARGE);
+        addStage(Stage.LEADERSHIP, Stage.LEADERSHIP.progress, StageIconSize.LARGE);
 
         getDataFor(Stage.SUPPLY_ACCESS).keepIconBrightWhenLaterStageReached = true;
         getDataFor(Stage.EXPANDED_SUPPLY).keepIconBrightWhenLaterStageReached = true;
         getDataFor(Stage.CONFIDENCE).keepIconBrightWhenLaterStageReached = true;
-        getDataFor(Stage.TRUSTWORTHY).keepIconBrightWhenLaterStageReached = true;
+        getDataFor(Stage.LEADERSHIP).keepIconBrightWhenLaterStageReached = true;
         //getDataFor(Stage.STARE_IN_TO).isRepeatable = true
 
         isImportant = true
@@ -82,7 +76,7 @@ class ExotechEventIntel() : BaseEventIntel() {
             Stage.SUPPLY_ACCESS -> "graphics/icons/intel/events/rat_exo2.png"
             Stage.EXPANDED_SUPPLY -> "graphics/icons/intel/events/rat_exo3.png"
             Stage.CONFIDENCE -> "graphics/icons/intel/events/rat_exo4.png"
-            Stage.TRUSTWORTHY -> "graphics/icons/intel/events/rat_exo5.png"
+            Stage.LEADERSHIP -> "graphics/icons/intel/events/rat_exo5.png"
             else -> "graphics/icons/intel/events/rat_exo1.png"
         }
 
@@ -115,7 +109,7 @@ class ExotechEventIntel() : BaseEventIntel() {
             if (esd.id == Stage.CONFIDENCE) {
                 info!!.addPara("Amelie is tasked with more important missions. Check with Xander for information.", initPad, tc, h)
             }
-            if (esd.id == Stage.TRUSTWORTHY) {
+            if (esd.id == Stage.LEADERSHIP) {
                 info!!.addPara("Amelie is now trusted enough to be in charge of something big.", initPad, tc, h, "")
             }
 
@@ -148,7 +142,7 @@ class ExotechEventIntel() : BaseEventIntel() {
                     Stage.SUPPLY_ACCESS -> tooltip!!.addTitle("Supply Access")
                     Stage.EXPANDED_SUPPLY -> tooltip!!.addTitle("Expanded Supply")
                     Stage.CONFIDENCE -> tooltip!!.addTitle("Confidence")
-                    Stage.TRUSTWORTHY -> tooltip!!.addTitle("Trustworthy")
+                    Stage.LEADERSHIP -> tooltip!!.addTitle("Leadership")
                 }
 
                 addStageDesc(tooltip!!, stageId, 10f, true)
@@ -182,7 +176,7 @@ class ExotechEventIntel() : BaseEventIntel() {
             info.addPara("The factions higher ups gain higher confidence in Amelie, providing her with more important work. Xander will now have more missions available.", 0f,
                 Misc.getTextColor(), Misc.getHighlightColor(), "Xander will now have more missions available.")
         }
-        if (stageId == Stage.TRUSTWORTHY)
+        if (stageId == Stage.LEADERSHIP)
         {
             info.addPara("Amelie is now trusted enough to be in charge of something big.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),
                 "")
@@ -216,7 +210,7 @@ class ExotechEventIntel() : BaseEventIntel() {
     }
 
     override fun getBarColor(): Color {
-        return faction.darkUIColor
+        return faction.baseUIColor.darker()
     }
 
     override fun getBarProgressIndicatorColor(): Color {

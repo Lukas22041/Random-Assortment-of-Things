@@ -122,8 +122,10 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
         params.forceAllowPhaseShipsEtc = true
 
         val fleet = FleetFactoryV3.createFleet(params)
+        fleet.cargo.addCrew(1000)
         for (member in fleet.fleetData.membersListCopy) {
             cargo.mothballedShips.addFleetMember(member)
+            member.repairTracker.cr = 0.7f
         }
     }
 

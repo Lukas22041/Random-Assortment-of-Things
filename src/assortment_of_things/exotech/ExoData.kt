@@ -31,6 +31,16 @@ class ExoData {
     var QuestBeginning_StartedFromRemains = false
 
     var QuestBeginning_Done = false
+    var talkedWithXanderOnce = false
+
+    var aiCorePriceMod = 0.25f
+    var alterationPriceMod = 0.25f
+    var blueprintPriceMod = 0.50f
+    var colonyEquipmentPriceMod = 0.75f
+    var conversionRatio = 0.001f
+
+    var maximumInfluenceRequired = 750
+    var influenceCapPeritem = 100f
 
     fun setExoship(exoship : SectorEntityToken) {
         this.exoship = exoship
