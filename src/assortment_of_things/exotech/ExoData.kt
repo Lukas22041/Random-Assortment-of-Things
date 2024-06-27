@@ -42,6 +42,11 @@ class ExoData {
     var maximumInfluenceRequired = 750
     var influenceCapPeritem = 100f
 
+
+    //Missions
+
+    var hasActiveMission = false
+
     fun setExoship(exoship : SectorEntityToken) {
         this.exoship = exoship
     }

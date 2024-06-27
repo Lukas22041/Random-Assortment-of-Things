@@ -38,6 +38,13 @@ import assortment_of_things.campaign.scripts.AICoreReplacerScript
 import assortment_of_things.campaign.scripts.render.RATCampaignRenderer
 import assortment_of_things.exotech.ExotechGenerator
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
+import assortment_of_things.misc.ReflectionUtils
+import assortment_of_things.misc.getChildrenCopy
+import assortment_of_things.misc.getParent
+import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.ui.UIPanelAPI
+import com.fs.starfarer.campaign.CampaignState
+import com.fs.state.AppDriver
 import com.thoughtworks.xstream.XStream
 import lunalib.lunaUtil.campaign.LunaCampaignRenderer
 import java.util.*

@@ -130,27 +130,33 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
             extra += 1
         }*/
 
-        variants += generateSequence { "rat_genesis_frigate_support_Standard" }.take(3+extra)
-        variants += generateSequence { "rat_genesis_frigate_attack_Standard" }.take(3+extra)
+        variants += generateSequence { "rat_genesis_frigate_support_Standard" }.take(4+extra)
+        variants += generateSequence { "rat_genesis_frigate_attack_Standard" }.take(4+extra)
 
         var takenTargets = ArrayList<ShipAPI>()
 
         for (variant in variants) {
 
             var targetShips = CombatUtils.getShipsWithinRange(ship.location, maxRange - 500).filter { !takenTargets.contains(it) && !it.isFighter}
-            var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 1600f))
+            var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 2000f))
+            var facing: Float? = null
 
             if (takenTargets.size < 3) {
                 var target = targetShips.randomOrNull()
                 if (target != null) {
                     takenTargets.add(target)
                     loc = MathUtils.getRandomPointOnCircumference(target.location, target.collisionRadius + MathUtils.getRandomNumberInRange(400f, 600f))
+                    facing = Misc.getAngleInDegrees(loc, target.location)
                 }
             }
 
             var apparation = spawnApparation(variant, loc)
             if (apparation != null) {
                 apparations.add(apparation)
+                if (facing != null) {
+                    apparation.facing = facing
+
+                }
             }
         }
     }

@@ -73,25 +73,34 @@ class NPCExoshipInteraction : RATInteractionPlugin() {
     //Xander
     fun firstTalkToXander() {
         data.talkedWithXanderOnce = true
+        visualPanel.showPersonInfo(data.xander)
 
-        createOption("Continue") {
-            clearOptions()
-            populateXanderDialog()
-        }
+        textPanel.addPara("\"Hey - Amelie already informed me. I'm the head of her fleets intelligence sector. I will inform you of anything relevant to her goals.")
+
+        textPanel.addPara("We've got some jobs that our fleet doesnt have the time to handle, or some that Amelie herself can not be risked to be assosciated with, and some information the higher ups are not aware of yet. All to say is, we have lots of work left to do.\"")
+
+
+        populateXanderDialog()
 
     }
 
     fun talkToXander() {
         visualPanel.showPersonInfo(data.xander)
 
-        textPanel.addPara("Placeholder")
+        textPanel.addPara("\"What do you need?\"")
 
         populateXanderDialog()
     }
 
     fun populateXanderDialog() {
-        createOption("Ask him questions about himself.") {
 
+        createOption("Inquire about new missions.") {
+
+        }
+
+        createOption("Ask him questions about himself.") {
+            clearOptions()
+            populateXanderTalk()
         }
 
         createOption("Back") {
@@ -100,6 +109,35 @@ class NPCExoshipInteraction : RATInteractionPlugin() {
         optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
     }
 
+    //Xander Talk
+    fun populateXanderTalk() {
+
+        createOption("About Amelie") {
+            clearOptions()
+
+            textPanel.addPara("\"She respects my work, and i get paid.\"")
+
+            textPanel.addPara("\"Doesn't need much more for me. She has the energy that expresses her competence, and i can see a clear future in working with her. " +
+                    "She got her goals, and i think i can work with those.\"")
+
+            addBackOptionForXanderTalk()
+        }
+
+        createOption("Back") {
+            clearOptions()
+            populateXanderDialog()
+        }
+        optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
+    }
+
+
+    fun addBackOptionForXanderTalk() {
+        createOption("Back") {
+            clearOptions()
+            populateXanderTalk()
+        }
+        optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
+    }
 
 
 
@@ -119,9 +157,10 @@ class NPCExoshipInteraction : RATInteractionPlugin() {
             donateItems()
         }
 
-        createOption("Ask her more about herself.") {
+        createOption("Ask her some questions.") {
             clearOptions()
-
+            textPanel.addPara("\"What do you want to know?\"")
+            populateAmelieTalk()
         }
 
         createOption("Back") {
@@ -130,6 +169,53 @@ class NPCExoshipInteraction : RATInteractionPlugin() {
         optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
     }
 
+
+    //Amelie Talk
+    fun populateAmelieTalk() {
+
+        createOption("How did you become a fleet commander?") {
+            clearOptions()
+
+            textPanel.addPara("\"It's not that interesting of a story. Most of us are forced to be enrolled in the resource or patrol deparment after coming of age, i didn't want to be locked in to grunt work, so i've went with the patrol department. " +
+                    "But even there, after my initial period of service was over, i already had enough of it, and looked towards more rewarding positions, so i've joined the stations Academy, and pretty much just progressed further from there.")
+
+            textPanel.addPara("Can't say i look back to the enrollment fondly, yet it likely shaped my view of everything quite much.\"")
+
+            addBackOptionForAmelieTalk()
+
+        }
+
+        createOption("About Xander") {
+            clearOptions()
+
+            textPanel.addPara("\"Oh, him? I honestly can't say we know much about eachother, though he probably does know a lot more about me, " +
+                    "with his occupation and all, but nonetheless i think well of him. He does not share the same aspiration as myself, atleast not to the same extend - but he does his job well despite that. ")
+
+            textPanel.addPara("It is calming to not have to worry about a cooperator stabbing your back to fullfil their own ideals.\" she says with an exhausted expression.")
+
+            addBackOptionForAmelieTalk()
+        }
+
+
+        createOption("Back") {
+            clearOptions()
+            populateAmelieDialog()
+        }
+        optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
+    }
+
+
+
+
+    fun addBackOptionForAmelieTalk() {
+        createOption("Back") {
+            clearOptions()
+            populateAmelieTalk()
+        }
+        optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
+    }
+
+    //Donation Mechanic
     fun donateItems() {
         var tradeCargo = Global.getFactory().createCargo(true)
         var playerCargo = Global.getSector().playerFleet.cargo
