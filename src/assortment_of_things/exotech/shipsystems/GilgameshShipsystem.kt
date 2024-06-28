@@ -42,6 +42,10 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         super.apply(stats, id, state, effectLevel)
         ship = stats!!.entity as ShipAPI? ?: return
 
+        if (!ship!!.fleetMember.fleetData.fleet.isPlayerFleet) {
+            Global.getCombatEngine().getCustomData().set("phaseAnchor_canDive", false)
+        }
+
         if (!addedRenderer) {
             addedRenderer = true
             Global.getCombatEngine().addLayeredRenderingPlugin(this)
@@ -438,9 +442,9 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         drone.getMutableStats().getBallisticWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.4f)
 
 
-        drone.getMutableStats().ballisticWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 250f)
-        drone.getMutableStats().energyWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 250f)
-        drone.getMutableStats().missileWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 250f)
+        drone.getMutableStats().ballisticWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 300f)
+        drone.getMutableStats().energyWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 300f)
+        drone.getMutableStats().missileWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 300f)
 
 
         drone.setCollisionClass(CollisionClass.NONE)

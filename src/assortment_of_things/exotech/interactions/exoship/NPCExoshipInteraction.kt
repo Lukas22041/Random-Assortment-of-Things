@@ -1,15 +1,18 @@
 package assortment_of_things.exotech.interactions.exoship
 
-import assortment_of_things.exotech.ExoData
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.intel.event.DonatedItemFactor
+import assortment_of_things.exotech.intel.event.MissionCompletedFactor
+import assortment_of_things.exotech.intel.missions.ProjectGilgameshIntel
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.CargoPickerListener
 import com.fs.starfarer.api.campaign.CargoStackAPI
 import com.fs.starfarer.api.campaign.CoreUITabId
 import com.fs.starfarer.api.campaign.impl.items.*
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
@@ -75,10 +78,11 @@ class NPCExoshipInteraction : RATInteractionPlugin() {
         data.talkedWithXanderOnce = true
         visualPanel.showPersonInfo(data.xander)
 
-        textPanel.addPara("\"Hey - Amelie already informed me. I'm the head of her fleets intelligence sector. I will inform you of anything relevant to her goals.")
+        textPanel.addPara("\"Hey - Amelie already informed me. I'm the head of her fleets intelligence sector. I will relay anything relevant to her goals to you.")
 
-        textPanel.addPara("We've got some jobs that our fleet doesnt have the time to handle, or some that Amelie herself can not be risked to be assosciated with, and some information the higher ups are not aware of yet. All to say is, we have lots of work left to do.\"")
+        textPanel.addPara("We've got some jobs that our fleet doesnt have the time to handle, or some that Amelie herself can not be risked to be assosciated with, and some information the higher ups are not aware of yet. All to say is, we have lots of work left to do.")
 
+        textPanel.addPara("In the meanwhile, i will keep on the look out for the oppertunity to acquire a \"Warp Catalyst\". They arent easy to get a grab of, so it may take a while.\"", Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
 
         populateXanderDialog()
 
@@ -94,17 +98,77 @@ class NPCExoshipInteraction : RATInteractionPlugin() {
 
     fun populateXanderDialog() {
 
-        createOption("Inquire about new missions.") {
+        if (data.hasActiveMission && data.finishedCurrentMission) {
+            createOption("Talk to Xander about the completed mission") {
+                clearOptions()
+                data.hasActiveMission = false
+                data.finishedCurrentMission = false
 
+                if (data.finishedGilgameshMission) {
+                    data.finishedGilgameshMission = false
+                    data.finishedGilgameshMissionEntirely = true
+                    gilgameshMissionEnd()
+                }
+                else if (data.finishedWarpCatalystMission) {
+                    data.finishedWarpCatalystMission = false
+                    data.finishedWarpCatalystMissionEntirely = true
+
+                }
+            }
         }
 
-        createOption("Ask him questions about himself.") {
+
+        createOption("Inquire about available missions.") {
+            clearOptions()
+
+            populateXanderMissions()
+        }
+
+        if (data.hasActiveMission) {
+            optionPanel.setEnabled("Inquire about available missions.", false)
+            optionPanel.setTooltip("Inquire about available missions.", "You already have an active mission.")
+        }
+
+        createOption("Ask him some questions.") {
             clearOptions()
             populateXanderTalk()
         }
 
         createOption("Back") {
             populateOptions()
+        }
+        optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
+    }
+
+    // Missions
+    fun populateXanderMissions() {
+
+
+
+        var anyMissionAvailable = false
+
+        if (!data.finishedGilgameshMissionEntirely) {
+            anyMissionAvailable = true
+            gilgameshMissionStart()
+        }
+
+        if (data.accessToMoreMissions) {
+            if (!data.finishedWarpCatalystMissionEntirely) {
+                anyMissionAvailable = true
+            }
+        }
+
+        if (!anyMissionAvailable) {
+            textPanel.addPara("Xander has no new missions for you at the moment.")
+        }
+        else {
+            textPanel.addPara("\"I've got some missions available for you. Keep in mind that you will only be able to pursue one of them at a time.\"",
+                Misc.getTextColor(), Misc.getHighlightColor(), " one of them at a time.")
+        }
+
+        createOption("Back") {
+            clearOptions()
+            populateXanderDialog()
         }
         optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
     }
@@ -131,6 +195,89 @@ class NPCExoshipInteraction : RATInteractionPlugin() {
     }
 
 
+
+    //Individual Missions
+    fun gilgameshMissionStart() {
+
+        createOption("About a stolen experimental ship") {
+            clearOptions()
+
+            textPanel.addPara("\"One of the factions fleets got ambushed while performing trial deployments of a new destroyer we've got in the works. We identified the perpetrators as pirates, and discovered someone providing them with information from within, but i will spare you the details.")
+
+            textPanel.addPara("Point is, there is a bounty on taking out the fleet and preventing the destroyer from being transfered over to a buyer. We have been instructed that the destruction of the target is acceptible if the situation calls for it. " +
+                    "Perhaps the destroyer will simply dissappear after you have done your work, if you catch my drift. \"")
+
+            createOption("Accept this mission") {
+                clearOptions()
+
+                data.hasActiveMission = true
+
+                var intel = ProjectGilgameshIntel()
+                Global.getSector().intelManager.addIntel(intel)
+
+                visualPanel.showMapMarker(intel.fleet.starSystem.center, "Destination: ${intel.fleet.starSystem.name}", Misc.getBasePlayerColor(), false,
+                    "graphics/icons/intel/discovered_entity.png", null, setOf())
+                //visualPanel.showFleetInfo("Target Fleet", intel.fleet, null, null)
+
+                var tooltip = textPanel.beginTooltip()
+
+                var shipsInList = 7
+                var shipListCount = 0
+                var previewList = ArrayList<FleetMemberAPI>()
+                for (member in intel.fleet.fleetData.membersListCopy) {
+                    if (shipListCount >= shipsInList) break
+                    shipListCount += 1
+
+                    previewList.add(member)
+                }
+
+                textPanel.addPara("\"Good. Remember, everything goes aslong as the pirates lose their access to the Gilgamesh-class. " +
+                        "We have some information about their fleet, but they likely have many more ships than those listed.\"",
+                    Misc.getTextColor(), Misc.getHighlightColor(), "Gilgamesh-class")
+
+                tooltip.addShipList(7, 1, 64f, Misc.getBasePlayerColor(), previewList, 0f)
+
+                textPanel.addTooltip()
+
+                var locDescription = intel.getOrbitLocationDescription()
+                textPanel.addPara("\"The target appears to be in the ${intel.fleet.starSystem.nameWithNoType} system. $locDescription. We've transfered the necessary intel to complete the mission.\"",
+                    Misc.getTextColor(), Misc.getHighlightColor(), "${intel.fleet.starSystem.nameWithNoType}")
+
+                Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)
+
+
+                addBackOptionForXanderDialog()
+            }
+
+            addBackOptionForXanderMissions()
+        }
+
+
+    }
+
+    fun gilgameshMissionEnd() {
+        textPanel.addPara("\"Good work. Dont worry about bringing back the prototypes remains. If you have salvaged it for yourself, keep it. " +
+                "Take it as a reward for helping us. We can fake the records of it's guaranteed destruction. ")
+
+        textPanel.addPara("I have also reported the traitor that leaked the original fleets flight plans, im sure the higher ups will be quite pleased.\"")
+
+        Global.getSoundPlayer().playUISound(Sounds.STORY_POINT_SPEND, 1f, 1f)
+
+        MissionCompletedFactor(150, dialog, "Project Gilgamesh")
+
+        addBackOptionForXanderDialog()
+    }
+
+
+
+    fun addBackOptionForXanderMissions() {
+        createOption("Back") {
+            clearOptions()
+            populateXanderMissions()
+        }
+        optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
+    }
+
     fun addBackOptionForXanderTalk() {
         createOption("Back") {
             clearOptions()
@@ -138,6 +285,20 @@ class NPCExoshipInteraction : RATInteractionPlugin() {
         }
         optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
     }
+
+    fun addBackOptionForXanderDialog() {
+        createOption("Back") {
+            clearOptions()
+            populateXanderDialog()
+        }
+        optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
+    }
+
+
+
+
+
+
 
 
 
@@ -235,6 +396,8 @@ class NPCExoshipInteraction : RATInteractionPlugin() {
             override fun pickedCargo(cargo: CargoAPI) {
                 if (cargo.isEmpty) return
 
+
+
                 //Remove from player inventory
                 cargo.sort()
                 for (stack in cargo.stacksCopy) {
@@ -248,15 +411,7 @@ class NPCExoshipInteraction : RATInteractionPlugin() {
                 }
 
                 val influence = computeValue(cargo)
-
-                /*if (tokens > 0) {
-                    data.tokens += tokens
-                    var tokenString = Misc.getWithDGS(tokens) + Strings.C
-
-                    textPanel.setFontSmallInsignia()
-                    textPanel.addPara("Gained $tokenString tokens", Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor())
-                    textPanel.setFontInsignia()
-                }*/
+                Misc.adjustRep(data.amelie, (influence * 0.50f) * 0.001f, textPanel)
 
 
                 if (influence > 0) {

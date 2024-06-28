@@ -100,14 +100,14 @@ class ExotechEventIntel() : BaseEventIntel() {
         if (isUpdate && getListInfoParam() is EventStageData) {
             val esd = getListInfoParam() as EventStageData
             if (esd.id == Stage.SUPPLY_ACCESS) {
-                info!!.addPara("You now have access to more advanced supplies at the exoship.", initPad, tc, h, "+1", "+1", "moving slowly")
+                info!!.addPara("You now have access to advanced equipment at the exoship.", initPad, tc, h, "+1", "+1", "moving slowly")
             }
             if (esd.id == Stage.EXPANDED_SUPPLY) {
                 //info!!.addPara("25%% reduced supply useage in the abyss.", initPad, tc, h, "25%")
                 info!!.addPara("You can now purchase ships from Exotech.", initPad, tc, h, "50%")
             }
             if (esd.id == Stage.CONFIDENCE) {
-                info!!.addPara("Amelie is tasked with more important missions. Check with Xander for information.", initPad, tc, h)
+                info!!.addPara("Amelie is now tasked with more important missions. Check with Xander for more information.", initPad, tc, h)
             }
             if (esd.id == Stage.LEADERSHIP) {
                 info!!.addPara("Amelie is now trusted enough to be in charge of something big.", initPad, tc, h, "")
@@ -168,7 +168,7 @@ class ExotechEventIntel() : BaseEventIntel() {
         }
         if (stageId == Stage.EXPANDED_SUPPLY)
         {
-            info.addPara("Amelie is now able to purchase ships under her name and transfer them to your inventory. Exotech ships under your ownership can also now have their hull restored to remove d-mods.",
+            info.addPara("Amelie is now able to purchase ships under her name and transfer them to your inventory. Purchased ships come with an existing loadout of weapons. Exotech ships under your ownership can also now have their hull restored to remove d-mods.",
                 0f,  Misc.getTextColor(), Misc.getHighlightColor(),"purchase ships", "restored")
         }
         if (stageId == Stage.CONFIDENCE)
@@ -205,6 +205,11 @@ class ExotechEventIntel() : BaseEventIntel() {
         {
             ExoUtils.getExoData().canRepairShips = true
             ExoUtils.getExoData().canBuyShips = true
+        }
+
+        if (stage!!.id == Stage.CONFIDENCE)
+        {
+            ExoUtils.getExoData().accessToMoreMissions = true
         }
 
     }

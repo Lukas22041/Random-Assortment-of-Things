@@ -1,0 +1,55 @@
+{
+    "displayName": "Attack",
+    "fluxCapacitors": 20,
+    "fluxVents": 18,
+    "goalVariant": true,
+    "hullId": "rat_gilgamesh",
+    "hullMods": [
+        "escort_package",
+        "heavyarmor",
+        "targetingunit",
+    ],
+    "permaMods": [],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_gilgamesh_Attack",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "pulselaser",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0010": "rat_starburst",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0004": "phasebeam",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0007": "ioncannon",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0006": "taclaser",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

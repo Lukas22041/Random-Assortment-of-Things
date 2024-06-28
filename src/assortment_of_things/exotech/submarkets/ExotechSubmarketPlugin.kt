@@ -125,7 +125,8 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
         fleet.cargo.addCrew(1000)
         for (member in fleet.fleetData.membersListCopy) {
             cargo.mothballedShips.addFleetMember(member)
-            member.repairTracker.cr = 0.7f
+            member.repairTracker.isMothballed = true
+            member.repairTracker.cr = 0.5f
         }
     }
 
@@ -180,7 +181,7 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
         if (action == SubmarketPlugin.TransferAction.PLAYER_SELL) {
             return "You can not sell ships to Amelie"
         }
-        else if (!ExoUtils.getExoData().canBuyItems) {
+        else if (!ExoUtils.getExoData().canBuyShips) {
             return "Amelie needs more influence to be able to transfer ships to you."
         }
         return ""
