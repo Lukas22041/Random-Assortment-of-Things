@@ -29,7 +29,10 @@ class ExoshipRemainsIntel : BaseIntelPlugin() {
             info.addPara("Investigate the provided coordinates", 0f, tc, tc)
         }
 
-        if (data.foundExoshipRemains) {
+        if (data.readyToRepairExoship) {
+            info.addPara("Return to the broken exoship and innitiate the repair procedure.", 0f, tc, Misc.getHighlightColor(), "innitiate the repair procedure")
+        }
+        else if (data.foundExoshipRemains) {
             info.addPara("Acquire a \"Warp Catalyst\"", 0f, tc, Misc.getHighlightColor(), "Warp Catalyst")
         }
     }

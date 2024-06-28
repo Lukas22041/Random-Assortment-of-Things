@@ -21,6 +21,7 @@ import assortment_of_things.exotech.interactions.exoship.NPCExoshipInteraction
 import assortment_of_things.exotech.interactions.exoship.PlayerExoshipInteraction
 import assortment_of_things.exotech.interactions.questBeginning.BeginningAtExoshipInteraction
 import assortment_of_things.exotech.interactions.questBeginning.BeginningQuestEndInteraction
+import assortment_of_things.exotech.interactions.warpCatalystMission.ExotechHideoutInteraction
 import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
@@ -161,6 +162,9 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 return PluginPick(AbyssalWreckInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
+            if (interactionTarget.hasTag("rat_exo_hideout")) {
+                return PluginPick(ExotechHideoutInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
 
 
             when (id) {

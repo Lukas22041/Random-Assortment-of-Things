@@ -13,7 +13,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 
-class MissionCompletedFactor(var points: Int, var dialog: InteractionDialogAPI, var missionName: String) : BaseOneTimeFactor(points) {
+class MissionCompletedFactor(var points: Int, dialog: InteractionDialogAPI, var missionName: String) : BaseOneTimeFactor(points) {
 
     init {
         ExotechEventIntel.addFactorCreateIfNecessary(this, dialog)

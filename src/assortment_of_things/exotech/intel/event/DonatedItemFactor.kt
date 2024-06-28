@@ -13,7 +13,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 
-class DonatedItemFactor(var points: Int, var dialog: InteractionDialogAPI) : BaseOneTimeFactor(points) {
+class DonatedItemFactor(var points: Int, dialog: InteractionDialogAPI) : BaseOneTimeFactor(points) {
 
     init {
         ExotechEventIntel.addFactorCreateIfNecessary(this, dialog)

@@ -145,7 +145,7 @@ class ProjectGilgameshIntel() : BaseIntelPlugin() {
     }
 
     override fun getMapLocation(map: SectorMapAPI?): SectorEntityToken? {
-        if (finished) return ExoUtils.getExoData().getExoship()
+        if (finished) return null
         return fleet.starSystem?.center
     }
 

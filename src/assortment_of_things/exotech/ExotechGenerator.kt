@@ -6,13 +6,18 @@ import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import assortment_of_things.exotech.entities.ExoLightsource
 import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
+import assortment_of_things.misc.fixVariant
 import assortment_of_things.misc.levelBetween
 import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.characters.FullName
+import com.fs.starfarer.api.fleet.FleetMemberType
+import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
+import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.util.Misc
@@ -27,6 +32,8 @@ object ExotechGenerator {
         setupPeople()
 
         generateExoship()
+
+        generateHideout()
 
         generateBeacons()
 
@@ -90,6 +97,90 @@ object ExotechGenerator {
 
         market.stability.modifyFlat("rat_exoship", 10f, "Exoship")
 
+    }
+
+    fun generateHideout() {
+        var systems = Global.getSector().starSystems.filter { !it.hasTag(Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasPulsar() && !it.hasTag(
+            Tags.THEME_HIDDEN)}
+
+        var filtered = systems.filter { system ->
+            system.planets.none { Global.getSector().economy.marketsCopy.contains(it.market) } && system.planets.filter { !it.isStar }.isNotEmpty()
+        }
+
+        var system = filtered.randomOrNull()
+        var planet = system!!.planets.filter { !it.isStar }.randomOrNull()
+
+        var hideout = system.addCustomEntity("rat_hideout_${Misc.genUID()}", "Abandoned Station", "orbital_habitat", Factions.NEUTRAL)
+        hideout.setCircularOrbitPointingDown(planet, MathUtils.getRandomNumberInRange(0f, 360f), 50 + hideout.radius + planet!!.radius, 90f)
+
+        hideout.customDescriptionId = "rat_exo_hideout"
+        hideout.addTag("rat_exo_hideout")
+
+        ExoUtils.getExoData().hideout = hideout
+
+        var fleet = spawnHideoutFleet()
+        hideout.memoryWithoutUpdate.set("\$defenderFleet", fleet)
+    }
+
+    fun spawnHideoutFleet() : CampaignFleetAPI {
+        var fleet = Global.getFactory().createEmptyFleet("rat_exotech", "Defectors", true)
+
+        var officer = Global.getSector().getFaction(Factions.PIRATES).createRandomPerson()
+        officer.portraitSprite = "graphics/portraits/rat_exo3.png"
+
+        officer.stats.level = 7
+        officer.stats.setSkillLevel(Skills.HELMSMANSHIP, 2f)
+        officer.stats.setSkillLevel(Skills.COMBAT_ENDURANCE, 2f)
+        officer.stats.setSkillLevel(Skills.IMPACT_MITIGATION, 2f)
+        officer.stats.setSkillLevel(Skills.DAMAGE_CONTROL, 2f)
+        officer.stats.setSkillLevel(Skills.FIELD_MODULATION, 2f)
+        officer.stats.setSkillLevel(Skills.GUNNERY_IMPLANTS, 2f)
+        officer.stats.setSkillLevel(Skills.SYSTEMS_EXPERTISE, 2f)
+
+        var arkas = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_arkas_Strike")
+        arkas.fixVariant()
+        arkas.variant.addTag(Tags.VARIANT_ALWAYS_RECOVERABLE)
+
+        arkas.captain = officer
+
+        fleet.fleetData.addFleetMember(arkas)
+
+
+
+        val params = FleetParamsV3(null,
+            fleet.locationInHyperspace,
+            "rat_exotech",
+            5f,
+            FleetTypes.PATROL_MEDIUM,
+            120f,  // combatPts
+            0f,  // freighterPts
+            0f,  // tankerPts
+            0f,  // transportPts
+            0f,  // linerPts
+            0f,  // utilityPts
+            0f // qualityMod
+        )
+
+        var secondFleet = FleetFactoryV3.createFleet(params)
+        for (member in secondFleet.fleetData.membersListCopy) {
+            fleet.fleetData.addFleetMember(member)
+        }
+
+        for (member in fleet.fleetData.membersListCopy) {
+            member.repairTracker.cr = 0.7f
+        }
+        fleet.inflateIfNeeded()
+        fleet.ai = null
+
+        fleet.memoryWithoutUpdate.set(MemFlags.FLEET_IGNORED_BY_OTHER_FLEETS, true)
+        fleet.memoryWithoutUpdate.set(MemFlags.FLEET_IGNORES_OTHER_FLEETS, true)
+        fleet.memoryWithoutUpdate.set(MemFlags.MEMORY_KEY_MAKE_HOSTILE, true)
+        fleet.memoryWithoutUpdate.set(MemFlags.FLEET_FIGHT_TO_THE_LAST, true)
+
+        fleet.memoryWithoutUpdate.set(MemFlags.MEMORY_KEY_NO_REP_IMPACT, true)
+
+
+        return fleet
     }
 
     fun generateBeacons() {

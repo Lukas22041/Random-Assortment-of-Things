@@ -58,11 +58,12 @@ class BeginningQuestEndInteraction : RATInteractionPlugin() {
 
         textPanel.addPara("When attempting to establish active communication, the only responses are in form of an auutonomous response: \"This is a pre-recorded message. Do not Approach. Any attempts at closing in will be seen as hostile action and will have an appropriate reaction.\"")
 
-        textPanel.addPara("But suddenly, on the possibly dozenth repeat, it cuts out and says \"Permission granted to dock with a shuttle in Hangar 7-B\". The sudden shift comes at a suprise, docking rights arent given freely in most cases.")
+        textPanel.addPara("But suddenly, on the dozenth repeat, it cuts out and says \"Permission granted to dock with a shuttle in Hangar 7-B\". The sudden shift comes at a suprise, docking rights arent given freely in most cases.")
 
         textPanel.addPara("Non the less, the fleet prepares a shuttle for approach.")
 
         createOption("Continue") {
+            clearOptions()
             textPanel.addPara("On your approach you take notice of the hundreds of exterior hangars, with ships ferrying in resources from all across the local system.")
 
             textPanel.addPara("As the ship becomes larger in front of you, your destination becomes visible. When flying in, it is immediately clear that this dock is hardly ever used, as it appears much shabbier than the others you have spotted.")

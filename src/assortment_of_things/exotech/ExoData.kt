@@ -11,9 +11,13 @@ class ExoData {
     private var exoship: SectorEntityToken? = null
     private var playerExoship: SectorEntityToken? = null
 
+    var preventNPCWarps = false
+
     var exoshipRemainsEntity: SectorEntityToken? = null
     var foundExoshipRemains = false
     var defeatedRemainsDefenses = false
+
+    var hideout: SectorEntityToken? = null
 
     //var showFactionInIntel = false
     var canRepairShips = false
@@ -42,7 +46,8 @@ class ExoData {
     var maximumInfluenceRequired = 750
     var influenceCapPeritem = 100f
 
-    var accessToMoreMissions = false
+    var reachedLeadershipGoal = false
+    var readyToRepairExoship = false
 
 
 

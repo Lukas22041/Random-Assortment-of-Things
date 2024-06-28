@@ -1,6 +1,9 @@
 package assortment_of_things.exotech.interactions
 
+import assortment_of_things.exotech.ExoData
 import assortment_of_things.exotech.ExoUtils
+import assortment_of_things.exotech.ExotechGenerator
+import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.intel.ExoshipIntel
 import assortment_of_things.exotech.interactions.questBeginning.ExoshipRemainsIntel
 import assortment_of_things.exotech.items.ExoProcessor
@@ -11,11 +14,16 @@ import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.CargoAPI
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.SpecialItemData
-import com.fs.starfarer.api.impl.campaign.ids.HullMods
-import com.fs.starfarer.api.impl.campaign.ids.MemFlags
-import com.fs.starfarer.api.impl.campaign.ids.Tags
+import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.impl.campaign.ids.*
+import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaTextfield
+import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.util.vector.Vector2f
 import java.util.*
 
 class ExoshipRemainsInteraction : RATInteractionPlugin() {
@@ -26,9 +34,99 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
         textPanel.addPara("Your fleet approaches the remains.")
 
 
-        if (data.foundExoshipRemains) {
+        if (data.readyToRepairExoship) {
 
-            textPanel.addPara("Placeholder")
+            var intel = Global.getSector().intelManager.getFirstIntel(ExoshipRemainsIntel::class.java) as ExoshipRemainsIntel
+            intel.endImmediately()
+
+
+            textPanel.addPara("As if you had no time to spare, the fleet readies up to prepare the repair protocol. A last run of diagnostics are done and the broken catalyst is replaced with the new one")
+
+            Global.getSector().playerFleet.cargo.removeItems(CargoAPI.CargoItemType.SPECIAL, SpecialItemData("rat_warp_catalyst", ""), 1f)
+
+            textPanel.addPara("With just the press of a button, the procedure can now be begun.")
+
+            createOption("Innitate the repair sequence") {
+                clearOptions()
+
+                var data = ExoUtils.getExoData()
+
+                var playerExoship = Global.getSector().hyperspace.addCustomEntity("exoship_${Misc.genUID()}", "Daybreak", "rat_exoship", "rat_exotech")
+                var playerPlugin = playerExoship.customPlugin as ExoshipEntity
+
+                var market = ExotechGenerator.addMarketplace(Factions.PLAYER,
+                    playerExoship,
+                    arrayListOf(),
+                    "Daybreak",
+                    3,
+                    arrayListOf(Conditions.OUTPOST),
+                    arrayListOf("rat_exoship_market"),
+                    arrayListOf(Industries.MEGAPORT),
+                    0.3f,
+                    false,
+                    false)
+                market.isHidden = true
+
+                playerExoship.orbit = null
+
+                textPanel.addPara("Within seconds hundreds of maintenance hatches open across the stations hull, and thousands of drones leave its confines.")
+
+                textPanel.addPara("It just takes a few hours, and the surface of the ship exterior looks as good as new. Some of the interior will require some finer touches, but nothing throws off the diagonstics anymore.")
+
+                createOption("Continue") {
+                    clearOptions()
+
+                    textPanel.addPara("Before innitiating a warp to test its functionality however, it may be fitting to provide the ship with a new name.")
+
+                    var tooltip = textPanel.beginTooltip()
+
+                    tooltip.addSpacer(5f)
+
+                    var textfield = tooltip.addLunaTextfield("Aurora", false, 180f, 30f).apply {
+                        enableTransparency = true
+                    }
+
+                    textPanel.addTooltip()
+
+                    createOption("Innitiate a warp") {
+                        clearOptions()
+
+                        closeDialog()
+
+                        playerExoship.name = textfield.getText()
+
+
+                        var exoshipToken = Global.getSector().hyperspace.createToken(interactionTarget.location)
+
+                        playerExoship.setCircularOrbit(exoshipToken, interactionTarget.facing, 0.1f, 999f)
+
+                        playerExoship.facing = interactionTarget.facing
+
+                        Global.getSector().hyperspace.removeEntity(interactionTarget)
+
+                        data.setPlayerExoship(playerExoship)
+                        playerPlugin.npcModule.isPlayerOwned = true
+                        playerPlugin.playerModule.isPlayerOwned = true
+
+                        var deepSpace = Global.getSector().createStarSystem("Deep Space_${Misc.genUID()}")
+                        deepSpace.name = "Deep Space"
+                        deepSpace.location.set(MathUtils.getRandomPointOnCircumference(Vector2f(), 300f))
+                        deepSpace.backgroundTextureFilename = "graphics/backgrounds/exo/rat_exo_deepspace.jpg"
+
+                        var token = deepSpace.createToken(Vector2f())
+                        deepSpace.addEntity(token)
+
+                        playerPlugin.warpModule.warp(token, true, true) {
+
+                        }
+                    }
+                }
+            }
+
+        }
+        else if (data.foundExoshipRemains) {
+
+            textPanel.addPara("Your fleet takes positon around the remains. Without a warp catalyst however, not much is to be done here.")
 
             addLeaveOption()
             return
@@ -229,5 +327,57 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
         interactionTarget.memoryWithoutUpdate.set("\$defenderFleet", fleet)
 
         return fleet
+    }
+
+    fun addMarketplace(factionID: String?, primaryEntity: SectorEntityToken, connectedEntities: ArrayList<SectorEntityToken>?, name: String?,
+                       size: Int, marketConditions: ArrayList<String>, submarkets: ArrayList<String>?, industries: ArrayList<String>, tarrif: Float,
+                       freePort: Boolean, withJunkAndChatter: Boolean): MarketAPI {
+
+        val globalEconomy = Global.getSector().economy
+        val planetID = primaryEntity.id
+        val marketID = planetID + "_market"
+        val newMarket = Global.getFactory().createMarket(marketID, name, size)
+        newMarket.factionId = factionID
+        newMarket.primaryEntity = primaryEntity
+        newMarket.tariff.modifyFlat("generator", tarrif)
+
+        //Adds submarkets
+        if (null != submarkets) {
+            for (market in submarkets) {
+                newMarket.addSubmarket(market)
+            }
+        }
+
+        //Adds market conditions
+        for (condition in marketConditions) {
+            newMarket.addCondition(condition)
+        }
+
+        //Add market industries
+        for (industry in industries) {
+            newMarket.addIndustry(industry)
+        }
+
+        //Sets us to a free port, if we should
+        newMarket.isFreePort = freePort
+
+        //Adds our connected entities, if any
+        if (null != connectedEntities) {
+            for (entity in connectedEntities) {
+                newMarket.connectedEntities.add(entity)
+            }
+        }
+        //globalEconomy.addMarket(newMarket, withJunkAndChatter)
+        primaryEntity.market = newMarket
+        primaryEntity.setFaction(factionID)
+        if (null != connectedEntities) {
+            for (entity in connectedEntities) {
+                entity.market = newMarket
+                entity.setFaction(factionID)
+            }
+        }
+
+        //Finally, return the newly-generated market
+        return newMarket
     }
 }

@@ -20,7 +20,7 @@ class ExotechEventIntel() : BaseEventIntel() {
     var faction = Global.getSector().getFaction("rat_exotech")
 
     enum class Stage(var progress: Int) {
-        CONTACT(0), SUPPLY_ACCESS(100), EXPANDED_SUPPLY(300), CONFIDENCE(500), LEADERSHIP(ExoUtils.getExoData().maximumInfluenceRequired)
+        CONTACT(0), SUPPLY_ACCESS(100), EXPANDED_SUPPLY(300), LEADERSHIP(550), INDEBTED(ExoUtils.getExoData().maximumInfluenceRequired)
     }
 
     companion object {
@@ -46,19 +46,18 @@ class ExotechEventIntel() : BaseEventIntel() {
     init {
         Global.getSector().getMemoryWithoutUpdate().set(KEY, this);
 
-        setMaxProgress(Stage.LEADERSHIP.progress);
+        setMaxProgress(Stage.INDEBTED.progress);
 
         addStage(Stage.CONTACT, Stage.CONTACT.progress, StageIconSize.SMALL);
         addStage(Stage.SUPPLY_ACCESS, Stage.SUPPLY_ACCESS.progress, StageIconSize.SMALL);
         addStage(Stage.EXPANDED_SUPPLY, Stage.EXPANDED_SUPPLY.progress, StageIconSize.MEDIUM);
-        addStage(Stage.CONFIDENCE, Stage.CONFIDENCE.progress, StageIconSize.MEDIUM);
         addStage(Stage.LEADERSHIP, Stage.LEADERSHIP.progress, StageIconSize.LARGE);
+        addStage(Stage.INDEBTED, Stage.INDEBTED.progress, StageIconSize.MEDIUM);
 
         getDataFor(Stage.SUPPLY_ACCESS).keepIconBrightWhenLaterStageReached = true;
         getDataFor(Stage.EXPANDED_SUPPLY).keepIconBrightWhenLaterStageReached = true;
-        getDataFor(Stage.CONFIDENCE).keepIconBrightWhenLaterStageReached = true;
         getDataFor(Stage.LEADERSHIP).keepIconBrightWhenLaterStageReached = true;
-        //getDataFor(Stage.STARE_IN_TO).isRepeatable = true
+        getDataFor(Stage.INDEBTED).keepIconBrightWhenLaterStageReached = true;
 
         isImportant = true
 
@@ -75,8 +74,8 @@ class ExotechEventIntel() : BaseEventIntel() {
             Stage.CONTACT -> "graphics/portraits/rat_exo1.png"
             Stage.SUPPLY_ACCESS -> "graphics/icons/intel/events/rat_exo2.png"
             Stage.EXPANDED_SUPPLY -> "graphics/icons/intel/events/rat_exo3.png"
-            Stage.CONFIDENCE -> "graphics/icons/intel/events/rat_exo4.png"
             Stage.LEADERSHIP -> "graphics/icons/intel/events/rat_exo5.png"
+            Stage.INDEBTED -> "graphics/icons/intel/events/rat_exo4.png"
             else -> "graphics/icons/intel/events/rat_exo1.png"
         }
 
@@ -106,11 +105,11 @@ class ExotechEventIntel() : BaseEventIntel() {
                 //info!!.addPara("25%% reduced supply useage in the abyss.", initPad, tc, h, "25%")
                 info!!.addPara("You can now purchase ships from Exotech.", initPad, tc, h, "50%")
             }
-            if (esd.id == Stage.CONFIDENCE) {
-                info!!.addPara("Amelie is now tasked with more important missions. Check with Xander for more information.", initPad, tc, h)
-            }
             if (esd.id == Stage.LEADERSHIP) {
-                info!!.addPara("Amelie is now trusted enough to be in charge of something big.", initPad, tc, h, "")
+                info!!.addPara("Amelie is now trusted enough to be in charge of bigger roles. Check with Xander for more new missions.", initPad, tc, h, "")
+            }
+            if (esd.id == Stage.INDEBTED) {
+                info!!.addPara("Many within the faction are indebted to Amelie for her work. She will be able to from now on get better deals on equipment.", initPad, tc, h)
             }
 
             return
@@ -141,8 +140,8 @@ class ExotechEventIntel() : BaseEventIntel() {
                     Stage.CONTACT -> tooltip!!.addTitle("Contact")
                     Stage.SUPPLY_ACCESS -> tooltip!!.addTitle("Supply Access")
                     Stage.EXPANDED_SUPPLY -> tooltip!!.addTitle("Expanded Supply")
-                    Stage.CONFIDENCE -> tooltip!!.addTitle("Confidence")
                     Stage.LEADERSHIP -> tooltip!!.addTitle("Leadership")
+                    Stage.INDEBTED -> tooltip!!.addTitle("Indepted")
                 }
 
                 addStageDesc(tooltip!!, stageId, 10f, true)
@@ -171,15 +170,15 @@ class ExotechEventIntel() : BaseEventIntel() {
             info.addPara("Amelie is now able to purchase ships under her name and transfer them to your inventory. Purchased ships come with an existing loadout of weapons. Exotech ships under your ownership can also now have their hull restored to remove d-mods.",
                 0f,  Misc.getTextColor(), Misc.getHighlightColor(),"purchase ships", "restored")
         }
-        if (stageId == Stage.CONFIDENCE)
-        {
-            info.addPara("The factions higher ups gain higher confidence in Amelie, providing her with more important work. Xander will now have more missions available.", 0f,
-                Misc.getTextColor(), Misc.getHighlightColor(), "Xander will now have more missions available.")
-        }
         if (stageId == Stage.LEADERSHIP)
         {
-            info.addPara("Amelie is now trusted enough to be in charge of something big.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),
+            info.addPara("Amelie is now trusted enough to be in charge of bigger roles. Check with Xander for more new missions.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),
                 "")
+        }
+        if (stageId == Stage.INDEBTED)
+        {
+            info.addPara("Many within the faction are indebted to Amelie for her work. She will be able to from now on get better deals on equipment.", 0f,
+                Misc.getTextColor(), Misc.getHighlightColor(), "Xander will now have more missions available.")
         }
     }
 
@@ -207,11 +206,16 @@ class ExotechEventIntel() : BaseEventIntel() {
             ExoUtils.getExoData().canBuyShips = true
         }
 
-        if (stage!!.id == Stage.CONFIDENCE)
-        {
-            ExoUtils.getExoData().accessToMoreMissions = true
+
+
+        if (stage!!.id == Stage.LEADERSHIP) {
+            ExoUtils.getExoData().reachedLeadershipGoal = true
         }
 
+        if (stage!!.id == Stage.INDEBTED)
+        {
+
+        }
     }
 
     override fun getBarColor(): Color {
