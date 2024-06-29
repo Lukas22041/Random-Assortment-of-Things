@@ -1,12 +1,13 @@
 {
     "displayName": "Attack",
-    "fluxCapacitors": 21,
+    "fluxCapacitors": 18,
     "fluxVents": 20,
-    "goalVariant": true,
+    "goalVariant": false,
     "hullId": "rat_gabriel",
     "hullMods": [
-        "phase_anchor",
-        "rat_controller",
+        "fluxbreakers",
+        "insulatedengine",
+        "targetingunit",
     ],
     "permaMods": [
         "automated",
@@ -19,8 +20,7 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0003": "rat_cecaelia",
-                "WS0004": "rat_calypso",
+                "WS0003": "rat_seabream",
             }
         },
         {
@@ -34,7 +34,8 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0005": "rat_seabream",
+                "WS0005": "rat_calypso",
+                "WS0004": "rat_cecaelia",
             }
         },
         {
