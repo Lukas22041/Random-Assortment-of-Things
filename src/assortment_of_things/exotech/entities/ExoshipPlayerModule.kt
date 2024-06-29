@@ -14,7 +14,7 @@ class ExoshipPlayerModule(var exoship: ExoshipEntity, var exoshipEntity: SectorE
 
     var fuelProductionLevel = 0.25f
     var fuelPercentPerMonthMax = 20f / 100f
-    var currentFuelPercent = 0.5f
+    var currentFuelPercent = 0.80f
     var maxFuelPercent = 1f
 
     var maxCost = 50000f

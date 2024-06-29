@@ -37,7 +37,7 @@ class GilgameshSystemAI : ShipSystemAIScript {
 
         var range = getFurthestWeaponRange(ship!!)
         var anyInRange = false
-        if (MathUtils.getDistance(ship!!.location, target!!.location) <= range + 100) {
+        if (MathUtils.getDistance(ship!!.location, target!!.location) <= range + 50) {
             anyInRange = true
         }
 
@@ -67,7 +67,7 @@ class GilgameshSystemAI : ShipSystemAIScript {
 
     fun getFurthestWeaponRange(ship: ShipAPI) : Float {
         var range = 0f
-        for (weapon in ship.allWeapons.filter { it.slot.slotSize == WeaponAPI.WeaponSize.MEDIUM  && it.slot.weaponType != WeaponAPI.WeaponType.MISSILE}) {
+        for (weapon in ship.allWeapons.filter { it.slot.id == "WS0004" || it.slot.id == "WS0005"} ) {
             if (weapon.range > range)
             {
                 range = weapon.range

@@ -50,6 +50,7 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
 
     fun populateXanderDialog() {
         visualPanel.showPersonInfo(data.xander)
+        visualPanel.hideSecondPerson()
 
         if (data.hasActiveMission && data.finishedCurrentMission) {
             createOption("Talk to Xander about the completed mission") {

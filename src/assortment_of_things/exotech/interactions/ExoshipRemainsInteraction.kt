@@ -1,25 +1,23 @@
 package assortment_of_things.exotech.interactions
 
-import assortment_of_things.exotech.ExoData
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.ExotechGenerator
 import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.intel.ExoshipIntel
+import assortment_of_things.exotech.interactions.exoship.ExoshipRecoveryContactInteraction
 import assortment_of_things.exotech.interactions.questBeginning.ExoshipRemainsIntel
 import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.misc.RATInteractionPlugin
 import assortment_of_things.misc.fixVariant
 import assortment_of_things.misc.getAndLoadSprite
-import assortment_of_things.strings.RATItems
+import assortment_of_things.misc.getExoData
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.CargoAPI
-import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.SpecialItemData
-import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.*
-import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaTextfield
 import org.lazywizard.lazylib.MathUtils
@@ -49,26 +47,6 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
             createOption("Innitate the repair sequence") {
                 clearOptions()
 
-                var data = ExoUtils.getExoData()
-
-                var playerExoship = Global.getSector().hyperspace.addCustomEntity("exoship_${Misc.genUID()}", "Daybreak", "rat_exoship", "rat_exotech")
-                var playerPlugin = playerExoship.customPlugin as ExoshipEntity
-
-                var market = ExotechGenerator.addMarketplace(Factions.PLAYER,
-                    playerExoship,
-                    arrayListOf(),
-                    "Daybreak",
-                    3,
-                    arrayListOf(Conditions.OUTPOST),
-                    arrayListOf("rat_exoship_market"),
-                    arrayListOf(Industries.MEGAPORT),
-                    0.3f,
-                    false,
-                    false)
-                market.isHidden = true
-
-                playerExoship.orbit = null
-
                 textPanel.addPara("Within seconds hundreds of maintenance hatches open across the stations hull, and thousands of drones leave its confines.")
 
                 textPanel.addPara("It just takes a few hours, and the surface of the ship exterior looks as good as new. Some of the interior will require some finer touches, but nothing throws off the diagonstics anymore.")
@@ -93,6 +71,37 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
 
                         closeDialog()
 
+                        data.recoveredExoship = true
+
+                        var data = ExoUtils.getExoData()
+
+                        var playerExoship = Global.getSector().hyperspace.addCustomEntity("exoship_${Misc.genUID()}", "Daybreak", "rat_exoship", "rat_exotech")
+                        var playerPlugin = playerExoship.customPlugin as ExoshipEntity
+
+                        playerExoship.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_exo_market")
+
+                        var market = ExotechGenerator.addMarketplace(Factions.PLAYER,
+                            playerExoship,
+                            arrayListOf(),
+                            "Daybreak",
+                            3,
+                            arrayListOf(Conditions.OUTPOST),
+                            arrayListOf("rat_exoship_market", Submarkets.SUBMARKET_STORAGE),
+                            arrayListOf(Industries.MEGAPORT),
+                            0.3f,
+                            false,
+                            false)
+                        market.isHidden = true
+
+                        //Should prevent them from building stuff on it
+                        market.isPlayerOwned = false
+
+                        market.admin = data.amelie
+                        data.amelie.postId = "stationCommander"
+
+
+                        playerExoship.orbit = null
+
                         playerExoship.name = textfield.getText()
 
 
@@ -109,15 +118,33 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
                         playerPlugin.playerModule.isPlayerOwned = true
 
                         var deepSpace = Global.getSector().createStarSystem("Deep Space_${Misc.genUID()}")
+                        deepSpace.initNonStarCenter()
+                        deepSpace.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
+                        deepSpace.addTag(Tags.THEME_HIDDEN)
                         deepSpace.name = "Deep Space"
-                        deepSpace.location.set(MathUtils.getRandomPointOnCircumference(Vector2f(), 300f))
+                        deepSpace.location.set(MathUtils.getRandomPointOnCircumference(Vector2f(), 3000f))
                         deepSpace.backgroundTextureFilename = "graphics/backgrounds/exo/rat_exo_deepspace.jpg"
+                        deepSpace.addTag("do_not_show_stranded_dialog")
 
-                        var token = deepSpace.createToken(Vector2f())
-                        deepSpace.addEntity(token)
+                        var planet = deepSpace.addPlanet("rat_deepspace_planet", deepSpace.center, "Rogue Planet", "barren", 0f, 300f, 1f, 900f)
+                        planet.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
+                        planet.descriptionIdOverride = "barren_deep_space"
+                        planet.addTag(Tags.NON_CLICKABLE)
 
-                        playerPlugin.warpModule.warp(token, true, true) {
+                        //Do not let the NPC exoship commit any new warps right now
+                        data.preventNPCWarps = true
 
+
+                        if (Global.getSector().playerFleet.hasAbility("fracture_jump")) {
+                            Global.getSector().playerFleet.getAbility("fracture_jump").cooldownLeft = 99999f
+                        }
+
+                        playerPlugin.warpModule.warp(planet, true, true) {
+                            playerExoship.addTag(Tags.NON_CLICKABLE)
+                            Global.getSector().getExoData().getExoshipPlugin().warpModule.doQuestlineWarp(planet) {
+                                Global.getSector().getExoData().getExoship().addTag(Tags.NON_CLICKABLE)
+                                Global.getSector().campaignUI.showInteractionDialog(ExoshipRecoveryContactInteraction(), Global.getSector().getExoData().getExoship())
+                            }
                         }
                     }
                 }
@@ -329,55 +356,4 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
         return fleet
     }
 
-    fun addMarketplace(factionID: String?, primaryEntity: SectorEntityToken, connectedEntities: ArrayList<SectorEntityToken>?, name: String?,
-                       size: Int, marketConditions: ArrayList<String>, submarkets: ArrayList<String>?, industries: ArrayList<String>, tarrif: Float,
-                       freePort: Boolean, withJunkAndChatter: Boolean): MarketAPI {
-
-        val globalEconomy = Global.getSector().economy
-        val planetID = primaryEntity.id
-        val marketID = planetID + "_market"
-        val newMarket = Global.getFactory().createMarket(marketID, name, size)
-        newMarket.factionId = factionID
-        newMarket.primaryEntity = primaryEntity
-        newMarket.tariff.modifyFlat("generator", tarrif)
-
-        //Adds submarkets
-        if (null != submarkets) {
-            for (market in submarkets) {
-                newMarket.addSubmarket(market)
-            }
-        }
-
-        //Adds market conditions
-        for (condition in marketConditions) {
-            newMarket.addCondition(condition)
-        }
-
-        //Add market industries
-        for (industry in industries) {
-            newMarket.addIndustry(industry)
-        }
-
-        //Sets us to a free port, if we should
-        newMarket.isFreePort = freePort
-
-        //Adds our connected entities, if any
-        if (null != connectedEntities) {
-            for (entity in connectedEntities) {
-                newMarket.connectedEntities.add(entity)
-            }
-        }
-        //globalEconomy.addMarket(newMarket, withJunkAndChatter)
-        primaryEntity.market = newMarket
-        primaryEntity.setFaction(factionID)
-        if (null != connectedEntities) {
-            for (entity in connectedEntities) {
-                entity.market = newMarket
-                entity.setFaction(factionID)
-            }
-        }
-
-        //Finally, return the newly-generated market
-        return newMarket
-    }
 }

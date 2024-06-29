@@ -9,6 +9,7 @@ import assortment_of_things.misc.addTooltip
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BaseCampaignEntityPickerListener
+import com.fs.starfarer.api.campaign.CoreUITabId
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
@@ -23,13 +24,14 @@ import lunalib.lunaUI.elements.LunaSpriteElement
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
 
-class PlayerExoshipInteraction(var openedFromAbility: Boolean) : RATInteractionPlugin() {
+class PlayerExoshipInteraction(var openedFromAbility: Boolean) : ExoshipInteractionPlugin() {
 
     var shownInteractionText = false
 
     var scrollerY = 0f
 
     var selectedDestination: SectorEntityToken? = null
+
 
     override fun init() {
 
@@ -45,13 +47,51 @@ class PlayerExoshipInteraction(var openedFromAbility: Boolean) : RATInteractionP
             textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
         }
 
+        populateOptions()
+
+    }
+
+    override fun populateOptions() {
         createOption("Manage Exoship") {
             recreateManagementOptions()
         }
 
+        var amelieDelegate = ExoshipAmelieInteraction(this)
+        var xanderDelegate = ExoshipXanderInteraction(this)
+
+
+        createOption("Talk to Amelie") {
+            clearOptions()
+
+            dialog.plugin = amelieDelegate
+            amelieDelegate.init(dialog)
+        }
+
+        createOption("Talk to Xander") {
+            clearOptions()
+
+            clearOptions()
+            dialog.plugin = xanderDelegate
+            xanderDelegate.init(dialog)
+        }
+
+        createOption("Trade & Storage") {
+            visualPanel.showCore(CoreUITabId.CARGO, interactionTarget) { }
+        }
+        optionPanel.setShortcut("Trade & Storage", Keyboard.KEY_I, false, false, false, false)
+
+        createOption("Manage Fleet") {
+            visualPanel.showCore(CoreUITabId.FLEET, interactionTarget) { }
+        }
+        optionPanel.setShortcut("Manage Fleet", Keyboard.KEY_F, false, false, false, false)
+
+        createOption("Refit Ships") {
+            visualPanel.showCore(CoreUITabId.REFIT, interactionTarget) { }
+        }
+        optionPanel.setShortcut("Refit Ships", Keyboard.KEY_R, false, false, false, false)
+
         addLeaveOption()
     }
-
 
     fun recreateManagementOptions() {
 
@@ -276,7 +316,7 @@ class PlayerExoshipInteraction(var openedFromAbility: Boolean) : RATInteractionP
         else {
             createOption("Back") {
                 clearOptions()
-                init(dialog)
+                populateOptions()
             }
         }
     }

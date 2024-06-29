@@ -75,7 +75,7 @@ class ExoshipIntel(var exoship: SectorEntityToken, var temporary: Boolean = fals
 
         var data = ExoUtils.getExoData().getExoshipPlugin()
 
-        if (data.isInTransit) {
+        if (data.isInTransit && data.npcModule.currentWarp != null) {
             info.addPara("The exoship ${exoship.name} is currently in transit towards the ${data.npcModule.currentWarp!!.destination.starSystem.nameWithNoType} system. " +
                     "", 0f,
                 Misc.getTextColor(), Misc.getHighlightColor(),

@@ -28,6 +28,12 @@ class NPCExoshipInteraction : ExoshipInteractionPlugin() {
 
         textPanel.addPara("You approach the exoship.")
 
+        if (data.recoveredExoship) {
+            textPanel.addPara("With Amelie and Xander no longer on this ship, you have nothing left to do here.")
+            addLeaveOption()
+            return
+        }
+
         textPanel.addPara("Your fleet sends in your shuttle together with some inconspicuous cargo ships, to create a pretense of trade. You once again land at this shabby hangar, and make your way towards the quarters of Amelies fleet.")
 
         populateOptions()
@@ -37,6 +43,7 @@ class NPCExoshipInteraction : ExoshipInteractionPlugin() {
     override fun populateOptions() {
         clearOptions()
         visualPanel.showImageVisual(interactionTarget.customInteractionDialogImageVisual)
+
 
         var amelieDelegate = ExoshipAmelieInteraction(this)
         var xanderDelegate = ExoshipXanderInteraction(this)
@@ -57,10 +64,10 @@ class NPCExoshipInteraction : ExoshipInteractionPlugin() {
             xanderDelegate.init(dialog)
         }
 
-        createOption("Trade & Storage") {
+        createOption("Trade") {
             visualPanel.showCore(CoreUITabId.CARGO, interactionTarget) { }
         }
-        optionPanel.setShortcut("Trade & Storage", Keyboard.KEY_I, false, false, false, false)
+        optionPanel.setShortcut("Trade", Keyboard.KEY_I, false, false, false, false)
 
         createOption("Manage Fleet") {
             visualPanel.showCore(CoreUITabId.FLEET, interactionTarget) { }

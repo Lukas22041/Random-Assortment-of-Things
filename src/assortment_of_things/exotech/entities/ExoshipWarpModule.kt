@@ -25,6 +25,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
 
     var playerJoined = false
     var doNotHidePlayer = false
+    var skipPreperation = false
     var parkingOrbit: SectorEntityToken? = null
     var departureAngle: Float = 0f
     var state = State.Inactive
@@ -48,20 +49,33 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         var orbit = entity.containingLocation.createToken(Vector2f())
 
         val orbitRadius = entity.radius + 250f
-        val orbitDays = orbitRadius / (20f + Misc.random.nextFloat() * 5f)
+        val orbitDays = orbitRadius / (20f + Misc.random.nextFloat() * 5f) + 20
         orbit.setCircularOrbit(entity, Misc.random.nextFloat() * 360f, orbitRadius, orbitDays)
         entity.containingLocation.addEntity(orbit)
 
-        warp(orbit, entity.starSystem, withPlayer, doNotHidePlayer, listener)
+        warp(orbit, entity.starSystem, withPlayer, doNotHidePlayer, false, listener)
     }
 
     //Warps to starsystem, selects random orbit
     fun warp(starSystem: StarSystemAPI, withPlayer: Boolean = false, doNotHidePlayer: Boolean = false, listener: () -> Unit = {}) {
         var orbit = findParkingOrbit(starSystem)
-        warp(orbit, starSystem, withPlayer, doNotHidePlayer, listener)
+        warp(orbit, starSystem, withPlayer, doNotHidePlayer, false, listener)
     }
 
-    private fun warp(orbit: SectorEntityToken?, starSystem: StarSystemAPI?, withPlayer: Boolean, doNotHidePlayer: Boolean = false, listener: () -> Unit) {
+    fun doQuestlineWarp(entity: SectorEntityToken, listener: () -> Unit = {}) {
+
+        val loc = MathUtils.getRandomPointOnCircumference(entity.location, entity.radius + 400f)
+        var orbit = entity.containingLocation.createToken(Vector2f())
+
+        val orbitRadius = entity.radius + 450f
+        val orbitDays = orbitRadius / (20f + Misc.random.nextFloat() * 5f)
+        orbit.setCircularOrbit(entity, Misc.random.nextFloat() * 360f, orbitRadius, orbitDays)
+        entity.containingLocation.addEntity(orbit)
+
+        warp(orbit, entity.starSystem, false, false, true, listener)
+    }
+
+    private fun warp(orbit: SectorEntityToken?, starSystem: StarSystemAPI?, withPlayer: Boolean, doNotHidePlayer: Boolean = false, skipPreperation: Boolean = false, listener: () -> Unit) {
         if (starSystem == null || starSystem === exoshipEntity.containingLocation || orbit == null) return
         if (state != State.Inactive) return
 
@@ -72,6 +86,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
 
         this.playerJoined = withPlayer
         this.doNotHidePlayer = doNotHidePlayer
+        this.skipPreperation = skipPreperation
         warpListener = listener
 
         destinationSystem = starSystem
@@ -79,7 +94,16 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         parkingOrbit = orbit
         departureAngle = Misc.getAngleInDegrees(exoshipEntity.locationInHyperspace, starSystem.location)
 
-        getMovementModule().movementUtil.acceleration = exoship.ACCELERATION
+        if (skipPreperation) {
+            exoshipEntity.facing = departureAngle
+        }
+
+        var extraAcceleration = 0
+        if (skipPreperation) {
+            extraAcceleration = 20
+        }
+
+        getMovementModule().movementUtil.acceleration = exoship.ACCELERATION + extraAcceleration
         getMovementModule().moveInDirection(departureAngle)
         getMovementModule().setFaceInOppositeDirection(false)
         getMovementModule().setTurnThenAccelerate(true)
@@ -123,6 +147,14 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
 
     fun advance(amount: Float) {
 
+        if (playerJoined && exoship.isInTransit) {
+            var ability = Global.getSector().playerFleet.getAbility("fracture_jump")
+            if (ability != null && ability.cooldownLeft <= 0.5f) {
+                ability.cooldownLeft = 0.5f
+            }
+
+        }
+
         if (playWarpSoundNextFrame) {
 
             framesTilWarpSound -= 1
@@ -139,6 +171,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         if (doNotHidePlayer) {
             Global.getSector().playerFleet.setLocation(exoshipEntity.location.x, exoshipEntity.location.y)
             Global.getSector().playerFleet.facing = exoshipEntity.facing
+            Global.getSector().playerFleet.stats.addTemporaryModMult(0.1f, "rat_exoship_warp", "Warp", 0f, Global.getSector().playerFleet.stats.fleetwideMaxBurnMod)
         }
 
         if (state == State.Departure) {
@@ -362,6 +395,8 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
             warpListener!!()
 
             doNotHidePlayer = false
+            skipPreperation = false
+
             warpListener = null
 
 

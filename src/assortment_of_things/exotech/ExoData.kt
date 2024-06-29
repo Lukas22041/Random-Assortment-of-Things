@@ -12,6 +12,7 @@ class ExoData {
     private var playerExoship: SectorEntityToken? = null
 
     var preventNPCWarps = false
+    var recoveredExoship = false
 
     var exoshipRemainsEntity: SectorEntityToken? = null
     var foundExoshipRemains = false

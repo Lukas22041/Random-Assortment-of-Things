@@ -177,7 +177,7 @@ class ExotechEventIntel() : BaseEventIntel() {
         }
         if (stageId == Stage.INDEBTED)
         {
-            info.addPara("Many within the faction are indebted to Amelie for her work. She will be able to from now on get better deals on equipment.", 0f,
+            info.addPara("Many within the faction are indebted to Amelie for her work. She will be able to from now on get better deals on equipment. (Currently Uninplemented)", 0f,
                 Misc.getTextColor(), Misc.getHighlightColor(), "Xander will now have more missions available.")
         }
     }

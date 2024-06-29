@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.entities
 
+import assortment_of_things.exotech.ExoUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.econ.MonthlyReport
@@ -34,11 +35,11 @@ class ExoshipNPCModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnti
 
         var days = Misc.getDays(amount)
 
-        if (currentWarp == null && !exoship.isInTransit) {
+        if (currentWarp == null && !exoship.isInTransit && !ExoUtils.getExoData().preventNPCWarps) {
             currentWarp = findNewDestination()
         }
 
-        if (currentWarp != null && !exoship.isInTransit) {
+        if (currentWarp != null && !exoship.isInTransit && !ExoUtils.getExoData().preventNPCWarps) {
 
             currentWarp!!.daysTilWarp -= days
 

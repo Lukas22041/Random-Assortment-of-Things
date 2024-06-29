@@ -11,6 +11,7 @@ import com.fs.starfarer.api.campaign.econ.SubmarketAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.submarkets.BaseSubmarketPlugin
 import com.fs.starfarer.api.loading.WeaponSpecAPI
@@ -39,12 +40,23 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
             cargo.initMothballedShips("rat_exotech")
             cargo.mothballedShips.clear()
 
+            market.getCommodityData(Commodities.SUPPLIES).playerDemandPriceMod.modifyFlat("rat_exo_commodities", 100f)
+            market.getCommodityData(Commodities.SUPPLIES).playerSupplyPriceMod.modifyFlat("rat_exo_commodities", 100f)
+
+            market.getCommodityData(Commodities.FUEL).playerDemandPriceMod.modifyFlat("rat_exo_commodities", 20f)
+            market.getCommodityData(Commodities.FUEL).playerSupplyPriceMod.modifyFlat("rat_exo_commodities", 20f)
+
+
+            cargo.addSupplies(MathUtils.getRandomNumberInRange(300f, 500f))
+            cargo.addFuel(MathUtils.getRandomNumberInRange(800f, 1500f))
+
             addAlterations()
             addEquipment()
             addExoShips()
         }
         getCargo().sort()
     }
+
 
 
     override fun isDone(): Boolean {
@@ -143,11 +155,15 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
     //Lock Items
     override fun isIllegalOnSubmarket(commodityId: String, action: SubmarketPlugin.TransferAction): Boolean {
         if (action == SubmarketPlugin.TransferAction.PLAYER_SELL) return true
+        if (commodityId == Commodities.SUPPLIES) return false
+        if (commodityId == Commodities.FUEL) return false
         return !ExoUtils.getExoData().canBuyItems
     }
 
     override fun isIllegalOnSubmarket(stack: CargoStackAPI, action: SubmarketPlugin.TransferAction): Boolean {
         if (action == SubmarketPlugin.TransferAction.PLAYER_SELL) return true
+        if (stack.commodityId == Commodities.SUPPLIES) return false
+        if (stack.commodityId == Commodities.FUEL) return false
         return !ExoUtils.getExoData().canBuyItems
     }
 
