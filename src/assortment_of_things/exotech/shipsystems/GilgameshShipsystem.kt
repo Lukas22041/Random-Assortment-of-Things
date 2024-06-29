@@ -1,20 +1,26 @@
 package assortment_of_things.exotech.shipsystems
 
 import assortment_of_things.exotech.ExoUtils
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
+import com.fs.starfarer.api.combat.listeners.AdvanceableListener
+import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.loading.BeamWeaponSpecAPI
+import com.fs.starfarer.api.loading.MissileSpecAPI
 import com.fs.starfarer.api.loading.ProjectileSpecAPI
 import com.fs.starfarer.api.loading.WeaponGroupSpec
 import com.fs.starfarer.api.loading.WeaponGroupType
+import com.fs.starfarer.api.mission.FleetSide
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.combat.CombatUtils
 import org.lwjgl.util.vector.Vector2f
 import java.util.*
 import kotlin.collections.ArrayList
@@ -38,11 +44,16 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
     var noLongerTeleportDrones = false
 
+
     override fun apply(stats: MutableShipStatsAPI?, id: String?, state: ShipSystemStatsScript.State?, effectLevel: Float) {
         super.apply(stats, id, state, effectLevel)
         ship = stats!!.entity as ShipAPI? ?: return
 
-        if (!ship!!.fleetMember.fleetData.fleet.isPlayerFleet) {
+        if (!ship!!.hasListenerOfClass(CollissionSpecConverter::class.java)) {
+            ship!!.addListener(CollissionSpecConverter())
+        }
+
+        if (ship!!.fleetMember?.fleetData?.fleet?.isPlayerFleet == false) {
             Global.getCombatEngine().getCustomData().set("phaseAnchor_canDive", false)
         }
 
@@ -105,17 +116,6 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
             drones.shuffle()
 
-           /* var left = ship!!.allWeapons.find { it.slot.id == "WS0004" }
-            var right = ship!!.allWeapons.find { it.slot.id == "WS0005" }
-
-            if (left != null) {
-                var drone = spawnDrone(left.spec.weaponId)
-                drones.add(drone)
-            }
-            if (right != null) {
-                var drone = spawnDrone(right.spec.weaponId)
-                drones.add(drone)
-            }*/
         }
 
 
@@ -195,6 +195,10 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
                         spec.collisionClass = CollisionClass.RAY_FIGHTER
                     }
                 }
+
+
+
+
 
 
                 val angle = Misc.getAngleInDegrees(drone.location, target!!.location)
@@ -525,5 +529,20 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         return false
     }
 
+
+
+}
+
+class CollissionSpecConverter() : AdvanceableListener {
+    override fun advance(amount: Float) {
+        var engine = Global.getCombatEngine() ?: return
+
+        for (missile in engine.missiles) {
+            if (missile.weapon?.ship?.baseOrModSpec()?.baseHullId != "rat_gilgamesh_drone") continue
+            if (missile.collisionClass == CollisionClass.MISSILE_FF) {
+                missile.collisionClass = CollisionClass.MISSILE_NO_FF
+            }
+        }
+    }
 
 }

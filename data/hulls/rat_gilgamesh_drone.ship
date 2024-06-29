@@ -1,35 +1,32 @@
 {
-    "center": [
-        2,
-        2
-    ],
-    "collisionRadius": 2,
-    "coversColor": "",
-    "height": 4,
-    "hullId": "rat_gilgamesh_drone",
-    "hullName": "DEM Drone",
-    "hullSize": "FIGHTER",
-    "shieldCenter": [
-        0,
-        0
-    ],
-    "shieldRadius": 2,
-    "spriteName": "graphics/fx/empty.png",
-    "style": "LOW_TECH",
-    "viewOffset": 0,
-    "weaponSlots": [
-        {
-            "angle": 0,
-            "arc": 10,
-            "id": "WS 000",
-            "locations": [
-                0,
-                0
-            ],
-            "mount": "HARDPOINT",
-            "size": "MEDIUM",
-            "type": "UNIVERSAL"
-        },
-    ],
-    "width": 4
+  "hullName": "DEM Drone",
+  "hullId": "rat_gilgamesh_drone",
+  "hullSize": "FIGHTER",
+  "spriteName": "graphics/fx/empty.png",
+  "style": "LOW_TECH",
+  "height": 4,
+  "width": 4,
+  "center": [2, 2],
+  "collisionRadius": 2,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 2,
+  "viewOffset": 0,
+  "weaponSlots": [
+    {
+      "id": "WS 000",
+      "size": "MEDIUM",
+      "type": "UNIVERSAL",
+      "mount": "HARDPOINT",
+      "arc": 10,
+      "angle": 0,
+      "locations": [0, 0]
+    }
+  ],
+  "engineSlots": [],
+  "bounds": [
+    1, -1,
+    -1, -1,
+    -1, 1,
+    1, 1
+  ]
 }
