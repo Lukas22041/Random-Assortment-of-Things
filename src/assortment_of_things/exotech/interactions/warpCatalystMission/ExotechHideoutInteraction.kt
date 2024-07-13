@@ -20,6 +20,7 @@ class ExotechHideoutInteraction() : RATInteractionPlugin() {
 
             textPanel.addPara("There is nothing left here anymore.")
 
+            addLeaveOption()
         }
         else if (intel == null) {
 

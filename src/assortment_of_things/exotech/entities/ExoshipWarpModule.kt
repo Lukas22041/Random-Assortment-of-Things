@@ -76,7 +76,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
     }
 
     private fun warp(orbit: SectorEntityToken?, starSystem: StarSystemAPI?, withPlayer: Boolean, doNotHidePlayer: Boolean = false, skipPreperation: Boolean = false, listener: () -> Unit) {
-        if (starSystem == null || starSystem === exoshipEntity.containingLocation || orbit == null) return
+        if (starSystem == null || starSystem == exoshipEntity.containingLocation || orbit == null) return
         if (state != State.Inactive) return
 
         if (parkingOrbit != null) {

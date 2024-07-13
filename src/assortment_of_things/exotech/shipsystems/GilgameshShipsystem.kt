@@ -180,6 +180,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
                 var spec =  weapon.spec
                 var projectileSpec = spec.projectileSpec
+                var projSpeed = 600f
                 if (projectileSpec is ProjectileSpecAPI) {
                     if (projectileSpec.collisionClass == CollisionClass.PROJECTILE_FF) {
                         projectileSpec.collisionClass = CollisionClass.PROJECTILE_NO_FF
@@ -188,14 +189,17 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
                     if (projectileSpec.collisionClass == CollisionClass.RAY) {
                         projectileSpec.collisionClass = CollisionClass.RAY_FIGHTER
                     }
+
+                    projSpeed = projectileSpec.getMoveSpeed(drone.mutableStats, weapon)
                 }
 
                 if (spec is BeamWeaponSpecAPI) {
                     if (spec.collisionClass == CollisionClass.RAY) {
                         spec.collisionClass = CollisionClass.RAY_FIGHTER
                     }
-                }
 
+                    projSpeed = spec.beamSpeed
+                }
 
 
 
@@ -221,7 +225,10 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
                 var isEnemyInShipArc = Misc.isInArc(ship!!.facing, 40f, shipAngleToTarget)
 
 
-                turnTowardsPointV2(drone, target!!.location, 0f)
+
+                var predictedPoint = Global.getCombatEngine().getAimPointWithLeadForAutofire(drone, 1f, target, projSpeed)
+                turnTowardsPointV2(drone, predictedPoint, 0f)
+                //turnTowardsPointV2(drone, target!!.location, 0f)
 
 
                /* if (droneLevel >= 0.9 && intervalElapsed) {

@@ -287,6 +287,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                 for (weapon in ship.allWeapons) {
                     weapon.setForceNoFireOneFrame(true)
+                    weapon.setRemainingCooldownTo(1f);
                 }
 
                 transitionTimer.advance(realAmount)
