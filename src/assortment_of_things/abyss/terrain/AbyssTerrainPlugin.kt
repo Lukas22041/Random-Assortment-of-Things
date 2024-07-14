@@ -1,7 +1,6 @@
 package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssBorder
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.misc.addPara
 import assortment_of_things.misc.getAndLoadSprite
@@ -51,71 +50,8 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
 
 
     override fun getRenderColor(): Color {
-        return AbyssUtils.getSystemData(entity.starSystem).getDarkColor()
+        return AbyssUtils.ABYSS_COLOR.darker().darker()
     }
-
-    override fun renderOnMap(factor: Float, alphaMult: Float) {
-        super.renderOnMap(factor, alphaMult)
-
-        if (sprite == null) {
-            sprite = Global.getSettings().getAndLoadSprite("graphics/backgrounds/abyss/Abyss2ForRift.jpg")
-            wormhole = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
-            wormhole2 = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
-        }
-
-        if (font == null) {
-            font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
-        }
-
-        if (entity == null) return
-
-        var system = AbyssUtils.getSystemData(entity.starSystem)
-        var color = system.getColor()
-
-        var width = 55000f * factor
-        var height = 55000f * factor
-
-        var x = -width / 2
-        var y = -height / 2
-
-        var border = system.system.customEntities.find { it.customEntitySpec.id == "rat_abyss_border" } ?: return
-        var plugin = border.customPlugin
-        if (plugin !is AbyssBorder) return
-
-
-        var radius = plugin.radius * factor
-
-        startStencil(radius, Vector2f(), 100)
-
-        sprite.setSize(width, height)
-        sprite.color = color
-        sprite.alphaMult = 0.4f * alphaMult
-        sprite.setNormalBlend()
-        sprite.render(x, y)
-
-        /*sprite.setAdditiveBlend()
-        sprite.alphaMult = 0.2f
-        sprite.render(x, y)*/
-
-        wormhole.setSize(width * 1.3f, width *  1.3f)
-        wormhole.setAdditiveBlend()
-        wormhole.alphaMult = 0.2f * alphaMult
-        wormhole.color = color
-        wormhole.renderAtCenter(x + width / 2, y + height / 2)
-
-        wormhole2.setSize(width * 1.35f, width *  1.35f)
-        wormhole2.setAdditiveBlend()
-        wormhole2.alphaMult = 0.1f * alphaMult
-        wormhole2.color = Color(50, 0, 255)
-        wormhole2.renderAtCenter(x + width / 2, y + height / 2)
-
-        endStencil()
-
-        renderBorder(radius, color.setAlpha(50), 100)
-
-
-    }
-
 
 
     fun save()
@@ -275,102 +211,4 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
         if (flag == TerrainAIFlags.MOVES_FLEETS) return true
         return false
     }
-
-
-
-
-
-    fun renderBorder(radius: Float, color: Color, circlePoints: Int) {
-        var c = color
-        GL11.glPushMatrix()
-
-        GL11.glTranslatef(0f, 0f, 0f)
-        GL11.glRotatef(0f, 0f, 0f, 1f)
-
-        GL11.glDisable(GL11.GL_TEXTURE_2D)
-
-
-        GL11.glEnable(GL11.GL_BLEND)
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-
-
-        GL11.glColor4f(c.red / 255f,
-            c.green / 255f,
-            c.blue / 255f,
-            c.alpha / 255f * (1f))
-
-        GL11.glEnable(GL11.GL_LINE_SMOOTH)
-        GL11.glBegin(GL11.GL_LINE_STRIP)
-
-        val x = 0f
-        val y = 0f
-
-
-        for (i in 0..circlePoints) {
-            val angle: Double = (2 * Math.PI * i / circlePoints)
-            val vertX: Double = Math.cos(angle) * (radius)
-            val vertY: Double = Math.sin(angle) * (radius)
-            GL11.glVertex2d(x + vertX, y + vertY)
-        }
-
-        GL11.glEnd()
-        GL11.glPopMatrix()
-    }
-
-    fun startStencil(radius: Float, location: Vector2f, circlePoints: Int) {
-
-        GL11.glClearStencil(0);
-        GL11.glStencilMask(0xff);
-        //set everything to 0
-        GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
-
-        //disable drawing colour, enable stencil testing
-        GL11.glColorMask(false, false, false, false); //disable colour
-        GL11.glEnable(GL11.GL_STENCIL_TEST); //enable stencil
-
-        // ... here you render the part of the scene you want masked, this may be a simple triangle or square, or for example a monitor on a computer in your spaceship ...
-        //begin masking
-        //put 1s where I want to draw
-        GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xff); // Do not test the current value in the stencil buffer, always accept any value on there for drawing
-        GL11.glStencilMask(0xff);
-        GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE); // Make every test succeed
-
-        // <draw a quad that dictates you want the boundaries of the panel to be>
-
-        GL11.glBegin(GL11.GL_POLYGON) // Middle circle
-
-        val x = location.x
-        val y = location.y
-
-        for (i in 0..circlePoints) {
-
-            var extra = 0f
-
-            val angle: Double = (2 * Math.PI * i / circlePoints)
-            val vertX: Double = Math.cos(angle) * (radius + extra)
-            val vertY: Double = Math.sin(angle) * (radius + extra)
-            GL11.glVertex2d(x + vertX, y + vertY)
-        }
-
-        GL11.glEnd()
-
-        //GL11.glRectf(x, y, x + width, y + height)
-
-        GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP); // Make sure you will no longer (over)write stencil values, even if any test succeeds
-        GL11.glColorMask(true, true, true, true); // Make sure we draw on the backbuffer again.
-
-
-
-
-        GL11.glStencilFunc(GL11.GL_EQUAL, 0, 0xFF); // Now we will only draw pixels where the corresponding stencil buffer value equals 1
-        //Ref 0 causes the content to not display in the specified area, 1 causes the content to only display in that area.
-
-        // <draw the lines>
-
-    }
-
-    fun endStencil() {
-        GL11.glDisable(GL11.GL_STENCIL_TEST);
-    }
-
 }

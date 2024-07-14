@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.items
 
-import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
 import assortment_of_things.scripts.AtMarketListener
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*

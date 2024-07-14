@@ -50,7 +50,7 @@ class AbyssalStormParticleManager() : BaseCustomEntityPlugin() {
             return
         }
 
-        color = AbyssUtils.getSystemData(entity.starSystem).getColor()
+        //color = AbyssUtils.getSystemData(entity.starSystem).getColor()
 
         if (halo == null) {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")

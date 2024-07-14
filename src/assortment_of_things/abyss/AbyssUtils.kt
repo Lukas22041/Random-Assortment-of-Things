@@ -1,7 +1,7 @@
 package assortment_of_things.abyss
 
+import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.AbyssData
-import assortment_of_things.abyss.procgen.AbyssSystemData
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
@@ -50,19 +50,8 @@ object AbyssUtils {
         return Global.getSector().memoryWithoutUpdate.get(ABYSS_DATA_KEY) as AbyssData? ?: AbyssData()
     }
 
-    fun getSystemData(system: StarSystemAPI) : AbyssSystemData {
-
-        if (system.memoryWithoutUpdate.get(SYSTEM_DATA_KEY) == null) {
-            system.memoryWithoutUpdate.set(SYSTEM_DATA_KEY, AbyssSystemData(system))
-        }
-
-        return system.memoryWithoutUpdate.get(SYSTEM_DATA_KEY) as AbyssSystemData
-    }
-
-    fun getSystemsWithMinorSlots() : List<AbyssSystemData> {
-        var abyssData = getAbyssData()
-        var list = abyssData.systemsData.filter { it.minorPoints.isNotEmpty() }
-        return list
+    fun getBiomeManager() : AbyssBiomeManager {
+        return getAbyssData().biomeManager
     }
 
     fun isAnyFleetTargetingPlayer() : Boolean {
@@ -92,13 +81,6 @@ object AbyssUtils {
     fun getDifficulty() : AbyssDifficulty {
         if (RATSettings.abyssDifficulty == "Hard") return AbyssDifficulty.Hard
         return AbyssDifficulty.Normal
-    }
-
-    fun playerInNeighbourOrSystem(system: StarSystemAPI) : Boolean
-    {
-        var player = Global.getSector().playerFleet
-        var data = getSystemData(system)
-        return player.containingLocation == system || data.neighbours.any { player.containingLocation == it }
     }
 
     fun addAlterationsToFleet(fleet: CampaignFleetAPI, chancePerShip: Float, random: Random) {

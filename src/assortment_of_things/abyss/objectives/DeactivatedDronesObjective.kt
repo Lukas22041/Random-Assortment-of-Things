@@ -4,7 +4,6 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
-import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
@@ -29,10 +28,10 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
     var activated = false
 
     override fun init(engine: CombatEngineAPI?, objective: BattleObjectiveAPI?) {
-        super.init(engine, objective)
+     /*   super.init(engine, objective)
 
         var system = Global.getSector().playerFleet.starSystem
-        var data = AbyssUtils.getSystemData(system)
+        //var data = AbyssUtils.getSystemData(system)
 
 
         var corePicker = WeightedRandomPicker<PersonAPI?>()
@@ -182,7 +181,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
             }
         }
 
-
+*/
     }
 
     /**
