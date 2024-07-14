@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.scripts
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.ui.AbyssalMapScreen
 import assortment_of_things.misc.*
 import com.fs.starfarer.api.EveryFrameScript
@@ -19,6 +20,8 @@ class MapPanelReplacerScript : EveryFrameScript {
     }
 
     override fun advance(amount: Float) {
+
+        if (!Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) return
 
         var state = AppDriver.getInstance().currentState
         if (state !is CampaignState) return
@@ -52,7 +55,7 @@ class MapPanelReplacerScript : EveryFrameScript {
         parent.position.inTL(50f, 50f)
 
 
-        var screen = AbyssalMapScreen(element, parent.getWidth() - 100, 650f)
+        var screen = AbyssalMapScreen(element, parent.getWidth() - 100, parent.getHeight() - 80)
 
 
        /* var scData = SCUtils.getSCData()

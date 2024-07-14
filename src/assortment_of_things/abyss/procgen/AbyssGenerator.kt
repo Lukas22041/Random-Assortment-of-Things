@@ -7,7 +7,9 @@ import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.util.Misc
+import java.awt.Color
 
 object AbyssGenerator {
 
@@ -20,6 +22,18 @@ object AbyssGenerator {
 
         system.initNonStarCenter()
         system.name = "The Abyssal Depths"
+
+        system.generateAnchorIfNeeded()
+        system.isProcgen = false
+        system.addTag(Tags.THEME_HIDDEN)
+        system.addTag(Tags.THEME_UNSAFE)
+        system.addTag(Tags.THEME_SPECIAL)
+        system.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
+        system.addTag("do_not_show_stranded_dialog")
+
+        system.addTag(AbyssUtils.SYSTEM_TAG)
+
+        system.lightColor = Color(20, 20, 20)
 
         var playerFleet = Global.getSector().playerFleet
         var currentLocation = playerFleet.containingLocation
