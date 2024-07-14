@@ -3,23 +3,26 @@ package assortment_of_things.abyss.ui
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaUI.elements.LunaElement
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
+import java.awt.Color
 
 class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
     var scale = 0.011f
     var playerPoint = Global.getSettings().getAndLoadSprite("graphics/starscape/star4.png")
+    var nebulaSprite: SpriteAPI = Global.getSettings().getAndLoadSprite("graphics/terrain/rat_map_nebula.png")
 
     init {
         enableTransparency = true
         borderAlpha = 0.4f
-        backgroundAlpha = 0.05f
+        backgroundAlpha = 1f
         borderColor = AbyssUtils.ABYSS_COLOR
-        backgroundColor = AbyssUtils.ABYSS_COLOR
+        backgroundColor = Color(20, 0, 0)
 
         onClick {
             var loc = toRealPosition(Vector2f(it.x.toFloat(), it.y.toFloat()))
@@ -34,13 +37,14 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
         var grid = manager.grid
         var playerCell = manager.getPlayerCell()
 
+
+        GL11.glPopMatrix()
+
         for (column in grid) {
             for (cell in column) {
                 var color = backgroundColor
 
-                if (cell == playerCell) {
-                    color = Misc.getHighlightColor()
-                }
+
 
                 var horOffset = (manager.mapHorizontalSize / 2) * scale
                 var verOffset = (manager.mapVerticalSize / 2) * scale
@@ -50,6 +54,16 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
                 var cellX = x + (width / 2) + cell.x * cellSize - horOffset
                 var cellY = y + (height / 2) + cell.y * cellSize - verOffset
 
+                nebulaSprite.setSize(cellSize * 4f, cellSize * 4f)
+                nebulaSprite.color = AbyssUtils.ABYSS_COLOR
+                nebulaSprite.alphaMult = cell.spriteAlpha * 0.05f * alphaMult
+                nebulaSprite.angle = cell.spriteAngle
+                nebulaSprite.renderAtCenter(cellX + cellSize/2, cellY + cellSize / 2)
+
+
+                /*if (cell == playerCell) {
+                    color = Misc.getHighlightColor()
+                }
 
                 //Fill
                 GL11.glPushMatrix()
@@ -108,7 +122,7 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
                 GL11.glVertex2f(cellX, cellY)
 
                 GL11.glEnd()
-                GL11.glPopMatrix()
+                GL11.glPopMatrix()*/
 
             }
         }
