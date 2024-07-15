@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.biomes.*
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
@@ -18,11 +19,15 @@ class AbyssBiomeManager {
     var cellCountHorizontal = (mapHorizontalSize / cellSize).toInt()
     var cellCountVertical = (mapVerticalSize / cellSize).toInt()
 
-    var biomes = listOf(
-        AbyssBiome("shore", "Abyssal Shore", Color(200, 0, 0), Color(200, 0, 0)),
-        AbyssBiome("sea_of_tranquility", "Sea of Tranquillity", Color(155, 0, 0), Color(155, 0, 0)),
-        AbyssBiome("abyssal_waste", "Abyssal Wastes", Color(40, 0, 0), Color(100, 0, 0)),
-        AbyssBiome("biome5", "Sea of Serenity", Color(252, 137, 3), Color(200, 90, 3))
+    var biomes = listOf<BaseAbyssBiome>(
+        /*BaseAbyssBiome("shore", "Abyssal Shore", Color(200, 0, 0), Color(200, 0, 0)),
+        BaseAbyssBiome("sea_of_tranquility", "Sea of Tranquillity", Color(155, 0, 0), Color(155, 0, 0)),
+        BaseAbyssBiome("abyssal_waste", "Abyssal Wastes", Color(40, 0, 0), Color(100, 0, 0)),
+        BaseAbyssBiome("biome5", "Sea of Serenity", Color(252, 137, 3), Color(200, 90, 3))*/
+        SeaOfTranquillity(),
+        OceanOfStorms(),
+        AbyssalWastes(),
+        SeaOfSerenity(),
     )
 
     var grid: Array<Array<BiomeCell>> = Array(cellCountHorizontal) { x ->
@@ -81,25 +86,25 @@ class AbyssBiomeManager {
         }
     }
 
-    fun getCellsBiome(cell: BiomeCell) : AbyssBiome? {
-        return biomes.find { it.id == cell.biomeId }
+    fun getCellsBiome(cell: BiomeCell) : BaseAbyssBiome? {
+        return biomes.find { it.getId() == cell.biomeId }
     }
 
 
-    fun createBlob(biome: AbyssBiome) {
+    fun createBlob(biome: BaseAbyssBiome) {
         var cellsSoFar = ArrayList<BiomeCell>()
 
         //var color = Color.getHSBColor(Random().nextFloat(), MathUtils.getRandomNumberInRange(0.7f, 1f), MathUtils.getRandomNumberInRange(0.7f, 1f))
-        var color = biome.color
+        var color = biome.getColor()
         //var max = MathUtils.getRandomNumberInRange(140, 150)
-        var max = ((cellCountHorizontal * cellCountVertical) * 0.7f / biomes.count()).toInt()
+        var max = ((cellCountHorizontal * cellCountVertical) * 0.85f / biomes.count()).toInt()
         //var max = ((cellCountHorizontal * cellCountVertical) * 0.8f / biomes.count()).toInt()
         //var max = ((cellCountHorizontal * cellCountVertical) * 0.9f / biomes.count()).toInt()
-        var center = cells.filter { it.biomeId == "" }.randomOrNull() ?: return
+        var center = cells.filter { it.biomeId == "" && it.getAdjacentFilledCells().isEmpty() /*No Cell directly next to biomes, prevents spawning in gaps*/ }.randomOrNull() ?: return
 
         cellsSoFar.add(center)
         center.color = color
-        center.biomeId = biome.id
+        center.biomeId = biome.getId()
        // biome.centralCell = center
 
         biome.cells.add(center)
@@ -114,7 +119,7 @@ class AbyssBiomeManager {
             var cell = continueCell.getAdjacentEmptyCell() ?: continue
 
             cell.color = color
-            cell.biomeId = biome.id
+            cell.biomeId = biome.getId()
 
             //Reduce alpha further away from biome core
           /*  var level = i.toFloat().levelBetween(0f, max.toFloat())
@@ -155,6 +160,7 @@ class AbyssBiomeManager {
         }
 
         var fakeCell = BiomeCell(0, 0, 0f)
+        fakeCell.biomeId = "abyssal_wastes"
         fakeCell.isFake = true
 
         return fakeCell

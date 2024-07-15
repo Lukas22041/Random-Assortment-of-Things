@@ -14,6 +14,8 @@ data class BiomeCell(var x: Int, var y: Int, var size: Float) {
     var spriteAngle = MathUtils.getRandomNumberInRange(0f, 360f)
     var spriteAlpha = MathUtils.getRandomNumberInRange(0.6f, 1f)
 
+    var isBorder = false
+
     var biomeId = ""
     var color = Color(0, 0, 0)
 

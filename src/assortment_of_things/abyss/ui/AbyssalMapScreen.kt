@@ -37,7 +37,7 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
 
         onClick {
             var loc = toRealPosition(Vector2f(it.x.toFloat(), it.y.toFloat()))
-            Global.getSector().playerFleet.location.set(loc)
+            Global.getSector().playerFleet.setLocation(loc.x, loc.y)
         }
     }
 
@@ -81,13 +81,13 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
 
 
 
-                var renderCells = false
+                var renderCells = true
 
 
                 if (!renderCells) {
-                    nebulaSprite.setSize(cellSize * 10f, cellSize * 10f)
+                    nebulaSprite.setSize(cellSize * 9f, cellSize * 9f)
                     nebulaSprite.color = cell.color
-                    nebulaSprite.alphaMult = cell.spriteAlpha * 0.023f * alphaMult
+                    nebulaSprite.alphaMult = cell.spriteAlpha * 0.03f * alphaMult
                     nebulaSprite.angle = cell.spriteAngle
                     nebulaSprite.renderAtCenter(cellX + cellSize/2, cellY + cellSize / 2)
                 }
@@ -122,9 +122,9 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
             var cellX = x + (width / 2) + median.x * cellSize - horOffset
             var cellY = y + (height / 2) + median.y * cellSize - verOffset
 
-            labelText.text = biome.name
+            labelText.text = biome.getName()
             labelText.fontSize = 1600f * scale
-            labelText.baseColor = biome.labelColor.setAlpha((200 * alphaMult).toInt())
+            labelText.baseColor = biome.getLabelColor().setAlpha((200 * alphaMult).toInt())
             labelText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
             labelText.blendSrc = GL11.GL_SRC_ALPHA
             labelText.drawAtAngle(cellX - (labelText.width / 2), cellY + (labelText.height), biome.labelAngle)
