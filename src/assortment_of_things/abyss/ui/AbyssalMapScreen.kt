@@ -66,6 +66,9 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
             for (cell in column) {
 
 
+                //Use this if theres performance issues
+                //if (cell.x.mod(2) != 0 && cell.y.mod(2) != 0) continue
+
 
                 var horOffset = (manager.mapHorizontalSize / 2) * scale
                 var verOffset = (manager.mapVerticalSize / 2) * scale
@@ -84,7 +87,7 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
                 if (!renderCells) {
                     nebulaSprite.setSize(cellSize * 10f, cellSize * 10f)
                     nebulaSprite.color = cell.color
-                    nebulaSprite.alphaMult = cell.spriteAlpha * 0.025f * alphaMult
+                    nebulaSprite.alphaMult = cell.spriteAlpha * 0.023f * alphaMult
                     nebulaSprite.angle = cell.spriteAngle
                     nebulaSprite.renderAtCenter(cellX + cellSize/2, cellY + cellSize / 2)
                 }
