@@ -2,13 +2,17 @@ package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.biomes.*
+import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.util.IntervalUtil
+import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.ext.rotate
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
-class AbyssBiomeManager {
+class AbyssBiomeManager : EveryFrameScript {
 
 
     var cellSize = 2000f
@@ -37,6 +41,79 @@ class AbyssBiomeManager {
     }
 
     var cells: List<BiomeCell> = grid.flatMap { it.asList() }
+
+    var interval = IntervalUtil(0.1f, 0.1f)
+
+    override fun advance(amount: Float) {
+
+        interval.advance(amount)
+
+        if (interval.intervalElapsed()) {
+            if (!Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) return
+
+            var playerCell = getPlayerCell()
+          /*  var adjacentPlayerCells = playerCell.getAdjacentCells()
+            var surroundingPlayerCells = playerCell.getSurroundingCells()
+
+            var combined = surroundingPlayerCells.plus(playerCell)*/
+
+            var cellsInArea = getCellsInRadius(playerCell, 2)
+
+            for (cell in cellsInArea) {
+                cell.isDiscovered = true
+
+                if (playerCell == cell) {
+                    var biome = getCellsBiome(cell)
+
+                    if (!biome!!.isDiscovered) {
+                        Global.getSector().campaignUI.addMessage("New Biome Discovered:\n" +
+                                " - ${biome.getName()}",
+                        Misc.getTextColor(), "${biome.getName()}", "", biome.getLabelColor(), Misc.getHighlightColor())
+                    }
+
+                    biome!!.isDiscovered = true
+
+
+                }
+
+            }
+
+            for (biome in biomes) {
+                if (biome.isFullyDiscovered) continue
+
+                var count = biome.cells.count { it.isDiscovered }
+                if (count >= biome.cells.count() * 0.8f) {
+                    biome.cells.forEach { it.isDiscovered = true }
+                    biome.isFullyDiscovered = true
+
+                    Global.getSector().campaignUI.addMessage("The ${biome.getName()} biome has been fully mapped!",
+                        Misc.getTextColor(), "${biome.getName()}", "", biome.getLabelColor(), Misc.getHighlightColor())
+                }
+            }
+        }
+    }
+
+    fun getCellsInRadius(center: BiomeCell, radius: Int) : Set<BiomeCell> {
+        var list = HashSet<BiomeCell>()
+
+        list.add(center)
+
+        var centerX = center.x
+        var centerY = center.y
+
+        for (i in 0 until radius) {
+            for (cell in HashSet(list)) {
+                list.add(cell.getTM())
+                list.add(cell.getLMid())
+                list.add(cell.getRMid())
+                list.add(cell.getBM())
+            }
+        }
+
+        list = list.filter { !it.isFake }.toHashSet()
+
+        return list
+    }
 
     fun generate() {
         var data = AbyssUtils.getAbyssData()
@@ -84,11 +161,18 @@ class AbyssBiomeManager {
             var yAverage = cells.map { it.y }.average().toInt()
             biome.centralCell = getCell(xAverage, yAverage)*/
         }
+
+        for (biome in biomes) {
+            findBorders(biome)
+        }
+
+        for (biome in biomes) {
+            biome.generate()
+        }
     }
 
-    fun getCellsBiome(cell: BiomeCell) : BaseAbyssBiome? {
-        return biomes.find { it.getId() == cell.biomeId }
-    }
+
+
 
 
     fun createBlob(biome: BaseAbyssBiome) {
@@ -153,40 +237,127 @@ class AbyssBiomeManager {
 
 
 
+    fun findBorders(biome: BaseAbyssBiome) {
+        var bounds = ArrayList<Vector2f>()
+        var biomeCells = biome.cells
+
+        var direction = Vector2f(0.1f, -1f)
+        var start = biomeCells.filter { getAdjacent(it, 1, 0).biomeId != it.biomeId }.random()
+        var current = start
+
+        var safetyBreak = 1000
+        while (true) {
+
+            current.isBorder = true
+
+            safetyBreak--
+            if (safetyBreak <= 1) {
+                break
+            }
+
+            var next = getAdjacent(current, direction)
+            //next.isBorder = true
+
+            if (next == start) {
+                break
+            }
+
+            var nextFront = getAdjacent(next, direction)
+            var nextLeft = getAdjacent(next, Vector2f(direction).rotate(90f))
+            if (next.biomeId == current.biomeId) {
+
+
+                //If facing a tile that doesnt have a biome in front or the left, turn to the left
+                if (nextLeft.biomeId == next.biomeId) {
+                    current = nextLeft
+                    if (current == start) { break }
+                    direction = direction.rotate(90f)
+                    continue
+                }
+
+                //Check if the tile left of the next tile is another biome, if so move forward
+                if (nextLeft.biomeId != current.biomeId) {
+                    current = next
+                    if (current == start) { break }
+                    continue
+                }
+            }
+            if (next.biomeId != current.biomeId) {
+                direction = direction.rotate(270f)
+                continue
+            }
+        }
+    }
+
+
+
+    fun getCellsBiome(cell: BiomeCell) : BaseAbyssBiome? {
+        return biomes.find { it.getId() == cell.biomeId }
+    }
+
 
     fun getCell(x: Int, y: Int) : BiomeCell {
         if (x in 0 until cellCountHorizontal && y in 0 until cellCountVertical) {
             return grid[x][y]
         }
 
-        var fakeCell = BiomeCell(0, 0, 0f)
-        fakeCell.biomeId = "abyssal_wastes"
+        var fakeCell = BiomeCell(x, y, cellSize)
+        fakeCell.biomeId = ""
         fakeCell.isFake = true
 
         return fakeCell
     }
 
+    fun getAdjacent(cell: BiomeCell, loc: Vector2f) : BiomeCell {
+        var x = loc.x.toInt()
+        var y = loc.y.toInt()
+        return getAdjacent(cell, x, y)
+    }
 
-    fun getPlayerCell() : BiomeCell {
-        var playerfleet = Global.getSector().playerFleet
+    fun getAdjacent(cell: BiomeCell, x: Int, y: Int) : BiomeCell {
+        return getCell(cell.x + x, cell.y + y)
+    }
 
+
+
+    fun toRealCoordinate(cell: BiomeCell) : Vector2f {
 
         var horOffset = mapHorizontalSize / 2
         var verOffset = mapVerticalSize / 2
 
-        var loc = playerfleet.location
+        var cellSize = cellSize
+
+        var locX = cell.x.toFloat() * cellSize - horOffset
+        var locY = cell.y.toFloat() * cellSize - verOffset
+
+        var realLoc = Vector2f(locX, locY)
+        return realLoc
+    }
+
+    fun getCellFromRealCoordinate(loc: Vector2f) : BiomeCell {
+        var horOffset = mapHorizontalSize / 2
+        var verOffset = mapVerticalSize / 2
+
         var x = ((loc.x+horOffset) / cellSize).toInt()
         var y = ((loc.y + verOffset) / cellSize).toInt()
 
-       /* if (x in 0 until cellCountHorizontal && y in 0 until cellCountVertical) {
-            return grid[x][y]
-        }
-
-        var fakeCell = BiomeCell(0, 0, 0f)
-        fakeCell.isFake = true*/
-
-        return getCell(x, y)
+        return getCell(x.toInt(), y.toInt())
     }
+
+    fun getPlayerCell() : BiomeCell {
+        var playerfleet = Global.getSector().playerFleet
+        return getCellFromRealCoordinate(Global.getSector().playerFleet.location)
+    }
+
+    override fun isDone(): Boolean {
+       return false
+    }
+
+
+    override fun runWhilePaused(): Boolean {
+        return false
+    }
+
 
 
 }

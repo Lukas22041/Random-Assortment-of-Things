@@ -1,8 +1,15 @@
 package assortment_of_things.abyss.procgen.biomes
 
+import assortment_of_things.abyss.AbyssUtils
+import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.util.Misc
 import java.awt.Color
 
 class SeaOfTranquillity : BaseAbyssBiome() {
+
+    //Notes
+    //No Seraphs
+
     override fun getId(): String {
         return "sea_of_tranquillity"
     }
@@ -29,6 +36,13 @@ class SeaOfTranquillity : BaseAbyssBiome() {
 
     override fun generate() {
 
+        //Generate connection between hyperspace and abyss
+
+       /* var system = AbyssUtils.getSystem()
+        for (cell in cells) {
+            var entitiy = system.addCustomEntity("test${Misc.genUID()}", "Test", "orbital_habitat", Factions.NEUTRAL)
+            entitiy.location.set(cell.getCenterInRealLoc())
+        }*/
     }
 
 

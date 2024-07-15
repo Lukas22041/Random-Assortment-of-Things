@@ -47,8 +47,10 @@ object AbyssUtils {
     var RIFT_TAG = "rat_abyss_rift"
 
     fun getAbyssData() : AbyssData {
-        return Global.getSector().memoryWithoutUpdate.get(ABYSS_DATA_KEY) as AbyssData? ?: AbyssData()
+        return Global.getSector().memoryWithoutUpdate.get(ABYSS_DATA_KEY) as AbyssData
     }
+
+    fun getSystem() = getAbyssData().system
 
     fun getBiomeManager() : AbyssBiomeManager {
         return getAbyssData().biomeManager

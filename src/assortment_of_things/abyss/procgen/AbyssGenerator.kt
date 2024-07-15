@@ -15,10 +15,9 @@ object AbyssGenerator {
 
     fun generate() {
 
-        var data = AbyssData()
-        Global.getSector().memoryWithoutUpdate.set(AbyssUtils.ABYSS_DATA_KEY, data)
-
         var system = Global.getSector().createStarSystem("The Abyssal Depths")
+        var data = AbyssData(system)
+        Global.getSector().memoryWithoutUpdate.set(AbyssUtils.ABYSS_DATA_KEY, data)
 
         system.initNonStarCenter()
         system.name = "The Abyssal Depths"
@@ -50,6 +49,7 @@ object AbyssGenerator {
 
         var manager = AbyssBiomeManager()
         data.biomeManager = manager
+        Global.getSector().addScript(manager)
 
         manager.generate()
     }

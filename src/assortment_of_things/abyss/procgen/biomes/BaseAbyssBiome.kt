@@ -16,6 +16,9 @@ abstract class BaseAbyssBiome() {
 
     abstract fun generate()
 
+    var isDiscovered = false
+    var isFullyDiscovered = false
+
     var labelAngle = MathUtils.getRandomNumberInRange(-12f, 12f)
 
     var cells: MutableList<BiomeCell> = ArrayList()

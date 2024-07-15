@@ -65,10 +65,9 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
         for (column in grid) {
             for (cell in column) {
 
+                if (!cell.isDiscovered && !Global.getSettings().isDevMode) continue
 
-                //Use this if theres performance issues
                 //if (cell.x.mod(2) != 0 && cell.y.mod(2) != 0) continue
-
 
                 var horOffset = (manager.mapHorizontalSize / 2) * scale
                 var verOffset = (manager.mapVerticalSize / 2) * scale
@@ -81,10 +80,10 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
 
 
 
-                var renderCells = true
+                var renderCells = false
 
 
-                if (!renderCells) {
+                if (!renderCells ) {
                     nebulaSprite.setSize(cellSize * 9f, cellSize * 9f)
                     nebulaSprite.color = cell.color
                     nebulaSprite.alphaMult = cell.spriteAlpha * 0.03f * alphaMult
@@ -92,8 +91,10 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
                     nebulaSprite.renderAtCenter(cellX + cellSize/2, cellY + cellSize / 2)
                 }
 
-                else {
-                    renderCell(cell, alphaMult)
+                else if (renderCells){
+                    var playerCell = manager.getPlayerCell()
+
+                    renderCell(cell, alphaMult, playerCell)
                 }
 
 
@@ -112,7 +113,18 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
 
 
         for (biome in manager.biomes) {
+            if (!biome.isDiscovered && !Global.getSettings().isDevMode) continue
+
             var median = biome.centralCell
+
+            if (!median.isDiscovered && !Global.getSettings().isDevMode) {
+                var discovered = biome.cells.filter { it.isDiscovered }
+
+                if (discovered.isNotEmpty()) {
+                    var sorted = discovered.sortedBy { MathUtils.getDistance(it.getRealLoc(), it.getRealLoc()) }
+                    median = sorted.first()
+                }
+            }
 
             var horOffset = (manager.mapHorizontalSize / 2) * scale
             var verOffset = (manager.mapVerticalSize / 2) * scale
@@ -141,10 +153,9 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
         return Vector2f((loc.x - (width / 2) - x) / scale, (loc.y - (height / 2) - y) / scale)
     }
 
-    fun renderCell(cell: BiomeCell, alphaMult: Float) {
+    fun renderCell(cell: BiomeCell, alphaMult: Float, playerCell: BiomeCell) {
         var manager = AbyssUtils.getBiomeManager()
         var grid = manager.grid
-        var playerCell = manager.getPlayerCell()
 
         var horOffset = (manager.mapHorizontalSize / 2) * scale
         var verOffset = (manager.mapVerticalSize / 2) * scale
@@ -156,7 +167,7 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
 
         var color = cell.color
 
-        if (cell == playerCell) {
+        if (playerCell == cell) {
             color = Misc.getHighlightColor()
         }
 
@@ -169,10 +180,14 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
 
 
+        var borderAlpha = 0.2f
+        if (cell.isBorder) {
+            borderAlpha = 0.25f
+        }
         GL11.glColor4f(color.red / 255f,
             color.green / 255f,
             color.blue / 255f,
-            color.alpha / 255f * (alphaMult * 0.2f))
+            color.alpha / 255f * (alphaMult * borderAlpha))
 
 
 
@@ -186,7 +201,7 @@ class AbyssalMapScreen(tooltip: TooltipMakerAPI, width: Float, height: Float) : 
 
         var c = cell.color
 
-        if (cell == playerCell) {
+        if (playerCell == cell) {
             color = Misc.getHighlightColor()
         }
 
