@@ -20,10 +20,11 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
     var arkasPhantomGlow: SpriteAPI? = null
     var hasPhase = false
 
- /*   var vertex = Global.getSettings().loadText("data/shaders/testVertex.shader")
-    var frag = Global.getSettings().loadText("data/shaders/testFragment.shader")
+ /*   var spriteWithShader = SpriteWithShader(ship.baseOrModSpec().spriteName,
+         Global.getSettings().loadText("data/shaders/testVertex.shader"),
+                 Global.getSettings().loadText("data/shaders/testFragment.shader"))
+*/
 
-    var shaderRenderer = SpriteWithShader("graphics/ships/rat_makara.png", vertex, frag)*/
 
     init {
         systemGlow = Global.getSettings().getAndLoadSprite(ship.hullSpec.spriteName.replace(".png", "") + "_glow1.png")
@@ -52,6 +53,9 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
 
     override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
         if (!ship.isAlive) return
+
+
+      //  spriteWithShader.render(ship.location.x, ship.location.y)
 
         var active = false
         var level = ship.system?.effectLevel ?: 0f
@@ -94,11 +98,6 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
 
 
         }
-
-        /*shaderRenderer.angle = ship.facing - 90
-        shaderRenderer.renderAtCenter(ship.location.x + 200f, ship.location.y + 0f)
-*/
-
 
 
     }
