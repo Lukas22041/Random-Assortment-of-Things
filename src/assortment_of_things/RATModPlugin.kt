@@ -127,6 +127,8 @@ class RATModPlugin : BaseModPlugin() {
             LunaCampaignRenderer.addRenderer(RATCampaignRenderer())
         }*/
 
+        //LunaCampaignRenderer.addTransientRenderer(ShaderTestRenderer())
+
         Global.getSector().addTransientScript(ChangeMainMenuColorScript())
         Global.getSector().addTransientScript(AICoreReplacerScript())
         Global.getSector().addTransientListener(AICoreDropReplacerScript())

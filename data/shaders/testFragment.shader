@@ -12,8 +12,11 @@ void main() {
 	if (col.a > 0.0) {
 		col.g = col.g * (2.0) * (texCoord.y*iTime);
 		col.b = col.b * (2.0) * (texCoord.y*iTime);
+		
+		
 	}
 
+	
 
 	gl_FragColor = col;
 
