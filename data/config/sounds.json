@@ -205,6 +205,12 @@
     ],
 
 
+
+	"hypatia_warp_chargeup":
+    [
+            {"file":"sounds/rat/systems/hypatia_warp_chargeup.ogg","pitch":1,"volume":2},
+    ],
+
 	"exoship_warp_chargeup":
     [
             {"file":"sounds/rat/campaign/exoship_warp_chargeup.ogg","pitch":1,"volume":2},

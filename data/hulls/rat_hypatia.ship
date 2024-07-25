@@ -12,7 +12,8 @@
   "shieldRadius": 85,
   "viewOffset": 0,
   "builtInMods": [
-    "rat_exogrid"
+    "rat_exogrid",
+    "rat_hypatia_hullmod"
   ],
   "builtInWeapons": {
     "WS0006": "rat_exo_coil_location",

@@ -70,6 +70,7 @@ Exogrid,rat_exogrid,0,,Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_t
 Exo Fighter AI,rat_exo_fighter_ai,0,,Exo-Tech,,,10000,FALSE,TRUE,TRUE,0,0,0,0,assortment_of_things.exotech.hullmods.ExoFighterAIHullmod,,,,graphics/hullmods/rat_exogrid.png
 Experimental Design,rat_exo_experimental,0,,Experimental Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.ExperimentalDesignHullmod,,,,graphics/hullmods/rat_experimental_design.png
 ,,,,,,,,,,,,,,,,,,,
+Warpfield,rat_hypatia_hullmod,0,,Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.HypatiaHullmod,,,,graphics/hullmods/rat_hypatia_hullmod.png
 Phase Entaglement,rat_tylos_hullmod,0,,Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.TylosHullmod,,,,graphics/hullmods/rat_tylos_hullmod.png
 Phase Platform,rat_apheidas_hullmod,0,,Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.ApheidasHullmod,,,,graphics/hullmods/rat_apheidas_hullmod.png
 ,,,,,,,,,,,,,,,,,,,
