@@ -2,10 +2,8 @@ package assortment_of_things.misc
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.graphics.SpriteAPI
-import com.fs.starfarer.api.util.Misc
 import kotlinx.coroutines.handleCoroutineException
 import org.dark.shaders.util.ShaderLib
-import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL13
 import org.lwjgl.opengl.GL20
@@ -65,6 +63,7 @@ class SpriteWithShader(var texture: String, var vertex: String, var fragment: St
         GL11.glEnable(GL11.GL_TEXTURE_2D)
         GL11.glEnable(GL11.GL_BLEND)
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+
 
         GL11.glTranslatef(x, y, 0.0f)
 

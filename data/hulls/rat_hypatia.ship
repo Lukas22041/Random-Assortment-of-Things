@@ -1,0 +1,264 @@
+{
+  "hullName": "Hypatia",
+  "hullId": "rat_hypatia",
+  "hullSize": "DESTROYER",
+  "spriteName": "graphics/ships/exo/rat_hypatia.png",
+  "style": "RAT_EXO",
+  "height": 160,
+  "width": 108,
+  "center": [54, 80],
+  "collisionRadius": 92.5,
+  "shieldCenter": [0, 0],
+  "shieldRadius": 86,
+  "viewOffset": 0,
+  "builtInMods": [
+    "rat_exogrid"
+  ],
+  "builtInWeapons": {
+    "WS0006": "rat_exo_coil_location",
+    "WS0007": "rat_hypatia_wing_left",
+    "WS0008": "rat_hypatia_wing_right"
+  },
+  "weaponSlots": [
+    {
+      "id": "WS0001",
+      "size": "MEDIUM",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 240,
+      "angle": 0,
+      "locations": [-24, -0]
+    },
+    {
+      "id": "WS0002",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 240,
+      "angle": 45,
+      "locations": [-5, 18]
+    },
+    {
+      "id": "WS0003",
+      "size": "SMALL",
+      "type": "ENERGY",
+      "mount": "TURRET",
+      "arc": 240,
+      "angle": -45,
+      "locations": [-5, -18]
+    },
+    {
+      "id": "WS0004",
+      "size": "SMALL",
+      "type": "SYNERGY",
+      "mount": "HARDPOINT",
+      "arc": 10,
+      "angle": 0,
+      "locations": [15, -15]
+    },
+    {
+      "id": "WS0005",
+      "size": "SMALL",
+      "type": "SYNERGY",
+      "mount": "HARDPOINT",
+      "arc": 10,
+      "angle": -0,
+      "locations": [15, 15]
+    },
+    {
+      "id": "WS0006",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 240,
+      "angle": 0,
+      "locations": [-12, -0]
+    },
+    {
+      "id": "WS0007",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 240,
+      "angle": 0,
+      "locations": [-32, 31]
+    },
+    {
+      "id": "WS0008",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 240,
+      "angle": -0,
+      "locations": [-32, -31]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-54, -16],
+      "length": 10,
+      "width": 6,
+      "angle": 180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-54, 16],
+      "length": 10,
+      "width": 5,
+      "angle": -180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-29.5, -28.5],
+      "length": 30,
+      "width": 8,
+      "angle": -155.5,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH_NO_GLOW"
+    },
+    {
+      "location": [-29.5, 28.5],
+      "length": 30,
+      "width": 8,
+      "angle": 155.5,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH_NO_GLOW"
+    },
+    {
+      "location": [-54, -15],
+      "length": 5,
+      "width": 3,
+      "angle": 180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-54, 15],
+      "length": 5,
+      "width": 3,
+      "angle": -180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-54, 17],
+      "length": 5,
+      "width": 3,
+      "angle": -180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-54, -17],
+      "length": 5,
+      "width": 3,
+      "angle": 180,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH"
+    },
+    {
+      "location": [-30, -29.5],
+      "length": 25,
+      "width": 6,
+      "angle": -153.5,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH_NO_GLOW"
+    },
+    {
+      "location": [-30, 29.5],
+      "length": 25,
+      "width": 6,
+      "angle": 153.5,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH_NO_GLOW"
+    },
+    {
+      "location": [-30, -31],
+      "length": 22,
+      "width": 5,
+      "angle": -149,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH_NO_GLOW"
+    },
+    {
+      "location": [-30, 31],
+      "length": 22,
+      "width": 5,
+      "angle": 149,
+      "contrailSize": 15,
+      "style": "CUSTOM",
+      "styleId": "EXO_TECH_NO_GLOW"
+    }
+  ],
+  "bounds": [
+    -75.5, 1,
+    -60.5, 5,
+    -58.5, 8.5,
+    -64.5, 8,
+    -64.5, 12,
+    -54, 12.5,
+    -54.5, 19.5,
+    -36.5, 21,
+    -49, 30,
+    -48, 36.5,
+    -29.5, 29,
+    -44.5, 39.5,
+    -42.5, 43.5,
+    -31.5, 38,
+    -30.5, 39.5,
+    -35, 45.5,
+    -34.5, 52.5,
+    -17, 38.5,
+    -14, 40,
+    -4.5, 31.5,
+    0, 30.5,
+    1, 32.5,
+    6.5, 27.5,
+    12, 26,
+    13, 22,
+    19, 22,
+    20, 10,
+    67.5, 1.5,
+    67.5, -1.5,
+    20, -10,
+    19, -22,
+    13, -22,
+    12, -26,
+    6.5, -27.5,
+    1, -32.5,
+    0, -30.5,
+    -4.5, -31.5,
+    -14, -40,
+    -17, -38.5,
+    -34.5, -52.5,
+    -35, -45.5,
+    -30.5, -39.5,
+    -31.5, -38,
+    -42.5, -43.5,
+    -44.5, -39.5,
+    -29.5, -29,
+    -48, -36.5,
+    -49, -30,
+    -36.5, -21,
+    -54.5, -19.5,
+    -54, -12.5,
+    -64.5, -12,
+    -64.5, -8,
+    -58.5, -8.5,
+    -60.5, -5,
+    -75.5, -1
+  ]
+}
