@@ -227,6 +227,24 @@ class HypatiaShipsystem : BaseShipSystemScript() {
 
         }
 
+        if (state == ShipSystemStatsScript.State.ACTIVE) {
+           if (isOutOfBounds()) {
+               ship!!.useSystem()
+           }
+        }
+    }
+
+    fun isOutOfBounds() : Boolean {
+        var width = Global.getCombatEngine().mapWidth
+        var height = Global.getCombatEngine().mapHeight
+
+        var x = ship!!.location.x
+        var y = ship!!.location.y
+
+        if (x in -(width/2)..(width/2) && y in -(height/2)..(height/2)) {
+            return false
+        }
+        return true
     }
 
     override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
