@@ -7,9 +7,9 @@
   "height": 160,
   "width": 108,
   "center": [54, 80],
-  "collisionRadius": 92.5,
-  "shieldCenter": [0, 0],
-  "shieldRadius": 86,
+  "collisionRadius": 100,
+  "shieldCenter": [-4, -0],
+  "shieldRadius": 85,
   "viewOffset": 0,
   "builtInMods": [
     "rat_exogrid"
@@ -81,7 +81,7 @@
       "mount": "TURRET",
       "arc": 240,
       "angle": 0,
-      "locations": [-32, 31]
+      "locations": [-26.5, 34.5]
     },
     {
       "id": "WS0008",
@@ -90,7 +90,7 @@
       "mount": "TURRET",
       "arc": 240,
       "angle": -0,
-      "locations": [-32, -31]
+      "locations": [-26.5, -34.5]
     }
   ],
   "engineSlots": [

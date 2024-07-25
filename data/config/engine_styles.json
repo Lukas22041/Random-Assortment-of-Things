@@ -235,7 +235,7 @@
 		"contrailCampaignColor":[248,172,44,25],
 		"type":"GLOW", # GLOW or SMOKE
 		
-		"glowSizeMult":0.5,
+		"glowSizeMult":0.4,
 		#"glowAlternateColor":[0, 0, 0,0],
 	},
 }
