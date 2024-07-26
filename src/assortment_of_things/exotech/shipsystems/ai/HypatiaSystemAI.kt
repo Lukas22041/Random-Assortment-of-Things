@@ -256,6 +256,9 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
                 //var offset = getOffset(targetEntity!!)
                 ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, targetEntity!!.location)
+                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST, 1f, targetEntity!!.location)
+                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST_WHILE_SIDETRACKED, 1f, targetEntity!!.location)
+
                 ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.BIGGEST_THREAT, 1f, null)
 
 
@@ -271,13 +274,13 @@ class HypatiaSystemAI : ShipSystemAIScript {
                     reachedTarget = true
                 }
 
-                if (distance > distanceForUnwarp * 1.2f) {
-                    var isInArc = Misc.isInArc(ship!!.facing, 10f, ship!!.location, targetEntity!!.location)
-                    if (ship!!.shipAI != null && isInArc) {
-                        ship!!.blockCommandForOneFrame(ShipCommand.TURN_LEFT)
-                        ship!!.blockCommandForOneFrame(ShipCommand.TURN_RIGHT)
+                    if (distance > distanceForUnwarp * 1.2f) {
+                        var isInArc = Misc.isInArc(ship!!.facing, 10f, ship!!.location, targetEntity!!.location)
+                        if (ship!!.shipAI != null && isInArc) {
+                            ship!!.blockCommandForOneFrame(ShipCommand.TURN_LEFT)
+                            ship!!.blockCommandForOneFrame(ShipCommand.TURN_RIGHT)
+                        }
                     }
-                }
 
                 if (reachedTarget && distance >= distanceForUnwarp * 1.3f) {
                     shouldStop = true
