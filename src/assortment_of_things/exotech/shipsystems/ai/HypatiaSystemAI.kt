@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.shipsystems.ai
 
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
@@ -96,12 +97,12 @@ class HypatiaSystemAI : ShipSystemAIScript {
             var taskManager = manager.getTaskManager(ship!!.isAlly)
             var assignment = taskManager.getAssignmentFor(ship!!)
 
-            var nearbyShipsIterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 2800f, 2800f)
+            var nearbyShipsIterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 3000f, 3000f)
             var nearbyShips = ArrayList<ShipAPI>()
             nearbyShipsIterator.forEach { if((it as ShipAPI).isVisibleToSide(ship!!.owner)) {nearbyShips.add(it as ShipAPI) } }
 
-            var hasNearbyAlly = nearbyShips.any { it.owner == ship!!.owner && it.isAlive && it != ship}
-            var hasNearbyHostile = nearbyShips.any { it.owner != ship!!.owner && it.isAlive && it != ship }
+            var hasNearbyAlly = nearbyShips.any { it.owner == ship!!.owner && it.isAlive && it != ship && MathUtils.getDistance(ship, it) <= 1800}
+            var hasNearbyHostile = nearbyShips.any { it.owner != ship!!.owner && it.isAlive && it != ship && MathUtils.getDistance(ship, it) <= minDistanceNonAssignmentWarp }
 
             var allShips = Global.getCombatEngine().ships
 
@@ -133,7 +134,16 @@ class HypatiaSystemAI : ShipSystemAIScript {
                             assignmentTarget = entity
                         }
                         if (entity is DeployedFleetMemberAPI) {
-                            assignmentTarget = entity.ship
+                            var other = entity.ship
+                            assignmentTarget = other
+
+                            //Jump together with an ally if it is currently warping and this ship is assigned to follow
+                          /*  if (other.baseOrModSpec().hullId == ship!!.baseOrModSpec().hullId) {
+                                if (other.system.isActive) {
+                                    //Skip Distance Calculation, just start a warp
+                                    targetEntity = other
+                                }
+                            }*/
                         }
                     }
 
@@ -253,7 +263,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
                         landingPoint!!.mass = ship!!.mass
                         landingPoint!!.owner = ship!!.owner
 
-                        Global.getCombatEngine().addLayeredRenderingPlugin(LandingPointRenderer(landingPoint!!))
+                        //Global.getCombatEngine().addLayeredRenderingPlugin(LandingPointRenderer(landingPoint!!))
 
 
                         //Get & Create List if it doesnt exist
@@ -284,6 +294,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
         //Can not interval this part, certain flags get overwritten every frame (specificly while near an opponent), which breaks the movement code
         if (ship!!.system.isActive) {
 
+            ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_USE_SHIELDS, 0.5f)
             var shouldStop = false
 
             if (warpTime <= 0) {
