@@ -27,7 +27,7 @@ Exocloak,rat_exocloak,,,,,,,,,,0.5,0,0.5,2,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,,TRUE,,g
 Phase Phantoms,rat_arkas_system,,,,3000,,,,,,12,0.1,1.5,20,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 Phased Deployment,rat_leanira_system,,,,,,,,,,1,,1,20,TRUE,,,,,,,,,,,,graphics/icons/hullsys/infernium_injector.png
 Superposition,rat_tylos_system,,,,,,,,,,1,0.1,1,5,FALSE,,,,,,,,,,,,graphics/icons/hullsys/infernium_injector.png
-Warp,rat_hypatia_system,,,,,,,,,,5,0,2,2,TRUE,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
+Warp,rat_hypatia_system,,,,,,,,,,5,0,2,2,TRUE,,,,TRUE,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 Aftershadows,rat_thestia_system,,,,,,,,,,1,10,1.5,20,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Gate of Babylon,rat_gilgamesh_system,,,,,,,,,,2,8,2,18,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
