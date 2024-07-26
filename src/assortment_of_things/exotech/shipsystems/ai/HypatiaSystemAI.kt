@@ -42,12 +42,17 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
     var minDistanceNonAssignmentWarp = 3500
     var minDistanceAssignmentWarp = 3500
-    var distanceForUnwarp = 750f
+
+
+    var distanceForUnwarp = 850f
+    var distanceForOffset = 750f
 
 
     var reachedTarget = false
 
     var previousTarget: CombatEntityAPI? = null
+
+    var activated = false
 
     //Entity placed on destination, apply a force code to space them out from eachother
     var landingPoint: CombatEntityAPI? = null
@@ -237,16 +242,13 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
                         //Real destination
 
-
-
                         //Place point slightly in front of destination instead
                         var angle = Misc.getAngleInDegrees(ship!!.location, targetEntity!!.location)
                         var loc = targetEntity!!.location
-                        var offset = MathUtils.getPointOnCircumference(loc, 750f, angle-180)
+                        var offset = MathUtils.getPointOnCircumference(loc, distanceForOffset, angle-180)
 
-                        //Set Landing Point
                         landingPoint = SimpleEntity(offset)
-                        //var vel = Vector2f(1000f, 100f)
+
                         landingPoint!!.collisionRadius = targetEntity!!.collisionRadius
                         landingPoint!!.mass = ship!!.mass
                         landingPoint!!.owner = ship!!.owner
@@ -288,6 +290,18 @@ class HypatiaSystemAI : ShipSystemAIScript {
                 shouldStop = true
             }
 
+            //Recalculate position once more after system finished charging
+            //This is to prevent an issue where the location of the real target has already moved during the 5 seconds of chargeup
+            if (!activated && ship!!.system.state == ShipSystemAPI.SystemState.ACTIVE) {
+                activated = true
+
+                var angle = Misc.getAngleInDegrees(ship!!.location, targetEntity!!.location)
+                var loc = targetEntity!!.location
+                var offset = MathUtils.getPointOnCircumference(loc, distanceForOffset, angle-180)
+
+                landingPoint!!.location.set(offset)
+            }
+
             var landings = Global.getCombatEngine().customData.get("rat_hypatia_landings") as MutableList<CombatEntityAPI>?
             if (landings != null) {
                 var shipsIter = Global.getCombatEngine().shipGrid.getCheckIterator(landingPoint!!.location, 3000f, 3000f)
@@ -309,7 +323,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
 
                    if (distance <= 700f) {
-                       var force = 30f
+                       var force = 20f
                        if (other.owner != landingPoint!!.owner) {
                            force = 50f
                        }
@@ -383,6 +397,8 @@ class HypatiaSystemAI : ShipSystemAIScript {
                 //Remove Landing Point
                 landings?.remove(landingPoint)
 
+                var activated = false
+
                 ship!!.useSystem()
             }
         }
@@ -415,7 +431,12 @@ class HypatiaSystemAI : ShipSystemAIScript {
     fun applyForce(entity: CombatEntityAPI, direction: Float, force: Float) : Vector2f {
         return applyForce(entity, MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 1f, direction), force)
     }
+
+
+
 }
+
+
 
 class LandingPointRenderer(var point: CombatEntityAPI) : BaseCombatLayeredRenderingPlugin() {
 
