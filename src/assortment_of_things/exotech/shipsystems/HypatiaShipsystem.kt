@@ -44,6 +44,7 @@ class HypatiaShipsystem : BaseShipSystemScript() {
     override fun apply(stats: MutableShipStatsAPI?, id: String?, state: ShipSystemStatsScript.State?, effectLevel: Float) {
         super.apply(stats, id, state, effectLevel)
         ship = stats!!.entity as ShipAPI? ?: return
+        var id = id + "_" + ship!!.getId()
 
         var stats = ship!!.mutableStats
 
@@ -90,7 +91,7 @@ class HypatiaShipsystem : BaseShipSystemScript() {
             Global.getSoundPlayer().playSound("exoship_warp", 1.1f, 0.9f, ship!!.location, Vector2f())
 
             var flash = HypatiaFlashRenderer(Vector2f(ship!!.location), ExoUtils.color1, Color(130,4,189, 255),
-                500f, 5000f, 0.0f, 0.5f, 2f)
+                500f, 2500f, 0.0f, 0.25f, 1f)
             Global.getCombatEngine().addLayeredRenderingPlugin(flash)
 
             ship!!.isPhased = true
@@ -201,7 +202,7 @@ class HypatiaShipsystem : BaseShipSystemScript() {
 
 
             stats.maxSpeed.unmodifyMult(key)
-            stats.maxSpeed.modifyFlat(key, 4000 * effectLevel)
+            stats.maxSpeed.modifyFlat(key, 350 * effectLevel) //Dont make this to high, because anything thats over 600 will make it exit the ability a lot faster & for longer
             stats.acceleration.modifyMult(key, 1 + 30f * effectLevel)
             //stats.deceleration.modifyMult(key, 1 + 0.5f * effectLevel)
             stats.maxTurnRate.modifyMult(key, 1 - 0.80f * effectLevel)
@@ -223,6 +224,10 @@ class HypatiaShipsystem : BaseShipSystemScript() {
                     400f, 2000f, 0.0f, 0.2f, 1f)
 
                 Global.getCombatEngine().addLayeredRenderingPlugin(flash)
+
+               /* var x = ship!!.velocity.x
+                var y = ship!!.velocity.y
+                ship!!.velocity.set(x * 0.2f, y * 0.2f)*/
             }
 
         }
