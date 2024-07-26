@@ -178,7 +178,7 @@ class HypatiaShipsystem : BaseShipSystemScript() {
 
         if (!Global.getCombatEngine().isPaused && system.isActive) {
             var nearbyShipsIterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 1200f, 1200f)
-            var nearbyShips = java.util.ArrayList<ShipAPI>()
+            var nearbyShips = ArrayList<ShipAPI>()
             nearbyShipsIterator.forEach { nearbyShips.add(it as ShipAPI) }
 
             //Push away ships that are to close
@@ -193,7 +193,12 @@ class HypatiaShipsystem : BaseShipSystemScript() {
                 level = 1-level
                 level *= level * level
 
-                CombatUtils.applyForce(other, angle, 1f * level)
+                var force = 1.25f
+                if (state == ShipSystemStatsScript.State.OUT) {
+                    force *= 1.25f
+                }
+
+                CombatUtils.applyForce(other, angle, force * level)
             }
         }
 

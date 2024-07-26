@@ -9,6 +9,7 @@ import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.combat.CombatUtils
+import org.lazywizard.lazylib.combat.entities.SimpleEntity
 import org.lazywizard.lazylib.ext.combat.isVisibleToSide
 import org.lwjgl.util.vector.Vector2f
 
@@ -36,8 +37,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
     var minDistanceNonAssignmentWarp = 3500
     var minDistanceAssignmentWarp = 3500
-    var distanceForUnwarp = 1500f
-    var unwarpDiff = MathUtils.getRandomNumberInRange(0f, 400f)
+    var distanceForUnwarp = 1400f
 
 
     var reachedTarget = false
@@ -45,9 +45,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
     var previousTarget: CombatEntityAPI? = null
 
     //Randomise a position around the target to fly to each time, avoids placing all ships in the same end location
-   /* var radialOffset = MathUtils.getRandomNumberInRange(-35f, 35f)
-    var distanceOffset = MathUtils.getRandomNumberInRange(200f, 800f)
-    var angleAtStart = 0f*/
+    var offsetEntity: CombatEntityAPI? = null
 
     override fun init(ship: ShipAPI?, system: ShipSystemAPI?, flags: ShipwideAIFlags?, engine: CombatEngineAPI?) {
         this.ship = ship
@@ -232,7 +230,17 @@ class HypatiaSystemAI : ShipSystemAIScript {
                         warpTime = maximumWarpTime
                         previousTarget = targetEntity
 
-                       // angleAtStart = Misc.getAngleInDegrees(ship!!.location, targetEntity!!.location)
+                        //Real destination
+
+                        var angle = Misc.getAngleInDegrees(ship!!.location, targetEntity!!.location)
+                        var loc = targetEntity!!.location
+                        var randAngle = MathUtils.getRandomNumberInRange(-55f, 55f)
+
+                        var behind = MathUtils.getPointOnCircumference(loc, MathUtils.getRandomNumberInRange(500f, 800f), angle-180-randAngle)
+
+                        offsetEntity = SimpleEntity(behind)
+                        offsetEntity!!.collisionRadius = targetEntity!!.collisionRadius
+
 
                     }
 
@@ -257,37 +265,46 @@ class HypatiaSystemAI : ShipSystemAIScript {
                 shouldStop = true
             }
 
-            if (targetEntity != null) {
+            if (targetEntity != null && offsetEntity != null) {
 
-                //var offset = getOffset(targetEntity!!)
-                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, targetEntity!!.location)
+                /*ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, targetEntity!!.location)
                 ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST, 1f, targetEntity!!.location)
                 ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST_WHILE_SIDETRACKED, 1f, targetEntity!!.location)
-
                 ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.BIGGEST_THREAT, 1f, null)
 
-
-                //ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1.25f, targetEntity!!.location)
-
-                //otherwise those fuckers dont wanna turn early enough
-                //var angle = Misc.getAngleInDegrees(ship!!.location, targetEntity!!.location)
                 var angle = Misc.getAngleInDegrees(ship!!.location, targetEntity!!.location)
                 ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.FACING_OVERRIDE_FOR_MOVE_AND_ESCORT_MANEUVERS, 1f, angle)
 
-                var distance = MathUtils.getDistance(ship, targetEntity!!.location)
-                if (distance <= distanceForUnwarp + unwarpDiff) {
+                var distance = MathUtils.getDistance(ship, targetEntity!!.location)*/
+
+
+                //Using offset entity
+                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, offsetEntity!!.location)
+                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST, 1f, offsetEntity!!.location)
+                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST_WHILE_SIDETRACKED, 1f, offsetEntity!!.location)
+                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.BIGGEST_THREAT, 1f, null)
+
+                var angle = Misc.getAngleInDegrees(ship!!.location, offsetEntity!!.location)
+                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.FACING_OVERRIDE_FOR_MOVE_AND_ESCORT_MANEUVERS, 1f, angle)
+
+                var distance = MathUtils.getDistance(ship, offsetEntity!!.location)
+
+
+
+                if (distance <= distanceForUnwarp) {
                     reachedTarget = true
                 }
 
-                   /* if (distance > distanceForUnwarp * 2.5f + unwarpDiff) {
-                        var isInArc = Misc.isInArc(ship!!.facing, 10f, ship!!.location, targetEntity!!.location)
-                        if (ship!!.shipAI != null && isInArc) {
-                            ship!!.blockCommandForOneFrame(ShipCommand.TURN_LEFT)
-                            ship!!.blockCommandForOneFrame(ShipCommand.TURN_RIGHT)
-                        }
-                    }*/
+                //Fixes a weird bug
+                if (distance > distanceForUnwarp * 2) {
+                    var isInArc = Misc.isInArc(ship!!.facing, 10f, ship!!.location, offsetEntity!!.location)
+                    if (ship!!.shipAI != null && isInArc) {
+                        ship!!.blockCommandForOneFrame(ShipCommand.TURN_LEFT)
+                        ship!!.blockCommandForOneFrame(ShipCommand.TURN_RIGHT)
+                    }
+                }
 
-                if (reachedTarget && distance >= distanceForUnwarp * 1.3f + unwarpDiff) {
+                if (reachedTarget && distance >= distanceForUnwarp * 1.3f) {
                     shouldStop = true
                 }
 
@@ -299,7 +316,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
             if (!Global.getCombatEngine().isPaused) {
                 //Add some code to prevent unwarps if a hostile ship is in the immediate surrounding
                 var nearbyShipsIterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 1200f, 1200f)
-                var nearbyShips = java.util.ArrayList<ShipAPI>()
+                var nearbyShips = ArrayList<ShipAPI>()
                 nearbyShipsIterator.forEach { nearbyShips.add(it as ShipAPI) }
 
               /*  //Push
@@ -317,7 +334,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
                     CombatUtils.applyForce(other, angle, 5f * level)
                 }*/
 
-                if (nearbyShips.any { MathUtils.getDistance(ship, it) <= 50 && it != ship}) {
+                if (nearbyShips.any { MathUtils.getDistance(ship, it) <= 10 && it != ship}) {
                     shouldStop = false
                 }
             }
@@ -330,8 +347,6 @@ class HypatiaSystemAI : ShipSystemAIScript {
                 reachedTarget = false
                 /* radialOffset = MathUtils.getRandomNumberInRange(-35f, 35f)
                  distanceOffset = MathUtils.getRandomNumberInRange(200f, 800f)*/
-
-                unwarpDiff = MathUtils.getRandomNumberInRange(0f, 400f)
 
                 ship!!.useSystem()
             }
