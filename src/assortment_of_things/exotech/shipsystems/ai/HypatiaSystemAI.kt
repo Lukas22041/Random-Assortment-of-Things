@@ -219,7 +219,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
                     ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.FACING_OVERRIDE_FOR_MOVE_AND_ESCORT_MANEUVERS, 1f, angle)
 
                     //ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST, 5f, targetEntity!!.location)
-                    var isInArc = Misc.isInArc(ship!!.facing, 45f, ship!!.location, targetEntity!!.location)
+                    var isInArc = Misc.isInArc(ship!!.facing, 55f, ship!!.location, targetEntity!!.location)
                         if (isInArc) {
                         shouldWarp = true
                     }
