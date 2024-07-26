@@ -270,8 +270,8 @@ class HypatiaShipsystem : BaseShipSystemScript() {
     }
 
     fun isOutOfBounds() : Boolean {
-        var width = Global.getCombatEngine().mapWidth
-        var height = Global.getCombatEngine().mapHeight
+        var width = Global.getCombatEngine().mapWidth + 500f
+        var height = Global.getCombatEngine().mapHeight + 500f
 
         var x = ship!!.location.x
         var y = ship!!.location.y
