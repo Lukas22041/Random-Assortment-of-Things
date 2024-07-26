@@ -1,17 +1,22 @@
 package assortment_of_things.exotech.shipsystems.ai
 
-import assortment_of_things.misc.baseOrModSpec
+import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.CombatFleetManagerAPI.AssignmentInfo
+import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.VectorUtils
 import org.lazywizard.lazylib.combat.CombatUtils
 import org.lazywizard.lazylib.combat.entities.SimpleEntity
 import org.lazywizard.lazylib.ext.combat.isVisibleToSide
+import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
+import java.awt.Color
+import java.util.*
 
 class HypatiaSystemAI : ShipSystemAIScript {
 
@@ -21,7 +26,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
     var previousAssignment: AssignmentInfo? = null
 
     //However clear the assignment after a while, just in case
-    var clearAssignmentTimeMax = 30f
+    var clearAssignmentTimeMax = 40f
     var clearAssignmentTime = clearAssignmentTimeMax
 
     //Need to check if the advance in phase stays correct
@@ -37,15 +42,15 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
     var minDistanceNonAssignmentWarp = 3500
     var minDistanceAssignmentWarp = 3500
-    var distanceForUnwarp = 1000f
+    var distanceForUnwarp = 750f
 
 
     var reachedTarget = false
 
     var previousTarget: CombatEntityAPI? = null
 
-    //Randomise a position around the target to fly to each time, avoids placing all ships in the same end location
-    var offsetEntity: CombatEntityAPI? = null
+    //Entity placed on destination, apply a force code to space them out from eachother
+    var landingPoint: CombatEntityAPI? = null
 
     override fun init(ship: ShipAPI?, system: ShipSystemAPI?, flags: ShipwideAIFlags?, engine: CombatEngineAPI?) {
         this.ship = ship
@@ -232,15 +237,33 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
                         //Real destination
 
+
+
+                        //Place point slightly in front of destination instead
                         var angle = Misc.getAngleInDegrees(ship!!.location, targetEntity!!.location)
                         var loc = targetEntity!!.location
-                        var randAngle = MathUtils.getRandomNumberInRange(-55f, 55f)
+                        var offset = MathUtils.getPointOnCircumference(loc, 750f, angle-180)
 
-                        var behind = MathUtils.getPointOnCircumference(loc, MathUtils.getRandomNumberInRange(500f, 800f), angle-180-randAngle)
+                        //Set Landing Point
+                        landingPoint = SimpleEntity(offset)
+                        //var vel = Vector2f(1000f, 100f)
+                        landingPoint!!.collisionRadius = targetEntity!!.collisionRadius
+                        landingPoint!!.mass = ship!!.mass
+                        landingPoint!!.owner = ship!!.owner
 
-                        offsetEntity = SimpleEntity(behind)
-                        offsetEntity!!.collisionRadius = targetEntity!!.collisionRadius
+                        Global.getCombatEngine().addLayeredRenderingPlugin(LandingPointRenderer(landingPoint!!))
 
+
+                        //Get & Create List if it doesnt exist
+                        //Even if added to the engine, those simple entities do not appear on the object grid, so this list is required
+                        var landings = Global.getCombatEngine().customData.get("rat_hypatia_landings") as MutableList<CombatEntityAPI>?
+                        if (landings == null) {
+                            landings = mutableListOf()
+                            Global.getCombatEngine().customData.set("rat_hypatia_landings", landings)
+
+                        }
+
+                        landings.add(landingPoint!!)
 
                     }
 
@@ -265,29 +288,52 @@ class HypatiaSystemAI : ShipSystemAIScript {
                 shouldStop = true
             }
 
-            if (targetEntity != null && offsetEntity != null) {
+            var landings = Global.getCombatEngine().customData.get("rat_hypatia_landings") as MutableList<CombatEntityAPI>?
+            if (landings != null) {
+                var shipsIter = Global.getCombatEngine().shipGrid.getCheckIterator(landingPoint!!.location, 3000f, 3000f)
+                var ships = ArrayList<ShipAPI>()
 
-                /*ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, targetEntity!!.location)
-                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST, 1f, targetEntity!!.location)
-                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST_WHILE_SIDETRACKED, 1f, targetEntity!!.location)
-                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.BIGGEST_THREAT, 1f, null)
+                //Add ships, ignore phased ships
+                shipsIter.forEach { if (it is ShipAPI && !it.isPhased ) {ships.add(it) } }
 
-                var angle = Misc.getAngleInDegrees(ship!!.location, targetEntity!!.location)
-                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.FACING_OVERRIDE_FOR_MOVE_AND_ESCORT_MANEUVERS, 1f, angle)
+                var objects = ArrayList<CombatEntityAPI>()
+                objects.addAll(ships)
+                objects.addAll(landings)
 
-                var distance = MathUtils.getDistance(ship, targetEntity!!.location)*/
+                for (other in objects) {
+                    if (other == landingPoint) continue
+                    if (other == ship) continue
+
+                    var angle = Misc.getAngleInDegrees(landingPoint!!.location, other.location)
+                    var distance = MathUtils.getDistance(landingPoint!!, other)
+
+
+                   if (distance <= 700f) {
+                       var force = 30f
+                       if (other.owner != landingPoint!!.owner) {
+                           force = 50f
+                       }
+                       var dir = MathUtils.getPointOnCircumference(Vector2f(), force, angle-180f)
+                       landingPoint!!.location.set(landingPoint!!.location.plus(dir))
+                   }
+
+                }
+
+            }
+
+            if (targetEntity != null && landingPoint != null) {
 
 
                 //Using offset entity
-                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, offsetEntity!!.location)
-                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST, 1f, offsetEntity!!.location)
-                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST_WHILE_SIDETRACKED, 1f, offsetEntity!!.location)
+                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, landingPoint!!.location)
+                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST, 1f, landingPoint!!.location)
+                ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST_WHILE_SIDETRACKED, 1f, landingPoint!!.location)
                 ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.BIGGEST_THREAT, 1f, null)
 
-                var angle = Misc.getAngleInDegrees(ship!!.location, offsetEntity!!.location)
+                var angle = Misc.getAngleInDegrees(ship!!.location, landingPoint!!.location)
                 ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.FACING_OVERRIDE_FOR_MOVE_AND_ESCORT_MANEUVERS, 1f, angle)
 
-                var distance = MathUtils.getDistance(ship, offsetEntity!!.location)
+                var distance = MathUtils.getDistance(ship, landingPoint!!.location)
 
 
 
@@ -313,26 +359,14 @@ class HypatiaSystemAI : ShipSystemAIScript {
                 }
             }
 
+
+
+
             if (!Global.getCombatEngine().isPaused) {
                 //Add some code to prevent unwarps if a hostile ship is in the immediate surrounding
                 var nearbyShipsIterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 1200f, 1200f)
                 var nearbyShips = ArrayList<ShipAPI>()
                 nearbyShipsIterator.forEach { nearbyShips.add(it as ShipAPI) }
-
-              /*  //Push
-                for (other in nearbyShips) {
-                    if (ship == other) continue
-                    if (ship!!.baseOrModSpec().hullId != other.baseOrModSpec().hullId) continue
-                    //if (!other.system.isActive) continue
-
-                    var angle = Misc.getAngleInDegrees(ship!!.location, other.location)
-                    var distance = MathUtils.getDistance(ship!!, other)
-                    var level = distance.levelBetween(ship!!.collisionRadius+other.collisionRadius, (ship!!.collisionRadius+other.collisionRadius) * 2)
-                    level = 1-level
-                    level *= level * level
-
-                    CombatUtils.applyForce(other, angle, 5f * level)
-                }*/
 
                 if (nearbyShips.any { MathUtils.getDistance(ship, it) <= 10 && it != ship}) {
                     shouldStop = false
@@ -345,16 +379,61 @@ class HypatiaSystemAI : ShipSystemAIScript {
                 warpTime = maximumWarpTime
                 targetEntity = null
                 reachedTarget = false
-                /* radialOffset = MathUtils.getRandomNumberInRange(-35f, 35f)
-                 distanceOffset = MathUtils.getRandomNumberInRange(200f, 800f)*/
+
+                //Remove Landing Point
+                landings?.remove(landingPoint)
 
                 ship!!.useSystem()
             }
         }
     }
 
-   /* fun getOffset(target: CombatEntityAPI) : Vector2f {
-        var point = MathUtils.getPointOnCircumference(target.location, distanceOffset, angleAtStart+radialOffset)
-        return point
-    }*/
+
+    //From Lazylib
+    fun applyForce(entity: CombatEntityAPI, direction: Vector2f, force: Float) : Vector2f {
+        // Filter out forces without a direction
+        var force = force
+        if (VectorUtils.isZeroVector(direction)) {
+            return Vector2f()
+        }
+
+        // Force is far too weak otherwise
+        force *= 100f
+
+        // Avoid divide-by-zero errors...
+        val mass = Math.max(1f, entity.mass)
+        // Calculate the velocity change and its resulting vector
+        // Don't bother going over Starsector's speed cap
+        val velChange = Math.min(1250f, force / mass)
+        val dir = Vector2f()
+        direction.normalise(dir)
+        dir.scale(velChange)
+        // Apply our velocity change
+        return dir
+    }
+
+    fun applyForce(entity: CombatEntityAPI, direction: Float, force: Float) : Vector2f {
+        return applyForce(entity, MathUtils.getPointOnCircumference(Vector2f(0f, 0f), 1f, direction), force)
+    }
+}
+
+class LandingPointRenderer(var point: CombatEntityAPI) : BaseCombatLayeredRenderingPlugin() {
+
+    var sprite: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/fx/explosion5.png")
+
+    override fun getRenderRadius(): Float {
+        return 1000000f
+    }
+
+    override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
+        return EnumSet.of(CombatEngineLayers.JUST_BELOW_WIDGETS)
+    }
+
+    override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
+
+        sprite!!.renderAtCenter(point.location.x, point.location.y)
+        sprite!!.color = Color(200, 0, 50)
+
+    }
+
 }
