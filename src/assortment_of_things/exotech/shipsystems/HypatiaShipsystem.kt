@@ -2,6 +2,7 @@ package assortment_of_things.exotech.shipsystems
 
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.exotech.ExoUtils
+import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
@@ -173,6 +174,30 @@ class HypatiaShipsystem : BaseShipSystemScript() {
             stats.maxTurnRate.modifyMult(key, 1 - 0.80f * fasterLevel)
             stats.turnAcceleration.modifyMult(key, 1 - 0.80f * fasterLevel)
         }
+
+
+        if (!Global.getCombatEngine().isPaused && system.isActive) {
+            var nearbyShipsIterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 1200f, 1200f)
+            var nearbyShips = java.util.ArrayList<ShipAPI>()
+            nearbyShipsIterator.forEach { nearbyShips.add(it as ShipAPI) }
+
+            //Push away ships that are to close
+            for (other in nearbyShips) {
+                if (ship == other) continue
+                if (ship!!.baseOrModSpec().hullId != other.baseOrModSpec().hullId) continue
+                //if (!other.system.isActive) continue
+
+                var angle = Misc.getAngleInDegrees(ship!!.location, other.location)
+                var distance = MathUtils.getDistance(ship!!, other)
+                var level = distance.levelBetween(ship!!.collisionRadius+other.collisionRadius, (ship!!.collisionRadius+other.collisionRadius) * 2)
+                level = 1-level
+                level *= level * level
+
+                CombatUtils.applyForce(other, angle, 1f * level)
+            }
+        }
+
+
 
 
         if (enteredActive) {
