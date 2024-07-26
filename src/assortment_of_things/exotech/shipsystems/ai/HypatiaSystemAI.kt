@@ -32,12 +32,12 @@ class HypatiaSystemAI : ShipSystemAIScript {
     var targetEntity: CombatEntityAPI? = null
 
     //Decent difference to make ships do actions less synchronosely
-    var inactiveInterval = IntervalUtil(1f, 4f)
+    var inactiveInterval = IntervalUtil(1f, 3f)
     var activeInterval = IntervalUtil(0.1f, 0.2f)
 
     var minDistanceNonAssignmentWarp = 3500
     var minDistanceAssignmentWarp = 3500
-    var distanceForUnwarp = 1400f
+    var distanceForUnwarp = 1000f
 
 
     var reachedTarget = false
@@ -296,13 +296,13 @@ class HypatiaSystemAI : ShipSystemAIScript {
                 }
 
                 //Fixes a weird bug
-                if (distance > distanceForUnwarp * 2) {
+              /*  if (distance > distanceForUnwarp * 2) {
                     var isInArc = Misc.isInArc(ship!!.facing, 10f, ship!!.location, offsetEntity!!.location)
                     if (ship!!.shipAI != null && isInArc) {
                         ship!!.blockCommandForOneFrame(ShipCommand.TURN_LEFT)
                         ship!!.blockCommandForOneFrame(ShipCommand.TURN_RIGHT)
                     }
-                }
+                }*/
 
                 if (reachedTarget && distance >= distanceForUnwarp * 1.3f) {
                     shouldStop = true
