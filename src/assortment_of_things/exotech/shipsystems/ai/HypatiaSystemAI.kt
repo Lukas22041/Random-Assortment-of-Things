@@ -18,6 +18,7 @@ import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HypatiaSystemAI : ShipSystemAIScript {
 
@@ -46,7 +47,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
 
     var distanceForUnwarp = 850f
-    var distanceForOffset = 750f
+    var distanceForOffset = 450f
 
 
     var reachedTarget = false
@@ -313,40 +314,55 @@ class HypatiaSystemAI : ShipSystemAIScript {
                 landingPoint!!.location.set(offset)
             }
 
+
+
             var landings = Global.getCombatEngine().customData.get("rat_hypatia_landings") as MutableList<CombatEntityAPI>?
-            if (landings != null) {
-                var shipsIter = Global.getCombatEngine().shipGrid.getCheckIterator(landingPoint!!.location, 3000f, 3000f)
-                var ships = ArrayList<ShipAPI>()
-
-                //Add ships, ignore phased ships
-                shipsIter.forEach { if (it is ShipAPI && !it.isPhased ) {ships.add(it) } }
-
-                var objects = ArrayList<CombatEntityAPI>()
-                objects.addAll(ships)
-                objects.addAll(landings)
-
-                for (other in objects) {
-                    if (other == landingPoint) continue
-                    if (other == ship) continue
-
-                    var angle = Misc.getAngleInDegrees(landingPoint!!.location, other.location)
-                    var distance = MathUtils.getDistance(landingPoint!!, other)
 
 
-                   if (distance <= 700f) {
-                       var force = 20f
-                       if (other.owner != landingPoint!!.owner) {
-                           force = 50f
-                       }
-                       var dir = MathUtils.getPointOnCircumference(Vector2f(), force, angle-180f)
-                       landingPoint!!.location.set(landingPoint!!.location.plus(dir))
-                   }
+            if (targetEntity != null && landingPoint != null) {
+
+
+                //Move Points
+
+                var distanceFromPoint = MathUtils.getDistance(ship!!, landingPoint)
+
+                // Stop Updating the point once the ship gets close
+                //Hopefully this avoids suttering, and ships missing their landing
+                if (distanceFromPoint >= distanceForUnwarp * 1.8) {
+
+                    if (landings != null) {
+                        var shipsIter = Global.getCombatEngine().shipGrid.getCheckIterator(landingPoint!!.location, 3000f, 3000f)
+                        var ships = ArrayList<ShipAPI>()
+
+                        //Add ships, ignore phased ships
+                        shipsIter.forEach { if (it is ShipAPI && !it.isPhased ) {ships.add(it) } }
+
+                        var objects = ArrayList<CombatEntityAPI>()
+                        objects.addAll(ships)
+                        objects.addAll(landings)
+
+                        for (other in objects) {
+                            if (other == landingPoint) continue
+                            if (other == ship) continue
+
+                            var angle = Misc.getAngleInDegrees(landingPoint!!.location, other.location)
+                            var distance = MathUtils.getDistance(landingPoint!!, other)
+
+                            if (distance <= 700f) {
+                                var force = 20f
+                                if (other.owner != landingPoint!!.owner) {
+                                    force = 60f
+                                }
+                                var dir = MathUtils.getPointOnCircumference(Vector2f(), force, angle-180f)
+                                landingPoint!!.location.set(landingPoint!!.location.plus(dir))
+                            }
+                        }
+                    }
 
                 }
 
-            }
 
-            if (targetEntity != null && landingPoint != null) {
+
 
 
                 //Using offset entity
@@ -389,13 +405,13 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
             if (!Global.getCombatEngine().isPaused) {
                 //Add some code to prevent unwarps if a hostile ship is in the immediate surrounding
-                var nearbyShipsIterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 1200f, 1200f)
+               /* var nearbyShipsIterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 1200f, 1200f)
                 var nearbyShips = ArrayList<ShipAPI>()
                 nearbyShipsIterator.forEach { nearbyShips.add(it as ShipAPI) }
 
                 if (nearbyShips.any { MathUtils.getDistance(ship, it) <= 10 && it != ship}) {
                     shouldStop = false
-                }
+                }*/
             }
 
 

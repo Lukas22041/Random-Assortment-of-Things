@@ -107,14 +107,16 @@ class HypatiaShipsystem : BaseShipSystemScript() {
                 chargeSound!!.setLocation(ship!!.location.x, ship!!.location.y)
             }
 
-            ship!!.giveCommand(ShipCommand.ACCELERATE, null, 0)
+            //Stop forced forwards thrust slightly before ability ends
+            if (state != ShipSystemStatsScript.State.OUT || effectLevel >= 0.25f) {
+                ship!!.giveCommand(ShipCommand.ACCELERATE, null, 0)
 
-            ship!!.blockCommandForOneFrame(ShipCommand.ACCELERATE_BACKWARDS)
-            ship!!.blockCommandForOneFrame(ShipCommand.DECELERATE)
+                ship!!.blockCommandForOneFrame(ShipCommand.ACCELERATE_BACKWARDS)
+                ship!!.blockCommandForOneFrame(ShipCommand.DECELERATE)
+            }
 
             ship!!.blockCommandForOneFrame(ShipCommand.STRAFE_LEFT)
             ship!!.blockCommandForOneFrame(ShipCommand.STRAFE_RIGHT)
-
 
 
             var intensity = 1f
