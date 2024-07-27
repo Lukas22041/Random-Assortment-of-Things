@@ -364,8 +364,8 @@ class InWarpScript(var ship: ShipAPI, var targetEntity: CombatEntityAPI, var lan
     var renderer: LandingPointRenderer? = null
 
     fun init() {
-        renderer = LandingPointRenderer(landingPoint!!)
-        Global.getCombatEngine().addLayeredRenderingPlugin(renderer)
+       /* renderer = LandingPointRenderer(landingPoint!!)
+        Global.getCombatEngine().addLayeredRenderingPlugin(renderer)*/
     }
 
     override fun advance(amount: Float) {
