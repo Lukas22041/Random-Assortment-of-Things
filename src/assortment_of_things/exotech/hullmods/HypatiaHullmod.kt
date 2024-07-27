@@ -15,6 +15,7 @@ class HypatiaHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI, id: String?) {
         stats!!.zeroFluxMinimumFluxLevel.modifyFlat(id, 0.1f)
+        stats!!.energyWeaponDamageMult.modifyFlat(id, 1.2f)
     }
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
@@ -33,6 +34,10 @@ class HypatiaHullmod : BaseHullMod() {
         tooltip!!.addPara("The ships integrated warp-drive passively emits a charged field that enables the ship to trigger the zero-flux speed boost while the its flux level is below 10%% of its maximum flux.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "zero-flux speed boost", "10%")
 
+        tooltip.addSpacer(10f)
+
+        tooltip.addPara("The field also influences frequencies commonly used by energy weapons, supercharging them to deal 20%% more damage.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "energy weapons", "20%")
 
         element.render {
             sprite.setSize(tooltip.widthSoFar + 20, tooltip.heightSoFar + 10)

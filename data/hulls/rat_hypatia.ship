@@ -24,7 +24,7 @@
     {
       "id": "WS0001",
       "size": "MEDIUM",
-      "type": "ENERGY",
+      "type": "SYNERGY",
       "mount": "TURRET",
       "arc": 210,
       "angle": 0,
