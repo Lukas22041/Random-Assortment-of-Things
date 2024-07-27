@@ -173,8 +173,8 @@ class HypatiaShipsystem : BaseShipSystemScript() {
             stats.maxSpeed.modifyMult(key, 1 - 0.6f * effectLevel)
          /*   stats.acceleration.modifyMult(key, 1 - 0.5f * effectLevel)
             stats.deceleration.modifyMult(key, 1 - 0.5f * effectLevel)*/
-            stats.maxTurnRate.modifyMult(key, 1 - 0.55f * fasterLevel)
-            stats.turnAcceleration.modifyMult(key, 1 - 0.55f * fasterLevel)
+            stats.maxTurnRate.modifyMult(key, 1 - 0.50f * fasterLevel)
+            stats.turnAcceleration.modifyMult(key, 1 - 0.50f * fasterLevel)
         }
 
 
@@ -208,7 +208,7 @@ class HypatiaShipsystem : BaseShipSystemScript() {
 
 
         if (enteredActive) {
-            if (ship!!.shield?.isOn == true) {
+            if (ship!!.shield?.isOn == true && effectLevel >= 0.5f) {
                 ship!!.shield?.toggleOff()
             }
 
@@ -237,8 +237,8 @@ class HypatiaShipsystem : BaseShipSystemScript() {
             stats.maxSpeed.modifyFlat(key, 350 * effectLevel) //Dont make this to high, because anything thats over 600 will make it exit the ability a lot faster & for longer
             stats.acceleration.modifyMult(key, 1 + 30f * effectLevel)
             //stats.deceleration.modifyMult(key, 1 + 0.5f * effectLevel)
-            stats.maxTurnRate.modifyMult(key, 1 - 0.55f * effectLevel)
-            stats.turnAcceleration.modifyMult(key, 1 - 0.55f * effectLevel)
+            stats.maxTurnRate.modifyMult(key, 1 - 0.50f * effectLevel)
+            stats.turnAcceleration.modifyMult(key, 1 - 0.50f * effectLevel)
         }
 
         if (system.state == ShipSystemAPI.SystemState.OUT) {

@@ -17,8 +17,9 @@ class HypatiaHullmod : BaseHullMod() {
         stats!!.zeroFluxMinimumFluxLevel.modifyFlat(id, 0.1f)
 
         stats!!.energyWeaponDamageMult.modifyMult(id, 1.15f)
-        stats!!.energyRoFMult.modifyMult(id, 1.10f)
-        stats!!.energyWeaponFluxCostMod.modifyMult(id, 1f/1.10f)
+
+        stats!!.energyRoFMult.modifyMult(id, 1.20f)
+        stats!!.energyWeaponFluxCostMod.modifyMult(id, 1f/1.20f)
 
     }
 
@@ -40,8 +41,8 @@ class HypatiaHullmod : BaseHullMod() {
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("The field also influences the same frequencies as commonly used by energy weapons, supercharging them to deal 15%% more damage and fire 10%% faster.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "energy weapons", "15%", "10%")
+        tooltip.addPara("The field also influences the same frequencies as commonly used by energy weapons, supercharging them to deal 15%% more damage and fire 20%% faster, without increasing flux usage.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "energy weapons", "15%", "20%")
 
         element.render {
             sprite.setSize(tooltip.widthSoFar + 20, tooltip.heightSoFar + 10)
