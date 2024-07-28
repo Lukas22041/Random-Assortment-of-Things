@@ -48,7 +48,9 @@
 		
 		#Exo
 		"rat_tylos_Standard":5,
-		"rat_hypatia_Strike":3,
+		"rat_hypatia_Strike":1.2,
+		"rat_hypatia_Stardust":1.2,
+		"rat_hypatia_Moonlight":1.2,
 		"rat_thestia_Support":5,
 		
 		

@@ -1,13 +1,13 @@
 {
     "displayName": "Attack",
-    "fluxCapacitors": 20,
-    "fluxVents": 18,
+    "fluxCapacitors": 17,
+    "fluxVents": 10,
     "goalVariant": true,
     "hullId": "rat_gilgamesh",
     "hullMods": [
-        "escort_package",
+        "advancedoptics",
         "heavyarmor",
-        "targetingunit",
+        "unstable_injector",
     ],
     "permaMods": [],
     "sMods": [],
@@ -18,35 +18,29 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0005": "pulselaser",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0010": "rat_starburst",
+                "WS0005": "rat_moonlight_lance",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0004": "phasebeam",
+                "WS0010": "rat_p_wave_launcher",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0007": "ioncannon",
+                "WS0004": "rat_stardust_lance",
             }
         },
         {
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0006": "taclaser",
+                "WS0007": "pdlaser",
+                "WS0006": "pdlaser",
             }
         },
     ],

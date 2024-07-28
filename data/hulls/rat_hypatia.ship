@@ -18,7 +18,9 @@
   "builtInWeapons": {
     "WS0006": "rat_exo_coil_location",
     "WS0007": "rat_hypatia_wing_left",
-    "WS0008": "rat_hypatia_wing_right"
+    "WS0008": "rat_hypatia_wing_right",
+    "WS0009": "rat_hypatia_front_left",
+    "WS0010": "rat_hypatia_front_right"
   },
   "weaponSlots": [
     {
@@ -37,7 +39,8 @@
       "mount": "TURRET",
       "arc": 240,
       "angle": 45,
-      "locations": [-5, 18]
+      "locations": [-5, 18],
+      "renderOrderMod": 200
     },
     {
       "id": "WS0003",
@@ -46,7 +49,8 @@
       "mount": "TURRET",
       "arc": 240,
       "angle": -45,
-      "locations": [-5, -18]
+      "locations": [-5, -18],
+      "renderOrderMod": 200
     },
     {
       "id": "WS0004",
@@ -55,7 +59,7 @@
       "mount": "HARDPOINT",
       "arc": 10,
       "angle": 0,
-      "locations": [15, -15]
+      "locations": [13, -15]
     },
     {
       "id": "WS0005",
@@ -64,7 +68,7 @@
       "mount": "HARDPOINT",
       "arc": 10,
       "angle": -0,
-      "locations": [15, 15]
+      "locations": [13, 15]
     },
     {
       "id": "WS0006",
@@ -92,6 +96,26 @@
       "arc": 240,
       "angle": -0,
       "locations": [-26.5, -34.5]
+    },
+    {
+      "id": "WS0009",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 240,
+      "angle": 0,
+      "locations": [12.5, 14.5],
+      "renderOrderMod": 100
+    },
+    {
+      "id": "WS0010",
+      "size": "SMALL",
+      "type": "DECORATIVE",
+      "mount": "TURRET",
+      "arc": 240,
+      "angle": -0,
+      "locations": [12.5, -14.5],
+      "renderOrderMod": 100
     }
   ],
   "engineSlots": [

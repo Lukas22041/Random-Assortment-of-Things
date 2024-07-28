@@ -1,6 +1,6 @@
 {
-    "displayName": "Strike",
-    "fluxCapacitors": 20,
+    "displayName": "Moonlight",
+    "fluxCapacitors": 16,
     "fluxVents": 6,
     "goalVariant": true,
     "hullId": "rat_hypatia",
@@ -12,13 +12,13 @@
     "permaMods": [],
     "sMods": [],
     "suppressedMods": [],
-    "variantId": "rat_hypatia_Strike",
+    "variantId": "rat_hypatia_Moonlight",
     "weaponGroups": [
         {
-            "autofire": false,
+            "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0001": "typhoon",
+                "WS0001": "rat_moonlight_lance",
             }
         },
         {
