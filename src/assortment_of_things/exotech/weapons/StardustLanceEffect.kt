@@ -14,9 +14,13 @@ class StardustLanceEffect : BeamEffectPlugin, DamageDealtModifier {
         var target = beam.damageTarget
 
         if (target is ShipAPI) {
-            if (!target.hasListenerOfClass(StardustLanceListener::class.java)) {
-                target.addListener(StardustLanceListener(target, 0.25f))
+            var listener = target.getListeners(StardustLanceListener::class.java).firstOrNull()
+
+            if (listener != null) {
+                target.removeListener(listener)
             }
+
+            target.addListener(StardustLanceListener(target, 0.25f))
         }
 
 

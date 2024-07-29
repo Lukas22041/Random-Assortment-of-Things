@@ -100,7 +100,7 @@ class LeaniraShipsystem : BaseShipSystemScript() {
                 engine.engineSlot.glowAlternateColor = Color(0, 0, 0, 0)
             }
 
-            if (!Global.getCombatEngine().combatUI.isShowingCommandUI) {
+            if (Global.getCombatEngine()?.combatUI?.isShowingCommandUI == false) {
                 moduleDespawnInterval.advance(Global.getCombatEngine().elapsedInLastFrame)
             }
 

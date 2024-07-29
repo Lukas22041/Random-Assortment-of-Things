@@ -15,9 +15,13 @@ class MoonlightLanceEffect : BeamEffectPlugin, DamageDealtModifier {
         var target = beam.damageTarget
 
         if (target is ShipAPI) {
-            if (!target.hasListenerOfClass(MoonlightLanceListener::class.java)) {
-                target.addListener(MoonlightLanceListener(target, 0.25f))
+            var listener = target.getListeners(MoonlightLanceListener::class.java).firstOrNull()
+
+            if (listener != null) {
+                target.removeListener(listener)
             }
+
+            target.addListener(MoonlightLanceListener(target, 0.25f))
         }
 
 

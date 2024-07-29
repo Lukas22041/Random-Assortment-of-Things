@@ -28,10 +28,10 @@
     0
   ],
   "fringeColor": [
-    255, 92, 64, 255
+    227,47,16, 255
   ],
   "coreColor": [
-    255, 255,255, 255
+    227, 86, 16, 255
   ],
   "width": 25,
   "textureType": ROUGH,
@@ -44,6 +44,7 @@
     MISSILE_FF,
     MISSILE_NO_FF
   ],
-  "fireSoundTwo": "phase_beam_loop",
+  #"fireSoundTwo": "phase_beam_loop",
+  "fireSoundTwo":"tachyon_lance_fire",
   "beamEffect":"assortment_of_things.exotech.weapons.StardustLanceEffect",
 }
