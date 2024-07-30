@@ -49,6 +49,7 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
         return EnumSet.of(CombatEngineLayers.ABOVE_SHIPS_LAYER)
     }
+    
 
     override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
         if (!ship.isAlive) return

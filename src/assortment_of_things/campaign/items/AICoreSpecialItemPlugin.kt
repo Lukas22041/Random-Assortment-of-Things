@@ -137,6 +137,7 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT)
 
         //Setup Noise2
+        //Noise texture needs to be power of two or it wont repeat correctly! (32x32, 64x64, 128x128)
         GL13.glActiveTexture(GL13.GL_TEXTURE0 + 2)
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, spriteNoise2.textureId)
 
