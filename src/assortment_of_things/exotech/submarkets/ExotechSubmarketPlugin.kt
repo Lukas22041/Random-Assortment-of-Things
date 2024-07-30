@@ -100,8 +100,8 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
         weights.add(Global.getSettings().getWeaponSpec("rat_hyper_dart"), 1f)
         weights.add(Global.getSettings().getWeaponSpec("rat_hyper_javelin"), 0.5f)
 
-        weights.add(Global.getSettings().getWeaponSpec("rat_moonlight_lance"), 1f)
-        weights.add(Global.getSettings().getWeaponSpec("rat_stardust_lance"), 1f)
+        weights.add(Global.getSettings().getWeaponSpec("rat_moonlight_lance"), 0.7f)
+        weights.add(Global.getSettings().getWeaponSpec("rat_stardust_lance"), 0.75f)
 
         weights.add(Global.getSettings().getWeaponSpec("rat_p_wave_launcher"), 1f)
         weights.add(Global.getSettings().getWeaponSpec("rat_starburst"), 1f)
