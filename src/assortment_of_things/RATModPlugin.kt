@@ -18,7 +18,6 @@ import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.scripts.ChangeExoIntelState
 import assortment_of_things.frontiers.FrontiersUtils
-import assortment_of_things.misc.RATSettings
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
 import assortment_of_things.snippets.DropgroupTestSnippet
@@ -38,9 +37,7 @@ import assortment_of_things.campaign.scripts.AICoreReplacerScript
 import assortment_of_things.campaign.scripts.render.RATCampaignRenderer
 import assortment_of_things.exotech.ExotechGenerator
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
-import assortment_of_things.misc.ReflectionUtils
-import assortment_of_things.misc.getChildrenCopy
-import assortment_of_things.misc.getParent
+import assortment_of_things.misc.*
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.campaign.CampaignState
@@ -128,6 +125,10 @@ class RATModPlugin : BaseModPlugin() {
         }*/
 
         //LunaCampaignRenderer.addTransientRenderer(ShaderTestRenderer())
+
+        if (!Global.getSector().hasScript(ConstantTimeIncreaseScript::class.java)) {
+            Global.getSector().addScript(ConstantTimeIncreaseScript())
+        }
 
         Global.getSector().addTransientScript(ChangeMainMenuColorScript())
         Global.getSector().addTransientScript(AICoreReplacerScript())

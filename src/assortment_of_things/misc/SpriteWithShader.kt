@@ -57,8 +57,10 @@ class SpriteWithShader(var texture: String, var vertex: String, var fragment: St
         GL20.glUseProgram(shader)
         GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), time)
 
+        sprite.angle = angle
+        sprite.render(x, y)
 
-        GL11.glColor4ub(color.getRed().toByte(), color.getGreen().toByte(), color.getBlue().toByte(), (color.getAlpha().toFloat() * alphaMult).toInt().toByte())
+     /*   GL11.glColor4ub(color.getRed().toByte(), color.getGreen().toByte(), color.getBlue().toByte(), (color.getAlpha().toFloat() * alphaMult).toInt().toByte())
 
         GL11.glEnable(GL11.GL_TEXTURE_2D)
         GL11.glEnable(GL11.GL_BLEND)
@@ -81,8 +83,8 @@ class SpriteWithShader(var texture: String, var vertex: String, var fragment: St
 
 
 
-      /*  GL11.glDisable(GL11.GL_TEXTURE_2D)
-       GL11.glRectf(x, y, x + width, y + height)*/
+      *//*  GL11.glDisable(GL11.GL_TEXTURE_2D)
+       GL11.glRectf(x, y, x + width, y + height)*//*
 
         GL11.glBegin(GL11.GL_QUADS)
         GL11.glTexCoord2f(texX, texY)
@@ -94,7 +96,7 @@ class SpriteWithShader(var texture: String, var vertex: String, var fragment: St
         GL11.glTexCoord2f(texX + sprite.textureWidth, texY)
         GL11.glVertex2f(width, 0.0f)
         GL11.glDisable(GL11.GL_BLEND)
-        GL11.glEnd()
+        GL11.glEnd()*/
 
         GL20.glUseProgram(0)
         GL11.glPopMatrix()

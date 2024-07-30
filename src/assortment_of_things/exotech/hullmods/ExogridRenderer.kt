@@ -20,9 +20,9 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
     var arkasPhantomGlow: SpriteAPI? = null
     var hasPhase = false
 
-   /* var spriteWithShader = SpriteWithShader(ship.baseOrModSpec().spriteName,
+    var spriteWithShader = SpriteWithShader(ship.baseOrModSpec().spriteName,
          Global.getSettings().loadText("data/shaders/testVertex.shader"),
-                 Global.getSettings().loadText("data/shaders/outlineFragment.shader"))*/
+                 Global.getSettings().loadText("data/shaders/outlineFragment.shader"))
 
 
     init {
@@ -54,8 +54,8 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         if (!ship.isAlive) return
 
 
-       /* spriteWithShader.angle = ship.facing - 90
-        spriteWithShader.renderAtCenter(ship.location.x, ship.location.y)*/
+        spriteWithShader.angle = ship.facing - 90
+        spriteWithShader.renderAtCenter(ship.location.x, ship.location.y)
 
         var active = false
         var level = ship.system?.effectLevel ?: 0f
