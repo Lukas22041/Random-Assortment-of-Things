@@ -65,17 +65,8 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
         plugin = RATCampaignPlugin().pickAICoreOfficerPlugin(commoditySpec.id)!!.plugin
 
 
-
-
-
-    }
-
-    override fun render(x: Float, y: Float, w: Float, h: Float, alphaMult: Float, glowMult: Float, renderer: SpecialItemPlugin.SpecialItemRendererAPI?) {
-        var centerX = x+w/2
-        var centerY = y+h/2
-
         shader = ShaderLib.loadShader(
-            Global.getSettings().loadText("data/shaders/testVertex.shader"),
+            Global.getSettings().loadText("data/shaders/baseVertex.shader"),
             Global.getSettings().loadText("data/shaders/scrollingGlowFragment.shader"))
         if (shader != 0) {
             GL20.glUseProgram(shader)
@@ -88,6 +79,12 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
         } else {
             var test = ""
         }
+    }
+
+    override fun render(x: Float, y: Float, w: Float, h: Float, alphaMult: Float, glowMult: Float, renderer: SpecialItemPlugin.SpecialItemRendererAPI?) {
+        var centerX = x+w/2
+        var centerY = y+h/2
+
 
 
 

@@ -19,7 +19,7 @@ import kotlin.math.sin
 class ShaderTestRenderer : LunaCampaignRenderingPlugin {
 
     var distortion = Global.getSettings().getAndLoadSprite("graphics/fx/genesis_weapon_glow.png")
-    var vertex = Global.getSettings().loadText("data/shaders/testVertex.shader")
+    var vertex = Global.getSettings().loadText("data/shaders/baseVertex.shader")
     var fragment = Global.getSettings().loadText("data/shaders/testFragment3.shader")
     var shader: Int = ShaderLib.loadShader(vertex, fragment)
 
