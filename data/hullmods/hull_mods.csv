@@ -68,6 +68,7 @@ Plasmatic Shield,rat_plasmaticShield,3,2.5,Hull Alteration,"rat_alteration, no_d
 Exogrid,rat_exogrid,0,,Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.ExogridHullmod,,,,graphics/hullmods/rat_exogrid.png
 #Exogrid Overload,rat_exogrid_overload,0,,Exo-Tech,"offensive, no_build_in, rat_exo",,10000,TRUE,FALSE,FALSE,10,20,30,50,assortment_of_things.exotech.hullmods.ExogridOverloadHullmod,,,,graphics/hullmods/rat_exogrid_overload.png
 Exo Fighter AI,rat_exo_fighter_ai,0,,Exo-Tech,,,10000,FALSE,TRUE,TRUE,0,0,0,0,assortment_of_things.exotech.hullmods.ExoFighterAIHullmod,,,,graphics/hullmods/rat_exogrid.png
+Exo Fighter Independence,rat_exo_fighter_independence,0,,Exo-Tech,,,10000,FALSE,TRUE,TRUE,0,0,0,0,assortment_of_things.exotech.hullmods.ExoFighterIndependenceHmod,,,,graphics/hullmods/rat_exogrid.png
 Experimental Design,rat_exo_experimental,0,,Experimental Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.ExperimentalDesignHullmod,,,,graphics/hullmods/rat_experimental_design.png
 ,,,,,,,,,,,,,,,,,,,
 Warpfield,rat_hypatia_hullmod,0,,Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.HypatiaHullmod,,,,graphics/hullmods/rat_hypatia_hullmod.png
