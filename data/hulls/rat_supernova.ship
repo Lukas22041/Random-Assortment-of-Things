@@ -27,7 +27,7 @@
       "size": "SMALL",
       "type": "UNIVERSAL",
       "mount": "TURRET",
-      "arc": 360,
+      "arc": 280,
       "angle": 0,
       "locations": [1, -0]
     },
