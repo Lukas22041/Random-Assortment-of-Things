@@ -42,7 +42,7 @@ class TemporalAssaultHullmod : BaseAlteration() {
             "Temporal Assault")
 
         tooltip.addSpacer(5f)
-        tooltip.addPara("Upon activation, the fighter experience a short-term increase in its perceived timeflow.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+        tooltip.addPara("Upon activation, the fighter experiences a short-term increase in its perceived timeflow.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "perceived timeflow")
     }
 
@@ -51,7 +51,7 @@ class TemporalAssaultHullmod : BaseAlteration() {
     }
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?, member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
-        tooltip!!.addPara("Can only be installed in to hulls that have atleast 1 fighter bay, bays from modifications are not accounted for.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        tooltip!!.addPara("Can only be installed into hulls that have at least 1 fighter bay; bays from modifications are not accounted for.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
     }
 
 }

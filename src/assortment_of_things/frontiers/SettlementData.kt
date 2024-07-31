@@ -17,8 +17,8 @@ class SettlementData(var primaryPlanet: PlanetAPI, var settlementEntity: SectorE
 
     var name = ""
     var description = "You take a trip down towards the surface, as your dropship closes on to the ground, the settlement starts becoming visible on the ground below. " +
-            "At first it appears as a tiny, unidentifeable dot, until just moments later this blob has turned in to an outpost spanning the visible surroundings. " +
-            "\n\nThe moment you leave your pod, you are welcomed to a humble but busy enviroment, with settlers making sure that operations can keep running on schedule, and the occasional launch and landings of tradeships from the landing pad."
+            "At first it appears as a tiny, unidentifiable dot, until just moments later this blob has turned into an outpost spanning the visible surroundings. " +
+            "\n\nThe moment you leave your pod, you are welcomed by a humble but busy environment, with settlers ensuring that operations run on schedule, and the occasional launches and landings of tradeships from the landing pad."
 
     var stats = SettlementStats()
     var modifiers = ArrayList<BaseSettlementModifier>()

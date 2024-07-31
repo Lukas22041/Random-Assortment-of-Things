@@ -22,7 +22,7 @@ class AbyssalUnknownLabInteraction : RATInteractionPlugin() {
 
         if (AbyssUtils.isAnyFleetTargetingPlayer())
         {
-            textPanel.addPara("As there are currently hostile targets following the fleets steps, safe docking at the station seems impossible.")
+            textPanel.addPara("As there are currently hostile targets following the fleet's steps, safe docking at the station seems impossible.")
             addLeaveOption()
             return
         }
@@ -37,7 +37,7 @@ class AbyssalUnknownLabInteraction : RATInteractionPlugin() {
 
         createOption("Explore") {
             clearOptions()
-            textPanel.addPara("You make your way through the silent halls of the station. With no records to go of the fleet tries to decipher the role this place had. ")
+            textPanel.addPara("You make your way through the silent halls of the station. With no records to go off of, the fleet tries to decipher the role this place had. ")
 
             textPanel.addPara("As this expedition progresses, many medical facilities and laboratories are discovered. " +
                     "Overall even for the state that the station is in after cycles of neglect, all of them have been in complete disarray.")
@@ -54,10 +54,10 @@ class AbyssalUnknownLabInteraction : RATInteractionPlugin() {
                     textPanel.addPara("Its robotic arms grab your hands, making you unable to resist. " +
                             "You scream for assistance, and your team hears the call, but their frantic attempts at opening the doors and shutting down the system seem futile.")
 
-                    textPanel.addPara("The machine proceeds, meanwhile crumbling away from decay, but suceeds in retrieving a small syringe of an unknown substance. Without hesitation, it injects it in to your skin. " +
-                            "But just before it finishes, its age does its part and the machine falls appart, the syringe falling to the ground and spilling its leftovers.")
+                    textPanel.addPara("The machine proceeds, meanwhile crumbling away from decay, but succeeds in retrieving a small syringe of an unknown substance. Without hesitation, it injects it into your skin. " +
+                            "But just before it finishes, its age does its part and the machine falls apart, the syringe falling to the ground and spilling its leftovers.")
 
-                    textPanel.addPara("The team finaly cracks the doors and shuts off the emergency power system. They immediately run to your location with medpacks in hand.")
+                    textPanel.addPara("The team finally cracks the doors and shuts off the emergency power system. They immediately run to your location with medpacks in hand.")
 
                     createOption("Continue") {
                         clearOptions()
@@ -69,19 +69,19 @@ class AbyssalUnknownLabInteraction : RATInteractionPlugin() {
                         panel.addUIElement(element)
                         panel.position.inTL(0f, 0f)
 
-                        textPanel.addPara("Just as you are about to tell your crew that you are fine, your vision darkens, it becomes hard to breath, and time appears to come to a still.")
+                        textPanel.addPara("Just as you are about to tell your crew that you are fine, your vision darkens, it becomes hard to breathe, and time appears to come to a still.")
 
-                        textPanel.addPara("As your normal senses weaken, something new comes in to your perception, not something you have ever felt before, a resonance only observed by you.")
+                        textPanel.addPara("As your normal senses weaken, something new enters your perception, not something you have ever felt before, a resonance only observed by you.")
 
                         createOption("Continue") {
                             clearOptions()
 
-                            var text = "This resonance is felt all around, in the station, in the abyssal sea surrounding it, and now in yourself. You try calling it out to it, you feel as if its trying to respond, but you cant understand what it means. "
+                            var text = "This resonance is felt all around, in the station, in the abyssal sea surrounding it, and now in yourself. You try calling out to it; you feel as if it's trying to respond, but you can't understand what it means. "
 
 
                             var cargo = Global.getSector().playerFleet.cargo
                             if (cargo.getCommodityQuantity(RATItems.CHRONOS_CORE) != 0f || cargo.getCommodityQuantity(RATItems.COSMOS_CORE) != 0f || cargo.getCommodityQuantity(RATItems.SERAPH_CORE) != 0f) {
-                                text += "You also feel a stronger response from the the direction of your fleets. What feels like a soft whisper closing in."
+                                text += "You also feel a stronger response from the the direction of your fleet, what feels like a soft whisper closing in."
                             }
 
                             textPanel.addPara(text)
@@ -93,7 +93,7 @@ class AbyssalUnknownLabInteraction : RATInteractionPlugin() {
 
                                 plugin.decreaseVignette = true
                                 textPanel.addPara("The response weakens, and suddenly, your senses start flooding back in, time appears to move, and you lose grasp of this new sensation. " +
-                                        "Your team still surround you, with your heart having stopped beating for seconds, preparing to relocate you towards the fleets medbay without delay. You feel that you will have lots of explaining to do.")
+                                        "Your team still surrounds you, with your heart having stopped beating for seconds, preparing to relocate you towards the fleets medbay without delay. You feel that you will have lots of explaining to do.")
 
                                 textPanel.addPara("Acquired a new skill.", AbyssUtils.ABYSS_COLOR, AbyssUtils.ABYSS_COLOR)
 
@@ -130,4 +130,3 @@ class AbyssalUnknownLabInteraction : RATInteractionPlugin() {
     }
 
 }
-

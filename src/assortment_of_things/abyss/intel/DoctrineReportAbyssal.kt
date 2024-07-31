@@ -32,7 +32,7 @@ class DoctrineReportAbyssal() : BaseIntelPlugin() {
     override fun createSmallDescription(info: TooltipMakerAPI, width: Float, height: Float) {
 
         info.addSpacer(5f)
-        info.addPara("Over multiple encounters with the unknown threat, the fleets intelligence office was able to construct a comprehensive list of notes specifying details of the opponent." +
+        info.addPara("Over multiple encounters with the unknown threat, the fleet's intelligence office was able to construct a comprehensive list of notes specifying details of the opponent." +
                 "This document portraits details about the \"Abyssal\" doctrine.", 0f, Misc.getTextColor(), Color(16, 154, 100,255), "Abyssal")
         info.addSpacer(10f)
 
@@ -45,7 +45,7 @@ class DoctrineReportAbyssal() : BaseIntelPlugin() {
 
         info.addSpacer(10f)
 
-        info.addPara("Additionaly, their fleets seem to overinvest in to kinetic weaponry, making armored ships a viable tactic against their forces.", 0f,
+        info.addPara("Additionally, their fleets seem to overinvest in kinetic weaponry, making armored ships a viable tactic against their forces.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "capable shields", "are not heavily armored")
 
         info.addSpacer(10f)
@@ -73,7 +73,7 @@ class DoctrineReportAbyssal() : BaseIntelPlugin() {
         var synergyHullmodSpec = Global.getSettings().getHullModSpec("rat_abyssal_core")
         var synergyIMG = info.beginImageWithText(synergyHullmodSpec.spriteName, 48f)
         synergyIMG.addPara(synergyHullmodSpec.displayName, 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        synergyIMG.addPara("The ships appears very synergetic with their ai-cores. Ships without ai cores have trouble using their shipsystem, and each ai core seems to give the ship its own advantage.", 0f)
+        synergyIMG.addPara("The ships appears very synergetic with their AI-cores. Ships without AI cores have trouble using their shipsystem, and each AI core seems to give the ship its own advantage.", 0f)
         info.addImageWithText(0f)
 
         info.addSpacer(10f)

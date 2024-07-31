@@ -122,12 +122,12 @@ class AbyssMap : BaseIntelPlugin() {
 
                     else if (depth == AbyssDepth.Shallow)
                     {
-                        tooltip!!.addPara("A zone within the abyss that is relatively close towards the entrance, the abyssal matter isnt very dense.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
+                        tooltip!!.addPara("A zone within the abyss that is relatively close towards the entrance; the abyssal matter isn't very dense.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(5f)
                     }
                     else if (depth == AbyssDepth.Deep)
                     {
-                        tooltip!!.addPara("A zone deep in to the abyss. The exotic matter is dense enough to inhibit the functionality of most of a fleets sensors dramaticly.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
+                        tooltip!!.addPara("A zone deep in the abyss. The exotic matter is dense enough to dramatically inhibit the functionality of a fleet's sensors.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(5f)
                     }
 
@@ -147,7 +147,7 @@ class AbyssMap : BaseIntelPlugin() {
                         var plural = "s"
                         if (unidentified == 1) prefix = "is"
                         if (unidentified == 1) plural = ""
-                        tooltip!!.addPara("There $prefix atleast $unidentified unidentified structure$plural in this zone.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
+                        tooltip!!.addPara("There $prefix at least $unidentified unidentified structure$plural in this zone.", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "")
                         tooltip.addSpacer(2f)
                     }
 

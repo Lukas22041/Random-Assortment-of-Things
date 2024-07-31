@@ -29,7 +29,7 @@ class NeuralLaboratoryInteraction : RATInteractionPlugin() {
 
             textPanel.addPara("You continue your way through the halls, just as you are about to abandon the search for anything of use, the crew stumbles across a room of intrigue.")
 
-            textPanel.addPara("In it, an ai-core terminal with some unknown kind of core slotted within it. The core is locked rigidly to the socket, and can likely only be removed by temporarily restoring power to the station.")
+            textPanel.addPara("In it, an AI-core terminal with some unknown kind of core slotted within it. The core is locked rigidly to the socket, and can likely only be removed by temporarily restoring power to the station.")
 
             createOption("Power up the station") {
                 clearOptions()

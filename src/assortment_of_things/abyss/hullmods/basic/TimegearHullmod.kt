@@ -51,7 +51,7 @@ class TimegearHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Installs experimental components in to the ships flux grid. This increases the ships perceived timeflow by up to a maximum of 25%% depending on the ships current flux level.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+        tooltip.addPara("Installs experimental components to the ship's flux grid. This increases the ship's perceived timeflow by up to a maximum of 25%% depending on the ship's current flux level.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "timeflow", "25%", "flux level")
 
     }

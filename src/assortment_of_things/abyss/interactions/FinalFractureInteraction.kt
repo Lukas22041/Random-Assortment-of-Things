@@ -9,9 +9,9 @@ import com.fs.starfarer.api.campaign.JumpPointAPI
 
 class FinalFractureInteraction : RATInteractionPlugin() {
     override fun init() {
-        textPanel.addPara("You approach the fracture, for a while it has been become incredibly tough for your fleet to advance through the ever densening matter.")
+        textPanel.addPara("You approach the fracture, for a while it has been become incredibly tough for your fleet to advance through the ever-densening matter.")
 
-        textPanel.addPara("This fracture appears different however. Unlike others, the matter around it appears still, it appears that we are reaching the singularity of this place. Caution is adviced before moving onwards.")
+        textPanel.addPara("This fracture appears different however. Unlike others, the matter around it appears still, it appears that we are reaching the singularity of this place. Caution is advised before moving onwards.")
 
         createOption("Move through the fracture") {
             var plugin = interactionTarget.customPlugin

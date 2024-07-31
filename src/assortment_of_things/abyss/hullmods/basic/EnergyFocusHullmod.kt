@@ -32,14 +32,14 @@ class EnergyFocusHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        /*tooltip.addPara("Transfigures the hulls internal configuration in to a state that benefits the standard operation of energy weapons.\n\n" +
+        /*tooltip.addPara("Transfigures the hulls internal configuration into a state that benefits the standard operation of energy weapons.\n\n" +
                 "" +
                 "Increases the rate of fire by 20%% without increasing flux usage, ammunition recharges 25%% faster and all energy weapons deal 5%% more damage.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "energy weapons", "20%", "25%", "5%")*/
 
-        tooltip.addPara("Transfigures the hulls internal configuration in to a state that benefits the standard operation of energy weapons.\n\n" +
+        tooltip.addPara("Transfigures the hull's internal configuration into a state that benefits the standard operation of energy weapons.\n\n" +
                 "" +
-                "All energy weapons see an increase in range of 100, reduced flux usage by 15%% and deal 10%% more damage.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+                "Increases range of energy weapons by 100, reduces flux usage by 15%%, and increases damage by 10%%.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "energy weapons", "100", "15%", "10%")
 
     }

@@ -42,8 +42,8 @@ import java.util.*
 
 //Spawns a single defensive fleet that attempts to orbit around a single location.
 
-//If the player isnt around the fleet will despawn, and if the fleet is ever destroyed, the script is removed to prevent respawns.
-//Will despawn if the player isnt in the abyss, or if the player is in the abyss but 2 connections away.
+//If the player isn't around the fleet will despawn, and if the fleet is ever destroyed, the script is removed to prevent respawns.
+//Will despawn if the player isn't in the abyss, or if the player is in the abyss but 2 connections away.
 //Will always use the same seed for respawn.
 
 //Its set to not to long pursuits, so once it looses the player it should go back to its spawn relatively soon.
@@ -52,7 +52,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
     var starsystem = source.starSystem
 
-    //Generates a single seed so that when it reconstructs the fleet, its basicly the same one.
+    //Generates a single seed so that when it reconstructs the fleet, its basically the same one.
     var randomSeed = Random().nextLong()
 
     enum class AbyssFleetType(var weight: Float, var deep: Boolean) {
@@ -83,7 +83,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
     /*Remnant Fleet Points
     *
-    * Remnant Medium Seeded Points (Randomly spawn in to the system)
+    * Remnant Medium Seeded Points (Randomly spawn into the system)
     * Min: 32
     * Max: 96
     *
@@ -497,7 +497,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
                 var tactical = (fleet.ai as ModularFleetAIAPI).tacticalModule
                 var target = tactical.target
 
-                //If the fleet was targeting the player and they dissapeared in to another system, try finding a connecting fracture and move towards it, then jump
+                //If the fleet was targeting the player and they disapeared into another system, try finding a connecting fracture and move towards it, then jump
                 if (target != null && fleet.containingLocation != target.containingLocation)
                 {
                     var fractures = fleet.containingLocation.customEntities.filter { it.customPlugin is AbyssalFracture }

@@ -227,10 +227,10 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
         createOption("Continue") {
             clearOptions()
 
-            textPanel.addPara("She continues \"Xander and myself already discussed on how we should continue, the faction would like the catalyst returned, we rather keep it for our own plan.\" " +
-                    "Xander intervenes \"We have decided to report the catalyst as unrecoverable, found scattered in to thousand pieces within the remains of the defectors fleet. The higher ups wont like this result, but its the best we got.\"")
+            textPanel.addPara("She continues \"Xander and I already discussed on how we should continue; the faction would like the catalyst returned, but we would rather keep it for our own plan.\" " +
+                    "Xander intervenes \"We have decided to report the catalyst as unrecoverable, found scattered into thousand pieces amidst the remains of the defector's fleet. The higher-ups won't like this result, but it's the best we've got.\"")
 
-            textPanel.addPara("Amelie continues \"So, make your way towards the damaged exoship, and use the catalyst to boot up the repair protocols. " +
+            textPanel.addPara("Amelie continues \"So, make your way towards the damaged Exoship, and use the catalyst to boot up the repair protocols. " +
                     "We analysed your data of its wreck, and the autonomous drones within the ship should do the work. Meanwhile both of us will stay here to prepare for what comes after\".")
 
             data.readyToRepairExoship = true
@@ -255,10 +255,10 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
         createOption("About a stolen prototype ship") {
             clearOptions()
 
-            textPanel.addPara("\"One of the factions fleets got ambushed while performing trial deployments of a new destroyer we've got in the works. We identified the perpetrators as pirates, and discovered someone providing them with information from within, but i will spare you the details.")
+            textPanel.addPara("\"One of the faction's fleets got ambushed while performing trial deployments of a new destroyer we've got in the works. We identified the perpetrators as pirates, and discovered someone providing them with information from within, but I will spare you the details.")
 
-            textPanel.addPara("Point is, there is a bounty on taking out the fleet and preventing the destroyer from being transfered over to a buyer. We have been instructed that the destruction of the target is acceptible if the situation calls for it. " +
-                    "Perhaps the destroyer will simply dissappear after you have done your work, if you catch my drift. \"")
+            textPanel.addPara("Point is, there is a bounty on taking out the fleet and preventing the destroyer from being transferred over to a buyer. We have been instructed that the destruction of the target is acceptable if the situation calls for it. " +
+                    "Perhaps the destroyer will simply disappear after you have done your work, if you catch my drift. \"")
 
             createOption("Accept this mission") {
                 clearOptions()
@@ -284,7 +284,7 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
                     previewList.add(member)
                 }
 
-                textPanel.addPara("\"Good. Remember, everything goes aslong as the pirates lose their access to the Gilgamesh-class. " +
+                textPanel.addPara("\"Good. Remember, everything goes as long as the pirates lose their access to the Gilgamesh-class. " +
                         "We have some information about their fleet, but they likely have many more ships than those listed.\"",
                     Misc.getTextColor(), Misc.getHighlightColor(), "Gilgamesh-class")
 
@@ -293,7 +293,7 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
                 textPanel.addTooltip()
 
                 var locDescription = intel.getOrbitLocationDescription()
-                textPanel.addPara("\"The target appears to be in the ${intel.fleet.starSystem.nameWithNoType} system. $locDescription. We've transfered the necessary intel to complete the mission.\"",
+                textPanel.addPara("\"The target appears to be in the ${intel.fleet.starSystem.nameWithNoType} system. $locDescription. We've transferred the necessary intel to complete the mission.\"",
                     Misc.getTextColor(), Misc.getHighlightColor(), "${intel.fleet.starSystem.nameWithNoType}")
 
                 Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)

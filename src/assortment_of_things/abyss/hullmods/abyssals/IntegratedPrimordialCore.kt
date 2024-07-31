@@ -55,8 +55,8 @@ class IntegratedPrimordialCore : BaseAlteration() {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
         tooltip!!.addSpacer(5f)
-        tooltip!!.addPara("Replaces the ships AI-Components with a miniature bridge and integrates a primordial core in to the ships subsystem. " +
-                "This allows humans to crew the ship and provides the cores skill to the ship.", 0f,
+        tooltip!!.addPara("Replaces the ships AI-Components with a miniature bridge and integrates a primordial core into the ship's subsystem. " +
+                "This allows humans to crew the ship and provides the core's skill to the ship.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "skill")
 
         var seraphSkill = Global.getSettings().getSkillSpec("rat_core_primordial")
@@ -94,4 +94,3 @@ class IntegratedPrimordialCore : BaseAlteration() {
         variant!!.addPermaMod(HullMods.AUTOMATED)
     }
 }
-

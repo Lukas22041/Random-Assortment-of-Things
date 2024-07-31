@@ -59,7 +59,7 @@ class BountyBackground : BaseCharacterBackground() {
         var manager = Global.getSector().scripts.find { it is BackgroundBountyManager } as BackgroundBountyManager?
         if (manager != null && manager.finished) {
             tooltip!!.addSpacer(10f)
-            tooltip!!.addPara("Your repeated feats have scared the opposing parties in to further retaliation, no more bounties should be put on your head beyond this point.")
+            tooltip!!.addPara("Your repeated victories have successfully deterred your enemies from sending any more bounty-hunters after you; no more bounties should be put on your head beyond this point.")
             return
         }
 

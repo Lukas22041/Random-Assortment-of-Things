@@ -52,7 +52,7 @@ class DeltaAIAssistantHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Integrates an additional delta-level AI in to the ship, which can assist the ship with a single elite skill. " +
+        tooltip.addPara("Integrates an additional Delta-level AI into the ship, which can assist the ship with a single elite skill. " +
                 "The skill is only applied if the officer does not already have it.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
         "delta-level AI", "elite skill")
 

@@ -64,7 +64,7 @@ class AbyssalRaphaelsGrace : BaseHullMod() {
         tooltip.addSpacer(10f)
 
         tooltip.addPara("The ships maximum speed is increased by 15 units, its armor and flux dissipation is improved by 100 and the flux capacity is increased by 500.\n\n" +
-                "Additionaly the ships weapon durability and repair time is also improved by 50%%.",
+                "Additionally the ships weapon durability and repair time is also improved by 50%%.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(), "15", "100", "500", "50%")
 
         tooltip.addSpacer(10f)
@@ -97,7 +97,7 @@ class AbyssalRaphaelsGrace : BaseHullMod() {
     }
 
     override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Can only be prebuilt in to hulls."
+        return "Can only be prebuilt into hulls."
     }
 
     override fun getDisplaySortOrder(): Int {

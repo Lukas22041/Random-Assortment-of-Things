@@ -6,7 +6,7 @@ import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.econ.SubmarketAPI
 import com.fs.starfarer.api.campaign.listeners.CargoScreenListener
 
-//Required because appearenently some salvage preventing tags dont work when the mod is smodded
+//Required because apparently some salvage preventing tags don't work when the mod is smodded
 class HullmodRemoverListener : RATBaseCampaignEventListener() {
     override fun reportEncounterLootGenerated(plugin: FleetEncounterContextPlugin?, loot: CargoAPI?) {
         super.reportEncounterLootGenerated(plugin, loot)

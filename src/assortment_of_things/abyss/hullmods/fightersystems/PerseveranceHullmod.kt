@@ -53,7 +53,7 @@ class PerseveranceHullmod : BaseAlteration() {
     }
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?, member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
-        tooltip!!.addPara("Can only be installed in to hulls that have atleast 1 fighter bay, bays from modifications are not accounted for.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        tooltip!!.addPara("Can only be installed into hulls that have at least 1 fighter bay; bays from modifications are not accounted for.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
     }
 
 }

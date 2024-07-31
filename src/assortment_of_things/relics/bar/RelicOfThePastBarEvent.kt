@@ -58,7 +58,7 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
         var known = person?.memoryWithoutUpdate?.getBoolean("\$rat_knownByPlayer") ?: false
 
         if (known) {
-            dialog!!.textPanel.addPara("At the edge of the bar you spot a familiar archivist.")
+            dialog!!.textPanel.addPara("At the edge of the bar, you spot a familiar archivist.")
         }
         else {
             dialog!!.textPanel.addPara("An archivist is excitedly looking for a spacer with time to spare.")
@@ -86,24 +86,24 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
         var known = person.memoryWithoutUpdate.getBoolean("\$rat_knownByPlayer") ?: false
 
         dialog!!.visualPanel.showPersonInfo(person)
-      //  dialog.visualPanel.showMapMarker(Global.getSector().starSystems.random().hyperspaceAnchor, "Desination: ", Misc.getHighlightColor(), false, "", "", setOf())
+      //  dialog.visualPanel.showMapMarker(Global.getSector().starSystems.random().hyperspaceAnchor, "Designation: ", Misc.getHighlightColor(), false, "", "", setOf())
 
         dialog!!.optionPanel.clearOptions()
 
         if (known) {
             text.addPara("You approach ${person.nameString}, she seems excited to see you.")
 
-            text.addPara("\"Glad to see you again ${Global.getSector().characterData.honorific}, and you are here just at the right moment in time. " +
+            text.addPara("\"Glad to see you again ${Global.getSector().characterData.honorific} - you are here just at the right time. " +
                     "I've picked up another rumor that could help me complete my archive of history. Would you be available to investigate this one for me?\"")
 
         } else {
-            text.addPara("You approach the young archivist, upon seeing you she can barely hold the excitement. ")
+            text.addPara("You approach the young archivist; upon seeing you she can barely hold her excitement. ")
 
-            text.addPara("\"Lets make it quick, i'm in the process of documenting the history of several long depopulated starsystems. " +
-                    "I've come across a rumor with some large implications for the field, but i want to confirm the validity of those before going on with my research.")
+            text.addPara("\"Let's make it quick - I'm in the process of documenting the history of several long-depopulated starsystems. " +
+                    "I've come across a rumor with some large implications for the field, but I want to confirm its validity before continuing with my research.")
 
-            text.addPara("This is where you come in to play, i want you to confirm the existance of the rumors subject for me. " +
-                    "This profession isn't one with much credits to spare, so i can't put a reward on it, but i can promise you that if this finding is real, it will be worth for both you and me.\"")
+            text.addPara("This is where you come into play, I want you to confirm the existence of the rumor's subject for me. " +
+                    "This profession isn't one with much credits to spare, so I can't put a reward on it, but I can promise you that if this finding is real, it will be worth it for both you and me.\"")
 
         }
 
@@ -124,7 +124,7 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
             if (optionData == "LEAVE")
             {
                 finished = true
-                text.addPara("Thats dissapointing, however if you were to change your mind, i'l still be here.")
+                text.addPara("Thats disappointing; however, if you were to change your mind, I'll still be here.")
             }
 
             var known = person?.memoryWithoutUpdate?.getBoolean("\$rat_knownByPlayer") ?: false
@@ -145,20 +145,20 @@ class RelicOfThePastBarEvent : BaseBarEvent() {
 
 
                 if (known) {
-                    text.addPara("\"Great! The rumor i want to confirm is the existance of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
-                            "Confirming the rumors validity would be a gateway in to learning much more about the history of this system.",
+                    text.addPara("\"Great! The rumor I want to confirm is the existence of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
+                            "Confirming the rumor's validity would be a gateway into learning much more about the history of this system.",
                         Misc.getTextColor(), Misc.getHighlightColor(), "${entity.name}", "${entity.starSystem.nameWithNoType}")
                 }
                 else {
-                    text.addPara("\"Thank you! The rumor i want to confirm is the existance of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
-                            "Confirming the rumors validity would be a gateway in to learning much more about the history of this system.",
+                    text.addPara("\"Thank you! The rumor I want to confirm is the existence of an old ${entity.name} that is located somewhere in the ${entity.starSystem.nameWithNoType} system. " +
+                            "Confirming the rumor's validity would be a gateway into learning much more about the history of this system.",
                         Misc.getTextColor(), Misc.getHighlightColor(), "${entity.name}", "${entity.starSystem.nameWithNoType}")
                 }
 
-                text.addPara("Since there are no previous records of it, so it would be quite likely that none or few salvagers have yet set foot on it. " +
-                        "I dont care about what happens with the structure, aslong as you send me the data i want.\"")
+                text.addPara("Since there are no previous records of it, it's likely that few, if any, scavengers have yet set foot on it. " +
+                        "I don't care about what happens to the structure, as long as you send me the data I want.\"")
 
-                dialog.visualPanel.showMapMarker(entity, "Desination: ${entity.starSystem}", Misc.getHighlightColor(), false, "", "", setOf())
+                dialog.visualPanel.showMapMarker(entity, "Designation: ${entity.starSystem}", Misc.getHighlightColor(), false, "", "", setOf())
 
                 var intel = ArchivistIntel(entity, person!!)
                 Global.getSector().addScript(intel)

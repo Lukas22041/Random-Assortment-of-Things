@@ -295,9 +295,9 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
                     createOption("Continue") {
                         clearOptions()
 
-                        textPanel.addPara("With no information on where to acquire such an object, the crew went digging in to further clues. " +
+                        textPanel.addPara("With no information on where to acquire such an object, the crew went digging for further clues. " +
                                 "Deeper within the system they discovered access codes and locations of some hypernavigational beacons in the sector. \n\n" +
-                                "The exotech faction uses such devices to plan their warps, working ourself in to this network using our own navigation equipment lets us discover the location of their active exoship, which may provide us with more information.")
+                                "The Exotech faction uses such devices to plan their warps; infiltrating this network with our own navigation equipment enables us to discover the location of their active Exoship, which may provide us with more information.")
 
                         var exoshipIntel = ExoshipIntel(data.getExoship())
                         Global.getSector().intelManager.addIntel(exoshipIntel)

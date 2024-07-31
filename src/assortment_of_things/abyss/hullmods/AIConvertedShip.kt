@@ -39,9 +39,9 @@ class AIConvertedShip : BaseAlteration() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
-        var label =tooltip!!.addPara("Replaces the internals of the ships bridge with systems for AI control, turning the ship in to an automated hull. \n\n" +
+        var label =tooltip!!.addPara("Replaces the internals of the ship's bridge with systems for AI control, turning the ship into an automated hull. \n\n" +
                 "This specific conversion is able to negate the combat readiness penalty from the \"Automated\" Hullmod.\n\n" +
-                "If installed in to a capital hull, it will increase the maintenance cost by 50%%", 0f)
+                "If installed into a capital hull, increases maintenance cost by 50%%", 0f)
 
         var h = Misc.getHighlightColor()
 
@@ -81,4 +81,3 @@ class AIConvertedShip : BaseAlteration() {
         variant!!.removePermaMod(HullMods.AUTOMATED)
     }
 }
-

@@ -64,8 +64,8 @@ class IntegratedChronosCore : BaseAlteration() {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
         tooltip!!.addSpacer(5f)
-        tooltip!!.addPara("Replaces the ships AI-Components with a miniature bridge and integrates a chronos core in to the ships subsystem. " +
-                "This allows humans to crew the ship. It enables the bonuses from the \"Abyssal Adaptability\" hullmod and provides the cores skill to the ship.", 0f,
+        tooltip!!.addPara("Replaces the ship's AI-Components with a miniature bridge and integrates a Chronos core into the ship's subsystem. " +
+                "This allows humans to crew the ship. It enables the bonuses from the \"Abyssal Adaptability\" hullmod and provides the core's skill to the ship.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "humans to crew the ship", "\"Abyssal Adaptability\"", "skill")
 
         var timeSkill = Global.getSettings().getSkillSpec("rat_core_time")
@@ -102,4 +102,3 @@ class IntegratedChronosCore : BaseAlteration() {
         variant!!.addPermaMod(HullMods.AUTOMATED)
     }
 }
-

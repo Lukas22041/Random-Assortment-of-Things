@@ -40,10 +40,10 @@ class AbyssalSeraphimDriveHullmod : BaseHullMod() {
         }
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("The ships drivesystem is connected to a unique type of phase-coil. It enables the ship to enter phase-space while being affected by abyssal phenonema. \n\n" +
-                "Stacks of \"Saving Grace\" from the \"Seraphs Grace\" hullmod affect the amount of stress the ships coils can take. The speed reduction from phase coil stress is reduced by up to 50%% at 30 stacks.\n\n" +
-                "All deployed fighters are also interconnected to this shipsystem and are forced in to phase-space whenever the ship is aswell, but only receive a fraction of the increase in timeflow. This comes at the cost of disrupting fighters shields, making them unable to use them for a short time. \n\n" +
-                "The ships is capable of hiding from most modern phase detectors outside of combat, essentially resulting in an undetectable sensor profile.",
+        tooltip.addPara("The ship's drive system is connected to a unique type of phase-coil. It enables the ship to enter phase-space while being affected by abyssal phenomena. \n\n" +
+                "Stacks of \"Saving Grace\" from the \"Seraphs Grace\" hullmod affect the amount of stress the ship's coils can take. The speed reduction from phase coil stress is reduced by up to 50%% at 30 stacks.\n\n" +
+                "All deployed fighters are also interconnected to this shipsystem and are forced into phase-space whenever the ship is as well, but only receive a fraction of the increase in timeflow. This comes at the cost of disrupting fighters' shields, making them unable to use them for a short time. \n\n" +
+                "The ship is capable of hiding from most modern phase detectors outside of combat, essentially resulting in an undetectable sensor profile.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "Saving Grace", "Seraphs Grace", "speed reduction", "50%", "30", "deployed fighters", "undetectable sensor profile")
 
@@ -62,7 +62,7 @@ class AbyssalSeraphimDriveHullmod : BaseHullMod() {
     }
 
     override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Can only be prebuilt in to abyssal hulls."
+        return "Can only be prebuilt into abyssal hulls."
     }
 }
 

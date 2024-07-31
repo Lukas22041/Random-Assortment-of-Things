@@ -20,12 +20,12 @@ class AccumalatorStationInteraction : RATInteractionPlugin() {
 
         if (AbyssUtils.isAnyFleetTargetingPlayer())
         {
-            textPanel.addPara("As there are currently hostile targets following the fleets steps, safe docking at the station seems impossible.")
+            textPanel.addPara("As there are currently hostile targets following the fleet's steps, safe docking at the station seems impossible.")
             addLeaveOption()
             return
         }
 
-        textPanel.addPara("Your fleet approaches the abyssal accumalator.")
+        textPanel.addPara("Your fleet approaches the abyssal accumulator.")
 
         textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
 

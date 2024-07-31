@@ -39,9 +39,9 @@ class AbyssalProbeInteraction : RATInteractionPlugin() {
 
         createOption("Explore") {
             clearOptions()
-            textPanel.addPara("The crew navigates through the few maintenance corridors of the droneship. " + "The ship has been dead for a while, but seemingly not aslong as some of the other infrastructure around. Its drone bays appear empty with no sign of where they went.")
+            textPanel.addPara("The crew navigates through the few maintenance corridors of the droneship. " + "The ship has been dead for a while, but seemingly not as long as some of the other infrastructure around. Its drone bays appear empty with no sign of where they went.")
 
-            textPanel.addPara("As one of the dozens of droneships in the abyss, its served a variety of purposes, salvaging its remains may proof worthwhile.")
+            textPanel.addPara("As one of the dozens of droneships in the abyss, its served a variety of purposes, salvaging its remains may prove worthwhile.")
 
             createOption("Begin salvage operations") {
                 clearOptions()

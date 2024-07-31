@@ -438,7 +438,7 @@ class InWarpScript(var ship: ShipAPI, var targetEntity: CombatEntityAPI, var lan
                     objects.addAll(ships)
                     objects.addAll(landings)
 
-                    //Add all forces in to a list, divide force by count of forces so that it doesnt gain like +10000 speed in one frame
+                    //Add all forces to a list, divide force by count of forces so that it doesn't gain like +10000 speed in one frame
                     var dirs = ArrayList<Vector2f>()
 
                     for (other in objects) {
@@ -449,7 +449,7 @@ class InWarpScript(var ship: ShipAPI, var targetEntity: CombatEntityAPI, var lan
                         var distance = MathUtils.getDistance(landingPoint!!, other)
 
 
-                        //Be less persistent about point location for opponent ships, runs in to tons of issues otherwise, as in many spots it finds no place for entry otherwise
+                        //Be less persistent about point location for opponent ships, runs into tons of issues otherwise, as in many spots it finds no place for entry otherwise
                         var maxDistance = 700f
                         //var maxDistance = 700f
 
