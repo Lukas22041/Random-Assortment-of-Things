@@ -94,6 +94,10 @@ Rat-Hyperspatial Dart1,rat_hyper_dart_shot,base_trail_smooth,10,0.1,0.1,0.10,7.5
 Rat-Hyperspatial Dart2,rat_hyper_dart_shot,base_trail_zap,10,0.1,0.1,0.10,5,2,"[252,143,0]","[130,4,189]",0.4,-128,-256,TRUE,18,20,1,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
 Rat-Hyperspatial Dart3,rat_hyper_dart_shot,base_trail_zap,10,0.1,0.1,0.10,5,2,"[252,143,0]","[130,4,189]",0.4,-128,-256,TRUE,18,40,1,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Rat-Hyperspatial Pulser1,rat_hyper_pulser_shot,base_trail_smooth,10,0.1,0.1,0.10,7.5,3,"[252,143,0]","[130,4,189]",0.4,-128,-256,TRUE,18,0,1,0,TRUE,FALSE,TRUE,50,0,0,0,180,180,true,false
+Rat-Hyperspatial Pulser2,rat_hyper_pulser_shot,base_trail_zap,10,0.1,0.1,0.10,5,2,"[252,143,0]","[130,4,189]",0.4,-128,-256,TRUE,18,20,1,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
+Rat-Hyperspatial Pulser3,rat_hyper_pulser_shot,base_trail_zap,10,0.1,0.1,0.10,5,2,"[252,143,0]","[130,4,189]",0.4,-128,-256,TRUE,18,40,1,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Rat-P-Wave Missile1,rat_p_wave_missile,base_trail_smooth,10,0.1,0.1,0.30,15,3,"[252,143,0]","[130,4,189]",0.8,-128,-256,TRUE,15,0,1,0,TRUE,FALSE,TRUE,50,0,0,0,0,0,true,false
 Rat-P-Wave Missile2,rat_p_wave_missile,base_trail_zap,10,0.1,0.1,0.30,5,2,"[252,143,0]","[130,4,189]",0.4,-128,-256,TRUE,15,20,1,0,TRUE,FALSE,TRUE,50,0,2,0,180,180,true,false
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

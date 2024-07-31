@@ -220,4 +220,14 @@
     [
             {"file":"sounds/rat/campaign/exoship_warp.ogg","pitch":1,"volume":3},
     ],
+	
+	"rat_hyper_pulser_fire":
+	[
+		{"file":"sounds/sfx_wpn_guns/mjolnir_fire_01.ogg","pitch":1.00,"volume":0.45},
+		{"file":"sounds/sfx_wpn_guns/mjolnir_fire_01.ogg","pitch":0.99,"volume":0.45},
+		{"file":"sounds/sfx_wpn_guns/mjolnir_fire_01.ogg","pitch":0.98,"volume":0.45},
+		{"file":"sounds/sfx_wpn_guns/mjolnir_fire_01.ogg","pitch":0.96,"volume":0.45},
+		{"file":"sounds/sfx_wpn_guns/mjolnir_fire_01.ogg","pitch":0.94,"volume":0.45},
+		{"file":"sounds/sfx_wpn_guns/mjolnir_fire_01.ogg","pitch":0.92,"volume":0.45},
+	],
 }
