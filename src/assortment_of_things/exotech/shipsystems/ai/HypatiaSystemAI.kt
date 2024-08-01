@@ -245,7 +245,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
                 if (targetEntity != null) {
                     /*var offset = getOffset(targetEntity!!)*/
-                    ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, targetEntity!!.location)
+                    //ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, targetEntity!!.location)
                     //ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1.25f, targetEntity!!.location)
 
                     //otherwise those fuckers dont wanna turn early enough
