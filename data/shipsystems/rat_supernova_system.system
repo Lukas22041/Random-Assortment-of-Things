@@ -1,0 +1,18 @@
+{
+	"id":"rat_supernova_system",
+	"type":"STAT_MOD",
+	"aiType":"CUSTOM",
+	"aiScript":"assortment_of_things.exotech.shipsystems.ai.HypatiaSystemAI",
+	
+	"statsScript":"assortment_of_things.exotech.shipsystems.HypatiaShipsystem",
+	"runScriptWhilePaused":true, # only for the player's ship
+	"runScriptWhileIdle":true,  # this means unapply() never gets called
+	"blockActionsWhileChargingDown":false,
+	
+	"canNotCauseOverload":true,
+	
+	"fadeActivationSoundOnChargedown":true,
+	"useSound":"system_recall_device",
+	"outOfUsesSound":"gun_out_of_ammo",
+	"deactivateSound":"system_recall_device",
+}

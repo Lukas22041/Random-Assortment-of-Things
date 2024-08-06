@@ -8,7 +8,6 @@ import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
-import org.lazywizard.console.commands.ToggleAI
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.VectorUtils
 import org.lazywizard.lazylib.combat.entities.SimpleEntity
@@ -50,6 +49,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
 
 
+    var ai: ShipAIPlugin? = null
 
     var previousTarget: CombatEntityAPI? = null
 
@@ -245,7 +245,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
                 if (targetEntity != null) {
                     /*var offset = getOffset(targetEntity!!)*/
-                    ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, targetEntity!!.location)
+                    //ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1f, targetEntity!!.location)
                     //ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MANEUVER_TARGET, 1.25f, targetEntity!!.location)
 
                     //otherwise those fuckers dont wanna turn early enough
@@ -300,7 +300,10 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
                         landings.add(landingPoint!!)
 
-                        ToggleAI.setAIEnabled(ship!!, false)
+                        //ToggleAI.setAIEnabled(ship!!, false)
+                        ai = ship!!.shipAI
+                        ship!!.shipAI = null
+
                         var script = InWarpScript(ship!!, targetEntity!!, landingPoint!!, this)
 
                         ship!!.addListener(script)
@@ -389,7 +392,7 @@ class InWarpScript(var ship: ShipAPI, var targetEntity: CombatEntityAPI, var lan
             return
         }
 
-        if (!Global.getCombatEngine().isPaused) {
+        if (!Global.getCombatEngine().isPaused && ship.system.state == ShipSystemAPI.SystemState.ACTIVE) {
             warpTime -= 1f * amount
         }
 
@@ -532,7 +535,8 @@ class InWarpScript(var ship: ShipAPI, var targetEntity: CombatEntityAPI, var lan
             landings?.remove(landingPoint)
             renderer?.done = true
 
-            ToggleAI.setAIEnabled(ship, true)
+            //ToggleAI.setAIEnabled(ship, true)
+            ship.shipAI = aiScript.ai
 
             aiScript.finishedWarp()
 

@@ -31,6 +31,4 @@ void main() {
 	color.a *= alphaMult;
 	gl_FragColor = color;
 
-	//gl_FragColor = noiseCol;
-
 }

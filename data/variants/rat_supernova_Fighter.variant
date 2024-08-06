@@ -1,0 +1,22 @@
+{
+  "variantId": "rat_supernova_Fighter",
+  "hullId": "rat_supernova",
+  "displayName": "Fighter",
+  "goalVariant": false,
+  "fluxCapacitors": 0,
+  "fluxVents": 0,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [],
+  "weaponGroups": [
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {
+        "WS 000": "rat_hyper_pulser"
+      }
+    }
+  ],
+  "modules": [],
+  "wings": []
+}

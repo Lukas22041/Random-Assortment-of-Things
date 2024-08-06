@@ -107,7 +107,8 @@ Callisto DEM Launcher,rat_arkas_launcher_right,2,,0,1200,,200,0,15,30,0,2,0.0666
 Twilight Ray,rat_twilightray,1,,1500,500,600,,,0,20,0,1,,,HIGH_EXPLOSIVE,,,5,1,1,5,,,,,3200,,,,,,,"SYSTEM, USE_LESS_VS_SHIELDS","no_sell, no_dealer, restricted",,Exo-Tech,,General,,,,,,,,,,20
 Dawnlance,rat_dawnlance,1,,1500,500,250,,,0,20,0,,,,HIGH_EXPLOSIVE,,,1,1,,,,,,,3200,,,,,,,SYSTEM,"no_sell, no_dealer, restricted",,Exo-Tech,,General,,,,,,,,,,20
 Dawnbreaker,rat_dawnbreaker,1,,1200,500,,100,50,0,0,0,2,0.5,2,ENERGY,0,,0,5,2,0.3,10,14,2,5,,300,25,5,75,,,"DO_NOT_AIM, SYSTEM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted",,Exo-Tech,,General,Medium,Medium,,,,,,,TRUE,12
-Starburst Microlauncher (F),rat_starburst_fighter,1,,1200,500,,50,10,5,0,0,12,2,12,KINETIC,0,,0,2,12,0.1,0,0,0,,,400,50,2,50,,,"SYSTEM, DO_NOT_AIM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted",,Exo-Tech,,Suppression,Good,Good,,,,,,,,12
+Starburst Microlauncher (F),rat_starburst_fighter,1,,1200,500,,50,10,5,0,0,12,2,12,KINETIC,0,,0,2,12,0.1,0,0,0,,,400,50,2,50,,,"SYSTEM, DO_NOT_AIM, DO_NOT_CONSERVE","no_sell, no_dealer, restricted",,Exo-Tech,,Supression,Good,Good,,,,,,,,12
+Hyperspatial Pulser,rat_hyper_pulser,2,,2000,600,,150,,5,80,0,24,3,6,ENERGY,50,,0,0.1,1,0.1,1,10,1,2,,1000,,,30,,,,"no_sell, no_dealer, restricted",,Exo-Tech,,General,,,,,,,,,,5006
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Grapplinghook,rat_grappling_hook,2,,2000,1000,,0,,25,30,0,,,,KINETIC,55,,0,3,1,0.15,0,0,0,15,,600,,,30,,,,"rat_abyssals, no_sell, no_dealer, restricted, kinetic15",,Abyssal,,Anti Shield,,,,,"%s
 Impacts on hull or armor add a stack of %s to the target, each stack lasts %s seconds and increases the damage taken by hull and armor by %s. A ship can have at most %s stacks.",Spatial Instability | instability | 3 | 0.5% | 30,,,,901
@@ -115,7 +116,7 @@ Impacts on hull or armor add a stack of %s to the target, each stack lasts %s se
 #Exo Decos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Exo Coil Location,rat_exo_coil_location,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
 Exo Phase Trail Location,rat_exo_phase_trail_location,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Exo Fighter Trail,rat_exo_fighter_trail,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Arkas Cover Left,rat_arkus_cover_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
 Arkas Cover Right,rat_arkus_cover_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,,,,,,,,,,,,,,,43
