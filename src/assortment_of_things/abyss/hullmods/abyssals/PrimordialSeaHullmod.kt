@@ -54,8 +54,8 @@ class PrimordialSeaHullmod : BaseHullMod() {
         tooltip.addPara("The spacewarping capabilities of the ship enable the Primordial Sea subsystem. " +
                 "When activated, it can overwrite nearby space with its own pocket dimension." +
                 "\n\n" +
-                "This dimension is home to exotic matter that the ship is able to freely shape in to small formations, spawning an infinite amount of frigates within. " +
-                "This matter however is unable to exist within real space, and as such the ships are unable to operate outside of the overwriten reality." +
+                "This dimension is home to exotic matter that the ship is able to freely shape into small formations, spawning an infinite number of frigates within. " +
+                "This matter however is unable to exist within real space, and as such the ships are unable to operate outside of the overwritten reality." +
                 "\n\n" +
                 "Those frigates are controlled by the same core as the ships.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
@@ -75,6 +75,6 @@ class PrimordialSeaHullmod : BaseHullMod() {
     }
 
     override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Can only be prebuilt in to abyssal hulls."
+        return "Can only be prebuilt into abyssal hulls."
     }
 }

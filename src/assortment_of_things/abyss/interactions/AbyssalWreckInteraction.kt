@@ -151,7 +151,7 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
 
         if (!hasCrewed) {
             optionPanel.setEnabled(crewedConversion, false)
-            optionPanel.setTooltip(crewedConversion, "Requires the \"Abyssal Crew Conversion\" alteration in the fleets storage.")
+            optionPanel.setTooltip(crewedConversion, "Requires the \"Abyssal Crew Conversion\" alteration in the fleet's storage.")
 
         }
         else {

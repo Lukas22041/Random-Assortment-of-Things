@@ -97,7 +97,7 @@ class GenesisInteraction : RATInteractionPlugin() {
         generateWreck()
         generateWormWreck()
 
-        textPanel.addPara("Following the fight, an eerie silence befell the fleets the center of command, even the most experienced crew trying to make sense of what they just experienced.")
+        textPanel.addPara("Following the fight, an eerie silence befell the fleets near the center of command, even the most experienced crew trying to make sense of what they just experienced.")
 
         textPanel.addPara("That silence is however quickly broken, as a strong, red flash of energy suddenly erupted from the just now defeated ship.")
 

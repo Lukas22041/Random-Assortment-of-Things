@@ -27,7 +27,7 @@ class FabrictationStationInteraction : RATInteractionPlugin() {
 
         if (AbyssUtils.isAnyFleetTargetingPlayer())
         {
-            textPanel.addPara("As there are currently hostile targets following the fleets steps, safe docking at the station seems impossible.")
+            textPanel.addPara("As there are currently hostile targets following the fleet's steps, safe docking at the station seems impossible.")
             addLeaveOption()
             return
         }

@@ -39,10 +39,10 @@ class ExotechHideoutInteraction() : RATInteractionPlugin() {
 
             createOption("Continue") {
 
-                textPanel.addPara("Within moments a whole fleet emerges from remains of the station, they hold their positions close towards it, and dont appear to be on an attack run yet. " +
-                        "Any attempts at closing in will escelate the situation.")
+                textPanel.addPara("Within moments a whole fleet emerges from remains of the station, they hold their positions close towards it, and don't appear to be on an attack run yet. " +
+                        "Any attempt to close in will escalate the situation.")
 
-                textPanel.addPara("Judging by the specs visible on the fleets scopes, this is the exotech defector fleet you have been tasked to eliminate. " +
+                textPanel.addPara("Judging by the specs visible on the fleet's scopes, this is the exotech defector fleet you have been tasked to eliminate. " +
                         "It has to be defeated to get access to the Warp Catalyst.",
                     Misc.getTextColor(), Misc.getHighlightColor(), "this is the exotech defector fleet you have been tasked to eliminate", "Warp Catalyst")
 
@@ -75,7 +75,7 @@ class ExotechHideoutInteraction() : RATInteractionPlugin() {
                 var tooltip = textPanel.beginTooltip()
 
                 var img = tooltip.beginImageWithText(Global.getSettings().getSpecialItemSpec("rat_warp_catalyst").iconName, 48f)
-                img.addPara("Acquired a \"Warp Catalyst\". It has been transfered to the fleets cargohold.", 0f,
+                img.addPara("Acquired a \"Warp Catalyst\". It has been transferred to the fleet's cargo hold.", 0f,
                     Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
                 tooltip.addImageWithText(0f)
 

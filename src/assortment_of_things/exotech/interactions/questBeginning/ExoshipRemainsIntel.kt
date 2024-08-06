@@ -46,8 +46,8 @@ class ExoshipRemainsIntel : BaseIntelPlugin() {
         }
 
         if (data.foundExoshipRemains) {
-            info.addPara("You discovered an exoship floating within the persean abyss, inactive but repairable, however a \"Warp Catalyst\" is required for the finishing touches.\n\n" +
-                    "There are no records within the fleets own archives about where to acquire such a device.",
+            info.addPara("You discovered an exoship floating within the Persean abyss, inactive but repairable, however a \"Warp Catalyst\" is required for the finishing touches.\n\n" +
+                    "There are no records within the fleet's own archives about where to acquire such a device.",
                 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
         }
     }

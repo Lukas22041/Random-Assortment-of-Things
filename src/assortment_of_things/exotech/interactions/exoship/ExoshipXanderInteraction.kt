@@ -30,11 +30,11 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
         data.talkedWithXanderOnce = true
         visualPanel.showPersonInfo(data.xander)
 
-        textPanel.addPara("\"Hey - Amelie already informed me. I'm the head of her fleets intelligence sector. I will relay anything relevant to her goals to you.")
+        textPanel.addPara("\"Hey - Amelie already informed me. I'm the head of her fleet's intelligence sector. I will relay anything relevant to her goals to you.")
 
-        textPanel.addPara("We've got some jobs that our fleet doesnt have the time to handle, or some that Amelie herself can not be risked to be assosciated with, and some information the higher ups are not aware of yet. All to say is, we have lots of work left to do.")
+        textPanel.addPara("We've got some jobs that our fleet doesn't have the time to handle, or some that Amelie herself can not be risked to be associated with, and some information the higher ups are not aware of yet. All to say is, we have lots of work left to do.")
 
-        textPanel.addPara("In the meanwhile, i will keep on the look out for the oppertunity to acquire a \"Warp Catalyst\". They arent easy to get a grab of, so it may take a while.\"", Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
+        textPanel.addPara("In the meanwhile, I will keep on the look out for the opportunity to acquire a \"Warp Catalyst\". They aren't easy to get a hold of, so it may take a while.\"", Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
 
         populateXanderDialog()
 
@@ -163,8 +163,8 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
                     "But we got our hands full in other places already, so we require your assistance. However, there is good reason for you to assist.")
 
             textPanel.addPara("A defector has withdrawn from the faction, but hasn't done so empty handed. " +
-                    "His entire Armada followed suit, escaping with a fleets worth of cargo. Here comes the important aspect. " +
-                    "Part of the stolen cargo was a \"Warp Catalyst\". It may be the best oppertunity we will ever geet to acquire one.\"",
+                    "His entire Armada followed suit, escaping with a fleet's worth of cargo. Here comes the important aspect. " +
+                    "Part of the stolen cargo was a \"Warp Catalyst\". It may be the best opportunity we will ever get to acquire one.\"",
                 Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
 
             createOption("Ask for the specifics of the assignment") {
@@ -227,10 +227,10 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
         createOption("Continue") {
             clearOptions()
 
-            textPanel.addPara("She continues \"Xander and myself already discussed on how we should continue, the faction would like the catalyst returned, we rather keep it for our own plan.\" " +
-                    "Xander intervenes \"We have decided to report the catalyst as unrecoverable, found scattered in to thousand pieces within the remains of the defectors fleet. The higher ups wont like this result, but its the best we got.\"")
+            textPanel.addPara("She continues \"Xander and I already discussed on how we should continue; the faction would like the catalyst returned, but we would rather keep it for our own plan.\" " +
+                    "Xander intervenes \"We have decided to report the catalyst as unrecoverable, found scattered into thousand pieces amidst the remains of the defector's fleet. The higher-ups won't like this result, but it's the best we've got.\"")
 
-            textPanel.addPara("Amelie continues \"So, make your way towards the damaged exoship, and use the catalyst to boot up the repair protocols. " +
+            textPanel.addPara("Amelie continues \"So, make your way towards the damaged Exoship, and use the catalyst to boot up the repair protocols. " +
                     "We analysed your data of its wreck, and the autonomous drones within the ship should do the work. Meanwhile both of us will stay here to prepare for what comes after\".")
 
             data.readyToRepairExoship = true
@@ -255,10 +255,10 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
         createOption("About a stolen prototype ship") {
             clearOptions()
 
-            textPanel.addPara("\"One of the factions fleets got ambushed while performing trial deployments of a new destroyer we've got in the works. We identified the perpetrators as pirates, and discovered someone providing them with information from within, but i will spare you the details.")
+            textPanel.addPara("\"One of the faction's fleets got ambushed while performing trial deployments of a new destroyer we've got in the works. We identified the perpetrators as pirates, and discovered someone providing them with information from within, but I will spare you the details.")
 
-            textPanel.addPara("Point is, there is a bounty on taking out the fleet and preventing the destroyer from being transfered over to a buyer. We have been instructed that the destruction of the target is acceptible if the situation calls for it. " +
-                    "Perhaps the destroyer will simply dissappear after you have done your work, if you catch my drift. \"")
+            textPanel.addPara("Point is, there is a bounty on taking out the fleet and preventing the destroyer from being transferred over to a buyer. We have been instructed that the destruction of the target is acceptable if the situation calls for it. " +
+                    "Perhaps the destroyer will simply disappear after you have done your work, if you catch my drift. \"")
 
             createOption("Accept this mission") {
                 clearOptions()
@@ -284,7 +284,7 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
                     previewList.add(member)
                 }
 
-                textPanel.addPara("\"Good. Remember, everything goes aslong as the pirates lose their access to the Gilgamesh-class. " +
+                textPanel.addPara("\"Good. Remember, everything goes as long as the pirates lose their access to the Gilgamesh-class. " +
                         "We have some information about their fleet, but they likely have many more ships than those listed.\"",
                     Misc.getTextColor(), Misc.getHighlightColor(), "Gilgamesh-class")
 
@@ -293,7 +293,7 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
                 textPanel.addTooltip()
 
                 var locDescription = intel.getOrbitLocationDescription()
-                textPanel.addPara("\"The target appears to be in the ${intel.fleet.starSystem.nameWithNoType} system. $locDescription. We've transfered the necessary intel to complete the mission.\"",
+                textPanel.addPara("\"The target appears to be in the ${intel.fleet.starSystem.nameWithNoType} system. $locDescription. We've transferred the necessary intel to complete the mission.\"",
                     Misc.getTextColor(), Misc.getHighlightColor(), "${intel.fleet.starSystem.nameWithNoType}")
 
                 Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)
@@ -309,10 +309,10 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
     }
 
     fun gilgameshMissionEnd() {
-        textPanel.addPara("\"Good work. Dont worry about bringing back the prototypes remains. If you have salvaged it for yourself, keep it. " +
+        textPanel.addPara("\"Good work. Don't worry about bringing back the prototypes remains. If you have salvaged it for yourself, keep it. " +
                 "Take it as a reward for helping us. We can fake the records of it's guaranteed destruction. ")
 
-        textPanel.addPara("I have also reported the traitor that leaked the original fleets flight plans, im sure the higher ups will be quite pleased.\"")
+        textPanel.addPara("I have also reported the traitor that leaked the original fleet's flight plans, im sure the higher ups will be quite pleased.\"")
 
         Global.getSoundPlayer().playUISound(Sounds.STORY_POINT_SPEND, 1f, 1f)
 

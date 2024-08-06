@@ -30,7 +30,7 @@ class BountyBackground : BaseCharacterBackground() {
     fun getTooltip(tooltip: TooltipMakerAPI) {
         tooltip!!.addSpacer(10f)
 
-        tooltip!!.addPara("Factions will occasionaly send bounty fleets towards your general location, increasing in strength as your own fleet increases in size. " +
+        tooltip!!.addPara("Factions will occasionally send bounty fleets towards your general location, increasing in strength as your own fleet increases in size. " +
                 "Bounty fleets can only know of your location if you have recently visited a populated volume of space, and defeating enough of them might send the message that your ascent can no longer be stopped.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(), "bounty fleets", "increasing in strength", "populated volume of space", "defeating enough of them")
     }
@@ -59,7 +59,7 @@ class BountyBackground : BaseCharacterBackground() {
         var manager = Global.getSector().scripts.find { it is BackgroundBountyManager } as BackgroundBountyManager?
         if (manager != null && manager.finished) {
             tooltip!!.addSpacer(10f)
-            tooltip!!.addPara("Your repeated feats have scared the opposing parties in to further retaliation, no more bounties should be put on your head beyond this point.")
+            tooltip!!.addPara("Your repeated victories have successfully deterred your enemies from sending any more bounty-hunters after you; no more bounties should be put on your head beyond this point.")
             return
         }
 

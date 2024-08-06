@@ -157,8 +157,8 @@ class ExotechEventIntel() : BaseEventIntel() {
         if (stageId == Stage.CONTACT)
         {
             info.addPara("You entered a contract with Amelie. You plan to increase her influence in the faction, resulting in her being able to offer you more access to the factions unique equipment." +
-                    "You can increase her influence by donating domain-grade artifacts or completing missions offered by Xander.",
-                0f, Misc.getTextColor(), Misc.getHighlightColor(), "Amelie", "domain-grade artifacts", "completing missions offered by Xander")
+                    "You can increase her influence by donating Domain-grade artifacts or completing missions offered by Xander.",
+                0f, Misc.getTextColor(), Misc.getHighlightColor(), "Amelie", "Domain-grade artifacts", "completing missions offered by Xander")
         }
         if (stageId == Stage.SUPPLY_ACCESS)
         {

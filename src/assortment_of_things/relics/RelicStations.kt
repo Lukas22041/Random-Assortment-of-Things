@@ -87,7 +87,7 @@ class RelicStations {
                     person.setPersonality(Personalities.RECKLESS)
                     person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7)
 
-                    var backstory = "The file on ${person.nameString} reveals a history of high-speed notoriety. With a list of commendations for daring and initiative only matched by a list of citations for ‘race-dueling’ and reckless behaviour, ${person.nameString} seemed to be climbing towards either an Admiral position or dying in a ship explosion. Instead neither happened - during an impromptu ‘race-duel’ with a  fellow officer their reckless behaviour resulted in the death of a lesser domain dignitary, resulting in ${person.hisOrHer} sentencing to this station."
+                    var backstory = "The file on ${person.nameString} reveals a history of high-speed notoriety. With a list of commendations for daring and initiative only matched by a list of citations for ‘race-dueling’ and reckless behaviour, ${person.nameString} seemed to be climbing towards either an Admiral position or dying in a ship explosion. Instead neither happened - during an impromptu ‘race-duel’ with a  fellow officer their reckless behaviour resulted in the death of a lesser Domain dignitary, resulting in ${person.hisOrHer} sentencing to this station."
                     person.memoryWithoutUpdate.set("\$rat_prisoner_backstory", backstory)
                 }
 

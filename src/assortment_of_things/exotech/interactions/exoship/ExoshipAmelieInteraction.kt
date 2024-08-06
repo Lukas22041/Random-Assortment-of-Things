@@ -59,10 +59,10 @@ class ExoshipAmelieInteraction(var original: ExoshipInteractionPlugin) : RATInte
         createOption("How did you become a fleet commander?") {
             clearOptions()
 
-            textPanel.addPara("\"It's not that interesting of a story. Most of us are forced to be enrolled in the resource or patrol deparment after coming of age, i didn't want to be locked in to grunt work, so i've went with the patrol department. " +
-                    "But even there, after my initial period of service was over, i already had enough of it, and looked towards more rewarding positions, so i've joined the stations Academy, and pretty much just progressed further from there.")
+            textPanel.addPara("\"It's not that interesting of a story. Most of us are forced to be enrolled in the resource or patrol department after coming of age. I didn't want to be locked into grunt work, so I've gone with the patrol department. " +
+                    "But even there, after my initial period of service was over, I already had enough of it and looked towards more rewarding positions, so I've joined the station's academy and pretty much just progressed further from there.")
 
-            textPanel.addPara("Can't say i look back to the enrollment fondly, yet it likely shaped my view of everything quite much.\"")
+            textPanel.addPara("Can't say I look back to the enrollment fondly, yet it likely shaped my view of everything.\"")
 
             addBackOptionForAmelieTalk()
 
@@ -71,10 +71,10 @@ class ExoshipAmelieInteraction(var original: ExoshipInteractionPlugin) : RATInte
         createOption("About Xander") {
             clearOptions()
 
-            textPanel.addPara("\"Oh, him? I honestly can't say we know much about eachother, though he probably does know a lot more about me, " +
-                    "with his occupation and all, but nonetheless i think well of him. He does not share the same aspiration as myself, atleast not to the same extend - but he does his job well despite that. ")
+            textPanel.addPara("\"Oh, him? I honestly can't say we know much about each other, though he probably does know a lot more about me, " +
+                    "with his occupation and all, but nonetheless I think well of him. He does not share the same aspiration as myself, at least not to the same extent - but he does his job well despite that. ")
 
-            textPanel.addPara("It is calming to not have to worry about a cooperator stabbing your back to fullfil their own ideals.\" she says with an exhausted expression.")
+            textPanel.addPara("It is calming to not have to worry about a cooperator stabbing your back to reach their own goals.\" she says with an exhausted expression.")
 
             addBackOptionForAmelieTalk()
         }
@@ -160,7 +160,7 @@ class ExoshipAmelieInteraction(var original: ExoshipInteractionPlugin) : RATInte
                 element.setParaFontDefault()
                 element.addImage(interactionTarget.faction.logo, width * 1f, 0f)
                 element.addSpacer(10f)
-                element.addPara("Trade in rare tech to improve Amelies standing within the faction. Different types of items have different values of importance, and thus some are less effective to trade in. Those values are: ",0f)
+                element.addPara("Trade in rare tech to improve Amelie's standing within the faction. Different types of items have different values of importance, and thus some are less effective to trade in. Those values are: ",0f)
                 element.addSpacer(10f)
                 element.beginGridFlipped(width, 1, 40f, 10f)
                 element.addToGrid(0, 0, "Colony Equipment", "${(data.colonyEquipmentPriceMod * 100).toInt()}%")
@@ -174,7 +174,7 @@ class ExoshipAmelieInteraction(var original: ExoshipInteractionPlugin) : RATInte
                 var influenceString = influence.toInt().toString()
                 var maxInfluenceString = data.maximumInfluenceRequired.toInt().toString()
 
-                element.addPara("All trades have a conversion rate of 1000 to 1. If you turn in the selected items, Amelies standing will improve by a value of $influenceString. The maximum required influence is $maxInfluenceString.", 0f,
+                element.addPara("All trades have a conversion rate of 1000 to 1. If you turn in the selected items, Amelie's standing will improve by a value of $influenceString. The maximum required influence is $maxInfluenceString.", 0f,
                     Misc.getTextColor(), Misc.getHighlightColor(), "1000 to 1", "$influenceString", "${maxInfluenceString}")
 
                 element.addSpacer(10f)

@@ -5,9 +5,9 @@ Artifact Controller,rat_artifact_controller,0,,,"no_drop_salvage, restricted",,3
 #Abyssals,,,,,,,,,,,,,,,,,,,
 Abyssal Adaptability,rat_abyssal_core,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod,,,,graphics/hullmods/rat_abyssal_core.png
 Abyssal Grid,rat_abyssal_grid,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalGrid,,,,graphics/hullmods/rat_abyssal_grid.png
-Seraphs Grace,rat_seraphs_grace,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSeraphsGrace,,,,graphics/hullmods/rat_seraphs_grace.png
-Raphaels Grace,rat_raphaels_grace,0,,Anomalous Phase-Tech,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalRaphaelsGrace,,,,graphics/hullmods/rat_raphaels_grace.png
-Sarakiels Blessing,rat_sarakiels_blessing,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSarakielsBlessing,,,,graphics/hullmods/rat_sarakiels_blessing.png
+Seraph's Grace,rat_seraphs_grace,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSeraphsGrace,,,,graphics/hullmods/rat_seraphs_grace.png
+Raphael's Grace,rat_raphaels_grace,0,,Anomalous Phase-Tech,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalRaphaelsGrace,,,,graphics/hullmods/rat_raphaels_grace.png
+Sarakiel's Blessing,rat_sarakiels_blessing,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSarakielsBlessing,,,,graphics/hullmods/rat_sarakiels_blessing.png
 Seraphim Drive,rat_seraphim_drive,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSeraphimDriveHullmod,,,,graphics/hullmods/rat_seraphim_drive.png
 Fighter Configuration,rat_fighter_configuration,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalFighterConfiguration,,,,graphics/hullmods/rat_fighter_configuration.png
 ,,,,,,,,,,,,,,,,,,,
@@ -72,7 +72,7 @@ Exo Fighter Independence,rat_exo_fighter_independence,0,,Exo-Tech,,,10000,FALSE,
 Experimental Design,rat_exo_experimental,0,,Experimental Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.ExperimentalDesignHullmod,,,,graphics/hullmods/rat_experimental_design.png
 ,,,,,,,,,,,,,,,,,,,
 Warpfield,rat_hypatia_hullmod,0,,Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.HypatiaHullmod,,,,graphics/hullmods/rat_hypatia_hullmod.png
-Phase Entaglement,rat_tylos_hullmod,0,,Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.TylosHullmod,,,,graphics/hullmods/rat_tylos_hullmod.png
+Phase Entanglement,rat_tylos_hullmod,0,,Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.TylosHullmod,,,,graphics/hullmods/rat_tylos_hullmod.png
 Phase Platform,rat_apheidas_hullmod,0,,Exo-Tech,,,10000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.exotech.hullmods.ApheidasHullmod,,,,graphics/hullmods/rat_apheidas_hullmod.png
 ,,,,,,,,,,,,,,,,,,,
 #Exo Alterations,,,,,,,,,,,,,,,,,,,

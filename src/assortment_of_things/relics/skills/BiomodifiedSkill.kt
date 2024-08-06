@@ -21,7 +21,7 @@ class BiomodifiedSkill : RATBaseShipSkill() {
 
     override fun createCustomDescription(stats: MutableCharacterStatsAPI?, skill: SkillSpecAPI?, info: TooltipMakerAPI?, width: Float) {
         info!!.addSpacer(2f)
-        info!!.addPara("This officer has been bioengineered in to a new form, improving reflexes and decision making. However their decisions appear to always be of the reckless kind. \n\n" +
+        info!!.addPara("This officer has been bioengineered themself a new form, improving reflexes and decision making. However their decisions appear to always be of the reckless kind. \n\n" +
                 "This officer will always be of \"Reckless\" personality, any attempts at changing it will be reverted \n\n" +
                 "+5%% timeflow\n" +
                 "+5%% damage dealt\n" +

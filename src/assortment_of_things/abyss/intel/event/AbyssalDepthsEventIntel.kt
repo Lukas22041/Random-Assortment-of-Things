@@ -140,9 +140,9 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
                 when (stageId) {
                     Stage.START -> tooltip!!.addTitle("Abyssal Exploration")
                     Stage.INTO_THE_DEPTHS -> tooltip!!.addTitle("Into the Depths")
-                    Stage.PERSISTANCE -> tooltip!!.addTitle("Persistance")
+                    Stage.PERSISTANCE -> tooltip!!.addTitle("Persistence")
                     Stage.IN_THE_DARK -> tooltip!!.addTitle("In the Dark")
-                    Stage.STARE_IN_TO -> tooltip!!.addTitle("Stare in to the abyss")
+                    Stage.STARE_IN_TO -> tooltip!!.addTitle("Stare into the abyss")
                 }
 
                 addStageDesc(tooltip!!, stageId, 10f, true)
@@ -157,26 +157,26 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
     {
         if (stageId == Stage.START)
         {
-            info.addPara("As you dive in to the abyss, you are met with a landscape untouched by man for hundreds of cycles. Further exploration may improve your understanding of this strange space.", 0f)
+            info.addPara("As you dive into the abyss, you are met with a landscape untouched by man for hundreds of cycles. Further exploration may improve your understanding of this strange space.", 0f)
         }
         if (stageId == Stage.INTO_THE_DEPTHS)
         {
-            info.addPara("Getting accustomed to the unique terrain of the abyss, navigating through it becomes more manageable, increasing the fleets maximum burn by 1 and " +
+            info.addPara("Getting accustomed to the unique terrain of the abyss, navigating through it becomes more manageable, increasing the fleet's maximum burn by 1 and " +
                     "increasing the speed at which the fleet is considered \"moving slowly\" by 1.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "unique terrain", "maximum burn", "1", "moving slowly", "1")
         }
         if (stageId == Stage.PERSISTANCE)
         {
-            info.addPara("After studying the patterns of abyssal of the abyssal enviroment, the fleet takes 50%% less damage from abyssal storms due to better pathing through the terrain.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),"50%", "abyssal storms")
+            info.addPara("After studying the patterns of abyssal of the abyssal environment, the fleet takes 50%% less damage from abyssal storms due to better pathing through the terrain.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),"50%", "abyssal storms")
         }
         if (stageId == Stage.IN_THE_DARK)
         {
-            info.addPara("The fleet is capable of using the darkness of the abyss to to avoid other fleets. Additionaly decreases the fleets sensor detection range by 10%% in the dark.", 0f,
+            info.addPara("The fleet is capable of using the darkness of the abyss to to avoid other fleets. Additionally decreases the fleet's sensor detection range by 10%% in the dark.", 0f,
                 Misc.getTextColor(), Misc.getHighlightColor(), "10%")
         }
         if (stageId == Stage.STARE_IN_TO)
         {
-            info.addPara("The experience aquirred from exploring the abyss gains the fleets captain an additional skill point.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),
+            info.addPara("The experience acquired from exploring the abyss gains the fleet's captain an additional skill point.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),
                 "skill point")
         }
     }
@@ -255,7 +255,7 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
 
             val cargo = Global.getSector().playerFleet.cargo
             cargo.addSpecial(SpecialItemData("rat_alteration_install", randomAlteration!!.id), 1f)
-            Global.getSector().campaignUI.messageDisplay.addMessage("Aquirred ${randomAlteration.displayName} from Abyssal Exploration")*/
+            Global.getSector().campaignUI.messageDisplay.addMessage("Acquired ${randomAlteration.displayName} from Abyssal Exploration")*/
         }
     }
 

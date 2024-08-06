@@ -210,7 +210,7 @@ class AlterationRefitButton : BaseRefitButton() {
             }
 
             override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
-                tooltip!!.addPara("Removes the alteration from the ship and return its installer back in to the inventory.", 0f)
+                tooltip!!.addPara("Removes the alteration from the ship and returns its installer back to your inventory.", 0f)
                 tooltip.addSpacer(5f)
 
                 if (!hasAlteration) {

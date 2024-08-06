@@ -151,7 +151,7 @@ class ProjectGilgameshIntel() : BaseIntelPlugin() {
 
     fun getOrbitLocationDescription() : String {
         var focus = fleet.orbitFocus
-        var name = "The fleets location within the system is unknown"
+        var name = "The fleet's location within the system is unknown"
 
         if (focus is PlanetAPI) {
             if (focus.isStar) {
