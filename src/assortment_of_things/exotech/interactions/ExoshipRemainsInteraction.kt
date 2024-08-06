@@ -274,8 +274,8 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
                 data.foundExoshipRemains = true
 
                 textPanel.addPara("You gain access to the control panel, and it quickly throws out multiple warnings regarding the current state of the station. \n\n" +
-                        "Suprisingly however, the requirements for repairing the ship appear rather humble. Most of it can be done by specialised repair drones docked within the ship. " +
-                        "The panel however also states the requirement of a \"Warp Catalyst\", a device you find no information about in the fleets database. Without it, the warp chamber will not be able to be activated, and the ship remains stranded here.",
+                        "Surprisingly however, the requirements for repairing the ship appear rather humble. Most of it can be done by specialised repair drones docked within the ship. " +
+                        "The panel however also states the requirement of a \"Warp Catalyst\", a device you find no information about in the fleet's database. Without it, the warp chamber will not be able to be activated, and the ship remains stranded here.",
                 Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
 
                 if (data.QuestBeginning_StartedFromExoship) {

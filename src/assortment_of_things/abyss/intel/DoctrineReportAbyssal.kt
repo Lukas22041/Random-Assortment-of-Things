@@ -39,8 +39,8 @@ class DoctrineReportAbyssal() : BaseIntelPlugin() {
         info.addSectionHeading("Details", Alignment.MID, 0f)
         info.addSpacer(10f)
 
-        info.addPara("The threats fleets are filled with automated ships that boast very capable shields, however their ships are not heavily armored. " +
-                "Because of this, once the shields are broken through they can be made quick work off, with the shield breaking being the tricky part.", 0f,
+        info.addPara("The threat's fleets are filled with automated ships that boast very capable shields, however their ships are not heavily armored. " +
+                "Because of this, once the shields are broken through they can be made quick work of, with the shield breaking being the tricky part.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "capable shields", "are not heavily armored")
 
         info.addSpacer(10f)

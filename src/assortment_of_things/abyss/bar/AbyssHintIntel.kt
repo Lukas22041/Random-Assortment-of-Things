@@ -31,7 +31,7 @@ class AbyssHintIntel() : BaseIntelPlugin() {
 
         info.addSpacer(10f)
 
-        info.addPara("You've been informed of a unique zone of hyperspatial topography within the persean abyss of the south-western sector. Not much is known of it, other than the fact that there may be many untouched domain-era artifacts laying around.")
+        info.addPara("You've been informed of a unique zone of hyperspatial topography within the Persean abyss of the south-western sector. Not much is known of it, other than the fact that there may be many untouched Domain-era artifacts laying around.")
 
     }
 

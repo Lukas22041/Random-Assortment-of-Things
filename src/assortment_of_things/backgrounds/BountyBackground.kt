@@ -30,7 +30,7 @@ class BountyBackground : BaseCharacterBackground() {
     fun getTooltip(tooltip: TooltipMakerAPI) {
         tooltip!!.addSpacer(10f)
 
-        tooltip!!.addPara("Factions will occasionaly send bounty fleets towards your general location, increasing in strength as your own fleet increases in size. " +
+        tooltip!!.addPara("Factions will occasionally send bounty fleets towards your general location, increasing in strength as your own fleet increases in size. " +
                 "Bounty fleets can only know of your location if you have recently visited a populated volume of space, and defeating enough of them might send the message that your ascent can no longer be stopped.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(), "bounty fleets", "increasing in strength", "populated volume of space", "defeating enough of them")
     }

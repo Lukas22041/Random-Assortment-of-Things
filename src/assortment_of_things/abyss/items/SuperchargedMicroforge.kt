@@ -50,7 +50,7 @@ class SuperchargedMicroforge : BaseSpecialItemPlugin() {
                 "100x Supplies\n" +
                 "100x Fuel\n" +
                 "\n" +
-                "Does not produce over the fleets cargo limits, any excess is wasted.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+                "Does not produce over the fleet's cargo limits, any excess is wasted.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "microforge", "stock of supplies.", "100x Supplies", "100x Fuel")
         tooltip.addSpacer(5f)
 

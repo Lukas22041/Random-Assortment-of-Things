@@ -115,7 +115,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
         if (source.isExpired) return null
 
-        //Prevents the game spawning fleets when the player isnt in the system or a neighbour
+        //Prevents the game spawning fleets when the player isn't in the system or a neighbour
         if (!AbyssUtils.playerInNeighbourOrSystem(starsystem)) return null
 
         var data = AbyssUtils.getSystemData(starsystem)

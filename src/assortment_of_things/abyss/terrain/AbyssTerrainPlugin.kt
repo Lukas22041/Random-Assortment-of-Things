@@ -196,12 +196,12 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
         tooltip!!.addTitle(terrainName)
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("A unique location within hyperspace. Discovered with the settlement of the sector, and quicky exploited for its unique resources. " +
-                "Post-collapse humanity however did not have the resources for working within this hostile enviroment, making it quasi isolated from the sector since.", 0f)
+        tooltip.addPara("A unique location within hyperspace. Discovered with the settlement of the sector, and quickly exploited for its unique resources. " +
+                "Post-collapse humanity however did not have the resources for working within this hostile environment, making it quasi isolated from the sector since.", 0f)
 
         tooltip.addSpacer(5f)
 
-        tooltip!!.addPara("Due to a unique interaction between the fleets sensors and the abyssal matter, it is possible to detect structures at further distances than normal, but without any identifying data. " +
+        tooltip!!.addPara("Due to a unique interaction between the fleet's sensors and the abyssal matter, it is possible to detect structures at further distances than normal, but without any identifying data. " +
                 "" +
                 "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "detect", "structures")
 
@@ -215,7 +215,7 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
             tooltip.addSpacer(5f)
             tooltip.addSectionHeading("Abyssal Fog", Alignment.MID, 0f)
             tooltip.addSpacer(5f)
-            tooltip!!.addPara("The charged particles within the fog combine with the exhaust of the fleets engines, increasing the burn speed by 50%%" +
+            tooltip!!.addPara("The charged particles within the fog combine with the exhaust of the fleet's engines, increasing the burn speed by 50%%" +
                     "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "burn speed", "50%")
         }
 
@@ -226,8 +226,8 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
             tooltip.addSpacer(5f)
             tooltip!!.addPara("Abyssal Storms may damage members of the fleet if it is moving through it at high speeds."
                 , 0f, Misc.getTextColor(), Misc.getHighlightColor(), "damage")
-          /*  tooltip!!.addPara("Abyssal Storms damage the fleets ships if they are moving quickly. \n\n" +
-                    "They emitt a unique type of wavelength that travels far through abyssal matter, making it possible to track their collission " +
+          /*  tooltip!!.addPara("Abyssal Storms damage the fleet's ships if they are moving quickly. \n\n" +
+                    "They emit a unique type of wavelength that travels far through abyssal matter, making it possible to track their collision " +
                     "with large objects, with the site of impact showing up on the map. " +
                     "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "damage", "wavelength", "map")*/
         }

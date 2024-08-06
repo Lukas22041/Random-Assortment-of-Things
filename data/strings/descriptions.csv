@@ -140,7 +140,7 @@ rat_abyss_log1,CUSTOM,Mysterious Particles,"Within the abyssal matter theres occ
 
 There however appear to be certain zones that have an especially high concentration of those particles, and traversing them has caused at least a dozen electronic malfunctions for our fleet.
 
-A few crew members seem to enjoy watching this anomaly through the fleets instruments, it apparently reminds them of the weather of their homeworld.
+A few crew members seem to enjoy watching this anomaly through the fleet's instruments, it apparently reminds them of the weather of their homeworld.
 ",,,
 rat_abyss_log2,CUSTOM,Autonomous Operations,"Over time, the expeditions into the abyssal depths ramped up. As we discovered more use for the abyssal matter for new technologies, more parties started to show interests despite the danger. 
 
@@ -181,7 +181,7 @@ Eventually they’ve made the breakthrough they wanted, a stable fusion of a flu
 
 Now however, only one of them is known to remain. All others have been lost past the collapse, in wars the faction thought winnable due to their ability to move fast in a world send back to to a comparative stone age. But as major powers established, their aggressiveness backfired, and left barely any fragments of them left. 
 
-But they haven't gone without spoils either, having hoarded and stolen numerous domain-grade artifacts during the early collapse, and having developed many advanced systems for their own wars, some of their riches remain on their only Exoship. But as a small target with vast wealth, they became easy prey, and such now travel through the fringes of the sector, hoping to avoid any confrontation. Only few know of their actual location.
+But they haven't gone without spoils either, having hoarded and stolen numerous Domain-grade artifacts during the early collapse, and having developed many advanced systems for their own wars, some of their riches remain on their only Exoship. But as a small target with vast wealth, they became easy prey, and such now travel through the fringes of the sector, hoping to avoid any confrontation. Only few know of their actual location.
 ",,,,
 ,,,,,,
 rat_exoship,CUSTOM,"A construct that stands at the center of all of Exotechs' life-support. Often referred to as ""exo-ship"", this gigantic station is capable of traversing towards other systems at a speed second only to gates. This once minor benefit became a major advantage within the early days of the post-collapse sector, moving the faction towards unstoppable acts of piracy. That was until they themself lost the position of advantage, and with many losses, only one of those giants remains, now crossing the fringes of the sector in isolation.",,,,
@@ -219,7 +219,7 @@ rat_moonlight_lance,WEAPON,"A weapon developed as a set with another. Originally
 rat_stardust_lance,WEAPON,"A weapon developed as a set with another. Originally made to be used on an experimental ship, but due to production delays, the weapon itself made it into the faction's doctrine much earlier. The plasma emitted melts even the strongest of hulls.",,,,
 ,,,,,,
 rat_p_wave_launcher,WEAPON,An evolution of the integrated phase-grids found in other exo-tech weapons. Each warhead contains a small coil that is supercharged by the launchers body while moving through p-space.,,,,
-rat_starburst,WEAPON,"A swarm-type launcher designed to support the fleets front-line from afar, its specs making it an active threat to opponents point-defense and shield systems.",,,,
+rat_starburst,WEAPON,"A swarm-type launcher designed to support the fleet's front-line from afar, its specs making it an active threat to opponents point-defense and shield systems.",,,,
 ,,,,,,
 ,,,,,,
 rat_arkas_launcher_left,WEAPON,"One of several tools assisting the Arkas-Class in its operation. The Callisto DEM enables more pressure against enemy shields, while the Arkas itself can quickly reposition to make advantage of this distraction.",,,,
@@ -260,7 +260,7 @@ rat_training_station,CUSTOM,"Temporal Training Facilities were a novel and often
 rat_damaged_cryosleeper,CUSTOM,"This is one of the massive vessels of legend which transported millions of human emigrants from the core systems of the Domain out into the great frontiers stretching from the Sagittarius Arm across the Orion Spur. It appears to be damaged beyond repair, recovery of the inhabiting sleepers is unlikely.",,,,
 ,,,,,,
 ,,,,,,
-rat_gravitational_dynamo,CUSTOM,"A type of megastructure once powering domain systems that could not harvest the power of a local star. While inferior to other power generation pre-Collapse, this gravitational dynamo far outscales the post-collapse power generation methods.",,,,
+rat_gravitational_dynamo,CUSTOM,"A type of megastructure once powering Domain systems that could not harvest the power of a local star. While inferior to other power generation pre-Collapse, this gravitational dynamo far outscales the post-collapse power generation methods.",,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,

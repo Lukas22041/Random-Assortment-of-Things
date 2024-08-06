@@ -30,11 +30,11 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
         data.talkedWithXanderOnce = true
         visualPanel.showPersonInfo(data.xander)
 
-        textPanel.addPara("\"Hey - Amelie already informed me. I'm the head of her fleets intelligence sector. I will relay anything relevant to her goals to you.")
+        textPanel.addPara("\"Hey - Amelie already informed me. I'm the head of her fleet's intelligence sector. I will relay anything relevant to her goals to you.")
 
-        textPanel.addPara("We've got some jobs that our fleet doesnt have the time to handle, or some that Amelie herself can not be risked to be assosciated with, and some information the higher ups are not aware of yet. All to say is, we have lots of work left to do.")
+        textPanel.addPara("We've got some jobs that our fleet doesn't have the time to handle, or some that Amelie herself can not be risked to be associated with, and some information the higher ups are not aware of yet. All to say is, we have lots of work left to do.")
 
-        textPanel.addPara("In the meanwhile, i will keep on the look out for the oppertunity to acquire a \"Warp Catalyst\". They arent easy to get a grab of, so it may take a while.\"", Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
+        textPanel.addPara("In the meanwhile, I will keep on the look out for the opportunity to acquire a \"Warp Catalyst\". They aren't easy to get a hold of, so it may take a while.\"", Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
 
         populateXanderDialog()
 
@@ -163,8 +163,8 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
                     "But we got our hands full in other places already, so we require your assistance. However, there is good reason for you to assist.")
 
             textPanel.addPara("A defector has withdrawn from the faction, but hasn't done so empty handed. " +
-                    "His entire Armada followed suit, escaping with a fleets worth of cargo. Here comes the important aspect. " +
-                    "Part of the stolen cargo was a \"Warp Catalyst\". It may be the best oppertunity we will ever geet to acquire one.\"",
+                    "His entire Armada followed suit, escaping with a fleet's worth of cargo. Here comes the important aspect. " +
+                    "Part of the stolen cargo was a \"Warp Catalyst\". It may be the best opportunity we will ever get to acquire one.\"",
                 Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
 
             createOption("Ask for the specifics of the assignment") {
@@ -309,10 +309,10 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
     }
 
     fun gilgameshMissionEnd() {
-        textPanel.addPara("\"Good work. Dont worry about bringing back the prototypes remains. If you have salvaged it for yourself, keep it. " +
+        textPanel.addPara("\"Good work. Don't worry about bringing back the prototypes remains. If you have salvaged it for yourself, keep it. " +
                 "Take it as a reward for helping us. We can fake the records of it's guaranteed destruction. ")
 
-        textPanel.addPara("I have also reported the traitor that leaked the original fleets flight plans, im sure the higher ups will be quite pleased.\"")
+        textPanel.addPara("I have also reported the traitor that leaked the original fleet's flight plans, im sure the higher ups will be quite pleased.\"")
 
         Global.getSoundPlayer().playUISound(Sounds.STORY_POINT_SPEND, 1f, 1f)
 

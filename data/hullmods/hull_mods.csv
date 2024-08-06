@@ -5,9 +5,9 @@ Artifact Controller,rat_artifact_controller,0,,,"no_drop_salvage, restricted",,3
 #Abyssals,,,,,,,,,,,,,,,,,,,
 Abyssal Adaptability,rat_abyssal_core,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalsAdaptabilityHullmod,,,,graphics/hullmods/rat_abyssal_core.png
 Abyssal Grid,rat_abyssal_grid,0,,Abyssal,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalGrid,,,,graphics/hullmods/rat_abyssal_grid.png
-Seraphs Grace,rat_seraphs_grace,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSeraphsGrace,,,,graphics/hullmods/rat_seraphs_grace.png
-Raphaels Grace,rat_raphaels_grace,0,,Anomalous Phase-Tech,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalRaphaelsGrace,,,,graphics/hullmods/rat_raphaels_grace.png
-Sarakiels Blessing,rat_sarakiels_blessing,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSarakielsBlessing,,,,graphics/hullmods/rat_sarakiels_blessing.png
+Seraph's Grace,rat_seraphs_grace,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSeraphsGrace,,,,graphics/hullmods/rat_seraphs_grace.png
+Raphael's Grace,rat_raphaels_grace,0,,Anomalous Phase-Tech,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalRaphaelsGrace,,,,graphics/hullmods/rat_raphaels_grace.png
+Sarakiel's Blessing,rat_sarakiels_blessing,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSarakielsBlessing,,,,graphics/hullmods/rat_sarakiels_blessing.png
 Seraphim Drive,rat_seraphim_drive,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalSeraphimDriveHullmod,,,,graphics/hullmods/rat_seraphim_drive.png
 Fighter Configuration,rat_fighter_configuration,0,,Seraph,,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalFighterConfiguration,,,,graphics/hullmods/rat_fighter_configuration.png
 ,,,,,,,,,,,,,,,,,,,

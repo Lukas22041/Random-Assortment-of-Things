@@ -161,7 +161,7 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
         }
         if (stageId == Stage.INTO_THE_DEPTHS)
         {
-            info.addPara("Getting accustomed to the unique terrain of the abyss, navigating through it becomes more manageable, increasing the fleets maximum burn by 1 and " +
+            info.addPara("Getting accustomed to the unique terrain of the abyss, navigating through it becomes more manageable, increasing the fleet's maximum burn by 1 and " +
                     "increasing the speed at which the fleet is considered \"moving slowly\" by 1.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "unique terrain", "maximum burn", "1", "moving slowly", "1")
         }

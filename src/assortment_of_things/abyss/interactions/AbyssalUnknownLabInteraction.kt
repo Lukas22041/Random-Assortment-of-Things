@@ -93,7 +93,7 @@ class AbyssalUnknownLabInteraction : RATInteractionPlugin() {
 
                                 plugin.decreaseVignette = true
                                 textPanel.addPara("The response weakens, and suddenly, your senses start flooding back in, time appears to move, and you lose grasp of this new sensation. " +
-                                        "Your team still surrounds you, with your heart having stopped beating for seconds, preparing to relocate you towards the fleets medbay without delay. You feel that you will have lots of explaining to do.")
+                                        "Your team still surrounds you, with your heart having stopped beating for seconds, preparing to relocate you towards the fleet's medbay without delay. You feel that you will have lots of explaining to do.")
 
                                 textPanel.addPara("Acquired a new skill.", AbyssUtils.ABYSS_COLOR, AbyssUtils.ABYSS_COLOR)
 

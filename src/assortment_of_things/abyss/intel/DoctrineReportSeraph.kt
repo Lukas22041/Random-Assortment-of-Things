@@ -31,7 +31,7 @@ class DoctrineReportSeraph() : BaseIntelPlugin() {
     override fun createSmallDescription(info: TooltipMakerAPI, width: Float, height: Float) {
 
         info.addSpacer(5f)
-        info.addPara("Over multiple encounters with the unknown threat, the fleets intelligence office was able to construct a comprehensive list of notes specifying details of the opponent." +
+        info.addPara("Over multiple encounters with the unknown threat, the fleet's intelligence office was able to construct a comprehensive list of notes specifying details of the opponent." +
                 "This document portraits details about the \"Seraph\" doctrine.", 0f, Misc.getTextColor(), Color(196, 20, 35,255), "Seraph")
         info.addSpacer(10f)
 
