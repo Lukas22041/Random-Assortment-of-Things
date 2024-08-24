@@ -163,7 +163,7 @@ class SupernovaShipsystem : BaseShipSystemScript() {
             }
 
 
-            ship!!.engineController.extendFlame(this, 1.5f * effectLevel, 0.5f * effectLevel, 0.2f * effectLevel)
+            ship!!.engineController.extendFlame(this, 2.5f * effectLevel, 1.5f * effectLevel, 1f * effectLevel)
         }
 
         if (system.state == ShipSystemAPI.SystemState.IN) {

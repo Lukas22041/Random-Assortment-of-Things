@@ -30,8 +30,8 @@ class SupernovaSystemAI : ShipSystemAIScript {
 
 
     companion object {
-        var distanceForUnwarp = 1000f
-        var distanceForOffset = 500f
+        var distanceForUnwarp = 800f
+        var distanceForOffset = 300f
 
     }
 

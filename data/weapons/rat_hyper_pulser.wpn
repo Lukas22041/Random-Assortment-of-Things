@@ -1,41 +1,43 @@
 {
-	"id":"rat_hyper_pulser",  # this id must match what's in the spreadsheet
-	"specClass":"projectile",
-	"type":"ENERGY",
-	"size":"SMALL",
-	#"displayArcRadius":300,
-	
-	#"turretSprite":"graphics/weapons/exo/rat_hyper_dart_turret.png",
-	#"turretGlowSprite":"graphics/weapons/exo/rat_hyper_dart_turret_glow.png",
-
-	#"hardpointSprite":"graphics/weapons/exo/rat_hyper_dart_hardpoint.png",
-	#"hardpointGlowSprite":"graphics/weapons/exo/rat_hyper_dart_hardpoint_glow.png",
-	
-	"turretSprite":"graphics/weapons/minipulser_turret_base.png",
-	"turretGlowSprite":"graphics/weapons/minipulser_turret_glow.png",
-	"hardpointSprite":"graphics/weapons/minipulser_hardpoint_base.png",
-	"hardpointGlowSprite":"graphics/weapons/minipulser_hardpoint_glow.png",
-
-	"turretOffsets":[18, 0],
-	"turretAngleOffsets":[0],
-	"hardpointOffsets":[16, 0],
-	"hardpointAngleOffsets":[0],
-	"specialWeaponGlowWidth":15,
-	"specialWeaponGlowHeight":25,
-	"barrelMode":"ALTERNATING_BURST", # or LINKED.  whether barrels fire at the same time or alternate.
-	"animationType":"GLOW_AND_FLASH",
-	"muzzleFlashSpec":{"length":15.0,   # only used if animationType = MUZZLE_FLASH
-					   "spread":360.0,
-					   "particleSizeMin":3.0,
-					   "particleSizeRange":15.0,
-					   "particleDuration":1.5,
-					   "particleCount":10,
-					   "particleColor":[97, 96, 94, 50]},
-	"projectileSpecId":"rat_hyper_pulser_shot",  # projectile that will be fired
-	"stopPreviousFireSound":false,
-	"autocharge":true,
-	#"fireSoundOne":"heavy_machinegun_intro",
-	"fireSoundTwo":"rat_hyper_pulser_fire",
-	#"fireSoundTwo":"plasma_cannon_fire",
-	#"everyFrameEffect":"assortment_of_things.exotech.weapons.HypersatialJavelinEffect",
+  "id": "rat_hyper_pulser",
+  "specClass": "projectile",
+  "projectileSpecId": "rat_hyper_pulser_shot",
+  "type": "ENERGY",
+  "size": "SMALL",
+  "turretSprite": "graphics/weapons/exo/builtin/rat_hyper_pulser_turret.png",
+  "hardpointSprite": "graphics/weapons/exo/builtin/rat_hyper_pulser_hardpoint.png",
+  "specialWeaponGlowHeight": 25,
+  "specialWeaponGlowWidth": 15,
+  "turretOffsets": [
+    14,
+    0
+  ],
+  "turretAngleOffsets": [
+    0
+  ],
+  "hardpointOffsets": [
+    15.5,
+    0
+  ],
+  "hardpointAngleOffsets": [
+    0
+  ],
+  "barrelMode": "ALTERNATING_BURST",
+  "animationType": "MUZZLE_FLASH",
+  "autocharge": true,
+  "muzzleFlashSpec": {
+    "length": 15,
+    "spread": 360,
+    "particleSizeMin": 3,
+    "particleSizeRange": 15,
+    "particleDuration": 1.5,
+    "particleCount": 10,
+    "particleColor": [
+      97,
+      96,
+      94,
+      50
+    ]
+  },
+  "fireSoundTwo": "rat_hyper_pulser_fire"
 }
