@@ -43,10 +43,14 @@ class ExoFighterTrail : EveryFrameWeaponEffectPlugin {
         var sidewayVel = Vector2f(projLateralBodyVel)
         sidewayVel = VectorUtils.rotate(sidewayVel, ship.facing).scale(0.9f) as Vector2f
 
+        var outDuration = 2f
+        if (ship.system != null) {
+            outDuration -= 2f * ship.system.effectLevel
+        }
 
         MagicTrailPlugin.addTrailMemberAdvanced(
             ship, id1, sprite1, weapon!!.location, 25f, 10f, weapon!!.currAngle, 0f, 0f,
-            15f, 3f, color1, color2, 0.8f, 0f, 0.1f, 2f, true, -128f, -256f,
+            15f, 3f, color1, color2, 0.8f, 0f, 0.1f, outDuration, true, -128f, -256f,
             sidewayVel, mutableMapOf(), CombatEngineLayers.CONTRAILS_LAYER, 0f)
 
 /*

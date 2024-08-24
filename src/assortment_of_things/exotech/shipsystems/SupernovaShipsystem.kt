@@ -29,7 +29,7 @@ class SupernovaShipsystem : BaseShipSystemScript() {
     var enteredActive = false
     var ship: ShipAPI? = null
 
-    var afterimageInterval = IntervalUtil(0.035f, 0.035f)
+    var afterimageInterval = IntervalUtil(0.025f, 0.025f)
     var empInterval = IntervalUtil(0.1f, 0.2f)
 
     val color = Color(248,172,44, 255)
@@ -73,7 +73,7 @@ class SupernovaShipsystem : BaseShipSystemScript() {
         if (!activated && system.state == ShipSystemAPI.SystemState.IN) {
             activated = true
 
-            chargeSound = Global.getSoundPlayer().playSound("hypatia_warp_chargeup", 1.1f, 0.8f, ship!!.location, Vector2f())
+            chargeSound = Global.getSoundPlayer().playSound("hypatia_warp_chargeup", 1.1f, 0.7f, ship!!.location, Vector2f())
         }
 
        /* if (chargeSound?.isPlaying == true) {
@@ -89,10 +89,10 @@ class SupernovaShipsystem : BaseShipSystemScript() {
             }
 
            // chargeSound!!.stop()
-            Global.getSoundPlayer().playSound("exoship_warp", 1.1f, 0.9f, ship!!.location, Vector2f())
+            Global.getSoundPlayer().playSound("exoship_warp", 1.1f, 0.75f, ship!!.location, Vector2f())
 
             var flash = HypatiaFlashRenderer(Vector2f(ship!!.location), ExoUtils.color1, Color(130,4,189, 255),
-                400f, 1600f, 0.0f, 0.25f, 1f)
+                300f, 1400f, 0.0f, 0.25f, 1f)
             Global.getCombatEngine().addLayeredRenderingPlugin(flash)
 
             ship!!.isPhased = true
@@ -142,7 +142,7 @@ class SupernovaShipsystem : BaseShipSystemScript() {
               //  if (enteredActive) alpha -= 50
 
                 //AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(alpha), color.setAlpha(alpha), 1.5f * effectLevel, 2f, Vector2f().plus(ship!!.location))
-                AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(alpha), Color(130,4,189, 0), 0.5f + (1f * effectLevel) * durationMod, 2f, Vector2f().plus(ship!!.location))
+                AfterImageRenderer.addAfterimage(ship!!, color.setAlpha(alpha), Color(130,4,189, 0), 0.4f + (0.8f * effectLevel) * durationMod, 2f, Vector2f().plus(ship!!.location))
             }
 
             if (effectLevel >= 0.1f) {
@@ -229,7 +229,7 @@ class SupernovaShipsystem : BaseShipSystemScript() {
             }
 
             if (!Global.getCombatEngine().isPaused && state == ShipSystemStatsScript.State.ACTIVE) {
-                CombatUtils.applyForce(ship!!, ship!!.facing, 5000f)
+                CombatUtils.applyForce(ship!!, ship!!.facing, 400f)
             }
 
 
@@ -250,7 +250,7 @@ class SupernovaShipsystem : BaseShipSystemScript() {
             if (enteredActive && !triggeredOut) {
                 triggeredOut = true
 
-                Global.getSoundPlayer().playSound("exoship_warp", 1.1f, 0.9f, ship!!.location, Vector2f())
+                Global.getSoundPlayer().playSound("exoship_warp", 1.1f, 0.75f, ship!!.location, Vector2f())
 
                 var flash = HypatiaFlashRenderer(Vector2f(ship!!.location), ExoUtils.color1, Color(130,4,189, 255),
                     300f, 1400f, 0.0f, 0.2f, 1f)
