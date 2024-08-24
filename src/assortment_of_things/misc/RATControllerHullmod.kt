@@ -27,12 +27,12 @@ class RATControllerHullmod : BaseHullMod() {
                         member.setVariant(variant, false, true)
                     }
 
-                    member.variant.addMod("rat_controller")
+                    member.variant.addPermaMod("rat_controller")
 
                     var moduleSlots = member.variant.moduleSlots
                     for (slot in moduleSlots) {
                         var module = member.variant.getModuleVariant(slot)
-                        module.addMod("rat_controller")
+                        module.addPermaMod("rat_controller")
                     }
                 }
             }

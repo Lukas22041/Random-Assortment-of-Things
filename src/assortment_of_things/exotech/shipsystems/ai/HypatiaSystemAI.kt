@@ -115,6 +115,7 @@ class HypatiaSystemAI : ShipSystemAIScript {
             var nearbyShipsIterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 3000f, 3000f)
             var nearbyShips = ArrayList<ShipAPI>()
             nearbyShipsIterator.forEach { if((it as ShipAPI).isVisibleToSide(ship!!.owner)) {nearbyShips.add(it as ShipAPI) } }
+            nearbyShips.remove(ship)
 
             var hasNearbyAlly =false
             var alliesCount = 0f
@@ -269,7 +270,6 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
                     //In some cases the system didnt activate at the start, may be because of travel drive
                     if (!ship!!.travelDrive.isActive) {
-                        ship!!.useSystem()
                         previousAssignment = assignment
                         clearAssignmentTime = clearAssignmentTimeMax
                         previousTarget = targetEntity
@@ -308,6 +308,8 @@ class HypatiaSystemAI : ShipSystemAIScript {
 
                         ship!!.addListener(script)
                         script.init()
+
+                        ship!!.useSystem()
 
                     }
 
@@ -529,8 +531,8 @@ class InWarpScript(var ship: ShipAPI, var targetEntity: CombatEntityAPI, var lan
 
         }
 
-
-        if (shouldStop) {
+        //Prevent stop while being in the "IN" state as that ignores the useSystem call
+        if (shouldStop && ship.system.state != ShipSystemAPI.SystemState.IN) {
             //Remove Landing Point
             landings?.remove(landingPoint)
             renderer?.done = true

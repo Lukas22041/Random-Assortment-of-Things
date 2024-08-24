@@ -191,7 +191,7 @@ rat_hypernavigational_beacon,CUSTOM,"A beacon constructed by the exo-tech factio
 rat_exo_hideout,CUSTOM,A long abandoned station withering away within the fringes. Scans indicate no recent activity.,,,,
 rat_exo_hideout_active,CUSTOM,A long abandoned station withering away within the fringes. Scans indicate recent activity.,,,,
 ,,,,,,
-rat_supernova,SHIP,"An experimental fighter based on the design principals behind the Hypatia-class. Along with its warp-system, this fighter has the unique ability to act entirely independently from its host carrier after deployment. Combining both of those aspects enables the Supernova to rapidly assist any ship in need.",,,,
+rat_supernova,SHIP,"An experimental autonomous fighter based on the design principals behind the Hypatia-class. Along with its warp-system, this fighter has the unique ability to act entirely independently from its host carrier after deployment. Combining all of those aspects enables the Supernova to rapidly assist any ship in need.",,,,
 rat_hyper_pulser,WEAPON,"A much downscaled version of other hyperspatial technologies. It appears that when applied on this scale, much of its unique properties dissapear, but due to the supernovas advanced energy core, it is a massive threat non the less.",,,,
 rat_supernova_system,SHIP_SYSTEM,,,"Moves the ship in to phase-space, massively increases its speed and largely reduces its maneuverability. ",phase-space || speed || maneuverability,
 ,,,,,,

@@ -16,7 +16,8 @@
     "rat_exo_fighter_independence",
     "insulatedengine",
     "fluxbreakers",
-    "turretgyros"
+    "turretgyros",
+    "automated",
   ],
   "builtInWeapons": {
     "WS0001": "rat_exo_fighter_trail"

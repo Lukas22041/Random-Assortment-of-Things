@@ -29,7 +29,7 @@ class ExoFighterTrail : EveryFrameWeaponEffectPlugin {
         if (!interval.intervalElapsed()) return
 
         var ship = weapon!!.ship
-        if (ship.system.isActive) return
+        //if (ship.system.isActive) return
 
         var color1 = Color(252,143,0)
         var color2 = Color(130,4,189)

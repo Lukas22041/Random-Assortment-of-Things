@@ -49,4 +49,4 @@ Gilgamesh,rat_gilgamesh,Phase-Superdestroyer,Experimental Exo-Tech,rat_gilgamesh
 Protostar,rat_protostar,,Exo-Tech,,,300,50,400,,100,0,,180,280,230,80,160,20,FRONT,,270,0,0.8,,,1,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
 Nightblade,rat_nightblade,,Exo-Tech,,,350,60,450,,100,0,,220,300,250,120,250,20,FRONT,,270,0,0.8,,,1,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
 Dawnblade,rat_dawnblade,,Exo-Tech,,,750,120,1250,,100,0,,200,300,250,90,180,20,FRONT,,270,0,0.8,,,3,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
-Supernova,rat_supernova,,Exo-Tech,rat_supernova_system,,900,150,1400,,250,0,,350,350,150,120,360,50,OMNI,,270,0,0.8,,,4,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
+Supernova,rat_supernova,,Exo-Tech,rat_supernova_system,,900,150,1400,,250,0,,350,350,150,120,360,50,OMNI,,270,0,0.8,,,0,0,,,,,,,,,,,,,,,,,,,,,,0,,,,3120
