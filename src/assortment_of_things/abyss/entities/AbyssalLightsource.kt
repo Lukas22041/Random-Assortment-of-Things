@@ -3,16 +3,10 @@ package assortment_of_things.abyss.entities
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
-import com.fs.starfarer.api.campaign.SectorEntityToken
-import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
-import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.FaderUtil
-import com.fs.starfarer.api.util.Misc
 import org.magiclib.kotlin.setAlpha
-import java.awt.Color
 
 class AbyssalLightsource : BaseCustomEntityPlugin(), AbyssalLight {
 

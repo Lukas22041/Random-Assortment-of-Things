@@ -43,7 +43,7 @@ class GenesisSerpentHullmod : BaseHullMod() {
             stats.crLossPerSecondPercent.modifyMult("test", 0f)
         } else {
             if (Global.getSector()?.characterData?.person != null) {
-                if (Global.getSector().characterData.person!!.stats.hasSkill(Skills.AUTOMATED_SHIPS)
+                if (Misc.getAllowedRecoveryTags().contains(Tags.AUTOMATED_RECOVERABLE)
                     || stats!!.variant.hasHullMod("rat_abyssal_conversion") ||
                     stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion") || stats!!.variant.hasHullMod("rat_seraph_conversion")) {
                     stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
@@ -103,7 +103,7 @@ class GenesisSerpentHullmod : BaseHullMod() {
         tooltip!!.addSpacer(5f)
         tooltip.addPara("The ship operates based on a link of several flexible modules. " +
                 "Each module has its own layer of armor, however its hitpoints are shared across all parts. \n\n" +
-                "Additionaly, due to its method of construction, the ship is unable to strafe left or right and can only turn forwards, backwards and turn sideways.",
+                "Additionally, due to its method of construction, the ship is unable to strafe left or right and can only turn forwards, backwards and turn sideways.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(), "modules", "layer of armor", "hitpoints are shared across all parts.", "unable to strafe")
 
         tooltip!!.addLunaElement(0f, 0f).apply {

@@ -23,8 +23,8 @@ class PartnershipDeed() : BaseSpecialItemPlugin() {
 
         tooltip.addSpacer(5f)
         tooltip.addPara("A deed signing a trade relation between Exo-Tech and your own Organisation. " +
-                "Acquiring the trust of the coorperation enables the the holder to purchase ships, weapons & fighters that are unique to Exo-Techs doctrine with their tokens.\n\n" +
-                "Additionaly a map with the current location of all Exoships is provided, and other options may reveal themself. This deed does not put you in to a commission with Exo-Tech.", 0f,
+                "Acquiring the trust of the corporation enables the the holder to purchase ships, weapons, and fighters that are unique to Exo-Tech's doctrine with their tokens.\n\n" +
+                "Additionally a map with the current location of all Exoships is provided, and other options may reveal themselves. This deed does not entitle you to a commission with Exo-Tech.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "Exo-Tech", "ships", "weapons", "fighters", "tokens", "map")
         tooltip.addSpacer(5f)
 

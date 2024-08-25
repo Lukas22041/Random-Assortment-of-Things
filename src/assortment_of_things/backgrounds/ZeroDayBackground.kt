@@ -3,7 +3,6 @@ package assortment_of_things.backgrounds
 import assortment_of_things.backgrounds.bounty.BackgroundBountyManager
 import assortment_of_things.backgrounds.bounty.BountyFleetIntel
 import assortment_of_things.exotech.ExoUtils
-import assortment_of_things.exotech.interactions.exoship.ExoShipBuyInteraction
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.EveryFrameScript
@@ -29,7 +28,7 @@ class ZeroDayBackground : BaseCharacterBackground() {
 
 
     override fun getLongDescription(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?): String {
-        return "You can temporarly hack in to opponents ships and take over control."
+        return "You can temporarily hack enemy ships and assume control."
     }
 
     fun getTooltip(tooltip: TooltipMakerAPI) {
@@ -43,13 +42,13 @@ class ZeroDayBackground : BaseCharacterBackground() {
         if (RATSettings.backgroundsAbilityKeybind == 0) key = "right click"
 
         var label = tooltip!!.addPara(
-                "Any ship below or at 35 deployment points on the opponents side can be temporarily taken control of by pressing $key while hovering over them. \n\n" +
+                "Any ship below or at 35 deployment points on the opponents side can be temporarily taken control of by pressing CTRL + $key while hovering over them. \n\n" +
                         "The maximum duration is between 10 to 20 seconds, based on how many deployment points the targeted ship has. The ability has a 20 second cooldown and can be canceled by pressing the activation key twice. \n\n" +
                         "" +
                         "While you are controlling the targeted ship, your own ship is on autopilot.", 0f)
 
 
-        label.setHighlight("35", "taken control", "$key", "10 to 20", "deployment points", "20", "autopilot")
+        label.setHighlight("35", "taken control", "CTRL", "$key", "10 to 20", "deployment points", "20", "autopilot")
         label.setHighlightColors(hc)
 
     }
@@ -75,4 +74,3 @@ class ZeroDayBackground : BaseCharacterBackground() {
 
     }
 }
-

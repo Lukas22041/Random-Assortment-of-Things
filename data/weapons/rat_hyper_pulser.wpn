@@ -1,0 +1,43 @@
+{
+  "id": "rat_hyper_pulser",
+  "specClass": "projectile",
+  "projectileSpecId": "rat_hyper_pulser_shot",
+  "type": "ENERGY",
+  "size": "SMALL",
+  "turretSprite": "graphics/weapons/exo/builtin/rat_hyper_pulser_turret.png",
+  "hardpointSprite": "graphics/weapons/exo/builtin/rat_hyper_pulser_hardpoint.png",
+  "specialWeaponGlowHeight": 25,
+  "specialWeaponGlowWidth": 15,
+  "turretOffsets": [
+    14,
+    0
+  ],
+  "turretAngleOffsets": [
+    0
+  ],
+  "hardpointOffsets": [
+    15.5,
+    0
+  ],
+  "hardpointAngleOffsets": [
+    0
+  ],
+  "barrelMode": "ALTERNATING_BURST",
+  "animationType": "MUZZLE_FLASH",
+  "autocharge": true,
+  "muzzleFlashSpec": {
+    "length": 15,
+    "spread": 360,
+    "particleSizeMin": 3,
+    "particleSizeRange": 15,
+    "particleDuration": 1.5,
+    "particleCount": 10,
+    "particleColor": [
+      97,
+      96,
+      94,
+      50
+    ]
+  },
+  "fireSoundTwo": "rat_hyper_pulser_fire"
+}

@@ -20,7 +20,7 @@ class DevelopmentStationInteraction : RATInteractionPlugin() {
 
         createOption("Continue") {
             clearOptions()
-            textPanel.addPara("You dock at the station and take a look through the its dozens of compartments. Many of those seem to be dedicated for the production and research of non-standardised modspecs that dont seem to have made it out in to the sector before the collapse.\n\n" + "Not much seems to have stood the test of time, but atleast some of it appears recoverable.")
+            textPanel.addPara("You dock at the station and take a look through its dozens of compartments. Many of those seem to be dedicated for the production and research of non-standardised modspecs that don't seem to have made it to the sector before the Collapse.\n\n" + "Not much seems to have stood the test of time, but at least some of it appears recoverable.")
 
             createOption("Loot") {
                 var random = Random(interactionTarget.getSalvageSeed())

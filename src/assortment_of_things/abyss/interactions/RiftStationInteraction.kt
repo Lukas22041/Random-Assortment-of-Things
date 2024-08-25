@@ -14,15 +14,15 @@ class RiftStationInteraction : RATInteractionPlugin() {
     override fun init() {
 
 
-        textPanel.addPara("The fleet approaches the station at the center of the rift. It appears that the station houses some kind of devide to keep this rift active, its purpose however is yet unknown. There doesnt appear to be any hostile activity around it.")
+        textPanel.addPara("The fleet approaches the station at the center of the rift. It appears that the station houses some kind of divide to keep this rift active, its purpose however is yet unknown. There doesn't appear to be any hostile activity around it.")
 
         var fleet = interactionTarget.memoryWithoutUpdate.get("\$defenderFleet")
         if (fleet != null ) {
            /* textPanel.addPara("However as we attempt to close in, as if out of nowhere a fleet emerges in the vicinity of the station. " +
-                    "It contains signatures that haven't been observed anywhere else within the abyss, it's adviced to proceed with extreme caution.")*/
+                    "It contains signatures that haven't been observed anywhere else within the abyss, it's advised to proceed with extreme caution.")*/
 
             textPanel.addPara("However as we attempt to close in, as if out of nowhere a fleet emerges in the vicinity of the station. " +
-                    "Its threat level is beyond any fleet we have yet observed, it's adviced to proceed with extreme caution.")
+                    "Its threat level is beyond any fleet we have yet observed, it's advised to proceed with extreme caution.")
 
             triggerDefenders()
         }

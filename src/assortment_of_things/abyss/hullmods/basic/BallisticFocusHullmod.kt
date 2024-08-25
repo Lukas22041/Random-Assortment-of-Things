@@ -28,9 +28,9 @@ class BallisticFocusHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("Transfigures the hulls internal configuration in to a state that benefits the standard operation of ballistic weapons.\n\n" +
+        tooltip.addPara("Transfigures the hull's internal configuration into a state that benefits the standard operation of ballistic weapons.\n\n" +
                 "" +
-                "All ballistic weapons see an increase in rate of fire of 20%% without increasing flux usage, ammunition recharges 25%% faster and deal 5%% more damage.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+                "Increases rate-of-fire for ballistic weapons by 20%% without increasing flux usage. Additionally, ammunition recharges 25%% faster and deals 5%% more damage.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "ballistic weapons", "20%", "25%", "5%")
 
     }

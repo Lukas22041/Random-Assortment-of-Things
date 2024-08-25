@@ -1,0 +1,48 @@
+{
+    "displayName": "Rapid Response",
+    "fluxCapacitors": 0,
+    "fluxVents": 0,
+    "goalVariant": false,
+    "hullId": "rat_apheidas",
+    "hullMods": [
+        "heavyarmor",
+        "safetyoverrides",
+    ],
+    "permaMods": [],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_apheidas_Rapid_Response",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "reaper",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0004": "atropos",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_stardust_lance",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "pdlaser",
+                "WS0002": "pdlaser",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

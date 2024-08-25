@@ -154,10 +154,10 @@ class ZeroDayScript : BaseEveryFrameCombatPlugin() {
         for (event in events!!) {
             if (!event.isConsumed) {
                 var triggered = false
-                if (RATSettings.backgroundsAbilityKeybind == 0 && event.isMouseDownEvent && event.isRMBDownEvent) {
+                if (RATSettings.backgroundsAbilityKeybind == 0 && event.isMouseDownEvent && event.isRMBDownEvent && event.isCtrlDown) {
                     triggered = true
                 }
-                else if (event.isKeyDownEvent && event.eventValue == RATSettings.backgroundsAbilityKeybind) {
+                else if (event.isKeyDownEvent && event.eventValue == RATSettings.backgroundsAbilityKeybind && event.isCtrlDown) {
                     triggered = true
                 }
 

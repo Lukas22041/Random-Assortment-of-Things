@@ -1,0 +1,49 @@
+{
+    "displayName": "Attack",
+    "fluxCapacitors": 17,
+    "fluxVents": 10,
+    "goalVariant": true,
+    "hullId": "rat_gilgamesh",
+    "hullMods": [
+        "advancedoptics",
+        "heavyarmor",
+        "unstable_injector",
+    ],
+    "permaMods": [],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_gilgamesh_Attack",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "rat_moonlight_lance",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0010": "rat_p_wave_launcher",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0004": "rat_stardust_lance",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0007": "pdlaser",
+                "WS0006": "pdlaser",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

@@ -5,6 +5,9 @@
 	
 	"posts":{
 		"rat_exo_comm":{"name":"External Communication"},
+		"rat_exo_intelligence":{"name":"Intelligence Officer"},
+		"rat_exo_fleetCommander":{"name":"Fleet Commander"},
+		"rat_exo_unknown":{"name":"Unknown"},
 	}
 }
 

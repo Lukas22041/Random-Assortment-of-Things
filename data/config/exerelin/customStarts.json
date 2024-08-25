@@ -4,7 +4,7 @@
 			"id":"rat_abyssStart",
 			"name":"Abyssal Adventurer",
 			"difficulty":"Easy",
-			"desc":"Your fleet made the risky move to explore the unknown, venturing in to the depths.",
+			"desc":"Your fleet made the risky move to explore the unknown, venturing into the depths.",
 			"className":"assortment_of_things.abyss.misc.AbyssStart",
 		},
 	],

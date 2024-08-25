@@ -49,11 +49,11 @@ class EngineeredUtopia : BaseMarketConditionPlugin() {
         var base = 0 + market.size
 
         tooltip!!.addSpacer(10f)
-        tooltip.addPara("This planet was once heavily terraformed to get it in to a better state. Much of the effort hasnt been able to survive past the collapse, but the mechanisms that are still active improve the conditons of this planet drasticly compared to less fortunate planets." +
+        tooltip.addPara("This planet was once heavily terraformed to improve habitability. Many of the terraforming mechanisms deteriorated post-Collapse, but those that are still active improve the conditions of this planet drastically compared to less-fortunate planets." +
                 "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("However, the ecosystem is in a tight balance and any large scale industrial effort risks to disrupt it. The bonuses below are only active if the amount of industries is below the maximum that can be build.", 0f,
+        tooltip.addPara("However, the ecosystem is in a tight balance and any large scale industrial effort risks to disrupt it. The bonuses below are only active if the amount of industries is below the maximum that can be built.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "the amount of industries is below the maximum")
 
         tooltip.addSpacer(10f)

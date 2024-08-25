@@ -18,7 +18,7 @@ class ChangeExoIntelState : EveryFrameScript {
     }
 
     override fun advance(amount: Float) {
-        faction.isShowInIntelTab = data.interactedWithExoship
+        //faction.isShowInIntelTab = data.showFactionInIntel
     }
 
 }

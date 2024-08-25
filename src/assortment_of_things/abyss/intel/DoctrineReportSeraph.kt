@@ -31,7 +31,7 @@ class DoctrineReportSeraph() : BaseIntelPlugin() {
     override fun createSmallDescription(info: TooltipMakerAPI, width: Float, height: Float) {
 
         info.addSpacer(5f)
-        info.addPara("Over multiple encounters with the unknown threat, the fleets intelligence office was able to construct a comprehensive list of notes specifying details of the opponent." +
+        info.addPara("Over multiple encounters with the unknown threat, the fleet's intelligence office was able to construct a comprehensive list of notes specifying details of the opponent." +
                 "This document portraits details about the \"Seraph\" doctrine.", 0f, Misc.getTextColor(), Color(196, 20, 35,255), "Seraph")
         info.addSpacer(10f)
 
@@ -64,7 +64,7 @@ class DoctrineReportSeraph() : BaseIntelPlugin() {
         var graceIMG = info.beginImageWithText(graceHullmodSpec.spriteName, 48f)
         graceIMG.addPara(graceHullmodSpec.displayName, 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         graceIMG.addPara("This hullmod allows the ship to temporarily become stronger after coming under heavy fire. Caution is advised against any ship that is still functional despite heavy damage. \n\n" +
-                "Additionaly it causes Seraphs to be stronger while in the abyss. This effect makes them a large threat within the enviroment they call home.", 0f)
+                "Additionally it causes Seraphs to be stronger while in the abyss. This effect makes them a large threat within the environment they call home.", 0f)
         info.addImageWithText(0f)
 
         info.addSpacer(10f)

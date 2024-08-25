@@ -55,9 +55,9 @@ class AbyssStart : CustomStart() {
             return
         }
 
-        textPanel.addPara("Your fleet made the risky move to explore the unknown, venturing in to the depths.")
+        textPanel.addPara("Your fleet made the risky move to explore the unknown, venturing into the depths.")
 
-        textPanel.addPara("It encountered automated threats that it made quick work off, however in the process much of the fleet was lost. The decision was made to make new purpose of the defeated fleets, transfering and renovating them for your own use.")
+        textPanel.addPara("It encountered automated threats that it made quick work of, though much of the fleet was lost in the process. You chose to repurpose the defeated Abyssal ships, renovating them for your own use.")
 
         PlayerFactionStore.setPlayerFactionIdNGC(Factions.PLAYER)
         val tempFleet = FleetFactoryV3.createEmptyFleet(PlayerFactionStore.getPlayerFactionIdNGC(), FleetTypes.PATROL_SMALL, null)

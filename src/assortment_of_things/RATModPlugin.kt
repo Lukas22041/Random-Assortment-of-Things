@@ -6,6 +6,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalFracture
 import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.AbyssProcgen
+import assortment_of_things.abyss.rework.AbyssGeneratorV2
 import assortment_of_things.abyss.scripts.*
 import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
 import assortment_of_things.artifacts.AddArtifactHullmod
@@ -15,10 +16,8 @@ import assortment_of_things.campaign.scripts.AICoreDropReplacerScript
 import assortment_of_things.campaign.scripts.ApplyRATControllerToPlayerFleet
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
-import assortment_of_things.exotech.ExoshipGenerator
 import assortment_of_things.exotech.scripts.ChangeExoIntelState
 import assortment_of_things.frontiers.FrontiersUtils
-import assortment_of_things.misc.RATSettings
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
 import assortment_of_things.snippets.DropgroupTestSnippet
@@ -26,11 +25,6 @@ import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.JumpPointAPI
-import com.fs.starfarer.api.characters.FullName
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
-import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.EntityLocation
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
@@ -39,9 +33,18 @@ import lunalib.lunaSettings.LunaSettings
 import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
-import org.lazywizard.lazylib.MathUtils
 import assortment_of_things.campaign.scripts.AICoreReplacerScript
+import assortment_of_things.campaign.scripts.render.RATCampaignRenderer
+import assortment_of_things.exotech.ExoCampaignListener
+import assortment_of_things.exotech.ExotechGenerator
+import assortment_of_things.exotech.terrain.ExotechHyperNebula
+import assortment_of_things.misc.*
+import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.ui.UIPanelAPI
+import com.fs.starfarer.campaign.CampaignState
+import com.fs.state.AppDriver
 import com.thoughtworks.xstream.XStream
+import lunalib.lunaUtil.campaign.LunaCampaignRenderer
 import java.util.*
 
 
@@ -116,6 +119,18 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
+        //TestFactor(1)
+
+        /*if (!LunaCampaignRenderer.hasRendererOfClass(RATCampaignRenderer::class.java)) {
+            LunaCampaignRenderer.addRenderer(RATCampaignRenderer())
+        }*/
+
+        //LunaCampaignRenderer.addTransientRenderer(ShaderTestRenderer())
+
+        if (!Global.getSector().hasScript(ConstantTimeIncreaseScript::class.java)) {
+            Global.getSector().addScript(ConstantTimeIncreaseScript())
+        }
+
         Global.getSector().addTransientScript(ChangeMainMenuColorScript())
         Global.getSector().addTransientScript(AICoreReplacerScript())
         Global.getSector().addTransientListener(AICoreDropReplacerScript())
@@ -124,18 +139,9 @@ class RATModPlugin : BaseModPlugin() {
         initFrontiers()
 
 
-
-
-        //Fixes a dumb crash in 0.97 for non-new saves
-        for (jumppoint in Global.getSector().hyperspace.jumpPoints) {
-            if (jumppoint.hasTag("rat_abyss_entrance") && jumppoint is JumpPointAPI && jumppoint.destinations.isEmpty()) {
-                var system = AbyssUtils.getAbyssData().rootSystem
-
-                var fracture = system!!.customEntities.find { it.customPlugin is AbyssalFracture }
-
-                jumppoint.addDestination(JumpPointAPI.JumpDestination(fracture, "Failsafe"))
-            }
-        }
+       /* if (!Global.getSector().characterData.abilities.contains("rat_exoship_management")) {
+            Global.getSector().characterData.addAbility("rat_exoship_management")
+        }*/
 
         //Global.getSector().intelManager.addIntel(DoctrineReportAbyssal())
 
@@ -181,7 +187,7 @@ class RATModPlugin : BaseModPlugin() {
             }
         }
 
-        Global.getSector().addTransientScript(ChangeExoIntelState())
+        //Global.getSector().addTransientScript(ChangeExoIntelState())
         generateExo()
 
 
@@ -191,6 +197,7 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(ForceNegAbyssalRep())
         Global.getSector().addTransientListener(HullmodRemoverListener())
         Global.getSector().addTransientListener(AbyssCampaignListener())
+        Global.getSector().addTransientListener(ExoCampaignListener())
 
         Global.getSector().addTransientScript(AddArtifactHullmod())
 
@@ -215,46 +222,6 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getLogger(this.javaClass).error("Failed to disable help pop-ups.")
             }
         }
-
-
-       /* var script = object : EveryFrameScript {
-            var done = false
-
-            var timer = 3f
-
-            *//**
-             * @return true when the script is finished and can be cleaned up by the engine.
-             *//*
-            override fun isDone(): Boolean {
-                return done
-            }
-
-            *//**
-             * @return whether advance() should be called while the campaign engine is paused.
-             *//*
-            override fun runWhilePaused(): Boolean {
-                return false
-            }
-
-
-            *//**
-             * Use SectorAPI.getClock() to convert to campaign days.
-             * @param amount seconds elapsed during the last frame.
-             *//*
-            override fun advance(amount: Float) {
-
-                timer -= 1f * amount
-
-
-                if (Global.getSector().campaignUI?.isShowingDialog == false && timer <= 0 && !done) {
-                    Global.getSector().campaignUI.showInteractionDialog(GenesisReencounterInteractionPlugin(), Global.getSector().playerFleet)
-                    done = true
-                }
-            }
-
-        }
-
-        Global.getSector().addScript(script)*/
     }
 
     fun generateAbyss() {
@@ -273,6 +240,8 @@ class RATModPlugin : BaseModPlugin() {
 
                 AbyssGenerator().beginGeneration()
             }
+
+          //AbyssGeneratorV2.generate()
         }
     }
 
@@ -283,7 +252,7 @@ class RATModPlugin : BaseModPlugin() {
 
             var data = ExoUtils.getExoData()
 
-            var person = Global.getSector().getFaction("rat_exotech").createRandomPerson(FullName.Gender.FEMALE)
+           /* var person = Global.getSector().getFaction("rat_exotech").createRandomPerson(FullName.Gender.FEMALE)
             person.portraitSprite = "graphics/portraits/rat_exo_comm.png"
 
            // person.name = FullName("Janssen", "", FullName.Gender.FEMALE)
@@ -300,21 +269,23 @@ class RATModPlugin : BaseModPlugin() {
                 data.exoships.add(exoship)
             }
 
-            generateBrokenExoship()
+            generateBrokenExoship()*/
+
+            ExotechGenerator.setup()
 
             Global.getSector().memoryWithoutUpdate.set("\$rat_exo_generated", true)
         }
     }
 
-    fun generateBrokenExoship() {
+   /* fun generateBrokenExoship() {
         var location = findBrokenLocation()
         var system = location.orbit.focus.starSystem
 
         var exoshipEntity = system.addCustomEntity("exoship_${Misc.genUID()}", "Exoship Remains", "rat_exoship_broken", Factions.NEUTRAL)
         exoshipEntity.orbit = location.orbit
-    }
+    }*/
 
-    fun findBrokenLocation() : EntityLocation {
+   /* fun findBrokenLocation() : EntityLocation {
         var systems = Global.getSector().starSystems.filter { it.planets.filter { !it.isStar }.isNotEmpty() && it.hasBlackHole() && (it.hasTag(Tags.THEME_RUINS) || it.hasTag(Tags.THEME_MISC)) }
         if (systems.isEmpty()) {
             systems = Global.getSector().starSystems.filter { it.planets.filter { !it.isStar }.isNotEmpty() && (it.hasTag(Tags.THEME_RUINS) || it.hasTag(Tags.THEME_MISC)) }
@@ -332,7 +303,7 @@ class RATModPlugin : BaseModPlugin() {
         }
 
         return location
-    }
+    }*/
 
     fun initFrontiers() {
 
@@ -390,6 +361,11 @@ class RATModPlugin : BaseModPlugin() {
         var hyperTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is AbyssTerrainInHyperspacePlugin }
         if (hyperTerrain != null) {
             (hyperTerrain.plugin as AbyssTerrainInHyperspacePlugin ).save()
+        }
+
+        var hyperExoTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is ExotechHyperNebula }
+        if (hyperExoTerrain != null) {
+            (hyperExoTerrain.plugin as ExotechHyperNebula ).save()
         }
 
     }

@@ -1,3 +1,4 @@
+/*
 package assortment_of_things.exotech.interactions
 
 import assortment_of_things.exotech.items.ExoProcessor
@@ -44,7 +45,7 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
                         "They are quickly identified as automated drones based on exo-tech specs." +
                         "\n\n" +
                         "They have likely been assigned to defend the wreckage from any salvager trying to acquire anything left of worth. " +
-                        "Their flagship seems to be piloted by a custom ai, caution is recommended."
+                        "Their flagship seems to be piloted by a custom AI; caution is recommended."
                 )
 
                 triggerDefenders()
@@ -167,4 +168,4 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
         return fleet
     }
 
-}
+}*/

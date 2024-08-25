@@ -23,6 +23,7 @@ FireBest NewGameOptionSelected",,,
 ,,,,,,
 ,,,,,,
 rat_commander_flavorTextMarket,TradePanelFlavorText,$market.id == rat_station_commander_market score:10000,"AddText ""The humble port concourse is filled with small freighters and freelancers down or up on their luck, identifiable by the shine or grime of ship armor and volume of cargo on-loading. A handful of speculators who all seem to know each other crowd offloading ship captains as they arrive while peddlers call out to crew, holding wares and projecting personal ad-holos."" marketFlavorTextColor",,,
+rat_exoship_flavourTextMarket,TradePanelFlavorText,$faction.id == rat_exotech score:10000,,,,
 ,,,,,,
 rat_createSettlement1,PopulateOptions,"ShouldShowSettlementCreationOption
 $menuState == main

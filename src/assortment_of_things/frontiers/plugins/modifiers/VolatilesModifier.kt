@@ -15,7 +15,7 @@ open class VolatilesModifier() : BaseSettlementModifier() {
 
     override fun getDescription(tooltip: TooltipMakerAPI) {
         tooltip.addPara("${getName()}:\n" +
-                "${getName()} can be found within this location. Improves the fleets fuel efficiency by 10%% a refinery is build.",
+                "${getName()} can be found within this location. Improves the fleet's fuel efficiency by 10%% once a refinery is built.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(), "${getName()}", "10%")
     }
 

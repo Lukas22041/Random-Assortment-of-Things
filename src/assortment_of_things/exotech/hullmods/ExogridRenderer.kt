@@ -20,10 +20,10 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
     var arkasPhantomGlow: SpriteAPI? = null
     var hasPhase = false
 
- /*   var vertex = Global.getSettings().loadText("data/shaders/testVertex.shader")
-    var frag = Global.getSettings().loadText("data/shaders/testFragment.shader")
+    /*var spriteWithShader = SpriteWithShader(ship.baseOrModSpec().spriteName,
+         Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+                 Global.getSettings().loadText("data/shaders/outlineFragment.shader"))*/
 
-    var shaderRenderer = SpriteWithShader("graphics/ships/rat_makara.png", vertex, frag)*/
 
     init {
         systemGlow = Global.getSettings().getAndLoadSprite(ship.hullSpec.spriteName.replace(".png", "") + "_glow1.png")
@@ -49,9 +49,14 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
         return EnumSet.of(CombatEngineLayers.ABOVE_SHIPS_LAYER)
     }
+    
 
     override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
         if (!ship.isAlive) return
+
+
+      /*  spriteWithShader.angle = ship.facing - 90
+        spriteWithShader.renderAtCenter(ship.location.x, ship.location.y)*/
 
         var active = false
         var level = ship.system?.effectLevel ?: 0f
@@ -94,11 +99,6 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
 
 
         }
-
-        /*shaderRenderer.angle = ship.facing - 90
-        shaderRenderer.renderAtCenter(ship.location.x + 200f, ship.location.y + 0f)
-*/
-
 
 
     }
@@ -178,7 +178,8 @@ class ExogridRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
         phaseGlow.angle = ship.facing - 90
         phaseGlow.renderAtCenter(ship.location.x, ship.location.y)
 
-        doJitter(phaseGlow, level, lastPhaseJitterLocations, 5, 2 + (2f * level))
+        //doJitter(phaseGlow, level, lastPhaseJitterLocations, 5, 2 + (2f * level))
+        doJitter(phaseGlow, 0.33f * level, lastPhaseJitterLocations, 5, 1 + (2f * level))
 
     }
 

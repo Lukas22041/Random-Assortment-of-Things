@@ -58,12 +58,12 @@ class AbyssHintBarEvent : BaseBarEvent() {
         dialog!!.visualPanel.showPersonInfo(person)
         dialog!!.optionPanel.clearOptions()
 
-        text.addPara("You innitiate a friendly discussion with the researcher, offering a drink in exchange for possible intel.")
+        text.addPara("You initiate a friendly discussion with the researcher, offering a drink in exchange for possible intel.")
 
         text.addPara("\"I'm not quite sure if i can give much practical advice to a trained captain such as yourself, " +
-                "the topography of the persean sectors hyperspace is a standard element of the officers academic lectures afterall.")
+                "the topography of the Persean sector's hyperspace is a standard element of the officers academic lectures, after all.")
 
-        text.addPara("Though, i could share some of my fascination of a specific region of hyperspace that isn't discussed quite as much, though i doubt it would be of much worth for you. \"")
+        text.addPara("Though, I could share some of my fascination of a specific region of hyperspace that isn't discussed quite as much, though I doubt it would be of much worth for you. \"")
 
         dialog.optionPanel.addOption("Continue", "CONTINUE")
 
@@ -81,10 +81,10 @@ class AbyssHintBarEvent : BaseBarEvent() {
 
                 dialog.optionPanel.clearOptions()
 
-                text.addPara("\"Within the south-western corner of the sector, deep within the persean abyss, there is a unique formation of hyperspatial matter that hasnt been discovered in any other colonised sector. \n\n" +
-                        "Not to much is known of it nowadays, but its been said that during the colonisation of this sector, some kind of exotic matter has been discovered, causing an economic rush for exploration and extraction of resources in its proximity.")
+                text.addPara("\"Within the south-western corner of the sector, deep within the Persean abyss, there is a unique formation of hyperspatial matter that hasn't been discovered in any other colonised sector. \n\n" +
+                        "Not too much is known of it nowadays, but it's been said that during the colonisation of this sector, some kind of exotic matter was discovered, causing an economic rush for exploration and extraction of resources in its proximity.")
 
-                text.addPara("The space is said to be rather dangerous, but it was nothing that couldn't be handled with the assistance of gates. And there lies the issue, with the collapse, its been almost impossible to reach that far in to the persean abyss, even less so to explore it in detail, making it quasi isolated from the sector since.\"")
+                text.addPara("The space is said to be rather dangerous, but it was nothing that couldn't be handled with the assistance of gates. And there lies the issue - due to the Collapse, it's been almost impossible to reach that far into the Persean abyss, much less to explore it in detail, making it quasi-isolated from the sector ever since.\"")
 
 
                 dialog.optionPanel.addOption("Continue", "CONTINUE2")
@@ -95,7 +95,7 @@ class AbyssHintBarEvent : BaseBarEvent() {
 
                 dialog.optionPanel.clearOptions()
 
-                text.addPara("\"So while it fascinates me, i dont think we will learn much more of it within my lifetime, as only barely sane captains would venture in to the depths and hope to return in one piece.\"")
+                text.addPara("\"So while it fascinates me, I don't think we will learn much more of it within my lifetime, as only barely sane captains would venture into the depths and hope to return in one piece.\"")
 
                 var intel = AbyssHintIntel()
                 Global.getSector().addScript(intel)

@@ -246,7 +246,7 @@
 	},
 	"ranks":{
 		"ranks":{
-			"spaceAdmiral":{"name":"Senior Operation Manager"},
+			"spaceAdmiral":{"name":"Admiral"},
 			"spaceCommander":{"name":"Operation Manager"},
 			"factionLeader":{"name":"CEO"},
 		},

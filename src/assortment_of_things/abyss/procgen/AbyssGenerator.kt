@@ -203,7 +203,7 @@ class  AbyssGenerator {
         val nebulaPlugin = (nebula as CampaignTerrainAPI).plugin as AbyssTerrainInHyperspacePlugin
         val editor = OldNebulaEditor(nebulaPlugin)
         editor.regenNoise()
-        editor.noisePrune(0.75f)
+        editor.noisePrune(0.70f)
         editor.regenNoise()
 
         //Clear all but a part on the right to make it less even

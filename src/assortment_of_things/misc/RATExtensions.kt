@@ -1,5 +1,9 @@
 package assortment_of_things.misc
 
+import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.AbyssData
+import assortment_of_things.exotech.ExoData
+import assortment_of_things.exotech.ExoUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.SettingsAPI
 import com.fs.starfarer.api.campaign.SectorAPI
@@ -17,8 +21,16 @@ import com.fs.starfarer.api.ui.UIComponentAPI
 import com.fs.starfarer.api.util.Misc
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
+import org.lazywizard.lazylib.MathUtils
+import kotlin.reflect.KClass
 
 var previouslyLoadedSprite = HashMap<String, Boolean>()
+
+fun Float.levelBetween(min: Float, max: Float) : Float {
+    var level = (this - min) / (max - min)
+    level = MathUtils.clamp(level, 0f, 1f)
+    return level
+}
 
 fun Any.logger() : Logger {
     return Global.getLogger(this::class.java).apply { level = Level.ALL }
@@ -30,6 +42,13 @@ fun SettingsAPI.getAndLoadSprite(filename: String) : SpriteAPI{
         previouslyLoadedSprite.put(filename, true)
     }
     return this.getSprite(filename)
+}
+
+fun SettingsAPI.loadTextureCached(filename: String){
+    if (!previouslyLoadedSprite.contains(filename)) {
+        this.loadTexture(filename)
+        previouslyLoadedSprite.put(filename, true)
+    }
 }
 
 fun TooltipMakerAPI.addPara(str: String) = this.addPara(str, 0f)
@@ -109,4 +128,12 @@ fun SectorEntityToken.setLooted() {
 
 fun SectorEntityToken.isLooted() : Boolean {
     return this.hasTag("rat_looted")
+}
+
+fun SectorAPI.getAbyssData() : AbyssData {
+    return AbyssUtils.getAbyssData()
+}
+
+fun SectorAPI.getExoData() : ExoData {
+    return ExoUtils.getExoData()
 }

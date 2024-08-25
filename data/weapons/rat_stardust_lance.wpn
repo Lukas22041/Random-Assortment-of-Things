@@ -1,0 +1,50 @@
+{
+  "id": "rat_stardust_lance",
+  "specClass": "beam",
+  "type": "ENERGY",
+  "size": "MEDIUM",
+  "collisionClass": "RAY",
+  "collisionClassByFighter": "RAY_FIGHTER",
+  "turretSprite": "graphics/weapons/exo/rat_stardust_lance_turret.png",
+  "turretGlowSprite": "graphics/weapons/exo/rat_stardust_lance_turret_glow.png",
+  "hardpointSprite": "graphics/weapons/exo/rat_stardust_lance_hardpoint.png",
+  "hardpointGlowSprite": "graphics/weapons/exo/rat_stardust_lance_hardpoint_glow.png",
+  "glowColor": [
+    255,255, 255,255
+  ],
+  "hitGlowRadius": 0,
+  "turretOffsets": [
+    19,
+    -0.5
+  ],
+  "turretAngleOffsets": [
+    0
+  ],
+  "hardpointOffsets": [
+    21.5,
+    -0.5
+  ],
+  "hardpointAngleOffsets": [
+    0
+  ],
+  "fringeColor": [
+    227,47,16, 255
+  ],
+  "coreColor": [
+    227, 86, 16, 255
+  ],
+  "width": 25,
+  "textureType": ROUGH,
+  "textureScrollSpeed": 64,
+  "pixelsPerTexel": 5,
+  "pierceSet": [
+    PROJECTILE_FF,
+    PROJECTILE_NO_FF,
+    PROJECTILE_FIGHTER,
+    MISSILE_FF,
+    MISSILE_NO_FF
+  ],
+  #"fireSoundTwo": "phase_beam_loop",
+  "fireSoundTwo":"tachyon_lance_fire",
+  "beamEffect":"assortment_of_things.exotech.weapons.StardustLanceEffect",
+}

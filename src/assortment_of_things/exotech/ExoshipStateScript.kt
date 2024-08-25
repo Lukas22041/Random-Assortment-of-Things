@@ -1,3 +1,4 @@
+/*
 package assortment_of_things.exotech
 
 import assortment_of_things.misc.instantTeleport
@@ -99,7 +100,9 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
         if (daysTilMove <= 0 && data.state == ExoShipData.State.Idle) {
             var system = findSystemToMoveTo() ?: return
             var location = BaseThemeGenerator.getLocations(Random(), system, MathUtils.getRandomNumberInRange(400f, 600f), linkedMapOf(
-                /*BaseThemeGenerator.LocationType.STAR_ORBIT to 5f,*/ BaseThemeGenerator.LocationType.OUTER_SYSTEM to 1f)).pick() ?: return
+                */
+/*BaseThemeGenerator.LocationType.STAR_ORBIT to 5f,*//*
+ BaseThemeGenerator.LocationType.OUTER_SYSTEM to 1f)).pick() ?: return
 
             exoship.orbit = null
             exoship.velocity.set(Vector2f(0f, 0f))
@@ -120,12 +123,14 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
 
         if (data.state == ExoShipData.State.Travelling) {
 
-          /*  var width = Global.getSettings().screenWidth
+          */
+/*  var width = Global.getSettings().screenWidth
             var height = Global.getSettings().screenHeight
 
             Global.getSector().viewport.isExternalControl = true
             Global.getSector().viewport.set(exoship.location.x - (width / 2), exoship.location.y - (height / 2), width , height)
-*/
+*//*
+
 
 
             if (!Global.getSector().isPaused) {
@@ -143,12 +148,14 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
                 }
             }
 
-          /*  var dest = MathUtils.getPointOnCircumference(exoship.location, 200f, exoship.facing + 45)
+          */
+/*  var dest = MathUtils.getPointOnCircumference(exoship.location, 200f, exoship.facing + 45)
             if (level >= 0.2f) {
                 Global.getSector().playerFleet.setVelocity(exoship.velocity.x, exoship.velocity.y)
                 dest = MathUtils.getPointOnCircumference(exoship.location, 250f, exoship.facing)
             }
-            Global.getSector().playerFleet.setMoveDestination(dest.x, dest.y)*/
+            Global.getSector().playerFleet.setMoveDestination(dest.x, dest.y)*//*
+
 
 
 
@@ -401,10 +408,12 @@ class ExoshipStateScript(var exoship: SectorEntityToken) : EveryFrameScript, Fle
 
         fleet.setFaction(market.factionId)
 
-      /*  var assignments = WeightedRandomPicker<FleetAssignment>()
+      */
+/*  var assignments = WeightedRandomPicker<FleetAssignment>()
         assignments.add(FleetAssignment.PATROL_SYSTEM, 1f)
         assignments.add(FleetAssignment.ORBIT_PASSIVE, 1f)
-        assignments.add(FleetAssignment.ORBIT_AGGRESSIVE, 1f)*/
+        assignments.add(FleetAssignment.ORBIT_AGGRESSIVE, 1f)*//*
+
 
         delayTimestamp = Global.getSector().clock.timestamp
         launchDelayDays = MathUtils.getRandomNumberInRange(0.25f, 0.75f)
@@ -444,4 +453,4 @@ fleet.caresAboutPlayerTransponder()
     override fun reportBattleOccurred(fleet: CampaignFleetAPI?, primaryWinner: CampaignFleetAPI?, battle: BattleAPI?) {
 
     }
-}
+}*/

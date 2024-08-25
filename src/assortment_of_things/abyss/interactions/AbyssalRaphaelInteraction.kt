@@ -77,11 +77,11 @@ class AbyssalRaphaelInteraction : RATInteractionPlugin() {
                 textPanel.addPara("Your crew boards the ship and begins inspecting its interiors. " +
                         "For indecipherable reasons, the ship appears to come with some crewed compartments, but not with any sort of human bridge on board.")
 
-                textPanel.addPara("As the crew delves deeper, they instead find a silvery chamber, in the center of it is an interface for an ai core, but its sockets dont match the standard of any known core design. " +
+                textPanel.addPara("As the crew delves deeper, they instead find a silvery chamber, in the center of it is an interface for an AI core, but its sockets don't match the standard of any known core design. " +
                         "Next to it they find a small plaquette, but due to degradation in the hull, only certain parts are readable. " +
                         "\nIt reads: \"..ER.A-0-B\"", Misc.getTextColor(), Misc.getHighlightColor(), "\"..ER.A-0-B\"")
 
-                textPanel.addPara("The crew is unable to find any hook in to the ships control system. It is unlikely that it can be booted up without the non-standard core required by its interface.")
+                textPanel.addPara("The crew is unable to find any hook into the ship's control system. It is unlikely that it can be booted up without the non-standard core required by its interface.")
 
                 addLeaveOption()
                 return@createOption
@@ -93,7 +93,7 @@ class AbyssalRaphaelInteraction : RATInteractionPlugin() {
             CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
 
             textPanel.addPara("Just as you were about to send your crew, a sudden request for a comlink comes in from Sierra. " +
-                    "Thinking it is of possible relevancy to to the inspection, you halt your crew and prepare to open the channel.", Misc.getTextColor(), AbyssUtils.SIERRA_COLOR, "Sierra")
+                    "Thinking it is of possible relevance to the inspection, you halt your crew and prepare to open the channel.", Misc.getTextColor(), AbyssUtils.SIERRA_COLOR, "Sierra")
 
             createOption("Converse with Sierra") {
                 clearOptions()

@@ -2,10 +2,7 @@ package assortment_of_things.abyss.shipsystem
 
 import assortment_of_things.abyss.hullmods.abyssals.AbyssalSeraphsGrace
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.MutableShipStatsAPI
-import com.fs.starfarer.api.combat.PhaseCloakSystemAPI
-import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.combat.ShipSystemAPI
+import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
@@ -148,6 +145,7 @@ class SeraphimDriveShipsystem : BaseShipSystemScript() {
             return
         }
 
+
         var cloak = ship!!.phaseCloak
         if (cloak == null) cloak = ship.system
         if (cloak == null) return
@@ -163,6 +161,9 @@ class SeraphimDriveShipsystem : BaseShipSystemScript() {
                 (cloak as PhaseCloakSystemAPI).minCoilJitterLevel = getDisruptionLevel(ship)
             }
         }
+
+
+
         if (state == ShipSystemStatsScript.State.COOLDOWN || state == ShipSystemStatsScript.State.IDLE) {
             unapply(stats, id)
             return
@@ -216,6 +217,8 @@ class SeraphimDriveShipsystem : BaseShipSystemScript() {
         fighters.addAll(ship.allWings.flatMap { it.returning.map { it.fighter } })
 
         for (fighter in fighters) {
+
+            fighter.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_USE_SHIELDS, 3f)
 
             if (state == ShipSystemStatsScript.State.IN || state == ShipSystemStatsScript.State.ACTIVE) {
                 fighter.isPhased = true

@@ -240,10 +240,10 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
         }
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("This type of hull is sensitive to the kind of ai core that controls it. " +
-                "Without an ai-core, the shipsystems cooldown and time to restore charges is worsened by 50%%." +
+        tooltip.addPara("This type of hull is sensitive to the kind of AI core that controls it. " +
+                "Without an AI-core, the shipsystems cooldown and time to restore charges is worsened by 50%%." +
                 "\n\n" +
-                "Additionaly, certain mechanisms react differently to abyssal cores when installed in to the hull.", 0f,
+                "Additionally, certain mechanisms react differently to abyssal cores when installed into the hull.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "50%")
 
 
@@ -364,4 +364,3 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
 
     }
 }
-

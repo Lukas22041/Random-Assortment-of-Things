@@ -23,7 +23,7 @@ class AbyssalGrid : BaseHullMod() {
 
 
         if (Global.getSector()?.characterData?.person != null) {
-            if (Global.getSector().characterData.person!!.stats.hasSkill(Skills.AUTOMATED_SHIPS)
+            if (Misc.getAllowedRecoveryTags().contains(Tags.AUTOMATED_RECOVERABLE)
                 || stats!!.variant.hasHullMod("rat_abyssal_conversion") ||
                 stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion") || stats!!.variant.hasHullMod("rat_seraph_conversion")) {
                 stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
@@ -86,6 +86,6 @@ class AbyssalGrid : BaseHullMod() {
     }
 
     override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Can only be prebuilt in to abyssal hulls."
+        return "Can only be prebuilt into abyssal hulls."
     }
 }

@@ -1,7 +1,7 @@
+/*
 package assortment_of_things.backgrounds
 
 import assortment_of_things.exotech.ExoUtils
-import assortment_of_things.exotech.interactions.exoship.ExoShipBuyInteraction
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.campaign.FactionSpecAPI
@@ -46,9 +46,11 @@ class ExoBackground : BaseCharacterBackground() {
         }
     }
 
-    /*override fun getSpawnLocationOverwrite(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?): SectorEntityToken {
+    */
+/*override fun getSpawnLocationOverwrite(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?): SectorEntityToken {
         return ExoUtils.getExoData().exoships.random()
-    }*/
+    }*//*
+
 
     override fun onNewGameAfterTimePass(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?) {
         ExoUtils.getExoData().interactedWithExoship = true
@@ -75,4 +77,4 @@ class ExoBackground : BaseCharacterBackground() {
         if (!isUnlocked()) return (Int.MAX_VALUE - spec.order).toFloat()
         return spec.order
     }
-}
+}*/

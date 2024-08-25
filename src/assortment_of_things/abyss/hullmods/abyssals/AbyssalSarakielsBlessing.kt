@@ -35,6 +35,6 @@ class AbyssalSarakielsBlessing : BaseHullMod() {
     }
 
     override fun getUnapplicableReason(ship: ShipAPI?): String {
-        return "Can only be prebuilt in to abyssal hulls."
+        return "Can only be prebuilt into abyssal hulls."
     }
 }

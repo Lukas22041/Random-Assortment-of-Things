@@ -39,12 +39,12 @@ class CrewConversionSeraphRefitButton : BaseRefitButton() {
     override fun addTooltip(tooltip: TooltipMakerAPI?,member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?) {
 
 
-        var label = tooltip!!.addPara("Double-Clicking this button installs a seraph core in to the crew-converted abyssal hull.", 0f,
+        var label = tooltip!!.addPara("Double-clicking this button installs a Seraph core into the crew-converted Abyssal hull.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "Double-Clicking", "seraph core")
 
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("This allows the ship to use the seraph cores signature skill." +
+        tooltip.addPara("This allows the ship to use the Seraph core's signature skill." +
                 "", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "shipsystem", "permanently")
 

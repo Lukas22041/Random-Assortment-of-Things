@@ -6,7 +6,10 @@ import assortment_of_things.abyss.skills.SeraphCoreSkill
 import assortment_of_things.abyss.skills.SpaceCoreSkill
 import assortment_of_things.abyss.skills.TimeCoreSkill
 import assortment_of_things.exotech.skills.ExoProcessorSkill
+import assortment_of_things.misc.ConstantTimeIncreaseScript
+import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.relics.skills.HyperlinkSkill
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
 import com.fs.starfarer.api.campaign.CargoStackAPI
@@ -16,12 +19,18 @@ import com.fs.starfarer.api.campaign.econ.CommoditySpecAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.campaign.econ.SubmarketAPI
 import com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin
+import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Strings
 import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.dark.shaders.util.ShaderLib
+import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL12
+import org.lwjgl.opengl.GL13
+import org.lwjgl.opengl.GL20
+import org.lwjgl.util.vector.Vector2f
 import java.util.*
 
 class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
@@ -38,6 +47,8 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
             "rat_neuro_core"  to "rat_hyperlink",
             "rat_exo_processor"  to "rat_exo_processor",
         )
+
+        var shader: Int = 0
     }
 
     override fun init(stack: CargoStackAPI) {
@@ -53,17 +64,41 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
         commoditySpec = Global.getSettings().getCommoditySpec(data)
         plugin = RATCampaignPlugin().pickAICoreOfficerPlugin(commoditySpec.id)!!.plugin
 
+
+        shader = ShaderLib.loadShader(
+            Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+            Global.getSettings().loadText("data/shaders/scrollingGlowFragment.shader"))
+        if (shader != 0) {
+            GL20.glUseProgram(shader)
+
+            GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
+            GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex1"), 1)
+            GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex2"), 2)
+
+            GL20.glUseProgram(0)
+        } else {
+            var test = ""
+        }
     }
 
     override fun render(x: Float, y: Float, w: Float, h: Float, alphaMult: Float, glowMult: Float, renderer: SpecialItemPlugin.SpecialItemRendererAPI?) {
         var centerX = x+w/2
         var centerY = y+h/2
 
+
+
+
         var sprite = Global.getSettings().getSprite(commoditySpec!!.iconName)
-        sprite.setNormalBlend()
-        sprite.alphaMult = alphaMult
-        sprite.setSize(w - 20, h - 20)
-        sprite.renderAtCenter(centerX, centerY)
+
+
+        if (commoditySpec.id == RATItems.PRIMORDIAL) {
+            renderSpecialGlow(w, h, centerX, centerY, alphaMult, sprite)
+        } else {
+            sprite.setNormalBlend()
+            sprite.alphaMult = alphaMult
+            sprite.setSize(w - 20f, h -20f)
+            sprite.renderAtCenter(centerX, centerY)
+        }
 
         if (glowMult > 0) {
             sprite.setAdditiveBlend()
@@ -71,6 +106,57 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
             sprite.setSize(w - 20, h - 20)
             sprite.renderAtCenter(centerX, centerY)
         }
+    }
+
+
+    fun renderSpecialGlow(w: Float, h: Float, centerX: Float, centerY: Float, alphaMult: Float, sprite: SpriteAPI) {
+        var time = (Global.getSector().scripts.find { it is ConstantTimeIncreaseScript } as ConstantTimeIncreaseScript).time / 8
+
+        var spriteNoise1 = Global.getSettings().getAndLoadSprite("graphics/icons/cargo/noise1.png")
+        var spriteNoise2 = Global.getSettings().getAndLoadSprite("graphics/icons/cargo/noise2.png")
+
+        GL20.glUseProgram(shader)
+
+
+        GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), time)
+        GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"), alphaMult)
+
+        //Bind Sprite
+        GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0)
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, sprite.textureId)
+
+        //Setup Noise1
+        //Noise texture needs to be power of two or it wont repeat correctly! (32x32, 64x64, 128x128)
+        GL13.glActiveTexture(GL13.GL_TEXTURE0 + 1)
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, spriteNoise1.textureId)
+
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST)
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST)
+
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT)
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT)
+
+        //Setup Noise2
+        //Noise texture needs to be power of two or it wont repeat correctly! (32x32, 64x64, 128x128)
+        GL13.glActiveTexture(GL13.GL_TEXTURE0 + 2)
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, spriteNoise2.textureId)
+
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST)
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST)
+
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT)
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT)
+
+        //Reset Texture
+        GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0)
+
+
+        sprite.setNormalBlend()
+        sprite.alphaMult = alphaMult
+        sprite.setSize(w - 20f, h -20f)
+        sprite.renderAtCenter(centerX, centerY)
+
+        GL20.glUseProgram(0)
     }
 
     override fun getName(): String {

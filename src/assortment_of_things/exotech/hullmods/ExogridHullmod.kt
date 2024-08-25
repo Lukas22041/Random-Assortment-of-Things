@@ -18,7 +18,7 @@ class ExogridHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI, id: String?) {
 
-        if (ExoUtils.getExoData().hasPartnership) {
+        if (ExoUtils.getExoData().canRepairShips) {
             stats.variant.removeTag(Tags.VARIANT_UNRESTORABLE)
         }
         else {
@@ -62,12 +62,18 @@ class ExogridHullmod : BaseHullMod() {
             stats.sensorProfile.modifyMult(id, 0.75f)
         }
 
-        stats.ventRateMult.modifyMult(id,  0.75f)
-        //stats.fluxDissipation.modifyMult(id, 0.9f)
+        if (!stats.variant.hasHullMod("rat_exo_experimental")) {
+            stats.ventRateMult.modifyMult(id,  0.75f)
+            //stats.fluxDissipation.modifyMult(id, 0.9f)
 
-        var vents = stats.variant.numFluxVents
-        var fluxDecrease = 5f * vents
-        stats.fluxDissipation.modifyFlat(id, -fluxDecrease)
+            var vents = stats.variant.numFluxVents
+            var fluxDecrease = 5f * vents
+            stats.fluxDissipation.modifyFlat(id, -fluxDecrease)
+        }
+    }
+
+    override fun getDisplaySortOrder(): Int {
+        return 0
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String?) {
@@ -125,6 +131,11 @@ class ExogridHullmod : BaseHullMod() {
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
+
+        var experimental = ship?.variant?.hasHullMod("rat_exo_experimental") ?: false
+        var ventTextColor = Misc.getTextColor()
+        if (experimental) ventTextColor = Misc.getGrayColor()
+
         var sprite = Global.getSettings().getAndLoadSprite("graphics/ui/rat_exo_hmod.png")
 
         var initialHeight = tooltip!!.heightSoFar
@@ -140,7 +151,7 @@ class ExogridHullmod : BaseHullMod() {
 
         tooltip.addPara("This design has its downsides however, venting large amounts of flux with this grid creates spatial instabilities, and to avoid critical failure, the active venting rate is capped at 75%% of its maximum output. " +
                 "Additional flux vents also only increase the flux dissipation by half of their normal value.",
-            0f, Misc.getTextColor(), Misc.getHighlightColor(), "the active venting rate is capped at 75% of its maximum output", "flux dissipation", "half")
+            0f, ventTextColor, Misc.getHighlightColor(), "the active venting rate is capped at 75% of its maximum output", "flux dissipation", "half")
 
         tooltip.addSpacer(10f)
 
@@ -149,8 +160,11 @@ class ExogridHullmod : BaseHullMod() {
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("The internal components of this ship are poorly understood by your crew. Without an Exo-Tech partnership, the ship can not be restored to remove d-mods.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "restored")
+        var textColor = Misc.getTextColor()
+        if (ExoUtils.getExoData().canRepairShips) textColor = Misc.getGrayColor()
+
+        tooltip.addPara("The internal components of this ship are poorly understood by your crew. Without support from the exo-tech faction, the ship can not be restored to remove d-mods.", 0f,
+            textColor, Misc.getHighlightColor(), "restored")
 
         element.render {
             sprite.setSize(tooltip.widthSoFar + 20, tooltip.heightSoFar + 10)

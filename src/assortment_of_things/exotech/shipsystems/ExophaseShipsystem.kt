@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.shipsystems
 
+import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.PhaseCloakSystemAPI
@@ -157,7 +158,7 @@ class ExophaseShipsystem : BaseShipSystemScript() {
         }
 
         for (weapon in ship.allWeapons.filter { it.isDecorative }) {
-            weapon.sprite.color = Color(255, 255, 255, (254 * (1 - ship.phaseCloak.effectLevel)).toInt())
+            weapon.sprite.color = Color(255, 255, 255, (254 * (1 - (ship.phaseCloak.effectLevel * 0.5f))).toInt())
         }
 
         val speedPercentMod = stats.dynamic.getMod(Stats.PHASE_CLOAK_SPEED_MOD).computeEffective(0f)
@@ -243,6 +244,25 @@ class ExophaseShipsystem : BaseShipSystemScript() {
     override fun getStatusData(index: Int, state: ShipSystemStatsScript.State?, effectLevel: Float): StatusData? {
 
         return null
+    }
+
+    override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
+
+        var disallowPhaseTimer = ship!!.customData.get("rat_dont_allow_phase") as Float?
+
+        if (disallowPhaseTimer != null) {
+            if (disallowPhaseTimer > 0f) {
+                return false
+            }
+        }
+
+        /*if (ship!!.baseOrModSpec().hullId == "rat_gilgamesh") {
+            if (ship.system.state == ShipSystemAPI.SystemState.IN || ship.system.state == ShipSystemAPI.SystemState.ACTIVE) {
+                return false
+            }
+        }*/
+
+        return super.isUsable(system, ship)
     }
 
 

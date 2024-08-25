@@ -12,8 +12,16 @@ import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
-import assortment_of_things.exotech.interactions.ExoshipWreckageInteraction
-import assortment_of_things.exotech.interactions.exoship.ExoshipInteractions
+import assortment_of_things.exotech.ExoUtils
+import assortment_of_things.exotech.entities.ExoshipEntity
+import assortment_of_things.exotech.interactions.ExoshipLockedOutInteraction
+import assortment_of_things.exotech.interactions.ExoshipRemainsInteraction
+import assortment_of_things.exotech.interactions.HyperNavBeaconInteraction
+import assortment_of_things.exotech.interactions.exoship.NPCExoshipInteraction
+import assortment_of_things.exotech.interactions.exoship.PlayerExoshipInteraction
+import assortment_of_things.exotech.interactions.questBeginning.BeginningAtExoshipInteraction
+import assortment_of_things.exotech.interactions.questBeginning.BeginningQuestEndInteraction
+import assortment_of_things.exotech.interactions.warpCatalystMission.ExotechHideoutInteraction
 import assortment_of_things.exotech.items.ExoProcessor
 import assortment_of_things.relics.RelicsUtils
 import assortment_of_things.relics.interactions.*
@@ -42,12 +50,35 @@ class RATCampaignPlugin : BaseCampaignPlugin()
     override fun pickInteractionDialogPlugin(interactionTarget: SectorEntityToken?): PluginPick<InteractionDialogPlugin>? {
         if (interactionTarget == null) return null
 
+        var exoData = ExoUtils.getExoData()
+
+        if (interactionTarget.hasTag("hypernav_beacon")) {
+            return PluginPick(HyperNavBeaconInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+        }
+
         if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship") {
-            return PluginPick(ExoshipInteractions(), CampaignPlugin.PickPriority.HIGHEST)
+            var plugin = interactionTarget.customPlugin as ExoshipEntity
+
+            if (exoData.lockedOutOfQuest) {
+                return PluginPick(ExoshipLockedOutInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
+            else if (exoData.foundExoshipRemains && exoData.QuestBeginning_Active && !exoData.QuestBeginning_Done) {
+                return PluginPick(BeginningQuestEndInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
+            else if (!exoData.QuestBeginning_StartedFromRemains && !exoData.QuestBeginning_Done) {
+                return PluginPick(BeginningAtExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
+            else if (plugin.playerModule.isPlayerOwned) {
+                return PluginPick(PlayerExoshipInteraction(false), CampaignPlugin.PickPriority.HIGHEST)
+            }
+            else {
+                return PluginPick(NPCExoshipInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
         }
 
         if (interactionTarget is CustomCampaignEntityAPI && interactionTarget.customEntitySpec.id == "rat_exoship_broken") {
-            return PluginPick(ExoshipWreckageInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            return PluginPick(ExoshipRemainsInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            //return PluginPick(ExoshipWreckageInteraction(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
 
@@ -131,6 +162,9 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 return PluginPick(AbyssalWreckInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
+            if (interactionTarget.hasTag("rat_exo_hideout")) {
+                return PluginPick(ExotechHideoutInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
 
 
             when (id) {

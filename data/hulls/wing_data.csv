@@ -11,7 +11,7 @@ rat_ceto,rat_ceto_Fighter,"no_sell, fighter, fighter6, auto_fighter, restricted"
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+rat_supernova_wing,rat_supernova_Fighter,"no_sell,  no_drop, auto_fighter, fighter, fighter15, rapid_reform, leader_no_swarm, wingmen_no_swarm, match_leader_facing, attack_at_an_angle, restricted",3,,10,30,V,100000,600,,1,FIGHTER,Independent Superfighter,20,50000,,,,,,,,,,,,,2223
 rat_dawnblade_wing,rat_dawnblade_Fighter,"no_sell, fighter, fighter12, restricted, rat_exotech_bp",3,,8,25,V,4000,600,,1,FIGHTER,Superfighter,15,25000,,,,,,,,,,,,,2223
 rat_nightblade_wing,rat_nightblade_Fighter,"no_sell, fighter, fighter8, restricted, rat_exotech_bp",3,,6,15,V,4000,600,,2,FIGHTER,Burst,12,15000,,,,,,,,,,,,,2223
 rat_protostar_wing,rat_protostar_Fighter,"no_sell, fighter, fighter8, restricted, rat_exotech_bp",3,,6,15,V,4000,600,,2,FIGHTER,Fighter,12,12500,,,,,,,,,,,,,2223

@@ -1,0 +1,43 @@
+{
+    "displayName": "Moonlight",
+    "fluxCapacitors": 16,
+    "fluxVents": 6,
+    "goalVariant": true,
+    "hullId": "rat_hypatia",
+    "hullMods": [
+        "advancedoptics",
+        "hardenedshieldemitter",
+        "missleracks",
+    ],
+    "permaMods": [],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_hypatia_Moonlight",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_moonlight_lance",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0005": "reaper",
+                "WS0004": "reaper",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "lrpdlaser",
+                "WS0002": "lrpdlaser",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

@@ -45,7 +45,7 @@ abstract class BaseConsumeableIndustry() : BaseIndustry() {
     override fun addRightAfterDescriptionSection(tooltip: TooltipMakerAPI?, mode: Industry.IndustryTooltipMode?) {
         if (mode == Industry.IndustryTooltipMode.ADD_INDUSTRY) {
             tooltip!!.addSpacer(10f)
-            tooltip!!.addNegativePara("Building this structure will use up the item that allows building it. Demolishing the structure returns the item in to the markets storage.")
+            tooltip!!.addNegativePara("Building this structure will use up the item that allows building it. Demolishing the structure returns the item to the market's storage.")
         }
     }
 
