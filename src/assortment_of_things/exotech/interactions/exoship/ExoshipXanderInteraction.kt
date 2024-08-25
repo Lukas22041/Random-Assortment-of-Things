@@ -117,7 +117,7 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
             gilgameshMissionStart()
         }
 
-        if (!data.finishedRapidMission) {
+        if (!data.finishedRapidMissionEntirely) {
             anyMissionAvailable = true
             rapidMissionStart()
         }

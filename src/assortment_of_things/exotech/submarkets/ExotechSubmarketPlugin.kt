@@ -1,6 +1,7 @@
 package assortment_of_things.exotech.submarkets
 
 import assortment_of_things.exotech.ExoUtils
+import assortment_of_things.exotech.intel.event.ExotechEventIntel
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
@@ -85,6 +86,16 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
         for (i in 0 until count) {
             cargo.addSpecial(SpecialItemData("rat_alteration_install", weights.pick()), 1f)
         }
+    }
+
+    override fun getTariff(): Float {
+
+        if (ExotechEventIntel.get() != null) {
+            if (ExotechEventIntel.get()!!.isStageActive(ExotechEventIntel.Stage.INDEBTED)) {
+                return 0.1f
+            }
+        }
+        return 0.3f
     }
 
     fun addEquipment() {
@@ -189,7 +200,7 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
         return RepLevel.VENGEFUL
     }
 
-
+    
 
     //Lock Ships
     override fun isIllegalOnSubmarket(member: FleetMemberAPI, action: SubmarketPlugin.TransferAction): Boolean {

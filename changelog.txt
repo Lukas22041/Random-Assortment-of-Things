@@ -1,3 +1,27 @@
+Version 2.4.0 - Exotech Overhaul
+Not Save compatible
+
+-> Reworked the Exotech Faction.
+-> Added a short questline and quest board to the Exotech Faction.
+-> Added the "Gilgamesh-class" Phase Superdestroyer.
+-> Added the "Hypatia-class" Frigate.
+-> Added the "Supernova-class" Superfighter. 
+-> Added the "Stardust Lance" and "Moonlight Lance" weapons.
+-> Added an Exoship Illustration (Credit: ANU)
+-> Removed the Exotech Background for now, will likely return in a new form later.
+-> The "Zero Day Exploit" background now require "CTRL" to be held in addition to the keybind.
+-> The Abyss boss ability now summons two more frigates, and the frigates hull and armor has been increased.
+-> The Gabriel no longer spawns with phase anchor.
+-> Fighters with shields will now have them temporarily disabled after the Gabriel phases.
+-> Most ships in the mod can now be reverse-engineered through industrial evolution.
+-> The Abyss Boss should no longer have combat chatter.
+-> Fixed Abyss fleets getting auto-fitted. This prevented aboleths from spawning with fighters.
+-> Implemented a bunch of grammatical fixes (Credit to BladedQueen & Nissa)
+-> Remade the mods normal maps, and removed the surface and material maps.
+-> Fixed an issue that made abyssal ships not recoverable with the "Second-in-Command" mod
+
+
+
 Version 2.3.1
 Save compatible
 
