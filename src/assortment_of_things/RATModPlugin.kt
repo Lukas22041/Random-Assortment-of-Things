@@ -35,6 +35,7 @@ import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import assortment_of_things.campaign.scripts.AICoreReplacerScript
 import assortment_of_things.campaign.scripts.render.RATCampaignRenderer
+import assortment_of_things.exotech.ExoCampaignListener
 import assortment_of_things.exotech.ExotechGenerator
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
 import assortment_of_things.misc.*
@@ -196,6 +197,7 @@ class RATModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(ForceNegAbyssalRep())
         Global.getSector().addTransientListener(HullmodRemoverListener())
         Global.getSector().addTransientListener(AbyssCampaignListener())
+        Global.getSector().addTransientListener(ExoCampaignListener())
 
         Global.getSector().addTransientScript(AddArtifactHullmod())
 

@@ -3,6 +3,7 @@ package assortment_of_things.exotech.interactions.exoship
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.intel.event.MissionCompletedFactor
 import assortment_of_things.exotech.intel.missions.ProjectGilgameshIntel
+import assortment_of_things.exotech.intel.missions.RapidResponseIntel
 import assortment_of_things.exotech.intel.missions.WarpCatalystMissionIntel
 import assortment_of_things.exotech.interactions.questBeginning.ExoshipRemainsIntel
 import assortment_of_things.misc.RATInteractionPlugin
@@ -63,6 +64,13 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
                     data.finishedGilgameshMissionEntirely = true
                     gilgameshMissionEnd()
                 }
+
+                else if (data.finishedRapidMission) {
+                    data.finishedRapidMission = false
+                    data.finishedRapidMissionEntirely = true
+                    rapidMissionEnd()
+                }
+
                 else if (data.finishedWarpCatalystMission) {
                     data.finishedWarpCatalystMission = false
                     data.finishedWarpCatalystMissionEntirely = true
@@ -107,6 +115,11 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
         if (!data.finishedGilgameshMissionEntirely) {
             anyMissionAvailable = true
             gilgameshMissionStart()
+        }
+
+        if (!data.finishedRapidMission) {
+            anyMissionAvailable = true
+            rapidMissionStart()
         }
 
         if (data.reachedLeadershipGoal) {
@@ -322,6 +335,83 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
         MissionCompletedFactor(200, dialog, "Project Gilgamesh")
 
         var intel = Global.getSector().intelManager.getFirstIntel(ProjectGilgameshIntel::class.java) as ProjectGilgameshIntel
+        intel.endImmediately()
+
+        addBackOptionForXanderDialog()
+    }
+
+
+
+
+
+
+
+    //Rapid Response
+    fun rapidMissionStart() {
+        createOption("About a rogue autonomous fleet") {
+            clearOptions()
+
+            textPanel.addPara("\"An autonomous fleet that the faction deployed to experiment with the concept of an in-system rapid response unit went rogue, and we've been tasked with eliminating it.")
+
+            textPanel.addPara("The fleet uses a different doctrine than usual within the faction, it has no phase ships within it, and instead fields a bunch of Hypatia-class destroyers. " +
+                    "Most importantly, a new prototype of an autonomous fighter has been integrated in this fleet, and its capabilities should not be underestimated.\"")
+
+            createOption("Accept this mission") {
+                clearOptions()
+
+                data.hasActiveMission = true
+
+                var intel = RapidResponseIntel()
+                Global.getSector().intelManager.addIntel(intel)
+
+                visualPanel.showMapMarker(intel.fleet.starSystem.center, "Destination: ${intel.fleet.starSystem.name}", Misc.getBasePlayerColor(), false,
+                    "graphics/icons/intel/discovered_entity.png", null, setOf())
+                //visualPanel.showFleetInfo("Target Fleet", intel.fleet, null, null)
+
+
+                var shipsInList = 999
+                var shipListCount = 0
+                var previewList = ArrayList<FleetMemberAPI>()
+                for (member in intel.fleet.fleetData.membersListCopy) {
+                    if (shipListCount >= shipsInList) break
+                    shipListCount += 1
+
+                    previewList.add(member)
+                }
+
+                textPanel.addPara("\"Alright. Make sure to get rid of the entire fleet. Having any ships remain may pose issues to others, or worse fall in to the hands of those they should not. " +
+                        "I went and listed the composition of the fleet for you below. \"",
+                    Misc.getTextColor(), Misc.getHighlightColor(), "")
+
+                var tooltip = textPanel.beginTooltip()
+
+                tooltip.addShipList(7, 2, 64f, Misc.getBasePlayerColor(), previewList, 0f)
+
+                textPanel.addTooltip()
+
+                var locDescription = intel.getOrbitLocationDescription()
+                textPanel.addPara("\"The target appears to be in the ${intel.fleet.starSystem.nameWithNoType} system. $locDescription. We've transferred the necessary intel to complete the mission.\"",
+                    Misc.getTextColor(), Misc.getHighlightColor(), "${intel.fleet.starSystem.nameWithNoType}")
+
+                Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)
+
+                addBackOptionForXanderDialog()
+            }
+        }
+    }
+
+    fun rapidMissionEnd() {
+        textPanel.addPara("\"Good work. Now theres no longer any reason to worry about that mess. I'l spare you the details of how this situation came to be.\n\n" +
+                "In case you recovered anything of note, keep it for your own fleet, it should be of more use to yourself than those that lost the equipment in the first place.\"")
+
+        Global.getSoundPlayer().playUISound(Sounds.STORY_POINT_SPEND, 1f, 1f)
+
+        Misc.adjustRep(data.xander, 0.1f, textPanel)
+        Misc.adjustRep(data.amelie, 0.07f, textPanel)
+
+        MissionCompletedFactor(200, dialog, "Rapid Response")
+
+        var intel = Global.getSector().intelManager.getFirstIntel(RapidResponseIntel::class.java) as RapidResponseIntel
         intel.endImmediately()
 
         addBackOptionForXanderDialog()

@@ -1,0 +1,37 @@
+{
+    "displayName": "Rapid Response",
+    "fluxCapacitors": 10,
+    "fluxVents": 8,
+    "goalVariant": false,
+    "hullId": "rat_thestia",
+    "hullMods": [
+        "advancedoptics",
+        "hardenedshieldemitter",
+    ],
+    "permaMods": [],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_thestia_Rapid_Response",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0005": "taclaser",
+                "WS0004": "taclaser",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0001": "rat_starburst",
+                "WS0002": "rat_starburst",
+            }
+        },
+    ],
+    "wings": [
+        "rat_supernova_wing",
+    ],
+    "modules": [],
+}

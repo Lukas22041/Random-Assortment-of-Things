@@ -59,6 +59,10 @@ class ExoData {
 
     var finishedGilgameshMission = false
     var finishedGilgameshMissionEntirely = false
+
+    var finishedRapidMission = false
+    var finishedRapidMissionEntirely = false
+
     var finishedWarpCatalystMission = false
     var finishedWarpCatalystMissionEntirely = false
 

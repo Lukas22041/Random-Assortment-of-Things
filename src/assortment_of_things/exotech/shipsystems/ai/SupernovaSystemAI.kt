@@ -151,9 +151,13 @@ class SupernovaSystemAI : ShipSystemAIScript {
                         //Real destination
 
                         //Place point slightly in front of destination instead
+                        /*var angle = Misc.getAngleInDegrees(ship!!.location, targetEntity!!.location)
+                        var loc = targetEntity!!.location
+                        var offset = MathUtils.getPointOnCircumference(loc, distanceForOffset, angle-180)*/
+
                         var angle = Misc.getAngleInDegrees(ship!!.location, targetEntity!!.location)
                         var loc = targetEntity!!.location
-                        var offset = MathUtils.getPointOnCircumference(loc, distanceForOffset, angle-180)
+                        var offset = MathUtils.getPointOnCircumference(loc, HypatiaSystemAI.distanceForOffset, angle-180 + MathUtils.getRandomNumberInRange(-20f, 20f))
 
                         var landingPoint = SimpleEntity(offset)
 
