@@ -178,7 +178,7 @@ class SupernovaShipsystem : BaseShipSystemScript() {
         }
 
 
-        if (!Global.getCombatEngine().isPaused && system.isActive) {
+       /* if (!Global.getCombatEngine().isPaused && system.isActive) {
             var nearbyShipsIterator = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 1200f, 1200f)
             var nearbyShips = ArrayList<ShipAPI>()
             nearbyShipsIterator.forEach { nearbyShips.add(it as ShipAPI) }
@@ -202,7 +202,7 @@ class SupernovaShipsystem : BaseShipSystemScript() {
 
                 CombatUtils.applyForce(other, angle, force * level)
             }
-        }
+        }*/
 
 
 

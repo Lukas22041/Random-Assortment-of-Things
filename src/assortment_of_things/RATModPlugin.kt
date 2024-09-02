@@ -272,7 +272,7 @@ class RATModPlugin : BaseModPlugin() {
             generateBrokenExoship()*/
 
             ExotechGenerator.setup()
-
+c
             Global.getSector().memoryWithoutUpdate.set("\$rat_exo_generated", true)
         }
     }

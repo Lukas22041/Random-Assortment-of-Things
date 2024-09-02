@@ -114,7 +114,9 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         exoshipEntity.addTag(Tags.NON_CLICKABLE)
 
         //Otherwise the exoship can still be interacted with if started from the ability
-        Global.getSector().campaignUI.clearLaidInCourse()
+        if (playerJoined) {
+            Global.getSector().campaignUI.clearLaidInCourse()
+        }
 
 
         if (playerJoined) {
