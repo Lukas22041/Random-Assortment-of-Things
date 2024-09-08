@@ -39,10 +39,6 @@ class AptitudeAbyssal : SCBaseAptitudePlugin() {
     }
 
     override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
-        if (fleet.flagship?.isAutomated() == true) return Float.MAX_VALUE
-
-        if (fleet.fleetData.membersListCopy.any { it.isAutomated() }) return 3f
-
         return 0f
     }
 

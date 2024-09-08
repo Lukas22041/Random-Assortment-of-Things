@@ -11,9 +11,30 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import second_in_command.SCUtils
 
 class AbyssalSeraphsGrace : BaseHullMod() {
 
+
+    fun isInAbyss() : Boolean {
+        var isInAbyss = false
+        if (Global.getSector() != null && Global.getSector().playerFleet != null) {
+            if (Global.getSector().playerFleet.containingLocation != null)
+            {
+                if (Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) {
+                    isInAbyss = true
+                }
+            }
+        }
+
+        if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+            if (SCUtils.getPlayerData().isSkillActive("rat_abyssal_angelic_presence")) {
+                isInAbyss = true
+            }
+        }
+
+        return isInAbyss
+    }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
 
@@ -25,15 +46,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
             stats.variant.addPermaMod(HullMods.AUTOMATED)
         }
 
-        var isInAbyss = false
-        if (Global.getSector() != null && Global.getSector().playerFleet != null) {
-            if (Global.getSector().playerFleet.containingLocation != null)
-            {
-                if (Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) {
-                    isInAbyss = true
-                }
-            }
-        }
+        var isInAbyss = isInAbyss()
 
         if (!isInAbyss) isInAbyss = stats.variant.hasHullMod("rat_sarakiels_blessing")
 
@@ -68,15 +81,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
             render { particleSpawner.renderBelow(this, it) }
         }
 
-        var isInAbyss = false
-        if (Global.getSector() != null && Global.getSector().playerFleet != null) {
-            if (Global.getSector().playerFleet.containingLocation != null)
-            {
-                if (Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) {
-                    isInAbyss = true
-                }
-            }
-        }
+        var isInAbyss = isInAbyss()
 
         if (!isInAbyss) isInAbyss = ship!!.variant.hasHullMod("rat_sarakiels_blessing")
 

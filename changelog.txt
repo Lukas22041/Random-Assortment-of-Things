@@ -1,3 +1,16 @@
+Version 2.4.1
+Save compatible with 2.4.0
+
+-> Added the "Abyssal" Aptitude, which can be found near the end of the abyss when the "Second-in-command" mod is enabled.
+   - Second-in-Command needs to be updated to version 1.1.6 or newer.
+   - Requires a new save to spawn.
+
+-> Increased amount of weapons & ships available at a time in the exotech submarket.
+-> Fixed a bug that caused the current course to be cleared whenever an exoship warped.
+-> Fixed the Supernovas bounty being able to drop the fighter multiple times.
+
+
+
 Version 2.4.0 - Exotech Overhaul
 Not Save compatible
 

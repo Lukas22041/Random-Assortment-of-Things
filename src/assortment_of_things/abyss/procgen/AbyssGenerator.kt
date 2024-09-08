@@ -284,6 +284,14 @@ class  AbyssGenerator {
            fractures.fracture2.location.set(pos2)
            if (isFinal) {
                fractures.fracture1.addTag("rat_final_fracture")
+
+               if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+                   var preSystem = fractures.fracture1.starSystem
+                   var drone = AbyssEntityGenerator.spawnMinorEntity(preSystem, "rat_abyss_drone")
+                   drone.addTag("rat_abyssal_xo_entity")
+
+                   drone.setCircularOrbit(fractures.fracture1, MathUtils.getRandomNumberInRange(0f, 360f), 200f, 80f)
+               }
            }
 
            AbyssProcgen.clearTerrainAroundFractures(fractures)

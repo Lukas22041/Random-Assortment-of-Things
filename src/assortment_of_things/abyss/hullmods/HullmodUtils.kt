@@ -11,6 +11,7 @@ object HullmodUtils {
 
         var allFlats = 0f
         for (flat in stat.flatMods ) {
+            if (flat.key == "rat_abyssal_symphony") continue
             allFlats += flat.value.value
         }
         stat.modifyFlat(id, -allFlats)
@@ -34,6 +35,7 @@ object HullmodUtils {
 
         var allFlats = 0f
         for (flat in stat.flatMods) {
+            if (flat.key == "rat_abyssal_symphony") continue
             if (flat.value.value > 0 && flat.key != id) {
                 allFlats += flat.value.value
             }
@@ -62,6 +64,7 @@ object HullmodUtils {
 
         var allFlats = 0f
         for (flat in stat.flatBonuses) {
+            if (flat.key == "rat_abyssal_symphony") continue
             if (flat.value.value > 0 && flat.key != id) {
                 allFlats += flat.value.value
             }
@@ -96,6 +99,7 @@ object HullmodUtils {
 
         var allFlats = 0f
         for (flat in stat.flatMods) {
+            if (flat.key == "rat_abyssal_symphony") continue
             if (flat.value.value < 0 && flat.key != id) {
                 allFlats += flat.value.value
             }
@@ -123,6 +127,7 @@ object HullmodUtils {
 
         var allFlats = 0f
         for (flat in stat.flatBonuses) {
+            if (flat.key == "rat_abyssal_symphony") continue
             if (flat.value.value < 0) {
                 allFlats += flat.value.value
             }

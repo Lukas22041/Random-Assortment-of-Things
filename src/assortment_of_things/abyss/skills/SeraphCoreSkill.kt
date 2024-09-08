@@ -82,6 +82,7 @@ class SeraphCoreSkill : RATBaseShipSkill() {
 
         init {
             maxDamage = when(ship.variant.hullSize) {
+                ShipAPI.HullSize.FIGHTER -> 30000f
                 ShipAPI.HullSize.FRIGATE -> 75000f
                 ShipAPI.HullSize.DESTROYER -> 125000f
                 ShipAPI.HullSize.CRUISER -> 175000f
