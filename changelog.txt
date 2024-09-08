@@ -8,6 +8,7 @@ Save compatible with 2.4.0
 -> Increased amount of weapons & ships available at a time in the exotech submarket.
 -> Fixed a bug that caused the current course to be cleared whenever an exoship warped.
 -> Fixed the Supernovas bounty being able to drop the fighter multiple times.
+-> Fixed a bug that made parts of the exotech questline dependent on nex.
 
 
 

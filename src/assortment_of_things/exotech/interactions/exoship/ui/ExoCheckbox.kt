@@ -3,8 +3,9 @@ package assortment_of_things.exotech.interactions.exoship.ui
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import exerelin.campaign.ui.NexLunaElement
+import lunalib.lunaUI.elements.LunaElement
 
-class ExoCheckbox(var value: Boolean, tooltip: TooltipMakerAPI, width: Float, height: Float, var isDocked: Boolean) : NexLunaElement(tooltip, width, height) {
+class ExoCheckbox(var value: Boolean, tooltip: TooltipMakerAPI, width: Float, height: Float, var isDocked: Boolean) : LunaElement(tooltip, width, height) {
 
     var offSprite = Global.getSettings().getSprite("ui", "toggle20_off")
     var onSprite = Global.getSettings().getSprite("ui", "toggle20_on")
