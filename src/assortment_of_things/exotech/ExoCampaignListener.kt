@@ -11,6 +11,7 @@ class ExoCampaignListener : RATBaseCampaignEventListener() {
 
         if (plugin?.loser?.memoryWithoutUpdate?.get("\$rat_rapid_response_fleet") == true) {
             loot!!.addFighters("rat_supernova_wing", 5)
+            plugin.loser.memoryWithoutUpdate.set("\$rat_rapid_response_fleet", false)
         }
     }
 }

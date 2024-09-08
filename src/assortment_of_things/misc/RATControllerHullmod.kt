@@ -42,6 +42,8 @@ class RATControllerHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         var playerfleet = Global.getSector().playerFleet
 
+        //stats!!.dynamic.getStat("sc_auto_points_mult").modifyMult(id, 0.5f)
+
         if (stats!!.variant.hasHullMod(HullMods.AUTOMATED)) {
             var hasAutoEngineer = playerfleet?.fleetData?.membersListCopy?.any { it.captain?.stats?.hasSkill("rat_auto_engineer") == true } ?: false
 

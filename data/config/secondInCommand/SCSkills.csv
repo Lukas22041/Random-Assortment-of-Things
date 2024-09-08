@@ -1,0 +1,16 @@
+id,name,iconPath,npcSpawnWeight,plugin
+,,,,
+#Abyssal,,,,
+rat_abyssal_abyssal_ships,Abyssal Ships,graphics/secondInCommand/abyssal/abyssal_ships.png,0,assortment_of_things.campaign.secondInCommand.abyssal.AbyssalShips
+rat_abyssal_mending,Mending,graphics/secondInCommand/abyssal/mending.png,0,assortment_of_things.campaign.secondInCommand.abyssal.Mending
+rat_abyssal_submerge,Submerge,graphics/secondInCommand/abyssal/submerge.png,0,assortment_of_things.campaign.secondInCommand.abyssal.Submerge
+rat_abyssal_stressed_grid,Stressed Grid,graphics/secondInCommand/abyssal/stressed_grid.png,0,assortment_of_things.campaign.secondInCommand.abyssal.StressedGrid
+rat_abyssal_interlinked,Interlinked,graphics/secondInCommand/abyssal/interlinked.png,0,assortment_of_things.campaign.secondInCommand.abyssal.Interlinked
+rat_abyssal_supercharged,Supercharged,graphics/secondInCommand/abyssal/supercharged.png,0,assortment_of_things.campaign.secondInCommand.abyssal.Supercharged
+rat_abyssal_angelic_presence,Angelic Presence,graphics/secondInCommand/abyssal/angelic_presence.png,0,assortment_of_things.campaign.secondInCommand.abyssal.AngelicPresence
+rat_abyssal_equivalent_exchange,Equivalent Exchange,graphics/secondInCommand/abyssal/equivalent_exchange.png,0,assortment_of_things.campaign.secondInCommand.abyssal.EquivalentExchange
+rat_abyssal_forgotten_pact,Forgotten Pact,graphics/secondInCommand/abyssal/forgotten_pact.png,0,assortment_of_things.campaign.secondInCommand.abyssal.ForgottenPact
+rat_abyssal_abyssal_symphony,Abyssal Symphony,graphics/secondInCommand/abyssal/abyssal_symphony.png,0,assortment_of_things.campaign.secondInCommand.abyssal.AbyssalSymphony
+,,,,
+,,,,
+,,,,

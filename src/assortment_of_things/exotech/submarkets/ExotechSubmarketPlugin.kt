@@ -100,7 +100,7 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
 
     fun addEquipment() {
 
-        var count = MathUtils.getRandomNumberInRange(20, 30)
+        var count = MathUtils.getRandomNumberInRange(30, 50)
 
         var weights = WeightedRandomPicker<Any>()
 
@@ -136,7 +136,7 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
             "rat_exotech",
             5f,
             FleetTypes.PATROL_MEDIUM,
-            140f,  // combatPts
+            200f,  // combatPts
             0f,  // freighterPts
             0f,  // tankerPts
             0f,  // transportPts
