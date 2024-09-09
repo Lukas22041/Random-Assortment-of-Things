@@ -28,8 +28,11 @@ class AbyssalSeraphsGrace : BaseHullMod() {
         }
 
         if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
-            if (SCUtils.getPlayerData().isSkillActive("rat_abyssal_angelic_presence")) {
-                isInAbyss = true
+            if (Global.getSector().playerFleet?.fleetData != null) //We love deserialisation dont we folks
+                {
+                if (SCUtils.getPlayerData().isSkillActive("rat_abyssal_angelic_presence")) {
+                    isInAbyss = true
+                }
             }
         }
 
