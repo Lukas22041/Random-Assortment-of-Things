@@ -8,6 +8,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.util.DelayedActionScript
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaUtil.LunaCommons
+import org.magiclib.achievements.MagicAchievementManager
 
 class ExoshipRecoveryContactInteraction : RATInteractionPlugin() {
 
@@ -106,6 +107,7 @@ class ExoshipRecoveryContactInteraction : RATInteractionPlugin() {
                             ExoUtils.getExoData().getExoshipPlugin().warpModule.warp(system!!, false, false)
                             ExoUtils.getExoData().getExoshipPlugin().npcModule.currentWarp = null
 
+                            MagicAchievementManager.getInstance().completeAchievement("rat_beatExotechQuestline")
 
                             closeDialog()
                         }

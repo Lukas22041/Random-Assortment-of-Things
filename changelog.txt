@@ -1,3 +1,12 @@
+Version 2.4.3
+Save compatible with 2.4.x
+
+-> Re-Added the Exotech Background, which nows starts you off with the Questline completed.
+  - The Questline needs to have been done once to be unlocked, it should count it if you already did so before this update.
+-> Added Achievement for finising the Exotech Questline
+
+
+
 Version 2.4.2
 Save compatible with 2.4.x
 
