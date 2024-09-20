@@ -248,9 +248,13 @@ class SupernovaInWarpScript(var ship: ShipAPI, var targetEntity: CombatEntityAPI
 
 
         if (ship.system.isChargedown) {
-            ship!!.removeListener(this)
+
+            ship.shipAI = aiScript.ai
 
             aiScript.finishedWarp()
+
+            ship!!.removeListener(this)
+
             return
         }
 

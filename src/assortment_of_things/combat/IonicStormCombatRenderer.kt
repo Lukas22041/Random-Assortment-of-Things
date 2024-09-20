@@ -26,6 +26,9 @@ class IonicStormCombatRenderer() : BaseCombatLayeredRenderingPlugin() {
     var color = AbyssUtils.ABYSS_COLOR
     var darkColor = AbyssUtils.ABYSS_COLOR.darker()
 
+    var minAlpha = 0.25f
+    var maxAlpha = 0.45f
+
     override fun advance(amount: Float) {
         super.advance(amount)
 
@@ -73,7 +76,7 @@ class IonicStormCombatRenderer() : BaseCombatLayeredRenderingPlugin() {
 
                 var size = MathUtils.getRandomNumberInRange(20f, 40f)
 
-                var alpha = MathUtils.getRandomNumberInRange(0.25f, 0.45f)
+                var alpha = MathUtils.getRandomNumberInRange(minAlpha, maxAlpha)
 
                 particles.add(AbyssalStormParticleManager.AbyssalLightParticle(fadeIn,
                     duration,

@@ -38,6 +38,9 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
     lateinit var commoditySpec: CommoditySpecAPI
     lateinit var plugin: AICoreOfficerPlugin
 
+    @Transient
+    var sprite: SpriteAPI? = null
+
     companion object {
         var cores = mapOf(
             "rat_chronos_core" to "rat_core_time",
@@ -85,26 +88,27 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
         var centerX = x+w/2
         var centerY = y+h/2
 
+        if (sprite == null) {
+            sprite = Global.getSettings().getSprite(commoditySpec!!.iconName)
+        }
 
 
-
-        var sprite = Global.getSettings().getSprite(commoditySpec!!.iconName)
 
 
         if (commoditySpec.id == RATItems.PRIMORDIAL) {
-            renderSpecialGlow(w, h, centerX, centerY, alphaMult, sprite)
+            renderSpecialGlow(w, h, centerX, centerY, alphaMult, sprite!!)
         } else {
-            sprite.setNormalBlend()
-            sprite.alphaMult = alphaMult
-            sprite.setSize(w - 20f, h -20f)
-            sprite.renderAtCenter(centerX, centerY)
+            sprite!!.setNormalBlend()
+            sprite!!.alphaMult = alphaMult
+            sprite!!.setSize(w - 20f, h -20f)
+            sprite!!.renderAtCenter(centerX, centerY)
         }
 
         if (glowMult > 0) {
-            sprite.setAdditiveBlend()
-            sprite.alphaMult = alphaMult * glowMult * 0.5f
-            sprite.setSize(w - 20, h - 20)
-            sprite.renderAtCenter(centerX, centerY)
+            sprite!!.setAdditiveBlend()
+            sprite!!.alphaMult = alphaMult * glowMult * 0.5f
+            sprite!!.setSize(w - 20, h - 20)
+            sprite!!.renderAtCenter(centerX, centerY)
         }
     }
 

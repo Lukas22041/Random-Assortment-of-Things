@@ -20,7 +20,7 @@ class AbyssalSymphony : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData?, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Automated ships can recover their hitpoints over time, at the cost of their peak performance time", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - The regneration happens at a rate of 2%% of the ships hitpoints per second", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "2%")
+        tooltip.addPara("   - The regeneration happens at a rate of 2%% of the ships hitpoints per second", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "2%")
         tooltip.addPara("   - For every 1%% of recovered hull the peak performance time is reduced by 2/2/3/4 seconds based on hullsize", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "1%", "2", "2", "3", "4")
         tooltip.addPara("   - The regeneration is stopped if the ship has no peak performance time remaining", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "1%", "1")
 

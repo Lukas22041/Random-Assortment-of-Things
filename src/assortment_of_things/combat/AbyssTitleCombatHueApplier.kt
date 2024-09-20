@@ -18,12 +18,10 @@ class AbyssTitleCombatHueApplier(var color: Color) : BaseCombatLayeredRenderingP
 
     var sprite: SpriteAPI = Global.getSettings().getAndLoadSprite("graphics/fx/rat_darkener.png")
 
-    var alpha = 25
+    var alpha = 60
 
     override fun init(entity: CombatEntityAPI?) {
         super.init(entity)
-
-        alpha = 60
     }
 
 

@@ -20,7 +20,7 @@ import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
 
-class CombatTitlePhotosphereRenderer(var radius: Float) : BaseCombatLayeredRenderingPlugin() {
+class CombatTitlePhotosphereRenderer(var radius: Float, offsetRadius: Float) : BaseCombatLayeredRenderingPlugin() {
 
     var color = AbyssUtils.ABYSS_COLOR.setAlpha(255)
     //var color = Color(0, 120, 255)
@@ -50,7 +50,7 @@ class CombatTitlePhotosphereRenderer(var radius: Float) : BaseCombatLayeredRende
 
         var level = (distance - min) / (max - min)
 
-        offset = MathUtils.getPointOnCircumference(Vector2f(0f , 0f), 600f * level, angle)
+        offset = MathUtils.getPointOnCircumference(Vector2f(0f , 0f), offsetRadius * level, angle)
 
         halo = Global.getSettings().getSprite("rat_terrain", "halo")
 

@@ -14,7 +14,7 @@ class AbyssTitleScreen : EveryFrameCombatPlugin {
     override fun init(engine: CombatEngineAPI?) {
         Global.getCombatEngine().addLayeredRenderingPlugin(IonicStormCombatRenderer())
 
-        Global.getCombatEngine().addLayeredRenderingPlugin(CombatTitlePhotosphereRenderer(150f))
+        Global.getCombatEngine().addLayeredRenderingPlugin(CombatTitlePhotosphereRenderer(150f, 600f))
         Global.getCombatEngine().addLayeredRenderingPlugin(AbyssTitleCombatHueApplier(AbyssUtils.ABYSS_COLOR))
 
         Global.getCombatEngine().backgroundColor = Color(125, 25, 25)

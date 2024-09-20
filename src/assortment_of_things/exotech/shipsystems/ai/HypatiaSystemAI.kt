@@ -1,6 +1,7 @@
 package assortment_of_things.exotech.shipsystems.ai
 
 import assortment_of_things.misc.getAndLoadSprite
+import assortment_of_things.misc.logger
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.CombatFleetManagerAPI.AssignmentInfo
@@ -385,12 +386,16 @@ class InWarpScript(var ship: ShipAPI, var targetEntity: CombatEntityAPI, var lan
         var landings = Global.getCombatEngine().customData.get("rat_hypatia_landings") as MutableList<CombatEntityAPI>?
 
         if (ship.system.isChargedown) {
-            ship!!.removeListener(this)
 
             landings?.remove(landingPoint)
             renderer?.done = true
 
+            ship.shipAI = aiScript.ai
+
             aiScript.finishedWarp()
+
+            ship!!.removeListener(this)
+
             return
         }
 
@@ -401,10 +406,6 @@ class InWarpScript(var ship: ShipAPI, var targetEntity: CombatEntityAPI, var lan
         if (warpTime <= 0) {
             shouldStop = true
         }
-
-
-
-
 
 
 
