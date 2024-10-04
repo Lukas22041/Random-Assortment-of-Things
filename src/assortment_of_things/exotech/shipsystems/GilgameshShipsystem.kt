@@ -410,6 +410,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         g.addSlot("WS 000")
         v.addWeaponGroup(g)
 
+
         var drone = Global.getCombatEngine().createFXDrone(v)
 
 

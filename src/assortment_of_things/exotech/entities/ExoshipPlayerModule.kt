@@ -13,7 +13,7 @@ import java.util.GregorianCalendar
 class ExoshipPlayerModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEntityToken) {
 
     var fuelProductionLevel = 0.25f
-    var fuelPercentPerMonthMax = 20f / 100f
+    var fuelPercentPerMonthMax = 25f / 100f
     var currentFuelPercent = 0.80f
     var maxFuelPercent = 1f
 

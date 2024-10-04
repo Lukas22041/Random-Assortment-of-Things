@@ -6,7 +6,7 @@ import com.fs.starfarer.api.util.IntervalUtil
 
 class ApplyRATControllerToPlayerFleet : EveryFrameScript {
 
-    var interval = IntervalUtil(0.2f, 0.2f)
+    var interval = IntervalUtil(0.75f, 1f)
 
     override fun isDone(): Boolean {
         return false

@@ -43,9 +43,6 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
     override fun advance(amount: Float) {
         var currentsystem = entity?.containingLocation ?: return
         if (Global.getSector().playerFleet.containingLocation != currentsystem) return
-
-
-
         super.advance(amount)
     }
 

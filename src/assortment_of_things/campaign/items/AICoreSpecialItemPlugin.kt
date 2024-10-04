@@ -41,6 +41,12 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
     @Transient
     var sprite: SpriteAPI? = null
 
+    @Transient
+    var spriteNoise1: SpriteAPI? = null
+
+    @Transient
+    var spriteNoise2: SpriteAPI? = null
+
     companion object {
         var cores = mapOf(
             "rat_chronos_core" to "rat_core_time",
@@ -52,6 +58,8 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
         )
 
         var shader: Int = 0
+
+
     }
 
     override fun init(stack: CargoStackAPI) {
@@ -68,28 +76,34 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
         plugin = RATCampaignPlugin().pickAICoreOfficerPlugin(commoditySpec.id)!!.plugin
 
 
-        shader = ShaderLib.loadShader(
-            Global.getSettings().loadText("data/shaders/baseVertex.shader"),
-            Global.getSettings().loadText("data/shaders/scrollingGlowFragment.shader"))
-        if (shader != 0) {
-            GL20.glUseProgram(shader)
+        if (shader == 0) {
+            shader = ShaderLib.loadShader(
+                Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+                Global.getSettings().loadText("data/shaders/scrollingGlowFragment.shader"))
+            if (shader != 0) {
+                GL20.glUseProgram(shader)
 
-            GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
-            GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex1"), 1)
-            GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex2"), 2)
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex1"), 1)
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex2"), 2)
 
-            GL20.glUseProgram(0)
-        } else {
-            var test = ""
+                GL20.glUseProgram(0)
+            } else {
+                var test = ""
+            }
         }
+
+
     }
 
     override fun render(x: Float, y: Float, w: Float, h: Float, alphaMult: Float, glowMult: Float, renderer: SpecialItemPlugin.SpecialItemRendererAPI?) {
         var centerX = x+w/2
         var centerY = y+h/2
 
-        if (sprite == null) {
+        if (sprite == null || spriteNoise1 == null || spriteNoise2 == null) {
             sprite = Global.getSettings().getSprite(commoditySpec!!.iconName)
+            spriteNoise1 = Global.getSettings().getAndLoadSprite("graphics/icons/cargo/noise1.png")
+            spriteNoise2 = Global.getSettings().getAndLoadSprite("graphics/icons/cargo/noise2.png")
         }
 
 
@@ -116,8 +130,7 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
     fun renderSpecialGlow(w: Float, h: Float, centerX: Float, centerY: Float, alphaMult: Float, sprite: SpriteAPI) {
         var time = (Global.getSector().scripts.find { it is ConstantTimeIncreaseScript } as ConstantTimeIncreaseScript).time / 8
 
-        var spriteNoise1 = Global.getSettings().getAndLoadSprite("graphics/icons/cargo/noise1.png")
-        var spriteNoise2 = Global.getSettings().getAndLoadSprite("graphics/icons/cargo/noise2.png")
+
 
         GL20.glUseProgram(shader)
 
@@ -132,7 +145,7 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
         //Setup Noise1
         //Noise texture needs to be power of two or it wont repeat correctly! (32x32, 64x64, 128x128)
         GL13.glActiveTexture(GL13.GL_TEXTURE0 + 1)
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, spriteNoise1.textureId)
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, spriteNoise1!!.textureId)
 
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST)
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST)
@@ -143,7 +156,7 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
         //Setup Noise2
         //Noise texture needs to be power of two or it wont repeat correctly! (32x32, 64x64, 128x128)
         GL13.glActiveTexture(GL13.GL_TEXTURE0 + 2)
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, spriteNoise2.textureId)
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, spriteNoise2!!.textureId)
 
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST)
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST)

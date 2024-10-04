@@ -64,6 +64,13 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         return super.getTerrainId() + id
     }
 
+    //Dont execute code from superclasses if your not in the system
+    override fun advance(amount: Float) {
+        var currentsystem = entity?.containingLocation ?: return
+        if (Global.getSector().playerFleet.containingLocation != currentsystem) return
+        super.advance(amount)
+    }
+
     override fun renderOnMap(factor: Float, alphaMult: Float) {
         var system = AbyssUtils.getSystemData(entity.starSystem)
 

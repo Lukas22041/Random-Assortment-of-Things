@@ -1,3 +1,12 @@
+Version 2.4.5
+Save compatible with 2.4.x
+
+-> The Exoship can now recharge at most 25% of its fuel per month instead of 20% (only on new saves)
+-> Performance improvement for the ai core cargo items, not sure if that entirely fixes the issues people had though.
+-> Made a few other performance adjustments.
+
+
+
 Version 2.4.4
 Save compatible with 2.4.x
 

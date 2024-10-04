@@ -23,7 +23,7 @@ class AbyssalSeraphimDriveHullmod : BaseHullMod() {
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String?) {
 
-        Global.getCombatEngine().addLayeredRenderingPlugin(SeraphimDriveRenderer(ship))
+        Global.getCombatEngine()?.addLayeredRenderingPlugin(SeraphimDriveRenderer(ship))
     }
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?,  ship: ShipAPI?,   isForModSpec: Boolean): Boolean {

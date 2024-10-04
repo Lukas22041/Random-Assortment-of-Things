@@ -2,6 +2,7 @@ package assortment_of_things.abyss.scripts
 
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.util.IntervalUtil
 
 class ForceNegAbyssalRep : EveryFrameScript {
     override fun isDone(): Boolean {
@@ -12,15 +13,21 @@ class ForceNegAbyssalRep : EveryFrameScript {
         return false
     }
 
+    var interval = IntervalUtil(2f, 3f)
+
     override fun advance(amount: Float) {
-        var player = Global.getSector().playerFaction
 
-        Global.getSector().getFaction("rat_abyssals")?.setRelationship(player.id, -1f)
-        Global.getSector().getFaction("rat_abyssals_deep")?.setRelationship(player.id, -1f)
-        Global.getSector().getFaction("rat_abyssals_deep_seraph")?.setRelationship(player.id, -1f)
-        Global.getSector().getFaction("rat_abyssals_primordials")?.setRelationship(player.id, -1f)
+        interval.advance(amount)
+        if (interval.intervalElapsed()) {
+            var player = Global.getSector().playerFaction
 
-        Global.getSector().getFaction("rat_abyssals_deep")?.setRelationship("rat_abyssals_deep_seraph", 1f)
+            Global.getSector().getFaction("rat_abyssals")?.setRelationship(player.id, -1f)
+            Global.getSector().getFaction("rat_abyssals_deep")?.setRelationship(player.id, -1f)
+            Global.getSector().getFaction("rat_abyssals_deep_seraph")?.setRelationship(player.id, -1f)
+            Global.getSector().getFaction("rat_abyssals_primordials")?.setRelationship(player.id, -1f)
+
+            Global.getSector().getFaction("rat_abyssals_deep")?.setRelationship("rat_abyssals_deep_seraph", 1f)
+        }
 
     }
 

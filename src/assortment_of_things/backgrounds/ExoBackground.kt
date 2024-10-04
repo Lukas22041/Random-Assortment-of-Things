@@ -43,7 +43,7 @@ class ExoBackground : BaseCharacterBackground() {
     }
 
     override fun getShortDescription(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?): String {
-        if (!isUnlocked()) return "Finish the Exotech Questline to unlock this backgriund."
+        if (!isUnlocked()) return "Finish the Exotech Questline to unlock this background."
         else return "You assisted Amelie and Xander in restoring an Exoship to good condition, and you are ready to make new use of it."
     }
 
