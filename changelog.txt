@@ -1,3 +1,11 @@
+Version 2.4.6
+Save compatible with 2.4.x
+
+-> Made the "Abyssal Symphony" skill require 5 PPT per CR recovered instead of 4.
+-> Tried another thing that may help prevent the freeze during the abyss boss (again (again))
+
+
+
 Version 2.4.5
 Save compatible with 2.4.x
 

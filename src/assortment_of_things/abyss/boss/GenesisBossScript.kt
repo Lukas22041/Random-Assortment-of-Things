@@ -841,7 +841,8 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                         ,0.1f, 0.1f, 1f, 0.3f, 1f)
 
                     //Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
-                    Global.getSoundPlayer().pauseCustomMusic()
+                    //Global.getSoundPlayer().pauseCustomMusic()
+                    Global.getSoundPlayer().playCustomMusic(1, 0, null)
 
                     /*azazel1 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))
                     azazel2 = spawnApparation("rat_genesis_serpent_head_Standard", ChronosCore().createPerson(RATItems.CHRONOS_CORE, "rat_abyssals_primordials", Random()))*/
