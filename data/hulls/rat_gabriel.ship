@@ -3,7 +3,7 @@
   "hullId": "rat_gabriel",
   "hullSize": "CRUISER",
   "spriteName": "graphics/ships/rat_gabriel.png",
-  "style": "ABYSSAL",
+  "style": "ABYSSAL_SERAPH",
   "height": 302,
   "width": 272,
   "center": [136, 151],

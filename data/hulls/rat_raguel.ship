@@ -3,7 +3,7 @@
   "hullId": "rat_raguel",
   "hullSize": "FRIGATE",
   "spriteName": "graphics/ships/rat_raguel.png",
-  "style": "ABYSSAL",
+  "style": "ABYSSAL_SERAPH",
   "height": 130,
   "width": 120,
   "center": [60, 65],

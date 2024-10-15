@@ -3,7 +3,7 @@
   "hullId": "rat_sariel",
   "hullSize": "DESTROYER",
   "spriteName": "graphics/ships/rat_sariel.png",
-  "style": "ABYSSAL",
+  "style": "ABYSSAL_SERAPH",
   "height": 220,
   "width": 200,
   "center": [100, 110],

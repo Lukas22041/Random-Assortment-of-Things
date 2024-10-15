@@ -19,33 +19,41 @@ class RampantMilitaryCore : BaseMarketConditionPlugin() {
 
 
     override fun apply(id: String?) {
-        var core = market.memoryWithoutUpdate.get("\$rat_military_core_person") as PersonAPI?
-        if (core == null) {
-            core = Global.getFactory().createPerson() as PersonAPI
+
+        //Man i hate Deserialisation
+        try {
+            var core = market.memoryWithoutUpdate.get("\$rat_military_core_person") as PersonAPI?
+            if (core == null) {
+                core = Global.getFactory().createPerson() as PersonAPI
+                core.setFaction(market.factionId)
+                core.name = FullName("Military Core", "", FullName.Gender.ANY)
+                core.portraitSprite = "graphics/portraits/cores/rat_military_core.png"
+
+                core.rankId = null
+                core.postId = Ranks.POST_ADMINISTRATOR
+
+                core.stats.setSkillLevel(Skills.INDUSTRIAL_PLANNING, 1f)
+                core.stats.setSkillLevel(Skills.HYPERCOGNITION, 1f)
+                market.memoryWithoutUpdate.set("\$rat_military_core_person", core)
+            }
+
             core.setFaction(market.factionId)
-            core.name = FullName("Military Core", "", FullName.Gender.ANY)
-            core.portraitSprite = "graphics/portraits/cores/rat_military_core.png"
+            market.admin = core
+            if (market.commDirectory.getEntryForPerson(core) == null) {
+                market.commDirectory.addPerson(core)
+                market.commDirectory.getEntryForPerson(core)
+            }
+            market.stability.modifyFlat(id, -1f, condition.name)
+            market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyFlat(id, 0.30f, condition.name)
 
-            core.rankId = null
-            core.postId = Ranks.POST_ADMINISTRATOR
+            market.stats.dynamic.getMod(Stats.PATROL_NUM_LIGHT_MOD).modifyFlat(id, 1f, condition.name)
+            market.stats.dynamic.getMod(Stats.PATROL_NUM_MEDIUM_MOD).modifyFlat(id, 1f, condition.name)
+            market.stats.dynamic.getMod(Stats.PATROL_NUM_HEAVY_MOD).modifyFlat(id, 1f, condition.name)
+        } catch (e: Throwable) {
 
-            core.stats.setSkillLevel(Skills.INDUSTRIAL_PLANNING, 1f)
-            core.stats.setSkillLevel(Skills.HYPERCOGNITION, 1f)
-            market.memoryWithoutUpdate.set("\$rat_military_core_person", core)
         }
 
-        core.setFaction(market.factionId)
-        market.admin = core
-        if (market.commDirectory.getEntryForPerson(core) == null) {
-            market.commDirectory.addPerson(core)
-            market.commDirectory.getEntryForPerson(core)
-        }
-        market.stability.modifyFlat(id, -1f, condition.name)
-        market.stats.dynamic.getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyFlat(id, 0.30f, condition.name)
 
-        market.stats.dynamic.getMod(Stats.PATROL_NUM_LIGHT_MOD).modifyFlat(id, 1f, condition.name)
-        market.stats.dynamic.getMod(Stats.PATROL_NUM_MEDIUM_MOD).modifyFlat(id, 1f, condition.name)
-        market.stats.dynamic.getMod(Stats.PATROL_NUM_HEAVY_MOD).modifyFlat(id, 1f, condition.name)
     }
 
     override fun unapply(id: String?) {
