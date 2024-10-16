@@ -84,6 +84,9 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     var phase3HealthLevel = 1f
     var maxPhas3HealthLevel = 1f
 
+
+    var stoppedMusic = false
+
     enum class Phases {
         P1, P2, P3
     }
@@ -238,6 +241,11 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
             ship!!.setJitter(this, jitterColor, (1- transitionTimer.level), 3, 0f, 0f )
             ship!!.setJitterUnder(this, jitterUnderColor, (1- transitionTimer.level), 25, 0f, 10f)
+
+            if (!ship.isAlive && !stoppedMusic) {
+                stoppedMusic = true
+                Global.getSoundPlayer().playCustomMusic(1, 0, null)
+            }
         }
 
         var realAmount = amount / Global.getCombatEngine().timeMult.modifiedValue
@@ -319,7 +327,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                 if (transitionTimer.state == StateBasedTimer.TimerState.Out && !activateZone) {
                     activateZone = true
-                    //Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.7f, 1.4f, ship.location, ship.velocity)
+                    Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.7f, 1.4f, ship.location, ship.velocity)
                     logger.debug("Starting Genesis Phase 2 Music. If the game freezes past this point, please make sure to increase the allocated ram, or change from Java23 to Java8 instead to fix the issue from happening again.")
                     //Global.getSoundPlayer().resumeCustomMusic()
                     Global.getSoundPlayer().playCustomMusic(1, 1, "rat_abyss_genesis2", true)
@@ -525,7 +533,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
         var extraRange = 0f
         if (hard) extraRange = 250f
 
-        var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(1800f + extraRange, 2500f + extraRange))
+        var loc = MathUtils.getRandomPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(1700f + extraRange, 2250f + extraRange))
         loc = findClearLocation(apparation, loc)
         apparation.location.set(loc)
 

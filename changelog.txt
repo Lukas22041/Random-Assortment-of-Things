@@ -1,3 +1,11 @@
+Version 2.4.7
+Save compatible with 2.4.x
+
+-> Gave some abyssal ships new damage textures.
+-> Another small change to potentialy avoid a freeze after the boss fight returns to the interaction screen.
+
+
+
 Version 2.4.6
 Save compatible with 2.4.x
 
