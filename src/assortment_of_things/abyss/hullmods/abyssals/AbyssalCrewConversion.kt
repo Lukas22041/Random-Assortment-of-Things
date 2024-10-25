@@ -74,7 +74,7 @@ class AbyssalCrewConversion : BaseAlteration() {
     }
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?,  member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
-        if (!member!!.baseOrModSpec().hasTag("rat_abyssals")) {
+        if (!(variant!!.hasHullMod("rat_abyssal_core") || variant!!.hasHullMod("rat_seraphs_grace") ||  variant!!.hasHullMod("rat_genesis_hullmod") || variant!!.hasHullMod("rat_genesis_serpent_hullmod"))) {
             tooltip!!.addPara("Can only be installed on abyssal hulls.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
         else {

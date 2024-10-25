@@ -31,6 +31,8 @@ class MaintainingMomentumSkill : RATBaseShipSkill() {
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
 
+        if (Global.getCombatEngine() == null) return
+
         var ship = stats!!.entity
         if (ship is ShipAPI) {
 
@@ -43,6 +45,8 @@ class MaintainingMomentumSkill : RATBaseShipSkill() {
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
+
+        if (Global.getCombatEngine() == null) return
 
         var ship = stats!!.entity
         if (ship is ShipAPI) {
@@ -89,6 +93,7 @@ class MaintaningMomentumListener(var pilotedShip: ShipAPI) : HullDamageAboutToBe
             if (param != pilotedShip) return false
             if (ship!!.isFighter) return false
             if (ship.owner == pilotedShip.owner) return false
+            if (ship.parentStation != null) return false //Ignore modules
             if (ship!!.hitpoints <= 0 && !ship.hasTag("rat_maverick_counted")) {
                 ship.addTag("rat_maverick_counted")
                 stacks.add(MomentumStacks(duration))

@@ -81,6 +81,9 @@ class AbyssalProbeInteraction : RATInteractionPlugin() {
                             SCUtils.showSkillOverview(dialog, officer)
 
                             SCUtils.getPlayerData().addOfficerToFleet(officer)
+                            SCUtils.getPlayerData().setOfficerInEmptySlotIfAvailable(officer)
+
+                            interactionTarget.removeTag("rat_abyssal_xo_entity")
 
                             addSalvageOption()
                         }

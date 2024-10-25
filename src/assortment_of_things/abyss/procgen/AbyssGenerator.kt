@@ -7,7 +7,6 @@ import assortment_of_things.abyss.intel.event.DiscoveredPhotosphere
 import assortment_of_things.abyss.intel.map.AbyssMap
 import assortment_of_things.abyss.procgen.types.*
 import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
-import assortment_of_things.abyss.terrain.AbyssTerrainPlugin
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import assortment_of_things.misc.randomAndRemove
@@ -37,6 +36,7 @@ import java.util.*
 class  AbyssGenerator {
 
     companion object {
+        var mainbranchTag = "rat_main_branch"
         var noBranchTag = "rat_no_branch"
         var branchTag = "rat_abyss_branch"
         var finalTag = "rat_abyss_final"
@@ -79,6 +79,7 @@ class  AbyssGenerator {
 
         systemData.mapLocation = Vector2f(0f, 250f)
         twilightSystem.addTag(noBranchTag)
+        twilightSystem.addTag(mainbranchTag)
 
         //Hyperspace-Abyss Fracture
         var fractures = AbyssProcgen.createFractures(Global.getSector().hyperspace, twilightSystem)
@@ -253,6 +254,7 @@ class  AbyssGenerator {
 
            var system = Global.getSector().createStarSystem(name)
            system.name = name
+           system.addTag(mainbranchTag)
 
            var isFinal = false
            if (step == systemsOnMainBranch - 1) {
@@ -283,7 +285,7 @@ class  AbyssGenerator {
            fractures.fracture1.location.set(pos1)
            fractures.fracture2.location.set(pos2)
            if (isFinal) {
-               fractures.fracture1.addTag("rat_final_fracture")
+              /* fractures.fracture1.addTag("rat_final_fracture")
 
                if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
                    var preSystem = fractures.fracture1.starSystem
@@ -291,7 +293,7 @@ class  AbyssGenerator {
                    drone.addTag("rat_abyssal_xo_entity")
 
                    drone.setCircularOrbit(fractures.fracture1, MathUtils.getRandomNumberInRange(0f, 360f), 200f, 80f)
-               }
+               }*/
            }
 
            AbyssProcgen.clearTerrainAroundFractures(fractures)
@@ -443,6 +445,32 @@ class  AbyssGenerator {
             var entity = AbyssEntityGenerator.spawnMinorEntity(majorLightsource.starSystem, "rat_sariel_outpost")
             entity.setCircularOrbit(majorLightsource, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(600f, 700f), 120f)
         }
+
+        //Generate in an early system on the main branch
+        var majorLightSourceInMainAndEarly = systems.filter { it.depth == AbyssDepth.Shallow && it.system.hasTag(
+            mainbranchTag) }.flatMap { it.system.customEntities.filter { it.hasTag("rat_abyss_major_lightsource") } }.toMutableList()
+
+        if (majorLightSourceInMainAndEarly.isNotEmpty()) {
+            majorLightSourceInMainAndEarly = systems.filter { it.system.hasTag(
+                mainbranchTag) }.flatMap { it.system.customEntities.filter { it.hasTag("rat_abyss_major_lightsource") } }.toMutableList()
+        }
+
+        //Abyssal Executive
+        if (majorLightSourceInMainAndEarly.isNotEmpty()) {
+
+            if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+
+                var majorLightsource = majorLightSourceInMainAndEarly.random()
+                majorLightSourceInMainAndEarly.remove(majorLightsource)
+
+                var drone = AbyssEntityGenerator.spawnMinorEntity(majorLightsource.starSystem, "rat_abyss_drone")
+                drone.addTag("rat_abyssal_xo_entity")
+
+                drone.setCircularOrbit(majorLightsource, MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(600f, 700f), 120f)
+            }
+        }
+
+
 
         if (Global.getSettings().modManager.isModEnabled("secretsofthefrontier")) {
             var systemsWithUniquePoints = systems.filter { it.system != AbyssUtils.getAbyssData().rootSystem && it.uniquePoints.isNotEmpty() && it.system.customEntities.any { it.customPlugin is AbyssalPhotosphere }}

@@ -53,7 +53,7 @@ class TemporalStasisSystemAI : ShipSystemAIScript {
 
         if (ship!!.fluxLevel >= 0.90f && target != null && !ship!!.phaseCloak.isActive) {
             var distance = MathUtils.getDistance(ship, target)
-            if (distance <= maxRange) {
+            if (distance <= maxRange && target.customData.get("rat_temporal_stasis_target") != true) {
                 ship!!.aiFlags.setFlag(AIFlags.TARGET_FOR_SHIP_SYSTEM, 1f, target)
                 ship!!.useSystem()
                 return

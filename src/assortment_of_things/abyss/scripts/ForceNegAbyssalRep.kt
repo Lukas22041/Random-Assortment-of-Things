@@ -13,7 +13,7 @@ class ForceNegAbyssalRep : EveryFrameScript {
         return false
     }
 
-    var interval = IntervalUtil(2f, 3f)
+    var interval = IntervalUtil(0.3f, 0.5f)
 
     override fun advance(amount: Float) {
 

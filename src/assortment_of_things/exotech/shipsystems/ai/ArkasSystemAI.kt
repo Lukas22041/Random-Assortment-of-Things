@@ -45,7 +45,7 @@ class ArkasSystemAI : ShipSystemAIScript {
             if (weapon.spec.weaponId == "rat_arkas_launcher_left" || weapon.spec.weaponId == "rat_arkas_launcher_right") continue
             var wRange = weapon.range
             if (weapon.type == WeaponAPI.WeaponType.MISSILE) {
-                wRange = MathUtils.clamp(wRange, 0f, 1200f)
+                wRange = MathUtils.clamp(wRange, 0f, 1600f)
             }
             if (weapon.range > range)
             {

@@ -69,6 +69,8 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
                     }
                 }
 
+                target!!.setCustomData("rat_temporal_stasis_target", false)
+
                 isCountingTimer = false
                 target = null
 
@@ -90,6 +92,9 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
                     if (target == ship!!.shipTarget) {
                         ship!!.shipTarget = null
                     }
+
+                    target!!.setCustomData("rat_temporal_stasis_target", true)
+
                     Global.getCombatEngine().addFloatingText(target!!.location, system.displayName, 22f, color, target, 0f, 0f)
                     isCountingTimer = true
                 }
@@ -286,7 +291,7 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
 
     override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
         var target = findTarget()
-        if (target != null) {
+        if (target != null && target.customData.get("rat_temporal_stasis_target") != true) {
             var distance = MathUtils.getDistance(ship, target)
             if (distance <= getMaxRange() && !target.isStation && target.parentStation == null && target.owner != ship!!.owner && !target.isHulk && target.isAlive) {
                 return true

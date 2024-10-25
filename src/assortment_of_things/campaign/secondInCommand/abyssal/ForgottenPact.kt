@@ -20,7 +20,8 @@ class ForgottenPact : SCBaseSkillPlugin() {
 
         tooltip.addPara("-10%% deployment points cost (maximum of 10)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+15%% top speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+100 armor", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% damage resistance while venting", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+50 armor", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Automated ships become even more fearless, no longer backing off even in the worst of situations", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
 
     }
@@ -34,7 +35,7 @@ class ForgottenPact : SCBaseSkillPlugin() {
             stats.dynamic.getMod(Stats.DEPLOYMENT_POINTS_MOD).modifyFlat(id, (-reduction).toFloat())
 
             stats.maxSpeed.modifyPercent(id, 15f)
-            stats.armorBonus.modifyFlat(id, 100f)
+            stats.armorBonus.modifyFlat(id, 50f)
         }
 
     }
@@ -66,6 +67,27 @@ class ForgottenPact : SCBaseSkillPlugin() {
         if (ship!!.isAutomated()) {
             ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_BACK_OFF, 999f)
             ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_BACK_OFF_EVEN_WHILE_VENTING, 999f)
+
+            /*ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.SAFE_VENT, 999f)
+            ship.aiFlags.removeFlag(ShipwideAIFlags.AIFlags.DO_NOT_VENT)*/
+
+            //Force Vent
+            if (ship.fluxTracker.fluxLevel >= 0.85f && !ship.fluxTracker.isVenting) {
+
+                //Dont force vent if its a player controlled auto ship
+                if (ship != Global.getCombatEngine().playerShip || Global.getCombatEngine().combatUI.isAutopilotOn) {
+                    ship.fluxTracker.ventFlux()
+                }
+
+            }
+
+            if (ship.fluxTracker.isVenting) {
+                ship.mutableStats.armorDamageTakenMult.modifyMult("sc_forgotten_pact", 0.80f)
+                ship.mutableStats.hullDamageTakenMult.modifyMult("sc_forgotten_pact", 0.80f)
+            } else {
+                ship.mutableStats.armorDamageTakenMult.unmodify("sc_forgotten_pact")
+                ship.mutableStats.hullDamageTakenMult.unmodify("sc_forgotten_pact")
+            }
         }
     }
 

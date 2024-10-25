@@ -167,7 +167,7 @@ class AbyssalDepthsEventIntel() : BaseEventIntel(), FleetEventListener {
         }
         if (stageId == Stage.PERSISTANCE)
         {
-            info.addPara("After studying the patterns of abyssal of the abyssal environment, the fleet takes 50%% less damage from abyssal storms due to better pathing through the terrain.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),"50%", "abyssal storms")
+            info.addPara("After studying the patterns of the abyssal environment, the fleet takes 50%% less damage from abyssal storms due to better pathing through the terrain.", 0f,  Misc.getTextColor(), Misc.getHighlightColor(),"50%", "abyssal storms")
         }
         if (stageId == Stage.IN_THE_DARK)
         {

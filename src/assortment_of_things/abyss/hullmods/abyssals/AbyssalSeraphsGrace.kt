@@ -182,15 +182,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
             Global.getCombatEngine().addLayeredRenderingPlugin(SeraphRenderer(ship!!))
         }
 
-        var isInAbyss = false
-        if (Global.getSector() != null && Global.getSector().playerFleet != null) {
-            if (Global.getSector().playerFleet.containingLocation != null)
-            {
-                if (Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) {
-                    isInAbyss = true
-                }
-            }
-        }
+        var isInAbyss = isInAbyss()
 
         if (!isInAbyss) isInAbyss = ship!!.variant.hasHullMod("rat_sarakiels_blessing")
 

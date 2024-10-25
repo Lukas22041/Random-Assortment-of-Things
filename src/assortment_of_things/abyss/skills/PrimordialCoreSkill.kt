@@ -37,6 +37,8 @@ class PrimordialCoreSkill : RATBaseShipSkill() {
 
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
 
+        if (Global.getCombatEngine() == null) return
+
         var ship = stats!!.entity
         if (ship is ShipAPI) {
 
@@ -48,14 +50,18 @@ class PrimordialCoreSkill : RATBaseShipSkill() {
             }
 
             if (ship.listenerManager?.hasListenerOfClass(PrimordialCoreListener::class.java) != true && !hasMomentum) {
-                var listener = PrimordialCoreListener(ship)
-                Global.getCombatEngine().listenerManager.addListener(listener)
-                ship.addListener(listener)
+                if (Global.getCombatEngine() != null) {
+                    var listener = PrimordialCoreListener(ship)
+                    Global.getCombatEngine()?.listenerManager?.addListener(listener)
+                    ship.addListener(listener)
+                }
             }
         }
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
+
+        if (Global.getCombatEngine() == null) return
 
         var ship = stats!!.entity
         if (ship is ShipAPI) {
@@ -102,6 +108,7 @@ class PrimordialCoreListener(var pilotedShip: ShipAPI) : HullDamageAboutToBeTake
             if (param != pilotedShip) return false
             if (ship!!.isFighter) return false
             if (ship.owner == pilotedShip.owner) return false
+            if (ship.parentStation != null) return false //Ignore modules
             if (ship!!.hitpoints <= 0 && !ship.hasTag("rat_primordial_counted")) {
                 ship.addTag("rat_primordial_counted")
                 stacks.add(PrimordialStacks(duration))
