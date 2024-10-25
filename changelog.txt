@@ -4,7 +4,7 @@ Save compatible with 2.4.x
 -> The Abyssal Executive Officer can now be found on a random lightsource in the main-branch of the abyss (path connected to the final system).
 -> Made the Arkas AI a bit more willing to use its shipsystem if its main weapons are missiles.
 -> Ships with the "Forgotten Pact" skill are forced to vent at high flux and receive some damage resistance while venting.
--> Fixed two or more Gabriels being able to target the same opponent as the same time.
+-> Fixed two or more Gabriels being able to target the same opponent at the same time.
 -> Fixed an issue that caused the "Angelic Presence" skill to not apply all its bonuses.
 -> Fixed an issue that made certain types of abyssal fleets hostile to eachother for a few seconds
 -> Fixed a misleading tooltip on the abyssal crew conversion hullmod.
