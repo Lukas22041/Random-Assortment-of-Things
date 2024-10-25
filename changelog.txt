@@ -8,7 +8,7 @@ Save compatible with 2.4.x
 -> Fixed an issue that caused the "Angelic Presence" skill to not apply all its bonuses.
 -> Fixed an issue that made certain types of abyssal fleets hostile to eachother for a few seconds
 -> Fixed a misleading tooltip on the abyssal crew conversion hullmod.
--> Fixed a crash with the Abyss Bosses Core.
+-> Fixed a crash with the Abyss Boss Core.
 
 
 
