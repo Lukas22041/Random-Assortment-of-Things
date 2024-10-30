@@ -1,4 +1,4 @@
-Version 2.4.8
+Version 2.4.9
 Save compatible with 2.4.x
 
 -> The "Abyssal Ships" skill now receives the same 10% min DP increase that the "Automated Ships" skill has aswell.
