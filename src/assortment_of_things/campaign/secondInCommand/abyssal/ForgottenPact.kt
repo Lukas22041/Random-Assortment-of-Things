@@ -41,6 +41,7 @@ class ForgottenPact : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI, id: String) {
+        if (Global.getCombatEngine() == null) return
 
         if (ship.isAutomated() && ship != Global.getCombatEngine().playerShip) {
             var config = ShipAIConfig()

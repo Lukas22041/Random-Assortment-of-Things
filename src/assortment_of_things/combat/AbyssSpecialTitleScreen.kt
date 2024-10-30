@@ -58,10 +58,12 @@ class AbyssSpecialTitleScreen : EveryFrameCombatPlugin {
     override fun renderInWorldCoords(viewport: ViewportAPI?) {
 
 
+        var noiseMult = 1f
+        if (Global.getCombatEngine().isSimulation) noiseMult = 0.5f;
 
         ShaderLib.beginDraw(shader);
         GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), Global.getCombatEngine().getTotalElapsedTime(false) / 8f)
-        GL20.glUniform1f(GL20.glGetUniformLocation(shader, "noise"), 0.05f)
+        GL20.glUniform1f(GL20.glGetUniformLocation(shader, "noise"), 0.05f * noiseMult)
 
         GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture());
@@ -72,6 +74,8 @@ class AbyssSpecialTitleScreen : EveryFrameCombatPlugin {
     }
 
     override fun renderInUICoords(viewport: ViewportAPI?) {
+
+        if (Global.getCombatEngine().isSimulation) return
 
         var viewport = Global.getCombatEngine().viewport
         viewport.isExternalControl = true

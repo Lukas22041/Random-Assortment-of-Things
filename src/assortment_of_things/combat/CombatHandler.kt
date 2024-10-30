@@ -32,7 +32,7 @@ class CombatHandler : EveryFrameCombatPlugin
 
         if (RATSettings.enableAbyss!! && Global.getCurrentState() == GameState.TITLE) {
 
-            if (RATModPlugin.isHalloween) {
+            if (RATModPlugin.isHalloween /*&& !engine.isSimulation*/) {
                 engine.addPlugin(AbyssSpecialTitleScreen())
             }
             else if (RATModPlugin.gameStartedForTitleScene) {

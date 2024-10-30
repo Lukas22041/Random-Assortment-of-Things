@@ -1,6 +1,7 @@
 package assortment_of_things.exotech.hullmods
 
 import assortment_of_things.misc.baseOrModSpec
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipCommand
@@ -45,6 +46,8 @@ class ExoFighterAIScript(var ship: ShipAPI) : AdvanceableListener {
     }
 
     override fun advance(amount: Float) {
+
+        if (ship == Global.getCombatEngine()?.playerShip) return //For compatibility with Synchro in SiC
 
         strafeInterval.advance(amount)
         if (strafeInterval.intervalElapsed() || strafeState == "none") {

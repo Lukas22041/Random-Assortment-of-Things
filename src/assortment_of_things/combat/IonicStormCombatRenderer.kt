@@ -34,7 +34,7 @@ class IonicStormCombatRenderer() : BaseCombatLayeredRenderingPlugin() {
 
         handleParticles(amount)
 
-        if (Global.getCurrentState() != GameState.TITLE) {
+        if (Global.getCurrentState() != GameState.TITLE && Global.getSector()?.playerFleet != null) {
             var data = AbyssUtils.getSystemData(Global.getSector().playerFleet.starSystem)
             color = data.getColor()
             darkColor = data.getDarkColor()

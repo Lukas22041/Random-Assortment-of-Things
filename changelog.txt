@@ -1,6 +1,17 @@
 Version 2.4.8
 Save compatible with 2.4.x
 
+-> The "Abyssal Ships" skill now receives the same 10% min DP increase that the "Automated Ships" skill has aswell.
+-> Slightly reduced the size of abyssal fleets.
+-> Made Exotech Fighters AI disabled if controlled through the Synchronisation skill in Second-in-Command
+-> Fixed a rare crash with the "Forgotten Pact" skill.
+-> Fixed a crash when entering simulations from the missions screen.
+
+
+
+Version 2.4.8
+Save compatible with 2.4.x
+
 -> The Abyssal Executive Officer can now be found on a random lightsource in the main-branch of the abyss (path connected to the final system).
 -> Made the Arkas AI a bit more willing to use its shipsystem if its main weapons are missiles.
 -> Ships with the "Forgotten Pact" skill are forced to vent at high flux and receive some damage resistance while venting.

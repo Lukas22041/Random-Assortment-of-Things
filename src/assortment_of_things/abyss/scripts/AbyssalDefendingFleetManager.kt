@@ -591,7 +591,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         var difficulty = AbyssUtils.getDifficulty()
         var level = getStrengthLevelForStep(data)
 
-        minPoints = 84f
+        minPoints = 54f
         if (difficulty == AbyssDifficulty.Hard) minPoints += 50f
         minPoints += 84 * level
 
@@ -603,7 +603,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         var difficulty = AbyssUtils.getDifficulty()
         var level = getStrengthLevelForStep(data)
 
-        maxPoints = 148f
+        maxPoints = 118f
         if (difficulty == AbyssDifficulty.Hard) maxPoints += 70f
         maxPoints += 84 * level
 
