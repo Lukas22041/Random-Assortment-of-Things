@@ -58,20 +58,24 @@ class AbyssSpecialTitleScreen : EveryFrameCombatPlugin {
     override fun renderInWorldCoords(viewport: ViewportAPI?) {
 
 
-        var noiseMult = 1f
-        if (Global.getCombatEngine().isSimulation) noiseMult = 0.5f;
+        //Disabling shaders makes the screen texture unable to load
+        if (ShaderLib.getScreenTexture() != 0) {
+            var noiseMult = 1f
+            if (Global.getCombatEngine().isSimulation) noiseMult = 0.5f;
 
-        ShaderLib.beginDraw(shader);
-        GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), Global.getCombatEngine().getTotalElapsedTime(false) / 8f)
-        GL20.glUniform1f(GL20.glGetUniformLocation(shader, "noise"), 0.05f * noiseMult)
+            ShaderLib.beginDraw(shader);
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), Global.getCombatEngine().getTotalElapsedTime(false) / 8f)
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "noise"), 0.05f * noiseMult)
 
-        GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture());
+            GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0);
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture());
 
-        GL11.glDisable(GL11.GL_BLEND);
-        ShaderLib.screenDraw(ShaderLib.getScreenTexture(), GL13.GL_TEXTURE0 + 0)
-        ShaderLib.exitDraw()
+            GL11.glDisable(GL11.GL_BLEND);
+            ShaderLib.screenDraw(ShaderLib.getScreenTexture(), GL13.GL_TEXTURE0 + 0)
+            ShaderLib.exitDraw()
+        }
     }
+
 
     override fun renderInUICoords(viewport: ViewportAPI?) {
 

@@ -3,3 +3,5 @@ id,name,categories,spawnWeight,color,tags,order,plugin
 ,,,,,,,
 ,,,,,,,
 rat_abyssal,Abyssal,sc_cat_automated,0,"255, 0, 50, 255",,905,assortment_of_things.campaign.secondInCommand.abyssal.AptitudeAbyssal
+rat_exotech,Exotech,,0,"252, 218, 0, 255",,525,assortment_of_things.campaign.secondInCommand.exotech.AptitudeExotech
+,,,,,,,

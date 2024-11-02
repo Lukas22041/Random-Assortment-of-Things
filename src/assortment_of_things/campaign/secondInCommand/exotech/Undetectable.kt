@@ -1,4 +1,4 @@
-package assortment_of_things.campaign.secondInCommand.abyssal
+package assortment_of_things.campaign.secondInCommand.exotech
 
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -12,28 +12,27 @@ import second_in_command.SCData
 import second_in_command.skills.automated.SCBaseAutoPointsSkillPlugin
 import second_in_command.specs.SCBaseSkillPlugin
 
-class Mending : SCBaseSkillPlugin() {
+class Undetectable : SCBaseSkillPlugin() {
     override fun getAffectsString(): String {
-        return "all automated ships"
+        return "all ships in the fleet"
     }
 
     override fun addTooltip(data: SCData?, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("Automated ships can no longer acquire additional d-mods", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("Automated ships are almost always recoverable if lost in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun callEffectsFromSeparateSkill(stats: MutableShipStatsAPI, hullSize: ShipAPI.HullSize, id: String) {
 
-        if (stats.isAutomated()) {
-            stats.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0f)
-            stats.dynamic.getMod(Stats.INDIVIDUAL_SHIP_RECOVERY_MOD).modifyFlat(id, 2f)
-        }
+
+
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI, id: String) {
 
+
+        
     }
 
     override fun advance(data: SCData, amunt: Float?) {

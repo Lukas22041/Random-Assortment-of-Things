@@ -24,7 +24,7 @@ class SeabreamEffect : BeamEffectPlugin, DamageDealtModifier {
         val dam = (damage.damage * damage.dpsDuration) * 0.2f
         var engine = Global.getCombatEngine()
 
-        engine!!.applyDamage(target, point, dam, DamageType.FRAGMENTATION, 0f, false, true, null)
+        engine!!.applyDamage(target, point, dam, DamageType.FRAGMENTATION, 0f, false, true, param.source)
 
         return null
     }

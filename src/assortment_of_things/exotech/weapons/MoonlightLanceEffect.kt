@@ -44,7 +44,7 @@ class MoonlightLanceEffect : BeamEffectPlugin, DamageDealtModifier {
 
         //Apply extra damage
         val dam = (damage.damage * damage.dpsDuration) * 0.33f
-        Global.getCombatEngine()!!.applyDamage(target, point, dam, damage.type, 0f, false, false, null)
+        Global.getCombatEngine()!!.applyDamage(target, point, dam, damage.type, 0f, false, false, param.source)
 
         //Reduce damage dealt
         damage.modifier.modifyMult("rat_moonlight_lance", 1/1.33f)

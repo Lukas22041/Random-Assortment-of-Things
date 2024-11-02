@@ -12,5 +12,15 @@ rat_abyssal_equivalent_exchange,Equivalent Exchange,graphics/secondInCommand/aby
 rat_abyssal_forgotten_pact,Forgotten Pact,graphics/secondInCommand/abyssal/forgotten_pact.png,0,assortment_of_things.campaign.secondInCommand.abyssal.ForgottenPact
 rat_abyssal_abyssal_symphony,Abyssal Symphony,graphics/secondInCommand/abyssal/abyssal_symphony.png,0,assortment_of_things.campaign.secondInCommand.abyssal.AbyssalSymphony
 ,,,,
-,,,,
+#Exotech,,,,
+rat_exotech_hyperspatial_reconfiguration,Hyperspatial Reconfiguration,graphics/secondInCommand/exotech/hyperspatial_reconfiguration.png,1,assortment_of_things.campaign.secondInCommand.exotech.HyperspatialReconfiguration
+rat_exotech_undetectable,Undetectable,graphics/secondInCommand/exotech/undetectable.png,0.5,assortment_of_things.campaign.secondInCommand.exotech.Undetectable
+rat_exotech_voyager,Voyager,graphics/secondInCommand/exotech/voyager.png,0.5,assortment_of_things.campaign.secondInCommand.exotech.Voyager
+rat_exotech_coil_efficiency,Coil Efficiency,graphics/secondInCommand/exotech/coil_efficiency.png,1,assortment_of_things.campaign.secondInCommand.exotech.CoilEfficiency
+rat_exotech_space_superiority,Space Superiority ,graphics/secondInCommand/exotech/space_superiority.png,1,assortment_of_things.campaign.secondInCommand.exotech.SpaceSuperiority 
+rat_exotech_packed_capacitors,Packed Capacitors,graphics/secondInCommand/exotech/packed_capacitors.png,1,assortment_of_things.campaign.secondInCommand.exotech.PackedCapacitors
+rat_exotech_phase_drift,Phase Drift,graphics/secondInCommand/exotech/phase_drift.png,1,assortment_of_things.campaign.secondInCommand.exotech.PhaseDrift
+rat_exotech_standardised,Standardised,graphics/secondInCommand/exotech/standardised.png,1,assortment_of_things.campaign.secondInCommand.exotech.Standardised
+rat_exotech_intercept_formation,Intercept Formation,graphics/secondInCommand/exotech/intercept_formation.png,1,assortment_of_things.campaign.secondInCommand.exotech.InterceptFormation
+rat_exotech_dimensional_chain,Dimensional Chain,graphics/secondInCommand/exotech/dimensional_chain.png,2,assortment_of_things.campaign.secondInCommand.exotech.DimensionalChain
 ,,,,

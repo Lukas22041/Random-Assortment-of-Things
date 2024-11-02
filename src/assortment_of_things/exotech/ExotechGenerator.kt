@@ -113,6 +113,8 @@ object ExotechGenerator {
         var hideout = system.addCustomEntity("rat_hideout_${Misc.genUID()}", "Abandoned Station", "orbital_habitat", Factions.NEUTRAL)
         hideout.setCircularOrbitPointingDown(planet, MathUtils.getRandomNumberInRange(0f, 360f), 50 + hideout.radius + planet!!.radius, 90f)
 
+        hideout.removeTag("salvageable") //Shows up on missions otherwise
+
         hideout.customDescriptionId = "rat_exo_hideout"
         hideout.addTag("rat_exo_hideout")
 
