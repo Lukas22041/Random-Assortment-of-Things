@@ -6,7 +6,7 @@ Save compatible with 2.4.x
 
 -> Fixed the "Mending" skill not working correctly.
 -> Fixed a few weapons not correctly reporting the source of their damage.
--> Fixed some descriptions for unidentified abyssal ships being wronog.
+-> Fixed some descriptions for unidentified abyssal ships being wrong.
 
 
 
