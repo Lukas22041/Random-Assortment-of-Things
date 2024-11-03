@@ -19,13 +19,13 @@ class PackedCapacitors : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData?, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% flux capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
-    override fun callEffectsFromSeparateSkill(stats: MutableShipStatsAPI, hullSize: ShipAPI.HullSize, id: String) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI,  variant: ShipVariantAPI, hullSize: ShipAPI.HullSize, id: String) {
 
-
+        stats.fluxCapacity.modifyPercent(id, 10f)
 
     }
 

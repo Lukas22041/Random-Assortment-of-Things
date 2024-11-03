@@ -8,10 +8,6 @@ import second_in_command.specs.SCBaseAptitudePlugin
 
 class AptitudeExotech : SCBaseAptitudePlugin() {
 
-    companion object {
-
-    }
-
     override fun getOriginSkillId(): String {
         return "rat_exotech_hyperspatial_reconfiguration"
     }

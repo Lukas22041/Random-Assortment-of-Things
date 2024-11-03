@@ -1,15 +1,13 @@
 package assortment_of_things.campaign.secondInCommand.exotech
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
-import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.campaign.skills.HullRestoration
+import com.fs.starfarer.api.impl.combat.TemporalShellStats
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
-import second_in_command.skills.automated.SCBaseAutoPointsSkillPlugin
 import second_in_command.specs.SCBaseSkillPlugin
 
 class HyperspatialReconfiguration : SCBaseSkillPlugin() {
@@ -19,13 +17,11 @@ class HyperspatialReconfiguration : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData?, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+5%% timeflow", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
-    override fun callEffectsFromSeparateSkill(stats: MutableShipStatsAPI, hullSize: ShipAPI.HullSize, id: String) {
-
-
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI,  variant: ShipVariantAPI, hullSize: ShipAPI.HullSize, id: String) {
 
     }
 
@@ -37,6 +33,21 @@ class HyperspatialReconfiguration : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amunt: Float?) {
 
+    }
+
+    override fun advanceInCombat(data: SCData?, ship: ShipAPI?, amount: Float?) {
+
+        if (Global.getCombatEngine() == null) return
+
+        var id = "rat_hyperspatial_reconfiguration_" + ship!!.id
+
+        val shipTimeMult = 1f + (0.05f)
+        ship!!.mutableStats.timeMult.modifyMult(id, shipTimeMult)
+        if (Global.getCombatEngine().playerShip == ship) {
+            Global.getCombatEngine().timeMult.modifyMult(id, 1f / shipTimeMult)
+        } else {
+            Global.getCombatEngine().timeMult.unmodify(id)
+        }
     }
 
     override fun onActivation(data: SCData) {

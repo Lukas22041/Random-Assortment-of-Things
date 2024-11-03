@@ -107,6 +107,7 @@
 		  "amelie_holo":"graphics/portraits/rat_exo1_holo.png",
 		  "xander":"graphics/portraits/rat_exo2.png",
 		  "defector":"graphics/portraits/rat_exo3.png",
+		  "executive":"graphics/portraits/rat_exo_exec.png",
 		},
 		
 		"rat_preload": {

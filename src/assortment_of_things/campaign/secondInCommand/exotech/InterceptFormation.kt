@@ -14,18 +14,35 @@ import second_in_command.specs.SCBaseSkillPlugin
 
 class InterceptFormation : SCBaseSkillPlugin() {
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "all ships and fighters in the fleet"
     }
 
     override fun addTooltip(data: SCData?, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+100 point-defense weapon range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% damage to missiles and fighters", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
-    override fun callEffectsFromSeparateSkill(stats: MutableShipStatsAPI, hullSize: ShipAPI.HullSize, id: String) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI,  variant: ShipVariantAPI, hullSize: ShipAPI.HullSize, id: String) {
 
+        stats.nonBeamPDWeaponRangeBonus.modifyFlat(id, 100f)
+        stats.beamPDWeaponRangeBonus.modifyFlat(id, 100f)
 
+        stats.damageToFighters.modifyPercent(id, 20f)
+        stats.damageToMissiles.modifyPercent(id, 20f)
+
+    }
+
+    override fun applyEffectsToFighterSpawnedByShip(data: SCData?, fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+
+        var stats = fighter!!.mutableStats
+
+        stats.nonBeamPDWeaponRangeBonus.modifyFlat(id, 100f)
+        stats.beamPDWeaponRangeBonus.modifyFlat(id, 100f)
+
+        stats.damageToFighters.modifyPercent(id, 20f)
+        stats.damageToMissiles.modifyPercent(id, 20f)
 
     }
 

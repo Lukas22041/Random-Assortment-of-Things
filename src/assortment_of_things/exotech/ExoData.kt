@@ -50,7 +50,7 @@ class ExoData {
     var reachedLeadershipGoal = false
     var readyToRepairExoship = false
 
-
+    var claimedExotechOfficer = false
 
     //Missions
 

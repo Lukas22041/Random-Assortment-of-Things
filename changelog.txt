@@ -1,3 +1,15 @@
+Version 2.5.0
+Save compatible with 2.4.x
+
+-> Added the "Exotech" Second-in-Command Aptitude.
+  --> Acquire its officer by talking to Amelie.
+
+-> Fixed the "Mending" skill not working correctly.
+-> Fixed a few weapons not correctly reporting the source of their damage.
+-> Fixed some descriptions for unidentified abyssal ships being wronog.
+
+
+
 Version 2.4.9
 Save compatible with 2.4.x
 

@@ -95,7 +95,7 @@ class ChronosRangeModifier(var ship: ShipAPI) : WeaponBaseRangeModifier, Advance
 
     override fun advance(amount: Float) {
         var mod = 1.15f
-        var modID = ship.id + "abyssal_adaptability"
+        var modID = ship.id + "rat_chronos_core"
 
         ship.mutableStats!!.timeMult.modifyMult(modID, mod);
         if (ship == Global.getCombatEngine().playerShip) {

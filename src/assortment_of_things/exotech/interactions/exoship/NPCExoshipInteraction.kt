@@ -64,6 +64,8 @@ class NPCExoshipInteraction : ExoshipInteractionPlugin() {
             xanderDelegate.init(dialog)
         }
 
+        //populateExecutiveOfficerInteraction()
+
         createOption("Trade") {
             visualPanel.showCore(CoreUITabId.CARGO, interactionTarget) { }
         }

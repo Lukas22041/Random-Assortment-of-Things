@@ -3,29 +3,26 @@ package assortment_of_things.campaign.secondInCommand.exotech
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
-import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.campaign.skills.HullRestoration
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
-import second_in_command.skills.automated.SCBaseAutoPointsSkillPlugin
 import second_in_command.specs.SCBaseSkillPlugin
 
-class `SpaceSuperiority ` : SCBaseSkillPlugin() {
+class SpaceSuperiority : SCBaseSkillPlugin() {
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "all carriers"
     }
 
     override fun addTooltip(data: SCData?, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-
+        tooltip.addPara("+15%% faster fighter replacement rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% engagement range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
-    override fun callEffectsFromSeparateSkill(stats: MutableShipStatsAPI, hullSize: ShipAPI.HullSize, id: String) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI,  variant: ShipVariantAPI, hullSize: ShipAPI.HullSize, id: String) {
 
-
+        stats.fighterRefitTimeMult.modifyMult(id, 0.85f)
+        stats.fighterWingRange.modifyPercent(id, 20f)
 
     }
 

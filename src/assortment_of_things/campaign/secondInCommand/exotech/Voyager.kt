@@ -14,18 +14,18 @@ import second_in_command.specs.SCBaseSkillPlugin
 
 class Voyager : SCBaseSkillPlugin() {
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "fleet"
     }
 
     override fun addTooltip(data: SCData?, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-
+        tooltip.addPara("-10%% fuel use", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-20%% terrain movement penalty from all applicable terrain", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
-    override fun callEffectsFromSeparateSkill(stats: MutableShipStatsAPI, hullSize: ShipAPI.HullSize, id: String) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI,  variant: ShipVariantAPI, hullSize: ShipAPI.HullSize, id: String) {
 
-
+        stats.fuelUseMod.modifyMult(id, 0.9f)
 
     }
 
@@ -35,16 +35,15 @@ class Voyager : SCBaseSkillPlugin() {
         
     }
 
-    override fun advance(data: SCData, amunt: Float?) {
-
+    override fun advance(data: SCData, amount: Float) {
+        data.commander.stats.dynamic.getStat(Stats.NAVIGATION_PENALTY_MULT).modifyFlat("rat_voyager", -0.2f)
     }
 
     override fun onActivation(data: SCData) {
-
+        data.commander.stats.dynamic.getStat(Stats.NAVIGATION_PENALTY_MULT).modifyFlat("rat_voyager", -0.2f)
     }
 
     override fun onDeactivation(data: SCData) {
-
+        data.commander.stats.dynamic.getStat(Stats.NAVIGATION_PENALTY_MULT).unmodify("rat_voyager")
     }
-
 }

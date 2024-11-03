@@ -75,6 +75,8 @@ class PlayerExoshipInteraction(var openedFromAbility: Boolean) : ExoshipInteract
             xanderDelegate.init(dialog)
         }
 
+        //populateExecutiveOfficerInteraction()
+
         createOption("Trade & Storage") {
             visualPanel.showCore(CoreUITabId.CARGO, interactionTarget) { }
         }

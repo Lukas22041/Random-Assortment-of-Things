@@ -8,12 +8,15 @@ import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.CargoPickerListener
 import com.fs.starfarer.api.campaign.CargoStackAPI
 import com.fs.starfarer.api.campaign.impl.items.*
+import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lwjgl.input.Keyboard
+import second_in_command.SCUtils
+import second_in_command.specs.SCOfficer
 
 class ExoshipAmelieInteraction(var original: ExoshipInteractionPlugin) : RATInteractionPlugin() {
 
@@ -29,6 +32,11 @@ class ExoshipAmelieInteraction(var original: ExoshipInteractionPlugin) : RATInte
 
         textPanel.addPara("\"Welcome Back. I asume you've brought some good news?\"")
 
+        if (Global.getSettings().modManager.isModEnabled("second_in_command") && !ExoUtils.getExoData().claimedExotechOfficer) {
+            textPanel.addPara("\"On that note, i have someone that may be of use to you.\"")
+        }
+
+
         populateAmelieDialog()
     }
 
@@ -36,6 +44,43 @@ class ExoshipAmelieInteraction(var original: ExoshipInteractionPlugin) : RATInte
         createOption("Transfer unique items.") {
             donateItems()
         }
+
+        if (Global.getSettings().modManager.isModEnabled("second_in_command") && !ExoUtils.getExoData().claimedExotechOfficer) {
+            createOption("Talk about the potential hire") {
+                clearOptions()
+
+                var person = Global.getSector().getFaction("rat_exotech").createRandomPerson(FullName.Gender.MALE)
+                var officer = SCOfficer(person, "rat_exotech")
+                officer.person.portraitSprite = "graphics/portraits/rat_exo_exec.png"
+                officer.increaseLevel(1)
+
+                visualPanel.showSecondPerson(officer.person)
+
+                textPanel.addPara("\"Someone from my unit just finished the last task i have given them. " +
+                        "At the moment i do not require ${officer.person.hisOrHer} particular skills for any of my current tasks, so i want ${officer.person.himOrHer} transfered over to your fleet to assist you with your own work.\n\n" +
+                        "" +
+                        "${officer.person.heOrShe.capitalize()} is an executive officer specialising within the fleets own doctrine, ${officer.person.heOrShe} should be of use if you plan to replicate our fleet structure, or if you were to try something similar.\"",
+                Misc.getTextColor(), Misc.getHighlightColor(), "executive officer")
+
+                SCUtils.showSkillOverview(dialog, officer)
+
+                textPanel.addPara("\"Dont worry, ${officer.person.hisOrHer} salary will continue to be paid from our side. I hope ${officer.person.heOrShe} will be of good use to you. \"",
+                    Misc.getTextColor(), Misc.getHighlightColor(), "executive officer")
+
+                SCUtils.getPlayerData().addOfficerToFleet(officer)
+                SCUtils.getPlayerData().setOfficerInEmptySlotIfAvailable(officer)
+                dialog.textPanel.addParagraph("${person.nameString} (level ${officer.getCurrentLevel()}) has joined your fleet",  Misc.getPositiveHighlightColor())
+
+                ExoUtils.getExoData().claimedExotechOfficer = true
+
+                createOption("Back") {
+                    clearOptions()
+                    visualPanel.hideSecondPerson()
+                    populateAmelieDialog()
+                }
+            }
+        }
+
 
         createOption("Ask her some questions.") {
             clearOptions()
