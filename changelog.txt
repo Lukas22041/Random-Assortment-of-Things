@@ -1,5 +1,6 @@
 Version 2.5.0
 Save compatible with 2.4.x
+If you use Second-in-Command, requires v1.2.6 or above, or it will likely crash
 
 -> Added the "Exotech" Second-in-Command Aptitude.
   --> Acquire its officer by talking to Amelie.
