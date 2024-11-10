@@ -1,3 +1,15 @@
+Version 2.5.1
+Save compatible with 2.4.x
+If you use Second-in-Command, requires v1.2.6 or above, or it will likely crash
+
+-> The Gilgamesh now has Synergy Mounts instead of Energy, but missile weapons face harsher downsides on it.
+-> Made the Gilgamesh AI a bit less afraid to use its shipsystem.
+-> Made the "Dimensional Chain" skill base on the Wings base number of active fighters, rather than on how many are active.
+-> Moved the "Angelic Presence" skill down a tier, as it kind of competed with skills that you would always pick.
+-> Fixed a bug with the Gilgamesh shipsystem AI that made it consider allied missiles as important danger.
+
+
+
 Version 2.5.0
 Save compatible with 2.4.x
 If you use Second-in-Command, requires v1.2.6 or above, or it will likely crash
