@@ -351,6 +351,11 @@ class AbyssTerrainInHyperspacePlugin() : OldHyperspaceTerrainPlugin() {
         return false
     }
 
+    override fun hasTooltip(): Boolean {
+        if (getLevel() <= 0.5f) return false
+        return true
+    }
+
     //Cant have multiple systems with the terrain without this
     override fun getTerrainId(): String {
         return super.getTerrainId() + id

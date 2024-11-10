@@ -24,10 +24,10 @@ class AptitudeAbyssal : SCBaseAptitudePlugin() {
         section1.addSkill("rat_abyssal_submerge")
         section1.addSkill("rat_abyssal_stressed_grid")
         section1.addSkill("rat_abyssal_interlinked")
+        section1.addSkill("rat_abyssal_angelic_presence")
         addSection(section1)
 
         var section2 = SCAptitudeSection(true, 2, "technology3")
-        section2.addSkill("rat_abyssal_angelic_presence")
         section2.addSkill("rat_abyssal_equivalent_exchange")
         section2.addSkill("rat_abyssal_forgotten_pact")
         addSection(section2)

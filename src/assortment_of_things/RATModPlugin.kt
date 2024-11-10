@@ -100,6 +100,7 @@ class RATModPlugin : BaseModPlugin() {
 
         LunaRefitManager.addRefitButton(CyberneticInterfaceRefitButton())
 
+
         if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
             //RATNexManager.addStartingFleets()
         }

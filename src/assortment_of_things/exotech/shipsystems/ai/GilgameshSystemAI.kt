@@ -30,7 +30,7 @@ class GilgameshSystemAI : ShipSystemAIScript {
 
         if (target == null) return
 
-        if (hasNearbyDanger(amount, missileDangerDir, collisionDangerDir, target, 500f)) {
+        if (hasNearbyDanger(amount, missileDangerDir, collisionDangerDir, target, 250f)) {
             countdown = maxCountdown
             return
         }
@@ -68,9 +68,12 @@ class GilgameshSystemAI : ShipSystemAIScript {
     fun getFurthestWeaponRange(ship: ShipAPI) : Float {
         var range = 0f
         for (weapon in ship.allWeapons.filter { it.slot.id == "WS0004" || it.slot.id == "WS0005"} ) {
-            if (weapon.range > range)
+            var weaponRange = weapon.range * 1.10f
+            if (weapon.type == WeaponAPI.WeaponType.MISSILE) weaponRange *= 0.9f //Adjust for reduction of missile ranges
+
+            if (weaponRange > range)
             {
-                range = weapon.range
+                range = weaponRange
             }
         }
         return range
@@ -86,6 +89,7 @@ class GilgameshSystemAI : ShipSystemAIScript {
             if (consideredProjectiles.contains(projectile))  continue
 
             if (projectile is DamagingProjectileAPI) {
+                if (projectile.owner == ship!!.owner) continue
                 consideredProjectiles.add(projectile)
                 if (projectile.isExpired) continue
                 incomingMissileDamage += projectile.baseDamageAmount
@@ -93,6 +97,7 @@ class GilgameshSystemAI : ShipSystemAIScript {
             }
 
             if (projectile is MissileAPI) {
+                if (projectile.owner == ship!!.owner) continue
                 consideredProjectiles.add(projectile)
                 if (projectile.isExpired) continue
                 incomingMissileDamage += projectile.baseDamageAmount

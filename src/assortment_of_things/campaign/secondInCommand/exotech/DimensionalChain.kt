@@ -133,9 +133,11 @@ class DimensionalChainSubsystem(ship: ShipAPI) : MagicSubsystem(ship) {
             var timeflowDecrease = 0.03f
             var damageIncrease = 0.05f
             var wing = ship.wing
-            if (wing != null && wing.wingMembers.size != 0) {
-                timeflowDecrease /= wing.wingMembers.size
-                damageIncrease /= wing.wingMembers.size
+            if (wing != null && wing.spec.numFighters != 0) {
+                /*timeflowDecrease /= wing.wingMembers.size
+                damageIncrease /= wing.wingMembers.size*/
+                timeflowDecrease /= wing.spec.numFighters
+                damageIncrease /= wing.spec.numFighters
             }
 
             listener.instances.add(DimensionalChainListener.ChainInstances(duration, timeflowDecrease, damageIncrease))

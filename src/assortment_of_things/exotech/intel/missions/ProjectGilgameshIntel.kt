@@ -17,6 +17,7 @@ import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
+import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
@@ -194,6 +195,8 @@ class ProjectGilgameshIntel() : BaseIntelPlugin() {
         fleet.makeImportant("")
 
         var officer = Global.getSector().getFaction(Factions.PIRATES).createRandomPerson()
+        officer.setPersonality(Personalities.AGGRESSIVE) //Make the Gilgamesh less afraid
+
 
         officer.stats.level = 7
         officer.stats.setSkillLevel(Skills.HELMSMANSHIP, 2f)

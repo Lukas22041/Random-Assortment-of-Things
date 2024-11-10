@@ -450,9 +450,10 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
         //Damage reduction
         drone.getMutableStats().getEnergyWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.4f)
-        drone.getMutableStats().getMissileWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.4f)
         drone.getMutableStats().getBallisticWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.4f)
+        drone.getMutableStats().getMissileWeaponDamageMult().modifyMult("rat_gilgamesh_drone", 0.3f)
 
+        drone.mutableStats.missileWeaponRangeBonus.modifyMult("rat_gilgamesh_drone", 0.75f)
 
         drone.getMutableStats().ballisticWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 300f)
         drone.getMutableStats().energyWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 300f)
