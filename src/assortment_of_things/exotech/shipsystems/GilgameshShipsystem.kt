@@ -220,11 +220,17 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
                     }
                 }
 
+                drone.shipTarget = target
 
                 val shipAngleToTarget = Misc.getAngleInDegrees(drone.location, target!!.location)
                 var isEnemyInShipArc = Misc.isInArc(ship!!.facing, 40f, shipAngleToTarget)
 
 
+                //This hopefully fixes some aiming issues, i think since the drones dont have velocity, its not considered in the innitial speed boost for weapons
+              /*  var currentSpeed = Vector2f(drone.velocity)
+                drone.velocity.set(Vector2f(ship!!.velocity))*/
+
+                //drone.velocity.set(Vector2f(ship!!.velocity)) //May potentialy fix issues where weapons are misaimed, i think before it got messed up since the drones have no velocity, which ofc isnt true when firing.
 
                 var predictedPoint = Global.getCombatEngine().getAimPointWithLeadForAutofire(drone, 1f, target, projSpeed)
                 turnTowardsPointV2(drone, predictedPoint, 0f)

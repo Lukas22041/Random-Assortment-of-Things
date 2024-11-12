@@ -162,6 +162,7 @@ class CombatHandler : EveryFrameCombatPlugin
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
     }
 
+
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?)
     {
         /*if (ArtifactUtils.getActiveArtifact() != null)
@@ -176,6 +177,7 @@ class CombatHandler : EveryFrameCombatPlugin
             if (ship == playership) continue
             ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.ESCORT_OTHER_SHIP, 1f, playership)
         }*/
+
 
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)

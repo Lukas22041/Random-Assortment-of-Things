@@ -32,6 +32,11 @@ fun Float.levelBetween(min: Float, max: Float) : Float {
     return level
 }
 
+fun Float.levelBetweenReversed(min: Float, max: Float) : Float {
+
+    return 1 - this.levelBetween(min, max)
+}
+
 fun Any.logger() : Logger {
     return Global.getLogger(this::class.java).apply { level = Level.ALL }
 }
