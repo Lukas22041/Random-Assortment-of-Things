@@ -64,10 +64,10 @@ class AbaddonLanceOnHit : OnHitEffectPlugin {
 
         if (target is ShipAPI) {
             var angle = Misc.getAngleInDegrees(projectile!!.location, target.location)
-            var force = 150f
-            if (target.isDestroyer) force += 250f
-            if (target.isCruiser) force += 450f
-            if (target.isCapital) force += 800f
+            var force = 100f
+            if (target.isDestroyer) force += 150f
+            if (target.isCruiser) force += 250f
+            if (target.isCapital) force += 500f
             CombatUtils.applyForce(target, angle, force)
         }
 
@@ -109,7 +109,7 @@ class AbaddonLanceExplosionScript(var projectile: DamagingProjectileAPI, var loc
 
     var maxDuration = duration
 
-    var interval = IntervalUtil(0.15f, 0.25f)
+    var interval = IntervalUtil(0.25f, 0.33f)
     var sinceLastInterval = 0f
     var dmgMult = 0.15f
 

@@ -1,3 +1,14 @@
+Version 2.5.2
+Save compatible with 2.4.x
+If you use Second-in-Command, requires v1.2.6 or above, or it will likely crash
+
+-> Replaced the Abaddon's Lance Secondary Effect and improved its vfx
+-> Apollyon's End is now more flux efficient and has improved vfx. 
+-> Azazel's Blade is now more flux efficient and has 100 more range.
+-> Fixed an issue with the Gilgmesh that made missiles sometimes not target the right ship.
+
+
+
 Version 2.5.1
 Save compatible with 2.4.x
 If you use Second-in-Command, requires v1.2.6 or above, or it will likely crash
