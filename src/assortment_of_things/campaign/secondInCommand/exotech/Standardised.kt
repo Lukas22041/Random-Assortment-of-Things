@@ -9,6 +9,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.skills.HullRestoration
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
 import second_in_command.skills.automated.SCBaseAutoPointsSkillPlugin
@@ -22,6 +23,7 @@ class Standardised : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData?, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("All energy mount weapons acquire a minimum base range of 600 (before stat modifiers)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - The skill has a limit of providing at most 300 units of additional range", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "300")
         tooltip.addPara("   - Stat modifiers can still decrease the weapons range below this range", 0f, Misc.getTextColor(), Misc.getHighlightColor())
 
     }
@@ -73,6 +75,7 @@ class StandardisedRangeModifier(var ship: ShipAPI) : WeaponBaseRangeModifier {
         var range = weapon.spec.maxRange
         if (range < minRange) {
             var difference = minRange - range
+            difference = MathUtils.clamp(difference, 0f, 300f)
             return difference
         }
 

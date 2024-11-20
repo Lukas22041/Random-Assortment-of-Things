@@ -2,7 +2,7 @@
     "displayName": "Burst",
     "fluxCapacitors": 18,
     "fluxVents": 11,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_gabriel",
     "hullMods": [
         "heavyarmor",

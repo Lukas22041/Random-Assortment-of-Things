@@ -1,3 +1,13 @@
+Version 2.5.3
+Save compatible with 2.4.x
+If you use Second-in-Command, requires v1.2.6 or above, or it will likely crash
+
+-> The "Standardised" skill can now only apply at most a 300 unit range increase.
+-> The Abaddons secondary effect should no longer effect normal projectiles.
+-> Fixed the Gabriel not having any preset variants in refit.
+
+
+
 Version 2.5.2
 Save compatible with 2.4.x
 If you use Second-in-Command, requires v1.2.6 or above, or it will likely crash

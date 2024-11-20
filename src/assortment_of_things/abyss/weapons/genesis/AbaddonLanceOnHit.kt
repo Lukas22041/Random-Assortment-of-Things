@@ -10,6 +10,7 @@ import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
+import com.fs.starfarer.api.loading.ProjectileSpecAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.combat.entities.Missile
@@ -157,6 +158,7 @@ class AbaddonLanceExplosionScript(var projectile: DamagingProjectileAPI, var loc
             var targets = Global.getCombatEngine().allObjectGrid.getCheckIterator(projectile.location, 2500f, 2500f)
             for (obj in targets) {
                 if (obj !is CombatEntityAPI) continue
+                if (obj is DamagingProjectileAPI) continue
 
                 var distance = MathUtils.getDistance(obj, loc)
                 if (distance >= 1500) continue
@@ -175,7 +177,7 @@ class AbaddonLanceExplosionScript(var projectile: DamagingProjectileAPI, var loc
                 }
 
                 if (obj is MissileAPI) {
-                    dmgMult = 0.5f
+                    dmgMult = 0.2f
                 }
 
                 var angle = Misc.getAngleInDegrees(targetLoc, center)

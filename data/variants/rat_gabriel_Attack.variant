@@ -2,7 +2,7 @@
     "displayName": "Attack",
     "fluxCapacitors": 18,
     "fluxVents": 20,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_gabriel",
     "hullMods": [
         "fluxbreakers",

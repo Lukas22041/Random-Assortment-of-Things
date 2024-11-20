@@ -1,5 +1,7 @@
 package assortment_of_things.combat
 
+import assortment_of_things.misc.getAndLoadSprite
+import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin
 import com.fs.starfarer.api.combat.CombatEngineLayers
@@ -9,8 +11,6 @@ import com.fs.starfarer.api.util.FlickerUtilV2
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
-import second_in_command.misc.getAndLoadSprite
-import second_in_command.misc.levelBetween
 import java.awt.Color
 import java.util.*
 import kotlin.collections.ArrayList
