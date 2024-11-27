@@ -6,20 +6,28 @@ import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.intel.event.BackgroundStartFactor
 import assortment_of_things.exotech.intel.event.ExotechEventIntel
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.misc.fixVariant
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FactionSpecAPI
+import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.characters.FullName
+import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
-import com.fs.starfarer.api.impl.campaign.ids.Conditions
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Industries
-import com.fs.starfarer.api.impl.campaign.ids.Submarkets
+import com.fs.starfarer.api.impl.campaign.DModManager
+import com.fs.starfarer.api.impl.campaign.ids.*
+import com.fs.starfarer.api.impl.campaign.submarkets.StoragePlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import exerelin.campaign.backgrounds.BaseCharacterBackground
 import exerelin.utilities.NexFactionConfig
 import lunalib.lunaUtil.LunaCommons
 import org.lazywizard.lazylib.MathUtils
+import org.magiclib.kotlin.getStorage
+import org.magiclib.kotlin.getStorageCargo
+import second_in_command.SCUtils
+import second_in_command.specs.SCOfficer
+import java.util.*
 
 class ExoBackground : BaseCharacterBackground() {
 
@@ -55,7 +63,7 @@ class ExoBackground : BaseCharacterBackground() {
                     "The Exoship will be orbiting a planet within the starting system. " +
                     "If theres no suitable location, it will be somewhere else, and you can call it to you with the \"Manage Exoship\" ability.\n\n" +
                     "" +
-                    "Xanders side missions are still available and are not commpleted by this background."
+                    "Xanders side missions are still available and are not commpleted by this background. The Automated Arkas is stored in the Exoships storage, it is however heavily damaged."
         }
     }
 
@@ -66,6 +74,23 @@ class ExoBackground : BaseCharacterBackground() {
 
     override fun onNewGameAfterTimePass(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?) {
         var data = ExoUtils.getExoData()
+
+        //Add Executive Officer
+        if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+            data.claimedExotechOfficer = true
+
+            var person = Global.getSector().getFaction("rat_exotech").createRandomPerson(FullName.Gender.MALE)
+            var officer = SCOfficer(person, "rat_exotech")
+            officer.person.portraitSprite = "graphics/portraits/rat_exo_exec.png"
+            officer.increaseLevel(1)
+
+            SCUtils.getPlayerData().addOfficerToFleet(officer)
+            SCUtils.getPlayerData().setOfficerInEmptySlotIfAvailable(officer)
+        }
+
+
+        //Give Processor
+        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_ai_core_special", "rat_exo_processor"), 1f)
 
         //Set Tags
 
@@ -127,11 +152,27 @@ class ExoBackground : BaseCharacterBackground() {
         data.amelie.postId = "stationCommander"
 
 
+
         playerExoship.setCircularOrbit(spawnEntity, MathUtils.getRandomNumberInRange(0f, 360f), spawnEntity.radius + playerExoship.radius + 100f, 120f)
 
         data.setPlayerExoship(playerExoship)
         playerPlugin.npcModule.isPlayerOwned = true
         playerPlugin.playerModule.isPlayerOwned = true
+
+
+
+        //Add Auto Arkas to Storage
+        market.getStorageCargo().initMothballedShips(Factions.PLAYER)
+        (market.getStorage() as StoragePlugin).setPlayerPaidToUnlock(true)
+        var arkas = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "rat_arkas_Strike")
+        arkas.fixVariant()
+        arkas.variant.addPermaMod(HullMods.AUTOMATED)
+        arkas.variant.addTag(Tags.TAG_AUTOMATED_NO_PENALTY)
+        arkas.repairTracker.cr = 1f
+        arkas.variant.addTag(Tags.TAG_NO_AUTOFIT)
+        arkas.variant.addPermaMod("rat_exo_experimental")
+        DModManager.addDMods(arkas, false, 5, Random())
+        market.getStorageCargo().mothballedShips.addFleetMember(arkas)
 
 
         //Last

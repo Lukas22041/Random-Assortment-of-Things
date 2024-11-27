@@ -1,14 +1,10 @@
 package assortment_of_things.abyss.misc
 
-import assortment_of_things.RATCampaignPlugin
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.procgen.AbyssData
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.fixVariant
-import assortment_of_things.misc.instantTeleport
 import assortment_of_things.strings.RATItems
-import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.rules.MemKeys
@@ -28,9 +24,7 @@ import exerelin.campaign.ExerelinSetupData
 import exerelin.campaign.PlayerFactionStore
 import exerelin.campaign.customstart.CustomStart
 import exerelin.utilities.StringHelper
-import org.lazywizard.lazylib.MathUtils
-import org.lwjgl.util.vector.Vector2f
-import java.util.*
+import second_in_command.SCUtils
 
 
 //Loosely based on the SoTF dustkeeper start
@@ -55,9 +49,9 @@ class AbyssStart : CustomStart() {
             return
         }
 
-        textPanel.addPara("Your fleet made the risky move to explore the unknown, venturing into the depths.")
+        textPanel.addPara("You ventured in to the vast abyssal depths, having lost most of what you entered with, but emerging with equipment before unseen.")
 
-        textPanel.addPara("It encountered automated threats that it made quick work of, though much of the fleet was lost in the process. You chose to repurpose the defeated Abyssal ships, renovating them for your own use.")
+        textPanel.addPara("The fleet encountered many threats they were not prepared for, but through excessive hardship, managed to prevail. Though most of the fleet has not made it through, you decide to repurpose your findings for a new purpose.")
 
         PlayerFactionStore.setPlayerFactionIdNGC(Factions.PLAYER)
         val tempFleet = FleetFactoryV3.createEmptyFleet(PlayerFactionStore.getPlayerFactionIdNGC(), FleetTypes.PATROL_SMALL, null)
@@ -67,10 +61,18 @@ class AbyssStart : CustomStart() {
 
         tooltip.addSpacer(5f)
 
-        var automatedIMG = tooltip.beginImageWithText("graphics/icons/skills/automated_ships.png", 48f)
-        automatedIMG.addPara("Start with the \"Automated Ships\" skill.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "Automated Ships")
-        tooltip.addImageWithText(0f)
+        if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+            var abyssalImg = tooltip.beginImageWithText("graphics/secondInCommand/abyssal/abyssal_ships.png", 48f)
+            abyssalImg.addPara("Start with an executive officer recovered from cryo-pods within the depths.", 0f,
+                Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "executive officer")
+            tooltip.addImageWithText(0f)
+        } else {
+            var automatedIMG = tooltip.beginImageWithText("graphics/icons/skills/automated_ships.png", 48f)
+            automatedIMG.addPara("Start with the \"Automated Ships\" skill.", 0f,
+                Misc.getTextColor(), Misc.getHighlightColor(), "Automated Ships")
+            tooltip.addImageWithText(0f)
+        }
+
 
         tooltip.addSpacer(10f)
 
@@ -82,8 +84,8 @@ class AbyssStart : CustomStart() {
         tooltip.addSpacer(10f)
 
         var levelIMG = tooltip.beginImageWithText(data.characterData.person.portraitSprite, 48f)
-        levelIMG.addPara("Start at level 4.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "4")
+        levelIMG.addPara("Start at level 3.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "3")
         tooltip.addImageWithText(0f)
 
         tooltip.addSpacer(5f)
@@ -97,6 +99,7 @@ class AbyssStart : CustomStart() {
         addMember("rat_makara_Strike", dialog, data, tempFleet)
         addMember("rat_merrow_Attack", dialog, data, tempFleet)
 
+        addMember("buffalo_d_Standard", dialog, data, tempFleet)
 
 
         tempFleet.fleetData.setSyncNeeded()
@@ -114,38 +117,48 @@ class AbyssStart : CustomStart() {
             supplies += (member.cargoCapacity.toInt() * 0.8f).toInt()
         }
 
-        var crew = 30f
+        var crew = 50f
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, Commodities.CREW, crew)
 
         data.startingCargo.addSpecial(SpecialItemData("rat_artifact", "computational_matrix"), 1f)
-        data.startingCargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_abyssal_conversion"), 1f)
-        data.startingCargo.credits.add(250000f)
-        AddRemoveCommodity.addCreditsGainText(250000, textPanel)
-        data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, RATItems.CHRONOS_CORE, 3f)
-        data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, RATItems.COSMOS_CORE, 3f)
+        //data.startingCargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_abyssal_conversion"), 1f)
+        data.startingCargo.credits.add(100000f)
+        AddRemoveCommodity.addCreditsGainText(100000, textPanel)
+        data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, RATItems.CHRONOS_CORE, 1f)
+        data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, RATItems.COSMOS_CORE, 1f)
 
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, Commodities.FUEL, fuel)
         data.startingCargo.addItems(CargoAPI.CargoItemType.RESOURCES, Commodities.SUPPLIES, supplies)
 
         textPanel.setFontSmallInsignia()
         textPanel.addPara("Gained 1x Computational Matrix", Misc.getPositiveHighlightColor(), Misc.getHighlightColor(), "1x")
-        textPanel.addPara("Gained 1x Abyssal Crew Conversions", Misc.getPositiveHighlightColor(), Misc.getHighlightColor(), "1x")
+        //textPanel.addPara("Gained 1x Abyssal Crew Conversions", Misc.getPositiveHighlightColor(), Misc.getHighlightColor(), "1x")
         textPanel.setFontInsignia()
-        AddRemoveCommodity.addCommodityGainText(RATItems.CHRONOS_CORE, 3, textPanel)
-        AddRemoveCommodity.addCommodityGainText(RATItems.COSMOS_CORE, 3,textPanel)
-        AddRemoveCommodity.addCommodityGainText(Commodities.FUEL, fuel.toInt(), textPanel)
+        AddRemoveCommodity.addCommodityGainText(RATItems.CHRONOS_CORE, 1, textPanel)
+        AddRemoveCommodity.addCommodityGainText(RATItems.COSMOS_CORE, 1,textPanel)
+       /* AddRemoveCommodity.addCommodityGainText(Commodities.FUEL, fuel.toInt(), textPanel)
         AddRemoveCommodity.addCommodityGainText(Commodities.SUPPLIES, supplies.toInt(),textPanel)
-        AddRemoveCommodity.addCommodityGainText(Commodities.CREW, crew.toInt(), textPanel)
+        AddRemoveCommodity.addCommodityGainText(Commodities.CREW, crew.toInt(), textPanel)*/
 
         PlayerFactionStore.setPlayerFactionIdNGC(Factions.PLAYER)
         ExerelinSetupData.getInstance().freeStart = true
+
 
 
         data.addScript {
 
             val fleet = Global.getSector().playerFleet
 
-            Global.getSector().getPlayerPerson().getStats().setSkillLevel(Skills.AUTOMATED_SHIPS, 1f);
+            if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+                var officer = SCUtils.createRandomSCOfficer("rat_abyssal")
+                officer.increaseLevel(1)
+
+                SCUtils.getPlayerData().addOfficerToFleet(officer)
+                SCUtils.getPlayerData().setOfficerInEmptySlotIfAvailable(officer)
+            } else {
+                Global.getSector().getPlayerPerson().getStats().setSkillLevel(Skills.AUTOMATED_SHIPS, 1f);
+            }
+
 
             NGCAddStandardStartingScript.adjustStartingHulls(fleet)
 
@@ -169,19 +182,23 @@ class AbyssStart : CustomStart() {
             fleet.fleetData.ensureHasFlagship()
 
             for (member in fleet.fleetData.membersListCopy) {
-                val max = member.repairTracker.maxCR
-                member.repairTracker.cr = max
+                //val max = member.repairTracker.maxCR
+                member.repairTracker.cr = 0.7f
             }
 
             var player = Global.getSector().playerFleet.commanderStats
             var plugin = Global.getSettings().levelupPlugin
-            for (i in 0 until 3) {
+            for (i in 0 until 2) {
                 var amount = plugin.getXPForLevel(Math.min(plugin.getMaxLevel(), player.getLevel() + 1)) - player.getXP();
                 var added = Math.min(amount, plugin.getXPForLevel(plugin.getMaxLevel()))
                 player.addXP(added)
             }
 
             fleet.fleetData.setSyncNeeded()
+
+            for (member in fleet.fleetData.membersListCopy) {
+                member.setStatUpdateNeeded(true)
+            }
 
         }
 

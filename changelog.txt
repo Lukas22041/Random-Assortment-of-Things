@@ -1,3 +1,21 @@
+Version 2.5.4
+Save compatible with 2.4.x
+If you use Second-in-Command, requires v1.2.6 or above, or it will likely crash
+
+-> The player-owned exoship now requires 1 Fuel/LY instead of 1.2 Fuel/LY. (New Save Only)
+-> Exoship Storage should be unlocked by default now, not requiring the 5000 credits payment.
+-> The Exotech Background now puts the Automated Arkas in to the Exoships storage.
+-> The Exotech Background now spawns you with an Exo-Processor.
+-> The Exotech Background now automaticly gives you the Second-in-Command executive officer.
+-> Slightly changed the theme of the abyssal custom start. Also no longer provides an additional crew conversion.
+-> The abyss start now provides you with an Abyssal officer instead of an Automation once when using Second-in-Command.
+-> The abyss start should no longer start you with low CR when using Second-in-Command.
+-> The abyss start now starts you at level 3.
+-> The abyss start now spawns you with a buffalo.
+-> Fixed the Primordial Sea Subsystem being able to overwrite the piloting officers personality.
+
+
+
 Version 2.5.3
 Save compatible with 2.4.x
 If you use Second-in-Command, requires v1.2.6 or above, or it will likely crash

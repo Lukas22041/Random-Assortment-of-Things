@@ -41,6 +41,7 @@ import assortment_of_things.exotech.terrain.ExotechHyperNebula
 import assortment_of_things.misc.*
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.ui.UIPanelAPI
+import com.fs.starfarer.api.util.DelayedActionScript
 import com.fs.starfarer.campaign.CampaignState
 import com.fs.state.AppDriver
 import com.thoughtworks.xstream.XStream
@@ -333,6 +334,7 @@ class RATModPlugin : BaseModPlugin() {
 
         if (Global.getSector().characterData.memoryWithoutUpdate.get("\$rat_started_abyss") == true) {
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", "rat_abyss_gate")
+
         }
 
     }
@@ -386,5 +388,19 @@ class RATModPlugin : BaseModPlugin() {
     override fun onNewGameAfterTimePass() {
         super.onNewGameAfterTimePass()
 
+        //Dumb fix for CR issues on the custom start
+        if (Global.getSector().characterData.memoryWithoutUpdate.get("\$rat_started_abyss") == true) {
+
+            var script = object : DelayedActionScript(0.1f) {
+                override fun doAction() {
+                    for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                        member.updateStats()
+                        member.setStatUpdateNeeded(true)
+                    }
+                }
+            }
+            Global.getSector().addScript(script)
+
+        }
     }
 }

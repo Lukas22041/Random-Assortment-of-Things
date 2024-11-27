@@ -19,7 +19,7 @@ class ExoshipPlayerModule(var exoship: ExoshipEntity, var exoshipEntity: SectorE
 
     var maxCost = 50000f
 
-    var fuelPerLightyear = 1.2f / 100f
+    var fuelPerLightyear = 1f / 100f
 
     var playerJoinsWarp = true
 

@@ -11,6 +11,7 @@ import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
 import com.fs.starfarer.api.loading.ProjectileSpecAPI
+import com.fs.starfarer.api.loading.WeaponSpecAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.combat.entities.Missile

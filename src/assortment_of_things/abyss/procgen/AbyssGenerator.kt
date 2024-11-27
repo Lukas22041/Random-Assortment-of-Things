@@ -28,6 +28,8 @@ import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
 import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
+import exerelin.utilities.NexConfig
+import exerelin.utilities.NexUtils
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
@@ -456,7 +458,7 @@ class  AbyssGenerator {
         }
 
         //Abyssal Executive
-        if (majorLightSourceInMainAndEarly.isNotEmpty()) {
+        if (majorLightSourceInMainAndEarly.isNotEmpty() && !Global.getSector().characterData.memoryWithoutUpdate.contains("\$rat_started_abyss")) {
 
             if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
 

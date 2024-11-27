@@ -2,9 +2,9 @@
 	"starts":[
 		{
 			"id":"rat_abyssStart",
-			"name":"Abyssal Adventurer",
-			"difficulty":"Easy",
-			"desc":"Your fleet made the risky move to explore the unknown, venturing into the depths.",
+			"name":"Depth Diver",
+			"difficulty":"Normal",
+			"desc":"You ventured in to the vast abyssal depths, having lost most of what you entered with, but emerging with equipment before unseen.",
 			"className":"assortment_of_things.abyss.misc.AbyssStart",
 		},
 	],

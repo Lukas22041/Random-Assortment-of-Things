@@ -257,7 +257,19 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         apparation!!.fleetMember.id = Misc.genUID()
         Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
 
-        apparation!!.captain = ship.captain
+        //apparation!!.captain = ship.captain
+
+        var ogCaptain = ship.captain
+
+        var core = Global.getSettings().createPerson()
+        core.portraitSprite = ogCaptain.portraitSprite
+        core.name = ship.captain.name
+
+        for (skill in ogCaptain.stats.skillsCopy) {
+            core.stats.setSkillLevel(skill.skill.id, skill.level)
+        }
+
+        apparation.captain = core
 
       /*  apparation.isPhased = true
         apparation.isHoldFireOneFrame = true

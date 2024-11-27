@@ -18,10 +18,12 @@ import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.*
+import com.fs.starfarer.api.impl.campaign.submarkets.StoragePlugin
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaTextfield
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.getStorage
 import java.util.*
 
 class ExoshipRemainsInteraction : RATInteractionPlugin() {
@@ -99,6 +101,7 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
                         market.admin = data.amelie
                         data.amelie.postId = "stationCommander"
 
+                        (market.getStorage() as StoragePlugin).setPlayerPaidToUnlock(true)
 
                         playerExoship.orbit = null
 

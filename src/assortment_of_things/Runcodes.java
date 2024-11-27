@@ -4,11 +4,13 @@ package assortment_of_things;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin;
+import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.impl.campaign.AICoreOfficerPluginImpl;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Industries;
+import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.lazywizard.console.Console;
@@ -20,6 +22,12 @@ public class Runcodes  {
 
     public void Example() {
 
+
+        /*InteractionDialogAPI dialog;
+
+        dialog.getTextPanel().setFontSmallInsignia();
+        dialog.getTextPanel().addPara("Information Here");
+        dialog.getTextPanel().setFontInsignia();*/
 
        /* runcode import java.awt.*;
         import java.awt.datatransfer.StringSelection;
