@@ -6,7 +6,10 @@ import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.fixVariant
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.*
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.CargoAPI
+import com.fs.starfarer.api.campaign.InteractionDialogAPI
+import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.campaign.rules.MemKeys
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.characters.CharacterCreationData
@@ -24,11 +27,27 @@ import exerelin.campaign.ExerelinSetupData
 import exerelin.campaign.PlayerFactionStore
 import exerelin.campaign.customstart.CustomStart
 import exerelin.utilities.StringHelper
+import org.magiclib.achievements.MagicAchievement
+import org.magiclib.achievements.MagicAchievementManager
 import second_in_command.SCUtils
 
 
 //Loosely based on the SoTF dustkeeper start
 class AbyssStart : CustomStart() {
+
+
+    override fun getDisabledTooltip(): String? {
+
+        if (!RATSettings.enableAbyss!!) {
+            return "This start is only available with the Abyss enabled in the \"Random Assortment of Things\" config."
+        }
+
+        if (!MagicAchievementManager.getInstance().getAchievement("rat_beatSingularity")!!.isComplete) {
+            return "Requires facing the singularity at the bottom of the abyss to be unlocked."
+        }
+
+        return null
+    }
 
     override fun execute(dialog: InteractionDialogAPI, memoryMap: MutableMap<String, MemoryAPI>) {
 
@@ -38,7 +57,7 @@ class AbyssStart : CustomStart() {
 
         //data.characterData.memoryWithoutUpdate.set("\$rat_started_abyss", true)
 
-        if (!RATSettings.enableAbyss!!) {
+       /* if (!RATSettings.enableAbyss!!) {
             textPanel.addPara("This start is only available with the Abyss enabled in the \"Random Assortment of Things\" config.",
                 Misc.getTextColor(), Misc.getHighlightColor(),
                 "Abyss", "Random Assortment of Things");
@@ -47,7 +66,7 @@ class AbyssStart : CustomStart() {
             optionPanel.setEnabled("fakeDone", false)
             optionPanel.addOption(StringHelper.getString("back", true), "nex_NGCStartBack")
             return
-        }
+        }*/
 
         textPanel.addPara("You ventured in to the vast abyssal depths, having lost most of what you entered with, but emerging with equipment before unseen.")
 
@@ -113,8 +132,8 @@ class AbyssStart : CustomStart() {
         var fuel = 0f
         var supplies = 0f
         for (member in tempFleet.fleetData.membersListCopy) {
-            fuel += (member.fuelCapacity.toInt() * 0.8f).toInt()
-            supplies += (member.cargoCapacity.toInt() * 0.8f).toInt()
+            fuel += (member.fuelCapacity.toInt() * 0.9f).toInt()
+            supplies += (member.cargoCapacity.toInt() * 0.9f).toInt()
         }
 
         var crew = 50f
@@ -143,7 +162,7 @@ class AbyssStart : CustomStart() {
         PlayerFactionStore.setPlayerFactionIdNGC(Factions.PLAYER)
         ExerelinSetupData.getInstance().freeStart = true
 
-
+        data.person.stats.addPoints(1)
 
         data.addScript {
 

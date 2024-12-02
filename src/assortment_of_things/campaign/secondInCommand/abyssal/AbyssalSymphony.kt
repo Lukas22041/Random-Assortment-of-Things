@@ -21,7 +21,7 @@ class AbyssalSymphony : SCBaseSkillPlugin() {
 
         tooltip.addPara("Automated ships can recover their hitpoints over time, at the cost of their peak performance time", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The regeneration happens at a rate of 2%% of the ships hitpoints per second", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "2%")
-        tooltip.addPara("   - For every 1%% of recovered hull the peak performance time is reduced by 2/2/3/5 seconds based on hullsize", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "1%", "2", "2", "3", "5")
+        tooltip.addPara("   - For every 1%% of recovered hull the peak performance time is reduced by 3/4/5/6 seconds based on hullsize", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "1%", "3", "4", "5", "6")
         tooltip.addPara("   - The regeneration is stopped if the ship has no peak performance time remaining", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "1%", "1")
 
     }
@@ -43,10 +43,10 @@ class AbyssalSymphonyScript(var ship: ShipAPI) : AdvanceableListener {
 
     init {
         secondsCostPerPercent = when(ship.hullSize) {
-            ShipAPI.HullSize.FRIGATE -> 2
-            ShipAPI.HullSize.DESTROYER -> 2
-            ShipAPI.HullSize.CRUISER -> 3
-            ShipAPI.HullSize.CAPITAL_SHIP -> 5
+            ShipAPI.HullSize.FRIGATE -> 3
+            ShipAPI.HullSize.DESTROYER -> 4
+            ShipAPI.HullSize.CRUISER -> 5
+            ShipAPI.HullSize.CAPITAL_SHIP -> 6
             else -> 2
         }
     }

@@ -1,5 +1,5 @@
 id,name,description,tooltip,script,image,spoilerLevel,rarity,
-rat_beatSingularity,Stared Back,Defeated the singularity at the bottom of the abyss.,,assortment_of_things.achivements.DefeatedSingularityAchivement,,SPOILER,LEGENDARY,
+rat_beatSingularity,Stared Back,Defeated the singularity at the bottom of the abyss. Unlocks the abyss custom start.,,assortment_of_things.achivements.DefeatedSingularityAchivement,,SPOILER,LEGENDARY,
 rat_beatSingularityChallenge,Angel of the Abyss,Defeated the challenge version of the singularity encounter.,,assortment_of_things.achivements.DefeatedSingularityAchivement,,SPOILER,LEGENDARY,
 ,,,,,,,,
 rat_beatExotechQuestline,Interstellar,"Completed the main Exotech Questline. Unlocks the ""Personal Exoship"" Background.",,assortment_of_things.achivements.RATBaseAchievement,,SPOILER,LEGENDARY,

@@ -1,3 +1,13 @@
+Version 2.5.5
+Save compatible with 2.4.x
+If you are using Nexerelin, requires the latest version of Nexerelin (v0.11.3) or later.
+
+-> The Abyss start now requires beating the abyss boss to be unlocked.
+-> Increased the PPT cost of the Abyssal Symphony skill.
+-> Fixed the Abyss custom start providing you with 1 less skill point than you are supposed to.
+
+
+
 Version 2.5.4
 Save compatible with 2.4.x
 If you use Second-in-Command, requires v1.2.6 or above, or it will likely crash
