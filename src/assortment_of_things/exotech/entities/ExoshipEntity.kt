@@ -28,6 +28,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
     @Transient
     var jitter: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_jitter.png")
+    @Transient
     var jitterBelow: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/stations/rat_exoship_jitter.png")
 
     var lastJitterLocations = ArrayList<Vector2f>()

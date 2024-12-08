@@ -2,6 +2,7 @@ package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssBorder
+import assortment_of_things.abyss.misc.MiscReplacement
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.misc.addPara
 import assortment_of_things.misc.getAndLoadSprite
@@ -169,7 +170,7 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
                     goDarkActive = goDark.isActive
                 }
 
-                if (cell != null && cell.isStorming && !Misc.isSlowMoving(fleet) && !goDarkActive) {
+                if (cell != null && cell.isStorming && !MiscReplacement.isSlowMoving(fleet) && !goDarkActive) {
 
                     applyStormStrikes(cell, fleet, days)
                 }

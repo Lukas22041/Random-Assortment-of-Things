@@ -1,3 +1,17 @@
+Version 2.5.6
+Save compatible with 2.4.x
+If you are using Nexerelin, requires the latest version of Nexerelin (v0.11.3) or later.
+
+-> Experimental Change that may fix the issue some people have where they take Abyssal Storm damage despite moving slowly.
+  -> Please tell me if this patch fixes that issue for you if you previously had it.
+-> Slightly increased the drop chance for seraph cores.
+-> Fixed an issue that made saves not compatible cross-platform and threw crashes if the settings.json devmode was active.
+-> Fixed the Azazel being able to take Storm/Solar Corona damage
+-> Fixed an issue that caused a nullpointer when entering Nexerelins Custom Start menu with Magiclib Achievements disabled.
+-> Fixed an issue with the Boss Core Integration that caused the ship to be seen as an automated ship.
+
+
+
 Version 2.5.5
 Save compatible with 2.4.x
 If you are using Nexerelin, requires the latest version of Nexerelin (v0.11.3) or later.

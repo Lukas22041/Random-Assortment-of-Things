@@ -31,7 +31,7 @@
 	
 	"drop_prob_officer_rat_chronos_core":0.075,
 	"drop_prob_officer_rat_cosmos_core":0.075,
-	"drop_prob_officer_rat_seraph_core":0.10,
+	"drop_prob_officer_rat_seraph_core":0.15,
 	"drop_prob_officer_rat_primordial_core":0,
 	
 	"drop_prob_officer_rat_neuro_core":0,

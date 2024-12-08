@@ -27,7 +27,8 @@ import exerelin.campaign.ExerelinSetupData
 import exerelin.campaign.PlayerFactionStore
 import exerelin.campaign.customstart.CustomStart
 import exerelin.utilities.StringHelper
-import org.magiclib.achievements.MagicAchievement
+import org.json.JSONObject
+import org.lazywizard.lazylib.JSONUtils
 import org.magiclib.achievements.MagicAchievementManager
 import second_in_command.SCUtils
 
@@ -42,7 +43,7 @@ class AbyssStart : CustomStart() {
             return "This start is only available with the Abyss enabled in the \"Random Assortment of Things\" config."
         }
 
-        if (!MagicAchievementManager.getInstance().getAchievement("rat_beatSingularity")!!.isComplete) {
+        if (MagicAchievementManager.getInstance()?.getAchievement("rat_beatSingularity")?.isComplete != true) {
             return "Requires facing the singularity at the bottom of the abyss to be unlocked."
         }
 

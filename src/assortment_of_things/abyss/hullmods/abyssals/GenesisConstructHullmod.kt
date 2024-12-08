@@ -30,6 +30,7 @@ class GenesisConstructHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
 
+
         stats!!.weaponTurnRateBonus.modifyMult(id, 1.5f)
 
         stats!!.energyWeaponDamageMult.modifyMult(id, 1.2f)
@@ -39,6 +40,8 @@ class GenesisConstructHullmod : BaseHullMod() {
         stats!!.energyWeaponRangeBonus.modifyFlat(id, 200f)
 
         stats.empDamageTakenMult.modifyMult(id, 0.5f)
+        stats!!.getDynamic().getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0f);
+
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String?) {

@@ -45,13 +45,14 @@ class AbyssalSeraphsGrace : BaseHullMod() {
             stats!!.variant.removeTag(Tags.SHIP_LIMITED_TOOLTIP)
         }
 
-        if (!stats!!.variant.hasHullMod("rat_abyssal_conversion") && !stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats!!.variant.hasHullMod("rat_seraph_conversion")  && !stats.variant.hasHullMod(HullMods.AUTOMATED)) {
-            stats.variant.addPermaMod(HullMods.AUTOMATED)
+        var conversions = listOf("rat_abyssal_conversion", "rat_chronos_conversion", "rat_cosmos_conversion", "rat_seraph_conversion", "rat_primordial_conversion")
+        if (conversions.none { stats!!.variant.hullMods.contains(it) } && !stats!!.variant.hasHullMod(HullMods.AUTOMATED)) {
+            stats!!.variant.addPermaMod(HullMods.AUTOMATED)
         }
 
         var isInAbyss = isInAbyss()
 
-        if (!isInAbyss) isInAbyss = stats.variant.hasHullMod("rat_sarakiels_blessing")
+        if (!isInAbyss) isInAbyss = stats!!.variant.hasHullMod("rat_sarakiels_blessing")
 
 
         if (isInAbyss) {
