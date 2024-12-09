@@ -14,7 +14,7 @@ class HyperNavBeaconInteraction : RATInteractionPlugin() {
 
         if (!interactionTarget.hasTag("used") && !Global.getSector().intelManager.hasIntelOfClass(ExoshipIntel::class.java)) {
             textPanel.addPara("Due to outdated protocols within this type of beacon, your crew managed to intersect a piece of data that describes the location " +
-                    "of their exoship, and their planned warp destinations for the following few months. Afterwards, another protocol detects the forcefull entry and shuts down any further use of the beacon.")
+                    "of their exoship, and their planned warp destinations for the following few months. Afterwards, another protocol detects the forceful entry and shuts down any further use of the beacon.")
 
             var intel = ExoshipIntel(ExoUtils.getExoData().getExoship(), true)
             Global.getSector().intelManager.addIntel(intel)

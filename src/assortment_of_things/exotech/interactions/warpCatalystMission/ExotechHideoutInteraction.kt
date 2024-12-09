@@ -57,12 +57,12 @@ class ExotechHideoutInteraction() : RATInteractionPlugin() {
 
         textPanel.addPara("With the fleet defeated, you order an inspection of the cargo holds of all the wrecks in the vicinity, but none of them appear to contain the Warp Catalyst.")
 
-        textPanel.addPara("As extended scans indiciate, no one is on the station anymore, most appear to have joined the fight, though some may have escaped in shuttles undetected. You order your crew to dock at the station and further search through its interiors.")
+        textPanel.addPara("As extended scans indicate, no one is on the station anymore, most appear to have joined the fight, though some may have escaped in shuttles undetected. You order your crew to dock at the station and further search through its interior.")
 
         createOption("Continue") {
             clearOptions()
 
-            textPanel.addPara("Your crew continues through the corridors, most of them are decayed beyond airtightness, but some appear to have been recently restored to operatable conditions. " +
+            textPanel.addPara("Your crew continues through the corridors, most of them are decayed beyond airtightness, but some appear to have been recently restored to operable conditions. " +
                     "The defectors likely tried to make this place their new home.")
 
             textPanel.addPara("As most corridors appear empty, the crew makes quick progress through the station. Rather suddenly your crew calls in discovering a heavily protected cache.")
