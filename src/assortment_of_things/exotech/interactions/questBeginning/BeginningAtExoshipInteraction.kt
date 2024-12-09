@@ -49,7 +49,7 @@ class BeginningAtExoshipInteraction : RATInteractionPlugin() {
                             "A figure can be seen, but due to the low quality of the data stream, which likely traces back to an antenna not connected to the main array, it can't be further identified.")
 
                     textPanel.addPara("\"I've got a proposition. Do not send agree nor disagreement back, as to not reveal the comm-line. Just do or do not as told. " +
-                            "I'l send over some coordinates, they should have a point of interest to your liking. If it is, come back and i can provide you with even more oppertunities \". ")
+                            "I'l send over some coordinates, they should have a point of interest to your liking. If it is, come back and i can provide you with even more opportunities \". ")
 
                     createOption("Continue") {
                         clearOptions()

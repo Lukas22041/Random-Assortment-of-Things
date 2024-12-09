@@ -92,7 +92,7 @@ class BeginningQuestEndInteraction : RATInteractionPlugin() {
             textPanel.addPara("She responds with a serious tone \"The faction isn't quite what it used to be - aspects of it, as you could possibly tell from your landing here, are not quite at a standard where it should be. " +
                     "It tries its best to keep appearances up, but internally it is slowly falling apart. A fear to make any attempts at anything keeps us stagnant, or worse at a decline.\"")
 
-            textPanel.addPara("She continues \"At some point in the future, our hoarded resources will run out, and I would rather not be there when that happens, or moreso not without having prepared any measures for the moment.")
+            textPanel.addPara("She continues \"At some point in the future, our hoarded resources will run out, and I would rather not be there when that happens, or more so not without having prepared any measures for the moment.")
 
             createOption("Continue") {
                 clearOptions()
@@ -126,8 +126,8 @@ class BeginningQuestEndInteraction : RATInteractionPlugin() {
 
     fun accept() {
         textPanel.addPara("\"Good, that is promising to say the least. Let's not waste any time then. We have two major objectives to follow. " +
-                "First, we need to acquire the necessary materials to repair the structure. Secondly, my standing within the faction needs to improve. " +
-                "As the commmander of a fleet, I am not in a low place to begin with, but am nonetheless miles away from being a suitable candidate to lead a station of my own.\"")
+                "First, we need to acquire the necessary materials to repair the structure. Second, my standing within the faction needs to improve. " +
+                "As the commander of a fleet, I am not in a low place to begin with, but I am nonetheless miles away from being a suitable candidate to lead a station of my own.\"")
 
         textPanel.addPara("To tackle both of these objectives, we need to work with my intelligence officer, Xander. He should be able to locate what we are missing for the repairs, and he will be able to find opportunities to further improve my standing. " +
                 "Alternatively, the higher-ups take special consideration of those who are capable of recovering Domain-era relics. If you have any of those that you aren't too attached to, make sure to deliver them to me.\"", Misc.getTextColor(), Misc.getHighlightColor(), "Xander")
