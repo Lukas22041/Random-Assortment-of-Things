@@ -14,9 +14,12 @@ import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
+import org.dark.shaders.util.ShaderLib
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.combat.CombatUtils
 import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL13
+import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
@@ -34,6 +37,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
     var aiInterval = IntervalUtil(3f, 3f)
 
+
     init {
         Global.getCombatEngine().addLayeredRenderingPlugin(renderer)
     }
@@ -43,7 +47,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
     }
 
     override fun getBaseCooldownDuration(): Float {
-        return 20f
+        return 2f //20
     }
 
     override fun getBaseInDuration(): Float {
@@ -403,6 +407,27 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
     var lastJitterLocations = ArrayList<Vector2f>()
     var lastSecondJitterLocations = ArrayList<Vector2f>()
 
+    companion object {
+        var shader = 0
+    }
+
+
+    init {
+        shader = ShaderLib.loadShader(
+            Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+            Global.getSettings().loadText("data/shaders/rat_primordialSeaShader.shader"))
+        if (shader != 0) {
+            GL20.glUseProgram(shader)
+
+            GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
+
+            GL20.glUseProgram(0)
+        } else {
+            var test = ""
+        }
+    }
+
+
     override fun init(entity: CombatEntityAPI?) {
 
     }
@@ -428,7 +453,7 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
     }
 
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
-        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS, CombatEngineLayers.ABOVE_SHIPS_LAYER, CombatEngineLayers.UNDER_SHIPS_LAYER)
+        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS, CombatEngineLayers.ABOVE_SHIPS_LAYER, CombatEngineLayers.UNDER_SHIPS_LAYER, CombatEngineLayers.JUST_BELOW_WIDGETS)
     }
 
     override fun getRenderRadius(): Float {
@@ -446,6 +471,38 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
 
         var radius = activator.getCurrentRange()
         var segments = 100
+
+        if (layer == CombatEngineLayers.JUST_BELOW_WIDGETS) {
+            if (ShaderLib.getScreenTexture() != 0) {
+
+
+
+                var screenLoc = ShaderLib.transformWorldToScreen(ship.location)
+                var screenLocUV = ShaderLib.transformScreenToUV(screenLoc)
+
+                var secPoint = MathUtils.getPointOnCircumference(ship.location, radius-2, 0f)
+                var secPointScreen = ShaderLib.transformWorldToScreen(secPoint)
+                var secPointsUV = ShaderLib.transformScreenToUV(secPointScreen)
+
+                var pointDist = MathUtils.getDistance(screenLocUV, secPointsUV)
+
+                var noiseMult = 1f
+                if (Global.getCombatEngine().isSimulation) noiseMult = 0.5f;
+
+                ShaderLib.beginDraw(shader);
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "intensity"), 1f)
+
+                GL20.glUniform2f(GL20.glGetUniformLocation(shader, "screenLocUV"), screenLocUV.x, screenLocUV.y)
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "range"), pointDist)
+
+                GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0);
+                GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture());
+
+                GL11.glDisable(GL11.GL_BLEND);
+                ShaderLib.screenDraw(ShaderLib.getScreenTexture(), GL13.GL_TEXTURE0 + 0)
+                ShaderLib.exitDraw()
+            }
+        }
 
         if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER) {
             systemGlow2.setNormalBlend()
@@ -511,6 +568,8 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
         if (layer == CombatEngineLayers.BELOW_PLANETS) {
             renderBorder(ship!!, radius, color, segments)
         }
+
+
 
     }
 

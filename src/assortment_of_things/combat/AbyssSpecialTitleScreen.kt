@@ -18,7 +18,6 @@ class AbyssSpecialTitleScreen : EveryFrameCombatPlugin {
 
     var shader = 0
 
-
     init {
         shader = ShaderLib.loadShader(
             Global.getSettings().loadText("data/shaders/baseVertex.shader"),

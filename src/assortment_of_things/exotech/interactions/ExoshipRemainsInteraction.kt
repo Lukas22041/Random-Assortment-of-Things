@@ -36,7 +36,10 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
 
         if (data.readyToRepairExoship) {
 
-            var intel = Global.getSector().intelManager.getFirstIntel(ExoshipRemainsIntel::class.java) as ExoshipRemainsIntel
+            var intel = Global.getSector().intelManager.getFirstIntel(ExoshipRemainsIntel::class.java) as ExoshipRemainsIntel?
+            if (intel == null) {
+                intel = ExoshipRemainsIntel()
+            }
             intel.endImmediately()
 
 

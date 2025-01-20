@@ -5,6 +5,7 @@ import assortment_of_things.abyss.entities.AbyssalStormParticleManager
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaActivator
+import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaRenderer
 import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.StateBasedTimer
 import assortment_of_things.misc.getAndLoadSprite
@@ -24,11 +25,14 @@ import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.apache.log4j.Level
 import org.dark.shaders.distortion.RippleDistortion
 import org.dark.shaders.post.PostProcessShader
+import org.dark.shaders.util.ShaderLib
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.combat.entities.SimpleEntity
 import org.lazywizard.lazylib.ext.plus
 import org.lazywizard.lazylib.ext.rotate
 import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL13
+import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import org.magiclib.subsystems.MagicSubsystem
@@ -86,6 +90,25 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
 
     var stoppedMusic = false
+
+    companion object {
+        var shader = 0
+    }
+
+    init {
+        shader = ShaderLib.loadShader(
+            Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+            Global.getSettings().loadText("data/shaders/rat_primordialSeaShader.shader"))
+        if (shader != 0) {
+            GL20.glUseProgram(shader)
+
+            GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
+
+            GL20.glUseProgram(0)
+        } else {
+            var test = ""
+        }
+    }
 
     enum class Phases {
         P1, P2, P3
@@ -726,6 +749,34 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             var offset = 300
             vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)
             vignette.render(viewport!!.llx - (offset * 0.5f), viewport!!.lly - (offset * 0.5f))
+
+
+            if (ShaderLib.getScreenTexture() != 0 && activateZone) {
+                var screenLoc = ShaderLib.transformWorldToScreen(ship.location)
+                var screenLocUV = ShaderLib.transformScreenToUV(screenLoc)
+
+                var secPoint = MathUtils.getPointOnCircumference(ship.location, radius-2, 0f)
+                var secPointScreen = ShaderLib.transformWorldToScreen(secPoint)
+                var secPointsUV = ShaderLib.transformScreenToUV(secPointScreen)
+
+                var pointDist = MathUtils.getDistance(screenLocUV, secPointsUV)
+
+                var noiseMult = 1f
+                if (Global.getCombatEngine().isSimulation) noiseMult = 0.5f;
+
+                ShaderLib.beginDraw(PrimordialSeaRenderer.shader);
+                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "intensity"), 0.5f)
+
+                GL20.glUniform2f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "screenLocUV"), screenLocUV.x, screenLocUV.y)
+                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "range"), pointDist)
+
+                GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0);
+                GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture());
+
+                GL11.glDisable(GL11.GL_BLEND);
+                ShaderLib.screenDraw(ShaderLib.getScreenTexture(), GL13.GL_TEXTURE0 + 0)
+                ShaderLib.exitDraw()
+            }
         }
 
         if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER && (phase == Phases.P2 || phase == Phases.P3) && ship.isAlive) {

@@ -163,6 +163,8 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         if (target != null) {
             for (drone in drones) {
 
+                drone.mutableStats.timeMult.applyMods(ship!!.mutableStats.timeMult) //Match Drones Timemult to ship, otherwise increases their time flow when you activate it when exiting phase
+
                 updateDroneEntryLevel(drone)
                 var droneLevel = getDroneLevel(drone)
 

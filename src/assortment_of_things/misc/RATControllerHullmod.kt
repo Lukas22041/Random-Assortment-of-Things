@@ -44,8 +44,12 @@ class RATControllerHullmod : BaseHullMod() {
 
         //stats!!.dynamic.getStat("sc_auto_points_mult").modifyMult(id, 0.5f)
 
-        if (stats!!.variant.hasHullMod(HullMods.AUTOMATED)) {
-            var hasAutoEngineer = playerfleet?.fleetData?.membersListCopy?.any { it.captain?.stats?.hasSkill("rat_auto_engineer") == true } ?: false
+        if (stats!!.variant.hasHullMod(HullMods.AUTOMATED) && playerfleet != null) {
+
+            //if (playerfleet.fleetData?.isForceNoSync == false) playerfleet.fleetData?.isForceNoSync = true
+            var hasAutoEngineer = playerfleet.fleetData?.membersListCopy?.any { it.captain?.stats?.hasSkill("rat_auto_engineer") == true } ?: false
+            //if (playerfleet.fleetData?.isForceNoSync == true) playerfleet.fleetData?.isForceNoSync = false
+
 
             if (hasAutoEngineer) {
                 stats.getDynamic().getMod(Stats.INDIVIDUAL_SHIP_RECOVERY_MOD).modifyFlat(id, 1000f);

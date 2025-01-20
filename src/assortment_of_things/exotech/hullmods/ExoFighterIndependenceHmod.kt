@@ -19,7 +19,7 @@ class ExoFighterIndependenceHmod : BaseHullMod() {
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String?) {
-        Global.getCombatEngine().addPlugin(ExoFighterIndependenceHmodScript(ship))
+        Global.getCombatEngine()?.addPlugin(ExoFighterIndependenceHmodScript(ship))
     }
 
 }
