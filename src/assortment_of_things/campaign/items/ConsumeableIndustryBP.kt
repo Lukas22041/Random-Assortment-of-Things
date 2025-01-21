@@ -1,5 +1,7 @@
 package assortment_of_things.campaign.items
 
+import assortment_of_things.exotech.submarkets.ExotechSubmarketPlugin
+import assortment_of_things.misc.addNegativePara
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoStackAPI
 import com.fs.starfarer.api.campaign.CargoTransferHandlerAPI
@@ -93,6 +95,10 @@ class ConsumeableIndustryBP : BaseSpecialItemPlugin() {
 
         tooltip.addPara(industry!!.desc, opad)
         addCostLabel(tooltip, opad, transferHandler, stackSource)
+
+        if (transferHandler?.submarketTradedWith?.plugin is ExotechSubmarketPlugin) {
+            tooltip.addNegativePara("This item does not restock.")
+        }
     }
 
 }

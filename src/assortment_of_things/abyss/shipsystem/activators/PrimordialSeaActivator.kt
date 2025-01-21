@@ -47,7 +47,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
     }
 
     override fun getBaseCooldownDuration(): Float {
-        return 2f //20
+        return 20f //20
     }
 
     override fun getBaseInDuration(): Float {

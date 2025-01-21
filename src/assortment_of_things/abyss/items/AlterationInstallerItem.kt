@@ -1,6 +1,8 @@
 package assortment_of_things.abyss.items
 
 import assortment_of_things.abyss.hullmods.BaseAlteration
+import assortment_of_things.exotech.submarkets.ExotechSubmarketPlugin
+import assortment_of_things.misc.addNegativePara
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoStackAPI
 import com.fs.starfarer.api.campaign.CargoTransferHandlerAPI
@@ -162,6 +164,9 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)
 
+        if (transferHandler?.submarketTradedWith?.plugin is ExotechSubmarketPlugin) {
+            tooltip.addNegativePara("This item does not restock.")
+        }
     }
 
     override fun createTooltip(tooltip: TooltipMakerAPI,  expanded: Boolean, transferHandler: CargoTransferHandlerAPI?, stackSource: Any?, useGray: Boolean) {
@@ -178,6 +183,7 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
         if (javaClass == BaseSpecialItemPlugin::class.java) {
             addCostLabel(tooltip, opad, transferHandler, stackSource)
         }
+
     }
 
     override fun hasRightClickAction(): Boolean {

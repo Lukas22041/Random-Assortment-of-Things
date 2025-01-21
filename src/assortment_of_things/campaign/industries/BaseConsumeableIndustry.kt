@@ -14,7 +14,7 @@ abstract class BaseConsumeableIndustry() : BaseIndustry() {
     abstract override fun apply()
 
     override fun isAvailableToBuild(): Boolean {
-        if (market.faction != Global.getSector().playerFaction) return false
+        //if (market.faction != Global.getSector().playerFaction) return false
         if (getStack() != null) return true
         return false
     }

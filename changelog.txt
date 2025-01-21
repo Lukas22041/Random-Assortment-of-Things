@@ -1,3 +1,16 @@
+Version 2.5.7
+Save compatible with 2.4.x
+
+-> Exotech Alterations no longer restock.
+-> Re-Added the "Advanced Asteroid Mining" industry blueprint.
+-> Slightly improved the visuals of the genesis shipsystem.
+-> The Gilgameshes Gates should now match the ships timeflow at all times.
+-> The Expedition Hub Industry should now be buildable even if the planet you own isnt your factions planet.
+-> Fixed a rare crash with the Supernova.
+-> Slight performance improvement to the execution of the system handling hullmod.
+
+
+
 Version 2.5.6
 Save compatible with 2.4.x
 If you are using Nexerelin, requires the latest version of Nexerelin (v0.11.3) or later.

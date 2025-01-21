@@ -2,6 +2,7 @@ package assortment_of_things.exotech.submarkets
 
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.intel.event.ExotechEventIntel
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
@@ -27,16 +28,29 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
         market.primaryEntity.addScript(this)
     }
 
+    var first = false
+
     override fun updateCargoPrePlayerInteraction() {
         val seconds = Global.getSector().clock.convertToSeconds(sinceLastCargoUpdate)
         sinceLastCargoUpdate = 0f
+
+
+
         if (okToUpdateShipsAndWeapons()) {
 
             if (cargo == null) {
                 cargo = Global.getFactory().createCargo(true)
             }
 
+            if (!first) {
+                first = true
+                addLimitedCargo()
+            }
+
             sinceSWUpdate = 0f
+
+            var altStacks = cargo.stacksCopy.filter { it.specialItemSpecIfSpecial?.id == "rat_alteration_install" || it.specialItemSpecIfSpecial?.id == RATItems.CONSUMEABLE_INDUSTRY_BP}
+
             cargo.clear()
             cargo.initMothballedShips("rat_exotech")
             cargo.mothballedShips.clear()
@@ -51,9 +65,12 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
             cargo.addSupplies(MathUtils.getRandomNumberInRange(300f, 500f))
             cargo.addFuel(MathUtils.getRandomNumberInRange(800f, 1500f))
 
-            addAlterations()
             addEquipment()
             addExoShips()
+
+            for (stack in altStacks) {
+                cargo.addFromStack(stack)
+            }
         }
         getCargo().sort()
     }
@@ -73,8 +90,8 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
         super.advance(amount)
     }
 
-    fun addAlterations() {
-        var count = MathUtils.getRandomNumberInRange(3, 6)
+    fun addLimitedCargo() {
+        /*var count = MathUtils.getRandomNumberInRange(3, 6)
 
         var hmods = Global.getSettings().allHullModSpecs.filter { it.hasTag("rat_alteration") && it.hasTag("exo") }
 
@@ -85,7 +102,13 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
 
         for (i in 0 until count) {
             cargo.addSpecial(SpecialItemData("rat_alteration_install", weights.pick()), 1f)
-        }
+        }*/
+
+        cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_overtuned_targeting"), 2f)
+        cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_unstopable_force"), 2f)
+        cargo.addSpecial(SpecialItemData("rat_alteration_install", "rat_autonomous_bays"), 1f)
+        cargo.addSpecial(SpecialItemData(RATItems.CONSUMEABLE_INDUSTRY_BP, "rat_asteroid_mining"), 1f)
+
     }
 
     override fun getTariff(): Float {
