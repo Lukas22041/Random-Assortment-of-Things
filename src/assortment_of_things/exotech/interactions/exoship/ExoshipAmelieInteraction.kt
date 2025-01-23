@@ -30,7 +30,7 @@ class ExoshipAmelieInteraction(var original: ExoshipInteractionPlugin) : RATInte
     fun talkToAmelie() {
         visualPanel.showPersonInfo(data.amelie)
 
-        textPanel.addPara("\"Welcome Back. I asume you've brought some good news?\"")
+        textPanel.addPara("\"Welcome Back. I assume you've brought some good news?\"")
 
         if (Global.getSettings().modManager.isModEnabled("second_in_command") && !ExoUtils.getExoData().claimedExotechOfficer) {
             textPanel.addPara("\"On that note, i have someone that may be of use to you.\"")
@@ -57,14 +57,14 @@ class ExoshipAmelieInteraction(var original: ExoshipInteractionPlugin) : RATInte
                 visualPanel.showSecondPerson(officer.person)
 
                 textPanel.addPara("\"Someone from my unit just finished the last task i have given them. " +
-                        "At the moment i do not require ${officer.person.hisOrHer} particular skills for any of my current tasks, so i want ${officer.person.himOrHer} transfered over to your fleet to assist you with your own work.\n\n" +
+                        "At the moment I do not require ${officer.person.hisOrHer} particular skills for any of my current tasks, so I want ${officer.person.himOrHer} transferred over to your fleet to assist you with your own work.\n\n" +
                         "" +
-                        "${officer.person.heOrShe.capitalize()} is an executive officer specialising within the fleets own doctrine, ${officer.person.heOrShe} should be of use if you plan to replicate our fleet structure, or if you were to try something similar.\"",
+                        "${officer.person.heOrShe.capitalize()} is an executive officer specializing within the fleets own doctrine, ${officer.person.heOrShe} should be of use if you plan to replicate our fleet structure, or if you were to try something similar.\"",
                 Misc.getTextColor(), Misc.getHighlightColor(), "executive officer")
 
                 SCUtils.showSkillOverview(dialog, officer)
 
-                textPanel.addPara("\"Dont worry, ${officer.person.hisOrHer} salary will continue to be paid from our side. I hope ${officer.person.heOrShe} will be of good use to you. \"",
+                textPanel.addPara("\"Don't worry, ${officer.person.hisOrHer} salary will continue to be paid from our side. I hope ${officer.person.heOrShe} will be of good use to you. \"",
                     Misc.getTextColor(), Misc.getHighlightColor(), "executive officer")
 
                 SCUtils.getPlayerData().addOfficerToFleet(officer)

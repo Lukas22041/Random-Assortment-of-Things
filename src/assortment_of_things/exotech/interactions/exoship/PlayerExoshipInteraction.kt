@@ -171,9 +171,9 @@ class PlayerExoshipInteraction(var openedFromAbility: Boolean) : ExoshipInteract
         var fuelPerLY = (playerData.fuelPerLightyear * 100)
 
         element.addPara("The exoship requires $fuelPerLY%% of fuel per light-year traveled and is able to produce it over time. " +
-                "You can configure the budget allocated to generating more fuel, but faster production rates have worse cost-efficiency. This cost only applies if its tanks arent full." +
+                "You can configure the budget allocated to generating more fuel, but faster production rates have worse cost-efficiency. This cost only applies if its tanks aren't full." +
                 "", 0f ,
-        Misc.getTextColor(), Misc.getHighlightColor(), "$fuelPerLY%", "light-year", "produce it over time", "worse cost-efficiency", "arent full")
+        Misc.getTextColor(), Misc.getHighlightColor(), "$fuelPerLY%", "light-year", "produce it over time", "worse cost-efficiency", "aren't full")
 
         element.addSpacer(10f)
 
@@ -232,7 +232,7 @@ class PlayerExoshipInteraction(var openedFromAbility: Boolean) : ExoshipInteract
 
         if (remaining < 0) {
             optionPanel.setEnabled("Warp", false)
-            optionPanel.setTooltip("Warp", "The ship does not have enough fuel left to innitiate this warp.")
+            optionPanel.setTooltip("Warp", "The ship does not have enough fuel left to initiate this warp.")
         }
 
         createOption("Select Destination") {

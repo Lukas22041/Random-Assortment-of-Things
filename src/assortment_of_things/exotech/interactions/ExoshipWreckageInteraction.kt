@@ -44,7 +44,7 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
                 textPanel.addPara("As your fleet further approaches the exoship, a fleet of ships emerge from the hangars. " +
                         "They are quickly identified as automated drones based on exo-tech specs." +
                         "\n\n" +
-                        "They have likely been assigned to defend the wreckage from any salvager trying to acquire anything left of worth. " +
+                        "They have likely been assigned to defend the wreckage from any salvager trying to acquire anything left of value. " +
                         "Their flagship seems to be piloted by a custom AI; caution is recommended."
                 )
 
@@ -53,7 +53,7 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
             }
         }
         else {
-            textPanel.addPara("All worthwhiles within this place have already been acquired.")
+            textPanel.addPara("All worthwhile salvage within this place has already been acquired.")
             addLeaveOption()
         }
 
@@ -62,10 +62,10 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
     override fun defeatedDefenders() {
         interactionTarget.memoryWithoutUpdate.set("\$defeated", true)
 
-        textPanel.addPara("After defeating the drones, the fleet prepares to close on to the wreckage.")
+        textPanel.addPara("After defeating the drones, your fleet prepares to close on to the wreckage.")
 
-        textPanel.addPara("There likely isnt much left in terms of raw materials, atleast in a useable state, but the drones must have been defending the place for a reason. " +
-                "Investigating the wreckages interiors should proof worthwhile.")
+        textPanel.addPara("There likely isn't much left in terms of raw materials, at least in a useable state, but the drones must have been defending the place for a reason. " +
+                "Investigating the wreckage interior should prove worthwhile.")
 
         createOption("Loot Wreckage") {
             var loot = Global.getFactory().createCargo(true)
@@ -84,10 +84,10 @@ class ExoshipWreckageInteraction : RATInteractionPlugin() {
 
                 clearOptions()
 
-                textPanel.addPara("After looting whatevers left, the salvage crew returns with both unique items and some remaining logs.")
+                textPanel.addPara("After looting whatever was left, the salvage crew returns with both unique items and some remaining logs.")
 
-                textPanel.addPara("It appears that even after its destruction, even with almost all compontents not functioning, the few compartments remaining with just minor damage were used for developing further technologies.\n\n" +
-                        "This kept them out of the eyes of the major factions to avoid repeated retaliation, atleast aslong as it took for their projects to bear fruit. According to the logs, the \"Arkas-Class\", and a unique phase-alligned AI-Core were developed here.")
+                textPanel.addPara("It appears that even after its destruction, even with almost all components not functioning, the few compartments remaining with just minor damage were used for developing further technologies.\n\n" +
+                        "This kept them out of the eyes of the major factions to avoid repeated retaliation, at least as long as it took for their projects to bear fruit. According to the logs, the \"Arkas-Class\", and a unique phase-aligned AI-Core were developed here.")
 
                 textPanel.addPara("But all of this has been far in the past, after the projects were finished and the faction had a way to defend itself, all new projects were moved towards their remaining exoships. This station has been left alone with its drones for dozens of cycles.")
 

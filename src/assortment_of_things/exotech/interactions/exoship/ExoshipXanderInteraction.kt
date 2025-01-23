@@ -150,10 +150,10 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
         createOption("About Amelie") {
             clearOptions()
 
-            textPanel.addPara("\"She respects my work, and i get paid.\"")
+            textPanel.addPara("\"She respects my work, and I get paid.\"")
 
-            textPanel.addPara("\"Doesn't need much more for me. She has the energy that expresses her competence, and i can see a clear future in working with her. " +
-                    "She got her goals, and i think i can work with those.\"")
+            textPanel.addPara("\"Doesn't need much more for me. She has the energy that expresses her competence, and I can see a clear future in working with her. " +
+                    "She got her goals, and I think I can work with those.\"")
 
             addBackOptionForXanderTalk()
         }
@@ -184,7 +184,7 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
                 clearOptions()
 
                 textPanel.addPara("\"The order is to completely destroy the defectors fleet. To our dismay, the higher ups also require the recovery and return of the Warp Catalyst. " +
-                        "While you are performing the job, i will discuss with Amelie on how to proceed with that issue.",
+                        "While you are performing the job, I will discuss with Amelie on how to proceed with that issue.",
                 Misc.getTextColor(), Misc.getHighlightColor(), "Warp Catalyst")
 
                 textPanel.addPara("Are you prepared to do this job?\"")
@@ -198,7 +198,7 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
                     var intel = WarpCatalystMissionIntel()
                     Global.getSector().intelManager.addIntel(intel)
 
-                    textPanel.addPara("\"Good to hear. We asume the fleet to be in the ${intel.hideout.starSystem.nameWithNoType} system. " +
+                    textPanel.addPara("\"Good to hear. We assume the fleet to be in the ${intel.hideout.starSystem.nameWithNoType} system. " +
                             "However we have no information on where, so you you will have to search for them yourself. Good Luck \"",
                     Misc.getTextColor(), Misc.getHighlightColor(), "${intel.hideout.starSystem.nameWithNoType}")
 
@@ -244,7 +244,7 @@ class ExoshipXanderInteraction(var original: ExoshipInteractionPlugin) : RATInte
                     "Xander intervenes \"We have decided to report the catalyst as unrecoverable, found scattered into thousand pieces amidst the remains of the defector's fleet. The higher-ups won't like this result, but it's the best we've got.\"")
 
             textPanel.addPara("Amelie continues \"So, make your way towards the damaged Exoship, and use the catalyst to boot up the repair protocols. " +
-                    "We analysed your data of its wreck, and the autonomous drones within the ship should do the work. Meanwhile both of us will stay here to prepare for what comes after\".")
+                    "We analyzed your data of its wreck, and the autonomous drones within the ship should do the work. Meanwhile both of us will stay here to prepare for what comes after\".")
 
             data.readyToRepairExoship = true
 

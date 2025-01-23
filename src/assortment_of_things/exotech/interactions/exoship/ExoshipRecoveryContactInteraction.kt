@@ -33,9 +33,9 @@ class ExoshipRecoveryContactInteraction : RATInteractionPlugin() {
                 clearOptions()
 
                 textPanel.addPara("Your fleet makes haste to leave as fast as possible, " +
-                        "and a response to your action comes in \"Good. We better not see you attempt anything funny from now on. It would be a good choice for you to dissapear as soon as you can from our scopes.\"")
+                        "and a response to your action comes in \"Good. We better not see you attempt anything funny from now on. It would be a good choice for you to disappear as soon as you can from our scopes.\"")
 
-                textPanel.addPara("Following, a small fleet of ships can be seen transfering crew and cargo between both ships. This process alone takes multiple hours, " +
+                textPanel.addPara("Following, a small fleet of ships can be seen transferring crew and cargo between both ships. This process alone takes multiple hours, " +
                         "but then the line of ships moving between the stations appears to come to a stop, and both ships appear to be readying up for a warp.")
 
                 createOption("Continue") {
@@ -45,16 +45,16 @@ class ExoshipRecoveryContactInteraction : RATInteractionPlugin() {
                     textPanel.addPara("As the stations warp drives heat up, another comm request comes in, this time however, from the other Exoship.")
 
                     textPanel.addPara("\"It appears everything worked out quite well for us, hasn't it\" says Amelie right after the request is accepted. " +
-                            "\"Dont worry, i know how to keep my part of a promise. However, as my first instruction as the commander of this new vessel, i have been tasked to return with the main fleet for extended inspection and repairs.\"")
+                            "\"Don't worry, i know how to keep my part of a promise. However, as my first instruction as the commander of this new vessel, i have been tasked to return with the main fleet for extended inspection and repairs.\"")
 
                     QuestlineFinishedFactor(100, dialog)
 
                     createOption("Continue") {
                         clearOptions()
 
-                        textPanel.addPara("\"I'l transfer over the access codes to a private commlink between your fleet and this station. It will enable you to order a warp to a location of your needs. " +
+                        textPanel.addPara("\"I'll transfer over the access codes to a private commlink between your fleet and this station. It will enable you to order a warp to a location of your needs. " +
                                 "If you need to talk with us, both myself and Xander will be located permanently within this ship now. You can also dock to store resources or travel somewhere together with the ship. \"",
-                        Misc.getTextColor(), Misc.getHighlightColor(), "warp to a location of your needs", "ocated permanently within this ship", "dock to store resources or travel somewhere together with the ship")
+                        Misc.getTextColor(), Misc.getHighlightColor(), "warp to a location of your needs", "Located permanently within this ship", "dock to store resources or travel somewhere together with the ship")
 
                         var tooltip = textPanel.beginTooltip()
 
@@ -83,7 +83,7 @@ class ExoshipRecoveryContactInteraction : RATInteractionPlugin() {
 
                         textPanel.addTooltip()
 
-                        textPanel.addPara("\"We will have to interupt our talk for now, as i've just received the call to initiate the warp. Looking forward to our next oppertunity to work together.\"")
+                        textPanel.addPara("\"We will have to interrupt our talk for now, as i've just received the call to initiate the warp. Looking forward to our next opportunity to work together.\"")
 
                         data.preventNPCWarps = false
                         data.recoveredExoship = true
