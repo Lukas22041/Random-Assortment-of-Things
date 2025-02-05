@@ -83,6 +83,8 @@
 		  "military":"graphics/portraits/cores/rat_military_core.png",
 		  
 		  "exo_processor":"graphics/portraits/cores/rat_exo_processor.png",
+		  
+		  "rat_neural_shard":"graphics/portraits/cores/rat_neural_shard.png",
 		},
 		
 		"rat_intel": {

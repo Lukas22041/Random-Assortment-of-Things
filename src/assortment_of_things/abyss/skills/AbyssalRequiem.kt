@@ -53,7 +53,7 @@ class AbyssalRequiem : RATBaseShipSkill() {
             if (!ship.hasListenerOfClass(AbyssalBloodstreamListener::class.java)) {
                 var listener = AbyssalBloodstreamListener(ship)
                 ship.addListener(listener)
-                Global.getCombatEngine().addLayeredRenderingPlugin(listener)
+                Global.getCombatEngine()?.addLayeredRenderingPlugin(listener)
             }
         }
     }

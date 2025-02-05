@@ -43,7 +43,7 @@ class PhaseDrift : SCBaseSkillPlugin() {
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI, id: String) {
 
-        if (!ship.hasListenerOfClass(PhaseDriftListener::class.java)) {
+        if (!ship.hasListenerOfClass(PhaseDriftListener::class.java) && ship.phaseCloak != null) {
             ship.addListener(PhaseDriftListener(ship))
         }
         

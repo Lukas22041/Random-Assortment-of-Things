@@ -67,7 +67,29 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
                     }
                 }
             }
+        }
 
+        var shardShips = Global.getCombatEngine().ships.filter { it.captain?.hasTag("rat_neuro_shard") == true}
+        for (ship in shardShips) {
+            var officer = ship!!.captain
+
+            if (ship.customData.get("rat_neuro_shard") == null) {
+                ship.setCustomData("rat_neuro_shard", officer)
+            }
+
+            if (officer.stats.skillsCopy.all { it.level == 0f }) {
+
+                var level = MathUtils.getRandomNumberInRange(2, 3)
+                officer.stats.level = level
+
+                var skills = Global.getSector().playerPerson.stats.skillsCopy.filter { it.skill.isCombatOfficerSkill && !it.skill.hasTag("npc_only") && it.level >= 0.5f }.toMutableList()
+                for (i in 0 until  level) {
+                    var skill = skills.randomOrNull() ?: continue
+
+                    skills.remove(skill)
+                    officer.stats.setSkillLevel(skill.skill.id, skill.level)
+                }
+            }
         }
 
         //Switch to closest ship on ship death.
@@ -192,7 +214,8 @@ class NeuralShardScript : BaseEveryFrameCombatPlugin() {
 
         person.name = player.name
         person.gender = player.gender
-        person.portraitSprite = player.portraitSprite
+        //person.portraitSprite = player.portraitSprite
+        person.portraitSprite = "graphics/portraits/cores/rat_neural_shard.png"
 
         var level = MathUtils.getRandomNumberInRange(2, 3)
         person.stats.level = level

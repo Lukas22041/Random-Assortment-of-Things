@@ -14,7 +14,7 @@
   "builtInMods": [
     "rat_exogrid",
     "rat_exo_experimental",
-    "phase_anchor"
+    "rat_phaseshift_shield"
   ],
   "builtInWeapons": {
     "WS0001": "rat_gilgamesh_wing_left",

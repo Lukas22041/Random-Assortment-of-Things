@@ -19,9 +19,7 @@ class ExperimentalDesignHullmod : BaseHullMod() {
 
     }
 
-    override fun getDisplaySortOrder(): Int {
-        return 1
-    }
+
 
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
@@ -48,6 +46,10 @@ class ExperimentalDesignHullmod : BaseHullMod() {
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?, isForModSpec: Boolean): Boolean {
         return false
+    }
+
+    override fun getDisplaySortOrder(): Int {
+        return 1
     }
 
     override fun getNameColor(): Color {

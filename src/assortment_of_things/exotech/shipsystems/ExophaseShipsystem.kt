@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.shipsystems
 
+import assortment_of_things.exotech.hullmods.PhaseriftShield
 import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
@@ -241,6 +242,11 @@ class ExophaseShipsystem : BaseShipSystemScript() {
         }
     }
 
+    override fun getInOverride(ship: ShipAPI?): Float {
+        if (ship?.baseOrModSpec()?.baseHullId == "rat_gilgamesh") return 1f
+        return super.getInOverride(ship)
+    }
+
     override fun getStatusData(index: Int, state: ShipSystemStatsScript.State?, effectLevel: Float): StatusData? {
 
         return null
@@ -252,6 +258,13 @@ class ExophaseShipsystem : BaseShipSystemScript() {
 
         if (disallowPhaseTimer != null) {
             if (disallowPhaseTimer > 0f) {
+                return false
+            }
+        }
+
+        var phaseriftShieldListener = ship.getListeners(PhaseriftShield.PhaseriftShieldListener::class.java).firstOrNull()
+        if ((ship.shipAI != null || (Global.getCombatEngine().combatUI.isAutopilotOn && ship == Global.getCombatEngine().playerShip)) && phaseriftShieldListener != null && ship.system?.isActive == true) {
+            if (phaseriftShieldListener.shieldHP >= 0.5f && ship.fluxLevel <= 0.5f) {
                 return false
             }
         }

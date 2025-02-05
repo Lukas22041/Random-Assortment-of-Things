@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.shipsystems.ai
 
+import assortment_of_things.exotech.hullmods.PhaseriftShield
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.util.IntervalUtil
@@ -19,8 +20,14 @@ class GilgameshSystemAI : ShipSystemAIScript {
     override fun advance(amount: Float, missileDangerDir: Vector2f?, collisionDangerDir: Vector2f?, target: ShipAPI?) {
         if (ship == null) return
 
+        var phaseriftShieldListener = ship!!.getListeners(PhaseriftShield.PhaseriftShieldListener::class.java).firstOrNull()
+
+        var shieldLevel = 0f
+        if (phaseriftShieldListener != null) shieldLevel = MathUtils.clamp(phaseriftShieldListener.shieldHP / phaseriftShieldListener.maxShieldHP, 0f, 1f)
+        var shieldCapable = shieldLevel >= 0.5 && ship!!.fluxLevel <= 0.6f
+
         //Allow phase use if the ship would otherwise get it while the system is active
-        if (hasNearbyDanger(amount, missileDangerDir, collisionDangerDir, target, 100f)) {
+        if (!shieldCapable && hasNearbyDanger(amount, missileDangerDir, collisionDangerDir, target, 100f)) {
             ship!!.setCustomData("rat_dont_allow_phase", -1f)
             return
         }
@@ -30,7 +37,7 @@ class GilgameshSystemAI : ShipSystemAIScript {
 
         if (target == null) return
 
-        if (hasNearbyDanger(amount, missileDangerDir, collisionDangerDir, target, 250f)) {
+        if (!shieldCapable && hasNearbyDanger(amount, missileDangerDir, collisionDangerDir, target, 250f)) {
             countdown = maxCountdown
             return
         }

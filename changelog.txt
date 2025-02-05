@@ -1,3 +1,14 @@
+Version 2.5.8
+Save compatible with 2.4.x
+
+-> The Gilgamesh now has a weak shield with limited hitpoints that it can charge by phasing.
+  -> Not entirely sure about this change yet, if il keep it probably depends on the feedback it gets.
+-> The Gilgamesh no longer comes with Phase Anchor built in.
+-> Neural Shard officers are now applied within the campaign, enabling them to trigger skills and hullmods that require an officer present.
+-> Fixed a crash with the Phase Drift skill.
+
+
+
 Version 2.5.7
 Save compatible with 2.4.x
 

@@ -1,6 +1,7 @@
 {
 	"ranks":{
 		"rat_archivist":{"name":"Archivist"},
+		"rat_shard":{"name":"(Neural Shard)"},
 	},
 	
 	"posts":{

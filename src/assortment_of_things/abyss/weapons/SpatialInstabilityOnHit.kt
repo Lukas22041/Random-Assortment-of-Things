@@ -23,5 +23,6 @@ class SpatialInstabilityOnHit : OnHitEffectPlugin {
         if (listener.stacks.size < 30) {
             listener.stacks.add(SpatialInstabilityScript.InstabilityStack(3f))
         }
+
     }
 }
