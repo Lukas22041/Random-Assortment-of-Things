@@ -221,6 +221,10 @@
             {"file":"sounds/rat/campaign/exoship_warp.ogg","pitch":1,"volume":3},
     ],
 	
+	"rat_gilgamesh_shield_burnout":[
+            {"file":"sounds/sfx_shields/shields_burnout_oneshot.ogg","pitch":1,"volume":1},
+    ],
+	
 	"rat_hyper_pulser_fire":
 	[
 		{"file":"sounds/sfx_wpn_guns/mjolnir_fire_01.ogg","pitch":1.00,"volume":0.45},

@@ -106,6 +106,7 @@ class NeuralShardOfficerScript : EveryFrameScript {
             {
                 if (!member.isAutomated()) {
                     addShardOfficer(member)
+                    member.updateStats()
                 }
             }
 
@@ -142,8 +143,9 @@ class NeuralShardOfficerScript : EveryFrameScript {
         person.portraitSprite = "graphics/portraits/cores/rat_neural_shard.png"
         person.rankId = "rat_shard"
 
-        var level = MathUtils.getRandomNumberInRange(2, 3)
-        person.stats.level = level
+        //var level = MathUtils.getRandomNumberInRange(2, 3)
+        //person.stats.level = level
+        person.stats.level = 3
 
        /* var skills = player.stats.skillsCopy.filter { it.skill.isCombatOfficerSkill && !it.skill.hasTag("npc_only") && it.level >= 0.5f }.toMutableList()
         for (i in 0 until  level) {

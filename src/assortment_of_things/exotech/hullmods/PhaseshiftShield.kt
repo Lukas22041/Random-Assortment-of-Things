@@ -18,7 +18,7 @@ import org.magiclib.util.MagicUI
 import java.awt.Color
 import java.util.*
 
-class PhaseriftShield : BaseHullMod() {
+class PhaseshiftShield : BaseHullMod() {
 
     override fun shouldAddDescriptionToTooltip(hullSize: ShipAPI.HullSize?, ship: ShipAPI?,   isForModSpec: Boolean): Boolean {
         return false
@@ -40,12 +40,12 @@ class PhaseriftShield : BaseHullMod() {
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("This shield can only take up to 3000 units of damage. It can be recharged for 300 units per second while phased, or 20%% of it can be restored from shipsystem activation. ", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "3000", "300", "20%")
+        tooltip.addPara("This shield can only take up to ${PhaseshiftShieldListener.maxShieldHP.toInt()} units of damage. It can be recharged for ${PhaseshiftShieldListener.regenerationRate.toInt()} units per second while phased, and ${(PhaseshiftShieldListener.regenPerSystemUse * 100).toInt()}%% of it can be restored on shipsystem activation. ", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${PhaseshiftShieldListener.maxShieldHP.toInt()}", "${PhaseshiftShieldListener.regenerationRate.toInt()}", "${(PhaseshiftShieldListener.regenPerSystemUse * 100).toInt()}%")
 
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("It has a shield efficiency of 0.8. Damage past your flux capacity can overload the ship and venting will rapidly drain the shield of charge.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "0.8", "overload")
+        tooltip.addPara("It has a shield efficiency of ${PhaseshiftShieldListener.shieldEfficiency}. Damage past your flux capacity can overload the ship and venting will rapidly drain the shield of charge.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${PhaseshiftShieldListener.shieldEfficiency}", "overload")
 
 
         element.render {
@@ -64,7 +64,7 @@ class PhaseriftShield : BaseHullMod() {
 
         if (Global.getCombatEngine() == null) return
 
-        ship.addListener(PhaseriftShieldListener(ship))
+        ship.addListener(PhaseshiftShieldListener(ship))
 
     }
 
@@ -81,18 +81,21 @@ class PhaseriftShield : BaseHullMod() {
     }
 
 
-    class PhaseriftShieldListener(var ship: ShipAPI) : AdvanceableListener {
+    class PhaseshiftShieldListener(var ship: ShipAPI) : AdvanceableListener {
         init {
-            ship.addListener(PhaseriftShieldDamageModifier(this))
-            ship.addListener(PhaseriftShieldDamageConverter(this))
-            Global.getCombatEngine().addLayeredRenderingPlugin(PhaseriftShieldRenderer(ship, this))
+            ship.addListener(PhaseshiftShieldDamageModifier(this))
+            ship.addListener(PhaseshiftShieldDamageConverter(this))
+            Global.getCombatEngine().addLayeredRenderingPlugin(PhaseshiftShieldRenderer(ship, this))
         }
 
-        var maxShieldHP = 3000f
+        companion object {
+            var maxShieldHP = 4000f
+            var regenerationRate = 400f
+            var shieldEfficiency = 0.8f
+            var regenPerSystemUse = 0.25f
+        }
+
         var shieldHP = maxShieldHP
-        var regenerationRate = 300f
-        var shieldEfficiency = 0.8f
-        var regenPerSystemUse = 0.2f
 
         var effectLevel = 1f
         var mostRecentDamage: Float? = null
@@ -104,7 +107,7 @@ class PhaseriftShield : BaseHullMod() {
             var cloakLevel = ship.phaseCloak.effectLevel
 
             if (ship.fluxTracker.isVenting) {
-                shieldHP -= regenerationRate * amount * 3
+                shieldHP -= regenerationRate * amount * 2 //Punish Venting
             }
 
             if (ship.isPhased) {
@@ -127,7 +130,9 @@ class PhaseriftShield : BaseHullMod() {
             }
             effectLevel = MathUtils.clamp(effectLevel, 0f, 1f)
 
-            var renderLevel = shieldHP.levelBetween(0f, maxShieldHP*0.2f)
+            var renderLevel = shieldHP.levelBetween(-100f, maxShieldHP*0.2f)
+            renderLevel = MathUtils.clamp(renderLevel, 0.7f, 1f)
+            if (shieldHP <= 0) renderLevel = 0f
 
             //var colorShiftLevel = shieldLevel * shieldLevel * shieldLevel
             var color = Misc.interpolateColor(ExoUtils.color1, Color(130,4,189, 255), 0f + ((1f-shieldLevel) * 0.4f))
@@ -139,14 +144,20 @@ class PhaseriftShield : BaseHullMod() {
             if (shieldHP > 0.1) {
                 ship.mutableStats.armorDamageTakenMult.modifyMult("phaserift_shield", 0.00001f)
                 ship.mutableStats.hullDamageTakenMult.modifyMult("phaserift_shield", 0.00001f)
+                ship.mutableStats.empDamageTakenMult.modifyMult("phaserift_shield", 0.00001f)
+                ship.mutableStats.weaponDamageTakenMult.modifyMult("phaserift_shield", 0.00001f)
+                ship.mutableStats.engineDamageTakenMult.modifyMult("phaserift_shield", 0.00001f)
             } else {
                 ship.mutableStats.armorDamageTakenMult.unmodify("phaserift_shield")
                 ship.mutableStats.hullDamageTakenMult.unmodify("phaserift_shield")
+                ship.mutableStats.empDamageTakenMult.unmodify("phaserift_shield")
+                ship.mutableStats.weaponDamageTakenMult.unmodify("phaserift_shield")
+                ship.mutableStats.engineDamageTakenMult.unmodify("phaserift_shield")
             }
         }
     }
 
-    class PhaseriftShieldRenderer(var ship: ShipAPI, var listener: PhaseriftShieldListener) : BaseCombatLayeredRenderingPlugin() {
+    class PhaseshiftShieldRenderer(var ship: ShipAPI, var listener: PhaseshiftShieldListener) : BaseCombatLayeredRenderingPlugin() {
 
 
         override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
@@ -167,14 +178,14 @@ class PhaseriftShield : BaseHullMod() {
 
     }
 
-    class PhaseriftShieldDamageConverter(var listener: PhaseriftShieldListener) : DamageListener {
+    class PhaseshiftShieldDamageConverter(var listener: PhaseshiftShieldListener) : DamageListener {
         override fun reportDamageApplied(source: Any?, target: CombatEntityAPI?, result: ApplyDamageResultAPI?) {
 
             var recent = listener.mostRecentDamage ?: return
             var hardflux = listener.mostRecentDamageHardflux ?: return
             var point = listener.mostRecentDamagePoint ?: return
 
-            var damage = recent * listener.shieldEfficiency
+            var damage = recent * PhaseshiftShieldListener.shieldEfficiency
 
             var active = false
             //Check if Shield is active
@@ -191,13 +202,17 @@ class PhaseriftShield : BaseHullMod() {
                 tracker.increaseFlux(damage, hardflux)
 
                 listener.shieldHP -= damage
-                listener.shieldHP = MathUtils.clamp(listener.shieldHP, 0f, listener.maxShieldHP)
+                listener.shieldHP = MathUtils.clamp(listener.shieldHP, 0f, PhaseshiftShieldListener.maxShieldHP)
 
                 //Spawn Distortions if the damage was significant
 
 
                 //Ensure onhits are triggered as shield hits
                 result?.damageToShields = damage
+
+                if (listener.shieldHP <= 0) {
+                    Global.getSoundPlayer().playSound("rat_gilgamesh_shield_burnout", 0.65f + MathUtils.getRandomNumberInRange(-0.2f, 0.2f), 1.3f, ship.location, ship.velocity)
+                }
             }
 
             listener.mostRecentDamage = null
@@ -207,7 +222,7 @@ class PhaseriftShield : BaseHullMod() {
         }
     }
 
-    class PhaseriftShieldDamageModifier(var listener: PhaseriftShieldListener) : DamageTakenModifier {
+    class PhaseshiftShieldDamageModifier(var listener: PhaseshiftShieldListener) : DamageTakenModifier {
 
         override fun modifyDamageTaken(param: Any?, target: CombatEntityAPI?, damage: DamageAPI?,  point: Vector2f?,
                                        shieldHit: Boolean): String? {

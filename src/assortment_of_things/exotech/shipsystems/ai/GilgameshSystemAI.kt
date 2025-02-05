@@ -1,9 +1,8 @@
 package assortment_of_things.exotech.shipsystems.ai
 
-import assortment_of_things.exotech.hullmods.PhaseriftShield
+import assortment_of_things.exotech.hullmods.PhaseshiftShield
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
-import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 
@@ -20,10 +19,35 @@ class GilgameshSystemAI : ShipSystemAIScript {
     override fun advance(amount: Float, missileDangerDir: Vector2f?, collisionDangerDir: Vector2f?, target: ShipAPI?) {
         if (ship == null) return
 
-        var phaseriftShieldListener = ship!!.getListeners(PhaseriftShield.PhaseriftShieldListener::class.java).firstOrNull()
+        var phaseshiftShieldListener = ship!!.getListeners(PhaseshiftShield.PhaseshiftShieldListener::class.java).firstOrNull()
+
+        //Force in to phase to regen shield outside of combat encounters
+        if (phaseshiftShieldListener != null && target == null || MathUtils.getDistance(ship, target) >= 2000) {
+
+            if (phaseshiftShieldListener!!.shieldHP / PhaseshiftShield.PhaseshiftShieldListener.maxShieldHP < 1f && ship!!.fluxLevel <= 0.3f) {
+
+                if (!ship!!.phaseCloak.isActive && !ship!!.system.isCoolingDown && !ship!!.fluxTracker.isOverloadedOrVenting) {
+                    ship!!.phaseCloak.forceState(ShipSystemAPI.SystemState.IN, 0f)
+                }
+
+                if (ship!!.phaseCloak.isActive) {
+                    ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.STAY_PHASED, 0.5f)
+                    ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_VENT, 3f)
+                }
+            }
+        }
+
+        //Stay phased for longer if it has the flux to spare to regen shield
+        if (phaseshiftShieldListener != null) {
+            if (phaseshiftShieldListener!!.shieldHP / PhaseshiftShield.PhaseshiftShieldListener.maxShieldHP < 1f && ship!!.fluxLevel <= 0.25f) {
+                if (ship?.phaseCloak!!.isActive) {
+                    ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.STAY_PHASED, 0.25f)
+                }
+            }
+        }
 
         var shieldLevel = 0f
-        if (phaseriftShieldListener != null) shieldLevel = MathUtils.clamp(phaseriftShieldListener.shieldHP / phaseriftShieldListener.maxShieldHP, 0f, 1f)
+        if (phaseshiftShieldListener != null) shieldLevel = MathUtils.clamp(phaseshiftShieldListener.shieldHP / PhaseshiftShield.PhaseshiftShieldListener.maxShieldHP, 0f, 1f)
         var shieldCapable = shieldLevel >= 0.5 && ship!!.fluxLevel <= 0.6f
 
         //Allow phase use if the ship would otherwise get it while the system is active

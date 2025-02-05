@@ -1,6 +1,6 @@
 package assortment_of_things.exotech.shipsystems
 
-import assortment_of_things.exotech.hullmods.PhaseriftShield
+import assortment_of_things.exotech.hullmods.PhaseshiftShield
 import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
@@ -243,7 +243,7 @@ class ExophaseShipsystem : BaseShipSystemScript() {
     }
 
     override fun getInOverride(ship: ShipAPI?): Float {
-        if (ship?.baseOrModSpec()?.baseHullId == "rat_gilgamesh") return 1f
+        if (ship?.baseOrModSpec()?.baseHullId == "rat_gilgamesh") return 0.75f
         return super.getInOverride(ship)
     }
 
@@ -262,9 +262,9 @@ class ExophaseShipsystem : BaseShipSystemScript() {
             }
         }
 
-        var phaseriftShieldListener = ship.getListeners(PhaseriftShield.PhaseriftShieldListener::class.java).firstOrNull()
-        if ((ship.shipAI != null || (Global.getCombatEngine().combatUI.isAutopilotOn && ship == Global.getCombatEngine().playerShip)) && phaseriftShieldListener != null && ship.system?.isActive == true) {
-            if (phaseriftShieldListener.shieldHP >= 0.5f && ship.fluxLevel <= 0.5f) {
+        var phaseshiftShieldListener = ship.getListeners(PhaseshiftShield.PhaseshiftShieldListener::class.java).firstOrNull()
+        if ((ship.shipAI != null || (Global.getCombatEngine().combatUI.isAutopilotOn && ship == Global.getCombatEngine().playerShip)) && phaseshiftShieldListener != null && ship.system?.isActive == true) {
+            if (phaseshiftShieldListener.shieldHP >= 0.5f && ship.fluxLevel <= 0.5f) {
                 return false
             }
         }

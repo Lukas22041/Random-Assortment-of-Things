@@ -1,7 +1,7 @@
 package assortment_of_things.exotech.shipsystems
 
 import assortment_of_things.exotech.ExoUtils
-import assortment_of_things.exotech.hullmods.PhaseriftShield
+import assortment_of_things.exotech.hullmods.PhaseshiftShield
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
@@ -96,10 +96,10 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         if (!activated && system.state == ShipSystemAPI.SystemState.IN) {
             activated = true
 
-            var phaseriftShieldListener = ship!!.getListeners(PhaseriftShield.PhaseriftShieldListener::class.java).firstOrNull()
-            if (phaseriftShieldListener != null) {
-                phaseriftShieldListener.shieldHP += phaseriftShieldListener.maxShieldHP * phaseriftShieldListener.regenPerSystemUse
-                phaseriftShieldListener.shieldHP = MathUtils.clamp(phaseriftShieldListener.shieldHP, 0f, phaseriftShieldListener.maxShieldHP)
+            var phaseshiftShieldListener = ship!!.getListeners(PhaseshiftShield.PhaseshiftShieldListener::class.java).firstOrNull()
+            if (phaseshiftShieldListener != null) {
+                phaseshiftShieldListener.shieldHP += PhaseshiftShield.PhaseshiftShieldListener.maxShieldHP * PhaseshiftShield.PhaseshiftShieldListener.regenPerSystemUse
+                phaseshiftShieldListener.shieldHP = MathUtils.clamp(phaseshiftShieldListener.shieldHP, 0f, PhaseshiftShield.PhaseshiftShieldListener.maxShieldHP)
             }
 
 
@@ -475,9 +475,9 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
 
         drone.mutableStats.missileWeaponRangeBonus.modifyMult("rat_gilgamesh_drone", 0.75f)
 
-        drone.getMutableStats().ballisticWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 300f)
-        drone.getMutableStats().energyWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 300f)
-        drone.getMutableStats().missileWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 300f)
+        drone.getMutableStats().ballisticWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 350f)
+        drone.getMutableStats().energyWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 350f)
+        drone.getMutableStats().missileWeaponRangeBonus.modifyFlat("rat_gilgamesh_drone", 350f)
 
 
         drone.setCollisionClass(CollisionClass.NONE)
