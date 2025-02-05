@@ -1,3 +1,14 @@
+Version 2.5.9
+Save compatible with 2.4.x
+
+-> Severaly changed the stats of the Gilgamesh, it is now more agile, with better flux stats, but worse armor.
+-> Strenthened the Phaseshift shield in a bunch of ways.
+-> Improved how the AI uses the Gilgamesh a bit.
+-> Neural Shard officers are now always level 3, even if only geting 2 skills.
+-> Fixed ships that have been assigned a shard not updating their fleet stats immediately.
+
+
+
 Version 2.5.8
 Save compatible with 2.4.x
 
