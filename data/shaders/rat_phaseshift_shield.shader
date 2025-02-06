@@ -9,6 +9,7 @@ uniform float level;
 
 vec2 texCoord = gl_TexCoord[0].xy;
 
+float intensity = 1.25;
 
 void main() {
 
@@ -28,14 +29,19 @@ void main() {
 		float scaled1 = brigtness1 * brigtness1 * brigtness1  * brigtness1;
 		float scaled2 = brigtness2 * brigtness2 * brigtness2 * brigtness2 * brigtness2;
 
-		color.r += scaled1 * 4;
-		color.g += scaled1 * 2;
-		
+		color.r = scaled1 * 4 * intensity;
+		color.g = scaled1 * 2 * level * intensity;
+		color.b = scaled1 * 4 * (1-level) * intensity;
 
-	
+		color.r += scaled2 * 2 * intensity;
+		color.g += scaled2 * 1 * level * intensity;
+		color.b += scaled2 * 2 * (1-level) * intensity;
 
-		color.r += scaled2 * 2;
-		color.g += scaled2 * 1;
+		//color.a = (color.r + color.g + color.b);
+
+		float level = (((brigtness1 + brigtness2) / 4) - 0.0) / (0.85 - 0.0);
+		color.a = level;
+
 	} else {
 		color.a = 0;
 	}

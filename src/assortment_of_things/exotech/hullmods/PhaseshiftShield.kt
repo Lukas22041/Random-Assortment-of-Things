@@ -1,6 +1,5 @@
 package assortment_of_things.exotech.hullmods
 
-import assortment_of_things.campaign.items.AICoreSpecialItemPlugin
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
@@ -125,8 +124,8 @@ class PhaseshiftShield : BaseHullMod() {
             shieldLevel = MathUtils.clamp(shieldLevel, 0f, 1f)
 
 
-            //MagicUI.drawHUDStatusBar(ship, 1f, ExoUtils.color1, ExoUtils.color1, 0f, "Shield", "", false)
-            MagicUI.drawInterfaceStatusBar(ship, shieldLevel, Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor(), 1f, "Shield", shieldHP.toInt())
+
+
 
             if (ship.isPhased) {
                effectLevel -= 3f * amount
@@ -158,6 +157,10 @@ class PhaseshiftShield : BaseHullMod() {
                 ship.mutableStats.weaponDamageTakenMult.unmodify("phaserift_shield")
                 ship.mutableStats.engineDamageTakenMult.unmodify("phaserift_shield")
             }
+
+            MagicUI.drawInterfaceStatusBar(ship, shieldLevel, Misc.getPositiveHighlightColor(), Misc.getPositiveHighlightColor(), 1f, "Shield", shieldHP.toInt())
+
+
         }
     }
 
@@ -207,8 +210,8 @@ class PhaseshiftShield : BaseHullMod() {
 
             GL20.glUseProgram(shader)
 
-            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), Global.getCombatEngine().getTotalElapsedTime(false) / 8f)
-            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"),  0.5f)
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), Global.getCombatEngine().getTotalElapsedTime(false) / 12f)
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"),  1f)
             GL20.glUniform1f(GL20.glGetUniformLocation(shader, "level"),  1f)
 
 
@@ -252,6 +255,10 @@ class PhaseshiftShield : BaseHullMod() {
             sprite.renderAtCenter(ship.location.x, ship.location.y)
 
             GL20.glUseProgram(0)
+        }
+
+        fun renderGlow() {
+
         }
 
     }
