@@ -9,7 +9,8 @@ uniform float level;
 
 vec2 texCoord = gl_TexCoord[0].xy;
 
-float intensity = 1.25;
+//float intensity = 1.25;
+uniform float intensity;
 
 void main() {
 
@@ -39,7 +40,7 @@ void main() {
 
 		//color.a = (color.r + color.g + color.b);
 
-		float level = (((brigtness1 + brigtness2) / 4) - 0.0) / (0.85 - 0.0);
+		float level = (((brigtness1 + brigtness2) / 4) - 0.0) / (0.90 - 0.0);
 		color.a = level;
 
 	} else {

@@ -9,6 +9,7 @@ import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.combat.listeners.DamageListener
 import com.fs.starfarer.api.combat.listeners.DamageTakenModifier
+import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
@@ -166,7 +167,7 @@ class PhaseshiftShield : BaseHullMod() {
 
     class PhaseshiftShieldRenderer(var ship: ShipAPI, var listener: PhaseshiftShieldListener) : BaseCombatLayeredRenderingPlugin() {
 
-        var sprite = ship.spriteAPI
+        //var sprite = ship.spriteAPI
         var noise1 = Global.getSettings().getAndLoadSprite("graphics/fx/rat_phaseshift_shield_noise1.png")
         var noise2 = Global.getSettings().getAndLoadSprite("graphics/fx/rat_phaseshift_shield_noise2.png")
 
@@ -174,7 +175,20 @@ class PhaseshiftShield : BaseHullMod() {
 
         init {
             if (shader == 0) {
+                shader = ShaderLib.loadShader(
+                    Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+                    Global.getSettings().loadText("data/shaders/rat_phaseshift_shield.shader"))
+                if (shader != 0) {
+                    GL20.glUseProgram(shader)
 
+                    GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
+                    GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex1"), 1)
+                    GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex2"), 2)
+
+                    GL20.glUseProgram(0)
+                } else {
+                    var test = ""
+                }
             }
         }
 
@@ -192,27 +206,37 @@ class PhaseshiftShield : BaseHullMod() {
 
         override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
 
-            shader = ShaderLib.loadShader(
-                Global.getSettings().loadText("data/shaders/baseVertex.shader"),
-                Global.getSettings().loadText("data/shaders/rat_phaseshift_shield.shader"))
-            if (shader != 0) {
-                GL20.glUseProgram(shader)
 
-                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
-                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex1"), 1)
-                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex2"), 2)
 
-                GL20.glUseProgram(0)
-            } else {
-                var test = ""
+            var lWing = ship!!.allWeapons.find { it.spec.weaponId == "rat_gilgamesh_wing_left" } ?: return
+            var rWing = ship!!.allWeapons.find { it.spec.weaponId == "rat_gilgamesh_wing_right" } ?: return
+
+            renderGlow(lWing.sprite, lWing.location, lWing.currAngle, 1f, 1.5f)
+            renderGlow(rWing.sprite, rWing.location, rWing.currAngle, 1f, 1.5f)
+
+            var sprite = ship.spriteAPI
+            renderGlow(sprite, ship.location, ship.facing, 1f, 1.25f)
+
+
+            //Apply glow, as the medium hardpoint can be past the boundary, which makes it not fully encompassed
+            var frontWeapon = ship.allWeapons.find { it.slot.id == "WS0010" }
+            if (frontWeapon != null) {
+                renderGlow(frontWeapon.sprite, frontWeapon.location, frontWeapon.currAngle, 0.5f, 1.25f)
             }
+
+
+        }
+
+        fun renderGlow(sprite: SpriteAPI, loc: Vector2f, angle: Float, alpha: Float, intensity: Float) {
+
 
 
             GL20.glUseProgram(shader)
 
             GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), Global.getCombatEngine().getTotalElapsedTime(false) / 12f)
-            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"),  1f)
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"),  alpha)
             GL20.glUniform1f(GL20.glGetUniformLocation(shader, "level"),  1f)
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "intensity"),  intensity)
 
 
             //Bind Texture
@@ -245,20 +269,16 @@ class PhaseshiftShield : BaseHullMod() {
             //Reset Texture
             GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0)
 
-
-            var width = ship.spriteAPI.width
-            var height = ship.spriteAPI.width
+            var width = sprite.width
+            var height = sprite.width
 
             sprite.setNormalBlend()
-            sprite.alphaMult = 1f
+            sprite.alphaMult = 0f //Stops sprite from rendering, but keeps the mask from being able to access it.
+            sprite.angle = angle - 90f
             //sprite.setSize(width, h -20f)
-            sprite.renderAtCenter(ship.location.x, ship.location.y)
+            sprite.renderAtCenter(loc.x, loc.y)
 
             GL20.glUseProgram(0)
-        }
-
-        fun renderGlow() {
-
         }
 
     }
