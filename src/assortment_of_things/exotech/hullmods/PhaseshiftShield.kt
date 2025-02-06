@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.hullmods
 
+import assortment_of_things.campaign.items.AICoreSpecialItemPlugin
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
@@ -12,7 +13,11 @@ import com.fs.starfarer.api.combat.listeners.DamageTakenModifier
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import org.dark.shaders.util.ShaderLib
 import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL13
+import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.util.MagicUI
 import java.awt.Color
@@ -140,7 +145,6 @@ class PhaseshiftShield : BaseHullMod() {
             ship.setJitter(this, color, 0.1f * effectLevel * renderLevel, 3, 0f, 0 + 2f)
             ship.setJitterUnder(this,  color, 0.5f * effectLevel * renderLevel, 25, 0f, 7f + 2)
 
-
             if (shieldHP > 0.1) {
                 ship.mutableStats.armorDamageTakenMult.modifyMult("phaserift_shield", 0.00001f)
                 ship.mutableStats.hullDamageTakenMult.modifyMult("phaserift_shield", 0.00001f)
@@ -159,6 +163,17 @@ class PhaseshiftShield : BaseHullMod() {
 
     class PhaseshiftShieldRenderer(var ship: ShipAPI, var listener: PhaseshiftShieldListener) : BaseCombatLayeredRenderingPlugin() {
 
+        var sprite = ship.spriteAPI
+        var noise1 = Global.getSettings().getAndLoadSprite("graphics/fx/rat_phaseshift_shield_noise1.png")
+        var noise2 = Global.getSettings().getAndLoadSprite("graphics/fx/rat_phaseshift_shield_noise2.png")
+
+        var shader: Int = 0
+
+        init {
+            if (shader == 0) {
+
+            }
+        }
 
         override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
             return super.getActiveLayers()
@@ -174,6 +189,69 @@ class PhaseshiftShield : BaseHullMod() {
 
         override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
 
+            shader = ShaderLib.loadShader(
+                Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+                Global.getSettings().loadText("data/shaders/rat_phaseshift_shield.shader"))
+            if (shader != 0) {
+                GL20.glUseProgram(shader)
+
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex1"), 1)
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex2"), 2)
+
+                GL20.glUseProgram(0)
+            } else {
+                var test = ""
+            }
+
+
+            GL20.glUseProgram(shader)
+
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), Global.getCombatEngine().getTotalElapsedTime(false) / 8f)
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"),  0.5f)
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "level"),  1f)
+
+
+            //Bind Texture
+            GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0)
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, sprite.textureId)
+
+            //Setup Noise1
+            //Noise texture needs to be power of two or it wont repeat correctly! (32x32, 64x64, 128x128)
+            GL13.glActiveTexture(GL13.GL_TEXTURE0 + 1)
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, noise1!!.textureId)
+
+            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST)
+            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST)
+
+            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT)
+            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT)
+
+            //Setup Noise2
+            //Noise texture needs to be power of two or it wont repeat correctly! (32x32, 64x64, 128x128)
+            GL13.glActiveTexture(GL13.GL_TEXTURE0 + 2)
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, noise1!!.textureId)
+
+            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST)
+            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST)
+
+            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT)
+            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT)
+
+
+            //Reset Texture
+            GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0)
+
+
+            var width = ship.spriteAPI.width
+            var height = ship.spriteAPI.width
+
+            sprite.setNormalBlend()
+            sprite.alphaMult = 1f
+            //sprite.setSize(width, h -20f)
+            sprite.renderAtCenter(ship.location.x, ship.location.y)
+
+            GL20.glUseProgram(0)
         }
 
     }
