@@ -1,6 +1,7 @@
 package assortment_of_things.exotech.hullmods
 
 import assortment_of_things.exotech.ExoUtils
+import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
@@ -116,7 +117,7 @@ class PhaseshiftShield : BaseHullMod() {
             }
 
             if (ship.isPhased) {
-                var regen = regenerationRate * amount * cloakLevel
+                var regen = regenerationRate * amount * (cloakLevel * cloakLevel * cloakLevel)
                 shieldHP += regen
             }
             shieldHP = MathUtils.clamp(shieldHP, 0f, maxShieldHP)
@@ -163,6 +164,8 @@ class PhaseshiftShield : BaseHullMod() {
 
 
         }
+
+        fun getShieldLevel() = MathUtils.clamp(shieldHP / maxShieldHP, 0f, 1f)
     }
 
     class PhaseshiftShieldRenderer(var ship: ShipAPI, var listener: PhaseshiftShieldListener) : BaseCombatLayeredRenderingPlugin() {
@@ -175,20 +178,7 @@ class PhaseshiftShield : BaseHullMod() {
 
         init {
             if (shader == 0) {
-                shader = ShaderLib.loadShader(
-                    Global.getSettings().loadText("data/shaders/baseVertex.shader"),
-                    Global.getSettings().loadText("data/shaders/rat_phaseshift_shield.shader"))
-                if (shader != 0) {
-                    GL20.glUseProgram(shader)
 
-                    GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
-                    GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex1"), 1)
-                    GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex2"), 2)
-
-                    GL20.glUseProgram(0)
-                } else {
-                    var test = ""
-                }
             }
         }
 
@@ -206,22 +196,43 @@ class PhaseshiftShield : BaseHullMod() {
 
         override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
 
+            shader = ShaderLib.loadShader(
+                Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+                Global.getSettings().loadText("data/shaders/rat_phaseshift_shield.shader"))
+            if (shader != 0) {
+                GL20.glUseProgram(shader)
 
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex1"), 1)
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex2"), 2)
+
+                GL20.glUseProgram(0)
+            } else {
+                var test = ""
+            }
+
+            var phaseLevel = 1-(ship.phaseCloak.effectLevel * ship.phaseCloak.effectLevel * ship.phaseCloak.effectLevel * ship.phaseCloak.effectLevel)
+            if (ship.phaseCloak.state != ShipSystemAPI.SystemState.IN) {
+                phaseLevel = listener.effectLevel
+            }
+
+            var renderLevel = listener.shieldHP.levelBetween(-100f, PhaseshiftShieldListener.maxShieldHP *0.2f)
+            renderLevel = MathUtils.clamp(renderLevel, 0.7f, 1f)
+            if (listener.shieldHP <= 0) renderLevel = 0f
 
             var lWing = ship!!.allWeapons.find { it.spec.weaponId == "rat_gilgamesh_wing_left" } ?: return
             var rWing = ship!!.allWeapons.find { it.spec.weaponId == "rat_gilgamesh_wing_right" } ?: return
 
-            renderGlow(lWing.sprite, lWing.location, lWing.currAngle, 1f, 1.5f)
-            renderGlow(rWing.sprite, rWing.location, rWing.currAngle, 1f, 1.5f)
+            renderGlow(lWing.sprite, lWing.location, lWing.currAngle, 0.15f * renderLevel * phaseLevel, 1.5f)
+            renderGlow(rWing.sprite, rWing.location, rWing.currAngle, 0.15f * renderLevel * phaseLevel, 1.5f)
 
             var sprite = ship.spriteAPI
-            renderGlow(sprite, ship.location, ship.facing, 1f, 1.25f)
-
+            renderGlow(sprite, ship.location, ship.facing, 1f * renderLevel * phaseLevel, 1.25f)
 
             //Apply glow, as the medium hardpoint can be past the boundary, which makes it not fully encompassed
             var frontWeapon = ship.allWeapons.find { it.slot.id == "WS0010" }
             if (frontWeapon != null) {
-                renderGlow(frontWeapon.sprite, frontWeapon.location, frontWeapon.currAngle, 0.5f, 1.25f)
+                renderGlow(frontWeapon.sprite, frontWeapon.location, frontWeapon.currAngle, 0.5f * renderLevel * phaseLevel, 1.25f)
             }
 
 
@@ -229,13 +240,15 @@ class PhaseshiftShield : BaseHullMod() {
 
         fun renderGlow(sprite: SpriteAPI, loc: Vector2f, angle: Float, alpha: Float, intensity: Float) {
 
+            var level = listener.getShieldLevel()
 
+            level = 1f - ((1f-level) * 0.4f)
 
             GL20.glUseProgram(shader)
 
             GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), Global.getCombatEngine().getTotalElapsedTime(false) / 12f)
             GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"),  alpha)
-            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "level"),  1f)
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "level"),  level)
             GL20.glUniform1f(GL20.glGetUniformLocation(shader, "intensity"),  intensity)
 
 
@@ -273,7 +286,7 @@ class PhaseshiftShield : BaseHullMod() {
             var height = sprite.width
 
             sprite.setNormalBlend()
-            sprite.alphaMult = 0f //Stops sprite from rendering, but keeps the mask from being able to access it.
+            sprite.alphaMult = 1f
             sprite.angle = angle - 90f
             //sprite.setSize(width, h -20f)
             sprite.renderAtCenter(loc.x, loc.y)
@@ -318,6 +331,27 @@ class PhaseshiftShield : BaseHullMod() {
                 if (listener.shieldHP <= 0) {
                     Global.getSoundPlayer().playSound("rat_gilgamesh_shield_burnout", 0.65f + MathUtils.getRandomNumberInRange(-0.2f, 0.2f), 1.3f, ship.location, ship.velocity)
                 }
+
+
+                var rippleLevel = damage.levelBetween(100f, 400f)
+
+                if (rippleLevel >= 0.05) {
+                    GraphicLibEffects.CustomRippleDistortion(point,
+                        Vector2f(),
+                        300f * rippleLevel,
+                        2f,
+                        false,
+                        0f,
+                        360f,
+                        1f,
+                        0f,0f,0.6f,
+                        0.3f,0f
+                    )
+                }
+
+
+
+
             }
 
             listener.mostRecentDamage = null

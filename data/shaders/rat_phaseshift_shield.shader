@@ -26,7 +26,6 @@ void main() {
 		float brigtness1 = (noiseCol1.r + noiseCol1.g + noiseCol1.b) / 3 ;
 		float brigtness2 = (noiseCol2.r + noiseCol2.g + noiseCol2.b) / 3 ;
 
-		
 		float scaled1 = brigtness1 * brigtness1 * brigtness1  * brigtness1;
 		float scaled2 = brigtness2 * brigtness2 * brigtness2 * brigtness2 * brigtness2;
 
