@@ -23,11 +23,11 @@ class HeadquartersFacility : BaseSettlementFacility() {
         Misc.getTextColor(), Misc.getHighlightColor(), "1")
     }
 
-    override fun canBeBuild(): Boolean {
+    /*override fun canBeBuild(): Boolean {
         return settlement.primaryPlanet.faction.id == Factions.PLAYER
     }
 
     override fun canNotBeBuildReason(tooltip: TooltipMakerAPI, data: SettlementData) {
         tooltip.addNegativePara("Can only be build on a planet with a colony owned by your faction.")
-    }
+    }*/
 }

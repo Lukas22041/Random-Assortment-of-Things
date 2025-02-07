@@ -183,7 +183,7 @@ class PhaseshiftShield : BaseHullMod() {
         }
 
         override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
-            return super.getActiveLayers()
+            return EnumSet.of(CombatEngineLayers.ABOVE_SHIPS_LAYER)
         }
 
         override fun getRenderRadius(): Float {
@@ -220,22 +220,44 @@ class PhaseshiftShield : BaseHullMod() {
             renderLevel = MathUtils.clamp(renderLevel, 0.7f, 1f)
             if (listener.shieldHP <= 0) renderLevel = 0f
 
+            var lCover = ship!!.allWeapons.find { it.spec.weaponId == "rat_gilgamesh_cover_left" } ?: return
+            var rCover = ship!!.allWeapons.find { it.spec.weaponId == "rat_gilgamesh_cover_right" } ?: return
+
             var lWing = ship!!.allWeapons.find { it.spec.weaponId == "rat_gilgamesh_wing_left" } ?: return
             var rWing = ship!!.allWeapons.find { it.spec.weaponId == "rat_gilgamesh_wing_right" } ?: return
-
-            renderGlow(lWing.sprite, lWing.location, lWing.currAngle, 0.15f * renderLevel * phaseLevel, 1.5f)
-            renderGlow(rWing.sprite, rWing.location, rWing.currAngle, 0.15f * renderLevel * phaseLevel, 1.5f)
 
             var sprite = ship.spriteAPI
             renderGlow(sprite, ship.location, ship.facing, 1f * renderLevel * phaseLevel, 1.25f)
 
+            //Wings
+            reRenderDeco(lWing.sprite, lWing.location, lWing.currAngle, 1f * phaseLevel)
+            reRenderDeco(rWing.sprite, rWing.location, rWing.currAngle, 1f * phaseLevel)
+
+            renderGlow(lWing.sprite, lWing.location, lWing.currAngle, 1f * renderLevel * phaseLevel, 1.5f)
+            renderGlow(rWing.sprite, rWing.location, rWing.currAngle, 1f * renderLevel * phaseLevel, 1.5f)
+
+            //Covers
+            reRenderDeco(lCover.sprite, lCover.location, lCover.currAngle, 1f * phaseLevel)
+            reRenderDeco(rCover.sprite, rCover.location, rCover.currAngle, 1f * phaseLevel)
+
+            renderGlow(lCover.sprite, lCover.location, lCover.currAngle, 1f * renderLevel * phaseLevel, 3f)
+            renderGlow(rCover.sprite, rCover.location, rCover.currAngle, 1f * renderLevel * phaseLevel, 3f)
+
             //Apply glow, as the medium hardpoint can be past the boundary, which makes it not fully encompassed
             var frontWeapon = ship.allWeapons.find { it.slot.id == "WS0010" }
             if (frontWeapon != null) {
-                renderGlow(frontWeapon.sprite, frontWeapon.location, frontWeapon.currAngle, 0.5f * renderLevel * phaseLevel, 1.25f)
+                renderGlow(frontWeapon.sprite, frontWeapon.location, frontWeapon.currAngle, 1f * renderLevel * phaseLevel, 1.5f)
             }
 
 
+        }
+
+        fun reRenderDeco(sprite: SpriteAPI, loc: Vector2f, angle: Float, alpha: Float) {
+            sprite.setNormalBlend()
+            sprite.alphaMult = alpha
+            sprite.angle = angle - 90f
+            //sprite.setSize(width, h -20f)
+            sprite.renderAtCenter(loc.x, loc.y)
         }
 
         fun renderGlow(sprite: SpriteAPI, loc: Vector2f, angle: Float, alpha: Float, intensity: Float) {
@@ -330,6 +352,18 @@ class PhaseshiftShield : BaseHullMod() {
 
                 if (listener.shieldHP <= 0) {
                     Global.getSoundPlayer().playSound("rat_gilgamesh_shield_burnout", 0.65f + MathUtils.getRandomNumberInRange(-0.2f, 0.2f), 1.3f, ship.location, ship.velocity)
+
+                    GraphicLibEffects.CustomRippleDistortion(ship.location,
+                        Vector2f(),
+                        ship.collisionRadius + 200f,
+                        3f,
+                        false,
+                        0f,
+                        360f,
+                        1f,
+                        0f,0f,3f,
+                        0.3f,0f
+                    )
                 }
 
 

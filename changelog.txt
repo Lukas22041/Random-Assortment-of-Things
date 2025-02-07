@@ -1,3 +1,11 @@
+Version 2.5.10
+Save compatible with 2.4.x
+
+-> More visual improvements on the Gilgamesh.
+-> Headquarters should now always be buildable on settlements.
+
+
+
 Version 2.5.9
 Save compatible with 2.4.x
 
