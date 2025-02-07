@@ -1,55 +1,56 @@
 {
-    "displayName": "Rapid Response",
-    "fluxCapacitors": 0,
-    "fluxVents": 6,
-    "goalVariant": false,
-    "hullId": "rat_leanira",
-    "hullMods": [
-        "targetingunit",
-    ],
-    "permaMods": [],
-    "sMods": [],
-    "suppressedMods": [],
-    "variantId": "rat_leanira_Rapid_Response",
-    "weaponGroups": [
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0003": "rat_stardust_lance",
-            }
-        },
-        {
-            "autofire": false,
-            "mode": "ALTERNATING",
-            "weapons": {
-                "WS0001": "rat_starburst",
-                "WS0002": "rat_starburst",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0007": "taclaser",
-                "WS0006": "taclaser",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0005": "pdlaser",
-                "WS0004": "pdlaser",
-            }
-        },
-    ],
-    "wings": [
-        "rat_supernova_wing",
-        "rat_supernova_wing",
-        "rat_supernova_wing",
-    ],
-    "modules": [
-        {"APHEIDAS_SLOT": "rat_apheidas_Rapid_Response"},
-    ],
+  "variantId": "rat_leanira_Rapid_Response",
+  "hullId": "rat_leanira",
+  "displayName": "Rapid Response",
+  "goalVariant": false,
+  "fluxCapacitors": 0,
+  "fluxVents": 2,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [
+    "targetingunit"
+  ],
+  "weaponGroups": [
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0003": "rat_stardust_lance"
+      }
+    },
+    {
+      "autofire": false,
+      "mode": "ALTERNATING",
+      "weapons": {
+        "WS0001": "rat_starburst",
+        "WS0002": "rat_starburst"
+      }
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0006": "taclaser",
+        "WS0007": "taclaser"
+      }
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0004": "pdlaser",
+        "WS0005": "pdlaser"
+      }
+    }
+  ],
+  "modules": [
+    {
+      "APHEIDAS_SLOT": "rat_apheidas_Rapid_Response"
+    }
+  ],
+  "wings": [
+    "rat_supernova_wing",
+    "rat_supernova_wing",
+    "rat_supernova_wing"
+  ]
 }

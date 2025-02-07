@@ -12,6 +12,8 @@ class GilgameshSystemAI : ShipSystemAIScript {
     var maxCountdown = 1.5f
     var countdown = maxCountdown
 
+    var shieldRechargeCooldown = 0f
+
     override fun init(ship: ShipAPI?, system: ShipSystemAPI?, flags: ShipwideAIFlags?, engine: CombatEngineAPI?) {
         this.ship = ship
     }
@@ -26,13 +28,17 @@ class GilgameshSystemAI : ShipSystemAIScript {
 
             if (phaseshiftShieldListener!!.shieldHP / PhaseshiftShield.PhaseshiftShieldListener.maxShieldHP < 1f && ship!!.fluxLevel <= 0.3f) {
 
-                if (!ship!!.phaseCloak.isActive && !ship!!.system.isCoolingDown && !ship!!.fluxTracker.isOverloadedOrVenting) {
+                if (shieldRechargeCooldown <= 0 && !ship!!.phaseCloak.isActive && !ship!!.system.isCoolingDown && !ship!!.fluxTracker.isOverloadedOrVenting) {
                     ship!!.phaseCloak.forceState(ShipSystemAPI.SystemState.IN, 0f)
+                    shieldRechargeCooldown = 3f
                 }
+
+                shieldRechargeCooldown -= 1 * amount
+                shieldRechargeCooldown = MathUtils.clamp(shieldRechargeCooldown, -1f, 10f)
 
                 if (ship!!.phaseCloak.isActive) {
                     ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.STAY_PHASED, 0.5f)
-                    ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_VENT, 3f)
+                    ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_VENT, 5f)
                 }
             }
         }

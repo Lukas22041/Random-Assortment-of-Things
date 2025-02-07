@@ -29,9 +29,9 @@ class DamagedCryosleeperInteraction : RATInteractionPlugin() {
 
                 textPanel.addPara("As your fleet moves in closer, new energy signatures are detected near the cryosleeper.")
 
-                textPanel.addPara("An automated drone is firing upon any kind of debri in its view. It appears that what sealed the fate of this ship is a defect in a protocol of its voyages defender.")
+                textPanel.addPara("An automated drone is firing upon any kind of debris in its view. It appears that what sealed the fate of this ship is a defect in a protocol of its voyages defender.")
 
-                textPanel.addPara("Any attempt to approach will most likely result in it as picking us as the next piece of \"debri\".")
+                textPanel.addPara("Any attempt to approach will most likely result in it as picking us as the next piece of \"debris\".")
 
                 triggerDefenders()
 

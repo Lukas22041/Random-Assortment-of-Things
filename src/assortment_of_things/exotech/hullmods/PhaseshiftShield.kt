@@ -246,7 +246,7 @@ class PhaseshiftShield : BaseHullMod() {
             //Apply glow, as the medium hardpoint can be past the boundary, which makes it not fully encompassed
             var frontWeapon = ship.allWeapons.find { it.slot.id == "WS0010" }
             if (frontWeapon != null) {
-                renderGlow(frontWeapon.sprite, frontWeapon.location, frontWeapon.currAngle, 1f * renderLevel * phaseLevel, 1.5f)
+                renderGlow(frontWeapon.sprite, frontWeapon.location, frontWeapon.currAngle, 0.75f * renderLevel * phaseLevel, 1.5f)
             }
 
 

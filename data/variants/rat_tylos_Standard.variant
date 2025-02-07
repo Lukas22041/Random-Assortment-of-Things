@@ -1,52 +1,53 @@
 {
-    "displayName": "Standard",
-    "fluxCapacitors": 20,
-    "fluxVents": 15,
-    "goalVariant": true,
-    "hullId": "rat_tylos",
-    "hullMods": [
-        "fluxcoil",
-        "fluxdistributor",
-        "targetingunit",
-        "unstable_injector",
-    ],
-    "permaMods": [],
-    "sMods": [],
-    "suppressedMods": [],
-    "variantId": "rat_tylos_Standard",
-    "weaponGroups": [
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0001": "gravitonbeam",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0005": "rat_starburst",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0002": "ionbeam",
-            }
-        },
-        {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0003": "taclaser",
-                "WS0004": "taclaser",
-            }
-        },
-    ],
-    "wings": [],
-    "modules": [
-        {"MODULE": "rat_tylos_double_Standard"},
-    ],
+  "variantId": "rat_tylos_Standard",
+  "hullId": "rat_tylos",
+  "displayName": "Standard",
+  "goalVariant": true,
+  "fluxCapacitors": 18,
+  "fluxVents": 15,
+  "quality": 1,
+  "permaMods": [],
+  "hullMods": [
+    "fluxcoil",
+    "fluxdistributor",
+    "targetingunit",
+    "unstable_injector"
+  ],
+  "weaponGroups": [
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0001": "gravitonbeam"
+      }
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0005": "rat_starburst"
+      }
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0002": "ionbeam"
+      }
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS0003": "taclaser",
+        "WS0004": "taclaser"
+      }
+    }
+  ],
+  "modules": [
+    {
+      "MODULE": "rat_tylos_double_Standard"
+    }
+  ],
+  "wings": []
 }
