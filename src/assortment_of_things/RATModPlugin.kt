@@ -202,7 +202,8 @@ class RATModPlugin : BaseModPlugin() {
         //Global.getSector().addTransientScript(ChangeExoIntelState())
         generateExo()
 
-
+        var faction = Global.getSector().getFaction("rat_exotech")
+        faction.isShowInIntelTab = Global.getSector().memoryWithoutUpdate.get("\$rat_exo_generated") == true
 
       //  Global.getSector().addTransientScript(ResetBackgroundScript())
 

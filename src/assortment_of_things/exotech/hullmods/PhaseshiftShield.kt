@@ -89,9 +89,14 @@ class PhaseshiftShield : BaseHullMod() {
 
     class PhaseshiftShieldListener(var ship: ShipAPI) : AdvanceableListener {
         init {
+            ship.setShield(ShieldAPI.ShieldType.FRONT, 0f, 1f, 1f) //may otherwise crash some onhits
+
             ship.addListener(PhaseshiftShieldDamageModifier(this))
             ship.addListener(PhaseshiftShieldDamageConverter(this))
             Global.getCombatEngine().addLayeredRenderingPlugin(PhaseshiftShieldRenderer(ship, this))
+
+            var shield = ship.shield
+            var test = ""
         }
 
         companion object {
@@ -109,6 +114,14 @@ class PhaseshiftShield : BaseHullMod() {
         var mostRecentDamagePoint: Vector2f? = null
 
         override fun advance(amount: Float) {
+
+            if (!ship.isAlive) return
+
+            ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_USE_SHIELDS, 999f)
+
+            if (ship.shield?.isOn == true) {
+                ship.shield?.toggleOff()
+            }
 
             var cloakLevel = ship.phaseCloak.effectLevel
 
@@ -178,7 +191,20 @@ class PhaseshiftShield : BaseHullMod() {
 
         init {
             if (shader == 0) {
+                shader = ShaderLib.loadShader(
+                    Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+                    Global.getSettings().loadText("data/shaders/rat_phaseshift_shield.shader"))
+                if (shader != 0) {
+                    GL20.glUseProgram(shader)
 
+                    GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
+                    GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex1"), 1)
+                    GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex2"), 2)
+
+                    GL20.glUseProgram(0)
+                } else {
+                    var test = ""
+                }
             }
         }
 
@@ -196,20 +222,7 @@ class PhaseshiftShield : BaseHullMod() {
 
         override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
 
-            shader = ShaderLib.loadShader(
-                Global.getSettings().loadText("data/shaders/baseVertex.shader"),
-                Global.getSettings().loadText("data/shaders/rat_phaseshift_shield.shader"))
-            if (shader != 0) {
-                GL20.glUseProgram(shader)
-
-                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
-                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex1"), 1)
-                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "noiseTex2"), 2)
-
-                GL20.glUseProgram(0)
-            } else {
-                var test = ""
-            }
+            if (!ship.isAlive) return
 
             var phaseLevel = 1-(ship.phaseCloak.effectLevel * ship.phaseCloak.effectLevel * ship.phaseCloak.effectLevel * ship.phaseCloak.effectLevel)
             if (ship.phaseCloak.state != ShipSystemAPI.SystemState.IN) {
@@ -321,6 +334,8 @@ class PhaseshiftShield : BaseHullMod() {
     class PhaseshiftShieldDamageConverter(var listener: PhaseshiftShieldListener) : DamageListener {
         override fun reportDamageApplied(source: Any?, target: CombatEntityAPI?, result: ApplyDamageResultAPI?) {
 
+            if (!listener.ship.isAlive) return
+
             var recent = listener.mostRecentDamage ?: return
             var hardflux = listener.mostRecentDamageHardflux ?: return
             var point = listener.mostRecentDamagePoint ?: return
@@ -399,6 +414,8 @@ class PhaseshiftShield : BaseHullMod() {
 
         override fun modifyDamageTaken(param: Any?, target: CombatEntityAPI?, damage: DamageAPI?,  point: Vector2f?,
                                        shieldHit: Boolean): String? {
+
+            if (!listener.ship.isAlive) return null
 
             //Transfer Damage to next listener
             var dam = damage!!.damage

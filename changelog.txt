@@ -1,3 +1,14 @@
+Version 2.5.11
+Save compatible with 2.4.x
+
+-> Increased the cost of the Starburst Microlauncher weapon from 12 to 14 OP.
+-> Fixed an issue that caused parts of the gilgamesh to potentialy render at the center of the combat map.
+-> Fixed an issue with the gilgamesh that caused it to repeatetly phase & unphase when not targeting any ship.
+-> Potentialy fixed an issue with the gilgamesh and some onHit weapon effects crashing (specificly one from Approlight)
+-> Fixed the Exotech Faction entry being displayed in saves where Exotech is disabled.
+
+
+
 Version 2.5.10
 Save compatible with 2.4.x
 
