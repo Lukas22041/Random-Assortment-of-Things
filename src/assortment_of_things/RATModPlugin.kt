@@ -54,7 +54,6 @@ class RATModPlugin : BaseModPlugin() {
     companion object {
         var added = false
 
-        var gameStartedForTitleScene = false
 
         var isHalloween = false
 
@@ -63,12 +62,10 @@ class RATModPlugin : BaseModPlugin() {
     override fun onApplicationLoad() {
         super.onApplicationLoad()
 
-        gameStartedForTitleScene = true
-
         val currentDate = Date()
         //var currentDate = Date(1698530401L * 1000)
-        val startDate = Date(1730329200L * 1000)
-        val endDate = Date(1730437200L * 1000)
+        val startDate = Date(1761865200L * 1000)
+        val endDate = Date(1761973200L * 1000)
         if (startDate.before(currentDate) && endDate.after(currentDate)) {
             isHalloween = true
         }

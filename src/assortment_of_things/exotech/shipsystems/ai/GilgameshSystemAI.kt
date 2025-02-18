@@ -21,7 +21,7 @@ class GilgameshSystemAI : ShipSystemAIScript {
     override fun advance(amount: Float, missileDangerDir: Vector2f?, collisionDangerDir: Vector2f?, target: ShipAPI?) {
         if (ship == null) return
 
-        var phaseshiftShieldListener = ship!!.getListeners(PhaseshiftShield.PhaseshiftShieldListener::class.java).firstOrNull()
+        var phaseshiftShieldListener = ship?.customData?.get("rat_phaseshift_listener") as PhaseshiftShield.PhaseshiftShieldListener?
 
         //Force in to phase to regen shield outside of combat encounters
         if (phaseshiftShieldListener != null && target == null || MathUtils.getDistance(ship, target) >= 2000) {
@@ -38,7 +38,7 @@ class GilgameshSystemAI : ShipSystemAIScript {
 
                 if (ship!!.phaseCloak.isActive) {
                     ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.STAY_PHASED, 0.5f)
-                    ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_VENT, 5f)
+                    ship!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_VENT, 6f)
                 }
             }
         }

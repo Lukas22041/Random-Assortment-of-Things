@@ -96,7 +96,7 @@ class GilgameshShipsystem : BaseShipSystemScript(), CombatLayeredRenderingPlugin
         if (!activated && system.state == ShipSystemAPI.SystemState.IN) {
             activated = true
 
-            var phaseshiftShieldListener = ship!!.getListeners(PhaseshiftShield.PhaseshiftShieldListener::class.java).firstOrNull()
+            var phaseshiftShieldListener = ship?.customData?.get("rat_phaseshift_listener") as PhaseshiftShield.PhaseshiftShieldListener?
             if (phaseshiftShieldListener != null) {
                 phaseshiftShieldListener.shieldHP += PhaseshiftShield.PhaseshiftShieldListener.maxShieldHP * PhaseshiftShield.PhaseshiftShieldListener.regenPerSystemUse
                 phaseshiftShieldListener.shieldHP = MathUtils.clamp(phaseshiftShieldListener.shieldHP, 0f, PhaseshiftShield.PhaseshiftShieldListener.maxShieldHP)

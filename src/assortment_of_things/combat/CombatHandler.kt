@@ -32,10 +32,10 @@ class CombatHandler : EveryFrameCombatPlugin
 
         if (RATSettings.enableAbyss!! && Global.getCurrentState() == GameState.TITLE) {
 
-            if (RATModPlugin.isHalloween /*&& !engine.isSimulation*/) {
+          /*  if (RATModPlugin.isHalloween *//*&& !engine.isSimulation*//*) {
                 engine.addPlugin(AbyssSpecialTitleScreen())
-            }
-            else if (RATModPlugin.gameStartedForTitleScene) {
+            }*/
+           /* else if (RATModPlugin.gameStartedForTitleScene) {
                 RATModPlugin.gameStartedForTitleScene = false
 
                 var random = MathUtils.getRandomNumberInRange(1, 100)
@@ -44,7 +44,7 @@ class CombatHandler : EveryFrameCombatPlugin
                     engine.addPlugin(AbyssTitleScreen())
                 }
 
-            }
+            }*/
         }
 
        /* engine!!.addPlugin(object : BaseEveryFrameCombatPlugin() {
@@ -66,12 +66,12 @@ class CombatHandler : EveryFrameCombatPlugin
             engine.addPlugin(DPSMeter())
         }*/
 
-        if (ChangeMainMenuColorScript.isInAbyss && Global.getCurrentState() == GameState.TITLE && !RATModPlugin.isHalloween) {
+       /* if (ChangeMainMenuColorScript.isInAbyss && Global.getCurrentState() == GameState.TITLE && !RATModPlugin.isHalloween) {
             //Global.getCombatEngine().backgroundColor = ChangeMainMenuColorScript.lastAbyssColor
             engine.addPlugin(AbyssTitleScreen())
             ChangeMainMenuColorScript.isInAbyss = false
 
-        }
+        }*/
 
 
 

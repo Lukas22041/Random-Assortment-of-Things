@@ -1,0 +1,5 @@
+id,weight,pluginPath
+,#Highter Weight = Higher chance to appear. Should generaly be far lower than vanillas titlescreen.,"#Class that inherits from ""BaseLunaTitleScreenPlugin"""
+#vanilla,1000,
+rat_abyss,5,assortment_of_things.combat.AbyssTitleScreen
+rat_abyss_halloween,0,assortment_of_things.combat.AbyssSpecialTitleScreen

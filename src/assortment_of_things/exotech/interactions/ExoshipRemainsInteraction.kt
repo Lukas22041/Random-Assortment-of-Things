@@ -49,7 +49,7 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
 
             textPanel.addPara("With just the press of a button, the procedure can now be begun.")
 
-            createOption("Innitate the repair sequence") {
+            createOption("Initate the repair sequence") {
                 clearOptions()
 
                 textPanel.addPara("Within seconds hundreds of maintenance hatches open across the stations hull, and thousands of drones leave its confines.")
@@ -71,7 +71,7 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
 
                     textPanel.addTooltip()
 
-                    createOption("Innitiate a warp") {
+                    createOption("Initiate a warp") {
                         clearOptions()
 
                         closeDialog()

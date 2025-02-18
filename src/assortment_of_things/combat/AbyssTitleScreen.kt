@@ -7,9 +7,16 @@ import com.fs.starfarer.api.combat.EveryFrameCombatPlugin
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.combat.CombatEngine
+import lunalib.lunaTitle.BaseLunaTitleScreenPlugin
+import lunalib.lunaTitle.LunaTitleRecordingScipt
 import java.awt.Color
 
-class AbyssTitleScreen : EveryFrameCombatPlugin {
+class AbyssTitleScreen : BaseLunaTitleScreenPlugin() {
+
+    override fun pickBasedOnSystemCondition(lastSystemID: String, lastSystemTags: ArrayList<String>): Boolean {
+        if (lastSystemTags.contains(AbyssUtils.SYSTEM_TAG)) return true
+        return false
+    }
 
     override fun init(engine: CombatEngineAPI?) {
         Global.getCombatEngine().addLayeredRenderingPlugin(IonicStormCombatRenderer())
@@ -22,6 +29,8 @@ class AbyssTitleScreen : EveryFrameCombatPlugin {
 
         Global.getSoundPlayer().playCustomMusic(1, 1, "rat_music_abyss", true)
     }
+
+
 
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
 
@@ -47,6 +56,7 @@ class AbyssTitleScreen : EveryFrameCombatPlugin {
         var height = Global.getSettings().screenHeight * 2
 
         viewport.set(0f-width/2, 0f-height/2, width, height)
+
     }
 
 }

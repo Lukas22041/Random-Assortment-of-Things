@@ -1,5 +1,6 @@
 package assortment_of_things.combat
 
+import assortment_of_things.RATModPlugin
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.CombatEngineAPI
@@ -7,6 +8,7 @@ import com.fs.starfarer.api.combat.EveryFrameCombatPlugin
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.combat.CombatEngine
+import lunalib.lunaTitle.BaseLunaTitleScreenPlugin
 import org.dark.shaders.post.PostProcessShader
 import org.dark.shaders.util.ShaderLib
 import org.lwjgl.opengl.GL11
@@ -14,7 +16,17 @@ import org.lwjgl.opengl.GL13
 import org.lwjgl.opengl.GL20
 import java.awt.Color
 
-class AbyssSpecialTitleScreen : EveryFrameCombatPlugin {
+class AbyssSpecialTitleScreen : BaseLunaTitleScreenPlugin() {
+
+    override fun pickBasedOnSystemCondition(lastSystemID: String, lastSystemTags: ArrayList<String>): Boolean {
+        if (RATModPlugin.isHalloween) return true
+        return false
+    }
+
+    override fun getWeight(): Float {
+        if (RATModPlugin.isHalloween) return Float.MAX_VALUE
+        return super.getWeight()
+    }
 
     var shader = 0
 
@@ -45,6 +57,8 @@ class AbyssSpecialTitleScreen : EveryFrameCombatPlugin {
 
         Global.getSoundPlayer().playCustomMusic(1, 1, "rat_music_abyss", true)
     }
+
+
 
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
 
