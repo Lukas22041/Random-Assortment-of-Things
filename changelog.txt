@@ -1,3 +1,12 @@
+Version 2.5.13
+Save compatible with 2.4.x
+
+-> Made some adjustments to the exoships route to make it a bit likier to stumble in to the same system as it.
+-> Now generates atleast 3 Hyper-Nav Exotech Beacons per save. (Was a minimum of 2)
+-> Potentialy fixed the issue that made slow-moveing not prevent hyperspace storm damage.
+
+
+
 Version 2.5.12
 Save compatible with 2.4.x
 

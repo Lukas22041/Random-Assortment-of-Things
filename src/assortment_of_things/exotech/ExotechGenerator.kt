@@ -186,7 +186,7 @@ object ExotechGenerator {
     }
 
     fun generateBeacons() {
-        var beacons = 2
+        var beacons = 3
 
         var systemsUnfiltered = Global.getSector().starSystems.filter { !it.hasTag(Tags.THEME_HIDDEN)}
         var systems = Global.getSector().starSystems.filter { it.planets.filter { planet -> !planet.isStar }.isNotEmpty() && !it.hasTag(Tags.THEME_CORE) && !it.hasTag(Tags.THEME_REMNANT) && !it.hasPulsar() && !it.hasTag(Tags.THEME_HIDDEN)}.toMutableList()
@@ -194,7 +194,7 @@ object ExotechGenerator {
 
         var count = systemsUnfiltered.count()
         var level = count.toFloat().levelBetween(250f, 600f)
-        var extra = 4f * level
+        var extra = 5f * level
 
         beacons += extra.toInt()
 
