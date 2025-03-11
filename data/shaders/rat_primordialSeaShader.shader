@@ -10,10 +10,10 @@ uniform float intensity;
 void main() {
 	vec4 col = texture2D(tex, texCoord);
 
-	float dist = sqrt(pow(texCoord.x - screenLocUV.x, 2) + pow(texCoord.y - screenLocUV.y, 2));
+	float dist = sqrt(pow(texCoord.x - screenLocUV.x, 2.0) + pow(texCoord.y - screenLocUV.y, 2.0));
 
 	if (dist <= range) {
-		float b = (col.r + col.g + col.b) / 3;
+		float b = (col.r + col.g + col.b) / 3.0;
 
 		col.r *= 1.0 - 0.1 * intensity;
 		col.g *= 1.0 - 0.1 * intensity;

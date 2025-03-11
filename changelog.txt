@@ -1,3 +1,12 @@
+Version 2.5.14
+Save compatible with 2.4.x
+
+-> Fixed the UI indicator for the gilgamesh shield not being positioned correctly.
+-> Fixed a few issues that made certain shaders not render on older hardware.
+-> Fixed a bug that restocked the exoship after completing the questline.
+
+
+
 Version 2.5.13
 Save compatible with 2.4.x
 

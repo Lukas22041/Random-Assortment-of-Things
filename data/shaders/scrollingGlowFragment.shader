@@ -21,8 +21,8 @@ void main() {
 	vec4 noiseCol2 = texture2D(noiseTex2, vec2(texCoord.x - iTime, texCoord.y - iTime));
 
 	if (color.a > 0.5) {
-		float brigtness1 = (noiseCol1.r + noiseCol1.g + noiseCol1.b) / 3 * 0.3;
-		float brigtness2 = (noiseCol2.r + noiseCol2.g + noiseCol2.b) / 3 * 0.5;
+		float brigtness1 = (noiseCol1.r + noiseCol1.g + noiseCol1.b) / 3.0 * 0.3;
+		float brigtness2 = (noiseCol2.r + noiseCol2.g + noiseCol2.b) / 3.0 * 0.5;
 
 		color.r += brigtness1;
 		color.b += brigtness2;

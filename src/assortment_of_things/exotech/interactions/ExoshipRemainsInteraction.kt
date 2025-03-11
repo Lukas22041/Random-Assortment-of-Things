@@ -7,6 +7,7 @@ import assortment_of_things.exotech.intel.ExoshipIntel
 import assortment_of_things.exotech.interactions.exoship.ExoshipRecoveryContactInteraction
 import assortment_of_things.exotech.interactions.questBeginning.ExoshipRemainsIntel
 import assortment_of_things.exotech.items.ExoProcessor
+import assortment_of_things.exotech.submarkets.ExotechSubmarketPlugin
 import assortment_of_things.misc.RATInteractionPlugin
 import assortment_of_things.misc.fixVariant
 import assortment_of_things.misc.getAndLoadSprite
@@ -109,6 +110,18 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
                         playerExoship.orbit = null
 
                         playerExoship.name = textfield.getText()
+
+
+                        //Fix submarket to prevent non-restockable to be restocked
+                        var oldSubmarket = data.getExoship().market.getSubmarket("rat_exoship_market")?.plugin as ExotechSubmarketPlugin?
+                        if (oldSubmarket != null) {
+                            var newSubmarket = playerExoship.market.getSubmarket("rat_exoship_market").plugin as ExotechSubmarketPlugin
+
+                            newSubmarket.first = oldSubmarket.first
+                            newSubmarket.cargo.addAll(oldSubmarket.cargo)
+
+                            oldSubmarket.cargo.clear()
+                        }
 
 
                         var exoshipToken = Global.getSector().hyperspace.createToken(interactionTarget.location)

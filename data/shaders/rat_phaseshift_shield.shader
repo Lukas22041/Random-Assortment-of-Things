@@ -23,27 +23,27 @@ void main() {
 	vec4 noiseCol2 = texture2D(noiseTex2, vec2(texCoord.x - iTime, texCoord.y - iTime));
 
 	if (color.a > 0.5) {
-		float brigtness1 = (noiseCol1.r + noiseCol1.g + noiseCol1.b) / 3 ;
-		float brigtness2 = (noiseCol2.r + noiseCol2.g + noiseCol2.b) / 3 ;
+		float brigtness1 = (noiseCol1.r + noiseCol1.g + noiseCol1.b) / 3.0 ;
+		float brigtness2 = (noiseCol2.r + noiseCol2.g + noiseCol2.b) / 3.0 ;
 
 		float scaled1 = brigtness1 * brigtness1 * brigtness1  * brigtness1;
 		float scaled2 = brigtness2 * brigtness2 * brigtness2 * brigtness2 * brigtness2;
 
-		color.r = scaled1 * 4 * intensity;
-		color.g = scaled1 * 2 * level * intensity;
-		color.b = scaled1 * 4 * (1-level) * intensity;
+		color.r = scaled1 * 4.0 * intensity;
+		color.g = scaled1 * 2.0 * level * intensity;
+		color.b = scaled1 * 4.0 * (1.0-level) * intensity;
 
-		color.r += scaled2 * 2 * intensity;
-		color.g += scaled2 * 1 * level * intensity;
-		color.b += scaled2 * 2 * (1-level) * intensity;
+		color.r += scaled2 * 2.0 * intensity;
+		color.g += scaled2 * 1.0 * level * intensity;
+		color.b += scaled2 * 2.0 * (1.0-level) * intensity;
 
 		//color.a = (color.r + color.g + color.b);
 
-		float level = (((brigtness1 + brigtness2) / 4) - 0.0) / (0.90 - 0.0);
+		float level = (((brigtness1 + brigtness2) / 4.0) - 0.0) / (0.90 - 0.0);
 		color.a = level;
 
 	} else {
-		color.a = 0;
+		color.a = 0.0;
 	}
 
 	color.a *= alphaMult;

@@ -2,7 +2,6 @@ package assortment_of_things.exotech.hullmods
 
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.misc.GraphicLibEffects
-import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
@@ -14,8 +13,6 @@ import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.combat.CombatState
-import com.fs.state.AppDriver
 import lunalib.lunaExtensions.addLunaElement
 import org.dark.shaders.util.ShaderLib
 import org.lazywizard.lazylib.MathUtils
@@ -24,8 +21,6 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL13
 import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
-import org.magiclib.bounty.ui.drawOutlined
-import org.magiclib.kotlin.setAlpha
 import org.magiclib.util.MagicUI
 import java.awt.Color
 import java.util.*
@@ -206,8 +201,15 @@ class PhaseshiftShield : BaseHullMod() {
             if (ship != Global.getCombatEngine().playerShip) return
             if (!Global.getCombatEngine().isUIShowingHUD || Global.getCombatEngine().combatUI?.isShowingCommandUI == true) return
 
-            var x = 232f
-            var y = 200f
+
+            var scale = Global.getSettings().screenScaleMult
+
+            var loc = MagicUI.getInterfaceOffsetFromStatusBars(ship, ship.variant)
+            var x = (loc.x + 176f)
+            var y = (loc.y + 130f)
+
+            //var x = 232f
+            //var y = 200f
 
             var shadowC = Color(0,0,0)
 

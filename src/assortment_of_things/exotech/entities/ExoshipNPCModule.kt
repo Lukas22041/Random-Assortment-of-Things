@@ -74,6 +74,8 @@ class ExoshipNPCModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnti
 
     fun findNewDestination(timeOverwrite: Float? = null) : WarpDestination? {
 
+        if (Global.getSector()?.playerFleet == null) return null
+
         var systems = Global.getSector().starSystems.filter { it != exoshipEntity.containingLocation && !it.hasTag(Tags.THEME_CORE) && /*!it.hasTag(Tags.THEME_REMNANT) &&*/ !it.hasPulsar() && !it.hasTag(
             Tags.THEME_HIDDEN)}
 
