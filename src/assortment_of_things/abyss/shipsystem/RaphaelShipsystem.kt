@@ -19,6 +19,7 @@ import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
+import second_in_command.SCUtils
 import java.awt.Color
 
 class RaphaelShipsystem : BaseShipSystemScript() {
@@ -393,6 +394,9 @@ class RaphaelShipsystem : BaseShipSystemScript() {
     }
 
     override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI): Boolean {
+        if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+            if (SCUtils.getPlayerData().isSkillActive("sotf_dance_between_realms")) return true
+        }
         return !ship.variant.hasTag("sotf_inert")
     }
 

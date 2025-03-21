@@ -25,8 +25,6 @@ public class Runcodes  {
 
     public void Example() {
 
-
-
         /*InteractionDialogAPI dialog;
 
         dialog.getTextPanel().setFontSmallInsignia();
