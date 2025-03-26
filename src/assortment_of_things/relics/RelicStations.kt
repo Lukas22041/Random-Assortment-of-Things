@@ -82,7 +82,7 @@ class RelicStations {
                     people.add(person)
                     person.stats.setSkillLevel("rat_maverick", 1f)
 
-                    person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7f)
+                    person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7)
 
                     person.setPersonality(Personalities.RECKLESS)
                     person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 7)

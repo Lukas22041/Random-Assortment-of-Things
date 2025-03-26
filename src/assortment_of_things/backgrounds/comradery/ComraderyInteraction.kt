@@ -27,7 +27,7 @@ class ComraderyInteraction(var factionID: String) : RATInteractionPlugin() {
 
     override fun init() {
 
-        person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 8f)
+        person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_LEVEL, 8)
         person.memoryWithoutUpdate.set(MemFlags.OFFICER_SKILL_PICKS_PER_LEVEL, 6)
         person.memoryWithoutUpdate.set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 3)
 

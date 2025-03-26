@@ -70,7 +70,7 @@ class AbyssalCrewConversion : BaseAlteration() {
     }
 
     override fun canInstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return (variant!!.hasHullMod("rat_abyssal_core") || variant!!.hasHullMod("rat_seraphs_grace") ||  variant!!.hasHullMod("rat_genesis_hullmod") || variant!!.hasHullMod("rat_genesis_serpent_hullmod")) && (member!!.captain == null || member!!.captain.nameString == "")
+        return (variant!!.hasHullMod("rat_abyssal_core") || variant!!.hasHullMod("rat_seraphs_grace") ||  variant!!.hasHullMod("rat_genesis_hullmod") || variant!!.hasHullMod("rat_genesis_serpent_hullmod")) && (member!!.captain == null || member!!.captain.nameString == "" || member.captain?.hasTag("rat_neuro_shard") == true)
     }
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?,  member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
@@ -83,7 +83,7 @@ class AbyssalCrewConversion : BaseAlteration() {
     }
 
     override fun canUninstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return member!!.captain == null || member!!.captain.nameString == ""
+        return member!!.captain == null || member!!.captain.nameString == "" || member.captain?.hasTag("rat_neuro_shard") == true
     }
 
     override fun cannotUninstallAlterationTooltip(tooltip: TooltipMakerAPI?,member: FleetMemberAPI?, variant: ShipVariantAPI?,width: Float) {

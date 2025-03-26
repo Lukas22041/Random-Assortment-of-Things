@@ -130,10 +130,7 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
     fun renderSpecialGlow(w: Float, h: Float, centerX: Float, centerY: Float, alphaMult: Float, sprite: SpriteAPI) {
         var time = (Global.getSector().scripts.find { it is ConstantTimeIncreaseScript } as ConstantTimeIncreaseScript).time / 8
 
-
-
         GL20.glUseProgram(shader)
-
 
         GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), time)
         GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"), alphaMult)

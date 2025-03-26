@@ -51,7 +51,7 @@ class AIConvertedShip : BaseAlteration() {
     }
 
     override fun canInstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return (member!!.captain == null || member!!.captain.nameString == "") && !variant!!.hasHullMod(HullMods.AUTOMATED)
+        return (member!!.captain == null || member!!.captain.nameString == ""|| member.captain?.hasTag("rat_neuro_shard") == true) && !variant!!.hasHullMod(HullMods.AUTOMATED)
     }
 
     override fun cannotInstallAlterationTooltip(tooltip: TooltipMakerAPI?,  member: FleetMemberAPI?, variant: ShipVariantAPI?, width: Float) {
@@ -69,7 +69,7 @@ class AIConvertedShip : BaseAlteration() {
     }
 
     override fun canUninstallAlteration(member: FleetMemberAPI?, variant: ShipVariantAPI?, marketAPI: MarketAPI?): Boolean {
-        return member!!.captain == null || member!!.captain.nameString == ""
+        return member!!.captain == null || member!!.captain.nameString == "" || member.captain?.hasTag("rat_neuro_shard") == true
     }
 
     override fun cannotUninstallAlterationTooltip(tooltip: TooltipMakerAPI?,member: FleetMemberAPI?, variant: ShipVariantAPI?,width: Float) {
