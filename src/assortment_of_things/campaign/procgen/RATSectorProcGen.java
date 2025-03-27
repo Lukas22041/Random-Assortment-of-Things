@@ -349,6 +349,7 @@ public class RATSectorProcGen implements SectorProcGenPlugin {
 		List<CustomConstellationParams> result = new ArrayList<CustomConstellationParams>();
 
 		for (StarSystemType type : EnumSet.allOf(StarSystemType.class)) {
+			if (type == StarSystemType.DEEP_SPACE || type == StarSystemType.DEEP_SPACE_GAS_GIANT) continue;
 			CustomConstellationParams params = new CustomConstellationParams(StarAge.ANY);
 			params.systemTypes.add(type);
 			if (type == StarSystemType.NEBULA) params.forceNebula = true;

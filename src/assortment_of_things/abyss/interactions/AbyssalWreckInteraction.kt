@@ -302,6 +302,7 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
             ShipCondition.AVERAGE -> return 0.4f + random.nextFloat() * 0.2f
             ShipCondition.BATTERED -> return 0.2f + random.nextFloat() * 0.2f
             ShipCondition.WRECKED -> return random.nextFloat() * 0.1f
+            else -> null
         }
         return 1f
     }
@@ -314,6 +315,7 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
             ShipCondition.AVERAGE -> return 1 + random.nextInt(2)
             ShipCondition.BATTERED -> return 2 + random.nextInt(2)
             ShipCondition.WRECKED -> return 3 + random.nextInt(2)
+            else -> null
         }
         return 1
     }
@@ -325,6 +327,7 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
             ShipCondition.AVERAGE -> return 0.5f
             ShipCondition.BATTERED -> return 0.33f
             ShipCondition.WRECKED -> return 0.2f
+            else -> null
         }
         return 0f
     }
@@ -337,25 +340,30 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
                 ShipCondition.GOOD -> return 2 + random.nextInt(2)
                 ShipCondition.AVERAGE -> return 4 + random.nextInt(3)
                 ShipCondition.BATTERED -> return 7 + random.nextInt(6)
+                else -> null
             }
 
             HullSize.CRUISER -> when (condition) {
                 ShipCondition.GOOD -> return 1 + random.nextInt(2)
                 ShipCondition.AVERAGE -> return 2 + random.nextInt(3)
                 ShipCondition.BATTERED -> return 4 + random.nextInt(4)
+                else -> null
             }
 
             HullSize.DESTROYER -> when (condition) {
                 ShipCondition.GOOD -> return 1 + random.nextInt(2)
                 ShipCondition.AVERAGE -> return 2 + random.nextInt(2)
                 ShipCondition.BATTERED -> return 3 + random.nextInt(3)
+                else -> null
             }
 
             HullSize.FRIGATE -> when (condition) {
                 ShipCondition.GOOD -> return 1
                 ShipCondition.AVERAGE -> return 2
                 ShipCondition.BATTERED -> return 3
+                else -> null
             }
+            else -> null
         }
         return 1
     }

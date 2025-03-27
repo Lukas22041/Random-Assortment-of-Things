@@ -161,10 +161,10 @@ class CombatWarpingSpriteRenderer(var chunks: Int, var speedMod: Float) : Warpin
 
 
         if (!declared) {
-            method = clazz.getMethod(methodName, *methodType.parameterArray())
+            method = clazz.getMethod(methodName, *methodType.parameterArray()) as Any?
         }
         else  {
-            method = clazz.getDeclaredMethod(methodName, *methodType.parameterArray())
+            method = clazz.getDeclaredMethod(methodName, *methodType.parameterArray()) as Any?
         }
 
         return invokeMethodHandle.invoke(method, instance, arguments)

@@ -2,8 +2,9 @@ package assortment_of_things.frontiers.ui
 
 import assortment_of_things.frontiers.SettlementData
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.*
+import com.fs.starfarer.api.campaign.CustomProductionPickerDelegate
 import com.fs.starfarer.api.campaign.FactionAPI.ShipPickMode
+import com.fs.starfarer.api.campaign.FactionProductionAPI
 import com.fs.starfarer.api.campaign.FactionProductionAPI.ProductionItemType
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.impl.campaign.fleets.DefaultFleetInflaterParams
@@ -127,6 +128,43 @@ class SettlementCustomProduction(var settlement: SettlementData) : CustomProduct
                 return settlement.intel.icon
             }
         })
+    }
+
+
+    override fun getWeaponColumnNameOverride(): String? {
+        return null
+    }
+
+    override fun getNoMatchingBlueprintsLabelOverride(): String? {
+        return null
+    }
+
+    override fun getMaximumOrderValueLabelOverride(): String? {
+        return null
+    }
+
+    override fun getCurrentOrderValueLabelOverride(): String? {
+        return null
+    }
+
+    override fun isUseCreditSign(): Boolean {
+        return true
+    }
+
+    override fun getCostOverride(item: Any?): Int {
+        return -1
+    }
+
+    override fun getItemGoesOverMaxValueStringOverride(): String? {
+        return null
+    }
+
+    override fun getCustomOrderLabelOverride(): String? {
+        return null
+    }
+
+    override fun getNoProductionOrdersLabelOverride(): String? {
+        return null
     }
 
 }

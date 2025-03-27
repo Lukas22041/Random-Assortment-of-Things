@@ -25,7 +25,8 @@ class AssemblyStationInteraction : RATInteractionPlugin() {
         createOption("Explore") {
             clearOptions()
 
-            textPanel.addPara("You approach according to the basic directions transmitted on repeat by the station. On reaching the dock you ignore the message asking you to 'please wait for one of our helpful humdinger staff to help you make the best choice!', sending in your salvors to break in. \n\n" + "Alarms sound, are ignored, and are then killed in short order. Your crew chief, sensor officer and communications officer all crowd around a terminal, arguing about how to best access the station's systems; these stations are well-known for uploading truly cancerous advertisement programs into any ship system they can. You'd rather not have an annoying jingle for a long-dead smarmy ship shifter on repeat sounding from the comms system until the end of time.",
+            textPanel.addPara(
+                "You approach according to the basic directions transmitted on repeat by the station. On reaching the dock you ignore the message asking you to 'please wait for one of our helpful humdinger staff to help you make the best choice!', sending in your salvors to break in. \n\n" + "Alarms sound, are ignored, and are then killed in short order. Your crew chief, sensor officer and communications officer all crowd around a terminal, arguing about how to best access the station's systems; these stations are well-known for uploading truly cancerous advertisement programs into any ship system they can. You'd rather not have an annoying jingle for a long-dead smarmy ship shifter on repeat sounding from the comms system until the end of time.",
                 Misc.getTextColor(), Misc.getHighlightColor(),
             )
 
@@ -97,6 +98,42 @@ class AssemblyStationInteraction : RATInteractionPlugin() {
                                 Misc.fadeAndExpire(interactionTarget)
                             }
                             optionPanel.setShortcut("Leave", Keyboard.KEY_ESCAPE, false, false, false, true);
+                        }
+
+                        override fun getWeaponColumnNameOverride(): String? {
+                            return null
+                        }
+
+                        override fun getNoMatchingBlueprintsLabelOverride(): String? {
+                            return null
+                        }
+
+                        override fun getMaximumOrderValueLabelOverride(): String? {
+                            return null
+                        }
+
+                        override fun getCurrentOrderValueLabelOverride(): String? {
+                            return null
+                        }
+
+                        override fun isUseCreditSign(): Boolean {
+                            return true
+                        }
+
+                        override fun getCostOverride(item: Any?): Int {
+                            return -1
+                        }
+
+                        override fun getItemGoesOverMaxValueStringOverride(): String? {
+                            return null
+                        }
+
+                        override fun getCustomOrderLabelOverride(): String? {
+                            return null
+                        }
+
+                        override fun getNoProductionOrdersLabelOverride(): String? {
+                            return null
                         }
                     })
                 }

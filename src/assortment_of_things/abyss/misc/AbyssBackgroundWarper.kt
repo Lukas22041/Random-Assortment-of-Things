@@ -165,10 +165,10 @@ class AbyssBackgroundWarper(var system: LocationAPI, var chunks: Int, var speedM
 
 
         if (!declared) {
-            method = clazz.getMethod(methodName, *methodType.parameterArray())
+            method = clazz.getMethod(methodName, *methodType.parameterArray()) as Any?
         }
         else  {
-            method = clazz.getDeclaredMethod(methodName, *methodType.parameterArray())
+            method = clazz.getDeclaredMethod(methodName, *methodType.parameterArray()) as Any?
         }
 
         return invokeMethodHandle.invoke(method, instance, arguments)

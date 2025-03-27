@@ -1,3 +1,12 @@
+Version 2.6.0
+
+-> Updated to 0.98.
+-> Fixed Abyssal Crew Conversion and the Automated Conversion being blocked by Neural Shards.
+-> Fixed instances where officer levels were set as floats, causing issues with other mods.
+-> Compiled for Java 17 and Kotlin 2.0
+
+
+
 Version 2.5.15
 Save compatible with 2.4.x
 

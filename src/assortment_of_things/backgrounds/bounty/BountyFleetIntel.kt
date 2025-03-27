@@ -104,6 +104,7 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI, var nonHost
                 EndReason.DEFEATED -> bullet = "Fleet defeated"
                 EndReason.EXPIRED -> bullet = "Mission over"
                 EndReason.NO_LONGER_HOSTILE -> bullet = "Cancelled: No longer hostile"
+                else -> null
             }
             info.addPara(bullet, 0f, tc, Misc.getGrayColor())
         } else if (assembling) {
@@ -155,6 +156,7 @@ class BountyFleetIntel(var factionId: String, var market: MarketAPI, var nonHost
                 EndReason.DEFEATED -> text = "The fleet has been defeated."
                 EndReason.EXPIRED -> text = "The fleet is returning to base."
                 EndReason.NO_LONGER_HOSTILE -> text = "${faction.displayNameWithArticle} ${faction.displayNameIsOrAre} no longer hostile. The vengeance mission has been terminated."
+                else -> null
             }
 
             info.addPara(text, opad, Misc.getTextColor(), Misc.getHighlightColor(), "${faction.displayNameWithArticle}")

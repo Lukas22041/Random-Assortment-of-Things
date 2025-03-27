@@ -13,7 +13,6 @@ import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import com.sun.org.apache.regexp.internal.RE
 
 class DeltaAIAssistantHullmod : BaseAlteration() {
 
