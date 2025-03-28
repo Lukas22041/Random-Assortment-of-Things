@@ -87,6 +87,11 @@ class EscortOrdersManager : BaseEveryFrameCombatPlugin() {
                     toEscort.put(candidate, int)
                 }
 
+                if (toEscort.isEmpty()) {
+                    ship.aiFlags.unsetFlag(ShipwideAIFlags.AIFlags.ESCORT_OTHER_SHIP)
+                    continue
+                }
+
                 //Filter out targets that are lower
                 var max = toEscort.maxOf { it.value }
                 toEscort = toEscort.filter { it.value == max } as HashMap<ShipAPI, Int>

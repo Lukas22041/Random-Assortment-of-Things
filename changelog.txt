@@ -1,3 +1,10 @@
+Version 2.6.3
+Save Compatible
+
+-> Fixed a crash with the Escort Planner that occured if the only ship deployed was an escorting ship.
+
+
+
 Version 2.6.2
 Save Compatible
 
