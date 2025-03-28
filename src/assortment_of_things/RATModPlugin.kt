@@ -39,6 +39,7 @@ import assortment_of_things.exotech.ExoCampaignListener
 import assortment_of_things.exotech.ExotechGenerator
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
 import assortment_of_things.misc.*
+import assortment_of_things.misc.escort.EscortRefitButton
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.DelayedActionScript
@@ -85,6 +86,8 @@ class RATModPlugin : BaseModPlugin() {
         FrontiersUtils.loadFacilitiesFromCSV()
 
         ArtifactUtils.loadArtifactsFromCSV()
+
+        LunaRefitManager.addRefitButton(EscortRefitButton())
 
         LunaRefitManager.addRefitButton(AlterationRefitButton())
 

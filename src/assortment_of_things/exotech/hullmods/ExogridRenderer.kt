@@ -1,6 +1,5 @@
 package assortment_of_things.exotech.hullmods
 
-import assortment_of_things.misc.SpriteWithShader
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global

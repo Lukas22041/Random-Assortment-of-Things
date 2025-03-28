@@ -1,17 +1,16 @@
 package assortment_of_things.combat
 
-import assortment_of_things.RATModPlugin
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
 import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
-import assortment_of_things.abyss.scripts.ChangeMainMenuColorScript
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.backgrounds.neural.NeuralShardScript
 import assortment_of_things.backgrounds.zero_day.ZeroDayScript
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.misc.escort.EscortOrdersManager
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
@@ -79,6 +78,8 @@ class CombatHandler : EveryFrameCombatPlugin
 
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {
+
+            Global.getCombatEngine().addPlugin(EscortOrdersManager())
 
             if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
                 if (CharacterBackgroundUtils.isBackgroundActive("rat_neural_shard")) {
@@ -162,9 +163,40 @@ class CombatHandler : EveryFrameCombatPlugin
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
     }
 
+    /*var replacements = ArrayList<ShadedShipSpriteTest>()
+    var radius = 0f*/
 
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?)
     {
+
+       /* for (ship in Global.getCombatEngine().ships) {
+            if (!ship.hasTag("sprite_replaced")) {
+                ship.addTag("sprite_replaced")
+                var shaded = ShadedShipSpriteTest(ship)
+                shaded.init()
+                replacements.add(shaded)
+            }
+        }
+
+        radius += 500 * amount
+        var baseOffset = 900f
+        var min = 0 - baseOffset + radius
+        var max = 0 + radius
+
+
+        if (radius >= baseOffset * 2) radius = 0f
+
+        for (replacement in replacements) {
+            replacement.minRadius = min
+            replacement.maxRadius = max
+        }*/
+
+
+
+
+
+
+
         /*if (ArtifactUtils.getActiveArtifact() != null)
         {
             ArtifactUtils.getActivePlugin()!!.advanceInCombat(Global.getSector().playerFleet, ArtifactUtils.STAT_MOD_ID)

@@ -44,6 +44,10 @@ object RATSettings : LunaSettingsListener
     var hullmodLootFrequency = LunaSettings.getFloat(modID, "rat_hullmodBPLootFrequency")
     var shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")
 
+    //Escprt
+    var escortEnabled = LunaSettings.getBoolean(modID, "rat_escortEnabled")
+
+
     //Parallel Construction
     var parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")
     var parallelApplyToNPCs = LunaSettings.getBoolean(modID, "rat_parallelApplyToNPCs")
@@ -89,6 +93,8 @@ object RATSettings : LunaSettingsListener
 
         procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
         procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
+
+        escortEnabled = LunaSettings.getBoolean(modID, "rat_escortEnabled")
 
         parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")
         parallelApplyToNPCs = LunaSettings.getBoolean(modID, "rat_parallelApplyToNPCs")

@@ -1,3 +1,11 @@
+Version 2.6.2
+Save Compatible
+
+-> Added "Escort Planner", a button in refit that allows assigning ships to escort other ships by default.
+ -> Disabled by default. Need to enable it in the Lunalib Config.
+
+
+
 Version 2.6.1
 Save Compatible
 
