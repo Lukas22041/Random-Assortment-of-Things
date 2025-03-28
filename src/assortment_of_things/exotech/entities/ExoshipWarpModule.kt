@@ -394,7 +394,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
             }
 
 
-            warpListener!!()
+            if (warpListener != null) warpListener!!()
 
             doNotHidePlayer = false
             skipPreperation = false
