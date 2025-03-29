@@ -4,6 +4,7 @@ import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.addPara
 import assortment_of_things.misc.addTooltip
 import assortment_of_things.misc.baseOrModSpec
+import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -23,7 +24,7 @@ class EscortRefitButton : BaseRefitButton() {
     }
 
     override fun shouldShow(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
-        return RATSettings.escortEnabled!!
+        return RATSettings.escortEnabled!! && Global.getCurrentState() == GameState.CAMPAIGN
     }
 
     override fun getIconName(member: FleetMemberAPI?, variant: ShipVariantAPI?): String {

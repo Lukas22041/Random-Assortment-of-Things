@@ -31,6 +31,8 @@ class EscortOrdersManager : BaseEveryFrameCombatPlugin() {
         fun fillNewEntries() {
             var data = getEscortData()
 
+            if (Global.getSector()?.playerFleet?.fleetData == null) return
+
             for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
                 var entry = data.get(member.id)
                 if (entry == null) {
@@ -59,6 +61,8 @@ class EscortOrdersManager : BaseEveryFrameCombatPlugin() {
 
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
         if (!RATSettings.escortEnabled!!) return
+
+        if (Global.getSector()?.playerFleet?.fleetData == null) return
 
         interval.advance(amount)
         if (interval.intervalElapsed()) {

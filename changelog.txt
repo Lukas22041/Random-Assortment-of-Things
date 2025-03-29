@@ -1,3 +1,10 @@
+Version 2.6.4
+Save Compatible
+
+-> Fixed yet another crash with the escort planner.
+
+
+
 Version 2.6.3
 Save Compatible
 
