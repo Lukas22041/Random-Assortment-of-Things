@@ -61,9 +61,9 @@ class ExoBackground : BaseCharacterBackground() {
             return "You begin with the Exotech Questline already completed, with a personal Exoship under your command. \n\n" +
                     "" +
                     "The Exoship will be orbiting a planet within the starting system. " +
-                    "If theres no suitable location, it will be somewhere else, and you can call it to you with the \"Manage Exoship\" ability.\n\n" +
+                    "If theres no suitable location, it will be somewhere else. You may call it to you with the \"Manage Exoship\" ability.\n\n" +
                     "" +
-                    "Xanders side missions are still available and are not commpleted by this background. The Automated Arkas is stored in the Exoships storage, it is however heavily damaged."
+                    "Xander's side missions remain available and incomplete in this background. The Automated Arkas is stored in Exoship storage, badly damaged."
         }
     }
 

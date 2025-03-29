@@ -1,11 +1,11 @@
 {
-	"starts":[
-		{
-			"id":"rat_abyssStart",
-			"name":"Depth Diver",
-			"difficulty":"Normal",
-			"desc":"You ventured in to the vast abyssal depths, having lost most of what you entered with, but emerging with equipment before unseen.",
-			"className":"assortment_of_things.abyss.misc.AbyssStart",
-		},
-	],
+  "starts": [
+    {
+      "id": "rat_abyssStart",
+      "name": "Depth Diver",
+      "difficulty": "Normal",
+      "desc": "You ventured in to the vast abyssal depths and lost most of what you entered with. What remains of your fleet returns with technology hitherto unseen by the broader universe. Was it worth it?",
+      "className": "assortment_of_things.abyss.misc.AbyssStart"
+    }
+  ]
 }

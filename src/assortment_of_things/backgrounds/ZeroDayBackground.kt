@@ -42,13 +42,13 @@ class ZeroDayBackground : BaseCharacterBackground() {
         if (RATSettings.backgroundsAbilityKeybind == 0) key = "right click"
 
         var label = tooltip!!.addPara(
-                "Any ship below or at 35 deployment points on the opponents side can be temporarily taken control of by pressing CTRL + $key while hovering over them. \n\n" +
-                        "The maximum duration is between 10 to 20 seconds, based on how many deployment points the targeted ship has. The ability has a 20 second cooldown and can be canceled by pressing the activation key twice. \n\n" +
+                "Any opposing ship at or below 35 deployment points can be temporarily controlled by pressing CTRL + $key while hovering over them. \n\n" +
+                        "The hack lasts for 10 to 20 seconds, based on how many deployment points the targeted ship has. The ability has a 20 second cooldown and can be canceled by pressing the activation key twice. \n\n" +
                         "" +
                         "While you are controlling the targeted ship, your own ship is on autopilot.", 0f)
 
 
-        label.setHighlight("35", "taken control", "CTRL", "$key", "10 to 20", "deployment points", "20", "autopilot")
+        label.setHighlight("35", "temporarily controlled", "CTRL", "$key", "10 to 20", "deployment points", "20", "autopilot")
         label.setHighlightColors(hc)
 
     }

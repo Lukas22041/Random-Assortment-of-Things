@@ -38,10 +38,10 @@ class ArmyBackground : BaseCharacterBackground() {
         var nc = Misc.getNegativeHighlightColor()
 
         var label = tooltip.addPara(
-                "The amount of maximum officers within your fleet is doubled, but their maximum level is reduced by 2, and they can not have more than one elite skill. " +
+                "Your officer limit is doubled, but their maximum level is reduced by 2. They only receive one elite skill. " +
                         "You are also much more likely to find officers on colonies. \n\n" +
                         "" +
-                        "All ships with officers also provide an effective increase of strength in planetary raids of 10/20/35/50 depending on their hullsize and the total number of marines in the fleet.  \n\n" +
+                        "All ships with officers also increase the effective strength of planetary raids by 10/20/35/50, depending on hullsize and number of marines in your fleet.  \n\n" +
                         "" +
                         "The reduction in officer capability may not apply to some special officers.", 0f)
 
