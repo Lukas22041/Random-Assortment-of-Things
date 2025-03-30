@@ -55,7 +55,7 @@ rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,Enhanc
 rat_parallelEnabled,Enable Parallel Construction,Boolean,false,,"Removes the queue system in Colony Construction, allowing everything to be built at the same time.",,,Enhancement
 rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,,"If set to true and parallel construction is enabled, NPC markets will benefit from the same effect.",,,Enhancement
 ,,,,,,,,
-rat_escortHeader,Escort Planner,Header,Parallel Construction,,,,,Enhancement
+rat_escortHeader,Escort Planner,Header,Escort Planner,,,,,Enhancement
 rat_escortEnabled,Enable Escort Planner,Boolean,false,,"Enables a button under ""Additional Options"" that allows planning Escort Orders that are automaticly assigned in combat.",,,Enhancement
 ,,,,,,,,
 ,,,,,,,,

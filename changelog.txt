@@ -1,3 +1,11 @@
+Version 2.6.5
+Save Compatible
+
+-> Fixed a crash with the abyssal warning beacon intel entry.
+-> Potentialy fixed some weird crashes with the exoship warp.
+
+
+
 Version 2.6.4
 Save Compatible
 

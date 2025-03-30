@@ -15,6 +15,10 @@ import com.fs.starfarer.api.util.Misc
 
 class AbyssWarningBeaconIntel(var beacon: SectorEntityToken, var faction: FactionAPI) : BaseIntelPlugin() {
 
+    override fun getName(): String {
+        return ""
+    }
+
     override fun createIntelInfo(info: TooltipMakerAPI, mode: IntelInfoPlugin.ListInfoMode?) {
         super.createIntelInfo(info, mode)
 
