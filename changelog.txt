@@ -1,3 +1,11 @@
+Version 2.6.6
+Save Compatible
+
+-> Should hopefuly fix the bug that caused the NPC exoship to no longer be able to warp after an innitial warp, will only really be fixed on new saves though. This issue also caused crashes on some java versions.
+-> Fixed bought exotech ships spawning with 50% CR instead of 70%.
+
+
+
 Version 2.6.5
 Save Compatible
 

@@ -158,9 +158,9 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
                             Global.getSector().playerFleet.getAbility("fracture_jump").cooldownLeft = 99999f
                         }
 
-                        playerPlugin.warpModule.warp(planet, true, true) {
+                        playerPlugin.warpModule.warp(planet, true, true) @JvmSerializableLambda {
                             playerExoship.addTag(Tags.NON_CLICKABLE)
-                            Global.getSector().getExoData().getExoshipPlugin().warpModule.doQuestlineWarp(planet) {
+                            Global.getSector().getExoData().getExoshipPlugin().warpModule.doQuestlineWarp(planet)  @JvmSerializableLambda {
                                 Global.getSector().getExoData().getExoship().addTag(Tags.NON_CLICKABLE)
                                 Global.getSector().campaignUI.showInteractionDialog(ExoshipRecoveryContactInteraction(), Global.getSector().getExoData().getExoship())
                             }

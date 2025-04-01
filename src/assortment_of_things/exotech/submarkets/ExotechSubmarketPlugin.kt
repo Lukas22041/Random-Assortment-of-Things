@@ -176,7 +176,7 @@ class ExotechSubmarketPlugin : BaseSubmarketPlugin(), EveryFrameScript {
         for (member in fleet.fleetData.membersListCopy) {
             cargo.mothballedShips.addFleetMember(member)
             member.repairTracker.isMothballed = true
-            member.repairTracker.cr = 0.5f
+            member.repairTracker.cr = 0.7f
         }
     }
 

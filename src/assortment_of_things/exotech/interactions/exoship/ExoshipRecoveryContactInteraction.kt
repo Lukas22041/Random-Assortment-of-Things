@@ -103,8 +103,8 @@ class ExoshipRecoveryContactInteraction : RATInteractionPlugin() {
 
                             var system = systems.random()
 
-                            ExoUtils.getExoData().getPlayerExoshipPlugin().warpModule.warp(system!!, false, false)
-                            ExoUtils.getExoData().getExoshipPlugin().warpModule.warp(system!!, false, false)
+                            ExoUtils.getExoData().getPlayerExoshipPlugin().warpModule.warp(system!!, false, false)  @JvmSerializableLambda { }
+                            ExoUtils.getExoData().getExoshipPlugin().warpModule.warp(system!!, false, false) @JvmSerializableLambda { }
                             ExoUtils.getExoData().getExoshipPlugin().npcModule.currentWarp = null
 
                             MagicAchievementManager.getInstance().completeAchievement("rat_beatExotechQuestline")

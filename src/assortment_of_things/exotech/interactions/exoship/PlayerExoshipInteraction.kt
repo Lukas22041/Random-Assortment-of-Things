@@ -341,10 +341,10 @@ class PlayerExoshipInteraction(var openedFromAbility: Boolean) : ExoshipInteract
         playerData.currentFuelPercent = remaining
 
         if (selectedDestination!!.starSystem.center == selectedDestination) {
-            exoship.warpModule.warp(selectedDestination!!.starSystem, playerJoins)
+            exoship.warpModule.warp(selectedDestination!!.starSystem, playerJoins)  @JvmSerializableLambda { }
         }
         else {
-            exoship.warpModule.warp(selectedDestination!!, playerJoins)
+            exoship.warpModule.warp(selectedDestination!!, playerJoins) @JvmSerializableLambda { }
         }
 
         selectedDestination = null

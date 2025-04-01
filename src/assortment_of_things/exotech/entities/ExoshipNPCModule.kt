@@ -58,7 +58,7 @@ class ExoshipNPCModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnti
                     if (currentWarp == null) return
                 }
 
-                exoship.warpModule.warp(currentWarp!!.destination, false) {
+                exoship.warpModule.warp(currentWarp!!.destination, false) @JvmSerializableLambda {
                     currentWarp = null
                 }
 
