@@ -35,7 +35,7 @@ class AbyssDoctrineListener(permaRegister: Boolean) : BaseCampaignEventListener(
             var intel = Global.getSector().intelManager
             if (data.abyssalsDestroyed >= 12 && !data.hasAbyssalDoctrine) {
                 data.hasAbyssalDoctrine = true
-                DelayedCampaignCodeExecution(1f) {
+                DelayedCampaignCodeExecution(1f) @JvmSerializableLambda {
                     intel.addIntel(DoctrineReportAbyssal())
                     for (listener in data.doctrineLearnedListeners) {
                         listener.learnedAbyssalDoctrine()
@@ -45,7 +45,7 @@ class AbyssDoctrineListener(permaRegister: Boolean) : BaseCampaignEventListener(
 
             if (data.seraphsDestroyed >= 2 && !data.hasSeraphDoctrine) {
                 data.hasSeraphDoctrine = true
-                DelayedCampaignCodeExecution(1f) {
+                DelayedCampaignCodeExecution(1f) @JvmSerializableLambda {
                     intel.addIntel(DoctrineReportSeraph())
                     for (listener in data.doctrineLearnedListeners) {
                         listener.learnedSeraphDoctrine()

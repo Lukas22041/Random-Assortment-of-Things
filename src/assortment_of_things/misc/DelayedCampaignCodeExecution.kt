@@ -23,7 +23,7 @@ class DelayedCampaignCodeExecution(var days: Float, var lambda: () -> Unit) : Ev
 
     override fun advance(amount: Float) {
         if (Global.getSector().clock.getElapsedDaysSince(timestamp) >= days) {
-            lambda()
+            if (lambda != null) lambda()
             done = true
         }
     }

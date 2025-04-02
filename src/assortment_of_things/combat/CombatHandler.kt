@@ -10,7 +10,7 @@ import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.backgrounds.neural.NeuralShardScript
 import assortment_of_things.backgrounds.zero_day.ZeroDayScript
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.misc.ShadedSphere
+import assortment_of_things.misc.ThreatFragmentShader
 import assortment_of_things.misc.escort.EscortOrdersManager
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.GameState
@@ -170,6 +170,14 @@ class CombatHandler : EveryFrameCombatPlugin
 
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?)
     {
+
+        /*for (ship in Global.getCombatEngine().ships) {
+            if (!ship.hasTag("sprite_replaced2")) {
+                ship.addTag("sprite_replaced2")
+                var shaded = ThreatFragmentShader(ship)
+                shaded.init()
+            }
+        }*/
 
        /* for (ship in Global.getCombatEngine().ships) {
             if (!ship.hasTag("sprite_replaced")) {

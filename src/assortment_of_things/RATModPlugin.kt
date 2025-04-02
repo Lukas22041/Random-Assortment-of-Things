@@ -41,6 +41,7 @@ import assortment_of_things.exotech.terrain.ExotechHyperNebula
 import assortment_of_things.misc.*
 import assortment_of_things.misc.escort.EscortRefitButton
 import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.DelayedActionScript
 import com.fs.starfarer.campaign.CampaignState

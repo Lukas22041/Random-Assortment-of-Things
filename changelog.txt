@@ -1,3 +1,10 @@
+Version 2.6.7
+Save Compatible
+
+-> Fixed a crash that could happen from unlocking information about abyssal ships.
+
+
+
 Version 2.6.6
 Save Compatible
 
