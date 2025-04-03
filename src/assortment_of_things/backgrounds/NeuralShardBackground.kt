@@ -35,7 +35,7 @@ class NeuralShardBackground : BaseCharacterBackground() {
 
 
     override fun getLongDescription(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?): String {
-        return "You can take control of all ships within your fleet, but the mental exhaustion from the chip makes it hard to work with others."
+        return "You can assume direct control of all ships within your fleet, but mental exhaustion from using the chip makes it hard to work with others."
     }
 
     fun getTooltip(tooltip: TooltipMakerAPI) {
@@ -50,14 +50,14 @@ class NeuralShardBackground : BaseCharacterBackground() {
 
         var label = tooltip!!.addPara(
                 "All non-automated ships in your fleet without an officer receive a shard of yourself as their pilot. " +
-                        "Those shards share two to three of your own combat skills. Those skills are assigned at random in every combat encounter. Every shard, and yourself, has aggressive behaviour. \n\n" +
+                        "Each shard retains 2-3 of your own combat skills. These skills are assigned at random in every combat encounter. Every shard has aggressive behaviour. \n\n" +
                         "" +
-                        "You can switch to any ship with a shard immediately by pressing $key while hovering over the ship. The ship currently controlled has access to all of your skills. \n\n" +
+                        "You can switch to any ship with a shard immediately by pressing $key while hovering over the ship. The ship you actively control has access to all of your skills. \n\n" +
                         "" +
-                        "The maximum number of officers able to join your fleet is halved, and you have a harder time finding anyone wanting to join you.", 0f)
+                        "The maximum number of officers able to join your fleet is halved, and you have a harder time finding anyone willing to join you.", 0f)
 
 
-        label.setHighlight("receive a shard of yourself as their pilot", "two to three", "aggressive", "switch", "$key", "all of your skills.", "halved")
+        label.setHighlight("receive a shard of yourself as their pilot", "2-3", "aggressive", "switch", "$key", "all of your skills.", "halved")
         label.setHighlightColors(hc, hc, hc, hc, hc, hc, nc)
 
     }

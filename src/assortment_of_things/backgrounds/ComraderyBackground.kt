@@ -18,7 +18,7 @@ class ComraderyBackground : BaseCharacterBackground() {
     }
 
     override fun getLongDescription(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?): String {
-        return "At the start of the game, you get to create an officer of high potential, together with a unique skill from a variety of choices."
+        return "When you begin your campaign, you may create an exceptional officer with a unique skill."
     }
 
     override fun onNewGameAfterTimePass(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?) {
@@ -55,7 +55,7 @@ class ComraderyBackground : BaseCharacterBackground() {
         super.addTooltipForSelection(tooltip, factionSpec, factionConfig, expanded)
 
         tooltip!!.addSpacer(10f)
-        tooltip.addPara("Your partner has a max level of 8, can select from 6 skills at level up and can have 3 elite skills.", 0f,
+        tooltip.addPara("Your partner has a max level of 8, can select from 6 skills at level up, and retain 3 elite skills.", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "8", "6", "3")
 
     }
