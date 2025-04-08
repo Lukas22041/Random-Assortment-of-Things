@@ -43,8 +43,8 @@ class ThreatFragmentShader(ship: ShipAPI) : ShipSpriteDelegate(ship)
 
         GL20.glUniform2f(GL20.glGetUniformLocation(shader, "resolution"), this.texWidth, this.texHeight)
 
-        GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"), 1f)
-        GL20.glUniform3f(GL20.glGetUniformLocation(shader, "colorMix"), 1f, 1f, 1f)
+        GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"), ship.alphaMult)
+        GL20.glUniform3f(GL20.glGetUniformLocation(shader, "colorMix"), ship.spriteAPI.color.red / 255f, ship.spriteAPI.color.green / 255f, ship.spriteAPI.color.blue / 255f)
 
         //Bind Texture
         GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0)
@@ -63,20 +63,28 @@ class ThreatFragmentShader(ship: ShipAPI) : ShipSpriteDelegate(ship)
         //Reset Texture
         GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0)
 
+        ship.shield?.innerColor = Color(156,186,174,75)
+        ship.shield?.ringColor = Color(255,255,255,255)
+        ship.engineController.fadeToOtherColor(ship.id + "_fragment", Color(130,155,145, 100), Color(130,155,145,25), 1f, 0.85f)
+
         var c = ship.spriteAPI.color
+
 
         ship.addTag("skipSpriteDelegate")
         ship.spriteAPI.setNormalBlend()
         ship.spriteAPI.alphaMult = 1f
         ship.spriteAPI.color = Color(255, 255, 255, 255)
-        ship.spriteAPI.render(ship.location.x, ship.location.y)
+        ship.spriteAPI.renderAtCenter(0f, 0f) //0, 0 Because Alex does a GLTranslate before this render is called.
         ship.removeTag("skipSpriteDelegate")
+        ship.spriteAPI.setNormalBlend()
         //ship.spriteAPI.color = c
 
 
         GL20.glUseProgram(0)
 
         GL11.glPopMatrix()
+
+
     }
 
 }

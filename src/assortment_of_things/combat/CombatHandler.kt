@@ -171,7 +171,7 @@ class CombatHandler : EveryFrameCombatPlugin
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?)
     {
 
-        /*for (ship in Global.getCombatEngine().ships) {
+      /*  for (ship in Global.getCombatEngine().ships) {
             if (!ship.hasTag("sprite_replaced2")) {
                 ship.addTag("sprite_replaced2")
                 var shaded = ThreatFragmentShader(ship)

@@ -1,6 +1,8 @@
 package assortment_of_things.campaign.secondInCommand.abyssal
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
 import second_in_command.specs.SCAptitudeSection
@@ -10,6 +12,11 @@ class AptitudeAbyssal : SCBaseAptitudePlugin() {
 
     companion object {
 
+    }
+
+    override fun addCodexDescription(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("The Abyssal aptitude is added by Random Assortment of Things. Its officer can be found in the wreck of an abyssal droneship near a major lightsource in the abyssal depths. The aptitude at large plays like an even more aggressive alternative to the Automation aptitude. ",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Abyssal", "the wreck of an abyssal droneship near a major lightsource", "Automation")
     }
 
     override fun getOriginSkillId(): String {

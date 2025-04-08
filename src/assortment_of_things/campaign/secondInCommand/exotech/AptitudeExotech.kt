@@ -1,12 +1,19 @@
 package assortment_of_things.campaign.secondInCommand.exotech
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
 class AptitudeExotech : SCBaseAptitudePlugin() {
+
+    override fun addCodexDescription(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("The Exotech aptitude is added by Random Assortment of Things. It can be acquired by talking to Amelie after having finished the first mission in the Exotech questline. The aptitude hosts a mix of high tech, carrier and phase skills. ",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Exotech", "acquired by talking to Amelie after having finished the first mission")
+    }
 
     override fun getOriginSkillId(): String {
         return "rat_exotech_hyperspatial_reconfiguration"
