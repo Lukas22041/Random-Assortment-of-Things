@@ -1,3 +1,10 @@
+Version 2.6.9
+Save Compatible
+
+- Fixed some unintended ships being available through the arms dealer.
+
+
+
 Version 2.6.8
 Save Compatible
 
