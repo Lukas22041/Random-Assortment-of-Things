@@ -63,6 +63,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
     }
 
     override fun canActivate(): Boolean {
+        if (!ship.isAlive) return false
         return ship.customData.get("rat_boss_second_phase") != true
     }
 

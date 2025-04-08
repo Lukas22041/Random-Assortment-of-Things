@@ -63,7 +63,7 @@ class AbyssalFleetInflationListener : FleetInflationListener {
 
 
             var abyssData = AbyssUtils.getAbyssData()
-            if (!abyssData.hasAbyssalDoctrine) {
+            /*if (!abyssData.hasAbyssalDoctrine) {
                 for (member in fleet.fleetData.membersListWithFightersCopy) {
                     if (member.baseOrModSpec().hasTag("rat_abyssals") && !member.baseOrModSpec().hasTag("rat_seraph")) {
                         member.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
@@ -79,7 +79,7 @@ class AbyssalFleetInflationListener : FleetInflationListener {
                     }
                 }
                 abyssData.doctrineLearnedListeners.add(AbyssDoctrineLearnedListener(fleet))
-            }
+            }*/
 
             var depth = AbyssDepth.Deep
             if (fleet.containingLocation != null && fleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG))    {

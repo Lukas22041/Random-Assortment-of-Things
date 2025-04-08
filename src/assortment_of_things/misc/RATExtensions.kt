@@ -81,7 +81,7 @@ fun FleetMemberAPI.fixVariant() {
     if (this.variant.source != VariantSource.REFIT)
     {
         var variant = this.variant.clone();
-        variant.originalVariant = null;
+        variant.originalVariant = variant.hullVariantId;
         variant.hullVariantId = Misc.genUID()
         variant.source = VariantSource.REFIT
         this.setVariant(variant, false, true)

@@ -19,11 +19,13 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.CampaignEventListener.FleetDespawnReason
 import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI
+import com.fs.starfarer.api.campaign.listeners.FleetEventListener
 import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
 import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
+import com.fs.starfarer.api.impl.SimulatorPluginImpl
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.fleets.SourceBasedFleetManager
@@ -31,6 +33,7 @@ import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseEventIntel
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseFactorTooltip
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseOneTimeFactor
+import com.fs.starfarer.api.impl.campaign.intel.misc.SimUpdateIntel
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager
 import com.fs.starfarer.api.loading.HullModSpecAPI
 import com.fs.starfarer.api.plugins.impl.CoreAutofitPlugin
@@ -170,6 +173,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
 
         val fleet = FleetFactoryV3.createFleet(params)
 
+
         if (factionID != "rat_abyssals_deep_seraph") {
             var minSeraphs = 0
             var maxSeraphs = 0
@@ -231,6 +235,8 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         if (depth == AbyssDepth.Deep) alterationChancePerShip += 0.2f
 
         AbyssUtils.addAlterationsToFleet(fleet, alterationChancePerShip, random)
+
+        fleet.addEventListener(SimUnlockerListener())
 
         return fleet
     }
@@ -772,4 +778,68 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         }
         return maxCapacitors
     }
+}
+
+class SimUnlockerListener() : FleetEventListener {
+    override fun reportFleetDespawnedToListener(fleet: CampaignFleetAPI?, reason: FleetDespawnReason?, param: Any?) {
+
+    }
+
+    override fun reportBattleOccurred(fleet: CampaignFleetAPI?, primaryWinner: CampaignFleetAPI?, battle: BattleAPI) {
+
+        var plugin = Misc.getSimulatorPlugin()
+
+        if (plugin !is SimulatorPluginImpl) return
+
+
+
+
+        //CampaignFleetAPI playerFleet = Global.getSector().getPlayerFleet();
+
+//		unlocksData.factions.clear();
+//		unlocksData.variants.clear();
+        //unlocksData.variants.addAll(Global.getSettings().getSimOpponents());
+        val addedFactions = LinkedHashSet<String>()
+        var addedVariants = LinkedHashSet<String?>()
+
+        for (fleet in battle.nonPlayerSideSnapshot) {
+            /*if (fleet.faction == null || fleet.faction.factionSpec == null || fleet.faction.factionSpec.custom == null) continue
+            val json = fleet.faction.factionSpec.custom.optJSONObject("simulatorData") ?: continue
+            val show = json.optBoolean("showInSimulator")
+            if (!show) continue*/
+
+            val members = Misc.getSnapshotMembersLost(fleet)
+            val fid = "rat_abyssals_sim"
+
+            if (!plugin.unlocksData.factions.contains(fid)) {
+                plugin.unlocksData.factions.add(fid)
+                addedFactions.add(fid)
+            }
+
+            for (member in members) {
+
+                val vid: String = plugin.getStockVariantId(member)
+
+                if (vid != null) {
+                    if (!plugin.unlocksData.variants.contains(vid)) {
+                        plugin.unlocksData.variants.add(vid)
+                        addedVariants.add(vid)
+                    }
+                }
+            }
+        }
+
+        if (!addedVariants.isEmpty()) {
+            addedVariants = LinkedHashSet(SimulatorPluginImpl.getVariantIDList(SimulatorPluginImpl.sortVariantList(
+                SimulatorPluginImpl.getVariantList(LinkedHashSet(addedVariants)))))
+        }
+
+        if (!addedFactions.isEmpty() || !addedVariants.isEmpty()) {
+            plugin.saveUnlocksData()
+
+            SimUpdateIntel(addedFactions, addedVariants)
+        }
+
+    }
+
 }

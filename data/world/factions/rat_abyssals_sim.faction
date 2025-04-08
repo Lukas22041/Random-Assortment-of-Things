@@ -1,20 +1,22 @@
 {
-	id:"rat_abyssals_primordials",
-	"displayName":"Primordial",
-	"displayNameWithArticle":"the primordials",
-	"displayNameLong":"Primordial",
-	"displayNameLongWithArticle":"the Primordials",
-	"entityNamePrefix":"Primordial",
-	"personNamePrefix":"Primordial",
+	#This faction only exists to have one single entry for any type of abyssal ship.
+	
+	id:"rat_abyssals_sim",
+	"displayName":"Abyssal",
+	"displayNameWithArticle":"the abyssals",
+	"displayNameLong":"Abyssal",
+	"displayNameLongWithArticle":"the Abyssals",
+	"entityNamePrefix":"Abyssal",
+	"personNamePrefix":"Abyssal",
 	"personNamePrefixAOrAn":"an",
 	"displayNameIsOrAre":"are",
 	
-	"logo":"graphics/factions/rat_primordials.png",
-	"crest":"graphics/factions/rat_primordials_crest.png",
+	"logo":"graphics/factions/rat_abyssals.png",
+	"crest":"graphics/factions/crest_rat_abyssals.png",
 	"shipNamePrefix":"ABS",
 	
-	"color":[140, 0, 250,255],
-	"baseUIColor":[140, 0, 250,255],
+	"color":[196, 20, 35,255],
+	"baseUIColor":[196, 20, 35,255],
 	#"color":[100,100,100,255],
 	#"baseUIColor":[155,155,155,255],
 	
@@ -42,17 +44,13 @@
 	},
 	# ships the faction gets access to when importing S&W out-of-faction
 	"shipsWhenImporting":{
-		"tags":[],
+		"tags":["rat_abyssals", "rat_seraph", "rat_primordial"],
 		"hulls":[
-			"rat_genesis",
-			"rat_genesis_serpent_head",
 		],
 	},
 	"knownShips":{
-		"tags":[],
+		"tags":["rat_abyssals", "rat_seraph", "rat_primordial"],
 		"hulls":[
-			"rat_genesis",
-			"rat_genesis_serpent_head",
 		],
 	},
 	# listing ships here will make the faction mostly use them even if other hulls become available
@@ -72,7 +70,7 @@
 		],
 	},
 	"knownWeapons":{
-		"tags":["base_bp", "lowtech_bp", "midline_bp", "hightech_bp", "missile_bp", "rat_abyssals"],
+		"tags":["base_bp", "lowtech_bp", "midline_bp", "hightech_bp", "missile_bp", "rat_abyssals", "rat_seraph"],
 		"weapons":[
 			"lightneedler",
 			"railgun",
@@ -169,9 +167,9 @@
 	"illegalCommodities":[
 	],
 	"music":{
-		"encounter_neutral":"rat_abyss_interaction2",
-		"encounter_hostile":"rat_abyss_interaction2",
-		"encounter_friendly":"rat_abyss_interaction2",
+		"encounter_neutral":"rat_abyss_encounter",
+		"encounter_hostile":"rat_abyss_encounter",
+		"encounter_friendly":"rat_abyss_encounter",
 	},	
 	#"internalComms":"hegemony_internal",
 	"portraits":{
@@ -197,6 +195,11 @@
 		"allowsTransponderOffTrade":true, # to prevent cargoscan dialog from "patrols"
 		"postsNoBounties":true,
 		"fightToTheLast":true, # order a full assault instead of retreating, in most cases
+		"simulatorData":{
+			"showInSimulator":true,
+			"standardAICores":true,
+			"includeCivShipsWithFaction":true,
+		},
 	},	
 	"fleetTypeNames":{
 		"patrolSmall":"Lookout",

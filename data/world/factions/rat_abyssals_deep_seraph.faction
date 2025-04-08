@@ -1,16 +1,16 @@
 {
 	id:"rat_abyssals_deep_seraph",
-	"displayName":"Abyssal",
-	"displayNameWithArticle":"the abyssals",
+	"displayName":"Seraphim",
+	"displayNameWithArticle":"the seraphim",
 	"displayNameLong":"Abyssal",
-	"displayNameLongWithArticle":"the Abyssals",
-	"entityNamePrefix":"Abyssal",
-	"personNamePrefix":"Abyssal",
+	"displayNameLongWithArticle":"the Seraphim",
+	"entityNamePrefix":"Seraphim",
+	"personNamePrefix":"Seraphim",
 	"personNamePrefixAOrAn":"an",
 	"displayNameIsOrAre":"are",
 	
 	"logo":"graphics/factions/rat_abyssals.png",
-	"crest":"graphics/factions/crest_rat_abyssals.png",
+	"crest":"graphics/factions/crest_rat_seraphim.png",
 	"shipNamePrefix":"ABS",
 	
 	"color":[196, 20, 35,255],

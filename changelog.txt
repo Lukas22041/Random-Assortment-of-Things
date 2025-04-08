@@ -1,3 +1,13 @@
+Version 2.6.8
+Save Compatible
+
+-> Abyssal and Exotech ships can now be unlocked for the codex and simulator.
+-> Fixed Shipsystem Codex Entries having no text.
+-> Fixed Entries that didnt display due to errors.
+-> Removed Codex Entries that are not supposed to be visible.
+
+
+
 Version 2.6.7
 Save Compatible
 

@@ -184,7 +184,7 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().addTransientScript(DisableTransverseScript())
         Global.getSector().addTransientScript(AbyssAmbientSoundPlayer())
-        Global.getSector().addTransientListener(AbyssDoctrineListener(false))
+        //Global.getSector().addTransientListener(AbyssDoctrineListener(false))
         //Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
 
         generateAbyss()

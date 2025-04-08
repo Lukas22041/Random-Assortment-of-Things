@@ -230,7 +230,6 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI?, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
         super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec)
 
-        if (ship == null) return
 
         var initialHeight = tooltip!!.heightSoFar
         var particleSpawner = HullmodTooltipAbyssParticles(tooltip, initialHeight)
@@ -246,6 +245,8 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
                 "Additionally, certain mechanisms react differently to abyssal cores when installed into the hull.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "50%")
 
+
+        if (ship == null) return
 
         //IMGs
 
