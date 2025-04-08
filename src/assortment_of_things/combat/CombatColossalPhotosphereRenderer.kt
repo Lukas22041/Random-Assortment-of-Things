@@ -1,7 +1,6 @@
 package assortment_of_things.combat
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -43,9 +42,9 @@ class CombatColossalPhotosphereRenderer(var radius: Float, photosphere: PlanetAP
         var distance = MathUtils.getDistance(playerfleet, photosphere)
         var angle = Misc.getAngleInDegrees(playerfleet.location, photosphere.location)
 
-        var data = AbyssUtils.getSystemData(playerfleet.containingLocation as StarSystemAPI)
+       /* var data = AbyssUtils.getSystemData(playerfleet.containingLocation as StarSystemAPI)
 
-        color = data.getColor()
+        color = data.getColor()*/
 
         var min = 0f
         var max = 9000

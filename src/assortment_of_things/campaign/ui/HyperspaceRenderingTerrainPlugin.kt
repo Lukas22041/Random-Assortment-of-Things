@@ -3,7 +3,6 @@ package assortment_of_things.campaign.ui
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
-import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.impl.campaign.procgen.StarGenDataSpec
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.ui.Fonts
@@ -32,14 +31,14 @@ class HyperspaceRenderingTerrainPlugin : BaseTerrain() {
             fractureText = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
-        var fracture = AbyssUtils.getAbyssData().hyperspaceFracture
+       /* var fracture = AbyssUtils.getData().hyperspaceFracture
         if (fracture != null) {
             fractureText.fontSize = 800f * factor
             fractureText.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
             fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
             fractureText.blendSrc = GL11.GL_SRC_ALPHA
             fractureText.drawOutlined(fracture.location.x * factor - (fractureText.width / 2), (fracture.location.y + 700) * factor + (fractureText.height))
-        }
+        }*/
 
        /* val font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
         var tapText = font.createText("Hypershunt", Color(100, 0, 255, (255 * alphaMult).toInt()), 750f * factor)
@@ -99,14 +98,14 @@ class HyperspaceRenderingTerrainPlugin : BaseTerrain() {
             fractureText = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
-        var fracture = AbyssUtils.getAbyssData().hyperspaceFracture
+        /*var fracture = AbyssUtils.getData().hyperspaceFracture
         if (fracture != null) {
             fractureText.fontSize = 800f * factor
             fractureText.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
             fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
             fractureText.blendSrc = GL11.GL_SRC_ALPHA
             fractureText.drawOutlined((fracture.location.x - radarCenter!!.x) * factor - (fractureText.width / 2), (fracture.location.y + 1000 - radarCenter.y) * factor + (fractureText.height))
-        }
+        }*/
     }
 
     fun renderBorder(location: Vector2f, factor: Float, radius: Float, color: Color, alpha: Float) {

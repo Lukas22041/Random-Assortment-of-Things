@@ -1,11 +1,6 @@
 package assortment_of_things.combat
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssalPhotosphere
-import assortment_of_things.abyss.procgen.AbyssDepth
-import assortment_of_things.abyss.procgen.AbyssProcgen
-import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
-import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
 import assortment_of_things.abyss.scripts.ResetBackgroundScript
 import assortment_of_things.backgrounds.neural.NeuralShardScript
 import assortment_of_things.backgrounds.zero_day.ZeroDayScript
@@ -93,7 +88,7 @@ class CombatHandler : EveryFrameCombatPlugin
                 }
             }
 
-            var system = Global.getSector()?.playerFleet?.starSystem ?: return
+            /*var system = Global.getSector()?.playerFleet?.starSystem ?: return
             if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
             {
                 var data = AbyssUtils.getSystemData(system)
@@ -111,13 +106,13 @@ class CombatHandler : EveryFrameCombatPlugin
 
                 ResetBackgroundScript.resetBackground = true
 
-               /* if (darkness!!.containsEntity(Global.getSector().playerFleet)) {
+               *//* if (darkness!!.containsEntity(Global.getSector().playerFleet)) {
                     CombatEngine.getBackground().color = color.darker()
                 }
                 else {
                     if (depth == AbyssDepth.Shallow) CombatEngine.getBackground().color = color.brighter()
                     if (depth == AbyssDepth.Deep) CombatEngine.getBackground().color = color.brighter().brighter().brighter()
-                }*/
+                }*//*
 
                // Global.getCombatEngine().isRenderStarfield = false
                 if (darkness!!.containsEntity(Global.getSector().playerFleet)) {
@@ -159,7 +154,7 @@ class CombatHandler : EveryFrameCombatPlugin
 
 
             }
-        }
+*/        }
     }
 
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
@@ -225,7 +220,7 @@ class CombatHandler : EveryFrameCombatPlugin
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {
             var system = Global.getSector()?.playerFleet?.starSystem ?: return
-            if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
+            /*if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
             {
 
                 var data = AbyssUtils.getSystemData(system)
@@ -294,7 +289,7 @@ class CombatHandler : EveryFrameCombatPlugin
                         ship.mutableStats.empDamageTakenMult.modifyMult("rat_ionicstorm", 1.20f)
                     }
                 }
-            }
+            }*/
         }
     }
 

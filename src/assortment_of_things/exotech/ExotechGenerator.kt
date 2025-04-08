@@ -1,6 +1,5 @@
 package assortment_of_things.exotech
 
-import assortment_of_things.abyss.entities.AbyssalLightsource
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import assortment_of_things.exotech.entities.ExoLightsource

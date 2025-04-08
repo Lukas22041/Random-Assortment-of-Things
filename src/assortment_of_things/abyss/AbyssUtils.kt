@@ -1,30 +1,18 @@
 package assortment_of_things.abyss
 
-import assortment_of_things.abyss.procgen.AbyssData
-import assortment_of_things.abyss.procgen.AbyssSystemData
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.baseOrModSpec
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
-import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
-import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI
-import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipHullSpecAPI
 import com.fs.starfarer.api.combat.WeaponAPI
-import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
-import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.HullMods
-import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.loading.CampaignPingSpec
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
-import org.lazywizard.lazylib.MathUtils
 import java.awt.Color
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
@@ -46,23 +34,13 @@ object AbyssUtils {
     var SYSTEM_DATA_KEY = "\$rat_system_data"
     var RIFT_TAG = "rat_abyss_rift"
 
-    fun getAbyssData() : AbyssData {
-        return Global.getSector().memoryWithoutUpdate.get(ABYSS_DATA_KEY) as AbyssData? ?: AbyssData()
-    }
-
-    fun getSystemData(system: StarSystemAPI) : AbyssSystemData {
-
-        if (system.memoryWithoutUpdate.get(SYSTEM_DATA_KEY) == null) {
-            system.memoryWithoutUpdate.set(SYSTEM_DATA_KEY, AbyssSystemData(system))
+    fun getData() : AbyssData {
+        var data = Global.getSector().memoryWithoutUpdate.get(ABYSS_DATA_KEY) as AbyssData?
+        if (data == null) {
+            data = AbyssData()
+            Global.getSector().memoryWithoutUpdate.set(ABYSS_DATA_KEY, data)
         }
-
-        return system.memoryWithoutUpdate.get(SYSTEM_DATA_KEY) as AbyssSystemData
-    }
-
-    fun getSystemsWithMinorSlots() : List<AbyssSystemData> {
-        var abyssData = getAbyssData()
-        var list = abyssData.systemsData.filter { it.minorPoints.isNotEmpty() }
-        return list
+        return data
     }
 
     fun isAnyFleetTargetingPlayer() : Boolean {
@@ -94,12 +72,7 @@ object AbyssUtils {
         return AbyssDifficulty.Normal
     }
 
-    fun playerInNeighbourOrSystem(system: StarSystemAPI) : Boolean
-    {
-        var player = Global.getSector().playerFleet
-        var data = getSystemData(system)
-        return player.containingLocation == system || data.neighbours.any { player.containingLocation == it }
-    }
+
 
     fun addAlterationsToFleet(fleet: CampaignFleetAPI, chancePerShip: Float, random: Random) {
 

@@ -1,4 +1,4 @@
-package assortment_of_things.abyss.entities
+package assortment_of_things.abyss.boss
 
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
@@ -13,9 +13,9 @@ import org.lazywizard.lazylib.ext.rotate
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
-class AbyssalHyperspaceParticleManager() : BaseCustomEntityPlugin() {
+class GenesisParticleManager() : BaseCustomEntityPlugin() {
 
-    class AbyssalLightParticle(var fadeIn: Float, var duration: Float, var fadeOut: Float, var color: Color, var alpha: Float, var size: Float, var location: Vector2f, var velocity: Vector2f) {
+    class GenesisParticle(var fadeIn: Float, var duration: Float, var fadeOut: Float, var color: Color, var alpha: Float, var size: Float, var location: Vector2f, var velocity: Vector2f) {
 
         enum class ParticleState {
             FadeIn, Mid, FadeOut
@@ -29,11 +29,12 @@ class AbyssalHyperspaceParticleManager() : BaseCustomEntityPlugin() {
         var maxDuration = duration
         var maxFadeOut = fadeOut
 
-        var adjustment = MathUtils.getRandomNumberInRange(-5f, 5f)
+        var adjustment = MathUtils.getRandomNumberInRange(-1f, 1f)
         var adjustmentInterval = IntervalUtil(0.5f, 0.75f)
+
     }
 
-    var particles = ArrayList<AbyssalLightParticle>()
+    var particles = ArrayList<GenesisParticle>()
 
     var particleInterval = IntervalUtil(0.2f, 0.2f)
 
@@ -44,8 +45,7 @@ class AbyssalHyperspaceParticleManager() : BaseCustomEntityPlugin() {
 
     override fun advance(amount: Float) {
 
-        var distance = MathUtils.getDistance(Global.getSector().playerFleet, entity)
-        if (distance >= 6000 || Global.getSector().playerFleet.containingLocation != entity.containingLocation) {
+        if (Global.getSector().playerFleet.starSystem != entity.starSystem) {
             particles.clear()
             return
         }
@@ -58,29 +58,29 @@ class AbyssalHyperspaceParticleManager() : BaseCustomEntityPlugin() {
 
         for (particle in ArrayList(particles)) {
 
-            if (particle.state == AbyssalLightParticle.ParticleState.FadeIn) {
+            if (particle.state == GenesisParticle.ParticleState.FadeIn) {
                 particle.fadeIn -= 1 * amount
 
                 var level = (particle.fadeIn - 0f) / (particle.maxFadeIn - 0f)
                 particle.level = 1 - level
 
                 if (particle.fadeIn < 0) {
-                    particle.state = AbyssalLightParticle.ParticleState.Mid
+                    particle.state = GenesisParticle.ParticleState.Mid
                 }
             }
 
-            if (particle.state == AbyssalLightParticle.ParticleState.Mid) {
+            if (particle.state == GenesisParticle.ParticleState.Mid) {
                 particle.duration -= 1 * amount
 
 
                 particle.level = 1f
 
                 if (particle.duration < 0) {
-                    particle.state = AbyssalLightParticle.ParticleState.FadeOut
+                    particle.state = GenesisParticle.ParticleState.FadeOut
                 }
             }
 
-            if (particle.state == AbyssalLightParticle.ParticleState.FadeOut) {
+            if (particle.state == GenesisParticle.ParticleState.FadeOut) {
                 particle.fadeOut -= 1 * amount
 
                 particle.level = (particle.fadeOut - 0f) / (particle.maxFadeOut - 0f)
@@ -94,7 +94,7 @@ class AbyssalHyperspaceParticleManager() : BaseCustomEntityPlugin() {
             particle.adjustmentInterval.advance(amount)
             if (particle.adjustmentInterval.intervalElapsed()) {
                 var velocity = Vector2f(0f, 0f)
-                particle.adjustment = MathUtils.getRandomNumberInRange(-20f, 20f)
+                particle.adjustment = MathUtils.getRandomNumberInRange(-1f, 1f)
             }
 
             particle.velocity = particle.velocity.rotate(particle.adjustment * amount)
@@ -114,37 +114,38 @@ class AbyssalHyperspaceParticleManager() : BaseCustomEntityPlugin() {
 
 
 
-            var amount = 8
+            var amount = 20
             var fadeInOverwrite = false
 
             if (particles.size <= 50) {
-                amount = 150
+                amount = 250
                 fadeInOverwrite = true
             }
+
 
             for (i in 0..amount) {
 
                 var velocity = Vector2f(0f, 0f)
-                velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), MathUtils.getRandomNumberInRange(75f, 125f), MathUtils.getRandomNumberInRange(0f, 360f)))
+                velocity = velocity.plus(MathUtils.getPointOnCircumference(Vector2f(), MathUtils.getRandomNumberInRange(200f, 550f), MathUtils.getRandomNumberInRange(180f, 210f)))
 
-                var spawnLocation = entity.location
+                var spawnLocation = Vector2f(Global.getSector().playerFleet.location)
                 //var spawnLocation = MathUtils.getPointOnCircumference(Vector2f(), 45f, entity.facing + 180)
 
-                var randomX = MathUtils.getRandomNumberInRange(-3700f, 3700f)
-                var randomY = MathUtils.getRandomNumberInRange(-3700f, 3700f)
+                var randomX = MathUtils.getRandomNumberInRange(-3000f, 3000f)
+                var randomY = MathUtils.getRandomNumberInRange(-3000f, 3000f)
 
                 spawnLocation = spawnLocation.plus(Vector2f(randomX, randomY))
 
-                var fadeIn = MathUtils.getRandomNumberInRange(1f, 3f)
+                var fadeIn = MathUtils.getRandomNumberInRange(1f, 1.5f)
                 if (fadeInOverwrite) fadeIn = 0.05f
-                var duration = MathUtils.getRandomNumberInRange(2f, 5f)
-                var fadeOut = MathUtils.getRandomNumberInRange(1f, 3f)
+                var duration = MathUtils.getRandomNumberInRange(2f, 4f)
+                var fadeOut = MathUtils.getRandomNumberInRange(1f, 2.5f)
 
                 var size = MathUtils.getRandomNumberInRange(25f, 50f)
 
-                var alpha = MathUtils.getRandomNumberInRange(0.15f, 0.25f)
+                var alpha = MathUtils.getRandomNumberInRange(0.25f, 0.45f)
 
-                particles.add(AbyssalLightParticle(fadeIn, duration, fadeOut, color, alpha, size, spawnLocation, velocity))
+                particles.add(GenesisParticle(fadeIn, duration, fadeOut, color, alpha, size, spawnLocation, velocity))
             }
         }
 

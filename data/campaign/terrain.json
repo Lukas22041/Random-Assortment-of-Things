@@ -1,45 +1,10 @@
 {
-	"rat_depths":{
-		"plugin":"assortment_of_things.abyss.terrain.AbyssTerrainPlugin",
-		
-		
-		"loopTwo":"terrain_hyperspace_deep",
-		
-		"loopFour":"terrain_hyperspace_storm",
-		"custom":{
-
-			"stormSound":"rat_abyss_storm_sounds",
-		},
-	},
-	
-	"rat_depths_in_hyper":{
-		"plugin":"assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin",
-		
-		
-		"loopTwo":"terrain_hyperspace_deep",
-		
-		"loopFour":"terrain_hyperspace_storm",
-		"custom":{
-
-			"stormSound":"rat_abyss_storm_sounds",
-		},
-	},
-	
-	"rat_depths_darkness":{
-		"plugin":"assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin",
-	},
-	
-	"rat_abyss_ionicstorm":{
-		"plugin":"assortment_of_things.abyss.terrain.AbyssalIonicStorm",
-	},
 	
 	"rat_hyperspace_rendering":{
 		"plugin":"assortment_of_things.campaign.ui.HyperspaceRenderingTerrainPlugin",
 	},
 	
-	"rat_abyssal_depthsV2":{
-		"plugin":"assortment_of_things.abyss.rework.AbyssalDepthsTerrainV2",
-	},
+	
 	
 	"rat_exo_nebula":{
 		"plugin":"assortment_of_things.exotech.terrain.ExotechHyperNebula",

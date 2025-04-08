@@ -1,6 +1,5 @@
 package assortment_of_things.abyss;
 
-import assortment_of_things.abyss.procgen.AbyssDepth;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.combat.*;
@@ -26,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+//TODO make work for new system
 public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
 
 
@@ -553,9 +553,9 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
         WeightedRandomPicker<String> objectivePicker = new WeightedRandomPicker<>();
 
         float chance = 0.2f;
-        if (AbyssUtils.INSTANCE.getSystemData(Global.getSector().getPlayerFleet().getStarSystem()).getDepth() == AbyssDepth.Deep) {
+        /*if (AbyssUtils.INSTANCE.getSystemData(Global.getSector().getPlayerFleet().getStarSystem()).getDepth() == AbyssDepth.Deep) {
             chance += 0.3f;
-        }
+        }*/
 
         objectivePicker.add("rat_deactivated_drone_large", chance);
 

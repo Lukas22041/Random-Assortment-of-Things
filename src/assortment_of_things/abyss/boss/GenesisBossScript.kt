@@ -1,7 +1,6 @@
 package assortment_of_things.abyss.boss
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssalStormParticleManager
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaActivator
@@ -59,7 +58,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     var wormhole = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
     var wormhole2 = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
 
-    var particles = ArrayList<AbyssalStormParticleManager.AbyssalLightParticle>()
+    var particles = ArrayList<GenesisParticleManager.GenesisParticle>()
 
     var particleInterval = IntervalUtil(0.2f, 0.2f)
     var halo = Global.getSettings().getSprite("rat_terrain", "halo")
@@ -489,7 +488,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                     var alpha = MathUtils.getRandomNumberInRange(0.25f, 0.45f)
 
-                    particles.add(AbyssalStormParticleManager.AbyssalLightParticle(fadeIn,
+                    particles.add(GenesisParticleManager.GenesisParticle(fadeIn,
                         duration,
                         fadeOut,
                         AbyssUtils.GENESIS_COLOR,
@@ -924,29 +923,29 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     fun handleParticles(amount: Float) {
         for (particle in ArrayList(particles)) {
 
-            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeIn) {
+            if (particle.state == GenesisParticleManager.GenesisParticle.ParticleState.FadeIn) {
                 particle.fadeIn -= 1 * amount
 
                 var level = (particle.fadeIn - 0f) / (particle.maxFadeIn - 0f)
                 particle.level = 1 - level
 
                 if (particle.fadeIn < 0) {
-                    particle.state = AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.Mid
+                    particle.state = GenesisParticleManager.GenesisParticle.ParticleState.Mid
                 }
             }
 
-            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.Mid) {
+            if (particle.state == GenesisParticleManager.GenesisParticle.ParticleState.Mid) {
                 particle.duration -= 1 * amount
 
 
                 particle.level = 1f
 
                 if (particle.duration < 0) {
-                    particle.state = AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeOut
+                    particle.state = GenesisParticleManager.GenesisParticle.ParticleState.FadeOut
                 }
             }
 
-            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeOut) {
+            if (particle.state == GenesisParticleManager.GenesisParticle.ParticleState.FadeOut) {
                 particle.fadeOut -= 1 * amount
 
                 particle.level = (particle.fadeOut - 0f) / (particle.maxFadeOut - 0f)

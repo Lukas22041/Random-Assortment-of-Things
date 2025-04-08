@@ -1,6 +1,5 @@
 package assortment_of_things.exotech.intel.event
 
-import assortment_of_things.abyss.entities.AbyssalPhotosphere
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global

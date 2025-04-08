@@ -1,7 +1,7 @@
 package assortment_of_things.misc
 
+import assortment_of_things.abyss.AbyssData
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.procgen.AbyssData
 import assortment_of_things.exotech.ExoData
 import assortment_of_things.exotech.ExoUtils
 import com.fs.starfarer.api.Global
@@ -22,7 +22,6 @@ import com.fs.starfarer.api.util.Misc
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.lazywizard.lazylib.MathUtils
-import kotlin.reflect.KClass
 
 var previouslyLoadedSprite = HashMap<String, Boolean>()
 
@@ -136,7 +135,7 @@ fun SectorEntityToken.isLooted() : Boolean {
 }
 
 fun SectorAPI.getAbyssData() : AbyssData {
-    return AbyssUtils.getAbyssData()
+    return AbyssUtils.getData()
 }
 
 fun SectorAPI.getExoData() : ExoData {
