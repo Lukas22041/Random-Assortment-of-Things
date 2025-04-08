@@ -117,6 +117,8 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
+        //Global.getSector().playerFleet.starSystem.mapGridWidthOverride = 1000000f
+
         //TestFactor(1)
 
         /*if (!LunaCampaignRenderer.hasRendererOfClass(RATCampaignRenderer::class.java)) {
