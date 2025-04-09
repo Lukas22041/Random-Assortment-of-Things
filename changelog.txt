@@ -1,7 +1,14 @@
+Version 2.6.10
+Save Compatible
+
+-> Fixed a crash sometimes occuring in the abyssal depths.
+
+
+
 Version 2.6.9
 Save Compatible
 
-- Fixed some unintended ships being available through the arms dealer.
+-> Fixed some unintended ships being available through the arms dealer.
 
 
 

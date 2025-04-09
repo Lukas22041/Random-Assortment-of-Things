@@ -785,14 +785,13 @@ class SimUnlockerListener() : FleetEventListener {
 
     }
 
-    override fun reportBattleOccurred(fleet: CampaignFleetAPI?, primaryWinner: CampaignFleetAPI?, battle: BattleAPI) {
+    override fun reportBattleOccurred(fleet: CampaignFleetAPI?, primaryWinner: CampaignFleetAPI?, battle: BattleAPI?) {
 
         var plugin = Misc.getSimulatorPlugin()
 
         if (plugin !is SimulatorPluginImpl) return
 
-
-
+        if (battle?.nonPlayerSideSnapshot == null) return
 
         //CampaignFleetAPI playerFleet = Global.getSector().getPlayerFleet();
 
