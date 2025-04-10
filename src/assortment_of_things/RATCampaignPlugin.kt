@@ -4,7 +4,6 @@ import assortment_of_things.abyss.AbyssBattleCreationPlugin
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.boss.GenesisInteraction
 import assortment_of_things.abyss.boss.GenesisReencounterInteractionPlugin
-import assortment_of_things.abyss.interactions.*
 import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore

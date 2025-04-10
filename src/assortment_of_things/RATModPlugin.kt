@@ -3,12 +3,8 @@ package assortment_of_things
 import assortment_of_things.abyss.AbyssCampaignListener
 import assortment_of_things.scripts.ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssalFracture
-import assortment_of_things.abyss.procgen.AbyssGenerator
-import assortment_of_things.abyss.procgen.AbyssProcgen
 import assortment_of_things.abyss.rework.AbyssGeneratorV2
 import assortment_of_things.abyss.scripts.*
-import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
@@ -144,7 +140,6 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().addScript(ConstantTimeIncreaseScript())
         }
 
-        Global.getSector().addTransientScript(ChangeMainMenuColorScript())
         Global.getSector().addTransientScript(AICoreReplacerScript())
         Global.getSector().addTransientListener(AICoreDropReplacerScript())
         Global.getSector().addTransientScript(ApplyRATControllerToPlayerFleet())
@@ -241,7 +236,7 @@ class RATModPlugin : BaseModPlugin() {
     fun generateAbyss() {
         if (RATSettings.enableAbyss!!)
         {
-            if (AbyssUtils.getAbyssData().systemsData.isEmpty()) {
+            /*if (AbyssUtils.getAbyssData().systemsData.isEmpty()) {
                 for (faction in Global.getSector().allFactions)
                 {
                     if (faction.id == "rat_abyssals" || faction.id == "rat_abyssals_deep") continue
@@ -253,6 +248,11 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getSector().memoryWithoutUpdate.set("\$rat_alteration_random", random)
 
                 AbyssGenerator().beginGeneration()
+            }*/
+
+            var data = AbyssUtils.getData()
+            if (!data.hasGenerated) {
+                data.hasGenerated = true
             }
 
           //AbyssGeneratorV2.generate()
@@ -365,7 +365,7 @@ class RATModPlugin : BaseModPlugin() {
     override fun beforeGameSave() {
         super.beforeGameSave()
 
-        for (system in Global.getSector().starSystems.filter { it.hasTag(AbyssUtils.SYSTEM_TAG) })
+       /* for (system in Global.getSector().starSystems.filter { it.hasTag(AbyssUtils.SYSTEM_TAG) })
         {
             var abyssPlugin = AbyssProcgen.getAbyssTerrainPlugin(system)
             if (abyssPlugin != null)
@@ -376,7 +376,7 @@ class RATModPlugin : BaseModPlugin() {
         var hyperTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is AbyssTerrainInHyperspacePlugin }
         if (hyperTerrain != null) {
             (hyperTerrain.plugin as AbyssTerrainInHyperspacePlugin ).save()
-        }
+        }*/
 
         var hyperExoTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is ExotechHyperNebula }
         if (hyperExoTerrain != null) {

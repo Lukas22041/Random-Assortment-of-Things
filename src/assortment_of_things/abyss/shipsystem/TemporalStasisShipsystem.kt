@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.shipsystem
 
-import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.exotech.shipsystems.ArkasShipsystem
 import assortment_of_things.misc.getAndLoadSprite
