@@ -11,6 +11,7 @@ object AbyssGenerator {
         var biomeManager = data.biomeManager
 
         var system = Global.getSector().createStarSystem("Abyssal Depths")
+        system.name = "The Abyssal Depths"
         data.system = system
 
         system.initNonStarCenter()

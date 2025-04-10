@@ -18,7 +18,7 @@ class AbyssBiomeManager {
 
     class BiomeCellData(var worldX: Float, var worldY: Float) {
         var isFake = false
-        var color = AbyssUtils.ABYSS_COLOR
+        var color = AbyssUtils.ABYSS_COLOR.darker().darker()
 
     }
 
