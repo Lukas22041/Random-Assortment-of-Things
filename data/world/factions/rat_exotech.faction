@@ -286,6 +286,10 @@
 			"canBombard":true,
 			"territorial":true,
 		},
+		"simulatorData":{
+			"showInSimulator":true,
+			"includeCivShipsWithFaction":true,
+		},
 	},	
 	"fleetTypeNames":{
 		"trade":"Corporate Trader",

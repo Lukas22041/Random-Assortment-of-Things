@@ -1,14 +1,14 @@
-name,id,planetary,decivRemove,script,desc,icon,order
-Local Gravitational Dynamo,rat_grav_dynamo_condition,TRUE,,assortment_of_things.relics.conditions.GravitationalDynamoCondition,,graphics/icons/markets/rat_grav_dynamo_condition.png,5001
-,,,,,,,
-Warscape,rat_warscape,TRUE,,assortment_of_things.relics.conditions.WarscapeCondition,,graphics/icons/markets/rat_warscape.png,5002
-Ancient Industries,rat_ancient_industries,TRUE,,assortment_of_things.relics.conditions.AncientIndustriesCondition,,graphics/icons/markets/rat_ancient_industries.png,5002
-Ancient Fuel Production,rat_ancient_fuel_hub,TRUE,,assortment_of_things.relics.conditions.AncientFuelProductionCondition,,graphics/icons/markets/rat_ancient_fuel_hub.png,5003
-Ancient Military Nexus,rat_ancient_military_hub,TRUE,,assortment_of_things.relics.conditions.AncientMilitaryNexusCondition,,graphics/icons/markets/rat_ancient_military_hub.png,5004
-Ancient Megacities,rat_ancient_megacities,TRUE,,assortment_of_things.relics.conditions.AncientMegacitiesCondition,,graphics/icons/markets/rat_ancient_megacities.png,5006
-Kinetic Launchsystem,rat_kinetic_launchsystem,TRUE,,assortment_of_things.relics.conditions.KineticLaunchsystemCondition,,graphics/icons/markets/rat_kinetic_launchsystem.png,5005
-Bionic Plantlife,rat_bionic_plantlife,TRUE,,assortment_of_things.relics.conditions.BionicPlantlifeCondition,,graphics/icons/markets/rat_bionic_plantlife.png,5006
-Defensive Dronesystem,rat_defensive_drones,TRUE,,assortment_of_things.relics.conditions.DefensiveDronesCondition,,graphics/icons/markets/rat_defensive_drones.png,5007
-Engineered Utopia,rat_engineered_utopia,TRUE,,assortment_of_things.relics.conditions.EngineeredUtopia,,graphics/icons/markets/rat_engineer_utopia.png,5008
-Rampant Military Core,rat_rampant_military_core,TRUE,,assortment_of_things.relics.conditions.RampantMilitaryCore,,graphics/icons/markets/rat_rampant_military_core.png,5009
-,,,,,,,
+name,id,tags,planetary,decivRemove,script,desc,icon,order
+Local Gravitational Dynamo,rat_grav_dynamo_condition,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.GravitationalDynamoCondition,,graphics/icons/markets/rat_grav_dynamo_condition.png,5001
+,,,,,,,,
+Warscape,rat_warscape,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.WarscapeCondition,,graphics/icons/markets/rat_warscape.png,5002
+Ancient Industries,rat_ancient_industries,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.AncientIndustriesCondition,,graphics/icons/markets/rat_ancient_industries.png,5002
+Ancient Fuel Production,rat_ancient_fuel_hub,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.AncientFuelProductionCondition,,graphics/icons/markets/rat_ancient_fuel_hub.png,5003
+Ancient Military Nexus,rat_ancient_military_hub,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.AncientMilitaryNexusCondition,,graphics/icons/markets/rat_ancient_military_hub.png,5004
+Ancient Megacities,rat_ancient_megacities,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.AncientMegacitiesCondition,,graphics/icons/markets/rat_ancient_megacities.png,5006
+Kinetic Launchsystem,rat_kinetic_launchsystem,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.KineticLaunchsystemCondition,,graphics/icons/markets/rat_kinetic_launchsystem.png,5005
+Bionic Plantlife,rat_bionic_plantlife,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.BionicPlantlifeCondition,,graphics/icons/markets/rat_bionic_plantlife.png,5006
+Defensive Dronesystem,rat_defensive_drones,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.DefensiveDronesCondition,,graphics/icons/markets/rat_defensive_drones.png,5007
+Engineered Utopia,rat_engineered_utopia,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.EngineeredUtopia,,graphics/icons/markets/rat_engineer_utopia.png,5008
+Rampant Military Core,rat_rampant_military_core,codex_unlockable,TRUE,,assortment_of_things.relics.conditions.RampantMilitaryCore,,graphics/icons/markets/rat_rampant_military_core.png,5009
+,,,,,,,,

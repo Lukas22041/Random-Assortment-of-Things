@@ -53,7 +53,7 @@
 		"rat_hypatia_Moonlight":2,
 		"rat_thestia_Support":5,
 		
-		
+		#"rat_gilgamesh_Attack":0.00000000001,
 	},
 	"combatLarge":{
 		
@@ -74,11 +74,13 @@
 		"rat_arkas_Strike":4,
 		"rat_leanira_Support":4,
 
-		
+		#"rat_genesis_serpent_head_Standard":0.00000000001,
 	},
 	"combatCapital":{		
 		"rat_morkoth_Attack":6,
 		"rat_morkoth_Anchor":4,
 		"rat_morkoth_Support":2,
+		
+		#"rat_genesis_Standard":0.00000000001,
 	},
 }

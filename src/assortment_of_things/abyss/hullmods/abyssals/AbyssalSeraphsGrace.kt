@@ -87,8 +87,6 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
         var isInAbyss = isInAbyss()
 
-        if (!isInAbyss) isInAbyss = ship!!.variant.hasHullMod("rat_sarakiels_blessing")
-
         var abyssColor = Misc.getGrayColor()
         var sectorColor = Misc.getHighlightColor()
 

@@ -194,6 +194,7 @@
 		"postsNoBounties":true,
 		"fightToTheLast":true, # order a full assault instead of retreating, in most cases
 	},	
+	
 	"fleetTypeNames":{
 		"patrolSmall":"Lookout",
 		"patrolMedium":"Defenders",

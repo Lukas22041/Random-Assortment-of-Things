@@ -1,21 +1,21 @@
 name,id,tags,tech/manufacturer,rarity,base price,stack size,cargo space,baseRaidDanger,icon,sound id,sound id drop,plugin,plugin params,desc,order
 #Abyss,,,,,,,,,,,,,,,
-Hullmod installer,rat_alteration_install,,Hull Alteration,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,,400
-Abyssal Survey Data,rat_abyss_survey,,,,20000,1000,1,,graphics/icons/cargo/rat_abyss_survey.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalSurveyData,,,402
+Hullmod installer,rat_alteration_install,hide_in_codex,Hull Alteration,,10000,1000,1,,graphics/icons/cargo/rat_alteration_installer.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AlterationInstallerItem,,,400
+Abyssal Survey Data,rat_abyss_survey,codex_unlockable,,,20000,1000,1,,graphics/icons/cargo/rat_abyss_survey.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.abyss.items.AbyssalSurveyData,,,402
 ,,,,,,,,,,,,,,,
 #Relics,,,,,,,,,,,,,,,
-Forge-Assisted Industry BP,rat_consumeable_industry,,Forge-Assisted,,20000,1000,1,,graphics/icons/cargo/rat_consumeable_industry.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ConsumeableIndustryBP,,Contains the technological specifications and an industrial-grade nanoforge to allow for the construction and maintenance of this industry or structure.,400
+Forge-Assisted Industry BP,rat_consumeable_industry,hide_in_codex,Forge-Assisted,,20000,1000,1,,graphics/icons/cargo/rat_consumeable_industry.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ConsumeableIndustryBP,,Contains the technological specifications and an industrial-grade nanoforge to allow for the construction and maintenance of this industry or structure.,400
 ,,,,,,,,,,,,,,,
 #Exo,,,,,,,,,,,,,,,
-Exo-Tech Blueprint Package,rat_exo_package,"package_bp, no_drop",,,650000,1000,1,,graphics/icons/cargo/rat_blueprint_exo.png,ui_chip_pickup,ui_bp_package_drop,com.fs.starfarer.api.campaign.impl.items.MultiBlueprintItemPlugin,rat_exotech_bp,"Enables heavy industry to construct the more common ship hulls, weapons, and fighter LPCs from the ""exo-tech"" school of design. A doctrine focused on phase ships and their supporting lineup.",270
+Exo-Tech Blueprint Package,rat_exo_package,"package_bp, no_drop, hide_in_codex",,,650000,1000,1,,graphics/icons/cargo/rat_blueprint_exo.png,ui_chip_pickup,ui_bp_package_drop,com.fs.starfarer.api.campaign.impl.items.MultiBlueprintItemPlugin,rat_exotech_bp,"Enables heavy industry to construct the more common ship hulls, weapons, and fighter LPCs from the ""exo-tech"" school of design. A doctrine focused on phase ships and their supporting lineup.",270
 ,,,,,,,,,,,,,,,
-Warp Catalyst,rat_warp_catalyst,mission_item,,,1000000,1000,1,,graphics/icons/cargo/rat_warp_catalyst.png,ui_chip_pickup,ui_bp_package_drop,com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin,,"A crystalline structure made out of an unknown material. It is in essence a heavily specialised accumulator, made to resist extreme loads of flux and deliver it towards its final destination.
+Warp Catalyst,rat_warp_catalyst,"mission_item, codex_unlockable",,,1000000,1000,1,,graphics/icons/cargo/rat_warp_catalyst.png,ui_chip_pickup,ui_bp_package_drop,com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin,,"A crystalline structure made out of an unknown material. It is in essence a heavily specialised accumulator, made to resist extreme loads of flux and deliver it towards its final destination.
 
 The secret to this marvels method of construction was only known to few within the faction, it is unknown if any of them still remain within the sector.",10
-Partnership Deed,rat_exo_deed,,,,100000,1000,1,,graphics/icons/cargo/rat_exo_deed.png,ui_chip_pickup,ui_modspec_drop,assortment_of_things.exotech.items.PartnershipDeed,,,-1000
+Partnership Deed,rat_exo_deed,hide_in_codex,,,100000,1000,1,,graphics/icons/cargo/rat_exo_deed.png,ui_chip_pickup,ui_modspec_drop,assortment_of_things.exotech.items.PartnershipDeed,,,-1000
 #Drone Replicator,rat_drone_replicator,,,,500000,1000,1,,graphics/icons/cargo/rat_hangar_forge.png,ui_chip_pickup,ui_modspec_drop,assortment_of_things.exotech.items.PartnershipDeed,,,-1000
 ,,,,,,,,,,,,,,,
 #Other,,,,,,,,,,,,,,,
-Artifact,rat_artifact,,Artifact,,50000,1000,1,,graphics/icons/rat_empty.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ArtifactItem,,"An ancient artifact that can be integrated into a fleet to provide additional benefits. Only one can be active at a time. More information will be provided via the ""Artifacts"" intel tab (located in the ""Personal"" section) when integrating for the first time.",5000
+Artifact,rat_artifact,hide_in_codex,Artifact,,50000,1000,1,,graphics/icons/rat_empty.png,ui_chip_pickup,ui_industry_bp_drop,assortment_of_things.campaign.items.ArtifactItem,,"An ancient artifact that can be integrated into a fleet to provide additional benefits. Only one can be active at a time. More information will be provided via the ""Artifacts"" intel tab (located in the ""Personal"" section) when integrating for the first time.",5000
 ,,,,,,,,,,,,,,,
-AI Core Special,rat_ai_core_special,,,0,25000,1000,1,,,ui_chip_pickup,ui_modspec_drop,assortment_of_things.campaign.items.AICoreSpecialItemPlugin,,,41
+AI Core Special,rat_ai_core_special,hide_in_codex,,0,25000,1000,1,,,ui_chip_pickup,ui_modspec_drop,assortment_of_things.campaign.items.AICoreSpecialItemPlugin,,,41

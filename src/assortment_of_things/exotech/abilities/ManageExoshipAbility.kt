@@ -41,15 +41,17 @@ class ManageExoshipAbility : BaseDurationAbility() {
     override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean) {
         super.createTooltip(tooltip, expanded)
 
-        var exoship = ExoUtils.getExoData().getPlayerExoship()
-        var exoshipPlugin = ExoUtils.getExoData().getPlayerExoshipPlugin()
-        var playerModule = exoshipPlugin.playerModule
-
         tooltip.addTitle("Manage Exoship")
 
         tooltip.addSpacer(10f)
 
         tooltip.addPara("Activate this ability to manage the exoship and order it to warp to a new location.", 0f)
+
+        if (Global.CODEX_TOOLTIP_MODE) return
+
+        var exoship = ExoUtils.getExoData().getPlayerExoship()
+        var exoshipPlugin = ExoUtils.getExoData().getPlayerExoshipPlugin()
+        var playerModule = exoshipPlugin.playerModule
 
         tooltip.addSpacer(10f)
         tooltip.addSectionHeading("Fuel", Alignment.MID, 0f)
