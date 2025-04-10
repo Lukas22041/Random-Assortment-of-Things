@@ -3,7 +3,7 @@ package assortment_of_things
 import assortment_of_things.abyss.AbyssCampaignListener
 import assortment_of_things.scripts.ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.rework.AbyssGeneratorV2
+import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.scripts.*
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
@@ -253,6 +253,7 @@ class RATModPlugin : BaseModPlugin() {
             var data = AbyssUtils.getData()
             if (!data.hasGenerated) {
                 data.hasGenerated = true
+                AbyssGenerator.init()
             }
 
           //AbyssGeneratorV2.generate()

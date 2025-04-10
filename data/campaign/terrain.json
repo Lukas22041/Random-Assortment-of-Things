@@ -5,6 +5,11 @@
 	},
 	
 	
+	#abyss
+	"rat_abyss_biome_test_renderer":{
+		"plugin":"assortment_of_things.abyss.terrain.BiomeTestRenderer",
+	},
+	
 	
 	"rat_exo_nebula":{
 		"plugin":"assortment_of_things.exotech.terrain.ExotechHyperNebula",
