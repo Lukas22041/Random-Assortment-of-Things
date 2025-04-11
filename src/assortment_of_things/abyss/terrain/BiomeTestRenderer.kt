@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.impl.campaign.procgen.StarGenDataSpec
@@ -34,7 +35,7 @@ class BiomeTestRenderer : BaseTerrain() {
 
             var x = cell.worldX * factor
             var y = cell.worldY * factor
-            var size = manager.cellSize * factor
+            var size = AbyssBiomeManager.cellSize * factor
 
             var renderOutlines = true
             if (renderOutlines) {

@@ -2,24 +2,31 @@ package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
+import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 class AbyssBiomeManager {
 
-    var width = 52000 * 3
-    var height = 52000 * 2
-    var cellSize = 2000
+    companion object {
+        var width = 52000 * 3
+        var height = 52000 * 2
+        var cellSize = 2000
 
-    var rows = width / cellSize
-    var columns = height / cellSize
+        var rows = width / cellSize
+        var columns = height / cellSize
 
-    var xOffset = width / 2
-    var yOffset = height / 2
+        var xOffset = width / 2
+        var yOffset = height / 2
+    }
+
 
     class BiomeCellData(var worldX: Float, var worldY: Float) {
         var isFake = false
         var color = AbyssUtils.ABYSS_COLOR.darker().darker()
 
+        fun getCenter() : Vector2f {
+            return Vector2f(worldX + cellSize / 2f, worldY + cellSize / 2f)
+        }
     }
 
     private val cellArray = Array(rows) { row ->
