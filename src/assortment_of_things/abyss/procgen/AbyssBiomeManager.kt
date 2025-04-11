@@ -43,7 +43,10 @@ class AbyssBiomeManager {
 
     fun init() {
 
-        var cells = cellArray.sumOf { it.size }
+        //var cells = cellArray.sumOf { it.size }
+
+        //TODO Remove
+        //cellList.forEach { it.color = AbyssUtils.ABYSS_COLOR.darker().darker() }
 
 
         var points = findStartingPoints()

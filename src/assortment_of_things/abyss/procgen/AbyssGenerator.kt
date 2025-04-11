@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
+import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 
 object AbyssGenerator {
@@ -31,6 +32,28 @@ object AbyssGenerator {
 
         //Biomes
         biomeManager.init()
+
+
+        /*Global.getSector().addScript(object:EveryFrameScript {
+
+            override fun isDone(): Boolean {
+                return false
+            }
+
+            override fun runWhilePaused(): Boolean {
+                return true
+            }
+
+            var time = 0f
+            override fun advance(amount: Float) {
+                time += 1f * amount
+                if (time >= 0.5f) {
+                    time = 0f
+                    biomeManager.init()
+                }
+            }
+
+        })*/
 
     }
 
