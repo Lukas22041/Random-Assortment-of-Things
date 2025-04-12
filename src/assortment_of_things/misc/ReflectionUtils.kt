@@ -122,6 +122,24 @@ object ReflectionUtils {
         return handle
     }
 
+    fun setWithSuper(fieldName: String, instanceToModify: Any, newValue: Any?, clazz: Class<*>? = null)
+    {
+        var field: Any? = null
+        var claz = clazz
+        if (claz == null) claz = instanceToModify.javaClass
+
+        try {  field = claz.getField(fieldName) } catch (e: Throwable) {
+            try {  field = claz.getDeclaredField(fieldName) } catch (e: Throwable) { }
+        }
+        if (field == null) {
+            setWithSuper(fieldName, instanceToModify, claz.superclass)
+            return
+        }
+
+        setFieldAccessibleHandle.invoke(field, true)
+        setFieldHandle.invoke(field, instanceToModify, newValue)
+    }
+
     class ReflectedField(private val field: Any) {
         fun get(): Any? = getFieldHandle.invoke(field)
         fun set(instance: Any?, value: Any?) {
