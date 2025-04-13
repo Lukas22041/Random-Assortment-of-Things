@@ -4,6 +4,8 @@ import java.awt.Color
 
 abstract class BaseAbyssBiome {
 
+    var cells = ArrayList<BiomeCellData>()
+
     abstract fun getBiomeID() : String
 
     abstract fun getBiomeColor() : Color

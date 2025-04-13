@@ -1,6 +1,9 @@
 package assortment_of_things.abyss.procgen
 
+import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import assortment_of_things.abyss.procgen.biomes.BiomeCellData
+import assortment_of_things.abyss.procgen.biomes.TestBiome
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
@@ -21,6 +24,7 @@ class AbyssBiomeManager {
         var yOffset = height / 2
     }
 
+    var biomes = ArrayList<BaseAbyssBiome>()
 
     //Get the lower left coordinate of a cell in World coordinates
     fun toWorldX(gridX: Int) = (gridX * cellSize - xOffset).toFloat()
@@ -42,15 +46,70 @@ class AbyssBiomeManager {
 
     fun init() {
 
+        biomes.clear()
+
+        biomes.add(TestBiome("rat_test1", Color(255, 0, 50)))
+        biomes.add(TestBiome("rat_test2", Color(120, 0, 20)))
+        biomes.add(TestBiome("rat_test3", Color(255, 0, 100)))
+        biomes.add(TestBiome("rat_test4", Color(155, 75, 0)))
+        biomes.add(TestBiome("rat_test5", Color(50, 50, 50)))
+
         //var cells = cellArray.sumOf { it.size }
 
         //TODO Remove
         //cellList.forEach { it.color = AbyssUtils.ABYSS_COLOR.darker().darker() }
 
 
-        var points = findStartingPoints()
 
-        var test = ""
+        var starts = findStartingPoints()
+        generateBiomes(/*starts*/)
+
+    }
+
+    fun determineBordersAndDepth() {
+
+    }
+
+    fun generateBiomes(/*cellsToExpandFrom: ArrayList<BiomeCellData>*/) /*: ArrayList<BiomeCellData>*/ {
+        //var list = ArrayList<BiomeCellData>()
+
+        //if (cellsToExpandFrom.isEmpty()) return
+
+
+        /*var candidates = ArrayList<BiomeCellData>()
+
+        for (cell in cellsToExpandFrom) {
+            var adjacent = cell.getEmptyAdjacent()
+            var pick = adjacent.randomOrNull()
+
+            if (pick != null) {
+                pick.setBiome(cell.getBiome()!!)
+                candidates.add(pick)
+            }
+        }
+
+        generateBiomes(candidates)*/
+
+
+
+
+        if (cellList.none { it.getBiome() == null }) return
+
+        for (biome in biomes) {
+            var available = biome.cells.flatMap { it.getEmptyAdjacent() }
+            var pick = available.randomOrNull() ?: continue //Stop if no cells are available
+
+            pick.setBiome(biome)
+        }
+
+        generateBiomes()
+
+        /* for (start in starts) {
+             for (adjacent in start.getAdjacent()) {
+                 adjacent.setBiome(start.getBiome()!!)
+             }
+         }*/
+
 
     }
 
@@ -58,61 +117,31 @@ class AbyssBiomeManager {
     fun findStartingPoints() : ArrayList<BiomeCellData> {
         var startingPoints = ArrayList<BiomeCellData>()
 
-        var first = cellList.random()
+      /*  var first = cellList.random()
         //var first = getCell(rows/2, columns/2)
-        startingPoints.add(first)
+        startingPoints.add(first)*/
 
-        var points = 4
 
         //Pick random points,check if their distance meets the minimum, if not, lower the minimum and then check another patch of points.
-        for (i in 0 until points) {
+        for (biome in biomes) {
             //var minDist = height /*/ 2f*/
             var minDist = width /*/ 2f*/
-            var cell = findPointRecursive(minDist.toFloat() ,startingPoints)
+
+            var cell: BiomeCellData? = null
+            if (startingPoints.isEmpty()) {
+                cell = cellList.random()
+            } else {
+               cell = findPointRecursive(minDist.toFloat(), startingPoints)
+            }
+
+            cell.setBiome(biome)
+            cell.isStartingPoint = true
             startingPoints.add(cell)
         }
 
-        /*for (i in 0 until points) {
-            //Cell, Distance
-            //var cells = ArrayList<Pair<BiomeCellData, Float>>()
-            var cells = WeightedRandomPicker<BiomeCellData>()
-
-            for (cell in cellList) {
-                if (startingPoints.contains(cell)) continue //Skip starting points
-
-                var distance = 0f
-                var toClose = false
-                for (start in startingPoints) {
-                    var dist = MathUtils.getDistance(Vector2f(start.worldX, start.worldY), Vector2f(cell.worldX, cell.worldY))
-                    distance += dist
-                    if (dist <= 5000) {
-                        toClose = true
-                    }
-                }
-                if (!toClose) {
-                    cells.add(cell, distance)
-                }
-            }
-
-            var toRemove = ArrayList<BiomeCellData>()
-            var sorted = ArrayList(cells.items.sortedBy { cells.getWeight(it)  })
-            for (cell in sorted) {
-                var index = sorted.indexOf(cell)
-                if (index <= cells.items.size / 2) {
-                    var weight = cells.getWeight(cell)
-                    toRemove.add(cell)
-                }
-            }
-
-            toRemove.forEach { cells.remove(it) }
-
-            var pick = cells.pick()
-            startingPoints.add(pick)
-        } */
-
-        for (cell in startingPoints) {
-            cell.color = Misc.getPositiveHighlightColor()
-        }
+        /*for (cell in startingPoints) {
+            //cell.color = Misc.getPositiveHighlightColor()
+        }*/
 
         return startingPoints
     }
@@ -121,15 +150,6 @@ class AbyssBiomeManager {
         var cell: BiomeCellData? = null
 
         var attempts = 10
-
-       /* for (i in 0 until 10) {
-            cell = cellList.filter { !startingCells.contains(it) }.random()
-
-            for (start in startingCells) {
-                var dist = MathUtils.getDistance(Vector2f(start.worldX, start.worldY), Vector2f(cell.worldX, cell.worldY))
-                if (dist )
-            }
-        }*/
 
         cell = cellList.filter { !startingCells.contains(it) }.random()
 
@@ -159,6 +179,21 @@ class AbyssBiomeManager {
     fun getCell(worldX: Float, worldY: Float) : BiomeCellData {
         var x = toGridX(worldX)
         var y = toGridY(worldY)
+
+        //Fixes an issue with my dumb math for when the cell is out of bounds, since cells on the left & bottom can report something from a wrong coordinate
+        if (worldX < -xOffset || worldY < -yOffset) {
+            var xOff = 0
+            var yOff = 0
+            if (worldX < -xOffset) xOff = 1
+            if (worldY < -yOffset) yOff = 1
+
+            var fake = createFakeCell(x-xOff, y-yOff)
+            fake.worldX -= 2000 * xOff
+            fake.worldY -= 2000 * yOff
+
+            return fake
+        }
+
         return getCell(x, y)
     }
 
@@ -171,7 +206,7 @@ class AbyssBiomeManager {
     fun createFakeCell(x: Int, y: Int) : BiomeCellData {
         var cell = BiomeCellData(this, x, y,toWorldX(x), toWorldY(y))
         cell.isFake = true
-        cell.color = Color.white
+        //cell.color = Color.white
         return cell
     }
 }

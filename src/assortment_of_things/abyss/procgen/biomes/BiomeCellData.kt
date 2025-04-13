@@ -6,13 +6,27 @@ import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: Int, var worldX: Float, var worldY: Float) {
+
+    private var biomePlugin: BaseAbyssBiome? = null
     var isFake = false
-    var color = Color(30, 30, 30)
+    //var color = Color(30, 30, 30)
     var tags = ArrayList<String>()
     var isUsed = false //Dont spawn anything if already used by something large
+    var isStartingPoint = false
+
+    //Depth Indicates how towards the center the biome cell is
+    //0 means its directly neighbouring another biome, 1 means its one step away from another biome, and so forth
+    var depth = 0
+
 
     fun getCenter() : Vector2f {
         return Vector2f(worldX + cellSize / 2f, worldY + cellSize / 2f)
+    }
+
+    fun getBiome() = biomePlugin
+    fun setBiome(plugin: BaseAbyssBiome) {
+        biomePlugin = plugin
+        biomePlugin!!.cells.add(this)
     }
 
     fun getLeft() = manager.getCell(gridX-1, gridY)
@@ -70,4 +84,7 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
 
         return result
     }
+
+    fun getEmptyAdjacent() = getAdjacent().filter { it.getBiome() == null && !it.isFake }
+    fun getEmptySurrounding() = getSurrounding().filter { it.getBiome() == null && !it.isFake }
 }

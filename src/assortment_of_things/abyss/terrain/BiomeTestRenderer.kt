@@ -9,6 +9,7 @@ import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.util.Misc
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
+import java.awt.Color
 import java.util.*
 
 class BiomeTestRenderer : BaseTerrain() {
@@ -26,13 +27,15 @@ class BiomeTestRenderer : BaseTerrain() {
         var cells = manager.getCells()
 
         var playerCell = manager.getPlayerCell()
-        var surrounding = playerCell.getAround(3)
+        //var surrounding = playerCell.getAround(2)
 
         var alpha = 0.5f
 
         for (cell in cells) {
-            var color = cell.color
-            if (surrounding.contains(cell)) color = Misc.getHighlightColor()
+            var color = Color(30, 30, 30)
+            if (cell.getBiome() != null) color = cell.getBiome()!!.getBiomeColor()
+            //if (surrounding.contains(cell)) color = Misc.getHighlightColor()
+            //if (cell.isStartingPoint) color = Misc.getPositiveHighlightColor()
             if (cell == playerCell) color = Misc.getBasePlayerColor()
 
             var x = cell.worldX * factor
