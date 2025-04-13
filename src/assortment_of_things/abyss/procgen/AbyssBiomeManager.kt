@@ -1,9 +1,8 @@
 package assortment_of_things.abyss.procgen
 
-import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.biomes.BiomeCellData
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
@@ -23,18 +22,18 @@ class AbyssBiomeManager {
     }
 
 
-    class BiomeCellData(var worldX: Float, var worldY: Float) {
-        var isFake = false
-        var color = AbyssUtils.ABYSS_COLOR.darker().darker()
+    //Get the lower left coordinate of a cell in World coordinates
+    fun toWorldX(gridX: Int) = (gridX * cellSize - xOffset).toFloat()
+    fun toWorldY(gridY: Int) = (gridY * cellSize - yOffset).toFloat()
+    fun toWorld(gridX: Int, gridY: Int) = Vector2f(toWorldX(gridX), toWorldY(gridY))
 
-        fun getCenter() : Vector2f {
-            return Vector2f(worldX + cellSize / 2f, worldY + cellSize / 2f)
-        }
-    }
+    //Convert the location of something in-world to the index of the cell their in.
+    fun toGridX(worldX: Float) = ((worldX + xOffset) / 2000).toInt()
+    fun toGridY(worldY: Float) = ((worldY + yOffset) / 2000).toInt()
 
     private val cellArray = Array(rows) { row ->
         Array<BiomeCellData>(columns) {
-            column -> BiomeCellData((row * cellSize - xOffset).toFloat(), (column * cellSize - yOffset).toFloat())
+            column -> BiomeCellData(this, row, column, toWorldX(row), toWorldY(column))
         }
     }
     private var cellList = cellArray.flatten()
@@ -158,19 +157,19 @@ class AbyssBiomeManager {
     }
 
     fun getCell(worldX: Float, worldY: Float) : BiomeCellData {
-        var x = ((worldX + xOffset) / 2000).toInt()
-        var y = ((worldY + yOffset) / 2000).toInt()
+        var x = toGridX(worldX)
+        var y = toGridY(worldY)
         return getCell(x, y)
     }
 
-    fun getCell(x: Int, y: Int) : BiomeCellData {
-        var cell = cellArray.getOrNull(x)?.getOrNull(y)
-        if (cell == null) cell = createFakeCell()
+    fun getCell(gridX: Int, gridY: Int) : BiomeCellData {
+        var cell = cellArray.getOrNull(gridX)?.getOrNull(gridY)
+        if (cell == null) cell = createFakeCell(gridX, gridY)
         return cell
     }
 
-    fun createFakeCell() : BiomeCellData {
-        var cell = BiomeCellData(0f, 0f)
+    fun createFakeCell(x: Int, y: Int) : BiomeCellData {
+        var cell = BiomeCellData(this, x, y,toWorldX(x), toWorldY(y))
         cell.isFake = true
         cell.color = Color.white
         return cell

@@ -26,11 +26,13 @@ class BiomeTestRenderer : BaseTerrain() {
         var cells = manager.getCells()
 
         var playerCell = manager.getPlayerCell()
+        var surrounding = playerCell.getAround(3)
 
         var alpha = 0.5f
 
         for (cell in cells) {
             var color = cell.color
+            if (surrounding.contains(cell)) color = Misc.getHighlightColor()
             if (cell == playerCell) color = Misc.getBasePlayerColor()
 
             var x = cell.worldX * factor
