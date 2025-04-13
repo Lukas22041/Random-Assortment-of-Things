@@ -1,11 +1,9 @@
 package assortment_of_things.abyss.procgen
 
-import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import assortment_of_things.abyss.procgen.biomes.BiomeCellData
 import assortment_of_things.abyss.procgen.biomes.TestBiome
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
@@ -15,7 +13,7 @@ class AbyssBiomeManager {
     companion object {
         var width = 52000 * 2 //*3
         var height = 52000 * 1 //*2
-        var cellSize = 2000
+        var cellSize = 2000 //Might want to try 4000 instead later, or 3000 with a different width/height. Would help in places where a cell is only 1 tile big between other biomes
 
         var rows = width / cellSize
         var columns = height / cellSize
@@ -32,8 +30,8 @@ class AbyssBiomeManager {
     fun toWorld(gridX: Int, gridY: Int) = Vector2f(toWorldX(gridX), toWorldY(gridY))
 
     //Convert the location of something in-world to the index of the cell their in.
-    fun toGridX(worldX: Float) = ((worldX + xOffset) / 2000).toInt()
-    fun toGridY(worldY: Float) = ((worldY + yOffset) / 2000).toInt()
+    fun toGridX(worldX: Float) = ((worldX + xOffset) / cellSize).toInt()
+    fun toGridY(worldY: Float) = ((worldY + yOffset) / cellSize).toInt()
 
     private val cellArray = Array(rows) { row ->
         Array<BiomeCellData>(columns) {
@@ -46,27 +44,94 @@ class AbyssBiomeManager {
 
     fun init() {
 
+        //TODO Remove
         biomes.clear()
+        for (cell in cellList) { cell.setBiome(null) }
 
-        biomes.add(TestBiome("rat_test1", Color(255, 0, 50)))
-        biomes.add(TestBiome("rat_test2", Color(120, 0, 20)))
-        biomes.add(TestBiome("rat_test3", Color(255, 0, 100)))
-        biomes.add(TestBiome("rat_test4", Color(155, 75, 0)))
-        biomes.add(TestBiome("rat_test5", Color(50, 50, 50)))
+        biomes.add(TestBiome("rat_test1", Color(255, 0, 50), Color(77, 0, 15), true))
+        biomes.add(TestBiome("rat_test2", Color(120, 0, 20), Color(51, 0, 9), true))
+        biomes.add(TestBiome("rat_test3", Color(255, 0, 100), Color(77, 0, 31), true))
+        biomes.add(TestBiome("rat_test4", Color(255, 123, 0), Color(77, 37, 0), true))
+        biomes.add(TestBiome("rat_test5", Color(30, 30, 30), Color(10, 10, 10), false).apply { gridAlphaMult = 0.2f })
 
         //var cells = cellArray.sumOf { it.size }
 
-        //TODO Remove
+
         //cellList.forEach { it.color = AbyssUtils.ABYSS_COLOR.darker().darker() }
 
 
 
         var starts = findStartingPoints()
+
+        //Slight blobs to guarantee biomes having atleast some deep parts
+        for (start in starts) {
+            for (cell in start.getEmptyAround(4)) {
+                cell.setBiome(start.getBiome()!!)
+            }
+        }
+
         generateBiomes(/*starts*/)
 
+        determineBordersAndDepth()
+
+        generateTerrain()
+    }
+
+    fun generateTerrain() {
+
+        for (biome in biomes) {
+            biome.generateTerrain()
+        }
     }
 
     fun determineBordersAndDepth() {
+        for (biome in biomes) {
+            for (cell in biome.cells) {
+                if (cell.getSurrounding().any { it.getBiome() != cell.getBiome() }) {
+                    cell.depth = BiomeDepth.BORDER
+                    biome.borderCells.add(cell)
+                }
+            }
+        }
+
+        for (biome in biomes) {
+            for (cell in biome.cells.filter { it.depth != BiomeDepth.BORDER }) {
+                if (cell.getAdjacent().any { it.depth == BiomeDepth.BORDER }) {
+                    cell.depth = BiomeDepth.NEAR_BORDER
+                    cell.intDepth = 1
+                    biome.nearCells.add(cell)
+                }
+            }
+        }
+
+
+        //Recursively go through the rest of the layers to determine the depth of all the other places.
+        getDepthRecursive(1)
+
+        //Put the 2 deepest deths in to their own list
+        for (biome in biomes) {
+            var deepest = biome.cells.maxOf { it.intDepth }
+            var deepestCells = biome.cells.filter { it.intDepth == deepest || it.intDepth == deepest - 1 }
+            biome.deepestCells.addAll(deepestCells)
+        }
+
+    }
+
+    fun getDepthRecursive(currDepth: Int) {
+
+        if (cellList.none { it.depth == BiomeDepth.NONE }) return
+
+        for (biome in biomes) {
+            for (cell in biome.cells.filter { it.depth == BiomeDepth.NONE }) {
+                if (cell.getAdjacent().any { it.intDepth == currDepth }) {
+                    cell.depth = BiomeDepth.DEEP
+                    cell.intDepth = currDepth + 1
+                    biome.borderCells
+                }
+            }
+        }
+
+        getDepthRecursive(currDepth+1)
 
     }
 
@@ -97,6 +162,17 @@ class AbyssBiomeManager {
 
         for (biome in biomes) {
             var available = biome.cells.flatMap { it.getEmptyAdjacent() }
+
+            //Make far away cells from core less likely to be picked
+           /* var weighted = WeightedRandomPicker<BiomeCellData>()
+            for (cell in available) {
+                var distance = MathUtils.getDistance(Vector2f(cell.worldX, cell.worldY), Vector2f(biome.startingCell!!.worldX, biome.startingCell!!.worldY))
+                var weight = height.toFloat() * 2 - distance
+                weight = MathUtils.clamp(weight, 0.1f, height.toFloat() * 2)
+                weighted.add(cell, weight)
+            }
+            var pick = weighted.pick() ?: continue //Stop if no cells are available*/
+
             var pick = available.randomOrNull() ?: continue //Stop if no cells are available
 
             pick.setBiome(biome)
@@ -136,6 +212,7 @@ class AbyssBiomeManager {
 
             cell.setBiome(biome)
             cell.isStartingPoint = true
+            biome.startingCell = cell
             startingPoints.add(cell)
         }
 

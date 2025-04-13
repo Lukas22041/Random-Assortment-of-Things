@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.misc.AbyssBackgroundWarper
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 
@@ -26,8 +27,12 @@ object AbyssGenerator {
         targetSystem.addEntity(playerFleet)
         Global.getSector().setCurrentLocation(targetSystem)
 
-        system.addTerrain("rat_abyss_biome_test_renderer", null)
+        system.backgroundTextureFilename = "graphics/backgrounds/abyss/Abyss2.jpg"
+        system.backgroundColorShifter.shift(this, AbyssUtils.DARK_ABYSS_COLOR, 0f, 99999f, 1f)
 
+        system.addTerrain("rat_abyss_biome_test_renderer", null)
+        var warper = AbyssBackgroundWarper(system, 8, 0.33f)
+        warper.overwriteColor = AbyssUtils.DARK_ABYSS_COLOR //TODO, dynamicly change the overwrite color
 
 
         //Biomes

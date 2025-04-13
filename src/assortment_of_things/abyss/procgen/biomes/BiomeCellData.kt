@@ -2,8 +2,8 @@ package assortment_of_things.abyss.procgen.biomes
 
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.AbyssBiomeManager.Companion.cellSize
+import assortment_of_things.abyss.procgen.BiomeDepth
 import org.lwjgl.util.vector.Vector2f
-import java.awt.Color
 
 class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: Int, var worldX: Float, var worldY: Float) {
 
@@ -16,17 +16,22 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
 
     //Depth Indicates how towards the center the biome cell is
     //0 means its directly neighbouring another biome, 1 means its one step away from another biome, and so forth
-    var depth = 0
+    var depth: BiomeDepth = BiomeDepth.NONE
+    var intDepth = 0
 
+    fun isDeepest() = biomePlugin?.deepestCells?.contains(this) == true
 
-    fun getCenter() : Vector2f {
+    fun getWorldCenter() : Vector2f {
         return Vector2f(worldX + cellSize / 2f, worldY + cellSize / 2f)
     }
 
     fun getBiome() = biomePlugin
-    fun setBiome(plugin: BaseAbyssBiome) {
+    fun setBiome(plugin: BaseAbyssBiome?) {
+
+        getBiome()?.cells?.remove(this) //Remove from prior biome if in it
+
         biomePlugin = plugin
-        biomePlugin!!.cells.add(this)
+        biomePlugin?.cells?.add(this)
     }
 
     fun getLeft() = manager.getCell(gridX-1, gridY)
@@ -69,6 +74,7 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
     }
 
     //Surrounding tiles based on range entered, includes itself, includes fake cells
+    //TODO improve the performance a lot
     fun getAround(radius: Int, parent: BiomeCellData=this) : List<BiomeCellData> {
         var list = ArrayList<BiomeCellData>()
         if (radius == 0) {
@@ -87,4 +93,5 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
 
     fun getEmptyAdjacent() = getAdjacent().filter { it.getBiome() == null && !it.isFake }
     fun getEmptySurrounding() = getSurrounding().filter { it.getBiome() == null && !it.isFake }
+    fun getEmptyAround(radius: Int) = getAround(0).filter { it.getBiome() == null && !it.isFake }
 }

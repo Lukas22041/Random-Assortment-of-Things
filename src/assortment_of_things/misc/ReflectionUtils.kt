@@ -122,8 +122,10 @@ object ReflectionUtils {
         return handle
     }
 
-    fun setWithSuper(fieldName: String, instanceToModify: Any, newValue: Any?, clazz: Class<*>? = null)
+    fun setWithSuper(fieldName: String, instanceToModify: Any, newValue: Any?, limit: Int, clazz: Class<*>? = null)
     {
+        if (limit < 0) return
+
         var field: Any? = null
         var claz = clazz
         if (claz == null) claz = instanceToModify.javaClass
@@ -132,7 +134,7 @@ object ReflectionUtils {
             try {  field = claz.getDeclaredField(fieldName) } catch (e: Throwable) { }
         }
         if (field == null) {
-            setWithSuper(fieldName, instanceToModify, claz.superclass)
+            setWithSuper(fieldName, instanceToModify, newValue, limit-1, claz.superclass)
             return
         }
 
