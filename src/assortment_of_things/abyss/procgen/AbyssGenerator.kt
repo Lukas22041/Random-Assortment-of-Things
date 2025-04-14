@@ -60,6 +60,14 @@ object AbyssGenerator {
 
         })*/
 
+
+
+
+
+
+        //Should be added last so that it renders over everything else on the map
+        system.addTerrain("rat_map_revealer", null)
+
     }
 
 }

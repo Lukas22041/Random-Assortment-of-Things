@@ -4,7 +4,6 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.misc.MiscReplacement
 import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
-import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
@@ -12,14 +11,11 @@ import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.TerrainAIFlags
 import com.fs.starfarer.api.impl.campaign.ids.Abilities
 import com.fs.starfarer.api.ui.Alignment
-import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import org.lazywizard.lazylib.ui.LazyFont
-import org.lwjgl.opengl.GL11
-import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
+import java.util.ArrayList
 
 class TestAbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
 
@@ -45,9 +41,14 @@ class TestAbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
     }
 
     override fun renderOnMap(factor: Float, alphaMult: Float) {
+
+        //AbyssUtils.getData().mapRevealer.startCellStencil(factor)
         super.renderOnMap(factor, alphaMult)
+        //AbyssUtils.getData().mapRevealer.endCellStencil()
 
     }
+
+
 
 
 

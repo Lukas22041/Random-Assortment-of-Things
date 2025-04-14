@@ -25,6 +25,12 @@
 	},
 	
 	
+	
+	"rat_map_revealer":{
+		"plugin":"assortment_of_things.abyss.terrain.MapRevealerTerrain",
+	},
+	
+	
 	"rat_exo_nebula":{
 		"plugin":"assortment_of_things.exotech.terrain.ExotechHyperNebula",
 		
@@ -37,6 +43,7 @@
 			"stormSound":"rat_abyss_storm_sounds",
 		},
 	},
+	
 	
 }
 

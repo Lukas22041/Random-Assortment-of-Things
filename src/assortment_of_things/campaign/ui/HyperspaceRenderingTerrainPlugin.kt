@@ -191,8 +191,6 @@ class HyperspaceRenderingTerrainPlugin : BaseTerrain() {
     }
 
     override fun getActiveLayers(): EnumSet<CampaignEngineLayers> {
-        Global.getSettings().getSpec(StarGenDataSpec::class.java, "", true)
-
         return EnumSet.of(CampaignEngineLayers.ABOVE)
     }
 

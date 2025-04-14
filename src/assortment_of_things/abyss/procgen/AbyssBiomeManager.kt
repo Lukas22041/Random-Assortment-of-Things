@@ -23,6 +23,8 @@ class AbyssBiomeManager {
     }
 
     var biomes = ArrayList<BaseAbyssBiome>()
+    fun getBiome(biomeId: String) = biomes.find { it.getBiomeID() == biomeId }!!
+    fun getBiomeOfClass(biome: Class<*>) = biomes.find { it.javaClass.name == biome.name }!!
 
     //Get the lower left coordinate of a cell in World coordinates
     fun toWorldX(gridX: Int) = (gridX * cellSize - xOffset).toFloat()
@@ -52,7 +54,7 @@ class AbyssBiomeManager {
         biomes.add(TestBiome("rat_test2", Color(120, 0, 20), Color(51, 0, 9), true))
         biomes.add(TestBiome("rat_test3", Color(255, 0, 100), Color(77, 0, 31), true))
         biomes.add(TestBiome("rat_test4", Color(255, 123, 0), Color(77, 37, 0), true))
-        biomes.add(TestBiome("rat_test5", Color(30, 30, 30), Color(10, 10, 10), false).apply { gridAlphaMult = 0.2f })
+        biomes.add(TestBiome("rat_test5", Color(30, 30, 30), Color(10, 10, 10), false).apply { gridAlphaMult = 0.25f })
 
         //var cells = cellArray.sumOf { it.size }
 
