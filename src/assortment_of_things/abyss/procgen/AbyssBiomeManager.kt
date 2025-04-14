@@ -65,7 +65,7 @@ class AbyssBiomeManager {
 
         //Slight blobs to guarantee biomes having atleast some deep parts
         for (start in starts) {
-            for (cell in start.getEmptyAround(4)) {
+            for (cell in start.getEmptyAround(3)) { //Change to 4 if generation is to off
                 cell.setBiome(start.getBiome()!!)
             }
         }
