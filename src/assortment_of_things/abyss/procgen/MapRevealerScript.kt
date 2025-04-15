@@ -4,7 +4,6 @@ import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.util.IntervalUtil
-import org.lwjgl.opengl.GL11
 
 class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript {
 
@@ -35,7 +34,7 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
                 var playercell = biomeManager.getPlayerCell()
                 playercell.isDiscovered = true
 
-                playercell.getAround(2).forEach {
+                playercell.getAround(3).forEach {
                     it.isDiscovered = true
                     it.getAdjacent().forEach { it.isPartialyDiscovered = true }
                 }

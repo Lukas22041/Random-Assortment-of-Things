@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector2f
 
 class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: Int, var worldX: Float, var worldY: Float) {
 
+    private var worldCenter = Vector2f(worldX + cellSize / 2f, worldY + cellSize / 2f)
     private var biomePlugin: BaseAbyssBiome? = null
     var isFake = false
     //var color = Color(30, 30, 30)
@@ -28,7 +29,7 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
     fun isDeepest() = biomePlugin?.deepestCells?.contains(this) == true
 
     fun getWorldCenter() : Vector2f {
-        return Vector2f(worldX + cellSize / 2f, worldY + cellSize / 2f)
+        return worldCenter
     }
 
     fun getBiome() = biomePlugin
@@ -79,7 +80,31 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
         return list
     }
 
-    //Surrounding tiles based on range entered, includes itself, includes fake cells
+    fun getAround(radius: Int, processed: MutableList<BiomeCellData> = mutableListOf(), toProcess: MutableList<BiomeCellData> = mutableListOf(this)) : List<BiomeCellData> {
+        //var list = ArrayList<BiomeCellData>()
+        if (radius == 0) {
+            return processed
+        }
+
+        var prior = ArrayList(toProcess)
+        toProcess.clear()
+
+        for (cell in prior) {
+            if (processed.contains(cell)) continue
+            //list.add(cell)
+            processed.add(cell)
+            toProcess.addAll(cell.getAdjacent())
+        }
+
+        //list.addAll(getAround(radius-1, processed, toProcess))
+        getAround(radius-1, processed, toProcess)
+
+        var result = processed.distinct()
+
+        return result
+    }
+
+    /*//Surrounding tiles based on range entered, includes itself, includes fake cells
     //TODO improve the performance a lot
     fun getAround(radius: Int, parent: BiomeCellData=this) : List<BiomeCellData> {
         var list = ArrayList<BiomeCellData>()
@@ -95,7 +120,7 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
        var result = list.distinct()
 
         return result
-    }
+    }*/
 
     fun getEmptyAdjacent() = getAdjacent().filter { it.getBiome() == null && !it.isFake }
     fun getEmptySurrounding() = getSurrounding().filter { it.getBiome() == null && !it.isFake }

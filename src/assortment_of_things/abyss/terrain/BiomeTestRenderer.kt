@@ -10,7 +10,6 @@ import com.fs.starfarer.api.impl.campaign.procgen.StarGenDataSpec
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.util.Misc
 import org.lwjgl.opengl.GL11
-import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import org.magiclib.kotlin.setBrightness
 import java.awt.Color
@@ -31,9 +30,10 @@ class BiomeTestRenderer : BaseTerrain() {
         var cells = manager.getCells()
 
         var playerCell = manager.getPlayerCell()
-        //var surrounding = playerCell.getAround(2)
+        //var surrounding = playerCell.getAround(3)
 
 
+        var showFog = AbyssUtils.isShowFog()
         for (cell in cells) {
             var alpha = 0.20f * (cell.getBiome()?.gridAlphaMult ?: 1f) //Set to 0.2 in the final version
 
@@ -56,21 +56,32 @@ class BiomeTestRenderer : BaseTerrain() {
 
             var color = Color(30, 30, 30)
             if (cell.getBiome() != null) color = cell.getBiome()!!.getBiomeColor()
-            //if (surrounding.contains(cell)) color = Misc.getHighlightColor()
+            /*if (surrounding.contains(cell)) {
+                alpha += 0.5f
+                color = Misc.getHighlightColor()
+            }*/
             //if (cell.isStartingPoint) color = Misc.getPositiveHighlightColor()
             if (cell == playerCell) color = Misc.getBasePlayerColor()
 
-            var x = cell.worldX * factor
-            var y = cell.worldY * factor
-            var size = AbyssBiomeManager.cellSize * factor
+
 
             var renderOutlines = true
+            //Dont render if the fog renders above it
+            if (!cell.isDiscovered && !cell.isPartialyDiscovered && showFog) {
+                renderOutlines = false
+            }
+
             if (renderOutlines) {
+
+                var x = cell.worldX * factor
+                var y = cell.worldY * factor
+                var size = AbyssBiomeManager.cellSize * factor
+
                 var c = color.setBrightness((alpha * 255f).toInt()).setAlpha(255)
                 GL11.glPushMatrix()
 
-                GL11.glTranslatef(0f, 0f, 0f)
-                GL11.glRotatef(0f, 0f, 0f, 1f)
+               /* GL11.glTranslatef(0f, 0f, 0f)
+                GL11.glRotatef(0f, 0f, 0f, 1f)*/
 
                 GL11.glDisable(GL11.GL_TEXTURE_2D)
 
@@ -107,8 +118,9 @@ class BiomeTestRenderer : BaseTerrain() {
                 GL11.glPopMatrix()
             }
 
+            //To FPS intensive for not much of a result
             var renderBackgrounds = true
-            if (renderBackgrounds) {
+            /*if (renderBackgrounds) {
 
                 var c = color.setBrightness((alpha * 255f * 0.75f).toInt()).setAlpha((255))
 
@@ -121,9 +133,9 @@ class BiomeTestRenderer : BaseTerrain() {
                 GL11.glEnable(GL11.GL_BLEND)
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
 
-                /* GL11.glEnable(GL11.GL_CULL_FACE)
+                *//* GL11.glEnable(GL11.GL_CULL_FACE)
                  GL11.glCullFace(GL11.GL_FRONT)
-                 GL11.glFrontFace(GL11.GL_CW)*/
+                 GL11.glFrontFace(GL11.GL_CW)*//*
                 //GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
                 GL11.glColor4f(c.red / 255f,
                     c.green / 255f,
@@ -133,7 +145,7 @@ class BiomeTestRenderer : BaseTerrain() {
                 GL11.glRectf(x, y , x + size, y + size)
 
                 GL11.glPopMatrix()
-            }
+            }*/
 
 
         }

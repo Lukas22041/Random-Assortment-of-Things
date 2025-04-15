@@ -30,10 +30,7 @@ object AbyssUtils {
     var SIERRA_COLOR = Color(205,155,255,255)
     var FACTION_ID = "rat_abyssals"
 
-    var SYSTEM_TAG = "rat_abyss_system"
     var ABYSS_DATA_KEY = "\$rat_abyss_data"
-    var SYSTEM_DATA_KEY = "\$rat_system_data"
-    var RIFT_TAG = "rat_abyss_rift"
 
     fun getData() : AbyssData {
         var data = Global.getSector().memoryWithoutUpdate.get(ABYSS_DATA_KEY) as AbyssData?
@@ -42,6 +39,11 @@ object AbyssUtils {
             Global.getSector().memoryWithoutUpdate.set(ABYSS_DATA_KEY, data)
         }
         return data
+    }
+
+    fun isShowFog() : Boolean {
+        return true
+        return !Global.getSettings().isDevMode
     }
 
     fun isAnyFleetTargetingPlayer() : Boolean {
@@ -133,4 +135,6 @@ object AbyssUtils {
         fleet.inflateIfNeeded()
 
     }
+
+
 }

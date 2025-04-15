@@ -18,7 +18,7 @@ object AbyssGenerator {
 
         system.initNonStarCenter()
 
-        //Telport
+        //Teleport
         var playerFleet = Global.getSector().playerFleet
         var currentLocation = playerFleet.containingLocation
         var targetSystem = system

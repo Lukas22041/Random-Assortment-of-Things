@@ -333,7 +333,7 @@ class RATModPlugin : BaseModPlugin() {
     }
 
     override fun onNewGameAfterProcGen() {
-        generateAbyss()
+        //generateAbyss()
 
         if (Global.getSector().characterData.memoryWithoutUpdate.get("\$rat_started_abyss") == true) {
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", "rat_abyss_gate")
