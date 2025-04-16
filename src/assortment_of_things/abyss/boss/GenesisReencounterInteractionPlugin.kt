@@ -71,7 +71,7 @@ class GenesisReencounterInteractionPlugin : RATInteractionPlugin() {
 
         boss.variant.addTag(Tags.TAG_NO_AUTOFIT)
         boss.variant.addTag(Tags.VARIANT_UNBOARDABLE)
-        boss.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
+        //boss.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
         boss.repairTracker.cr = 0.7f
         boss!!.variant.addTag("rat_really_not_recoverable")
         if (challenge) {

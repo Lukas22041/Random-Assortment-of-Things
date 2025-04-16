@@ -358,7 +358,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
         }
 
         var abyssData = AbyssUtils.getAbyssData()
-        if (!abyssData.hasAbyssalDoctrine) {
+        /*if (!abyssData.hasAbyssalDoctrine) {
             for (member in fleet.fleetData.membersListWithFightersCopy) {
                 if (member.baseOrModSpec().hasTag("rat_abyssals") && !member.baseOrModSpec().hasTag("rat_seraph")) {
                     member.variant.addTag(Tags.SHIP_LIMITED_TOOLTIP)
@@ -374,7 +374,7 @@ class AbyssalDefendingFleetManager(source: SectorEntityToken, var depth: AbyssDe
                 }
             }
             abyssData.doctrineLearnedListeners.add(AbyssDoctrineLearnedListener(fleet))
-        }
+        }*/
 
         var difficulty = AbyssUtils.getDifficulty()
         var chance = WeightedRandomPicker<Int>()
