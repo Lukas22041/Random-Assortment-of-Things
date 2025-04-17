@@ -42,7 +42,7 @@ object AbyssUtils {
     }
 
     fun isShowFog() : Boolean {
-        return true
+        //return true
         return !Global.getSettings().isDevMode
     }
 

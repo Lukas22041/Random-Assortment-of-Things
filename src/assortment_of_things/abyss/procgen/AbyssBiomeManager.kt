@@ -76,15 +76,23 @@ class AbyssBiomeManager {
 
         determineBordersAndDepth()
 
-        generateTerrain()
+        //generateTerrain()
+
+        initBiomes()
     }
 
-    fun generateTerrain() {
-
+    fun initBiomes() {
         for (biome in biomes) {
-            biome.generateTerrain()
+            biome.init()
         }
     }
+
+    /*fun generateTerrain() {
+
+        for (biome in biomes) {
+            biome.generateFogTerrain()
+        }
+    }*/
 
     fun determineBordersAndDepth() {
         for (biome in biomes) {

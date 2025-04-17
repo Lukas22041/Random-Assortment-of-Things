@@ -23,61 +23,12 @@ class TestBiome(var id: String, var color: Color, var darkColor: Color, var gene
         return darkColor
     }
 
-    override fun generateTerrain() {
+    /** Called after all cells are generated */
+    override fun init() {
 
-
-
-        if (generateTerrain) {
-            var data = AbyssUtils.getData()
-            var system = data.system
-            var manager = data.biomeManager
-            var otherBiomes = manager.biomes.filter { it != this }
-
-            val w = AbyssBiomeManager.width / 200
-            val h = AbyssBiomeManager.height / 200
-
-           /* val w = 250
-            val h = 250*/
-
-            val string = StringBuilder()
-            for (y in h - 1 downTo 0) {
-                for (x in 0 until w) {
-                    string.append("x")
-                }
-            }
-
-            val nebula = system?.addTerrain("rat_abyss_test", OldBaseTiledTerrain.TileParams(string.toString(),
-                    w, h,
-                    "rat_terrain", "depths1",
-                    4,4,
-                    null))
-
-            nebula!!.id = "rat_depths_${Misc.genUID()}"
-            nebula!!.location[0f] = 0f
-
-            val nebulaPlugin = (nebula as CampaignTerrainAPI).plugin as TestAbyssTerrainPlugin
-            nebulaPlugin.biome = this
-
-            val editor = OldNebulaEditor(nebulaPlugin)
-            editor.regenNoise()
-            editor.noisePrune(0.60f) //0.35
-            editor.regenNoise()
-
-
-            for (other in otherBiomes) {
-
-                for (cell in other.cells) {
-                    //if (cell.depth != BiomeDepth.BORDER) {
-
-                    if (cell.getAdjacent().none { it.getBiome() == this }) {
-                        editor.clearArc(cell.getWorldCenter().x, cell.getWorldCenter().y, 0f, AbyssBiomeManager.cellSize.toFloat() * 1.05f, 0f, 360f)
-                    }
-
-                    //}
-                }
-            }
-        }
-
+        if (generateTerrain) generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1")
 
     }
+
+
 }
