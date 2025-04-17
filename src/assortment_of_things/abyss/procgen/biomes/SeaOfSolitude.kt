@@ -2,13 +2,13 @@ package assortment_of_things.abyss.procgen.biomes
 
 import java.awt.Color
 
-class SeaOfStorms() : BaseAbyssBiome() {
+class SeaOfSolitude() : BaseAbyssBiome() {
     override fun getBiomeID(): String {
-        return "sea_of_storms"
+        return "sea_of_solitude"
     }
 
     override fun getDisplayName(): String {
-        return "Sea of Storms"
+        return "Sea of Solitude"
     }
 
     override fun getBiomeColor(): Color {

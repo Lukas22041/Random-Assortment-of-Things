@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.misc.AbyssBackgroundWarper
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 
 object AbyssGenerator {
 
@@ -17,6 +18,11 @@ object AbyssGenerator {
         data.system = system
 
         system.initNonStarCenter()
+
+        system.addTag(Tags.THEME_HIDDEN)
+        system.addTag(Tags.THEME_UNSAFE)
+        system.addTag(Tags.THEME_SPECIAL)
+        system.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
 
         //Teleport
         var playerFleet = Global.getSector().playerFleet

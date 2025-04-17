@@ -4,7 +4,6 @@ import assortment_of_things.abyss.procgen.biomes.*
 import com.fs.starfarer.api.Global
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
-import java.awt.Color
 
 class AbyssBiomeManager {
 
@@ -52,7 +51,7 @@ class AbyssBiomeManager {
 
         biomes.add(SeaOfTranquility())
         biomes.add(SeaOfHarmony())
-        biomes.add(SeaOfStorms())
+        biomes.add(SeaOfSolitude())
         biomes.add(SeaOfSerenity())
         biomes.add(AbyssalWastes())
 
