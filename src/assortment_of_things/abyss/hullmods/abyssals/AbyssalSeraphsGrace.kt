@@ -21,7 +21,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
         if (Global.getSector() != null && Global.getSector().playerFleet != null) {
             if (Global.getSector().playerFleet.containingLocation != null)
             {
-                if (Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) {
+                if (Global.getSector().playerFleet.containingLocation == AbyssUtils.getData().system) {
                     isInAbyss = true
                 }
             }

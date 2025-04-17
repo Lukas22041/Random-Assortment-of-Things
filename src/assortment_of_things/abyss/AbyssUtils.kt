@@ -46,6 +46,13 @@ object AbyssUtils {
         return !Global.getSettings().isDevMode
     }
 
+    fun isPlayerInAbyss() = isInAbyss(Global.getSector()?.playerFleet)
+
+    fun isInAbyss(entity: SectorEntityToken?) : Boolean {
+        if (entity == null) return false
+        return entity.containingLocation == getData().system
+    }
+
     fun isAnyFleetTargetingPlayer() : Boolean {
         if (Global.getSettings().isDevMode) return false
         val playerFleet = Global.getSector().playerFleet
