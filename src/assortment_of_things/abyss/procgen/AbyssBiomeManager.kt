@@ -29,6 +29,8 @@ class AbyssBiomeManager {
     //Get the lower left coordinate of a cell in World coordinates
     fun toWorldX(gridX: Int) = (gridX * cellSize - xOffset).toFloat()
     fun toWorldY(gridY: Int) = (gridY * cellSize - yOffset).toFloat()
+    fun toWorldX(x: Float) = x * cellSize - xOffset
+    fun toWorldY(y: Float) = y * cellSize - yOffset
     fun toWorld(gridX: Int, gridY: Int) = Vector2f(toWorldX(gridX), toWorldY(gridY))
 
     //Convert the location of something in-world to the index of the cell their in.
@@ -78,12 +80,30 @@ class AbyssBiomeManager {
 
         //generateTerrain()
 
+        findCorners()
+
         initBiomes()
     }
 
     fun initBiomes() {
         for (biome in biomes) {
             biome.init()
+        }
+    }
+
+    //Searches for the cells per biome that are left, right, top or bottom
+    fun findCorners() {
+        for (biome in biomes) {
+            biome.leftMostCell = biome.cells.minOf { it.gridX }
+            biome.rightMostCell = biome.cells.maxOf { it.gridX }
+
+            biome.bottomMostCell = biome.cells.minOf { it.gridY }
+            biome.topMostCell = biome.cells.maxOf { it.gridY }
+
+            biome.cellsWidth = biome.rightMostCell - biome.leftMostCell
+            biome.cellsHeight = biome.topMostCell - biome.bottomMostCell
+
+            biome.biomeWorldCenter = Vector2f(toWorldX(biome.leftMostCell.toFloat() + (biome.cellsWidth).toFloat()/2f) + cellSize/2, toWorldY(biome.bottomMostCell.toFloat() + (biome.cellsHeight).toFloat()/2)+ cellSize/2)
         }
     }
 

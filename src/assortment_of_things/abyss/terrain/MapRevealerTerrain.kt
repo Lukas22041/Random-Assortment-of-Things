@@ -49,6 +49,15 @@ class MapRevealerTerrain : BaseTerrain() {
             }
         }
 
+       /* for (biome in AbyssUtils.getData().biomeManager.biomes) {
+            fog!!.setSize(AbyssBiomeManager.cellSize * 4f * factor, AbyssBiomeManager.cellSize * 4f * factor)
+
+            var loc = biome.biomeWorldCenter
+            fog!!.alphaMult = alphaMult
+
+            fog!!.renderAtCenter(loc.x * factor, loc.y * factor)
+        }*/
+
 
 
     }
