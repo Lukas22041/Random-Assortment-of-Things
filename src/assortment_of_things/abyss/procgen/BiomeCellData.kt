@@ -1,8 +1,7 @@
-package assortment_of_things.abyss.procgen.biomes
+package assortment_of_things.abyss.procgen
 
-import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.AbyssBiomeManager.Companion.cellSize
-import assortment_of_things.abyss.procgen.BiomeDepth
+import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 

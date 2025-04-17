@@ -19,7 +19,7 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
         return true
     }
 
-    var interval = IntervalUtil(0.5f, 0.6f)
+    var interval = IntervalUtil(0.25f, 0.4f)
 
     override fun advance(amount: Float) {
 
@@ -27,6 +27,8 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
         for (cell in biome.cells) {
             cell.isDiscovered = true
         }*/
+
+        if (Global.getSector().isPaused && !Global.getSettings().isDevMode) return
 
         interval.advance(amount)
         if (interval.intervalElapsed()) {

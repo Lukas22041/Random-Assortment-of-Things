@@ -1,8 +1,6 @@
 package assortment_of_things.abyss.procgen
 
-import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
-import assortment_of_things.abyss.procgen.biomes.BiomeCellData
-import assortment_of_things.abyss.procgen.biomes.TestBiome
+import assortment_of_things.abyss.procgen.biomes.*
 import com.fs.starfarer.api.Global
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
@@ -52,11 +50,11 @@ class AbyssBiomeManager {
         biomes.clear()
         for (cell in cellList) { cell.setBiome(null) }
 
-        biomes.add(TestBiome("rat_test1", Color(255, 0, 50), Color(77, 0, 15), true))
-        biomes.add(TestBiome("rat_test2", Color(120, 0, 20), Color(51, 0, 9), true))
-        biomes.add(TestBiome("rat_test3", Color(255, 0, 100), Color(77, 0, 31), true))
-        biomes.add(TestBiome("rat_test4", Color(255, 123, 0), Color(77, 37, 0), true))
-        biomes.add(TestBiome("rat_test5", Color(30, 30, 30), Color(10, 10, 10), false).apply { gridAlphaMult = 0.25f })
+        biomes.add(SeaOfTranquility())
+        biomes.add(SeaOfHarmony())
+        biomes.add(SeaOfStorms())
+        biomes.add(SeaOfSerenity())
+        biomes.add(AbyssalWastes())
 
         //var cells = cellArray.sumOf { it.size }
 

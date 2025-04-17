@@ -2,11 +2,14 @@ package assortment_of_things.abyss.procgen.biomes
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
+import assortment_of_things.abyss.procgen.BiomeCellData
+import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.TestAbyssTerrainPlugin
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
+import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.util.Misc
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
@@ -22,7 +25,6 @@ abstract class BaseAbyssBiome {
 
     var deepestCells = ArrayList<BiomeCellData>() //Should be worked with first as to be reserved for important things
 
-    var gridAlphaMult = 1f
 
     //Generated before Init. Mostly required to create appropiate grid sizes for the nebula terrain.
     var leftMostCell: Int = 0
@@ -33,15 +35,31 @@ abstract class BaseAbyssBiome {
     var cellsHeight: Int = 0
     var biomeWorldCenter: Vector2f = Vector2f()
 
+    //Can be different types of terrain depending on the biome
+    var terrain: BaseTerrain? = null
+
     abstract fun getBiomeID() : String
+    abstract fun getDisplayName() : String
 
     abstract fun getBiomeColor() : Color
     abstract fun getDarkBiomeColor() : Color
 
+    fun getShiftedColor() : Color = Color(255, 255, 255)
+    fun getBackgroundColor() = getDarkBiomeColor()
+
+    open fun getMaxDarknessMult() = 0.75f
+    open fun getDarknessText() : String = "Darkness"
+
+    open fun getGridAlphaMult() = 1f
+
     /** Called after all cells are generated */
     abstract fun init()
 
-    fun generateFogTerrain(terrainId: String, tileTexCat: String, tileTexKey: String) {
+    open fun spawnParticlesForCell(/*Pass Particle Manager Here*/ cell: BiomeCellData) {
+
+    }
+
+    fun generateFogTerrain(terrainId: String, tileTexCat: String, tileTexKey: String, fogFraction: Float) {
 
         var data = AbyssUtils.getData()
         var system = data.system
@@ -75,12 +93,13 @@ abstract class BaseAbyssBiome {
         nebula!!.id = "rat_depths_${Misc.genUID()}"
         nebula!!.location.set(loc)
 
-        val nebulaPlugin = (nebula as CampaignTerrainAPI).plugin as TestAbyssTerrainPlugin
-        nebulaPlugin.biome = this
+        val nebulaPlugin = (nebula as CampaignTerrainAPI).plugin as BaseFogTerrain
+        terrain = nebulaPlugin
+        nebulaPlugin.biomePlugin = this
 
         val editor = OldNebulaEditor(nebulaPlugin)
         editor.regenNoise()
-        editor.noisePrune(0.6f) //0.35
+        editor.noisePrune(fogFraction) //0.35
         editor.regenNoise()
 
 
@@ -96,6 +115,8 @@ abstract class BaseAbyssBiome {
                 //}
             }
         }
+
+        nebulaPlugin.save()
 
     }
 

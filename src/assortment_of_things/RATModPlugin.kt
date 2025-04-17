@@ -5,6 +5,7 @@ import assortment_of_things.scripts.ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.scripts.*
+import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
@@ -366,6 +367,17 @@ class RATModPlugin : BaseModPlugin() {
     override fun beforeGameSave() {
         super.beforeGameSave()
 
+
+        var data = AbyssUtils.getData()
+        var biomes = data.biomeManager?.biomes
+        if (biomes != null) {
+            for (biome in biomes) {
+                var terrain = biome.terrain
+                if (terrain is BaseFogTerrain) {
+                    terrain.save()
+                }
+            }
+        }
        /* for (system in Global.getSector().starSystems.filter { it.hasTag(AbyssUtils.SYSTEM_TAG) })
         {
             var abyssPlugin = AbyssProcgen.getAbyssTerrainPlugin(system)

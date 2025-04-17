@@ -31,8 +31,8 @@ object AbyssGenerator {
         system.backgroundColorShifter.shift(this, AbyssUtils.DARK_ABYSS_COLOR, 0f, 99999f, 1f)
 
         system.addTerrain("rat_abyss_biome_test_renderer", null)
-        var warper = AbyssBackgroundWarper(system, 8, 0.33f)
-        warper.overwriteColor = AbyssUtils.DARK_ABYSS_COLOR //TODO, dynamicly change the overwrite color
+        data.warper = AbyssBackgroundWarper(system, 8, 0.33f)
+        data.warper!!.overwriteColor = AbyssUtils.DARK_ABYSS_COLOR //TODO, dynamicly change the overwrite color
 
 
         //Biomes

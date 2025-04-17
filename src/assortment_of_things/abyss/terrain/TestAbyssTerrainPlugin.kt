@@ -17,11 +17,9 @@ import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.ArrayList
 
-class TestAbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
+class TestAbyssTerrainPlugin() : BaseFogTerrain() {
 
     var id = Misc.genUID()
-
-    var biome: BaseAbyssBiome? = null
 
     var color = AbyssUtils.ABYSS_COLOR
 
@@ -37,7 +35,7 @@ class TestAbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
 
 
     override fun getRenderColor(): Color {
-        return biome?.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+        return getBiome()?.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
     }
 
     override fun renderOnMap(factor: Float, alphaMult: Float) {
@@ -47,30 +45,6 @@ class TestAbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
         //AbyssUtils.getData().mapRevealer.endCellStencil()
 
     }
-
-
-
-
-
-    fun save()
-    {
-        params.tiles = null
-        savedTiles = encodeTiles(tiles)
-
-        savedActiveCells.clear()
-
-        for (i in activeCells.indices) {
-            for (j in activeCells[0].indices) {
-                val curr = activeCells[i][j]
-                if (curr != null && isTileVisible(i, j)) {
-                    savedActiveCells.add(curr)
-                }
-            }
-        }
-    }
-
-
-
 
     override fun applyEffect(entity: SectorEntityToken?, days: Float) {
         //super.applyEffect(entity, days)
