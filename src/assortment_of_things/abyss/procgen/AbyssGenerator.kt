@@ -69,6 +69,9 @@ object AbyssGenerator {
 
 
 
+        system.mapGridWidthOverride = AbyssBiomeManager.width.toFloat()
+        system.mapGridHeightOverride = AbyssBiomeManager.height.toFloat()
+
 
 
         //Should be added last so that it renders over everything else on the map
