@@ -44,6 +44,9 @@ class AbyssBiomeManager {
 
     //var cells = ArrayList<ArrayList>
 
+    fun getDominantBiome() : BaseAbyssBiome {
+        return getBiomeLevels().maxBy { it.value }.key
+    }
 
     fun getBiomeLevels() : HashMap<BaseAbyssBiome, Float> {
         var levels = HashMap<BaseAbyssBiome, Float>()

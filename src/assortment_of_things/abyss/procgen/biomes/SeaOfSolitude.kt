@@ -2,6 +2,7 @@ package assortment_of_things.abyss.procgen.biomes
 
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.BiomeCellData
+import assortment_of_things.abyss.procgen.BiomeDepth
 import assortment_of_things.abyss.procgen.BiomeParticleManager
 import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
@@ -51,6 +52,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
             var spawnLocation = cell.getWorldCenter()
 
             var spread = AbyssBiomeManager.cellSize * 1f/** 0.75f*/
+            if (cell.depth == BiomeDepth.BORDER) spread *= 0.9f
             var randomX = MathUtils.getRandomNumberInRange(-spread, spread)
             var randomY = MathUtils.getRandomNumberInRange(-spread, spread)
 
