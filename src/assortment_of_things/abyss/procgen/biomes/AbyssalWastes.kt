@@ -25,6 +25,10 @@ class AbyssalWastes() : BaseAbyssBiome() {
         return 0.25f
     }
 
+    override fun getSaturation(): Float {
+        return 0.75f
+    }
+
     /** Called after all cells are generated */
     override fun init() {
        //generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1", 0.6f)

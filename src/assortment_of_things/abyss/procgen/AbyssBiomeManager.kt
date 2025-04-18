@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.procgen.biomes.*
+import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
@@ -20,8 +21,8 @@ class AbyssBiomeManager {
     }
 
     var biomes = ArrayList<BaseAbyssBiome>()
-    fun getBiome(biomeId: String) = biomes.find { it.getBiomeID() == biomeId }!!
-    fun getBiomeOfClass(biome: Class<*>) = biomes.find { it.javaClass.name == biome.name }!!
+    fun getBiome(biomeId: String) = biomes.find { it.getBiomeID() == biomeId }
+    fun getBiomeOfClass(biome: Class<*>) = biomes.find { it.javaClass.name == biome.name }
 
     //Get the lower left coordinate of a cell in World coordinates
     fun toWorldX(gridX: Int) = (gridX * cellSize - xOffset).toFloat()
@@ -42,6 +43,52 @@ class AbyssBiomeManager {
     private var cellList = cellArray.flatten()
 
     //var cells = ArrayList<ArrayList>
+
+
+    fun getBiomeLevels() : HashMap<BaseAbyssBiome, Float> {
+        var levels = HashMap<BaseAbyssBiome, Float>()
+
+        var playerLoc = Global.getSector().playerFleet.location
+        var playerCell = getPlayerCell()
+        //var around = playerCell.getAround(3)//.filter { it.depth == BiomeDepth.BORDER }
+        //var surrounding = playerCell.getSurrounding()
+        var surrounding = playerCell.getSurroundingWithCenter()
+
+        var maxLevels = HashMap<BaseAbyssBiome, Float>()
+
+        for (cell in surrounding) {
+            var biome = cell.getBiome() ?: continue //Continue if no biome
+
+            var distance = MathUtils.getDistance(cell.getWorldCenter(), playerLoc)
+
+            var level = distance.levelBetween(cellSize.toFloat()/**1.5f*/, 0f)
+
+            if (level >= (maxLevels.get(biome) ?: 0f)) {
+                maxLevels.put(biome, level)
+            }
+
+        }
+
+        var totalDistance = maxLevels.values.sum()
+        for (biome in biomes) {
+            var value = maxLevels.get(biome)
+            if (value == null) {
+                levels.put(biome, 0f)
+                continue
+            }
+            var level = (value / totalDistance)
+            levels.put(biome, level)
+        }
+
+        if (maxLevels.size == 1) {
+            var first = maxLevels.keys.first()
+            levels.set(first, 1f)
+        }
+
+        return levels
+   }
+
+  
 
     fun init() {
 
@@ -310,6 +357,10 @@ class AbyssBiomeManager {
     fun createFakeCell(x: Int, y: Int) : BiomeCellData {
         var cell = BiomeCellData(this, x, y,toWorldX(x), toWorldY(y))
         cell.isFake = true
+        var biome = getBiome("abyssal_wastes")
+      /*  if (biome != null) {
+            cell.setBiome(biome)
+        }*/
         //cell.color = Color.white
         return cell
     }

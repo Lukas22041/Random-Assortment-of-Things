@@ -31,7 +31,10 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
         return worldCenter
     }
 
-    fun getBiome() = biomePlugin
+    fun getBiome() : BaseAbyssBiome? {
+        if (isFake) return manager.getBiome("abyssal_wastes")
+        return biomePlugin
+    }
     fun setBiome(plugin: BaseAbyssBiome?) {
 
         getBiome()?.cells?.remove(this) //Remove from prior biome if in it
@@ -64,6 +67,7 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
         return list
     }
 
+
     /** All 8 surrounding tiles */
     fun getSurrounding() : List<BiomeCellData> {
         var list = ArrayList<BiomeCellData>()
@@ -78,6 +82,9 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
 
         return list
     }
+
+    fun getAdjacentWithCenter() = getAdjacent().plus(this)
+    fun getSurroundingWithCenter() = getSurrounding().plus(this)
 
     fun getAround(radius: Int, processed: MutableList<BiomeCellData> = mutableListOf(), toProcess: MutableList<BiomeCellData> = mutableListOf(this)) : List<BiomeCellData> {
         //var list = ArrayList<BiomeCellData>()

@@ -20,8 +20,6 @@ enum class AbyssDifficulty {
     Normal, Hard
 }
 
-data class LinkedFracture(val fracture1: SectorEntityToken, var fracture2: SectorEntityToken)
-
 object AbyssUtils {
 
     var ABYSS_COLOR = Color(255, 0, 50)
@@ -40,6 +38,8 @@ object AbyssUtils {
         }
         return data
     }
+
+    fun getBiomeManager() = getData().biomeManager
 
     fun isShowFog() : Boolean {
         //return true

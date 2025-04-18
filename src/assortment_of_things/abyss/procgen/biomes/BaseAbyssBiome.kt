@@ -44,8 +44,9 @@ abstract class BaseAbyssBiome {
     abstract fun getBiomeColor() : Color
     abstract fun getDarkBiomeColor() : Color
 
-    fun getShiftedColor() : Color = Color(255, 255, 255)
-    fun getBackgroundColor() = getDarkBiomeColor()
+    open fun getShiftedColor() : Color = Color(255, 255, 255)
+    open fun getSaturation() : Float = 1f
+    open fun getBackgroundColor() = getDarkBiomeColor()
 
     open fun getMaxDarknessMult() = 0.75f
     open fun getDarknessText() : String = "Darkness"

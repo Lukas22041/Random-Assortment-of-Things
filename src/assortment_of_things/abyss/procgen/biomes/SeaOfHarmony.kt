@@ -21,6 +21,10 @@ class SeaOfHarmony() : BaseAbyssBiome() {
         return Color(102, 25, 20)
     }
 
+    override fun getSaturation(): Float {
+        return 1.1f
+    }
+
     /** Called after all cells are generated */
     override fun init() {
        generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1", 0.6f)

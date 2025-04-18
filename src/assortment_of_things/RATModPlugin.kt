@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssCampaignListener
 import assortment_of_things.scripts.ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssGenerator
+import assortment_of_things.abyss.procgen.BiomeAtmosphereRenderer
 import assortment_of_things.abyss.scripts.*
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.artifacts.AddArtifactHullmod
@@ -128,6 +129,8 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
+
+        LunaCampaignRenderer.addTransientRenderer(BiomeAtmosphereRenderer())
 
         //TestFactor(1)
 
