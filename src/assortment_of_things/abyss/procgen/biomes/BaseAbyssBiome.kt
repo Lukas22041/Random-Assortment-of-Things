@@ -65,7 +65,7 @@ abstract class BaseAbyssBiome {
         var count = 3
         var fadeInOverwrite = false
         if (particleManager.particles.size <= 50) {
-            count *= 3
+            count *= 4
             fadeInOverwrite = true
         }
 

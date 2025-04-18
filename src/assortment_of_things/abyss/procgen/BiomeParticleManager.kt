@@ -68,7 +68,7 @@ class BiomeParticleManager(var manager: AbyssBiomeManager) : LunaCampaignRenderi
             //Make particles die faster in other biomes
             var lifeTimeMult = 1f
             var cell = manager.getCell(particle.location.x, particle.location.y)
-            if (cell.getBiome() != particle.biome) lifeTimeMult = 2f
+            if (cell.getBiome() != particle.biome) lifeTimeMult = 2.5f
 
             if (particle.state == AbyssalLightParticle.ParticleState.FadeIn) {
                 particle.fadeIn -= 1 * amount
