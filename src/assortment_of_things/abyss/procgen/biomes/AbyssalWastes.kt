@@ -29,6 +29,10 @@ class AbyssalWastes() : BaseAbyssBiome() {
         return 0.75f
     }
 
+    override fun getParticleColor(): Color {
+        return Color(145, 126, 125)
+    }
+
     /** Called after all cells are generated */
     override fun init() {
        //generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1", 0.6f)
