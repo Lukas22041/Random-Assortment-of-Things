@@ -101,7 +101,16 @@ class AbyssTerrainPlugin : BaseTerrain() {
         return true
     }
 
-    override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
-       tooltip.addTitle()
+    override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean) {
+        var player = Global.getSector().playerFleet
+
+        var manager = AbyssUtils.getBiomeManager()
+        var dominant = manager.getDominantBiome()
+
+        var name = dominant.getDisplayName()
+
+        tooltip.addTitle(name)
+        tooltip.addSpacer(10f)
+
     }
 }
