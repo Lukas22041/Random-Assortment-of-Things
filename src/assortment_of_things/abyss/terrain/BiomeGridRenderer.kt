@@ -15,7 +15,7 @@ import org.magiclib.kotlin.setBrightness
 import java.awt.Color
 import java.util.*
 
-class BiomeTestRenderer : BaseTerrain() {
+class BiomeGridRenderer : BaseTerrain() {
 
 
     /*override fun renderOnRadar(radarCenter: Vector2f?, factor: Float, alphaMult: Float) {
@@ -35,7 +35,7 @@ class BiomeTestRenderer : BaseTerrain() {
 
         var showFog = AbyssUtils.isShowFog()
         for (cell in cells) {
-            var alpha = 0.20f * (cell.getBiome()?.gridAlphaMult ?: 1f) //Set to 0.2 in the final version
+            var alpha = 0.20f * (cell.getBiome()?.getGridAlphaMult() ?: 1f) //Set to 0.2 in the final version
 
             if (cell.depth == BiomeDepth.BORDER) {
                 alpha *= 0.5f

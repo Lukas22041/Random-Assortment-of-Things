@@ -36,7 +36,7 @@ object AbyssGenerator {
         system.backgroundTextureFilename = "graphics/backgrounds/abyss/Abyss2.jpg"
         system.backgroundColorShifter.shift(this, AbyssUtils.DARK_ABYSS_COLOR, 0f, 99999f, 1f)
 
-        system.addTerrain("rat_abyss_biome_test_renderer", null)
+        system.addTerrain("rat_biome_grid_renderer", null)
         data.warper = AbyssBackgroundWarper(system, 8, 0.33f)
         data.warper!!.overwriteColor = AbyssUtils.DARK_ABYSS_COLOR //TODO, dynamicly change the overwrite color
 
@@ -73,6 +73,9 @@ object AbyssGenerator {
 
         //Should be added last so that it renders over everything else on the map
         system.addTerrain("rat_map_revealer", null)
+
+        //Add last to ensure running after all other terrains
+        system.addTerrain("rat_abyss_terrain", null)
 
     }
 

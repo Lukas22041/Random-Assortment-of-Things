@@ -29,7 +29,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
 
     /** Called after all cells are generated */
     override fun init() {
-        generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1", 0.6f)
+        generateFogTerrain("rat_sea_of_solitude", "rat_terrain", "depths1", 0.6f)
     }
 
     override fun spawnParticlesForCell(particleManager: BiomeParticleManager, cell: BiomeCellData) {
@@ -60,8 +60,8 @@ class SeaOfSolitude() : BaseAbyssBiome() {
 
             var fadeIn = MathUtils.getRandomNumberInRange(1f, 1.5f)
             if (fadeInOverwrite) fadeIn = 0.05f
-            var duration = MathUtils.getRandomNumberInRange(2f, 4f)
-            var fadeOut = MathUtils.getRandomNumberInRange(1f, 2.5f)
+            var duration = MathUtils.getRandomNumberInRange(2f, 3.5f)
+            var fadeOut = MathUtils.getRandomNumberInRange(1f, 2.25f)
 
             var size = MathUtils.getRandomNumberInRange(25f, 50f)
 

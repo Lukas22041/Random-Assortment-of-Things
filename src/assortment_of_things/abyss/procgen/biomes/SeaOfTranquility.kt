@@ -22,7 +22,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
     /** Called after all cells are generated */
     override fun init() {
-        generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1", 0.6f)
+        generateFogTerrain("rat_sea_of_tranquility", "rat_terrain", "depths1", 0.6f)
     }
 
 }

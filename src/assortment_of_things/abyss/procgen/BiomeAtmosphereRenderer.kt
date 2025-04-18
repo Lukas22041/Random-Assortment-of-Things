@@ -25,18 +25,10 @@ class BiomeAtmosphereRenderer : LunaCampaignRenderingPlugin {
     }
 
     override fun advance(amount: Float) {
-      /*  var manager = AbyssUtils.getBiomeManager()
-        var biome = manager.getBiomeOfClass(SeaOfTranquility::class.java) ?: return
 
-        println()
-        println("Biome Levels: ")
-        for (biome in manager.getBiomeLevels()) {
-            println("${biome.key.getDisplayName()}: ${biome.value}")
-        }
-        println()*/
+        var warper = AbyssUtils.getData().warper
+        //TODO Set warper color here
 
-        /*var level = manager.getBiomeLevel(biome)
-        println(level)*/
     }
 
     var layers = EnumSet.of(CampaignEngineLayers.ABOVE)
