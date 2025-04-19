@@ -75,7 +75,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
             var duration = MathUtils.getRandomNumberInRange(2f, 5f)
             var fadeOut = MathUtils.getRandomNumberInRange(1f, 3f)
 
-            var size = MathUtils.getRandomNumberInRange(20f, 30f)
+            var size = MathUtils.getRandomNumberInRange(25f, 45f)
 
             var alpha = MathUtils.getRandomNumberInRange(0.15f, 0.25f)
 
