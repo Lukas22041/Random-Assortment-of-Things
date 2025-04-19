@@ -41,11 +41,14 @@ abstract class BaseAbyssBiome {
     //Can be different types of terrain depending on the biome
     var terrain: BaseTerrain? = null
 
+
     abstract fun getBiomeID() : String
     abstract fun getDisplayName() : String
 
     abstract fun getBiomeColor() : Color
     abstract fun getDarkBiomeColor() : Color
+
+    open fun shouldGenerateBiome() : Boolean = true
 
     open fun getShiftedColor() : Color = Color(255, 255, 255)
     open fun getSaturation() : Float = 1f
@@ -56,6 +59,9 @@ abstract class BaseAbyssBiome {
     open fun getDarknessText() : String = "Darkness"
 
     open fun getGridAlphaMult() = 1f
+
+    /* Called before any cells have been generated, used mostly for minor biomes to take their cells */
+    open fun preGenerate() { }
 
     /** Called after all cells are generated */
     abstract fun init()
@@ -117,8 +123,8 @@ abstract class BaseAbyssBiome {
         loc = biomeWorldCenter
         //Needs to be converted to the units used for the terrains tiles since their different
         var tileSize = OldHyperspaceTerrainPlugin.TILE_SIZE
-        val w = (cellsWidth * AbyssBiomeManager.cellSize / tileSize).toInt()
-        val h = (cellsHeight * AbyssBiomeManager.cellSize / tileSize).toInt()
+        val w = (cellsWidth * AbyssBiomeManager.cellSize / tileSize).toInt() + 2 //slightly larger than supposed to, enables a bit of overlap
+        val h = (cellsHeight * AbyssBiomeManager.cellSize / tileSize).toInt() + 2 //slightly larger than supposed to, enables a bit of overlap
 
         val string = StringBuilder()
         for (y in h - 1 downTo 0) {

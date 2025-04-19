@@ -44,6 +44,58 @@ class AbyssBiomeManager {
 
     //var cells = ArrayList<ArrayList>
 
+  
+
+    fun init() {
+
+        //TODO Remove
+        biomes.clear()
+        for (cell in cellList) { cell.setBiome(null) }
+
+
+
+        biomes.add(SeaOfTranquility())
+        biomes.add(SeaOfHarmony())
+        biomes.add(SeaOfSolitude())
+        biomes.add(SeaOfSerenity())
+        biomes.add(AbyssalWastes())
+
+        //SoTF Biome
+        if (Global.getSettings().modManager.isModEnabled("secretsofthefrontier")) {
+            biomes.add(EtherealShores())
+        }
+
+
+        //var cells = cellArray.sumOf { it.size }
+
+
+        //cellList.forEach { it.color = AbyssUtils.ABYSS_COLOR.darker().darker() }
+
+
+        //Used mostly for minor biomes
+        for (biome in biomes) {
+            biome.preGenerate()
+        }
+
+        var starts = findStartingPoints()
+
+        //Slight blobs to guarantee biomes having atleast some deep parts
+        for (start in starts) {
+            for (cell in start.getEmptyAround(3)) { //Change to 4 if generation is to off
+                cell.setBiome(start.getBiome()!!)
+            }
+        }
+
+        generateBiomes()
+
+        determineBordersAndDepth()
+
+        findCorners()
+
+        initBiomes()
+    }
+
+
     fun getDominantBiome() : BaseAbyssBiome {
         return getBiomeLevels().maxBy { it.value }.key
     }
@@ -89,48 +141,10 @@ class AbyssBiomeManager {
         }
 
         return levels
-   }
-
-  
-
-    fun init() {
-
-        //TODO Remove
-        biomes.clear()
-        for (cell in cellList) { cell.setBiome(null) }
-
-        biomes.add(SeaOfTranquility())
-        biomes.add(SeaOfHarmony())
-        biomes.add(SeaOfSolitude())
-        biomes.add(SeaOfSerenity())
-        biomes.add(AbyssalWastes())
-
-        //var cells = cellArray.sumOf { it.size }
-
-
-        //cellList.forEach { it.color = AbyssUtils.ABYSS_COLOR.darker().darker() }
-
-
-
-        var starts = findStartingPoints()
-
-        //Slight blobs to guarantee biomes having atleast some deep parts
-        for (start in starts) {
-            for (cell in start.getEmptyAround(3)) { //Change to 4 if generation is to off
-                cell.setBiome(start.getBiome()!!)
-            }
-        }
-
-        generateBiomes(/*starts*/)
-
-        determineBordersAndDepth()
-
-        //generateTerrain()
-
-        findCorners()
-
-        initBiomes()
     }
+
+
+
 
     fun initBiomes() {
         for (biome in biomes) {
@@ -237,7 +251,7 @@ class AbyssBiomeManager {
 
         if (cellList.none { it.getBiome() == null }) return
 
-        for (biome in biomes) {
+        for (biome in biomes.filter { it.shouldGenerateBiome() }) {
             var available = biome.cells.flatMap { it.getEmptyAdjacent() }
 
             //Make far away cells from core less likely to be picked
@@ -276,13 +290,13 @@ class AbyssBiomeManager {
 
 
         //Pick random points,check if their distance meets the minimum, if not, lower the minimum and then check another patch of points.
-        for (biome in biomes) {
+        for (biome in biomes.filter { it.shouldGenerateBiome() }) {
             //var minDist = height /*/ 2f*/
             var minDist = width /*/ 2f*/
 
             var cell: BiomeCellData? = null
             if (startingPoints.isEmpty()) {
-                cell = cellList.random()
+                cell = cellList.filter { it.getBiome() == null }.random()
             } else {
                cell = findPointRecursive(minDist.toFloat(), startingPoints)
             }
@@ -305,7 +319,7 @@ class AbyssBiomeManager {
 
         var attempts = 10
 
-        cell = cellList.filter { !startingCells.contains(it) }.random()
+        cell = cellList.filter { it.getBiome() == null && !startingCells.contains(it) }.random()
 
         var failed = false
         for (start in startingCells) {

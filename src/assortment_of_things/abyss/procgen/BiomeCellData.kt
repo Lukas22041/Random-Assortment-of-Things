@@ -36,11 +36,12 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
         return biomePlugin
     }
     fun setBiome(plugin: BaseAbyssBiome?) {
+        if (!isFake) {
+            getBiome()?.cells?.remove(this) //Remove from prior biome if in it
 
-        getBiome()?.cells?.remove(this) //Remove from prior biome if in it
-
-        biomePlugin = plugin
-        biomePlugin?.cells?.add(this)
+            biomePlugin = plugin
+            biomePlugin?.cells?.add(this)
+        }
     }
 
     fun getLeft() = manager.getCell(gridX-1, gridY)
