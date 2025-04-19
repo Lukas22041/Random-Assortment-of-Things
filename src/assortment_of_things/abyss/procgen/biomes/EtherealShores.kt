@@ -22,7 +22,7 @@ class EtherealShores() : BaseAbyssBiome() {
     }
 
     override fun getDarkBiomeColor(): Color {
-        return Color(123, 93, 153)
+        return Color(82, 62, 102)
     }
 
     override fun getGridAlphaMult(): Float {
@@ -47,7 +47,9 @@ class EtherealShores() : BaseAbyssBiome() {
     override fun preGenerate() {
 
         var manager = AbyssUtils.getBiomeManager()
-        var cell = manager.getCells().filter { it.getBiome() == null }.random()
+        var picks = manager.getCells().filter { it.getBiome() == null }
+        //Do not let it spawn at the edges
+        var cell = picks.filter { it.gridX != 0 && it.gridX != AbyssBiomeManager.width && it.gridY != 0 && it.gridY != AbyssBiomeManager.height }.random()
 
         cell.setBiome(this)
         deepestCells.add(cell)
@@ -55,7 +57,6 @@ class EtherealShores() : BaseAbyssBiome() {
         for (surounding in cell.getSurrounding()) {
             if (surounding.getBiome() != null) continue
             if (surounding.isFake) continue
-
             surounding.setBiome(this)
         }
 
@@ -68,6 +69,9 @@ class EtherealShores() : BaseAbyssBiome() {
 
     }
 
+    override fun getBackgroundColor(): Color {
+        return super.getBackgroundColor().darker()
+    }
 
     /** Called after all cells are generated */
     override fun init() {

@@ -10,6 +10,7 @@ import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugi
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
@@ -56,7 +57,6 @@ abstract class BaseAbyssBiome {
     open fun getParticleColor() = getBiomeColor()
 
     open fun getMaxDarknessMult() = 0.75f
-    open fun getDarknessText() : String = "Darkness"
 
     open fun getGridAlphaMult() = 1f
 
@@ -65,6 +65,10 @@ abstract class BaseAbyssBiome {
 
     /** Called after all cells are generated */
     abstract fun init()
+
+    fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
+
+    }
 
     open fun spawnParticlesForCell(particleManager: BiomeParticleManager, cell: BiomeCellData) {
 

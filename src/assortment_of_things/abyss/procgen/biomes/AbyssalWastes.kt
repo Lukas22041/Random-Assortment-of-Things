@@ -36,6 +36,10 @@ class AbyssalWastes() : BaseAbyssBiome() {
         return 0.75f
     }
 
+    override fun getMaxDarknessMult(): Float {
+        return 0.5f
+    }
+
     override fun getParticleColor(): Color {
         return Color(168, 146, 145)
     }

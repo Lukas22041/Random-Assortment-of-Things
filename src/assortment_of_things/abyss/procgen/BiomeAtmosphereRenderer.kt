@@ -13,6 +13,8 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL13
 import org.lwjgl.opengl.GL20
 import org.magiclib.kotlin.elapsedDaysSinceGameStart
+import org.magiclib.kotlin.setAlpha
+import java.awt.Color
 import java.util.*
 
 //Transient
@@ -26,7 +28,12 @@ class BiomeAtmosphereRenderer : LunaCampaignRenderingPlugin {
 
     override fun advance(amount: Float) {
 
+        var manager = AbyssUtils.getBiomeManager()
+
+
+
         var warper = AbyssUtils.getData().warper
+        warper?.overwriteColor = manager.getCurrentBackgroundColor()
         //TODO Set warper color here
 
     }

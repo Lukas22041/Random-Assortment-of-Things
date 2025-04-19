@@ -19,6 +19,10 @@ class SeaOfSerenity() : BaseAbyssBiome() {
         return Color(77, 37, 0)
     }
 
+    override fun getMaxDarknessMult(): Float {
+        return 0.6f
+    }
+
     /** Called after all cells are generated */
     override fun init() {
         generateFogTerrain("rat_sea_of_serenity", "rat_terrain", "depths1", 0.6f)

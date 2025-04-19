@@ -135,7 +135,7 @@ class BiomeParticleManager(var manager: AbyssBiomeManager) : LunaCampaignRenderi
     }
 
 
-    var layers = EnumSet.of(CampaignEngineLayers.ABOVE)
+    var layers = EnumSet.of(CampaignEngineLayers.TERRAIN_10) //One below darkness
     override fun getActiveLayers(): EnumSet<CampaignEngineLayers> {
         return layers
     }

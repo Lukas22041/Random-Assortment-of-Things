@@ -61,6 +61,11 @@
 		},
 	},
 
+	#Darkness
+	
+	"rat_depths_darkness":{
+		"plugin":"assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin",
+	},
 
 	#Sensor Fog
 	"rat_map_revealer":{

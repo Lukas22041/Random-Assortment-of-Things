@@ -5,6 +5,8 @@ import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
+import java.awt.Color
 
 class AbyssBiomeManager {
 
@@ -95,6 +97,44 @@ class AbyssBiomeManager {
         initBiomes()
     }
 
+    fun getCurrentBiomeColor() : Color{
+        var levels = getBiomeLevels()
+
+        var color = Color(0, 0,0, 0)
+        color = color.setAlpha(255)
+        for (level in levels) {
+            var bColor = level.key.getBiomeColor()
+            color = Color((color.red + (bColor.red * level.value).toInt()), (color.green + (bColor.green * level.value).toInt()), (color.blue + (bColor.blue * level.value).toInt()))
+        }
+
+        return color
+    }
+
+    fun getCurrentDarkBiomeColor() : Color{
+        var levels = getBiomeLevels()
+
+        var color = Color(0, 0,0, 0)
+        color = color.setAlpha(255)
+        for (level in levels) {
+            var bColor = level.key.getDarkBiomeColor()
+            color = Color((color.red + (bColor.red * level.value).toInt()), (color.green + (bColor.green * level.value).toInt()), (color.blue + (bColor.blue * level.value).toInt()))
+        }
+
+        return color
+    }
+
+    fun getCurrentBackgroundColor() : Color{
+        var levels = getBiomeLevels()
+
+        var color = Color(0, 0,0, 0)
+        color = color.setAlpha(255)
+        for (level in levels) {
+            var bColor = level.key.getBackgroundColor()
+            color = Color((color.red + (bColor.red * level.value).toInt()), (color.green + (bColor.green * level.value).toInt()), (color.blue + (bColor.blue * level.value).toInt()))
+        }
+
+        return color
+    }
 
     fun getDominantBiome() : BaseAbyssBiome {
         return getBiomeLevels().maxBy { it.value }.key

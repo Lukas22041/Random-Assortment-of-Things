@@ -109,8 +109,15 @@ class AbyssTerrainPlugin : BaseTerrain() {
 
         var name = dominant.getDisplayName()
 
+        val inCloud = isAnyInCloud(player)
+        var cell = getAnyTilePreferStorm(player.location, player.radius)
+        var isStorming = cell?.isStorming == true
+
         tooltip.addTitle(name)
         tooltip.addSpacer(10f)
 
+        dominant.addBiomeTooltip(tooltip)
+
+        //Fog & Storm stuff here
     }
 }

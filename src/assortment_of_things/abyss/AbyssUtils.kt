@@ -41,6 +41,8 @@ object AbyssUtils {
 
     fun getBiomeManager() = getData().biomeManager
 
+    fun getSystem() = getData().system
+
     fun isShowFog() : Boolean {
         //return true
         return !Global.getSettings().isDevMode
