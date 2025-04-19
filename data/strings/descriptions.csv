@@ -71,6 +71,17 @@ rat_gabriel,SHIP,"A terrifying presence, being virtually invisible on radar scop
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,,
 ,,,,,,,
+rat_saint,SHIP,"IDENTIFICATION ERROR: Target matches no known class of ship in the Domain registry or historical reference. Submit data for temporary entry? Processing. ERROR // DOMAIN INFOSEC VIOLATION THRESHOLD WARNING
+// retry?
+ Processing. ERROR // From the depths
+// retry?
+ Processing. ERROR // Reborn once more
+// process failed.
+
+IMMEDIATELY contact DOMAIN INFOSEC to review compliance with Domain Information Security Standards.",Unidentified Vessel,"UNKNOWN ENTRY
+
+Please register your Tri-Tachyon datapad to receive the latest news and updates.",,,
+,,,,,,,
 rat_genesis_serpent_head,SHIP,"A hull similar to those encountered before, however while some glimpses of their properties remain, it is mutilated beyond recognition. The ship is constructed out of a chain of individual and incredibly flexible parts. No known material matches the tensile strength represented within the components of this ship.",Genesis-Class,"UNKNOWN ENTRY
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,,

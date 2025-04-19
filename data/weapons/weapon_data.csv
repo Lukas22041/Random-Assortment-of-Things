@@ -86,7 +86,8 @@ Raphael Cover Middle,rat_raphael_cover_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYST
 Raguel Cover Left,rat_raguel_cover_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,hide_in_codex,,,,,,,,,,,,,,43
 Raguel Cover Right,rat_raguel_cover_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,hide_in_codex,,,,,,,,,,,,,,43
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Saint Cover Left,rat_saint_cover_left,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,hide_in_codex,,,,,,,,,,,,,,43
+Saint Cover Right,rat_saint_cover_right,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,SYSTEM,hide_in_codex,,,,,,,,,,,,,,43
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
