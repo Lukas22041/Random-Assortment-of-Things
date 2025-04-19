@@ -21,7 +21,7 @@ Gabriel,rat_gabriel,Phase Droneship,Seraph,rat_temporal_stasis,30,9000,1250,1100
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 # Threat Seraphs,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #,#standoff_unit,Line Unit,Threat,extraction_protocol,18,18000,1700,12000,11667,700,1000,,70,70,60,15,30,500,FRONT,,150,0.4,1.2,,,0,0,120,150,0.75,200,9,150000,100,10,,,20,20,,,,,,,UNBOARDABLE,"threat, threat_combat, codex_unlockable, limited_tooltip_if_locked",,,,0.5,2,3,,418
-,rat_saint,Saint Unit,Threat,,30,13000,1400,11000,18000,900,160,,75,60,60,25,25,600,FRONT,,270,0.4,1,,,0,0,120,150,3,50,9,180000,4,20,420,0.25,35,35,,,,,,,UNBOARDABLE,"auto_rec, rat_seraph, codex_unlockable, limited_tooltip_if_locked,  no_dealer",,,,0.5,2,3,rat_traveldrive_seraphim_drive,3113
+,rat_saint,Saint Unit,Threat,,30,13000,1400,9000,18000,600,160,,75,60,60,25,25,600,FRONT,,270,0.4,1,,,0,0,120,150,3,50,9,180000,4,20,420,0.25,35,35,,,,,,,UNBOARDABLE,"auto_rec, rat_seraph, codex_unlockable, limited_tooltip_if_locked,  no_dealer",,,,0.5,2,3,rat_traveldrive_seraphim_drive,3113
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Primordials,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

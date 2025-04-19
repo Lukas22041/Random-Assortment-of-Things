@@ -32,8 +32,8 @@ class SymbiosisHullmod : BaseHullMod() {
         tooltip.addPara("A swarm of Threat fragments roils around the ship, providing a regenerating supply of fragments for fragment-based weapons. \n\n" +
                 "The base number of fragments is 50/100/200. Every 100 units of hull and armor damage dealt towards opponents or received by the ship itself generate 4 additional replacement fragments. \n\n" +
                 "The ship is capable of using its subsystem to turn nearby wrecks, friend or foe, in to 40/80/120/160 additional fragments, based on the hullsize of the targeted ship. Fragments generated this way can temporarily go past the maximum capacity of the ship.\n\n" +
-                "The ships sensor profile is reduced by 50%% and damage towards its weapons, engines and any kind of emp damage is reduced by 25%%. ",
-            0f, Misc.getTextColor(), Misc.getHighlightColor(), "50", "100", "200",      "100", "hull and armor", "4",      "40", "80", "120", "160",      "50%", "25%")
+                "The ships sensor profile is reduced by 50%% and damage towards its weapons, engines and any kind of emp damage is reduced by 25%%. Energy weapons have their ranged increased by 100 units.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "50", "100", "200",      "100", "hull and armor", "4",      "40", "80", "120", "160",      "50%", "25%", "100")
 
     }
 
@@ -53,6 +53,8 @@ class SymbiosisHullmod : BaseHullMod() {
         stats.empDamageTakenMult.modifyMult(id, 0.75f)
         stats.engineDamageTakenMult.modifyMult(id, 0.75f)
         stats.weaponDamageTakenMult.modifyMult(id, 0.75f)
+
+        stats.energyWeaponRangeBonus.modifyFlat(id, 100f)
 
     }
 
@@ -108,8 +110,6 @@ class SymbiosisListener(var ship: ShipAPI) : AdvanceableListener {
                 swarm.despawnMembers(1)
             }
         }
-
-
 
 
         if (playerShip) {
