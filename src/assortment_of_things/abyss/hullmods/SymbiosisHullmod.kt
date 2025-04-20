@@ -416,6 +416,8 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
                     if (isActive) {
                         vel = vel.plus(wreck.velocity)
                         offset = offset.plus(MathUtils.getRandomPointInCircle(Vector2f(), wreck.collisionRadius * 0.4f))
+                    } else {
+                        vel = vel.plus((Vector2f(wreck.velocity.x * 0.2f, wreck.velocity.y * 0.2f)))
                     }
 
                     Global.getCombatEngine().addNebulaParticle(offset, vel, MathUtils.getRandomNumberInRange(45f + (80 * effectLevel), 80f + (120 * effectLevel)),
