@@ -101,6 +101,10 @@ class AbyssTerrainPlugin : BaseTerrain() {
         return true
     }
 
+    override fun isTooltipExpandable(): Boolean {
+        return false
+    }
+
     override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean) {
         var player = Global.getSector().playerFleet
 

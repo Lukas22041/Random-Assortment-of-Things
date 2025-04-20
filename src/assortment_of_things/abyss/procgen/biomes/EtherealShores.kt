@@ -60,12 +60,12 @@ class EtherealShores() : BaseAbyssBiome() {
             surounding.setBiome(this)
         }
 
-        for (i in 0 until 3) {
+        /*for (i in 0 until 2) {
             var surrounding = cell.getSurrounding().random()
 
-            var toConvert = surrounding.getSurrounding().filter { it.getBiome() != null && !it.isFake }.randomOrNull()
+            var toConvert = surrounding.getAdjacent().filter { it != cell && it.getBiome() == null && !it.isFake }.randomOrNull()
             toConvert?.setBiome(this)
-        }
+        }*/
 
     }
 

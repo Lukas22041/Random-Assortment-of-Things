@@ -15,6 +15,11 @@
 			{"file":"ImpendingPresence.ogg","source":"sounds/rat/music","volume":0.8},
 		],
 		
+		"rat_music_abyss_merged":[
+			{"file":"EchoesOfTheDepths.ogg","source":"sounds/rat/music","volume":0.8},
+			{"file":"ImpendingPresence.ogg","source":"sounds/rat/music","volume":0.8},
+		],
+		
 		"rat_abyss_encounter":[
 			{
 				"file":"EyesOfTheAbyss.ogg",

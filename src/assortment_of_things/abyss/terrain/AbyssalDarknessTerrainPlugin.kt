@@ -273,8 +273,12 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         return true
     }
 
+    override fun isTooltipExpandable(): Boolean {
+        return false
+    }
+
     override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
-        super.createTooltip(tooltip, expanded)
+        //super.createTooltip(tooltip, expanded)
 
         var system = entity.starSystem
 

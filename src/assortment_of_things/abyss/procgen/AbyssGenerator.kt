@@ -6,6 +6,7 @@ import assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
+import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 
 object AbyssGenerator {
@@ -25,6 +26,8 @@ object AbyssGenerator {
         system.addTag(Tags.THEME_UNSAFE)
         system.addTag(Tags.THEME_SPECIAL)
         system.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
+
+        system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
 
         //Teleport
         var playerFleet = Global.getSector().playerFleet

@@ -5,6 +5,7 @@ import assortment_of_things.abyss.procgen.biomes.SeaOfTranquility
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
+import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import lunalib.lunaUtil.campaign.LunaCampaignRenderer
 import lunalib.lunaUtil.campaign.LunaCampaignRenderingPlugin
 import org.dark.shaders.util.ShaderLib

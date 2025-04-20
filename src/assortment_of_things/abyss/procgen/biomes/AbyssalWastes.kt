@@ -44,6 +44,10 @@ class AbyssalWastes() : BaseAbyssBiome() {
         return Color(168, 146, 145)
     }
 
+    override fun getMusicKeyId(): String {
+        return "music_campaign_abyssal"
+    }
+
     /** Called after all cells are generated */
     override fun init() {
        //generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1", 0.6f)
