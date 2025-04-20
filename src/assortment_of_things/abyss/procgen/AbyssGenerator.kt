@@ -26,6 +26,7 @@ object AbyssGenerator {
         system.addTag(Tags.THEME_UNSAFE)
         system.addTag(Tags.THEME_SPECIAL)
         system.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
+        system.addTag(Tags.DO_NOT_SHOW_STRANDED_DIALOG)
 
         system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
 
