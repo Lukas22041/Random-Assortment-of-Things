@@ -1,9 +1,13 @@
 package assortment_of_things.abyss.terrain
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
+import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
+import java.awt.Color
 
 open class BaseFogTerrain : OldHyperspaceTerrainPlugin(), BiomeTerrain {
 
@@ -14,6 +18,11 @@ open class BaseFogTerrain : OldHyperspaceTerrainPlugin(), BiomeTerrain {
 
     override fun hasTooltip(): Boolean {
         return false
+    }
+
+    override fun getRenderColor(): Color {
+        if (RATSettings.brighterAbyss!!) getBiome()?.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+        return getBiome()?.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
     }
 
    /* override fun containsEntity(other: SectorEntityToken?): Boolean {

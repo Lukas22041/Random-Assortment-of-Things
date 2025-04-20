@@ -31,9 +31,9 @@ class SeaOfTranquilityTerrain() : BaseFogTerrain() {
     }
 
 
-    override fun getRenderColor(): Color {
+    /*override fun getRenderColor(): Color {
         return getBiome()?.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
-    }
+    }*/
 
     override fun renderOnMap(factor: Float, alphaMult: Float) {
         super.renderOnMap(factor, alphaMult)
