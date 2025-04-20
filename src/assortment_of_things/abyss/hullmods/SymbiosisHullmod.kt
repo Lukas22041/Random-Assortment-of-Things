@@ -4,8 +4,11 @@ import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.listeners.AdvanceableListener
-import com.fs.starfarer.api.combat.listeners.DamageDealtModifier
+import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
+import com.fs.starfarer.api.combat.listeners.DamageListener
+import com.fs.starfarer.api.combat.listeners.DamageTakenModifier
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
+import com.fs.starfarer.api.impl.combat.RiftLanceEffect
 import com.fs.starfarer.api.impl.combat.threat.FragmentSwarmHullmod
 import com.fs.starfarer.api.impl.combat.threat.FragmentWeapon
 import com.fs.starfarer.api.impl.combat.threat.RoilingSwarmEffect
@@ -17,6 +20,7 @@ import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.util.MagicIncompatibleHullmods
+import java.awt.Color
 import kotlin.math.max
 
 class SymbiosisHullmod : BaseHullMod() {
@@ -62,6 +66,10 @@ class SymbiosisHullmod : BaseHullMod() {
         if (!ship.hasListenerOfClass(SymbiosisListener::class.java)) {
             ship.addListener(SymbiosisListener(ship))
         }
+
+        if (!Global.getCombatEngine().listenerManager.hasListenerOfClass(SymbiosisDamageDealtListener::class.java)) {
+            Global.getCombatEngine().listenerManager.addListener(SymbiosisDamageDealtListener())
+        }
     }
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
@@ -73,15 +81,15 @@ class SymbiosisListener(var ship: ShipAPI) : AdvanceableListener {
 
     var despawnInterval = IntervalUtil(0.1f, 0.1f)
 
-    var damageDealtListener = SymbiosisDamageDealtListener(this)
-    var swarmCheckInterval = IntervalUtil(0.2f, 0.25f)
+    //var damageDealtListener = SymbiosisDamageDealtListener(this)
+    //var swarmCheckInterval = IntervalUtil(0.2f, 0.25f)
 
     var fragmentsPerSpawn = 1
     var damagePerSpawn = 100f
     var damageDealtOrTaken = 0f
 
     init {
-        ship.addListener(damageDealtListener)
+        //ship.addListener(damageDealtListener)
     }
 
 
@@ -90,19 +98,19 @@ class SymbiosisListener(var ship: ShipAPI) : AdvanceableListener {
 
 
         //Add damage dealt listener to swarms launched by the ship
-        swarmCheckInterval.advance(amount)
-        if (swarmCheckInterval.intervalElapsed()) {
-            for (fighter in Global.getCombatEngine().ships) {
-                if (!fighter.isFighter) continue
-                if (RoilingSwarmEffect.getSwarmFor(fighter) == null) continue
+        /* swarmCheckInterval.advance(amount)
+         if (swarmCheckInterval.intervalElapsed()) {
+             for (fighter in Global.getCombatEngine().ships) {
+                 if (!fighter.isFighter) continue
+                 if (RoilingSwarmEffect.getSwarmFor(fighter) == null) continue
 
-                if (fighter.wing?.sourceShip == ship) {
-                    if (!fighter.hasListenerOfClass(SymbiosisDamageDealtListener::class.java)) {
-                        fighter.addListener(damageDealtListener)
-                    }
-                }
-            }
-        }
+                 if (fighter.wing?.sourceShip == ship) {
+                     if (!fighter.hasListenerOfClass(SymbiosisDamageDealtListener::class.java)) {
+                         fighter.addListener(damageDealtListener)
+                     }
+                 }
+             }
+         }*/
 
 
 
@@ -177,11 +185,18 @@ class SymbiosisListener(var ship: ShipAPI) : AdvanceableListener {
             for (j in 0 until fragmentsPerSpawn) {
                 if (swarm.numActiveMembers >= swarm.params.baseMembersToMaintain) continue
                 val p: SwarmMember = swarm.addMember()
+                var offset = point.plus(MathUtils.getRandomPointInCircle(Vector2f(), 10f))
 
-                var offset = point.plus(MathUtils.getRandomPointInCircle(Vector2f(), 30f))
+                //VFX
+
+                for (i in 0 until 3) {
+                    Global.getCombatEngine().addNegativeNebulaParticle(offset, Vector2f(), MathUtils.getRandomNumberInRange(45f, 80f),
+                        1f, 0.5f, 0f, MathUtils.getRandomNumberInRange(0.5f + delay, 1.5f + delay)
+                        , RiftLanceEffect.getColorForDarkening(Color(130,155,145,150)));
+                }
 
                 p.loc.set(point)
-                p.fader.durationIn = MathUtils.getRandomNumberInRange(0.5f, 0.6f) + delay
+                p.fader.durationIn = MathUtils.getRandomNumberInRange(0.30f, 0.40f) + delay
                 delay += 0.05f //Dont make all of them fade in immediately
             }
         }
@@ -191,9 +206,63 @@ class SymbiosisListener(var ship: ShipAPI) : AdvanceableListener {
 
 }
 
-class SymbiosisDamageDealtListener(var listener: SymbiosisListener) : DamageDealtModifier {
+//Added once to the engine
+class SymbiosisDamageDealtListener() : DamageListener, DamageTakenModifier /*DamageDealtModifier*/ {
 
-    override fun modifyDamageDealt(param: Any?, target: CombatEntityAPI?, damage: DamageAPI?, point: Vector2f?, shieldHit: Boolean): String? {
+    var lastTarget: ShipAPI? = null
+    var lastPoint = Vector2f()
+
+    //TODO check if the fighter is part of a wing of a ship with symbiosis
+    override fun reportDamageApplied(source: Any?, target: CombatEntityAPI?, result: ApplyDamageResultAPI?) {
+
+        if (target !is ShipAPI) return
+        if (!target.isAlive) return
+        if (target.isFighter) return
+
+        var hull = result!!.damageToHull
+        var armor = result!!.totalDamageToArmor
+
+        if (hull <= 0f && armor <= 0f) return
+
+        var ship: ShipAPI? = null
+        if (source is WeaponAPI) ship = source.ship
+        if (source is ShipAPI) ship = source
+        if (ship == null) return
+
+        if (target.owner == ship.owner) return
+
+        var listener: SymbiosisListener? = null
+        //Check if the fighter has a host ship with the listener
+        if (ship.isFighter) {
+            var host = ship.wing?.sourceShip
+            listener = host?.getListeners(SymbiosisListener::class.java)?.firstOrNull()
+        } else {
+            listener = ship.getListeners(SymbiosisListener::class.java)?.firstOrNull()
+        }
+
+        if (listener == null) return
+
+        //Find Point from other listener
+        var point = target.location
+        if (target == lastTarget) {
+            point = lastPoint
+        }
+
+        listener.damageDealtOrTaken += hull + armor
+        listener.turnDamageToFragments(point, true)
+    }
+
+    //Required to get the points of damage because ApplyDamageResult does not give it
+    override fun modifyDamageTaken(param: Any?, target: CombatEntityAPI?, damage: DamageAPI?,  point: Vector2f, shieldHit: Boolean): String? {
+        if (target !is ShipAPI) return null
+
+        lastTarget = target
+        lastPoint = point
+
+        return null
+    }
+
+    /*override fun modifyDamageDealt(param: Any?, target: CombatEntityAPI?, damage: DamageAPI?, point: Vector2f?, shieldHit: Boolean): String? {
 
         if (target !is ShipAPI) return null
         if (!target.isAlive || target.owner == listener.ship.owner) return null
@@ -201,12 +270,12 @@ class SymbiosisDamageDealtListener(var listener: SymbiosisListener) : DamageDeal
 
         var currentDamage = 0f
 
-       /* if (param is BeamAPI) {
+       *//* if (param is BeamAPI) {
             currentDamage += damage!!.damage * damage.dpsDuration
         }
         else {
             currentDamage += damage!!.damage
-        }*/
+        }*//*
 
         currentDamage += damage!!.computeDamageDealt(damage.dpsDuration)
 
@@ -215,6 +284,7 @@ class SymbiosisDamageDealtListener(var listener: SymbiosisListener) : DamageDeal
         listener.turnDamageToFragments(point!!, true)
 
         return null
-    }
+    }*/
+
 
 }
