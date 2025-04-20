@@ -60,7 +60,8 @@ abstract class BaseAbyssBiome {
 
     open fun getGridAlphaMult() = 1f
 
-    open fun getMusicKeyId() = "rat_music_abyss_merged"
+    //If null, will not change the music while within the biome and continue the prior ones.
+    open fun getMusicKeyId() : String? = "rat_music_abyss_merged"
 
     /* Called before any cells have been generated, used mostly for minor biomes to take their cells */
     open fun preGenerate() { }

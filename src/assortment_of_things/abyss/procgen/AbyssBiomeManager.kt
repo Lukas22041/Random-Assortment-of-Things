@@ -11,8 +11,10 @@ import java.awt.Color
 class AbyssBiomeManager {
 
     companion object {
-        var width = 52000 * 2 //*3 //TODO Look for something that is a bit larger than vanilla * 2, dividable by 2000
-        var height = 52000 * 1 //*2 //TODO Look for something that is a bit larger than vanilla, dividable by 2000
+        //var width = 52000 * 2 //*3 //TODO Look for something that is a bit larger than vanilla * 2, dividable by 2000 //Vanilla scaled
+        //var height = 52000 * 1 //*2 //TODO Look for something that is a bit larger than vanilla, dividable by 2000 //Vanilla scaled
+        var width = 56000 * 2 //4 more cells
+        var height = 56000 * 1 //2 more cells
         var cellSize = 2000 //Might want to try 4000 instead later, or 3000 with a different width/height. Would help in places where a cell is only 1 tile big between other biomes
 
         var rows = width / cellSize

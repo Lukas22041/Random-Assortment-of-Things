@@ -36,17 +36,23 @@ class BiomeMusicHandler : EveryFrameScript {
 
             var dominant = mananger.getDominantBiome()
 
-            //Just to ensure the right music is played when entering the system or loading a save
+            //Just to ensure the right music is played when entering the system
             if (skipInterval) {
                 skipInterval = false
-                AbyssUtils.getData().system!!.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, dominant.getMusicKeyId())
+                var key = dominant.getMusicKeyId()
+                if (key != null)  {
+                    AbyssUtils.getData().system!!.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, key)
+                }
                 return
             }
 
             //To make it so that flying a tiny bit backwards does not immediately change the music set again
             var level = mananger.getBiomeLevels().get(dominant)!!
             if (level >= 0.60f) {
-                AbyssUtils.getData().system!!.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, dominant.getMusicKeyId())
+                var key = dominant.getMusicKeyId()
+                if (key != null) {
+                    AbyssUtils.getData().system!!.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, key)
+                }
             }
 
         }

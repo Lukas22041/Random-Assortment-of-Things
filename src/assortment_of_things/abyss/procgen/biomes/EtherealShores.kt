@@ -37,7 +37,9 @@ class EtherealShores() : BaseAbyssBiome() {
         return Color(205,155,255)
     }
 
-
+    override fun getMusicKeyId(): String? {
+        return null
+    }
 
     //Do not let the normal generation handle this
     override fun shouldGenerateBiome(): Boolean {
