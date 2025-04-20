@@ -39,7 +39,7 @@ class SymbiosisHullmod : BaseHullMod() {
         tooltip.addSpacer(10f)
         tooltip.addPara("A swarm of Threat fragments roils around the ship, providing a regenerating supply of fragments for fragment-based weapons. \n\n" +
                 "The base number of fragments is 50/100/200. Every 100 units of hull and armor damage dealt towards opponents or received by the ship itself generates 1 additional replacement fragment. \n\n" +
-                "The ship is capable of using its subsystem to turn wrecks in a 1500 unit radius, friend or foe, in to 40/60/120/160 additional fragments, based on the hullsize of the targeted ship*. Fragments generated this way can temporarily go past the maximum capacity of the ship.",
+                "The ship is capable of using its subsystem to turn wrecks in a 1500 unit radius, friend or foe, in to 40/60/100/150 additional fragments, based on the hullsize of the targeted ship*. Fragments generated this way can temporarily go past the maximum capacity of the ship.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(), "50", "100", "200",      "100", "hull and armor", "1",     "1500", "40", "60", "100", "150",      )
 
         tooltip.addSpacer(10f)
@@ -309,7 +309,7 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
     }
 
     override fun getBaseCooldownDuration(): Float {
-        return 1f
+        return 3f
     }
 
     override fun getBaseOutDuration(): Float {
@@ -332,7 +332,9 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
         if (aiUpdateInterval.intervalElapsed()) {
             var swarm = RoilingSwarmEffect.getSwarmFor(ship)
             if (swarm.numActiveMembers <= swarm.params.baseMembersToMaintain * 0.8f) {
-                return true
+                if (findValidWrecks().isNotEmpty()) {
+                    return true
+                }
             }
         }
 
@@ -488,7 +490,7 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
     }
 
     override fun onActivate() {
-
+        Global.getSoundPlayer().playSound("system_construction_swarm", 0.7f, 0.8f, ship.location, Vector2f())
     }
 
     override fun getDisplayText(): String {
