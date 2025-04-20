@@ -45,7 +45,7 @@ class BiomeMusicHandler : EveryFrameScript {
 
             //To make it so that flying a tiny bit backwards does not immediately change the music set again
             var level = mananger.getBiomeLevels().get(dominant)!!
-            if (level >= 0.70f) {
+            if (level >= 0.60f) {
                 AbyssUtils.getData().system!!.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, dominant.getMusicKeyId())
             }
 
