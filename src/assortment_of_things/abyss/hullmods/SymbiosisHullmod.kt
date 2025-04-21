@@ -8,6 +8,7 @@ import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.combat.listeners.DamageListener
 import com.fs.starfarer.api.combat.listeners.DamageTakenModifier
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
+import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.combat.RiftLanceEffect
 import com.fs.starfarer.api.impl.combat.threat.FragmentSwarmHullmod
 import com.fs.starfarer.api.impl.combat.threat.FragmentWeapon
@@ -37,10 +38,23 @@ class SymbiosisHullmod : BaseHullMod() {
     override fun addPostDescriptionSection(tooltip: TooltipMakerAPI, hullSize: ShipAPI.HullSize?, ship: ShipAPI?, width: Float, isForModSpec: Boolean) {
 
         tooltip.addSpacer(10f)
-        tooltip.addPara("A swarm of Threat fragments roils around the ship, providing a regenerating supply of fragments for fragment-based weapons. \n\n" +
-                "The base number of fragments is 50/100/200. Every 100 units of hull and armor damage dealt towards opponents or received by the ship itself generates 1 additional replacement fragment. \n\n" +
-                "The ship is capable of using its subsystem to turn wrecks in a 1500 unit radius, friend or foe, in to 40/60/100/150 additional fragments, based on the hullsize of the targeted ship*. Fragments generated this way can temporarily go past the maximum capacity of the ship.",
-            0f, Misc.getTextColor(), Misc.getHighlightColor(), "50", "100", "200",      "100", "hull and armor", "1",     "1500", "40", "60", "100", "150",      )
+        tooltip.addPara(
+            "A swarm of Threat fragments roils around the ship, providing a regenerating supply of fragments for fragment-based weapons. \n\n" + "The base number of fragments is 50/100/200. Every 75 units of hull and armor damage dealt towards opponents or received by the ship itself generates 1 additional replacement fragment. \n\n" + "The ship is capable of using its subsystem to turn wrecks in a 1500 unit radius, friend or foe, in to 40/60/100/150 additional fragments, based on the hullsize of the targeted ship*. Fragments generated this way can temporarily go past the maximum capacity of the ship.",
+            0f,
+            Misc.getTextColor(),
+            Misc.getHighlightColor(),
+            "50",
+            "100",
+            "200",
+            "75",
+            "hull and armor",
+            "1",
+            "1500",
+            "40",
+            "60",
+            "100",
+            "150",
+        )
 
         tooltip.addSpacer(10f)
         tooltip.addPara("The ships sensor profile is reduced by 50%% and damage towards its weapons, " +
@@ -55,6 +69,9 @@ class SymbiosisHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI, id: String?) {
+
+
+        //stats.dynamic.getMod(Stats.SWARM_LAUNCHER_WING_SIZE_MOD).modifyFlat(id, -1f)
 
         if(stats.getVariant().getHullMods().contains(HullMods.FRAGMENT_SWARM)){
             //if someone tries to install heavy armor, remove it
@@ -96,13 +113,13 @@ class SymbiosisHullmod : BaseHullMod() {
 
 class SymbiosisListener(var ship: ShipAPI) : AdvanceableListener {
 
-    var despawnInterval = IntervalUtil(0.05f, 0.05f)
+    var despawnInterval = IntervalUtil(0.1f, 0.1f)
 
     //var damageDealtListener = SymbiosisDamageDealtListener(this)
     //var swarmCheckInterval = IntervalUtil(0.2f, 0.25f)
 
     var fragmentsPerSpawn = 1
-    var damagePerSpawn = 100f
+    var damagePerSpawn = 75f
     var damageDealtOrTaken = 0f
 
     init {
@@ -158,7 +175,7 @@ class SymbiosisListener(var ship: ShipAPI) : AdvanceableListener {
 
         //swarm.addMembers(10)
 
-        //Despawn members, 20 per second, if over the limit
+        //Despawn members, 10 per second, if over the limit
         despawnInterval.advance(amount)
         if (despawnInterval.intervalElapsed()) {
             if (swarm.numActiveMembers > sizeToMainain) {
