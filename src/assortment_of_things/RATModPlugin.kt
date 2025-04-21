@@ -60,6 +60,18 @@ class RATModPlugin : BaseModPlugin() {
 
     }
 
+    override fun onAboutToStartGeneratingCodex() {
+        CodexHandler.onAboutToStartGeneratingCodex()
+    }
+
+    override fun onAboutToLinkCodexEntries() {
+        CodexHandler.onAboutToLinkCodexEntries()
+    }
+
+    override fun onCodexDataGenerated() {
+        CodexHandler.onCodexDataGenerated()
+    }
+
     override fun onApplicationLoad() {
         super.onApplicationLoad()
 
