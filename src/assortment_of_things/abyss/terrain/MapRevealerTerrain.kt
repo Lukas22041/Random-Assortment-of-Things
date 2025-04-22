@@ -19,8 +19,6 @@ class MapRevealerTerrain : BaseTerrain() {
 
     }
 
-
-
     override fun renderOnMap(factor: Float, alphaMult: Float) {
 
         if (fog == null) {

@@ -3,6 +3,7 @@ package assortment_of_things.abyss.procgen.biomes
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.BiomeCellData
+import assortment_of_things.abyss.procgen.BiomeDepth
 import assortment_of_things.abyss.procgen.BiomeParticleManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
@@ -174,6 +175,96 @@ abstract class BaseAbyssBiome {
 
         nebulaPlugin.save()
 
+    }
+
+
+
+    fun getUnclaimedCells() : List<BiomeCellData> {
+        return cells.filter { !it.claimed && it.depth != BiomeDepth.BORDER } //Major things should not spawn in border cells
+    }
+
+    /*fun getUnclaimedAdjacent() : List<BiomeCellData> {
+        var list = ArrayList<BiomeCellData>()
+        for (cell in cells) {
+            if (cell.claimed) continue
+            if (cell.getAdjacent().any { it.claimed }) continue
+            list.add(cell)
+        }
+        return list
+    }
+
+    fun getUnclaimedSurrounding() : List<BiomeCellData> {
+        var list = ArrayList<BiomeCellData>()
+        for (cell in cells) {
+            if (cell.claimed) continue
+            if (cell.getSurrounding().any { it.claimed }) continue
+            list.add(cell)
+        }
+        return list
+    }
+
+    fun getUnclaimedAround(radius: Int) : List<BiomeCellData> {
+        var list = ArrayList<BiomeCellData>()
+        for (cell in cells) {
+            if (cell.claimed) continue
+            if (cell.getAround(radius).any { it.claimed }) continue
+            list.add(cell)
+        }
+        return list
+    }*/
+
+    fun pickAndClaimCell() : BiomeCellData? {
+        var pick = getUnclaimedCells().randomOrNull()
+        pick?.claimed = true
+        return pick
+    }
+
+    fun pickAndClaimAdjacent() : BiomeCellData? {
+        var list = ArrayList<BiomeCellData>()
+        for (cell in getUnclaimedCells()) {
+            if (cell.getAdjacent().any { it.claimed }) continue
+            list.add(cell)
+        }
+        var pick = list.randomOrNull() ?: return null
+
+        pick.claimed = true
+        pick.getAdjacent().forEach { it.claimed = true }
+
+        return pick
+    }
+
+    fun pickAndClaimSurrounding() : BiomeCellData? {
+        var list = ArrayList<BiomeCellData>()
+        for (cell in getUnclaimedCells()) {
+            if (cell.getSurrounding().any { it.claimed }) continue
+            list.add(cell)
+        }
+        var pick = list.randomOrNull() ?: return null
+
+        pick.claimed = true
+        pick.getSurrounding().forEach { it.claimed = true }
+
+        return pick
+    }
+
+    fun pickAndClaimAround(radius: Int) : BiomeCellData? {
+        var list = ArrayList<BiomeCellData>()
+        for (cell in getUnclaimedCells()) {
+            if (cell.getAround(radius).any { it.claimed }) continue
+            list.add(cell)
+        }
+        var pick = list.randomOrNull() ?: return null
+
+        pick.claimed = true
+        pick.getAround(radius).forEach { it.claimed = true }
+
+        return pick
+    }
+
+    fun pickAndClaimDeep() : BiomeCellData? {
+        var pick = deepestCells.filter { !it.claimed }.randomOrNull()
+        pick?.claimed = true
+        return pick
     }
 
 }

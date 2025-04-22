@@ -28,8 +28,6 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
             cell.isDiscovered = true
         }*/
 
-        if (Global.getSector().isPaused && !Global.getSettings().isDevMode) return
-
         interval.advance(amount)
         if (interval.intervalElapsed()) {
             if (Global.getSector()?.playerFleet?.containingLocation == AbyssUtils.getData().system) {

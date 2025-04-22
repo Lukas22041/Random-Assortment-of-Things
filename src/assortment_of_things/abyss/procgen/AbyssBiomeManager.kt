@@ -1,8 +1,10 @@
 package assortment_of_things.abyss.procgen
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.biomes.*
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
@@ -378,11 +380,17 @@ class AbyssBiomeManager {
         return cell
     }
 
+
+
     fun getCells() = cellList
 
     fun getPlayerCell() : BiomeCellData {
         var playerFleet = Global.getSector().playerFleet
-        var loc = playerFleet.location
+        return getCell(playerFleet)
+    }
+
+    fun getCell(entity: SectorEntityToken) : BiomeCellData {
+        var loc = entity.location
         return getCell(loc.x, loc.y)
     }
 

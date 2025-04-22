@@ -12,13 +12,13 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
     var isFake = false
     //var color = Color(30, 30, 30)
     var tags = ArrayList<String>()
-    var isUsed = false //Dont spawn anything if already used by something large
     var isStartingPoint = false
     var renderAngle = MathUtils.getRandomNumberInRange(0f, 360f)
 
     var isDiscovered = false
     var isPartialyDiscovered = false
 
+    var claimed = false //Dont spawn anything if already used by something large
 
     //Depth Indicates how towards the center the biome cell is
     //0 means its directly neighbouring another biome, 1 means its one step away from another biome, and so forth

@@ -2,8 +2,8 @@ package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.misc.AbyssBackgroundWarper
+import assortment_of_things.abyss.procgen.scripts.AbyssalLightDiscovery
 import assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin
-import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
@@ -30,14 +30,9 @@ object AbyssGenerator {
 
         system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
 
-        //Teleport
-        var playerFleet = Global.getSector().playerFleet
-        var currentLocation = playerFleet.containingLocation
-        var targetSystem = system
 
-        currentLocation.removeEntity(playerFleet)
-        targetSystem.addEntity(playerFleet)
-        Global.getSector().setCurrentLocation(targetSystem)
+
+
 
         system.backgroundTextureFilename = "graphics/backgrounds/abyss/Abyss2.jpg"
         system.backgroundColorShifter.shift(this, AbyssUtils.DARK_ABYSS_COLOR, 0f, 99999f, 1f)
@@ -80,18 +75,33 @@ object AbyssGenerator {
 
 
 
-        //Should be added last so that it renders over everything else on the map
-        system.addTerrain("rat_map_revealer", null)
+
 
 
         //Add later to ensure running after all other terrains
         system.addTerrain("rat_abyss_terrain", null)
 
-
-
         var darkness = system.addTerrain("rat_depths_darkness", null)
         data.darknessTerrain = (darkness as CampaignTerrainAPI).plugin as AbyssalDarknessTerrainPlugin
 
+        //Should be added last so that it renders over everything else on the map
+        system.addTerrain("rat_map_revealer", null)
+
+
+
+
+        Global.getSector().addScript(AbyssalLightDiscovery())
+
+
+
+        //Teleport
+        var playerFleet = Global.getSector().playerFleet
+        var currentLocation = playerFleet.containingLocation
+        var targetSystem = system
+
+        currentLocation.removeEntity(playerFleet)
+        targetSystem.addEntity(playerFleet)
+        Global.getSector().setCurrentLocation(targetSystem)
     }
 
 }

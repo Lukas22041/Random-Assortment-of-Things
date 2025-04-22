@@ -7,9 +7,87 @@
 	
 	
 	
+	"rat_abyss_photosphere":{
+		"defaultName":"Photosphere", # used if name=null in addCustomEntity()
+		"defaultRadius":100, # used if radius<0 in addCustomEntity()
+		"nameInText":"photosphere",
+		"shortName":"photosphere",
+		"customDescriptionId":"rat_abyss_photosphere",
+		"interactionImage":"graphics/illustrations/rat_abyss_entity.jpg",
+		"icon":"graphics/planets/sun_halo.png",
+		"iconColor":[250,0, 100,255],
+		"iconWidth":64,
+		"iconHeight":64,
+		"renderShadow":true,
+		"useLightColor":true,
+		"showInCampaign":true,
+		"showIconOnMap":true,
+		"showNameOnMap":true,
+		"scaleNameWithZoom":false,
+		"scaleIconWithZoom":true,
+		"tags":[],
+		"layers":[TERRAIN_7A, ABOVE], 
+		"pluginClass":"assortment_of_things.abyss.entities.light.AbyssalPhotosphere",
+		"renderCircleIndicator":false,
+		"renderCircleIndicatorSelectionFlash":false,
+	},
 	
 	
+	"rat_abyss_photosphere_sierra":{
+		"defaultName":"Photosphere", # used if name=null in addCustomEntity()
+		"defaultRadius":100, # used if radius<0 in addCustomEntity()
+		"nameInText":"photosphere",
+		"shortName":"photosphere",
+		"customDescriptionId":"rat_abyss_photosphere",
+		"interactionImage":"graphics/illustrations/rat_abyss_entity.jpg",
+		"icon":"graphics/planets/sun_halo.png",
+		"iconColor":[205,155,255,255],
+		"iconWidth":64,
+		"iconHeight":64,
+		"renderShadow":true,
+		"useLightColor":true,
+		"showInCampaign":true,
+		"showIconOnMap":true,
+		"showNameOnMap":true,
+		"scaleNameWithZoom":false,
+		"scaleIconWithZoom":true,
+		"tags":[],
+		"layers":[TERRAIN_7A, ABOVE], 
+		"pluginClass":"assortment_of_things.abyss.entities.light.AbyssalPhotosphere",
+		"renderCircleIndicator":false,
+		"renderCircleIndicatorSelectionFlash":false,
+	},
 	
+	
+	"rat_abyss_beacon":{
+		"defaultName":"Abyssal Beacon", # used if name=null in addCustomEntity()
+		"defaultRadius":70, # used if radius<0 in addCustomEntity()
+		"nameInText":"beacon",
+		"shortName":"station",
+		"customDescriptionId":"rat_abyss_beacon",
+		"interactionImage":"graphics/illustrations/rat_abyss_wreckage.jpg",
+		"icon":"graphics/icons/nav_buoy.png",
+		"iconWidth":40,
+		"iconHeight":40,
+		"iconColor":[250,50,50,255],
+		"nameColor":[250,50,50,255],
+		"nameShadowColor":[0,0,0,255],
+		"sprite":"graphics/stations/rat_abyss_beacon.png",
+		"spriteWidth":180,
+		"spriteHeight":180,
+		"renderShadow":true,
+		"useLightColor":true,
+		"showInCampaign":true,
+		"showIconOnMap":true,
+		"showNameOnMap":false,
+		"scaleNameWithZoom":false,
+		"scaleIconWithZoom":true,
+		"pluginClass":"assortment_of_things.abyss.entities.light.AbyssalBeacon",
+		"renderCircleIndicator":false,
+		"renderCircleIndicatorSelectionFlash":false,
+		"tags":[],
+		"layers":[TERRAIN_7A, ABOVE], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+	},
 	
 	
 	

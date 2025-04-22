@@ -1,9 +1,15 @@
 package assortment_of_things.abyss.procgen.biomes
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
+import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.ext.plus
+import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 //Sierra Biome
@@ -81,9 +87,21 @@ class EtherealShores() : BaseAbyssBiome() {
         var fog = terrain as BaseFogTerrain
         var editor = OldNebulaEditor(fog)
 
+        var system = AbyssUtils.getSystem()
+
         var center = deepestCells.first()
 
         editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 1.25f, AbyssBiomeManager.cellSize * 5f, 0f, 360f)
+
+
+        var pLoc = center!!.getWorldCenter().plus(MathUtils.getRandomPointInCircle(Vector2f(), AbyssBiomeManager.cellSize * 0.25f))
+
+        var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere_sierra", Factions.NEUTRAL)
+        photosphere.setLocation(pLoc.x, pLoc.y)
+        photosphere.radius = 100f
+
+        var plugin = photosphere.customPlugin as AbyssalLight
+        plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
     }
 
 }
