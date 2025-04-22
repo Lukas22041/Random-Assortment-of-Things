@@ -2,6 +2,7 @@ package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.*
+import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.levelBetween
@@ -9,13 +10,18 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
+import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.ui.LazyFont
+import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.bounty.ui.drawOutlined
 import org.magiclib.kotlin.setAlpha
 import java.util.*
 
@@ -26,6 +32,12 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
     @Transient
     var halo: SpriteAPI? = null
+
+    @Transient
+    var font: LazyFont? = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+
+    @Transient
+    var fractureText:LazyFont.DrawableString? = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
 
     var id = Misc.genUID()
 
@@ -61,6 +73,11 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         var data = AbyssUtils.getData()
         var system = AbyssUtils.getSystem()
 
+        if (font == null) {
+            font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+            fractureText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+        }
+
         if (halo == null) {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
         }
@@ -89,6 +106,23 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             halo!!.renderAtCenter(loc.x, loc.y)
         }
 
+        for (fracture in system!!.customEntities) {
+            if (fracture.customEntitySpec.id != "rat_abyss_fracture") continue
+            var plugin = fracture.customPlugin
+            if (plugin !is AbyssalFracture) continue
+
+            var destination = plugin.connectedEntity?.containingLocation ?: continue
+
+            var destinationName = destination.nameWithNoType ?: continue
+            fractureText!!.text = destinationName
+            fractureText!!.fontSize = 600f * factor
+            fractureText!!.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+            fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+            fractureText!!.drawOutlined(fracture.location.x * factor - (fractureText!!.width / 2), (fracture.location.y + 600) * factor + (fractureText!!.height))
+        }
+
     }
 
     override fun renderOnRadar(radarCenter: Vector2f, factor: Float, alphaMult: Float) {
@@ -96,6 +130,11 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
         var data = AbyssUtils.getData() ?: return
         var system = AbyssUtils.getSystem() ?: return
+
+        if (font == null) {
+            font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+            fractureText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+        }
 
         if (halo == null) {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
@@ -129,6 +168,25 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             halo!!.setSize(radius / 2, radius / 2)
             halo!!.setAdditiveBlend()
             halo!!.renderAtCenter(loc.x, loc.y)
+        }
+
+        for (fracture in system.customEntities) {
+
+            if (MathUtils.getDistance(fracture.location, radarCenter) >= radarRadius) continue
+
+            if (fracture.customEntitySpec.id != "rat_abyss_fracture") continue
+            var plugin = fracture.customPlugin
+            if (plugin !is AbyssalFracture) continue
+
+            var destination = plugin.connectedEntity?.containingLocation ?: continue
+
+            var destinationName = destination.nameWithNoType ?: continue
+            fractureText!!.text = destinationName
+            fractureText!!.fontSize = 800f * factor
+            fractureText!!.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+            fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+            fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+            fractureText!!.drawOutlined((fracture.location.x - radarCenter.x) * factor - (fractureText!!.width / 2), (fracture.location.y - radarCenter.y + 800) * factor + (fractureText!!.height))
         }
     }
 

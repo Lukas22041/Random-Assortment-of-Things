@@ -11,6 +11,9 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags
 
 object AbyssGenerator {
 
+
+
+
     fun init() {
 
         var data = AbyssUtils.getData()
@@ -102,6 +105,13 @@ object AbyssGenerator {
         currentLocation.removeEntity(playerFleet)
         targetSystem.addEntity(playerFleet)
         Global.getSector().setCurrentLocation(targetSystem)
+
+        //playerFleet.location.set(data.abyssFracture!!.location)
+        playerFleet.setLocation(data.abyssFracture!!.location.x, data.abyssFracture!!.location.y)
+
+        //generateHyperspaceEntrance() //Moved to tranquility biome plugin
     }
+
+
 
 }

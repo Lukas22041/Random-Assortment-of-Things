@@ -5,12 +5,19 @@ import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
+import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
+import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
+import com.fs.starfarer.api.impl.campaign.ghosts.BaseSensorGhost
+import com.fs.starfarer.api.impl.campaign.ghosts.GBDartAround
+import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
+import java.util.*
 
 //Sierra Biome
 class EtherealShores() : BaseAbyssBiome() {
@@ -102,6 +109,31 @@ class EtherealShores() : BaseAbyssBiome() {
 
         var plugin = photosphere.customPlugin as AbyssalLight
         plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
-    }
 
+
+        // sensor ghosts
+        for (i in 0 until 3) {
+            val g = BaseSensorGhost(null, 0)
+            g.initEntity(g.genMediumSensorProfile(), g.genSmallRadius(), 0, system)
+            g.addBehavior(GBDartAround(photosphere,
+                9999f,
+                8 + Misc.random.nextInt(4),
+                photosphere.radius + 200f,
+                2500f))
+            g.despawnRange = -1f
+            g.entity.addTag("sotf_AMDancingGhost")
+            g.setLoc(Misc.getPointAtRadius(photosphere.location, 1200f))
+            //g.placeNearEntity(tia.getHyperspaceAnchor(), 800, 3200);
+            system.addScript(g)
+        }
+
+        val params = DerelictShipEntityPlugin.createVariant("rat_raphael_Hull", Random(), DerelictShipEntityPlugin.getDefaultSModProb())
+        val raphael = BaseThemeGenerator.addSalvageEntity(Random(), system, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
+        raphael.setDiscoverable(true)
+
+        raphael.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), 280f, 90f)
+
+        raphael.addTag("rat_abyss_sierra_raphael")
+
+    }
 }

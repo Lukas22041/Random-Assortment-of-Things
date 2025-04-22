@@ -3,6 +3,7 @@ package assortment_of_things.abyss.procgen
 import assortment_of_things.abyss.procgen.AbyssBiomeManager.Companion.cellSize
 import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 
 class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: Int, var worldX: Float, var worldY: Float) {
@@ -29,6 +30,10 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
 
     fun getWorldCenter() : Vector2f {
         return worldCenter
+    }
+
+    fun getWorldCenterWithCircleOffset(radius: Float) : Vector2f {
+        return worldCenter.plus(MathUtils.getRandomPointInCircle(Vector2f(), radius))
     }
 
     fun getBiome() : BaseAbyssBiome? {

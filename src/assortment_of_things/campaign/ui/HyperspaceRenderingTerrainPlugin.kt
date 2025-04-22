@@ -31,62 +31,14 @@ class HyperspaceRenderingTerrainPlugin : BaseTerrain() {
             fractureText = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
-       /* var fracture = AbyssUtils.getData().hyperspaceFracture
+        var fracture = AbyssUtils.getData().hyperspaceFracture
         if (fracture != null) {
             fractureText.fontSize = 800f * factor
             fractureText.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
             fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
             fractureText.blendSrc = GL11.GL_SRC_ALPHA
             fractureText.drawOutlined(fracture.location.x * factor - (fractureText.width / 2), (fracture.location.y + 700) * factor + (fractureText.height))
-        }*/
-
-       /* val font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
-        var tapText = font.createText("Hypershunt", Color(100, 0, 255, (255 * alphaMult).toInt()), 750f * factor)
-        var cryoText = font.createText("Cryosleeper", Color(0, 200, 200, (255 * alphaMult).toInt()), 750f * factor)
-        var beaconText = font.createText("Beacon", Color(250, 50, 50, (255 * alphaMult).toInt()), 300f * factor)
-
-        for (tap in Global.getSector().getCustomEntitiesWithType("coronal_tap")) {
-            var range = ItemEffectsRepo.CORONAL_TAP_LIGHT_YEARS * Global.getSettings().unitsPerLightYear
-
-            renderCircle(tap.locationInHyperspace, factor, range, Color(100, 0, 255, 25), alphaMult)
-            renderBorder(tap.locationInHyperspace, factor, range, Color(100, 0, 255), alphaMult)
-
-            tapText.drawOutlined(tap.locationInHyperspace.x * factor - (tapText.width / 2), (tap.locationInHyperspace.y + 1000) * factor + (tapText.height))
         }
-
-        for (cryo in Global.getSector().getCustomEntitiesWithType("derelict_cryosleeper")) {
-            var range = 10f * Global.getSettings().unitsPerLightYear
-            renderCircle(cryo.locationInHyperspace, factor, range, Color(0, 200, 200, 25), alphaMult)
-            renderBorder(cryo.locationInHyperspace, factor, range, Color(0, 200, 200), alphaMult)
-
-            cryoText.drawOutlined(cryo.locationInHyperspace.x * factor - (cryoText.width / 2), (cryo.locationInHyperspace.y + 1000) * factor + (cryoText.height))
-        }
-
-*//*
-        for (system in Global.getSector().starSystems) {
-            if (system.hasTag(Tags.THEME_REMNANT_MAIN)) {
-                if (system.hasTag(Tags.THEME_REMNANT_RESURGENT)) {
-                    var range = 1000f
-                   *//**//* renderCircle(system.location, factor, range, Color(250, 50, 50, 25), alphaMult)
-                    renderBorder(system.location, factor, range, Color(250, 50, 50), alphaMult)*//**//*
-
-                    beaconText.drawOutlined(system.location.x * factor - (beaconText.width / 2), (system.location.y + 1000) * factor + (beaconText.height))
-
-                }
-                if (system.hasTag(Tags.THEME_REMNANT_SUPPRESSED)) {
-                    var range = 1000f
-                    renderCircle(system.location, factor, range, Color(250, 200, 50, 25), alphaMult)
-                    renderBorder(system.location, factor, range, Color(250, 200, 50), alphaMult)
-                }
-                if (system.hasTag(Tags.THEME_REMNANT_DESTROYED)) {
-                    var range = 1000f
-                    renderCircle(system.location, factor, range, Color(0, 255, 100, 25), alphaMult)
-                    renderBorder(system.location, factor, range, Color(0, 255, 100), alphaMult)
-                }
-            }*//*
-
-        }*/
-
 
     }
 
@@ -98,14 +50,14 @@ class HyperspaceRenderingTerrainPlugin : BaseTerrain() {
             fractureText = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
-        /*var fracture = AbyssUtils.getData().hyperspaceFracture
+        var fracture = AbyssUtils.getData().hyperspaceFracture
         if (fracture != null) {
             fractureText.fontSize = 800f * factor
             fractureText.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
             fractureText.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
             fractureText.blendSrc = GL11.GL_SRC_ALPHA
             fractureText.drawOutlined((fracture.location.x - radarCenter!!.x) * factor - (fractureText.width / 2), (fracture.location.y + 1000 - radarCenter.y) * factor + (fractureText.height))
-        }*/
+        }
     }
 
     fun renderBorder(location: Vector2f, factor: Float, radius: Float, color: Color, alpha: Float) {

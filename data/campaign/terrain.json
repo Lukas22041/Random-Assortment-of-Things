@@ -60,6 +60,20 @@
 			"stormSound":"rat_abyss_storm_sounds",
 		},
 	},
+	
+	#Terrain for the Hyperspace Fracture
+	"rat_depths_in_hyper":{
+		"plugin":"assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin",
+		
+		
+		"loopTwo":"terrain_hyperspace_deep",
+		
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
+
+			"stormSound":"rat_abyss_storm_sounds",
+		},
+	},
 
 	#Darkness
 	
