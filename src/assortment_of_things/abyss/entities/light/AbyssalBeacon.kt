@@ -67,7 +67,7 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
         var radius = entity.radius
         if (halo != null && glow != null) return
 
-        color = AbyssUtils.getBiomeManager().getCell(entity).getBiome()?.getBiomeColor() ?: AbyssUtils.ABYSS_COLOR
+        color = AbyssUtils.getBiomeManager().getCell(entity).getBiome()?.getBiomeColor()?.setAlpha(255) ?: AbyssUtils.ABYSS_COLOR
 
         halo = Global.getSettings().getSprite("rat_terrain", "halo")
         glow = Global.getSettings().getAndLoadSprite("graphics/stations/rat_abyss_beacon_glow.png")
