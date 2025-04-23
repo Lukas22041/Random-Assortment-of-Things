@@ -3,6 +3,7 @@ package assortment_of_things.abyss.procgen.biomes
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.entities.light.AbyssalPhotosphere
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.AbyssProcgenUtils
 import assortment_of_things.abyss.procgen.BiomeCellData
@@ -14,6 +15,7 @@ import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.JumpPointAPI
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
@@ -48,6 +50,8 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         tooltip.addPara("Placeholder")
     }
 
+    var photospheres = ArrayList<SectorEntityToken>()
+
     /** Called after all cells are generated */
     override fun init() {
         generateFogTerrain("rat_sea_of_tranquility", "rat_terrain", "depths1", 0.6f)
@@ -56,10 +60,12 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
         generateHyperspaceEntrance() //Pick entrance first
 
-        //TODO Remove
-        while (true) {
 
-            var cell: BiomeCellData? = pickAndClaimSurrounding() ?: break
+        var photosphereNum = MathUtils.getRandomNumberInRange(13, 16)
+
+        for (i in 0 until photosphereNum) {
+
+            var cell: BiomeCellData? = pickAndClaimAdjacentOrSmaller() ?: break
 
             var loc = cell!!.getWorldCenter().plus(MathUtils.getRandomPointInCircle(Vector2f(), AbyssBiomeManager.cellSize * 0.5f))
 
@@ -70,11 +76,37 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             var plugin = entity.customPlugin as AbyssalLight
             plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
 
+            photospheres.add(entity)
+
             entity.sensorProfile = 1f
             /*entity.setDiscoverable(true)
             entity.detectedRangeMod.modifyFlat("test", 5000f)*/
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     fun generateHyperspaceEntrance() {
         var manager = AbyssUtils.getBiomeManager()

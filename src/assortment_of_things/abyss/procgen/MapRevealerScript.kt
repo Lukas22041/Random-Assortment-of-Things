@@ -3,6 +3,7 @@ package assortment_of_things.abyss.procgen
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CoreUITabId
 import com.fs.starfarer.api.util.IntervalUtil
 
 class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript {

@@ -247,6 +247,36 @@ abstract class BaseAbyssBiome {
         return pick
     }
 
+    //Pick a smaller cell if its very important that this finds a spawn location
+    fun pickAndClaimAdjacentOrSmaller() : BiomeCellData? {
+        var list = ArrayList<BiomeCellData>()
+        for (cell in getUnclaimedCells()) {
+            if (cell.getAdjacent().any { it.claimed }) continue
+            list.add(cell)
+        }
+        var pick = list.randomOrNull() ?: return pickAndClaimCell()
+
+        pick.claimed = true
+        pick.getAdjacent().forEach { it.claimed = true }
+
+        return pick
+    }
+
+    //Pick a smaller cell if its very important that this finds a spawn location
+    fun pickAndClaimSurroundingOrSmaller() : BiomeCellData? {
+        var list = ArrayList<BiomeCellData>()
+        for (cell in getUnclaimedCells()) {
+            if (cell.getSurrounding().any { it.claimed }) continue
+            list.add(cell)
+        }
+        var pick = list.randomOrNull() ?: return pickAndClaimAdjacentOrSmaller()
+
+        pick.claimed = true
+        pick.getSurrounding().forEach { it.claimed = true }
+
+        return pick
+    }
+
     fun pickAndClaimAround(radius: Int) : BiomeCellData? {
         var list = ArrayList<BiomeCellData>()
         for (cell in getUnclaimedCells()) {
