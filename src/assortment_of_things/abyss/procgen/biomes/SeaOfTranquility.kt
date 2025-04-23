@@ -27,6 +27,7 @@ import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
+import java.util.Random
 
 //Starting Biome
 class SeaOfTranquility() : BaseAbyssBiome() {
@@ -54,12 +55,12 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
     /** Called after all cells are generated */
     override fun init() {
-        generateFogTerrain("rat_sea_of_tranquility", "rat_terrain", "depths1", 0.6f)
 
         var system = AbyssUtils.getSystem()
 
-        generateHyperspaceEntrance() //Pick entrance first
+        generateFogTerrain("rat_sea_of_tranquility", "rat_terrain", "depths1", 0.6f)
 
+        generateHyperspaceEntrance() //Pick entrance first
 
         var photosphereNum = MathUtils.getRandomNumberInRange(13, 16)
 
@@ -77,6 +78,11 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
 
             photospheres.add(entity)
+
+            //Have some photospheres with cleared terrain, some not.
+            if (Random().nextFloat() >= 0.5f) {
+                AbyssProcgenUtils.clearTerrainAround(terrain as BaseFogTerrain, entity, MathUtils.getRandomNumberInRange(250f, 600f))
+            }
 
             entity.sensorProfile = 1f
             /*entity.setDiscoverable(true)

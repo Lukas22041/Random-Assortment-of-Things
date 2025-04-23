@@ -42,7 +42,21 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
             }
         }
 
+        if (Global.getSector().campaignUI.currentCoreTab == CoreUITabId.MAP) {
+            for (cell in biomeManager.getCells()) {
+                if (cell.isDiscovered) {
+                    if (cell.discoveryFader >= 0) {
+                        cell.discoveryFader -= 0.75f * amount
+                    }
+                }
 
+                if (cell.isPartialyDiscovered) {
+                    if (cell.partialDiscoveryFader >= 0) {
+                        cell.partialDiscoveryFader -= 0.75f * amount
+                    }
+                }
+            }
+        }
     }
 
 

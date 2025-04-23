@@ -18,7 +18,8 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
 
     var isDiscovered = false
     var isPartialyDiscovered = false
-    var revealFader = 0f
+    var discoveryFader = 1f
+    var partialDiscoveryFader = 1f
 
     var claimed = false //Dont spawn anything if already used by something large
 

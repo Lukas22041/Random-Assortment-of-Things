@@ -292,13 +292,13 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
             var lightLevel = getLightlevel() // 1 At total darkness
 
-            if (lightLevel != 0f) {
+            //if (lightLevel != 0f) {
 
                 var mult = getDarknessMult()
 
                 var name = getDarknessName(mult)
 
-                var current = 1 * (mult * lightLevel)
+                var current = 1 - ((1 - mult) * lightLevel)
 
                 fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "$name", current, fleet.stats.detectedRangeMod)
 
@@ -314,7 +314,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
                 if (AbyssalDepthsEventIntel.get()?.isStageActive(AbyssalDepthsEventIntel.Stage.IN_THE_DARK) == true) {
                     fleet.stats.addTemporaryModMult(0.1f, id,  "In the Dark",  1 - (0.10f * lightLevel), fleet.stats.detectedRangeMod)
                 }*/
-            }
+           // }
         }
     }
 

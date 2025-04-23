@@ -19,6 +19,7 @@ class MapRevealerTerrain : BaseTerrain() {
 
     }
 
+
     override fun renderOnMap(factor: Float, alphaMult: Float) {
 
         if (fog == null) {
@@ -29,12 +30,12 @@ class MapRevealerTerrain : BaseTerrain() {
 
         if (AbyssUtils.isShowFog()) {
             for (cell in AbyssUtils.getData().biomeManager.getCells()) {
-                if (!cell.isDiscovered) {
+                if (!cell.isDiscovered || cell.discoveryFader > 0f) {
 
-                    var alpha = 1f
+                    var alpha = 1f * (cell.discoveryFader * cell.discoveryFader)
 
                     //if (cell.getAdjacent().any { it.isDiscovered }) alpha = 0.6f
-                    if (cell.isPartialyDiscovered) alpha = 0.6f
+                    if (cell.isPartialyDiscovered && cell.discoveryFader >= 1) alpha = 0.6f + (0.4f * cell.partialDiscoveryFader * cell.partialDiscoveryFader)
 
                     //var loc = cell.getWorldCenter()
                     var loc = cell.getWorldCenter()
@@ -46,18 +47,6 @@ class MapRevealerTerrain : BaseTerrain() {
                 }
             }
         }
-
-       /* for (biome in AbyssUtils.getData().biomeManager.biomes) {
-            fog!!.setSize(AbyssBiomeManager.cellSize * 4f * factor, AbyssBiomeManager.cellSize * 4f * factor)
-
-            var loc = biome.biomeWorldCenter
-            fog!!.alphaMult = alphaMult
-
-            fog!!.renderAtCenter(loc.x * factor, loc.y * factor)
-        }*/
-
-
-
     }
 
     override fun getRenderRange(): Float {

@@ -120,7 +120,7 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
     override fun createMapTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
         super.createMapTooltip(tooltip, expanded)
 
-        tooltip!!.addPara("Abyssal Beacon", 0f, Misc.getTextColor(), AbyssUtils.ABYSS_COLOR, "Abyssal Beacon")
+        tooltip!!.addPara("Abyssal Beacon", 0f, Misc.getTextColor(), color, "Abyssal Beacon")
 
     }
 }

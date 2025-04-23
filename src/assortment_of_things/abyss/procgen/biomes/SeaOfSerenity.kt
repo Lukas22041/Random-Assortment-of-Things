@@ -1,7 +1,20 @@
 package assortment_of_things.abyss.procgen.biomes
 
+import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.procgen.AbyssBiomeManager
+import assortment_of_things.abyss.procgen.AbyssProcgenUtils
+import assortment_of_things.abyss.procgen.BiomeCellData
+import assortment_of_things.abyss.terrain.BaseFogTerrain
+import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.ext.plus
+import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
+import java.util.*
 
 class SeaOfSerenity() : BaseAbyssBiome() {
     override fun getBiomeID(): String {
@@ -28,9 +41,40 @@ class SeaOfSerenity() : BaseAbyssBiome() {
         return 0.6f
     }
 
+    var photospheres = ArrayList<SectorEntityToken>()
+
     /** Called after all cells are generated */
     override fun init() {
+
+        var system = AbyssUtils.getSystem()
+
         generateFogTerrain("rat_sea_of_serenity", "rat_terrain", "depths1", 0.6f)
+
+        var photosphereNum = MathUtils.getRandomNumberInRange(12, 14)
+
+        for (i in 0 until photosphereNum) {
+
+            var cell: BiomeCellData? = pickAndClaimAdjacentOrSmaller() ?: break
+
+            var loc = cell!!.getWorldCenter().plus(MathUtils.getRandomPointInCircle(Vector2f(), AbyssBiomeManager.cellSize * 0.5f))
+
+            var entity = system!!.addCustomEntity("rat_abyss_beacon${Misc.genUID()}", "Abyssal Beacon", "rat_abyss_beacon", Factions.NEUTRAL)
+            entity.setLocation(loc.x, loc.y)
+            entity.radius = 100f
+
+            var plugin = entity.customPlugin as AbyssalLight
+            plugin.radius = MathUtils.getRandomNumberInRange(10000f, 12500f)
+            photospheres.add(entity)
+
+            //Have some photospheres with cleared terrain, some not.
+            if (Random().nextFloat() >= 0.5f) {
+                AbyssProcgenUtils.clearTerrainAround(terrain as BaseFogTerrain, entity, MathUtils.getRandomNumberInRange(250f, 600f))
+            }
+
+            entity.sensorProfile = 1f
+            /*entity.setDiscoverable(true)
+            entity.detectedRangeMod.modifyFlat("test", 5000f)*/
+        }
     }
 
 }

@@ -130,6 +130,14 @@
 		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_05.ogg","pitch":1,"volume":0.5},
     ],
 	
+	"rat_abyss_solitude_storm_sounds":[
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_01.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_02.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_03.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_04.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_05.ogg","pitch":1,"volume":0.5},
+    ],
+	
  	"abyss_haddock":[
 		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.9,"volume":0.8},
 	],

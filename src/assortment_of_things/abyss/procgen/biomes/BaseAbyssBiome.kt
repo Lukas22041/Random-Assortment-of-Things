@@ -9,6 +9,7 @@ import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
+import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -19,7 +20,7 @@ import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
-abstract class BaseAbyssBiome {
+abstract class BaseAbyssBiome : EveryFrameScript {
 
     var startingCell: BiomeCellData? = null
     var cells = ArrayList<BiomeCellData>()
@@ -73,6 +74,9 @@ abstract class BaseAbyssBiome {
     /** Called after all cells are generated */
     abstract fun init()
 
+    override fun advance(amount: Float) {
+
+    }
 
     open fun spawnParticlesForCell(particleManager: BiomeParticleManager, cell: BiomeCellData) {
 
@@ -297,4 +301,16 @@ abstract class BaseAbyssBiome {
         return pick
     }
 
-}
+    override fun isDone(): Boolean {
+        return false
+    }
+
+    var advanceWhilePaused = false
+    override fun runWhilePaused(): Boolean {
+        return advanceWhilePaused
+    }
+
+
+
+
+ }
