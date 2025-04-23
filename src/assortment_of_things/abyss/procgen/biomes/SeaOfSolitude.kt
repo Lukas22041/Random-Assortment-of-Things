@@ -44,7 +44,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
         tooltip.addPara("Exotic matter moves violently and non-stop throughout the biome, leading to an enviroment that is constantly under the influence of charged particles. \n\n" +
                 "" +
-                "Extreme Storms occur frequently, approximately every 3 days. Anything not hidden within the dense fog of the abyss will appear visible to the sensors of everything in its surroundings. ", 0f,
+                "Extreme Storms, that span the entire biome, occur approximately every 3 days. Anything not hidden within the dense fog of the abyss will appear visible to the sensors of everything in its surroundings. ", 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "Extreme Storms", "3", "dense fog")
     }
 
