@@ -144,9 +144,9 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
 
         if (stats!!.fleetMember == null) return
 
-        if (Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(stats!!.fleetMember) == true) {
+        /*if (Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(stats!!.fleetMember) == true) {
             stats!!.variant.removeTag(Tags.SHIP_LIMITED_TOOLTIP)
-        }
+        }*/
 
         var conversions = listOf("rat_abyssal_conversion", "rat_chronos_conversion", "rat_cosmos_conversion", "rat_seraph_conversion", "rat_primordial_conversion")
         if (conversions.none { stats!!.variant.hullMods.contains(it) } && !stats!!.variant.hasHullMod(HullMods.AUTOMATED)) {

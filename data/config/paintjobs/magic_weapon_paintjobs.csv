@@ -1,0 +1,17 @@
+id,paintjobFamilies,weaponIds,spriteMap
+# id: Required. The id of the weapon paintjob.,,,
+# paintjobFamilies: Required. The paintjobFamily(s) that this paintjob applies to. Must match at least one in `magic_paintjobs.csv`.,,,
+# weaponIds: Required. The id(s) of the weapons(s) that this paintjob applies to. Must contain at least one valid weapon id.,,,
+"# spriteMap: Required. Format: ""path/to/old/sprite.png -> path/to/new/sprite.png"". Weapons that are not decos typically have many sprites. This field should have one sprite path map per sprite that needs to be replaced. Must contain at least one valid replacement.",,,
+,,,
+# More info: https://starsector.wiki.gg/wiki/MagicLib#Weapons_and_Decos,,,
+,,,
+# Deco Example (for more, see https://github.com/Starficz/scy-nation/blob/main/data/config/paintjobs/magic_weapon_paintjobs.csv),,
+metallic_abyss_aboleth_cover_left,metallic_abyss,aboleth_cover_left,graphics/weapons/decorative/aboleth/aboleth_cover_left.png -> graphics/weapons/decorative/metallic/aboleth/aboleth_cover_left.png
+metallic_abyss_aboleth_cover_right,metallic_abyss,aboleth_cover_right,graphics/weapons/decorative/aboleth/aboleth_cover_right.png ->  graphics/weapons/decorative/metallic/aboleth/aboleth_cover_right.png
+metallic_abyss_aboleth_mount_left,metallic_abyss,aboleth_mount_left,graphics/weapons/decorative/aboleth/aboleth_mount_left.png ->  graphics/weapons/decorative/metallic/aboleth/aboleth_mount_left.png
+metallic_abyss_aboleth_mount_right,metallic_abyss,aboleth_mount_right,graphics/weapons/decorative/aboleth/aboleth_mount_right.png ->  graphics/weapons/decorative/metallic/aboleth/aboleth_mount_right.png
+metallic_abyss_rat_makara_cover_right,metallic_abyss,rat_makara_cover_right,graphics/weapons/decorative/makara/rat_makara_cover_right.png ->  graphics/weapons/decorative/metallic/makara/rat_makara_cover_right.png
+metallic_abyss_rat_makara_cover_left,metallic_abyss,rat_makara_cover_left,graphics/weapons/decorative/makara/rat_makara_cover_left.png ->  graphics/weapons/decorative/metallic/makara/rat_makara_cover_left.png
+metallic_abyss_chuul_cover,metallic_abyss,chuul_cover,graphics/weapons/decorative/chuul/chuul_cover.png -> graphics/weapons/decorative/metallic/chuul/chuul_cover.png
+metallic_abyss_morkoth_cover,metallic_abyss,morkoth_cover,graphics/weapons/decorative/morkoth/morkoth_cover.png ->  graphics/weapons/decorative/metallic/morkoth/morkoth_cover.png
