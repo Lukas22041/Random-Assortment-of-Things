@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.procgen.biomes
 
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import java.awt.Color
 
 class SeaOfSerenity() : BaseAbyssBiome() {
@@ -17,6 +18,10 @@ class SeaOfSerenity() : BaseAbyssBiome() {
 
     override fun getDarkBiomeColor(): Color {
         return Color(77, 37, 0)
+    }
+
+    override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
+
     }
 
     override fun getMaxDarknessMult(): Float {

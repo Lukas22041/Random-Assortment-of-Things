@@ -7,6 +7,7 @@ import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.BiomeAtmosphereRenderer
 import assortment_of_things.abyss.procgen.BiomeMusicHandler
 import assortment_of_things.abyss.scripts.*
+import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUtils
@@ -386,6 +387,12 @@ class RATModPlugin : BaseModPlugin() {
                 }
             }
         }
+
+        var hyperTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is AbyssTerrainInHyperspacePlugin }
+        if (hyperTerrain != null) {
+            (hyperTerrain.plugin as AbyssTerrainInHyperspacePlugin).save()
+        }
+
        /* for (system in Global.getSector().starSystems.filter { it.hasTag(AbyssUtils.SYSTEM_TAG) })
         {
             var abyssPlugin = AbyssProcgen.getAbyssTerrainPlugin(system)
@@ -394,10 +401,7 @@ class RATModPlugin : BaseModPlugin() {
                 abyssPlugin.save()
             }
         }
-        var hyperTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is AbyssTerrainInHyperspacePlugin }
-        if (hyperTerrain != null) {
-            (hyperTerrain.plugin as AbyssTerrainInHyperspacePlugin ).save()
-        }*/
+        */
 
         var hyperExoTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is ExotechHyperNebula }
         if (hyperExoTerrain != null) {

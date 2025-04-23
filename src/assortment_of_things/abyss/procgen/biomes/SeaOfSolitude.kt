@@ -4,6 +4,7 @@ import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.BiomeCellData
 import assortment_of_things.abyss.procgen.BiomeDepth
 import assortment_of_things.abyss.procgen.BiomeParticleManager
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
@@ -25,6 +26,10 @@ class SeaOfSolitude() : BaseAbyssBiome() {
 
     override fun getDarkBiomeColor(): Color {
         return Color(77, 0, 31)
+    }
+
+    override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
+
     }
 
     /** Called after all cells are generated */

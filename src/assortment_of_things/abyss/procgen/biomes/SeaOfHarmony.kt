@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.procgen.biomes
 
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import java.awt.Color
 
 //System with a large Photosphere illuminating it
@@ -19,6 +20,10 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
     override fun getDarkBiomeColor(): Color {
         return Color(102, 25, 20)
+    }
+
+    override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
+
     }
 
     override fun getSaturation(): Float {

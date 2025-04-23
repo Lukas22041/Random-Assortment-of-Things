@@ -3,6 +3,7 @@ package assortment_of_things.abyss.procgen.biomes
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.BiomeCellData
 import assortment_of_things.abyss.procgen.BiomeParticleManager
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
@@ -26,6 +27,14 @@ class AbyssalWastes() : BaseAbyssBiome() {
 
     override fun getDarkBiomeColor(): Color {
         return Color(10, 10, 10)
+    }
+
+    override fun getTooltipColor(): Color {
+        return Color(150, 140, 140)
+    }
+
+    override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
+
     }
 
     override fun getGridAlphaMult(): Float {

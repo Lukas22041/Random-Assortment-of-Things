@@ -12,6 +12,7 @@ import com.fs.starfarer.api.impl.campaign.ghosts.GBDartAround
 import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
@@ -36,6 +37,10 @@ class EtherealShores() : BaseAbyssBiome() {
 
     override fun getDarkBiomeColor(): Color {
         return Color(82, 62, 102)
+    }
+
+    override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
+
     }
 
     override fun getGridAlphaMult(): Float {

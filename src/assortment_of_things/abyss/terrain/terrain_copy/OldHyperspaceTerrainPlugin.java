@@ -1212,7 +1212,7 @@ public class OldHyperspaceTerrainPlugin extends OldBaseTiledTerrain { // impleme
 		}
 	}
 	
-	protected void applyStormStrikes(CellStateTracker cell, CampaignFleetAPI fleet, float days) {
+	public void applyStormStrikes(CellStateTracker cell, CampaignFleetAPI fleet, float days) {
 		
 		if (cell.flicker != null && cell.flicker.getWait() > 0) {
 			cell.flicker.setNumBursts(0);

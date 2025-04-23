@@ -140,6 +140,19 @@ class AbyssBiomeManager {
         return color
     }
 
+    fun getCurrentTooltipColor() : Color{
+        var levels = getBiomeLevels()
+
+        var color = Color(0, 0,0, 0)
+        color = color.setAlpha(255)
+        for (level in levels) {
+            var bColor = level.key.getTooltipColor()
+            color = Color((color.red + (bColor.red * level.value).toInt()), (color.green + (bColor.green * level.value).toInt()), (color.blue + (bColor.blue * level.value).toInt()))
+        }
+
+        return color
+    }
+
     fun getDominantBiome() : BaseAbyssBiome {
         return getBiomeLevels().maxBy { it.value }.key
     }

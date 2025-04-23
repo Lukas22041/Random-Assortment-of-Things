@@ -50,8 +50,11 @@ abstract class BaseAbyssBiome {
     abstract fun getBiomeColor() : Color
     abstract fun getDarkBiomeColor() : Color
 
+    abstract fun addBiomeTooltip(tooltip: TooltipMakerAPI)
+
     open fun shouldGenerateBiome() : Boolean = true
 
+    open fun getTooltipColor() = getBiomeColor()
     open fun getShiftedColor() : Color = Color(255, 255, 255)
     open fun getSaturation() : Float = 1f
     open fun getBackgroundColor() = getDarkBiomeColor()
@@ -70,9 +73,6 @@ abstract class BaseAbyssBiome {
     /** Called after all cells are generated */
     abstract fun init()
 
-    fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
-
-    }
 
     open fun spawnParticlesForCell(particleManager: BiomeParticleManager, cell: BiomeCellData) {
 

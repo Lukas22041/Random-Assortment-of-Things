@@ -10,6 +10,7 @@ import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
+import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.JumpPointAPI
@@ -17,6 +18,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
@@ -40,6 +42,10 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
     override fun getDarkBiomeColor(): Color {
         return Color(77, 0, 15)
+    }
+
+    override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("Placeholder")
     }
 
     /** Called after all cells are generated */
