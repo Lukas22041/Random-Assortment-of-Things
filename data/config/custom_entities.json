@@ -91,7 +91,7 @@
 		"useLightColor":true,
 		"showInCampaign":true,
 		"showIconOnMap":true,
-		"showNameOnMap":true,
+		"showNameOnMap":false,
 		"scaleNameWithZoom":false,
 		"scaleIconWithZoom":true,
 		"tags":[],
