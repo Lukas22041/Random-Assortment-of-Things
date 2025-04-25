@@ -5,6 +5,7 @@ import assortment_of_things.abyss.procgen.biomes.*
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.impl.MusicPlayerPluginImpl
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
@@ -99,6 +100,24 @@ class AbyssBiomeManager {
         findCorners()
 
         initBiomes()
+
+        //Apply music keys to all entities spawned
+        for (entity in AbyssUtils.getSystem()!!.customEntities) {
+            var cell = getCell(entity)
+            var biome = cell.getBiome()
+
+            var musicKey = when (biome) {
+                is SeaOfTranquility -> "rat_abyss_interaction1"
+                is SeaOfSerenity -> "rat_abyss_interaction2"
+                is SeaOfSolitude -> "rat_abyss_interaction2"
+                is SeaOfHarmony -> "rat_abyss_interaction1"
+                is AbyssalWastes -> "rat_abyss_interaction2"
+                is EtherealShores -> "rat_abyss_interaction1"
+                else -> "rat_abyss_interaction1"
+            }
+
+            entity.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, musicKey)
+        }
     }
 
     fun getCurrentBiomeColor() : Color{
@@ -450,6 +469,7 @@ class AbyssBiomeManager {
     fun createFakeCell(x: Int, y: Int) : BiomeCellData {
         var cell = BiomeCellData(this, x, y,toWorldX(x), toWorldY(y))
         cell.isFake = true
+        cell.depth = BiomeDepth.BORDER
         var biome = getBiome("abyssal_wastes")
       /*  if (biome != null) {
             cell.setBiome(biome)
