@@ -39,6 +39,9 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
     @Transient
     var fractureText:LazyFont.DrawableString? = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
 
+    @Transient
+    var biomeText:LazyFont.DrawableString? = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+
     var id = Misc.genUID()
 
     override fun getActiveLayers(): EnumSet<CampaignEngineLayers> {
@@ -76,6 +79,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
             fractureText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+            biomeText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
         if (halo == null) {
@@ -106,22 +110,43 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             halo!!.renderAtCenter(loc.x, loc.y)
         }
 
-        for (fracture in system!!.customEntities) {
-            if (fracture.customEntitySpec.id != "rat_abyss_fracture") continue
-            var plugin = fracture.customPlugin
-            if (plugin !is AbyssalFracture) continue
+        for (entity in system!!.customEntities) {
 
-            var destination = plugin.connectedEntity?.containingLocation ?: continue
 
-            var destinationName = destination.nameWithNoType ?: continue
-            fractureText!!.text = destinationName
-            fractureText!!.fontSize = 600f * factor
-            fractureText!!.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
-            fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+            if (entity.customEntitySpec.id == "rat_abyss_fracture") {
+                var plugin = entity.customPlugin
+                if (plugin !is AbyssalFracture) continue
 
-            fractureText!!.drawOutlined(fracture.location.x * factor - (fractureText!!.width / 2), (fracture.location.y + 600) * factor + (fractureText!!.height))
+                var destination = plugin.connectedEntity?.containingLocation ?: continue
+
+                var destinationName = destination.nameWithNoType ?: continue
+                fractureText!!.text = destinationName
+                fractureText!!.fontSize = 600f * factor
+                fractureText!!.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+                fractureText!!.drawOutlined(entity.location.x * factor - (fractureText!!.width / 2), (entity.location.y + 600) * factor + (fractureText!!.height))
+            }
+
+            if (entity.customEntitySpec.id == "rat_abyss_sensor" || entity.customEntitySpec.id == "rat_decaying_abyss_sensor") {
+
+                if (!entity.hasTag("scanned")) continue
+
+                var plugin = entity.customPlugin as AbyssSensorEntity
+                var biome = plugin.biome ?: continue
+
+                fractureText!!.text = biome.getDisplayName()
+                fractureText!!.fontSize = 600f * factor
+                fractureText!!.baseColor = biome.getTooltipColor().setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+                fractureText!!.drawOutlined(entity.location.x * factor - (fractureText!!.width / 2), (entity.location.y + 600) * factor + (fractureText!!.height))
+            }
         }
+
+
 
     }
 
@@ -134,6 +159,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
             fractureText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+            biomeText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
         if (halo == null) {
@@ -170,23 +196,42 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             halo!!.renderAtCenter(loc.x, loc.y)
         }
 
-        for (fracture in system.customEntities) {
+        for (entity in system.customEntities) {
 
-            if (MathUtils.getDistance(fracture.location, radarCenter) >= radarRadius) continue
+            if (MathUtils.getDistance(entity.location, radarCenter) >= radarRadius) continue
 
-            if (fracture.customEntitySpec.id != "rat_abyss_fracture") continue
-            var plugin = fracture.customPlugin
-            if (plugin !is AbyssalFracture) continue
+            if (entity.customEntitySpec.id == "rat_abyss_fracture") {
+                var plugin = entity.customPlugin
+                if (plugin !is AbyssalFracture) continue
 
-            var destination = plugin.connectedEntity?.containingLocation ?: continue
+                var destination = plugin.connectedEntity?.containingLocation ?: continue
 
-            var destinationName = destination.nameWithNoType ?: continue
-            fractureText!!.text = destinationName
-            fractureText!!.fontSize = 800f * factor
-            fractureText!!.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
-            fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
-            fractureText!!.drawOutlined((fracture.location.x - radarCenter.x) * factor - (fractureText!!.width / 2), (fracture.location.y - radarCenter.y + 800) * factor + (fractureText!!.height))
+                var destinationName = destination.nameWithNoType ?: continue
+                fractureText!!.text = destinationName
+                fractureText!!.fontSize = 800f * factor
+                fractureText!!.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+                fractureText!!.drawOutlined((entity.location.x - radarCenter.x) * factor - (fractureText!!.width / 2), (entity.location.y - radarCenter.y + 800) * factor + (fractureText!!.height))
+            }
+
+            /*if (entity.customEntitySpec.id == "rat_abyss_sensor" || entity.customEntitySpec.id == "rat_decaying_abyss_sensor") {
+
+                if (!entity.hasTag("scanned")) continue
+
+                var plugin = entity.customPlugin as AbyssSensorEntity
+                var biome = plugin.biome ?: continue
+
+                fractureText!!.text = biome.getDisplayName()
+                fractureText!!.fontSize = 800f * factor
+                fractureText!!.baseColor = biome.getTooltipColor().setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+                fractureText!!.drawOutlined((entity.location.x - radarCenter.x) * factor - (fractureText!!.width / 2), (entity.location.y - radarCenter.y + 600) * factor + (fractureText!!.height))
+
+            }*/
+
         }
     }
 

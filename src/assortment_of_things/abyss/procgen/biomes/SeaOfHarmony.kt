@@ -1,5 +1,7 @@
 package assortment_of_things.abyss.procgen.biomes
 
+import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.AbyssProcgenUtils
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import java.awt.Color
 
@@ -32,7 +34,12 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
     /** Called after all cells are generated */
     override fun init() {
-       generateFogTerrain("rat_sea_of_harmony", "rat_terrain", "depths1", 0.6f)
+        var system = AbyssUtils.getSystem()
+
+        generateFogTerrain("rat_sea_of_harmony", "rat_terrain", "depths1", 0.6f)
+
+        var sensor = AbyssProcgenUtils.createSensorArray(system!!, this)
+        sensor.location.set(deepestCells.random().getWorldCenterWithCircleOffset(300f))
     }
 
 }

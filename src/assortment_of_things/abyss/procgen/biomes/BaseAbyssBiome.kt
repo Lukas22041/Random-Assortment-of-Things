@@ -10,7 +10,9 @@ import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
@@ -20,7 +22,9 @@ import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
-abstract class BaseAbyssBiome : EveryFrameScript {
+abstract class BaseAbyssBiome {
+
+
 
     var startingCell: BiomeCellData? = null
     var cells = ArrayList<BiomeCellData>()
@@ -44,6 +48,7 @@ abstract class BaseAbyssBiome : EveryFrameScript {
     //Can be different types of terrain depending on the biome
     var terrain: BaseTerrain? = null
 
+    var isSensorRevealed = false
 
     abstract fun getBiomeID() : String
     abstract fun getDisplayName() : String
@@ -55,6 +60,7 @@ abstract class BaseAbyssBiome : EveryFrameScript {
 
     open fun shouldGenerateBiome() : Boolean = true
 
+    open fun getSystemLightColor() = getDarkBiomeColor()
     open fun getTooltipColor() = getBiomeColor()
     open fun getShiftedColor() : Color = Color(255, 255, 255)
     open fun getSaturation() : Float = 1f
@@ -71,12 +77,10 @@ abstract class BaseAbyssBiome : EveryFrameScript {
     /* Called before any cells have been generated, used mostly for minor biomes to take their cells */
     open fun preGenerate() { }
 
+    var majorLightsources = ArrayList<SectorEntityToken>()
+
     /** Called after all cells are generated */
     abstract fun init()
-
-    override fun advance(amount: Float) {
-
-    }
 
     open fun spawnParticlesForCell(particleManager: BiomeParticleManager, cell: BiomeCellData) {
 
@@ -300,17 +304,5 @@ abstract class BaseAbyssBiome : EveryFrameScript {
         pick?.claimed = true
         return pick
     }
-
-    override fun isDone(): Boolean {
-        return false
-    }
-
-    var advanceWhilePaused = false
-    override fun runWhilePaused(): Boolean {
-        return advanceWhilePaused
-    }
-
-
-
 
  }

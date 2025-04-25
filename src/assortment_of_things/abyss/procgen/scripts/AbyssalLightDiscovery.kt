@@ -20,6 +20,21 @@ class AbyssalLightDiscovery() : EveryFrameScript {
 
     var discovered = ArrayList<SectorEntityToken>()
 
+    fun reveal(entity: SectorEntityToken) {
+        var manager = AbyssUtils.getBiomeManager()
+        //entity.setSensorProfile(null)
+        var cell = manager.getCell(entity)
+        cell.isDiscovered = true
+
+        for (adjacent in cell.getAdjacent()) {
+            if (adjacent.getAdjacent().any { it.isPartialyDiscovered }) {
+                adjacent.isPartialyDiscovered = true
+            }
+        }
+
+        discovered.add(entity)
+    }
+
     override fun advance(amount: Float) {
         var system = AbyssUtils.getSystem()
         if (system == Global.getSector().currentLocation) {
@@ -42,17 +57,7 @@ class AbyssalLightDiscovery() : EveryFrameScript {
 
                 if (!isDiscovered) {
                     if (MathUtils.getDistance(player, entity) <= radar || viewport.isNearViewport(entity.location, plugin.radius/10)) {
-                        //entity.setSensorProfile(null)
-                        var cell = manager.getCell(entity)
-                        cell.isDiscovered = true
-
-                        for (adjacent in cell.getAdjacent()) {
-                            if (adjacent.getAdjacent().any { it.isPartialyDiscovered }) {
-                                adjacent.isPartialyDiscovered = true
-                            }
-                        }
-
-                        discovered.add(entity)
+                       reveal(entity)
                     }
                 }
 

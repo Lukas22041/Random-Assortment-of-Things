@@ -1,6 +1,8 @@
 package assortment_of_things.abyss.procgen.biomes
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
+import assortment_of_things.abyss.procgen.AbyssProcgenUtils
 import assortment_of_things.abyss.procgen.BiomeCellData
 import assortment_of_things.abyss.procgen.BiomeParticleManager
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -33,6 +35,10 @@ class AbyssalWastes() : BaseAbyssBiome() {
         return Color(150, 140, 140)
     }
 
+    override fun getSystemLightColor(): Color {
+        return Color(80, 80, 80)
+    }
+
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
 
     }
@@ -59,7 +65,14 @@ class AbyssalWastes() : BaseAbyssBiome() {
 
     /** Called after all cells are generated */
     override fun init() {
+
+        var system = AbyssUtils.getSystem()
+
        //generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1", 0.6f)
+
+        var sensor = AbyssProcgenUtils.createDecayingSensorArray(system!!, this)
+        sensor.location.set(deepestCells.random().getWorldCenterWithCircleOffset(300f))
+
     }
 
     override fun spawnParticlesForCell(particleManager: BiomeParticleManager, cell: BiomeCellData) {

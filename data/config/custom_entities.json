@@ -160,6 +160,77 @@
 	
 	
 	
+	#Entities
+	
+	"rat_abyss_sensor":{
+		"defaultRadius":75, # used if radius<0 in addCustomEntity()
+		"showInCampaign":true,
+		"showIconOnMap":true,
+		"showNameOnMap":true,
+		"nameFontScale":1,
+		"nameAngle":0,
+		"nameColor":[70,200,255,255],
+		"nameShadowColor":[0,0,0,255],
+		"scaleNameWithZoom":false,
+		"scaleIconWithZoom":true,
+		"renderCircleIndicator":true,
+		"renderCircleIndicatorSelectionFlash":true,
+		"defaultName":"Sensor Array", # used if name=null in addCustomEntity()
+		"nameInText":"sensor array",
+		"shortName":"array",
+		"icon":"graphics/icons/sensor_array.png",
+		"iconWidth":24,
+		"iconHeight":24,
+		"sprite":"graphics/stations/rat_abyss_sensor.png",
+		"spriteWidth":86,
+		"spriteHeight":86,
+		"customDescriptionId":"rat_abyss_sensor",
+		"interactionImage":"graphics/illustrations/rat_abyss_wreckage.jpg",
+		"tags":["rat_abyss_biome_wreck_visual"],
+		"layers":[TERRAIN_7A], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"pluginClass":"assortment_of_things.abyss.entities.AbyssSensorEntity",
+		
+		"detectionRange":5000, # must be >0 for discoverable/discoveryXP to be used
+		"discoverable":true,
+		"discoveryXP":5000,
+	},
+	
+	"rat_decaying_abyss_sensor":{
+		"defaultRadius":75, # used if radius<0 in addCustomEntity()
+		"showInCampaign":true,
+		"showIconOnMap":true,
+		"showNameOnMap":true,
+		"nameFontScale":1,
+		"nameAngle":0,
+		"nameColor":[70,200,255,255],
+		"nameShadowColor":[0,0,0,255],
+		"scaleNameWithZoom":false,
+		"scaleIconWithZoom":true,
+		"renderCircleIndicator":true,
+		"renderCircleIndicatorSelectionFlash":true,
+		"defaultName":"Deteriorating Sensor Array", # used if name=null in addCustomEntity()
+		"nameInText":"sensor array",
+		"shortName":"array",
+		"icon":"graphics/icons/sensor_array.png",
+		"iconWidth":24,
+		"iconHeight":24,
+		"sprite":"graphics/stations/rat_abyss_sensor_decaying.png",
+		"spriteWidth":86,
+		"spriteHeight":86,
+		"customDescriptionId":"rat_decaying_abyss_sensor",
+		"interactionImage":"graphics/illustrations/rat_abyss_wreckage.jpg",
+		"tags":["rat_abyss_biome_wreck_visual"],
+		"layers":[TERRAIN_7A], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"pluginClass":"assortment_of_things.abyss.entities.AbyssSensorEntity",
+		
+		"detectionRange":5000, # must be >0 for discoverable/discoveryXP to be used
+		"discoverable":true,
+		"discoveryXP":5000,
+	},
+	
+	
+	
+	
 	
 	
 	

@@ -74,7 +74,10 @@ class EtherealShores() : BaseAbyssBiome() {
         cell.setBiome(this)
         deepestCells.add(cell)
 
-        for (surounding in cell.getSurrounding()) {
+        var count = 0
+        for (surounding in cell.getSurrounding().shuffled()) {
+            count++
+            if (count >= 6) break
             if (surounding.getBiome() != null) continue
             if (surounding.isFake) continue
             surounding.setBiome(this)
@@ -111,6 +114,8 @@ class EtherealShores() : BaseAbyssBiome() {
         var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere_sierra", Factions.NEUTRAL)
         photosphere.setLocation(pLoc.x, pLoc.y)
         photosphere.radius = 100f
+
+        majorLightsources.add(photosphere)
 
         var plugin = photosphere.customPlugin as AbyssalLight
         plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)

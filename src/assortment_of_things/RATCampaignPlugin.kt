@@ -5,6 +5,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.boss.GenesisInteraction
 import assortment_of_things.abyss.boss.GenesisReencounterInteractionPlugin
 import assortment_of_things.abyss.entities.hyper.AbyssalFracture
+import assortment_of_things.abyss.interactions.AbyssSensorInteraction
 import assortment_of_things.abyss.interactions.ethereal.AbyssalRaphaelInteraction
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
@@ -152,6 +153,11 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
             if (interactionTarget.hasTag("rat_abyss_sierra_raphael")) {
                 return PluginPick(AbyssalRaphaelInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+            }
+
+            when (id) {
+                "rat_abyss_sensor" -> return PluginPick(AbyssSensorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_decaying_abyss_sensor" -> return PluginPick(AbyssSensorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
             /*

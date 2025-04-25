@@ -51,16 +51,15 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         tooltip.addPara("Placeholder")
     }
 
-    var photospheres = ArrayList<SectorEntityToken>()
-
     /** Called after all cells are generated */
     override fun init() {
 
-        var system = AbyssUtils.getSystem()
+        var system = AbyssUtils.getSystem()!!
 
         generateFogTerrain("rat_sea_of_tranquility", "rat_terrain", "depths1", 0.6f)
 
         generateHyperspaceEntrance() //Pick entrance first
+
 
         var photosphereNum = MathUtils.getRandomNumberInRange(13, 16)
 
@@ -77,7 +76,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             var plugin = entity.customPlugin as AbyssalLight
             plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
 
-            photospheres.add(entity)
+            majorLightsources.add(entity)
 
             //Have some photospheres with cleared terrain, some not.
             if (Random().nextFloat() >= 0.5f) {
@@ -87,6 +86,12 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             entity.sensorProfile = 1f
             /*entity.setDiscoverable(true)
             entity.detectedRangeMod.modifyFlat("test", 5000f)*/
+        }
+
+        var sensor = AbyssProcgenUtils.createSensorArray(system, this)
+        var sphere = majorLightsources.randomOrNull()
+        if (sphere != null) {
+            sensor.setCircularOrbitWithSpin(sphere, MathUtils.getRandomNumberInRange(0f, 360f), sphere.radius + sensor.radius + MathUtils.getRandomNumberInRange(100f, 250f), 90f, -10f, 10f)
         }
     }
 

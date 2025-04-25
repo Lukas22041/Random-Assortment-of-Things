@@ -29,13 +29,19 @@ class BiomeAtmosphereRenderer : LunaCampaignRenderingPlugin {
 
     override fun advance(amount: Float) {
 
+        if (!AbyssUtils.isPlayerInAbyss()) return
+
+        var system = AbyssUtils.getSystem()
         var manager = AbyssUtils.getBiomeManager()
 
+        system!!.lightColor = manager.getCurrentSystemLightColor()
 
 
         var warper = AbyssUtils.getData().warper
         warper?.overwriteColor = manager.getCurrentBackgroundColor()
         //TODO Set warper color here
+
+
 
     }
 

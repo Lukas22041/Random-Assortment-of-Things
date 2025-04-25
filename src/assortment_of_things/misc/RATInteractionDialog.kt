@@ -1,5 +1,10 @@
 package assortment_of_things.misc
 
+import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.biomes.AbyssalWastes
+import assortment_of_things.abyss.procgen.biomes.SeaOfHarmony
+import assortment_of_things.abyss.procgen.biomes.SeaOfSerenity
+import assortment_of_things.abyss.procgen.biomes.SeaOfSolitude
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.campaign.*
@@ -62,7 +67,23 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
         this.targetMemory = dialog.interactionTarget.memoryWithoutUpdate
         this.memory = Global.getSector().memoryWithoutUpdate
 
-        if (dialog.interactionTarget.customInteractionDialogImageVisual != null)
+        if (dialog.interactionTarget.hasTag("rat_abyss_biome_wreck_visual")) {
+            var manager = AbyssUtils.getBiomeManager()
+            var biome = manager.getCell(interactionTarget).getBiome()!!
+
+            var path = when (biome) {
+                is SeaOfSerenity -> "graphics/illustrations/rat_abyss_wreckag_serenity.jpg"
+                is SeaOfHarmony -> "graphics/illustrations/rat_abyss_wreckage_harmony.jpg"
+                is SeaOfSolitude -> "graphics/illustrations/rat_abyss_wreckag_solitude.jpg"
+                is AbyssalWastes -> "graphics/illustrations/rat_abyss_wreckage_wastes.jpg"
+                else -> "graphics/illustrations/rat_abyss_wreckage.jpg"
+            }
+
+            var sprite = Global.getSettings().getAndLoadSprite(path)
+            var interactionImage = InteractionDialogImageVisual(path, sprite.width, sprite.height)
+            visualPanel.showImageVisual(interactionImage)
+        }
+        else if (dialog.interactionTarget.customInteractionDialogImageVisual != null)
         {
             var path = dialog.interactionTarget.customInteractionDialogImageVisual.spriteName
             var sprite = Global.getSettings().getAndLoadSprite(path)

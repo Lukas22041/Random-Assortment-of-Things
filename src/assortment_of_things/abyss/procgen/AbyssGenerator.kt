@@ -3,6 +3,7 @@ package assortment_of_things.abyss.procgen
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.misc.AbyssBackgroundWarper
 import assortment_of_things.abyss.procgen.scripts.AbyssalLightDiscovery
+import assortment_of_things.abyss.procgen.scripts.MiscAbyssScript
 import assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
@@ -93,6 +94,7 @@ object AbyssGenerator {
 
 
 
+        Global.getSector().addScript(MiscAbyssScript())
         Global.getSector().addScript(AbyssalLightDiscovery())
 
 

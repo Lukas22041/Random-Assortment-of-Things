@@ -48,8 +48,6 @@ class SeaOfSolitude() : BaseAbyssBiome() {
             Misc.getTextColor(), Misc.getHighlightColor(), "Extreme Storms", "3", "dense fog")
     }
 
-    var photospheres = ArrayList<SectorEntityToken>()
-
     var stormHandler = SolitudeStormHandler(this)
 
     /** Called after all cells are generated */
@@ -57,9 +55,9 @@ class SeaOfSolitude() : BaseAbyssBiome() {
 
         LunaCampaignRenderer.addRenderer(stormHandler)
 
-        var system = AbyssUtils.getSystem()
+        var system = AbyssUtils.getSystem()!!
 
-        generateFogTerrain("rat_sea_of_solitude", "rat_terrain", "depths1", 0.5f)
+        generateFogTerrain("rat_sea_of_solitude", "rat_terrain", "depths1", 0.45f)
 
         var photosphereNum = MathUtils.getRandomNumberInRange(12, 14)
 
@@ -76,7 +74,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
             var plugin = entity.customPlugin as AbyssalLight
             plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
 
-            photospheres.add(entity)
+            majorLightsources.add(entity)
 
             //Have some photospheres with cleared terrain, some not.
             if (Random().nextFloat() >= 0.1f) {
@@ -87,10 +85,12 @@ class SeaOfSolitude() : BaseAbyssBiome() {
             /*entity.setDiscoverable(true)
             entity.detectedRangeMod.modifyFlat("test", 5000f)*/
         }
-    }
 
-    override fun advance(amount: Float) {
-
+        var sensor = AbyssProcgenUtils.createSensorArray(system, this)
+        var sphere = majorLightsources.randomOrNull()
+        if (sphere != null) {
+            sensor.setCircularOrbitWithSpin(sphere, MathUtils.getRandomNumberInRange(0f, 360f), sphere.radius + sensor.radius + MathUtils.getRandomNumberInRange(100f, 250f), 90f, -10f, 10f)
+        }
     }
 
 
@@ -175,7 +175,7 @@ class SolitudeStormHandler(var solitude: SeaOfSolitude) : LunaCampaignRenderingP
 
         if (stormDuration <= 0 && dominant == solitude && cell.depth != BiomeDepth.BORDER) stormInterval.advance(amount) //Only advance if not storming
         if (stormInterval.intervalElapsed()) {
-            stormDuration = MathUtils.getRandomNumberInRange(10f, 14f)
+            stormDuration = MathUtils.getRandomNumberInRange(10f, 16f)
             stormInterval.advance(0f)
         }
 
@@ -198,6 +198,7 @@ class SolitudeStormHandler(var solitude: SeaOfSolitude) : LunaCampaignRenderingP
             for (fleet in AbyssUtils.getSystem()!!.fleets) {
                 var inClouds = (solitude.terrain as BaseFogTerrain).isInClouds(fleet)
                 if (!inClouds) {
+                    fleet.stats.addTemporaryModFlat(0.1f, "rat_extreme_storm", "Extreme Storm", 100 * (stormSensorMultIncrease * brightness), fleet.stats.detectedRangeMod)
                     fleet.stats.addTemporaryModMult(0.1f, "rat_extreme_storm", "Extreme Storm", 1f + (stormSensorMultIncrease * brightness), fleet.stats.detectedRangeMod)
                 }
             }
