@@ -31,12 +31,15 @@ class EtherealShores() : BaseAbyssBiome() {
         return "Ethereal Shores"
     }
 
+    private var biomeColor = Color(205,155,255)
+    private var darkBiomeColor = Color(82, 62, 102)
+
     override fun getBiomeColor(): Color {
-        return Color(205,155,255)
+        return biomeColor
     }
 
     override fun getDarkBiomeColor(): Color {
-        return Color(82, 62, 102)
+        return darkBiomeColor
     }
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
@@ -51,9 +54,7 @@ class EtherealShores() : BaseAbyssBiome() {
         return 1.25f
     }
 
-    override fun getParticleColor(): Color {
-        return Color(205,155,255)
-    }
+
 
     override fun getMusicKeyId(): String? {
         return null
@@ -74,10 +75,10 @@ class EtherealShores() : BaseAbyssBiome() {
         cell.setBiome(this)
         deepestCells.add(cell)
 
-        var count = 0
+        //var count = 0
         for (surounding in cell.getSurrounding().shuffled()) {
-            count++
-            if (count >= 6) break
+            //count++
+            //if (count >= 6) break //Kind of just breaks without the 8 surrounding cells
             if (surounding.getBiome() != null) continue
             if (surounding.isFake) continue
             surounding.setBiome(this)

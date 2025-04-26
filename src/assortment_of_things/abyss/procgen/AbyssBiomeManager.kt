@@ -95,6 +95,10 @@ class AbyssBiomeManager {
 
         generateBiomes()
 
+        for (biome in biomes) {
+            biome.preDepthScan()
+        }
+
         determineBordersAndDepth()
 
         findCorners()
@@ -236,6 +240,11 @@ class AbyssBiomeManager {
 
 
     fun initBiomes() {
+
+        for (biome in biomes) {
+            biome.preInit()
+        }
+
         for (biome in biomes) {
             biome.init()
         }

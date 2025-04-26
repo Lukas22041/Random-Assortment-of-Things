@@ -39,12 +39,15 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         return "Sea of Tranquility"
     }
 
+    private var biomeColor = Color(255, 0, 50)
+    private var darkBiomeColor = Color(77, 0, 15)
+
     override fun getBiomeColor(): Color {
-        return Color(255, 0, 50)
+        return biomeColor
     }
 
     override fun getDarkBiomeColor(): Color {
-        return Color(77, 0, 15)
+        return darkBiomeColor
     }
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {

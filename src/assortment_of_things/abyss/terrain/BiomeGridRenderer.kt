@@ -54,8 +54,7 @@ class BiomeGridRenderer : BaseTerrain() {
                 alpha += 0.5f
             }*/
 
-            var color = Color(30, 30, 30)
-            if (cell.getBiome() != null) color = cell.getBiome()!!.getBiomeColor()
+            var color = cell.getBiome()?.getBiomeColor() ?: Color(30, 30, 30)
             /*if (surrounding.contains(cell)) {
                 alpha += 0.5f
                 color = Misc.getHighlightColor()
@@ -119,7 +118,6 @@ class BiomeGridRenderer : BaseTerrain() {
             }
 
             //To FPS intensive for not much of a result
-            var renderBackgrounds = true
             /*if (renderBackgrounds) {
 
                 var c = color.setBrightness((alpha * 255f * 0.75f).toInt()).setAlpha((255))
@@ -149,7 +147,6 @@ class BiomeGridRenderer : BaseTerrain() {
 
 
         }
-
     }
 
 

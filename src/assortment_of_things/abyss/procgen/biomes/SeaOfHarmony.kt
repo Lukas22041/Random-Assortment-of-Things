@@ -16,12 +16,15 @@ class SeaOfHarmony() : BaseAbyssBiome() {
         return "Sea of Harmony"
     }
 
+    private var biomeColor = Color(255, 64, 50)
+    private var darkBiomeColor = Color(102, 25, 20)
+
     override fun getBiomeColor(): Color {
-        return Color(255, 64, 50)
+        return biomeColor
     }
 
     override fun getDarkBiomeColor(): Color {
-        return Color(102, 25, 20)
+        return darkBiomeColor
     }
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {

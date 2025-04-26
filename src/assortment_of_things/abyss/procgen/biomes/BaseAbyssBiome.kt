@@ -62,7 +62,7 @@ abstract class BaseAbyssBiome {
 
     open fun getSystemLightColor() = getDarkBiomeColor()
     open fun getTooltipColor() = getBiomeColor()
-    open fun getShiftedColor() : Color = Color(255, 255, 255)
+    //open fun getShiftedColor() : Color = Color(255, 255, 255)
     open fun getSaturation() : Float = 1f
     open fun getBackgroundColor() = getDarkBiomeColor()
     open fun getParticleColor() = getBiomeColor()
@@ -77,10 +77,16 @@ abstract class BaseAbyssBiome {
     /* Called before any cells have been generated, used mostly for minor biomes to take their cells */
     open fun preGenerate() { }
 
-    var majorLightsources = ArrayList<SectorEntityToken>()
+    /* Called before the final scan for the depth of cells, last chance to modify the biomes without introducing weirdness*/
+    open fun preDepthScan() { }
+
+    /* Called before other biomes init */
+    open fun preInit() {  }
 
     /** Called after all cells are generated */
     abstract fun init()
+
+    var majorLightsources = ArrayList<SectorEntityToken>()
 
     open fun spawnParticlesForCell(particleManager: BiomeParticleManager, cell: BiomeCellData) {
 

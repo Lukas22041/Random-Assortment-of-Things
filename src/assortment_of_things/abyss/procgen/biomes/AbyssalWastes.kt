@@ -23,20 +23,30 @@ class AbyssalWastes() : BaseAbyssBiome() {
         return "Abyssal Wastes"
     }
 
+    private var biomeColor = Color(30, 30, 30)
+    private var darkBiomeColor = Color(10, 10, 10)
+    private var tooltipColor = Color(150, 140, 140)
+    private var systemLightColor = Color(80, 80, 8)
+    private var particleColor = Color(168, 146, 145)
+
     override fun getBiomeColor(): Color {
-        return Color(30, 30, 30)
+        return biomeColor
     }
 
     override fun getDarkBiomeColor(): Color {
-        return Color(10, 10, 10)
+        return darkBiomeColor
     }
 
     override fun getTooltipColor(): Color {
-        return Color(150, 140, 140)
+        return tooltipColor
     }
 
     override fun getSystemLightColor(): Color {
-        return Color(80, 80, 80)
+        return systemLightColor
+    }
+
+    override fun getParticleColor(): Color {
+        return particleColor
     }
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
@@ -55,9 +65,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
         return 0.5f
     }
 
-    override fun getParticleColor(): Color {
-        return Color(168, 146, 145)
-    }
+
 
     override fun getMusicKeyId(): String {
         return "music_campaign_abyssal"
