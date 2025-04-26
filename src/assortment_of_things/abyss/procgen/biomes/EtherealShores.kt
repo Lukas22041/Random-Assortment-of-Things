@@ -65,31 +65,38 @@ class EtherealShores() : BaseAbyssBiome() {
         return false
     }
 
-    override fun preGenerate() {
+    //Should not be overwriteable by another minibiome
+    override fun canBeOverwritten(): Boolean {
+        return false
+    }
 
+    //Place the biome between two other biomes
+    override fun preDepthScan() {
         var manager = AbyssUtils.getBiomeManager()
-        var picks = manager.getCells().filter { it.getBiome() == null }
+        var picks = manager.getCells()/*.filter { it.getBiome() == null }*/
         //Do not let it spawn at the edges
-        var cell = picks.filter { it.gridX != 0 && it.gridX != AbyssBiomeManager.width && it.gridY != 0 && it.gridY != AbyssBiomeManager.height }.random()
+        //var cell = picks.filter { it.gridX != 0 && it.gridX != AbyssBiomeManager.width && it.gridY != 0 && it.gridY != AbyssBiomeManager.height }.random()
+        var cellsFull = picks.filter { it.gridX > 0 && it.gridX < AbyssBiomeManager.rows && it.gridY > 0 && it.gridY < AbyssBiomeManager.columns }
+
+        //Only cells where any of their surrounding biome cells is not their own biome, and only on the border of the abyssal wastes
+        var cells = cellsFull.filter { center -> center.getSurrounding().any { surrounding -> center.getBiome() != surrounding.getBiome() && !surrounding.isFake && surrounding.getBiome() is AbyssalWastes } }
+
+        //Ensure it doesnt pick a biome border with any biome that can not be overwritten
+        cells = cells.filter { center -> center.getSurrounding().none { it.getBiome()?.canBeOverwritten() == false} }
+
+        var cell = cells.random()
 
         cell.setBiome(this)
         deepestCells.add(cell)
 
-        //var count = 0
         for (surounding in cell.getSurrounding().shuffled()) {
-            //count++
-            //if (count >= 6) break //Kind of just breaks without the 8 surrounding cells
-            if (surounding.getBiome() != null) continue
+            //if (surounding.getBiome() != null) continue
             if (surounding.isFake) continue
             surounding.setBiome(this)
         }
+    }
 
-        /*for (i in 0 until 2) {
-            var surrounding = cell.getSurrounding().random()
-
-            var toConvert = surrounding.getAdjacent().filter { it != cell && it.getBiome() == null && !it.isFake }.randomOrNull()
-            toConvert?.setBiome(this)
-        }*/
+    override fun preGenerate() {
 
     }
 
@@ -99,7 +106,7 @@ class EtherealShores() : BaseAbyssBiome() {
 
     /** Called after all cells are generated */
     override fun init() {
-        generateFogTerrain("rat_sea_of_ethereal_shores", "rat_terrain", "depths1", 0.75f)
+        generateFogTerrain("rat_sea_of_ethereal_shores", "rat_terrain", "depths1", 0.65f)
         var fog = terrain as BaseFogTerrain
         var editor = OldNebulaEditor(fog)
 
@@ -107,7 +114,18 @@ class EtherealShores() : BaseAbyssBiome() {
 
         var center = deepestCells.first()
 
-        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 1.25f, AbyssBiomeManager.cellSize * 5f, 0f, 360f)
+
+
+
+        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 1.35f, AbyssBiomeManager.cellSize * 5f, 0f, 360f)
+
+        //Make it look less circular
+
+        var angle1 = MathUtils.getRandomNumberInRange(0f, 360f)
+        var angle2 = MathUtils.getRandomNumberInRange(0f, 360f)
+
+        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 1f, AbyssBiomeManager.cellSize * 5f, angle1, angle1+80f)
+        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 0.9f, AbyssBiomeManager.cellSize * 5f, angle2, angle2+50f)
 
 
         var pLoc = center!!.getWorldCenter().plus(MathUtils.getRandomPointInCircle(Vector2f(), AbyssBiomeManager.cellSize * 0.25f))

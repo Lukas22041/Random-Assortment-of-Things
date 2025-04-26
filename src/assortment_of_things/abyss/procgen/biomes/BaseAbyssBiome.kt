@@ -59,6 +59,7 @@ abstract class BaseAbyssBiome {
     abstract fun addBiomeTooltip(tooltip: TooltipMakerAPI)
 
     open fun shouldGenerateBiome() : Boolean = true
+    open fun canBeOverwritten() : Boolean = true //If a biome allows its cells from being overwritten during generation
 
     open fun getSystemLightColor() = getDarkBiomeColor()
     open fun getTooltipColor() = getBiomeColor()
