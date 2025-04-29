@@ -2,6 +2,7 @@ package assortment_of_things.combat
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.combat.AbyssCombatHueApplier
+import assortment_of_things.abyss.combat.CombatBeaconRenderer
 import assortment_of_things.abyss.combat.CombatPhotosphereRenderer
 import assortment_of_things.abyss.entities.light.AbyssalBeacon
 import assortment_of_things.abyss.entities.light.AbyssalLight
@@ -176,6 +177,7 @@ class CombatHandler : EveryFrameCombatPlugin
         var currentColor = manager.getCurrentBiomeColor()
         var currentDarkColor = manager.getCurrentDarkBiomeColor()
         var currentBackgroundColor = manager.getCurrentBackgroundColor()
+        var currentLightColor = manager.getCurrentSystemLightColor()
 
         //Background
         var backgroundBrightness = 40
@@ -213,9 +215,8 @@ class CombatHandler : EveryFrameCombatPlugin
                 engine!!.addLayeredRenderingPlugin(CombatPhotosphereRenderer(lightSource))
             }
 
-            //TODO Implement Abyssal Beacon in Combat
             if (plugin is AbyssalBeacon) {
-
+                engine!!.addLayeredRenderingPlugin(CombatBeaconRenderer(lightSource, currentLightColor))
             }
 
         }
