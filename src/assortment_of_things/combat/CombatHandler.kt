@@ -1,21 +1,23 @@
 package assortment_of_things.combat
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.scripts.ResetBackgroundScript
+import assortment_of_things.abyss.combat.AbyssCombatHueApplier
+import assortment_of_things.abyss.combat.CombatPhotosphereRenderer
+import assortment_of_things.abyss.entities.light.AbyssalBeacon
+import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.entities.light.AbyssalPhotosphere
 import assortment_of_things.backgrounds.neural.NeuralShardScript
 import assortment_of_things.backgrounds.zero_day.ZeroDayScript
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.misc.ThreatFragmentShader
 import assortment_of_things.misc.escort.EscortOrdersManager
-import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.input.InputEventAPI
 import exerelin.campaign.backgrounds.CharacterBackgroundUtils
 import org.lazywizard.lazylib.MathUtils
+import org.magiclib.kotlin.setBrightness
 
 
 class CombatHandler : EveryFrameCombatPlugin
@@ -88,6 +90,10 @@ class CombatHandler : EveryFrameCombatPlugin
                 }
             }
 
+            if (AbyssUtils.isPlayerInAbyss()) {
+                initAbyss()
+            }
+
             /*var system = Global.getSector()?.playerFleet?.starSystem ?: return
             if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
             {
@@ -157,6 +163,70 @@ class CombatHandler : EveryFrameCombatPlugin
 */        }
     }
 
+    fun initAbyss() {
+        var engine = Global.getCombatEngine()
+
+        var data = AbyssUtils.getData()
+        var manager = AbyssUtils.getBiomeManager()
+
+        var darkness = data.darknessTerrain ?: return
+        var lightLevel = 1-darkness.getLightlevel() //1 If full brightness
+        var darknessLevel = darkness.getDarknessMult() //Biome dependent darkness mult
+
+        var currentColor = manager.getCurrentBiomeColor()
+        var currentDarkColor = manager.getCurrentDarkBiomeColor()
+        var currentBackgroundColor = manager.getCurrentBackgroundColor()
+
+        //Background
+        var backgroundBrightness = 40
+        backgroundBrightness += (75 * lightLevel * darknessLevel).toInt()
+
+        var background = currentBackgroundColor.setBrightness(backgroundBrightness)
+
+        Global.getCombatEngine().backgroundColor = background
+
+        //Hue
+        engine.addLayeredRenderingPlugin(AbyssCombatHueApplier(currentDarkColor, lightLevel, darknessLevel))
+
+        //Display Lightsources in combat
+
+        var lightSource: SectorEntityToken? = null
+        var lightSources = Global.getSector().playerFleet.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
+        for (source in lightSources)
+        {
+            var plugin = source.customPlugin as AbyssalLight
+            if (MathUtils.getDistance(source.location, Global.getSector().playerFleet.location) < (plugin.radius / 10) - 10)
+            {
+                if (plugin is AbyssalPhotosphere || plugin is AbyssalBeacon) {
+                    lightSource = source
+                }
+                break
+            }
+        }
+
+        //engine!!.addLayeredRenderingPlugin(CombatWarpingBackgroundRenderer(background, color))
+
+        if (lightSource != null) {
+            var plugin = lightSource.customPlugin
+
+            if (plugin is AbyssalPhotosphere) {
+                engine!!.addLayeredRenderingPlugin(CombatPhotosphereRenderer(lightSource))
+            }
+
+            //TODO Implement Abyssal Beacon in Combat
+            if (plugin is AbyssalBeacon) {
+
+            }
+
+        }
+
+
+    }
+
+    fun advanceAbyss(amount: Float) {
+
+    }
+
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
     }
 
@@ -220,6 +290,11 @@ class CombatHandler : EveryFrameCombatPlugin
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {
             var system = Global.getSector()?.playerFleet?.starSystem ?: return
+
+            if (AbyssUtils.isPlayerInAbyss()) {
+                advanceAbyss(amount)
+            }
+
             /*if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
             {
 
