@@ -13,6 +13,7 @@ object ReflectionUtils {
     private val getFieldHandle = MethodHandles.lookup().findVirtual(fieldClass, "get", MethodType.methodType(Any::class.java, Any::class.java))
     private val getFieldNameHandle = MethodHandles.lookup().findVirtual(fieldClass, "getName", MethodType.methodType(String::class.java))
     private val setFieldAccessibleHandle = MethodHandles.lookup().findVirtual(fieldClass,"setAccessible", MethodType.methodType(Void.TYPE, Boolean::class.javaPrimitiveType))
+    private val getFieldTypeHandle = MethodHandles.lookup().findVirtual(fieldClass, "getType", MethodType.methodType(Class::class.java))
 
     private val methodClass = Class.forName("java.lang.reflect.Method", false, Class::class.java.classLoader)
     private val getMethodNameHandle = MethodHandles.lookup().findVirtual(methodClass, "getName", MethodType.methodType(String::class.java))
@@ -27,6 +28,25 @@ object ReflectionUtils {
 
         setFieldAccessibleHandle.invoke(field, true)
         setFieldHandle.invoke(field, instanceToModify, newValue)
+    }
+
+    fun setFieldOfType(type: Class<*>, instanceToModify: Any, newValue: Any?)
+    {
+        var decFieldsA: Array<Any> = instanceToModify.javaClass.declaredFields as Array<Any>
+        var fields: MutableList<Any> = decFieldsA.toMutableList()
+        var nonDecFieldsA: Array<Any> = instanceToModify.javaClass.fields as Array<Any>
+        var nonDecFields: MutableList<Any> = nonDecFieldsA.toMutableList()
+
+        fields.addAll(nonDecFields)
+
+        for (field: Any in fields)
+        {
+            setFieldAccessibleHandle.invoke(field, true)
+            var fieldType: Class<*> = getFieldTypeHandle.invoke(field) as Class<*>
+            if (fieldType == type) {
+                setFieldHandle.invoke(field, instanceToModify, newValue)
+            }
+        }
     }
 
     fun get(fieldName: String, instanceToGetFrom: Any): Any? {

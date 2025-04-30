@@ -9,6 +9,7 @@ import assortment_of_things.misc.RATInteractionPlugin
 import assortment_of_things.misc.addPara
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CoreUITabId
 import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.util.Misc
 
@@ -45,6 +46,9 @@ class AbyssSensorInteraction : RATInteractionPlugin() {
     }
 
     fun revealBiome() {
+
+        Global.getSector().campaignUI.showCoreUITab(CoreUITabId.MAP)
+
         var biome = (interactionTarget.customPlugin as AbyssSensorEntity).biome!!
 
         biome.isSensorRevealed = true

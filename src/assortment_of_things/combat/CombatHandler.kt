@@ -1,21 +1,22 @@
 package assortment_of_things.combat
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.combat.AbyssCombatHueApplier
-import assortment_of_things.abyss.combat.CombatBeaconRenderer
-import assortment_of_things.abyss.combat.CombatPhotosphereRenderer
+import assortment_of_things.abyss.combat.*
 import assortment_of_things.abyss.entities.light.AbyssalBeacon
 import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.entities.light.AbyssalPhotosphere
+import assortment_of_things.abyss.procgen.biomes.SeaOfSolitude
 import assortment_of_things.backgrounds.neural.NeuralShardScript
 import assortment_of_things.backgrounds.zero_day.ZeroDayScript
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.misc.escort.EscortOrdersManager
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.input.InputEventAPI
+import com.fs.starfarer.campaign.WarpingSpriteRenderer
 import exerelin.campaign.backgrounds.CharacterBackgroundUtils
 import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.setBrightness
@@ -169,6 +170,7 @@ class CombatHandler : EveryFrameCombatPlugin
 
         var data = AbyssUtils.getData()
         var manager = AbyssUtils.getBiomeManager()
+        var dominant = manager.getDominantBiome()
 
         var darkness = data.darknessTerrain ?: return
         var lightLevel = 1-darkness.getLightlevel() //1 If full brightness
@@ -187,11 +189,21 @@ class CombatHandler : EveryFrameCombatPlugin
 
         Global.getCombatEngine().backgroundColor = background
 
+        //Background Warper
+        var warper = CombatBackgroundWarper(8, 0.25f)
+        ReflectionUtils.setFieldOfType(WarpingSpriteRenderer::class.java, Global.getCombatEngine(), warper)
+        warper.overwriteColor = background
+
+
         //Hue
         engine.addLayeredRenderingPlugin(AbyssCombatHueApplier(currentDarkColor, lightLevel, darknessLevel))
 
-        //Display Lightsources in combat
+        //Sea of Solitude rendering
+        if (dominant is SeaOfSolitude) {
+            Global.getCombatEngine().addLayeredRenderingPlugin(SolitudeStormCombatRenderer(dominant))
+        }
 
+        //Display Lightsources in combat
         var lightSource: SectorEntityToken? = null
         var lightSources = Global.getSector().playerFleet.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
         for (source in lightSources)
@@ -218,8 +230,9 @@ class CombatHandler : EveryFrameCombatPlugin
             if (plugin is AbyssalBeacon) {
                 engine!!.addLayeredRenderingPlugin(CombatBeaconRenderer(lightSource, currentLightColor))
             }
-
         }
+
+
 
 
     }
