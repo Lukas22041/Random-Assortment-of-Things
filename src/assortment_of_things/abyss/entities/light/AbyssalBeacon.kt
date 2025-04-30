@@ -24,7 +24,7 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
     override var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
     override var lightColor = color
 
-    var fader = FaderUtil(1f, 15f, MathUtils.getRandomNumberInRange(14f, 15f), false, false)
+    var fader = FaderUtil(1f, 15f, MathUtils.getRandomNumberInRange(14f, 16f), false, false)
 
     @Transient
     var halo: SpriteAPI? = null

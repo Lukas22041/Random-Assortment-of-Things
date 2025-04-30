@@ -10,6 +10,7 @@ import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin
 import com.fs.starfarer.api.combat.CombatEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
+import com.fs.starfarer.api.util.FlickerUtilV2
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.DynamicRingBand
 import org.lazywizard.lazylib.MathUtils
@@ -37,6 +38,9 @@ class CombatDecayingPhotosphereRenderer(var photosphere: SectorEntityToken) : Ba
 
     var rotation = 0f
     var offset = Vector2f(0f, 0f)
+
+    var flicker1 = FlickerUtilV2(0.15f)
+    var flicker2 = FlickerUtilV2(0.33f)
 
     init {
 
@@ -85,6 +89,9 @@ class CombatDecayingPhotosphereRenderer(var photosphere: SectorEntityToken) : Ba
 
     override fun advance(amount: Float) {
         band1!!.advance(amount * 0.75f)
+
+        flicker1.advance(amount * 0.15f)
+        flicker2.advance(amount * 0.33f)
     }
 
     override fun getRenderRadius(): Float {
@@ -165,20 +172,35 @@ class CombatDecayingPhotosphereRenderer(var photosphere: SectorEntityToken) : Ba
 
 
 
+        band1!!.color = color.setAlpha(255)
+        band1!!.isAdditiveBlend = true
+        band1!!.render(location.x, location.y, viewport!!.alphaMult)
 
         center!!.setSize(radius * 1.8f , radius  * 1.8f)
-        center!!.color = color.setAlpha(130)
+        center!!.color = color.setAlpha(255)
         center!!.renderAtCenter(location.x, location.y)
 
-        band1!!.color = color.setAlpha(45)
-        band1!!.render(location.x, location.y, viewport!!.alphaMult)
 
 
         halo!!.alphaMult = 1f
-        halo!!.color = color.setAlpha(30)
+        halo!!.color = lightColor.setAlpha(75)
         halo!!.setSize(radius * 15, radius * 15 )
         halo!!.setAdditiveBlend()
         halo!!.renderAtCenter(location.x, location.y)
+
+        halo!!.alphaMult = 1f * ((flicker1.brightness + flicker2.brightness) /2)
+        halo!!.color = lightColor.setAlpha(15)
+        halo!!.setSize(radius * 6f, radius * 6f )
+        halo!!.setAdditiveBlend()
+        halo!!.renderAtCenter(location.x, location.y)
+
+        halo!!.alphaMult = 1f
+        halo!!.color = lightColor.setAlpha(55)
+        halo!!.setSize(radius * 4f, radius * 4f)
+        halo!!.setAdditiveBlend()
+        halo!!.renderAtCenter(location.x, location.y)
+
+
 
 
     }
