@@ -13,6 +13,7 @@ class AbyssalLightsource : BaseCustomEntityPlugin(), AbyssalLight {
 
     override var radius = 2000f
     override var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
+    override var lightColor = color
 
     @Transient
     var halo: SpriteAPI? = null
@@ -42,6 +43,8 @@ class AbyssalLightsource : BaseCustomEntityPlugin(), AbyssalLight {
         if (halo == null) {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
         }
+
+        lightColor = color
 
         if (layer == CampaignEngineLayers.ABOVE)
         {

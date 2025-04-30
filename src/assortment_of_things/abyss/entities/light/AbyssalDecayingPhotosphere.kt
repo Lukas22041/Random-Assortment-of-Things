@@ -8,12 +8,13 @@ import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.FlickerUtilV2
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.DynamicRingBand
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
-class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
+class AbyssalDecayingPhotosphere() : BaseCustomEntityPlugin(), AbyssalLight {
 
     override var radius = 20000f
     override var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
@@ -30,12 +31,17 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
 
     var rotation = 0f
 
+    var flicker1 = FlickerUtilV2(0.15f)
+    var flicker2 = FlickerUtilV2(0.33f)
+
     override fun advance(amount: Float) {
         super.advance(amount)
 
         if (entity == null) return
         initSpritesIfNull()
         band1!!.advance(amount)
+        flicker1.advance(amount * 0.15f)
+        flicker2.advance(amount * 0.33f)
     }
 
     fun initSpritesIfNull()
@@ -44,8 +50,8 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         var radius = entity.radius
         if (band1 != null && halo != null) return
 
-        color = AbyssUtils.getBiomeManager().getCell(entity).getBiome()?.getBiomeColor()?.setAlpha(255) ?: AbyssUtils.ABYSS_COLOR
-        lightColor = color
+        color = Color(10, 10, 10)
+        lightColor = Color(70, 70, 70)
 
         halo = Global.getSettings().getSprite("rat_terrain", "halo")
 
@@ -90,9 +96,9 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         var posX = entity.location.x
         var posY = entity.location.y
 
-        if (!viewport!!.isNearViewport(entity.location, radius)) return
 
-        lightColor = color
+
+        if (!viewport!!.isNearViewport(entity.location, radius)) return
 
         if (layer == CampaignEngineLayers.TERRAIN_7A)
         {
@@ -110,15 +116,19 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         {
 
             halo!!.alphaMult = 1f
-            halo!!.color = color.setAlpha(75)
+            halo!!.color = lightColor.setAlpha(75)
+            halo!!.setSize(radius / 20, radius / 20)
+            halo!!.setAdditiveBlend()
+            halo!!.renderAtCenter(entity.location.x, entity.location.y)
 
+            halo!!.alphaMult = 1f * ((flicker1.brightness + flicker2.brightness) /2)
+            halo!!.color = lightColor.setAlpha(15)
             halo!!.setSize(radius / 20, radius / 20)
             halo!!.setAdditiveBlend()
             halo!!.renderAtCenter(entity.location.x, entity.location.y)
 
             halo!!.alphaMult = 1f
-            halo!!.color = color.setAlpha(55)
-
+            halo!!.color = lightColor.setAlpha(55)
             halo!!.setSize(radius / 2, radius / 2)
             halo!!.setAdditiveBlend()
             halo!!.renderAtCenter(entity.location.x, entity.location.y)
@@ -132,7 +142,7 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
     override fun createMapTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
         super.createMapTooltip(tooltip, expanded)
 
-        tooltip!!.addPara("Photosphere", 0f, Misc.getTextColor(), color, "Photosphere")
+        tooltip!!.addPara("Decaying Photosphere", 0f, Misc.getTextColor(), Color(150, 140, 140), "Decaying Photosphere")
 
     }
 }

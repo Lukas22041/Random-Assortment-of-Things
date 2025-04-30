@@ -3,6 +3,7 @@ package assortment_of_things.abyss.terrain
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.*
 import assortment_of_things.abyss.entities.hyper.AbyssalFracture
+import assortment_of_things.abyss.entities.light.AbyssalBeacon
 import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.levelBetween
@@ -93,7 +94,8 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
             var plugin = source.customPlugin as AbyssalLight
             var radius = plugin.radius * factor
-            var color = plugin.color
+            if (plugin is AbyssalBeacon) radius = (plugin.baseRadius + plugin.extraRadius) * factor
+            var color = plugin.lightColor
 
             halo!!.alphaMult = 0.6f * alphaMult
             halo!!.color = color.setAlpha(75)
@@ -178,7 +180,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
             var plugin = sources.customPlugin as AbyssalLight
             var radius = plugin.radius * factor
-            var color = plugin.color
+            var color = plugin.lightColor
             if (plugin.radius >= 50000) continue
 
             halo!!.alphaMult = 1f * alphaMult
@@ -276,6 +278,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             if (distance < maxRadius) {
                 inAny = true
                 var level = (distance - minRadius) / (maxRadius - minRadius)
+                if (source.customEntitySpec?.id == "rat_abyss_decaying_photosphere") level = MathUtils.clamp(level, 0.5f, 1f)
                 if (level >= highestMult) {
                     highestMult = level
                 }

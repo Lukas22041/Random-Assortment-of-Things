@@ -22,6 +22,7 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
     var extraRadius = 12000f
     override var radius = baseRadius + extraRadius
     override var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
+    override var lightColor = color
 
     var fader = FaderUtil(1f, 15f, MathUtils.getRandomNumberInRange(14f, 15f), false, false)
 
@@ -68,6 +69,7 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
         if (halo != null && glow != null) return
 
         color = AbyssUtils.getBiomeManager().getCell(entity).getBiome()?.getBiomeColor()?.setAlpha(255) ?: AbyssUtils.ABYSS_COLOR
+        lightColor = color
 
         halo = Global.getSettings().getSprite("rat_terrain", "halo")
         glow = Global.getSettings().getAndLoadSprite("graphics/stations/rat_abyss_beacon_glow.png")
@@ -84,6 +86,8 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
 
 
         initSpritesIfNull()
+
+        lightColor = color
 
         if (layer == CampaignEngineLayers.ABOVE)
         {

@@ -6,5 +6,6 @@ interface AbyssalLight {
 
     var radius: Float
     var color: Color
+    var lightColor: Color
 
 }

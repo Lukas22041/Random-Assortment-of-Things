@@ -1,16 +1,21 @@
 package assortment_of_things.abyss.procgen.biomes
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.AbyssProcgenUtils
 import assortment_of_things.abyss.procgen.BiomeCellData
 import assortment_of_things.abyss.procgen.BiomeParticleManager
+import assortment_of_things.abyss.terrain.BaseFogTerrain
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
+import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
+import java.util.*
 
 //System with no fog, threat is rampant and its generaly very dark
 class AbyssalWastes() : BaseAbyssBiome() {
@@ -26,7 +31,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
     private var biomeColor = Color(30, 30, 30)
     private var darkBiomeColor = Color(10, 10, 10)
     private var tooltipColor = Color(150, 140, 140)
-    private var systemLightColor = Color(80, 80, 8)
+    private var systemLightColor = Color(25, 25, 25)
     private var particleColor = Color(168, 146, 145)
 
     override fun getBiomeColor(): Color {
@@ -77,6 +82,31 @@ class AbyssalWastes() : BaseAbyssBiome() {
         var system = AbyssUtils.getSystem()
 
        //generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1", 0.6f)
+
+
+        var photosphereNum = MathUtils.getRandomNumberInRange(10, 13)
+
+        for (i in 0 until photosphereNum) {
+
+            //Unlike other biomes, try to force more spacing
+            var cell: BiomeCellData? = pickAndClaimSurroundingOrSmaller() ?: break
+
+            var loc = cell!!.getWorldCenter().plus(MathUtils.getRandomPointInCircle(Vector2f(), AbyssBiomeManager.cellSize * 0.5f))
+
+            var entity = system!!.addCustomEntity("rat_abyss_decyaing_photosphere_${Misc.genUID()}", "Decaying Photosphere", "rat_abyss_decaying_photosphere", Factions.NEUTRAL)
+            entity.setLocation(loc.x, loc.y)
+            entity.radius = 100f
+
+            var plugin = entity.customPlugin as AbyssalLight
+            plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
+
+            majorLightsources.add(entity)
+
+            entity.sensorProfile = 1f
+            /*entity.setDiscoverable(true)
+            entity.detectedRangeMod.modifyFlat("test", 5000f)*/
+        }
+
 
         var sensor = AbyssProcgenUtils.createDecayingSensorArray(system!!, this)
         sensor.location.set(deepestCells.random().getWorldCenterWithCircleOffset(300f))
