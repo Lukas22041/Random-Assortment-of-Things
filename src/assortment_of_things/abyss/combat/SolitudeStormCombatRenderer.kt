@@ -4,19 +4,17 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.misc.FlickerUtilV2Abyssal
 import assortment_of_things.abyss.procgen.BiomeDepth
 import assortment_of_things.abyss.procgen.biomes.SeaOfSolitude
-import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin
 import com.fs.starfarer.api.combat.CombatEngineLayers
-import com.fs.starfarer.api.combat.CombatLayeredRenderingPlugin
 import com.fs.starfarer.api.combat.ViewportAPI
-import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.util.IntervalUtil
-import lunalib.lunaUtil.campaign.LunaCampaignRenderingPlugin
+import org.dark.shaders.light.LightShader
+import org.dark.shaders.light.StandardLight
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.lwjgl.util.vector.Vector3f
 import java.awt.Color
 import java.util.*
 
@@ -24,15 +22,23 @@ class SolitudeStormCombatRenderer(var solitude: SeaOfSolitude) : BaseCombatLayer
 
     var thunder = Global.getSettings().getAndLoadSprite("graphics/fx/rat_solitude_thunder.png")
 
+
+
     override fun isExpired(): Boolean {
         return false
     }
 
-
-    var stormInterval = IntervalUtil(6f, 8f)
+    var stormInterval = IntervalUtil(12f, 22f)
+    var stormDuration = 0f
 
     var flicker1 = FlickerUtilV2Abyssal(0.5f)
     var flicker2 = FlickerUtilV2Abyssal(0.7f)
+
+    var addedLight = false
+    var sun1 = StandardLight()
+    var sun2 = StandardLight()
+    var lightDirection1 = Vector2f()
+    var lightDirection2 = Vector2f()
     //var flicker2 = FlickerUtilV2(4f)
 
     init {
@@ -49,14 +55,32 @@ class SolitudeStormCombatRenderer(var solitude: SeaOfSolitude) : BaseCombatLayer
         var dominant = manager.getDominantBiome()
         var cell = manager.getPlayerCell()
 
-        stormInterval.advance(amount) //Only advance if not storming
+        if (stormDuration <= 0 && dominant == solitude && cell.depth != BiomeDepth.BORDER) stormInterval.advance(amount) //Only advance if not storming
         if (stormInterval.intervalElapsed()) {
-            flicker1.newBurst()
-            flicker2.newBurst()
+            stormDuration = MathUtils.getRandomNumberInRange(10f, 16f)
             stormInterval.advance(0f)
 
             flicker1.numBursts = MathUtils.getRandomNumberInRange(5,7)
             flicker2.numBursts = MathUtils.getRandomNumberInRange(2,3)
+
+            var x = MathUtils.getRandomNumberInRange(-0.5f, 0.5f)
+            var y = MathUtils.getRandomNumberInRange(-0.5f, 0.5f)
+            lightDirection1 = Vector2f(x, y)
+
+            x = MathUtils.getRandomNumberInRange(-0.5f, 0.5f)
+            y = MathUtils.getRandomNumberInRange(-0.5f, 0.5f)
+            lightDirection2 = Vector2f(x, y)
+        }
+
+        stormDuration -= 1 * amount
+
+        //Only advance while in the biome, or if it has to finish flashing
+        if (stormDuration <= 0f || dominant != solitude || cell.depth == BiomeDepth.BORDER) {
+            flicker1.stopAll = true
+            flicker2.stopAll = true
+        } else {
+            flicker1.stopAll = false
+            flicker2.stopAll = false
         }
 
         flicker1.advance(amount * 0.15f)
@@ -65,8 +89,31 @@ class SolitudeStormCombatRenderer(var solitude: SeaOfSolitude) : BaseCombatLayer
         //flicker2.advance(amount)
 
         if (flicker1.isPeakFrame) {
-            Global.getSoundPlayer().playSound("rat_abyss_solitude_storm_sounds", 0.8f, 1.4f, Global.getCombatEngine().viewport.center, Vector2f())
+            Global.getSoundPlayer().playSound("rat_abyss_solitude_storm_sounds", 0.8f, 1.25f, Global.getCombatEngine().viewport.center, Vector2f())
         }
+
+        if (!addedLight) {
+            addedLight = true
+
+            sun1.type = 3
+            sun1.specularIntensity = 0.020f
+            sun1.makePermanent()
+            LightShader.addLight(sun1)
+
+            sun2.type = 3
+            sun2.specularIntensity = 0.020f
+            sun2.makePermanent()
+            LightShader.addLight(sun2)
+
+        }
+
+        sun1.direction = Vector3f(lightDirection1.x, lightDirection1.y, 0.25f).normalise() as Vector3f
+        sun1.intensity = 20.000f * flicker1.brightness
+        sun1.setColor(0.8f, 0.01f, 0.03f)
+
+        sun2.direction = Vector3f(lightDirection2.x, lightDirection2.y, 0.5f).normalise() as Vector3f
+        sun2.intensity = 2.000f * flicker2.brightness
+        sun2.setColor(1f, 1f, 1f)
     }
 
     var layers = EnumSet.of(CombatEngineLayers.BELOW_PLANETS)

@@ -8,6 +8,9 @@ import com.fs.starfarer.api.combat.CombatEngineLayers
 import com.fs.starfarer.api.combat.CombatEntityAPI
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
+import org.dark.shaders.light.LightShader
+import org.dark.shaders.light.StandardLight
+import org.lwjgl.util.vector.Vector3f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
@@ -16,7 +19,7 @@ class AbyssCombatHueApplier(var darkColor: Color, var lightLevel: Float, var dar
 
     var sprite: SpriteAPI = Global.getSettings().getAndLoadSprite("graphics/fx/rat_darkener.png")
 
-    var alpha = 60
+    var alpha = 70
 
     override fun init(entity: CombatEntityAPI?) {
         super.init(entity)
@@ -36,6 +39,8 @@ class AbyssCombatHueApplier(var darkColor: Color, var lightLevel: Float, var dar
                 AbyssDepth.Deep -> 85
             }
         }*/
+
+
     }
 
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {

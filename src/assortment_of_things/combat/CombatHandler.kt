@@ -18,7 +18,10 @@ import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.campaign.WarpingSpriteRenderer
 import exerelin.campaign.backgrounds.CharacterBackgroundUtils
+import org.dark.shaders.light.LightShader
+import org.dark.shaders.light.StandardLight
 import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.util.vector.Vector3f
 import org.magiclib.kotlin.setBrightness
 
 
@@ -201,6 +204,7 @@ class CombatHandler : EveryFrameCombatPlugin
         //Sea of Solitude rendering
         if (dominant is SeaOfSolitude) {
             Global.getCombatEngine().addLayeredRenderingPlugin(SolitudeStormCombatRenderer(dominant))
+            Global.getCombatEngine().addLayeredRenderingPlugin(SolitudeStormParticleCombatRenderer(dominant))
         }
 
         //Display Lightsources in combat
@@ -218,8 +222,6 @@ class CombatHandler : EveryFrameCombatPlugin
             }
         }
 
-        //engine!!.addLayeredRenderingPlugin(CombatWarpingBackgroundRenderer(background, color))
-
         if (lightSource != null) {
             var plugin = lightSource.customPlugin
 
@@ -234,8 +236,8 @@ class CombatHandler : EveryFrameCombatPlugin
 
 
 
-
     }
+
 
     fun advanceAbyss(amount: Float) {
 
