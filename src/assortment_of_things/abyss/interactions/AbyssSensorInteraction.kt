@@ -3,8 +3,10 @@ package assortment_of_things.abyss.interactions
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssSensorEntity
 import assortment_of_things.abyss.procgen.BiomeDepth
+import assortment_of_things.abyss.procgen.MapRevealerScript
 import assortment_of_things.abyss.procgen.biomes.*
 import assortment_of_things.abyss.procgen.scripts.AbyssalLightDiscovery
+import assortment_of_things.abyss.terrain.MapRevealerTerrain
 import assortment_of_things.misc.RATInteractionPlugin
 import assortment_of_things.misc.addPara
 import assortment_of_things.misc.getAndLoadSprite
@@ -12,6 +14,8 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CoreUITabId
 import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.campaign.CampaignEngine
+import org.lwjgl.input.Keyboard
 
 class AbyssSensorInteraction : RATInteractionPlugin() {
     override fun init() {
@@ -47,14 +51,12 @@ class AbyssSensorInteraction : RATInteractionPlugin() {
 
     fun revealBiome() {
 
-        Global.getSector().campaignUI.showCoreUITab(CoreUITabId.MAP)
-
         var biome = (interactionTarget.customPlugin as AbyssSensorEntity).biome!!
 
         biome.isSensorRevealed = true
 
         for (cell in biome.cells) {
-            if (cell.depth != BiomeDepth.BORDER) {
+            if (cell.getAdjacent().none { it.getBiome() != cell.getBiome() && !it.isFake }) {
                 cell.isDiscovered = true
                 cell.isPartialyDiscovered = true
             } else {
@@ -83,6 +85,28 @@ class AbyssSensorInteraction : RATInteractionPlugin() {
         textPanel.addTooltip()
     }
 
+    fun addMapOption() {
+        createOption("View the revealed map data") {
+            MapRevealerTerrain.isAboveMode = true
+            MapRevealerScript.revealDelay = 1.5f
+            MapRevealerScript.revealSpeedMult = 0.5f
+
+            CampaignEngine.getInstance().campaignUI.showNoise(0.5f, 0.25f, 1.5f)
+            Global.getSector().campaignUI.showCoreUITab(CoreUITabId.MAP)
+            optionPanel.setEnabled("View the revealed map data", false)
+        }
+    }
+
+    fun createLeaveOption() {
+        createOption("Leave") {
+            MapRevealerTerrain.isAboveMode = false
+            MapRevealerScript.revealDelay = 0f
+            MapRevealerScript.revealSpeedMult = 1f
+            closeDialog()
+        }
+        optionPanel.setShortcut("Leave", Keyboard.KEY_ESCAPE, false, false, false, true);
+    }
+
     fun addTranquilityDialog() {
 
         textPanel.addPara("The sensors team extracts and collates the array’s data for analysis, " +
@@ -98,7 +122,9 @@ class AbyssSensorInteraction : RATInteractionPlugin() {
 
         interactionTarget.addTag("scanned")
 
-        addLeaveOption()
+        addMapOption()
+
+        createLeaveOption()
     }
 
     fun addSerenityDialog() {
@@ -116,8 +142,9 @@ class AbyssSensorInteraction : RATInteractionPlugin() {
 
         interactionTarget.addTag("scanned")
 
-        addLeaveOption()
+        addMapOption()
 
+        createLeaveOption()
     }
 
     fun addHarmonyDialog() {
@@ -135,8 +162,9 @@ class AbyssSensorInteraction : RATInteractionPlugin() {
 
         interactionTarget.addTag("scanned")
 
-        addLeaveOption()
+        addMapOption()
 
+        createLeaveOption()
     }
 
     fun addSolitudeDialog() {
@@ -153,8 +181,9 @@ class AbyssSensorInteraction : RATInteractionPlugin() {
 
         interactionTarget.addTag("scanned")
 
-        addLeaveOption()
+        addMapOption()
 
+        createLeaveOption()
     }
 
     fun addWastesDialog() {
@@ -180,7 +209,9 @@ class AbyssSensorInteraction : RATInteractionPlugin() {
 
             interactionTarget.addTag("scanned")
 
-            addLeaveOption()
+            addMapOption()
+
+            createLeaveOption()
         }
     }
 }

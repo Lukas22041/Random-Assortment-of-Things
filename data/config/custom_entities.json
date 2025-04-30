@@ -101,6 +101,31 @@
 		"renderCircleIndicatorSelectionFlash":false,
 	},
 	
+	"rat_abyss_colossal_photosphere":{
+		"defaultName":"Colossal Photosphere", # used if name=null in addCustomEntity()
+		"defaultRadius":100, # used if radius<0 in addCustomEntity()
+		"nameInText":"colossal photosphere",
+		"shortName":"colossal photosphere",
+		"customDescriptionId":"rat_abyss_colossal_photosphere",
+		"interactionImage":"graphics/illustrations/rat_abyss_entity.jpg",
+		"icon":"graphics/icons/entities/rat_photosphere_colossal.png",
+		"iconColor":[255, 64, 50,255],
+		"iconWidth":64,
+		"iconHeight":64,
+		"renderShadow":true,
+		"useLightColor":true,
+		"showInCampaign":true,
+		"showIconOnMap":true,
+		"showNameOnMap":false,
+		"scaleNameWithZoom":false,
+		"scaleIconWithZoom":true,
+		"tags":[],
+		"layers":[TERRAIN_7A, ABOVE], 
+		"pluginClass":"assortment_of_things.abyss.entities.light.AbyssalPhotosphere",
+		"renderCircleIndicator":false,
+		"renderCircleIndicatorSelectionFlash":false,
+	},
+	
 	"rat_abyss_photosphere_sierra":{
 		"defaultName":"Photosphere", # used if name=null in addCustomEntity()
 		"defaultRadius":100, # used if radius<0 in addCustomEntity()

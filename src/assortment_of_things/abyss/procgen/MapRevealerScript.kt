@@ -20,6 +20,11 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
         return true
     }
 
+    companion object {
+        var revealDelay = 0f
+        var revealSpeedMult = 1f
+    }
+
     var interval = IntervalUtil(0.25f, 0.4f)
 
     override fun advance(amount: Float) {
@@ -28,6 +33,11 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
         for (cell in biome.cells) {
             cell.isDiscovered = true
         }*/
+
+        if (revealDelay > 0) {
+            revealDelay -= 1 * amount
+            return
+        }
 
         interval.advance(amount)
         if (interval.intervalElapsed()) {
@@ -46,13 +56,13 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
             for (cell in biomeManager.getCells()) {
                 if (cell.isDiscovered) {
                     if (cell.discoveryFader >= 0) {
-                        cell.discoveryFader -= 0.75f * amount
+                        cell.discoveryFader -= 0.75f * amount * revealSpeedMult
                     }
                 }
 
                 if (cell.isPartialyDiscovered) {
                     if (cell.partialDiscoveryFader >= 0) {
-                        cell.partialDiscoveryFader -= 0.75f * amount
+                        cell.partialDiscoveryFader -= 0.75f * amount * revealSpeedMult
                     }
                 }
             }

@@ -15,13 +15,28 @@ class MapRevealerTerrain : BaseTerrain() {
     @Transient
     var fog: SpriteAPI? = Global.getSettings().getAndLoadSprite("graphics/fx/rat_abyss_fog2.png")
 
+    companion object {
+        //Toggled active by the sensor interaction, should not be active normaly, as the radar bug out
+        var isAboveMode = false
+    }
+
     override fun advance(amount: Float) {
 
     }
 
+    override fun renderOnMapAbove(factor: Float, alphaMult: Float) {
+        if (isAboveMode) {
+            render(factor, alphaMult)
+        }
+    }
 
     override fun renderOnMap(factor: Float, alphaMult: Float) {
+        if (!isAboveMode) {
+            render(factor, alphaMult)
+        }
+    }
 
+    fun render(factor: Float, alphaMult: Float) {
         if (fog == null) {
             fog = Global.getSettings().getAndLoadSprite("graphics/fx/rat_abyss_fog2.png")
         }
@@ -32,10 +47,12 @@ class MapRevealerTerrain : BaseTerrain() {
             for (cell in AbyssUtils.getData().biomeManager.getCells()) {
                 if (!cell.isDiscovered || cell.discoveryFader > 0f) {
 
-                    var alpha = 1f * (cell.discoveryFader * cell.discoveryFader)
+                    //var alpha = 1f * (cell.discoveryFader * cell.discoveryFader)
 
                     //if (cell.getAdjacent().any { it.isDiscovered }) alpha = 0.6f
-                    if (cell.isPartialyDiscovered && cell.discoveryFader >= 1) alpha = 0.6f + (0.4f * cell.partialDiscoveryFader * cell.partialDiscoveryFader)
+                    /*if (cell.isPartialyDiscovered && cell.discoveryFader >= 0.99) alpha = 0.6f + (0.4f * cell.partialDiscoveryFader * cell.partialDiscoveryFader)*/
+
+                    var alpha = easeInOutSine(0.6f * cell.discoveryFader + 0.4f * cell.partialDiscoveryFader)
 
                     //var loc = cell.getWorldCenter()
                     var loc = cell.getWorldCenter()
@@ -47,6 +64,10 @@ class MapRevealerTerrain : BaseTerrain() {
                 }
             }
         }
+    }
+
+    fun easeInOutSine(x: Float): Float {
+        return (-(Math.cos(Math.PI * x) - 1) / 2).toFloat();
     }
 
     override fun getRenderRange(): Float {
