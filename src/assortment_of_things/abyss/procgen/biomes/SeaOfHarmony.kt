@@ -1,9 +1,19 @@
 package assortment_of_things.abyss.procgen.biomes
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.AbyssProcgenUtils
+import assortment_of_things.abyss.procgen.BiomeCellData
+import assortment_of_things.abyss.terrain.BaseFogTerrain
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
+import org.lazywizard.lazylib.ext.plus
+import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
+import java.util.*
 
 //System with a large Photosphere illuminating it
 class SeaOfHarmony() : BaseAbyssBiome() {
@@ -41,8 +51,37 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
         generateFogTerrain("rat_sea_of_harmony", "rat_terrain", "depths1", 0.6f)
 
-        var sensor = AbyssProcgenUtils.createSensorArray(system!!, this)
-        sensor.location.set(deepestCells.random().getWorldCenterWithCircleOffset(300f))
+        var photosphereNum = MathUtils.getRandomNumberInRange(6, 7)
+
+        for (i in 0 until photosphereNum) {
+
+            //Claim all cells around a larger pattern
+            var cell: BiomeCellData? = pickAndClaimAroundNoOtherBiome(3) ?: break
+
+            var loc = cell!!.getWorldCenter().plus(MathUtils.getRandomPointInCircle(Vector2f(), AbyssBiomeManager.cellSize * 0.5f))
+
+            var entity = system!!.addCustomEntity("rat_abyss_colossal_photosphere_${Misc.genUID()}", "Colossal Photosphere", "rat_abyss_colossal_photosphere", Factions.NEUTRAL)
+            entity.setLocation(loc.x, loc.y)
+            entity.radius = 600f
+
+            var plugin = entity.customPlugin as AbyssalLight
+            plugin.radius = MathUtils.getRandomNumberInRange(entity.radius + 32500f, entity.radius + 35000f)
+
+            majorLightsources.add(entity)
+
+            //Have some photospheres with cleared terrain, some not.
+            AbyssProcgenUtils.clearTerrainAround(terrain as BaseFogTerrain, entity, MathUtils.getRandomNumberInRange(entity.radius + 200f, entity.radius + 1200f))
+
+            entity.sensorProfile = 1f
+            /*entity.setDiscoverable(true)
+            entity.detectedRangeMod.modifyFlat("test", 5000f)*/
+        }
+
+        var sensor = AbyssProcgenUtils.createDecayingSensorArray(system!!, this)
+        var sphere = majorLightsources.randomOrNull()
+        if (sphere != null) {
+            sensor.setCircularOrbitWithSpin(sphere, MathUtils.getRandomNumberInRange(0f, 360f), sphere.radius + sensor.radius + MathUtils.getRandomNumberInRange(100f, 250f), 90f, -10f, 10f)
+        }
     }
 
 }

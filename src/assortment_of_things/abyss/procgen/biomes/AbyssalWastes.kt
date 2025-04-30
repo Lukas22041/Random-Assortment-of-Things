@@ -109,7 +109,10 @@ class AbyssalWastes() : BaseAbyssBiome() {
 
 
         var sensor = AbyssProcgenUtils.createDecayingSensorArray(system!!, this)
-        sensor.location.set(deepestCells.random().getWorldCenterWithCircleOffset(300f))
+        var sphere = majorLightsources.randomOrNull()
+        if (sphere != null) {
+            sensor.setCircularOrbitWithSpin(sphere, MathUtils.getRandomNumberInRange(0f, 360f), sphere.radius + sensor.radius + MathUtils.getRandomNumberInRange(100f, 250f), 90f, -10f, 10f)
+        }
 
     }
 

@@ -2,6 +2,7 @@ package assortment_of_things.abyss.entities.light
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
@@ -75,8 +76,7 @@ class AbyssalDecayingPhotosphere() : BaseCustomEntityPlugin(), AbyssalLight {
         band1 = DynamicRingBand("rat_terrain", "wormhole_bands", 64.0f, 3, Color.white, var4,  var3,  var1 + radius * 0.25f - var4 * 0.05f, 10.0f, var5, 100.0f, 10.0f, true)
 
         var centerPath = "graphics/fx/rat_center.png"
-        Global.getSettings().loadTexture(centerPath)
-        center = Global.getSettings().getSprite(centerPath)
+        center = Global.getSettings().getAndLoadSprite(centerPath)
 
     }
 

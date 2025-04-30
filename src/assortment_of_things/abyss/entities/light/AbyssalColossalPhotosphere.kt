@@ -14,7 +14,7 @@ import com.fs.starfarer.campaign.DynamicRingBand
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
-class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
+class AbyssalColossalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
 
     override var radius = 20000f
     override var color = AbyssUtils.ABYSS_COLOR.setAlpha(50)
@@ -36,7 +36,7 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
 
         if (entity == null) return
         initSpritesIfNull()
-        band1!!.advance(amount)
+        band1!!.advance(amount * 0.33f)
     }
 
     fun initSpritesIfNull()
@@ -69,7 +69,7 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
 
         band1 = DynamicRingBand("rat_terrain", "wormhole_bands", 64.0f, 3, Color.white, var4,  var3,  var1 + radius * 0.25f - var4 * 0.05f, 10.0f, var5, 100.0f, 10.0f, true)
 
-        var centerPath = "graphics/fx/rat_center.png"
+        var centerPath = "graphics/fx/rat_center_colossal.png"
         center = Global.getSettings().getAndLoadSprite(centerPath)
 
     }
@@ -103,6 +103,7 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
             center!!.setSize(entity.radius * 1.8f , entity.radius  * 1.8f)
             center!!.renderAtCenter(entity.location.x, entity.location.y)
 
+            band1!!.isAdditiveBlend = false
             band1!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)
         }
 
@@ -110,9 +111,9 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         {
 
             halo!!.alphaMult = 1f
-            halo!!.color = color.setAlpha(75)
+            halo!!.color = color.setAlpha(155)
 
-            halo!!.setSize(radius / 20, radius / 20)
+            halo!!.setSize(radius / 15, radius / 15)
             halo!!.setAdditiveBlend()
             halo!!.renderAtCenter(entity.location.x, entity.location.y)
 

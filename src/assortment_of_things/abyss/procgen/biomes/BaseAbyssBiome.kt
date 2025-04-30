@@ -306,6 +306,20 @@ abstract class BaseAbyssBiome {
         return pick
     }
 
+    fun pickAndClaimAroundNoOtherBiome(radius: Int) : BiomeCellData? {
+        var list = ArrayList<BiomeCellData>()
+        for (cell in getUnclaimedCells()) {
+            if (cell.getAround(radius).any { it.claimed || it.getBiome() != cell.getBiome() }) continue
+            list.add(cell)
+        }
+        var pick = list.randomOrNull() ?: return null
+
+        pick.claimed = true
+        pick.getAround(radius).forEach { it.claimed = true }
+
+        return pick
+    }
+
     fun pickAndClaimDeep() : BiomeCellData? {
         var pick = deepestCells.filter { !it.claimed }.randomOrNull()
         pick?.claimed = true

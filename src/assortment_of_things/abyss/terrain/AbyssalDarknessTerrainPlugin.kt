@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.*
 import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.entities.light.AbyssalBeacon
+import assortment_of_things.abyss.entities.light.AbyssalColossalPhotosphere
 import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.levelBetween
@@ -173,7 +174,9 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
         for (sources in lightsources)
         {
-            if (MathUtils.getDistance(sources.location, radarCenter) >= radarRadius) continue
+            var extra = 0f
+            if (sources.customPlugin is AbyssalColossalPhotosphere) extra += 2000
+            if (MathUtils.getDistance(sources.location, radarCenter) >= radarRadius + extra) continue
 
             var loc = Vector2f((sources.location.x - radarCenter.x) * factor, (sources.location.y - radarCenter.y) * factor)
 
