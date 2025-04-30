@@ -26,6 +26,8 @@ object AbyssGenerator {
 
         system.initNonStarCenter()
 
+        system.addTag(AbyssUtils.SYSTEM_TAG)
+
         system.addTag(Tags.THEME_HIDDEN)
         system.addTag(Tags.THEME_UNSAFE)
         system.addTag(Tags.THEME_SPECIAL)

@@ -28,6 +28,8 @@ object AbyssUtils {
     var SIERRA_COLOR = Color(205,155,255,255)
     var FACTION_ID = "rat_abyssals"
 
+    var SYSTEM_TAG = "rat_abyssal_depths"
+
     var ABYSS_DATA_KEY = "\$rat_abyss_data"
 
     fun getData() : AbyssData {

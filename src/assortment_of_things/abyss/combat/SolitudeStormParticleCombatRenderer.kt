@@ -13,9 +13,10 @@ import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lazywizard.lazylib.ext.rotate
 import org.lwjgl.util.vector.Vector2f
+import java.awt.Color
 import java.util.*
 
-class SolitudeStormParticleCombatRenderer(var solitude: SeaOfSolitude) : BaseCombatLayeredRenderingPlugin() {
+class SolitudeStormParticleCombatRenderer(var color: Color, var darkColor: Color) : BaseCombatLayeredRenderingPlugin() {
 
     var particles = ArrayList<BiomeParticleManager.AbyssalLightParticle>()
 
@@ -23,9 +24,6 @@ class SolitudeStormParticleCombatRenderer(var solitude: SeaOfSolitude) : BaseCom
     var halo = Global.getSettings().getSprite("rat_terrain", "halo")
 
     var vignette = Global.getSettings().getSprite("graphics/fx/rat_darkness_vignette_reversed.png")
-
-    var color = solitude.getParticleColor()
-    var darkColor = solitude.getDarkBiomeColor()
 
     var minAlpha = 0.25f
     var maxAlpha = 0.45f
@@ -74,7 +72,7 @@ class SolitudeStormParticleCombatRenderer(var solitude: SeaOfSolitude) : BaseCom
                 var alpha = MathUtils.getRandomNumberInRange(minAlpha, maxAlpha)
 
                 particles.add(BiomeParticleManager.AbyssalLightParticle(
-                    solitude,
+                    null,
                     fadeIn,
                     duration,
                     fadeOut,
@@ -165,7 +163,7 @@ class SolitudeStormParticleCombatRenderer(var solitude: SeaOfSolitude) : BaseCom
 
         if (layer == CombatEngineLayers.JUST_BELOW_WIDGETS) {
             vignette.color = darkColor.darker()
-            vignette.alphaMult = 0.05f
+            vignette.alphaMult = 0.25f
 
             var offset = 300
             vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)

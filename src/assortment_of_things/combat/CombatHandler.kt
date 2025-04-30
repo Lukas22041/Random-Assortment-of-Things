@@ -204,7 +204,7 @@ class CombatHandler : EveryFrameCombatPlugin
         //Sea of Solitude rendering
         if (dominant is SeaOfSolitude) {
             Global.getCombatEngine().addLayeredRenderingPlugin(SolitudeStormCombatRenderer(dominant))
-            Global.getCombatEngine().addLayeredRenderingPlugin(SolitudeStormParticleCombatRenderer(dominant))
+            Global.getCombatEngine().addLayeredRenderingPlugin(SolitudeStormParticleCombatRenderer(dominant.getParticleColor(), dominant.getDarkBiomeColor()))
         }
 
         //Display Lightsources in combat

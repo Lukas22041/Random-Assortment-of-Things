@@ -23,7 +23,7 @@ class BiomeParticleManager(var manager: AbyssBiomeManager) : LunaCampaignRenderi
         LunaCampaignRenderer.addRenderer(this)
     }
 
-    class AbyssalLightParticle(var biome: BaseAbyssBiome,
+    class AbyssalLightParticle(var biome: BaseAbyssBiome?,
         var fadeIn: Float, var duration: Float, var fadeOut: Float,
         var color: Color, var alpha: Float, var size: Float, var location: Vector2f, var velocity: Vector2f,
         var adjustInterval: IntervalUtil, var startAdjustment: Float, var adjustMin: Float, var adjustMax: Float) {

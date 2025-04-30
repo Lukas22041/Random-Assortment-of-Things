@@ -1,17 +1,13 @@
-package assortment_of_things.combat
+package assortment_of_things.abyss.combat.title
 
 import assortment_of_things.abyss.AbyssUtils
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.SectorEntityToken
-import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin
 import com.fs.starfarer.api.combat.CombatEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
-import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.DynamicRingBand
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.ext.minus
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
