@@ -276,7 +276,7 @@ class AbyssBiomeManager {
     fun determineBordersAndDepth() {
         for (biome in biomes) {
             for (cell in biome.cells) {
-                if (cell.getSurrounding().any { it.getBiome() != cell.getBiome() }) {
+                if (cell.getSurrounding().any { it.getBiome() != cell.getBiome() || it.isFake }) {
                     cell.depth = BiomeDepth.BORDER
                     biome.borderCells.add(cell)
                 }
