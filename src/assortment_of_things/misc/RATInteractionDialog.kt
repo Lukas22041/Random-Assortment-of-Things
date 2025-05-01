@@ -1,10 +1,7 @@
 package assortment_of_things.misc
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.procgen.biomes.AbyssalWastes
-import assortment_of_things.abyss.procgen.biomes.SeaOfHarmony
-import assortment_of_things.abyss.procgen.biomes.SeaOfSerenity
-import assortment_of_things.abyss.procgen.biomes.SeaOfSolitude
+import assortment_of_things.abyss.procgen.biomes.*
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.campaign.*
@@ -72,6 +69,8 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
             var biome = manager.getCell(interactionTarget).getBiome()!!
 
             var path = when (biome) {
+                is PrimordialWaters -> "graphics/illustrations/rat_abyss_wreckage_primordial.jpg"
+                is EtherealShores -> "graphics/illustrations/rat_abyss_wreckage_ethereal.jpg"
                 is SeaOfSerenity -> "graphics/illustrations/rat_abyss_wreckag_serenity.jpg"
                 is SeaOfHarmony -> "graphics/illustrations/rat_abyss_wreckage_harmony.jpg"
                 is SeaOfSolitude -> "graphics/illustrations/rat_abyss_wreckag_solitude.jpg"

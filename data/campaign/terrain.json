@@ -52,8 +52,16 @@
 		},
 	},
 	
-	"rat_sea_of_ethereal_shores":{
+	"rat_ethereal_shores":{
 		"plugin":"assortment_of_things.abyss.terrain.fog.EtherealShoresTerrain",
+		"loopTwo":"terrain_hyperspace_deep",
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
+			"stormSound":"rat_abyss_storm_sounds",
+		},
+	},
+	"rat_primordial_waters":{
+		"plugin":"assortment_of_things.abyss.terrain.fog.PrimordialWatersTerrain",
 		"loopTwo":"terrain_hyperspace_deep",
 		"loopFour":"terrain_hyperspace_storm",
 		"custom":{

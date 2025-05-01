@@ -21,18 +21,18 @@ import java.awt.Color
 import java.util.*
 
 //Sierra Biome
-class EtherealShores() : BaseAbyssBiome() {
+class PrimordialWaters() : BaseAbyssBiome() {
 
     override fun getBiomeID(): String {
-        return "ethereal_shores"
+        return "primordial_waters"
     }
 
     override fun getDisplayName(): String {
-        return "Ethereal Shores"
+        return "Primordial Waters"
     }
 
-    private var biomeColor = Color(205,155,255)
-    private var darkBiomeColor = Color(82, 62, 102)
+    private var biomeColor = Color(140, 0, 250)
+    private var darkBiomeColor = Color(44, 0, 77)
 
     override fun getBiomeColor(): Color {
         return biomeColor
@@ -46,18 +46,12 @@ class EtherealShores() : BaseAbyssBiome() {
 
     }
 
-    override fun getGridAlphaMult(): Float {
-        return 0.75f
-    }
-
-    override fun getSaturation(): Float {
-        return 1.25f
-    }
-
-
-
     override fun getMusicKeyId(): String? {
         return null
+    }
+
+    override fun getMaxDarknessMult(): Float {
+        return 0.6f
     }
 
     //Do not let the normal generation handle this
@@ -78,18 +72,31 @@ class EtherealShores() : BaseAbyssBiome() {
         //var cell = picks.filter { it.gridX != 0 && it.gridX != AbyssBiomeManager.width && it.gridY != 0 && it.gridY != AbyssBiomeManager.height }.random()
         var cellsFull = picks.filter { it.gridX > 0 && it.gridX < AbyssBiomeManager.rows -1 && it.gridY > 0 && it.gridY < AbyssBiomeManager.columns -1 }
 
-        //Only cells where any of their surrounding biome cells is not their own biome, and only on the border of the abyssal wastes
-        var cells = cellsFull.filter { center -> center.getSurrounding().any { surrounding -> center.getBiome() != surrounding.getBiome() && !surrounding.isFake && surrounding.getBiome() is AbyssalWastes } }
+
+        //Only cells where any of their surrounding biome cells is not their own biome,
+        // and only on the border of the sea of tranquility and not the wastes
+        var cells = cellsFull.filter { center -> center.getSurrounding().any {
+            surrounding -> center.getBiome() != surrounding.getBiome() && !surrounding.isFake && surrounding.getBiome() is SeaOfTranquility } }
+
+        cells = cells.filter { it.getAdjacent().none { it.getBiome() is AbyssalWastes } }
+
+        //More generous search, in case it cant find a connection to the sea of tranquility without also being in the wastes
+        if (cells.isEmpty()) {
+            cells = cellsFull.filter { center -> center.getSurrounding().any {
+                    surrounding -> center.getBiome() != surrounding.getBiome() && !surrounding.isFake && surrounding.getBiome() is SeaOfTranquility } }
+        }
+
+        var radius = 3
 
         //Ensure it doesnt pick a biome border with any biome that can not be overwritten
-        cells = cells.filter { center -> center.getSurrounding().none { it.getBiome()?.canBeOverwritten() == false} }
+        cells = cells.filter { center -> center.getAround(radius).none { it.getBiome()?.canBeOverwritten() == false} }
 
         var cell = cells.random()
 
         cell.setBiome(this)
         deepestCells.add(cell)
 
-        for (surounding in cell.getSurrounding().shuffled()) {
+        for (surounding in cell.getAround(radius).shuffled()) {
             //if (surounding.getBiome() != null) continue
             if (surounding.isFake) continue
             surounding.setBiome(this)
@@ -106,7 +113,7 @@ class EtherealShores() : BaseAbyssBiome() {
 
     /** Called after all cells are generated */
     override fun init() {
-        generateFogTerrain("rat_ethereal_shores", "rat_terrain", "depths1", 0.65f)
+        generateFogTerrain("rat_primordial_waters", "rat_terrain", "depths1", 0.65f)
         var fog = terrain as BaseFogTerrain
         var editor = OldNebulaEditor(fog)
 
@@ -115,22 +122,23 @@ class EtherealShores() : BaseAbyssBiome() {
         var center = deepestCells.first()
 
 
+        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, 0f, AbyssBiomeManager.cellSize * 0.6f, 0f, 360f)
 
 
-        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 1.35f, AbyssBiomeManager.cellSize * 5f, 0f, 360f)
+        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 2.35f, AbyssBiomeManager.cellSize * 5f, 0f, 360f)
 
         //Make it look less circular
 
         var angle1 = MathUtils.getRandomNumberInRange(0f, 360f)
         var angle2 = MathUtils.getRandomNumberInRange(0f, 360f)
 
-        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 1f, AbyssBiomeManager.cellSize * 5f, angle1, angle1+80f)
-        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 0.9f, AbyssBiomeManager.cellSize * 5f, angle2, angle2+50f)
+        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 2f, AbyssBiomeManager.cellSize * 5f, angle1, angle1+80f)
+        editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, AbyssBiomeManager.cellSize * 1.9f, AbyssBiomeManager.cellSize * 5f, angle2, angle2+50f)
 
 
-        var pLoc = center!!.getWorldCenter().plus(MathUtils.getRandomPointInCircle(Vector2f(), AbyssBiomeManager.cellSize * 0.25f))
+        var pLoc = center!!.getWorldCenter()
 
-        var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere_sierra", Factions.NEUTRAL)
+        var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere", Factions.NEUTRAL)
         photosphere.setLocation(pLoc.x, pLoc.y)
         photosphere.radius = 100f
 
@@ -139,30 +147,6 @@ class EtherealShores() : BaseAbyssBiome() {
         var plugin = photosphere.customPlugin as AbyssalLight
         plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
 
-
-        // sensor ghosts
-        for (i in 0 until 3) {
-            val g = BaseSensorGhost(null, 0)
-            g.initEntity(g.genMediumSensorProfile(), g.genSmallRadius(), 0, system)
-            g.addBehavior(GBDartAround(photosphere,
-                9999f,
-                8 + Misc.random.nextInt(4),
-                photosphere.radius + 200f,
-                2500f))
-            g.despawnRange = -1f
-            g.entity.addTag("sotf_AMDancingGhost")
-            g.setLoc(Misc.getPointAtRadius(photosphere.location, 1200f))
-            //g.placeNearEntity(tia.getHyperspaceAnchor(), 800, 3200);
-            system.addScript(g)
-        }
-
-        val params = DerelictShipEntityPlugin.createVariant("rat_raphael_Hull", Random(), DerelictShipEntityPlugin.getDefaultSModProb())
-        val raphael = BaseThemeGenerator.addSalvageEntity(Random(), system, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
-        raphael.setDiscoverable(true)
-
-        raphael.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), 280f, 90f)
-
-        raphael.addTag("rat_abyss_sierra_raphael")
 
     }
 }

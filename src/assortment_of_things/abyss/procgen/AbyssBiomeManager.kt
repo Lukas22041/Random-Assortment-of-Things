@@ -67,6 +67,8 @@ class AbyssBiomeManager {
         biomes.add(SeaOfSerenity())
         biomes.add(AbyssalWastes())
 
+        biomes.add(PrimordialWaters())
+
         //SoTF Biome
         if (Global.getSettings().modManager.isModEnabled("secretsofthefrontier")) {
             biomes.add(EtherealShores())
