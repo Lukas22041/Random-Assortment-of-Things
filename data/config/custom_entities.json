@@ -238,9 +238,9 @@
 		"layers":[TERRAIN_7A], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 		"pluginClass":"assortment_of_things.abyss.entities.AbyssSensorEntity",
 		
-		"detectionRange":5000, # must be >0 for discoverable/discoveryXP to be used
+		"detectionRange":4000, # must be >0 for discoverable/discoveryXP to be used
 		"discoverable":true,
-		"discoveryXP":5000,
+		"discoveryXP":10000,
 	},
 	
 	"rat_decaying_abyss_sensor":{

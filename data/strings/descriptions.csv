@@ -10,7 +10,7 @@ rat_decaying_abyss_sensor,CUSTOM,"A domain-era, high resolution monitoring array
 rat_abyss_photosphere,CUSTOM,"This anomalous object appears to perform active fusion with abyssal matter gathered from around its vicinity. It doesn't appear to generate much heat or radiation, but emits a steady amount of light.",,,,,
 rat_abyss_decaying_photosphere,CUSTOM,"A dying light in a vast sea of nothingness, even highly accurate sensors are almost unable to take note of it. The decomposition may be related to the low density of abyssal matter within the region.",,,,,
 rat_abyss_photosphere_sierra,CUSTOM,"This anomalous object appears to perform active fusion with abyssal matter gathered from around its vicinity. It doesn't appear to generate much heat or radiation, but emits a steady amount of light.",,,,,
-rat_abyss_colossal_photosphere,CUSTOM,"An immense photosphere, only possible through the local intensity of abyssal matter, emitting a gargantuan amount of light in to the local abyssal region. Despite the increased output, the intense amount of visual radiation does not appear to affect the fleet in any negative way.",,,,,
+rat_abyss_colossal_photosphere,CUSTOM,"An immense photosphere, only possible through the local intensity of abyssal matter, emitting a gargantuan amount of light in to the local abyssal region. Despite the increased output, the intense amount of radiation does not appear to affect the fleet in any negative way.",,,,,
 #rat_colossal_photosphere,PLANET,"An immense photosphere, emitting a gargantuan amount of light in to the local abyssal zone. Mysteriously despite the increased output, the intense amount of radiation does not appear to affect the fleet in any negative way.",,,,,
 ,,,,,,,
 ,,,,,,,

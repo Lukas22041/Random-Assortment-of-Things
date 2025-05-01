@@ -175,7 +175,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         for (sources in lightsources)
         {
             var extra = 0f
-            if (sources.customPlugin is AbyssalColossalPhotosphere) extra += 2000
+            if (sources.customPlugin is AbyssalColossalPhotosphere) extra += 2500
             if (MathUtils.getDistance(sources.location, radarCenter) >= radarRadius + extra) continue
 
             var loc = Vector2f((sources.location.x - radarCenter.x) * factor, (sources.location.y - radarCenter.y) * factor)
