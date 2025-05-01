@@ -227,6 +227,10 @@ class CombatHandler : EveryFrameCombatPlugin
                 engine!!.addLayeredRenderingPlugin(CombatPhotosphereRenderer(lightSource))
             }
 
+            if (plugin is AbyssalColossalPhotosphere) {
+                engine!!.addLayeredRenderingPlugin(CombatColossalPhotosphereRenderer(lightSource))
+            }
+
             if (plugin is AbyssalDecayingPhotosphere) {
                 engine!!.addLayeredRenderingPlugin(CombatDecayingPhotosphereRenderer(lightSource))
             }

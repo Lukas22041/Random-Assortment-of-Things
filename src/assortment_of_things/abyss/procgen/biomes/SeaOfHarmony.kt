@@ -41,6 +41,10 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
     }
 
+    override fun getVignetteLevel(): Float {
+        return 0.5f
+    }
+
     override fun getSaturation(): Float {
         return 1.1f
     }
@@ -51,7 +55,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
         generateFogTerrain("rat_sea_of_harmony", "rat_terrain", "depths1", 0.6f)
 
-        var photosphereNum = MathUtils.getRandomNumberInRange(6, 7)
+        var photosphereNum = MathUtils.getRandomNumberInRange(7, 7)
 
         for (i in 0 until photosphereNum) {
 
@@ -65,7 +69,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
             entity.radius = 600f
 
             var plugin = entity.customPlugin as AbyssalLight
-            plugin.radius = MathUtils.getRandomNumberInRange(entity.radius + 32500f, entity.radius + 35000f)
+            plugin.radius = MathUtils.getRandomNumberInRange(entity.radius + 42500f, entity.radius + 45000f)
 
             majorLightsources.add(entity)
 
@@ -77,7 +81,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
             entity.detectedRangeMod.modifyFlat("test", 5000f)*/
         }
 
-        var sensor = AbyssProcgenUtils.createDecayingSensorArray(system!!, this)
+        var sensor = AbyssProcgenUtils.createSensorArray(system!!, this)
         var sphere = majorLightsources.randomOrNull()
         if (sphere != null) {
             sensor.setCircularOrbitWithSpin(sphere, MathUtils.getRandomNumberInRange(0f, 360f), sphere.radius + sensor.radius + MathUtils.getRandomNumberInRange(100f, 250f), 90f, -10f, 10f)

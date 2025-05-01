@@ -412,6 +412,10 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             var playerfleet = Global.getSector().playerFleet
             if (entity.containingLocation == playerfleet.containingLocation) {
 
+                var levels = AbyssUtils.getBiomeManager().getBiomeLevels()
+                var biomeVignetteLevel = levels.map { it.key.getVignetteLevel() * it.value }.sum()
+
+
                 var darknessMult = getDarknessMult()
                 var level = 1 - darknessMult.levelBetween(0.5f, 0.75f)
 
@@ -419,7 +423,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
                 //TODO change based on darkness level
 
-                vignette.alphaMult = 0.85f + (0.05f * level) //Darker in darker biomes
+                vignette.alphaMult = (0.85f + (0.05f * level)) * biomeVignetteLevel //Darker in darker biomes
                 if (RATSettings.brighterAbyss!!) vignette.alphaMult = 0.6f + (0.05f * level)
                 vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)
                 vignette.render(viewport!!.llx - (offset / 2), viewport!!.lly - (offset / 2))

@@ -68,6 +68,7 @@ abstract class BaseAbyssBiome {
     open fun getBackgroundColor() = getDarkBiomeColor()
     open fun getParticleColor() = getBiomeColor()
 
+    open fun getVignetteLevel() = 1f
     open fun getMaxDarknessMult() = 0.75f
 
     open fun getGridAlphaMult() = 1f

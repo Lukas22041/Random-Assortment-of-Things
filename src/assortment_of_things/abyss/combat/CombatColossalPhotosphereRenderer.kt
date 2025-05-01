@@ -1,8 +1,9 @@
-package assortment_of_things.combat
+package assortment_of_things.abyss.combat
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.BaseCombatLayeredRenderingPlugin
@@ -19,7 +20,7 @@ import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
 
-class CombatColossalPhotosphereRenderer(var radius: Float, photosphere: PlanetAPI) : BaseCombatLayeredRenderingPlugin() {
+class CombatColossalPhotosphereRenderer(var photosphere: SectorEntityToken) : BaseCombatLayeredRenderingPlugin() {
 
     var color = AbyssUtils.ABYSS_COLOR.setAlpha(255)
     //var color = Color(0, 120, 255)
@@ -41,13 +42,12 @@ class CombatColossalPhotosphereRenderer(var radius: Float, photosphere: PlanetAP
         var playerfleet = Global.getSector().playerFleet
         var distance = MathUtils.getDistance(playerfleet, photosphere)
         var angle = Misc.getAngleInDegrees(playerfleet.location, photosphere.location)
+        var plugin = photosphere.customPlugin as AbyssalLight
 
-       /* var data = AbyssUtils.getSystemData(playerfleet.containingLocation as StarSystemAPI)
-
-        color = data.getColor()*/
+        color = plugin.color
 
         var min = 0f
-        var max = 9000
+        var max = plugin.radius / 10
 
         var level = (distance - min) / (max - min)
 
@@ -55,7 +55,7 @@ class CombatColossalPhotosphereRenderer(var radius: Float, photosphere: PlanetAP
 
         halo = Global.getSettings().getSprite("rat_terrain", "halo")
 
-        var radius = radius
+        var radius = getRadius()
 
         val var1: Float = radius * 0.45f
         val var2: Float = radius * 3.1415927f * 2.0f
@@ -82,7 +82,7 @@ class CombatColossalPhotosphereRenderer(var radius: Float, photosphere: PlanetAP
     }
 
     override fun advance(amount: Float) {
-        band1!!.advance(amount * 0.75f)
+        band1!!.advance(amount * 0.33f)
     }
 
     override fun getRenderRadius(): Float {
@@ -93,14 +93,46 @@ class CombatColossalPhotosphereRenderer(var radius: Float, photosphere: PlanetAP
         return EnumSet.of(CombatEngineLayers.PLANET_LAYER)
     }
 
+
+    fun getRadius() : Float {
+        var viewport = Global.getCombatEngine().viewport
+
+        var plugin = photosphere.customPlugin as AbyssalLight
+        var min = 0f
+        var max = plugin.radius / 10
+        var playerfleet = Global.getSector().playerFleet
+        var distance = MathUtils.getDistance(playerfleet, photosphere)
+        var level = (distance - min) / (max - min)
+
+        var radius = 180f
+        radius -= radius * 0.50f * level //Decrease in size further away from the core
+        radius *= viewport.viewMult
+        return radius
+    }
+
     override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
 
         var adjustedOffset = Vector2f(offset.x * viewport!!.viewMult, offset.y * viewport.viewMult)
+
+
+
+
+
+        var playerXLevel = MathUtils.clamp(viewport.center.x.levelBetween(-Global.getCombatEngine().mapWidth/2, Global.getCombatEngine().mapWidth/2), 0f, 1f)
+        var playerYLevel = MathUtils.clamp(viewport.center.y.levelBetween(-Global.getCombatEngine().mapHeight/2, Global.getCombatEngine().mapHeight/2), 0f, 1f)
+
+
+        var playerXOff = 100f - 200f * playerXLevel
+        var playerYOff = 100f - 200f * playerYLevel
+
+        adjustedOffset = adjustedOffset.plus(Vector2f(playerXOff * viewport.viewMult, playerYOff * viewport.viewMult))
+
         var location = Vector2f()
         location = Vector2f((viewport!!.llx + viewport!!.visibleWidth / 2), (viewport!!.lly + viewport!!.visibleHeight / 2)).plus(adjustedOffset)
 
 
-        radius = (100f * viewport.viewMult)
+
+        var radius = getRadius()
 
         val var1: Float = radius * 0.45f
         val var2: Float = radius * 3.1415927f * 2.0f
@@ -133,15 +165,24 @@ class CombatColossalPhotosphereRenderer(var radius: Float, photosphere: PlanetAP
 
 
         center!!.setSize(radius * 1.8f , radius  * 1.8f)
-        center!!.color = color.setAlpha(130)
+        center!!.color = color.setAlpha(255)
         center!!.renderAtCenter(location.x, location.y)
 
-        band1!!.color = color.setAlpha(45)
+        band1!!.isAdditiveBlend = false
+        band1!!.color = color.setAlpha(180)
         band1!!.render(location.x, location.y, viewport!!.alphaMult)
 
 
+
+
         halo!!.alphaMult = 1f
-        halo!!.color = color.setAlpha(30)
+        halo!!.color = color.setAlpha(75)
+        halo!!.setSize(radius * 3, radius * 3 )
+        halo!!.setAdditiveBlend()
+        halo!!.renderAtCenter(location.x, location.y)
+
+        halo!!.alphaMult = 1f
+        halo!!.color = color.setAlpha(45)
         halo!!.setSize(radius * 15, radius * 15 )
         halo!!.setAdditiveBlend()
         halo!!.renderAtCenter(location.x, location.y)

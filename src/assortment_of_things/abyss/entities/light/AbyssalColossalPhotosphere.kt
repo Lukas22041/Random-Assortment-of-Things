@@ -111,7 +111,7 @@ class AbyssalColossalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         {
 
             halo!!.alphaMult = 1f
-            halo!!.color = color.setAlpha(155)
+            halo!!.color = color.setAlpha(100)
 
             halo!!.setSize(radius / 15, radius / 15)
             halo!!.setAdditiveBlend()
@@ -133,7 +133,7 @@ class AbyssalColossalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
     override fun createMapTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
         super.createMapTooltip(tooltip, expanded)
 
-        tooltip!!.addPara("Photosphere", 0f, Misc.getTextColor(), color, "Photosphere")
+        tooltip!!.addPara("Colossal Photosphere", 0f, Misc.getTextColor(), color, "Colossal Photosphere")
 
     }
 }

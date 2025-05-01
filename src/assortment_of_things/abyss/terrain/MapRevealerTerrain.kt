@@ -41,7 +41,7 @@ class MapRevealerTerrain : BaseTerrain() {
             fog = Global.getSettings().getAndLoadSprite("graphics/fx/rat_abyss_fog2.png")
         }
 
-        fog!!.setSize(AbyssBiomeManager.cellSize * 2f * factor, AbyssBiomeManager.cellSize * 2f * factor)
+        fog!!.setSize(AbyssBiomeManager.cellSize * 2.1f * factor, AbyssBiomeManager.cellSize * 2.1f * factor)
 
         if (AbyssUtils.isShowFog()) {
             for (cell in AbyssUtils.getData().biomeManager.getCells()) {
@@ -52,7 +52,7 @@ class MapRevealerTerrain : BaseTerrain() {
                     //if (cell.getAdjacent().any { it.isDiscovered }) alpha = 0.6f
                     /*if (cell.isPartialyDiscovered && cell.discoveryFader >= 0.99) alpha = 0.6f + (0.4f * cell.partialDiscoveryFader * cell.partialDiscoveryFader)*/
 
-                    var alpha = easeInOutSine(0.6f * cell.discoveryFader + 0.4f * cell.partialDiscoveryFader)
+                    var alpha = easeInOutSine(0.6f * cell.discoveryFader) + easeInOutSine(0.4f * cell.partialDiscoveryFader)
 
                     //var loc = cell.getWorldCenter()
                     var loc = cell.getWorldCenter()
