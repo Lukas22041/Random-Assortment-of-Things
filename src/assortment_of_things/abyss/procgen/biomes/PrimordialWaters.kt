@@ -138,14 +138,14 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
         var pLoc = center!!.getWorldCenter()
 
-        var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere", Factions.NEUTRAL)
+      /*  var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere", Factions.NEUTRAL)
         photosphere.setLocation(pLoc.x, pLoc.y)
         photosphere.radius = 100f
 
         majorLightsources.add(photosphere)
 
         var plugin = photosphere.customPlugin as AbyssalLight
-        plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
+        plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)*/
 
 
     }
