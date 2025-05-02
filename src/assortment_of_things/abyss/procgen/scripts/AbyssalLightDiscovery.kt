@@ -2,6 +2,7 @@ package assortment_of_things.abyss.procgen.scripts
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.entities.primordial.PrimordialPhotosphere
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -52,6 +53,8 @@ class AbyssalLightDiscovery() : EveryFrameScript {
 
                 var plugin = entity.customPlugin
                 if (plugin !is AbyssalLight) continue
+
+                if (plugin is PrimordialPhotosphere) continue //Do not reveal this one automaticly
 
                 var isDiscovered = discovered.contains(entity)
 

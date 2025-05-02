@@ -5,12 +5,16 @@ import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
+import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL20
+import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
 //Sierra Biome
@@ -25,7 +29,7 @@ class PrimordialWaters() : BaseAbyssBiome() {
         if (level >= 1) return "Primordial Waters"
 
         var radius = getRadius()
-        if (MathUtils.getDistance(Global.getSector().playerFleet, deepestCells.first().getWorldCenter()) <= radius) {
+        if (MathUtils.getDistance(Global.getSector().playerFleet, getStencilCenter()) <= radius) {
             return "Primordial Waters"
         } else return "Nameless Sea"
     }
@@ -59,7 +63,7 @@ class PrimordialWaters() : BaseAbyssBiome() {
         if (level >= 1) return getBiomeColor()
 
         var radius = getRadius()
-        if (MathUtils.getDistance(Global.getSector().playerFleet, deepestCells.first().getWorldCenter()) <= radius) {
+        if (MathUtils.getDistance(Global.getSector().playerFleet, getStencilCenter()) <= radius) {
             return getBiomeColor()
         } else return getInactiveBiomeColor()
     }
@@ -149,13 +153,18 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
     /** Called after all cells are generated */
     override fun init() {
-        generateFogTerrain("rat_primordial_waters", "rat_terrain", "depths1", 0.65f)
+        generateFogTerrain("rat_primordial_waters", "rat_terrain", "depths1", 0.70f)
         var fog = terrain as BaseFogTerrain
         var editor = OldNebulaEditor(fog)
 
         var system = AbyssUtils.getSystem()
 
         var center = deepestCells.first()
+
+
+
+        var whirlwind = system!!.addCustomEntity("rat_abyss_whirlwind_${Misc.genUID()}", "", "rat_abyss_primordial_whirlwind", Factions.NEUTRAL)
+        whirlwind.location.set(center.getWorldCenter())
 
 
         editor.clearArc(center.getWorldCenter().x, center.getWorldCenter().y, 0f, AbyssBiomeManager.cellSize * 0.6f, 0f, 360f)
@@ -174,14 +183,19 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
         var pLoc = center!!.getWorldCenter()
 
-         var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere", Factions.NEUTRAL)
+        var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_primordial_photosphere", Factions.NEUTRAL)
         photosphere.setLocation(pLoc.x, pLoc.y)
         photosphere.radius = 100f
+
+
+        ReflectionUtils.invoke("setShowIconOnMap", photosphere.customEntitySpec, false)
+        photosphere.addTag(Tags.NO_ENTITY_TOOLTIP)
+        photosphere.addTag(Tags.NON_CLICKABLE)
 
         majorLightsources.add(photosphere)
 
         var plugin = photosphere.customPlugin as AbyssalLight
-        plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
+        plugin.radius = 15000f
 
 
     }
@@ -189,6 +203,10 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
     private var level = 0.5f
     fun getMaxRadius() = 5000f
+
+    fun getStencilCenter() : Vector2f {
+        return deepestCells.first().getWorldCenter()
+    }
 
     fun getRadius() : Float {
         return getMaxRadius() * easeInOutSine(level)
@@ -224,11 +242,11 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
         GL11.glBegin(GL11.GL_POLYGON) // Middle circle
 
-        var center = deepestCells.first()
+        var center = getStencilCenter()
 
         var radius = getRadius()
-        val x = center.getWorldCenter().x
-        val y = center.getWorldCenter().y
+        val x = center.x
+        val y = center.y
         var points = 100
 
         for (i in 0..points) {
@@ -245,6 +263,7 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
         GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP); // Make sure you will no longer (over)write stencil values, even if any test succeeds
         GL11.glColorMask(true, true, true, true); // Make sure we draw on the backbuffer again.
+        //GL11.glDepthMask(true);
 
         var ref = 1
         if (reverse) ref = 0

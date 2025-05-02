@@ -141,6 +141,7 @@ class EtherealShores() : BaseAbyssBiome() {
         var plugin = photosphere.customPlugin as AbyssalLight
         plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
 
+        photosphere.sensorProfile = 1f
 
         // sensor ghosts
         for (i in 0 until 3) {

@@ -41,6 +41,10 @@ class PrimordialWatersTerrain() : BaseFogTerrain() {
     }
 
     override fun renderOnMap(factor: Float, alphaMult: Float) {
+
+        /*super.renderOnMap(factor, alphaMult)
+        return*/
+
         var biome = getBiome()
         if (biome !is PrimordialWaters) return
 
@@ -83,13 +87,25 @@ class PrimordialWatersTerrain() : BaseFogTerrain() {
 
         var level = biome.getLevel()
 
+        /*if (layer != BASE_OVER) {
+            super.render(layer, viewport)
+            return
+        }*/
+
         if (level > 0 && level < 1) {
             //Inner
+
+           // GL11.glPushMatrix()
+
             color = biome.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
             if (RATSettings.brighterAbyss!!) biome.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
             biome.startStencil(false)
             super.render(layer, viewport)
             biome.endStencil()
+
+           // GL11.glPopMatrix()
+
+            //GL11.glPushMatrix()
 
             //Outer
             color = biome.getInactiveDarkBiomeColor().setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
@@ -98,7 +114,10 @@ class PrimordialWatersTerrain() : BaseFogTerrain() {
             super.render(layer, viewport)
             biome.endStencil()
 
+            //GL11.glPopMatrix()
+
             renderBorder(biome)
+
         }
 
         else if (level <= 0f) {
@@ -139,11 +158,11 @@ class PrimordialWatersTerrain() : BaseFogTerrain() {
         GL11.glEnable(GL11.GL_LINE_SMOOTH)
         GL11.glBegin(GL11.GL_LINE_STRIP)
 
-        var center = biomePlugin?.deepestCells?.first()
+        var center = biome.getStencilCenter()
 
         var radius = biome.getRadius()
-        val x = center!!.getWorldCenter().x
-        val y = center.getWorldCenter().y
+        val x = center.x
+        val y = center.y
         var points = 100
 
 
