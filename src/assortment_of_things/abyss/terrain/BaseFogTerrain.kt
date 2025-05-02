@@ -21,7 +21,7 @@ open class BaseFogTerrain : OldHyperspaceTerrainPlugin(), BiomeTerrain {
     }
 
     override fun getRenderColor(): Color {
-        if (RATSettings.brighterAbyss!!) getBiome()?.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+        if (RATSettings.brighterAbyss!!) return getBiome()?.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
         return getBiome()?.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
     }
 

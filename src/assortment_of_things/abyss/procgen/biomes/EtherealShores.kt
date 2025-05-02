@@ -6,6 +6,7 @@ import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
+import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
 import com.fs.starfarer.api.impl.campaign.ghosts.BaseSensorGhost
 import com.fs.starfarer.api.impl.campaign.ghosts.GBDartAround
@@ -16,6 +17,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
+import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 import java.util.*

@@ -238,7 +238,7 @@
 		"layers":[TERRAIN_7A], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 		"pluginClass":"assortment_of_things.abyss.entities.AbyssSensorEntity",
 		
-		"detectionRange":4000, # must be >0 for discoverable/discoveryXP to be used
+		"detectionRange":3000, # must be >0 for discoverable/discoveryXP to be used
 		"discoverable":true,
 		"discoveryXP":10000,
 	},

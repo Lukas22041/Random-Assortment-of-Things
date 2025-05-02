@@ -5,20 +5,13 @@ import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
-import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
-import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
-import com.fs.starfarer.api.impl.campaign.ghosts.BaseSensorGhost
-import com.fs.starfarer.api.impl.campaign.ghosts.GBDartAround
-import com.fs.starfarer.api.impl.campaign.ids.Entities
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.ext.plus
-import org.lwjgl.util.vector.Vector2f
+import org.lwjgl.opengl.GL11
 import java.awt.Color
-import java.util.*
 
 //Sierra Biome
 class PrimordialWaters() : BaseAbyssBiome() {
@@ -28,11 +21,22 @@ class PrimordialWaters() : BaseAbyssBiome() {
     }
 
     override fun getDisplayName(): String {
-        return "Primordial Waters"
+        if (level <= 0) return "Nameless Sea"
+        if (level >= 1) return "Primordial Waters"
+
+        var radius = getRadius()
+        if (MathUtils.getDistance(Global.getSector().playerFleet, deepestCells.first().getWorldCenter()) <= radius) {
+            return "Primordial Waters"
+        } else return "Nameless Sea"
     }
+
 
     private var biomeColor = Color(140, 0, 250)
     private var darkBiomeColor = Color(44, 0, 77)
+
+    private var inactiveBiomeColor = Color(184, 176, 191)
+    private var inactiveDarkBiomeColor = Color(66, 63, 69)
+
 
     override fun getBiomeColor(): Color {
         return biomeColor
@@ -40,6 +44,38 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
     override fun getDarkBiomeColor(): Color {
         return darkBiomeColor
+    }
+
+    fun getInactiveBiomeColor(): Color {
+        return inactiveBiomeColor
+    }
+
+    fun getInactiveDarkBiomeColor(): Color {
+        return inactiveDarkBiomeColor
+    }
+
+    override fun getTooltipColor(): Color {
+        if (level <= 0) return getInactiveBiomeColor()
+        if (level >= 1) return getBiomeColor()
+
+        var radius = getRadius()
+        if (MathUtils.getDistance(Global.getSector().playerFleet, deepestCells.first().getWorldCenter()) <= radius) {
+            return getBiomeColor()
+        } else return getInactiveBiomeColor()
+    }
+
+    override fun getSystemLightColor(): Color {
+        var level = getLevel()
+        if (level <= 0f) return getInactiveBiomeColor()
+        if (level >= 1f) return getBiomeColor()
+        else return Misc.interpolateColor(getInactiveBiomeColor(), getBiomeColor(), level)
+    }
+
+    override fun getParticleColor(): Color {
+        var level = getLevel()
+        if (level <= 0f) return getInactiveBiomeColor()
+        if (level >= 1f) return getBiomeColor()
+        else return Misc.interpolateColor(getInactiveBiomeColor(), getBiomeColor(), level)
     }
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
@@ -138,15 +174,88 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
         var pLoc = center!!.getWorldCenter()
 
-      /*  var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere", Factions.NEUTRAL)
+         var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_photosphere", Factions.NEUTRAL)
         photosphere.setLocation(pLoc.x, pLoc.y)
         photosphere.radius = 100f
 
         majorLightsources.add(photosphere)
 
         var plugin = photosphere.customPlugin as AbyssalLight
-        plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)*/
+        plugin.radius = MathUtils.getRandomNumberInRange(12500f, 15000f)
 
 
+    }
+
+
+    private var level = 0.5f
+    fun getMaxRadius() = 5000f
+
+    fun getRadius() : Float {
+        return getMaxRadius() * easeInOutSine(level)
+    }
+
+    fun easeInOutSine(x: Float): Float {
+        return (-(Math.cos(Math.PI * x) - 1) / 2).toFloat();
+    }
+
+    fun getLevel() : Float {
+        return MathUtils.clamp(level, 0f, 1f)
+    }
+
+    fun startStencil(reverse: Boolean) {
+
+        GL11.glClearStencil(0);
+        GL11.glStencilMask(0xff);
+        //set everything to 0
+        GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
+
+        //disable drawing colour, enable stencil testing
+        GL11.glColorMask(false, false, false, false); //disable colour
+        GL11.glEnable(GL11.GL_STENCIL_TEST); //enable stencil
+
+        // ... here you render the part of the scene you want masked, this may be a simple triangle or square, or for example a monitor on a computer in your spaceship ...
+        //begin masking
+        //put 1s where I want to draw
+        GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xff); // Do not test the current value in the stencil buffer, always accept any value on there for drawing
+        GL11.glStencilMask(0xff);
+        GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE); // Make every test succeed
+
+        // <draw a quad that dictates you want the boundaries of the panel to be>
+
+        GL11.glBegin(GL11.GL_POLYGON) // Middle circle
+
+        var center = deepestCells.first()
+
+        var radius = getRadius()
+        val x = center.getWorldCenter().x
+        val y = center.getWorldCenter().y
+        var points = 100
+
+        for (i in 0..points) {
+
+            val angle: Double = (2 * Math.PI * i / points)
+            val vertX: Double = Math.cos(angle) * (radius)
+            val vertY: Double = Math.sin(angle) * (radius)
+            GL11.glVertex2d(x + vertX, y + vertY)
+        }
+
+        GL11.glEnd()
+
+        //GL11.glRectf(x, y, x + width, y + height)
+
+        GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP); // Make sure you will no longer (over)write stencil values, even if any test succeeds
+        GL11.glColorMask(true, true, true, true); // Make sure we draw on the backbuffer again.
+
+        var ref = 1
+        if (reverse) ref = 0
+        GL11.glStencilFunc(GL11.GL_EQUAL, ref, 0xFF); // Now we will only draw pixels where the corresponding stencil buffer value equals 1
+        //Ref 0 causes the content to not display in the specified area, 1 causes the content to only display in that area.
+
+        // <draw the lines>
+
+    }
+
+    fun endStencil() {
+        GL11.glDisable(GL11.GL_STENCIL_TEST);
     }
 }

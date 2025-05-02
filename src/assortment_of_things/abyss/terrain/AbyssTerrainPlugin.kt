@@ -21,6 +21,9 @@ import java.util.EnumSet
 
 class AbyssTerrainPlugin : BaseTerrain() {
 
+    var data = AbyssUtils.getData()
+    var manager = AbyssUtils.getBiomeManager()
+
     override fun containsEntity(other: SectorEntityToken?): Boolean {
         return true
     }
@@ -40,7 +43,6 @@ class AbyssTerrainPlugin : BaseTerrain() {
 
 
     fun isAnyInCloud(entityToken: SectorEntityToken) : Boolean {
-        var manager = AbyssUtils.getBiomeManager()
         for (biome in manager.biomes) {
             if (biome.terrain is BaseFogTerrain) {
                 if ((biome.terrain as BaseFogTerrain).isInClouds(entityToken)) {
@@ -53,8 +55,6 @@ class AbyssTerrainPlugin : BaseTerrain() {
     }
 
     fun getAnyTilePreferStorm(loc: Vector2f, radius: Float) : Pair<CellStateTracker?, BaseFogTerrain> {
-        var manager = AbyssUtils.getBiomeManager()
-
         var any: Pair<CellStateTracker?, BaseFogTerrain>? = null
         for (biome in manager.biomes) {
             if (biome.terrain is BaseFogTerrain) {
@@ -122,7 +122,6 @@ class AbyssTerrainPlugin : BaseTerrain() {
         var name = ""
         var player = Global.getSector().playerFleet
 
-        var manager = AbyssUtils.getBiomeManager()
         var dominant = manager.getDominantBiome()
 
         val inCloud = isAnyInCloud(player)
@@ -146,7 +145,6 @@ class AbyssTerrainPlugin : BaseTerrain() {
     }
 
     override fun getNameColor(): Color {
-        var manager = AbyssUtils.getBiomeManager()
         var dominant = manager.getDominantBiome()
         //return manager.getCurrentTooltipColor()
         return dominant.getTooltipColor()
@@ -155,7 +153,6 @@ class AbyssTerrainPlugin : BaseTerrain() {
     override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean) {
         var player = Global.getSector().playerFleet
 
-        var manager = AbyssUtils.getBiomeManager()
         var dominant = manager.getDominantBiome()
 
         var name = dominant.getDisplayName()

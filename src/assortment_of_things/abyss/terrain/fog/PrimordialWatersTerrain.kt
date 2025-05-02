@@ -1,20 +1,29 @@
 package assortment_of_things.abyss.terrain.fog
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
 import assortment_of_things.abyss.terrain.BaseFogTerrain
+import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.TerrainAIFlags
+import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lwjgl.opengl.GL11
+import org.magiclib.kotlin.setAlpha
+import java.awt.Color
 
 class PrimordialWatersTerrain() : BaseFogTerrain() {
 
     var id = Misc.genUID()
 
     var color = AbyssUtils.ABYSS_COLOR
+
+    var manager = AbyssUtils.getBiomeManager()
 
     override fun advance(amount: Float) {
         var currentsystem = entity?.containingLocation ?: return
@@ -27,8 +36,127 @@ class PrimordialWatersTerrain() : BaseFogTerrain() {
         return getBiome()?.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
     }*/
 
+    override fun getRenderColor(): Color {
+        return color
+    }
+
     override fun renderOnMap(factor: Float, alphaMult: Float) {
-        super.renderOnMap(factor, alphaMult)
+        var biome = getBiome()
+        if (biome !is PrimordialWaters) return
+
+        var level = biome.getLevel()
+
+        if (level > 0 && level < 1) {
+            //Inner
+            color = biome.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            if (RATSettings.brighterAbyss!!) biome.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            biome.startStencil(false)
+            super.renderOnMap(factor, alphaMult)
+            biome.endStencil()
+
+            //Outer
+            color = biome.getInactiveDarkBiomeColor().setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            if (RATSettings.brighterAbyss!!) biome.getInactiveDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            biome.startStencil(true)
+            super.renderOnMap(factor, alphaMult)
+            biome.endStencil()
+
+            renderBorder(biome)
+        }
+
+        else if (level <= 0f) {
+            color = biome.getInactiveDarkBiomeColor().setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            if (RATSettings.brighterAbyss!!) color = biome.getInactiveDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            super.renderOnMap(factor, alphaMult)
+        }
+        else if (level >= 1f) {
+            color = biome.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            if (RATSettings.brighterAbyss!!) color = biome.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            super.renderOnMap(factor, alphaMult)
+        }
+
+    }
+
+    override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
+        var biome = getBiome()
+        if (biome !is PrimordialWaters) return
+
+        var level = biome.getLevel()
+
+        if (level > 0 && level < 1) {
+            //Inner
+            color = biome.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            if (RATSettings.brighterAbyss!!) biome.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            biome.startStencil(false)
+            super.render(layer, viewport)
+            biome.endStencil()
+
+            //Outer
+            color = biome.getInactiveDarkBiomeColor().setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            if (RATSettings.brighterAbyss!!) biome.getInactiveDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            biome.startStencil(true)
+            super.render(layer, viewport)
+            biome.endStencil()
+
+            renderBorder(biome)
+        }
+
+        else if (level <= 0f) {
+            color = biome.getInactiveDarkBiomeColor().setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            if (RATSettings.brighterAbyss!!) color = biome.getInactiveDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            super.render(layer, viewport)
+        }
+        else if (level >= 1f) {
+            color = biome.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            if (RATSettings.brighterAbyss!!) color = biome.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            super.render(layer, viewport)
+        }
+
+
+
+    }
+
+    fun renderBorder(biome: PrimordialWaters) {
+        var c = biome.getBiomeColor().setAlpha(33)
+
+        GL11.glPushMatrix()
+
+        GL11.glTranslatef(0f, 0f, 0f)
+        GL11.glRotatef(0f, 0f, 0f, 1f)
+
+        GL11.glDisable(GL11.GL_TEXTURE_2D)
+
+
+        GL11.glEnable(GL11.GL_BLEND)
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+
+
+        GL11.glColor4f(c.red / 255f,
+            c.green / 255f,
+            c.blue / 255f,
+            c.alpha / 255f * (1f))
+
+        GL11.glEnable(GL11.GL_LINE_SMOOTH)
+        GL11.glBegin(GL11.GL_LINE_STRIP)
+
+        var center = biomePlugin?.deepestCells?.first()
+
+        var radius = biome.getRadius()
+        val x = center!!.getWorldCenter().x
+        val y = center.getWorldCenter().y
+        var points = 100
+
+
+        for (i in 0..points) {
+            val angle: Double = (2 * Math.PI * i / points)
+            val vertX: Double = Math.cos(angle) * (radius)
+            val vertY: Double = Math.sin(angle) * (radius)
+            GL11.glVertex2d(x + vertX, y + vertY)
+        }
+
+
+        GL11.glEnd()
+        GL11.glPopMatrix()
     }
 
     override fun applyEffect(entity: SectorEntityToken?, days: Float) {
