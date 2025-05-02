@@ -6,6 +6,8 @@ import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.entities.light.AbyssalBeacon
 import assortment_of_things.abyss.entities.light.AbyssalColossalPhotosphere
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.entities.primordial.PrimordialPhotosphere
+import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
@@ -98,19 +100,37 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             if (plugin is AbyssalBeacon) radius = (plugin.baseRadius + plugin.extraRadius) * factor
             var color = plugin.lightColor
 
-            halo!!.alphaMult = 0.6f * alphaMult
-            halo!!.color = color.setAlpha(75)
+            var skipRendering = false
+            var isStenceling = false
+            if (plugin is PrimordialPhotosphere) {
+                var biome = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
+                var level = biome.getLevel()
+                if (level > 0 && level < 1) {
+                    isStenceling = true
+                    biome.startStencil(true)
+                } else if (level <= 0) {
+                    skipRendering = true
+                }
+            }
 
-            halo!!.setSize(radius / 20, radius / 20)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
+            if (!skipRendering) {
+                halo!!.alphaMult = 0.6f * alphaMult
+                halo!!.color = color.setAlpha(75)
 
-            halo!!.alphaMult = 0.8f * alphaMult
-            halo!!.color = color.setAlpha(55)
+                halo!!.setSize(radius / 20, radius / 20)
+                halo!!.setAdditiveBlend()
+                halo!!.renderAtCenter(loc.x, loc.y)
 
-            halo!!.setSize(radius / 2, radius / 2)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
+                halo!!.alphaMult = 0.8f * alphaMult
+                halo!!.color = color.setAlpha(55)
+
+                halo!!.setSize(radius / 2, radius / 2)
+                halo!!.setAdditiveBlend()
+                halo!!.renderAtCenter(loc.x, loc.y)
+            }
+
+            if (isStenceling) GL11.glDisable(GL11.GL_STENCIL_TEST)
+
         }
 
         for (entity in system!!.customEntities) {
@@ -186,19 +206,38 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             var color = plugin.lightColor
             if (plugin.radius >= 50000) continue
 
-            halo!!.alphaMult = 1f * alphaMult
-            halo!!.color = color.setAlpha(75)
+            var skipRendering = false
+            var isStenceling = false
+            if (plugin is PrimordialPhotosphere) {
+                var biome = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
+                var level = biome.getLevel()
+                if (level > 0 && level < 1) {
+                    isStenceling = true
+                    //biome.startStencil(false)
+                } else if (level <= 0) {
+                    skipRendering = true
+                }
+            }
 
-            halo!!.setSize(radius / 20, radius / 20)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
+            if (!skipRendering) {
+                halo!!.alphaMult = 1f * alphaMult
+                halo!!.color = color.setAlpha(75)
 
-            halo!!.alphaMult = 1f * alphaMult
-            halo!!.color = color.setAlpha(55)
+                halo!!.setSize(radius / 20, radius / 20)
+                halo!!.setAdditiveBlend()
+                halo!!.renderAtCenter(loc.x, loc.y)
 
-            halo!!.setSize(radius / 2, radius / 2)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
+                halo!!.alphaMult = 1f * alphaMult
+                halo!!.color = color.setAlpha(55)
+
+                halo!!.setSize(radius / 2, radius / 2)
+                halo!!.setAdditiveBlend()
+                halo!!.renderAtCenter(loc.x, loc.y)
+            }
+
+
+           // if (isStenceling) GL11.glDisable(GL11.GL_STENCIL_TEST)
+
         }
 
         for (entity in system.customEntities) {

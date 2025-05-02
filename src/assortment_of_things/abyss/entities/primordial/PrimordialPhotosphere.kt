@@ -3,15 +3,18 @@ package assortment_of_things.abyss.entities.primordial
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
+import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.DynamicRingBand
+import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
@@ -35,12 +38,36 @@ class PrimordialPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
     var manager = AbyssUtils.getBiomeManager()
     var biome = manager.getBiome("primordial_waters") as PrimordialWaters
 
+    var isInRange: Boolean? = null
+
     override fun advance(amount: Float) {
         super.advance(amount)
 
         if (entity == null) return
         initSpritesIfNull()
         band1!!.advance(amount)
+
+        var isNowInrange = false
+        if (MathUtils.getDistance(entity.location, biome.getStencilCenter()) < biome.getRadius()) {
+            isNowInrange = true
+        }
+
+        if (biome.getLevel() <= 0) isNowInrange = false
+
+        //Only call if a change actually happened to avoid spamming reflection code
+        if (isInRange != isNowInrange) {
+            isInRange = isNowInrange
+
+            if (isInRange!!) {
+                ReflectionUtils.invoke("setShowIconOnMap", entity.customEntitySpec, true)
+                entity.removeTag(Tags.NO_ENTITY_TOOLTIP)
+                entity.removeTag(Tags.NON_CLICKABLE)
+            } else {
+                ReflectionUtils.invoke("setShowIconOnMap", entity.customEntitySpec, false)
+                entity.addTag(Tags.NO_ENTITY_TOOLTIP)
+                entity.addTag(Tags.NON_CLICKABLE)
+            }
+        }
     }
 
     fun initSpritesIfNull()

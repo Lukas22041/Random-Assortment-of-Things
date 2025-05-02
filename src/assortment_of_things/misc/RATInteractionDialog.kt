@@ -78,6 +78,13 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
                 else -> "graphics/illustrations/rat_abyss_wreckage.jpg"
             }
 
+            if (biome is PrimordialWaters) {
+                var level = biome.getLevel()
+                if (level <= 0) {
+                    path = "graphics/illustrations/rat_abyss_wreckage_nameless.jpg"
+                }
+            }
+
             var sprite = Global.getSettings().getAndLoadSprite(path)
             var interactionImage = InteractionDialogImageVisual(path, sprite.width, sprite.height)
             visualPanel.showImageVisual(interactionImage)

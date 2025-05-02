@@ -14,6 +14,7 @@ import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lwjgl.opengl.GL11
+import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
@@ -40,12 +41,23 @@ class PrimordialWatersTerrain() : BaseFogTerrain() {
         return color
     }
 
+    override fun renderOnRadar(radarCenter: Vector2f?, factor: Float, alphaMult: Float) {
+        //Just shift color on map instead of doing a stencil, since the stencil really doesnt like being used on the map stuff for some reasons
+        var biome = biomePlugin as PrimordialWaters
+        color = Misc.interpolateColor(biome.getInactiveDarkBiomeColor(), biome.getDarkBiomeColor(), biome.getLevel())
+        super.renderOnRadar(radarCenter, factor, alphaMult)
+    }
+
     override fun renderOnMap(factor: Float, alphaMult: Float) {
+        //Just shift color on map instead of doing a stencil, since the stencil really doesnt like being used on the map stuff for some reasons
+        var biome = biomePlugin as PrimordialWaters
+        color = Misc.interpolateColor(biome.getInactiveDarkBiomeColor(), biome.getDarkBiomeColor(), biome.getLevel())
+        super.renderOnMap(factor, alphaMult)
 
         /*super.renderOnMap(factor, alphaMult)
         return*/
 
-        var biome = getBiome()
+        /*var biome = getBiome()
         if (biome !is PrimordialWaters) return
 
         var level = biome.getLevel()
@@ -54,14 +66,14 @@ class PrimordialWatersTerrain() : BaseFogTerrain() {
             //Inner
             color = biome.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
             if (RATSettings.brighterAbyss!!) biome.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
-            biome.startStencil(false)
+            biome.startStencil(true)
             super.renderOnMap(factor, alphaMult)
             biome.endStencil()
 
             //Outer
             color = biome.getInactiveDarkBiomeColor().setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
             if (RATSettings.brighterAbyss!!) biome.getInactiveDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
-            biome.startStencil(true)
+            biome.startStencil(false)
             super.renderOnMap(factor, alphaMult)
             biome.endStencil()
 
@@ -77,7 +89,7 @@ class PrimordialWatersTerrain() : BaseFogTerrain() {
             color = biome.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
             if (RATSettings.brighterAbyss!!) color = biome.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
             super.renderOnMap(factor, alphaMult)
-        }
+        }*/
 
     }
 

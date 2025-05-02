@@ -5,15 +5,13 @@ import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
-import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
@@ -25,8 +23,8 @@ class PrimordialWaters() : BaseAbyssBiome() {
     }
 
     override fun getDisplayName(): String {
-        if (level <= 0) return "Nameless Sea"
-        if (level >= 1) return "Primordial Waters"
+        if (effectLevel <= 0) return "Nameless Sea"
+        if (effectLevel >= 1) return "Primordial Waters"
 
         var radius = getRadius()
         if (MathUtils.getDistance(Global.getSector().playerFleet, getStencilCenter()) <= radius) {
@@ -59,8 +57,8 @@ class PrimordialWaters() : BaseAbyssBiome() {
     }
 
     override fun getTooltipColor(): Color {
-        if (level <= 0) return getInactiveBiomeColor()
-        if (level >= 1) return getBiomeColor()
+        if (effectLevel <= 0) return getInactiveBiomeColor()
+        if (effectLevel >= 1) return getBiomeColor()
 
         var radius = getRadius()
         if (MathUtils.getDistance(Global.getSector().playerFleet, getStencilCenter()) <= radius) {
@@ -183,33 +181,41 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
         var pLoc = center!!.getWorldCenter()
 
+        //Photosphere
+
         var photosphere = system!!.addCustomEntity("rat_abyss_photosphere_${Misc.genUID()}", "Photosphere", "rat_abyss_primordial_photosphere", Factions.NEUTRAL)
         photosphere.setLocation(pLoc.x, pLoc.y)
         photosphere.radius = 100f
 
-
-        ReflectionUtils.invoke("setShowIconOnMap", photosphere.customEntitySpec, false)
+        /*ReflectionUtils.invoke("setShowIconOnMap", photosphere.customEntitySpec, false)
         photosphere.addTag(Tags.NO_ENTITY_TOOLTIP)
-        photosphere.addTag(Tags.NON_CLICKABLE)
+        photosphere.addTag(Tags.NON_CLICKABLE)*/
 
         majorLightsources.add(photosphere)
 
         var plugin = photosphere.customPlugin as AbyssalLight
         plugin.radius = 15000f
 
+        //Activation Station
+        var catalyst = system!!.addCustomEntity("rat_primordial_catalyst_${Misc.genUID()}", "Primordial Catalyst", "rat_abyss_primordial_activator", Factions.NEUTRAL)
+        catalyst.setCircularOrbitWithSpin(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), 800f, -120f, 5f, 6f)
+
+        this.catalyst = catalyst
 
     }
 
 
-    private var level = 0.5f
+    var effectLevel = 0.0f
     fun getMaxRadius() = 5000f
 
+    private var catalyst: SectorEntityToken? = null
     fun getStencilCenter() : Vector2f {
-        return deepestCells.first().getWorldCenter()
+        //return deepestCells.first().getWorldCenter()
+        return catalyst?.location ?: Vector2f()
     }
 
     fun getRadius() : Float {
-        return getMaxRadius() * easeInOutSine(level)
+        return getMaxRadius() * easeInOutSine(effectLevel)
     }
 
     fun easeInOutSine(x: Float): Float {
@@ -217,7 +223,7 @@ class PrimordialWaters() : BaseAbyssBiome() {
     }
 
     fun getLevel() : Float {
-        return MathUtils.clamp(level, 0f, 1f)
+        return MathUtils.clamp(effectLevel, 0f, 1f)
     }
 
     fun startStencil(reverse: Boolean) {
