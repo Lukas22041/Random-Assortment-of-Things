@@ -55,6 +55,8 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
         var count = cargo.getCommodityQuantity("rat_abyssal_matter")
 
         createOption("Supply 200 units of abyssal matter to the catalyst") {
+            clearOptions()
+
             cargo.removeCommodity("rat_abyssal_matter", 200f)
 
             textPanel.addPara("Your team prepares the transfer of abyssal matter towards the entities storage hold, " +
@@ -77,6 +79,7 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
         }
 
         createOption("Supply 300 units of abyssal matter to the catalyst") {
+            clearOptions()
             cargo.removeCommodity("rat_abyssal_matter", 300f)
 
             textPanel.addPara("Your team prepares the transfer of abyssal matter towards the entities storage hold, " +
@@ -194,6 +197,7 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
 
             fleet.setSensorProfile(null)
             fleet.setDiscoverable(null)
+            fleet.forceNoSensorProfileUpdate = true
 
             //fleet.forceSensorFaderBrightness(0f)
             //fleet.fadeInIndicator()
