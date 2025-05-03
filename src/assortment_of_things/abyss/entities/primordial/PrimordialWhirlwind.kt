@@ -30,7 +30,7 @@ class PrimordialWhirlwind : BaseCustomEntityPlugin() {
     }
 
     override fun advance(amount: Float) {
-        if (!Global.getSector().isPaused) {
+        if (!Global.getSector().isPaused && wormhole1 != null) {
             wormhole1.angle += 5f * amount
             wormhole2.angle += 2.5f * amount
             wormhole3.angle += 0.25f * amount

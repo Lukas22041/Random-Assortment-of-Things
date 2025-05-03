@@ -25,6 +25,7 @@ class PrimordialFabricator : BaseCustomEntityPlugin() {
 
     var manager = AbyssUtils.getBiomeManager()
     var biome = manager.getBiome("primordial_waters") as PrimordialWaters
+    @Transient
     var isInRange: Boolean? = null
 
     var fade = 0f

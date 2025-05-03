@@ -209,6 +209,7 @@ class PrimordialWaters() : BaseAbyssBiome() {
         fabricator.setCircularOrbitWithSpin(photosphere, angle + MathUtils.getRandomNumberInRange(60f, 90f), 500f, -110f, 5f, 6f)
         fabricator.setDiscoverable(null)
         fabricator.setSensorProfile(null)
+
     }
 
 

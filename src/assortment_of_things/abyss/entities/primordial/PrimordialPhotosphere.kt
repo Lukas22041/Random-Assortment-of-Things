@@ -37,6 +37,8 @@ class PrimordialPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
 
     var manager = AbyssUtils.getBiomeManager()
     var biome = manager.getBiome("primordial_waters") as PrimordialWaters
+
+    @Transient
     var isInRange: Boolean? = null
 
     override fun advance(amount: Float) {

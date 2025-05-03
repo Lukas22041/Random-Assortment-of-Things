@@ -2,11 +2,9 @@ package assortment_of_things.abyss.interactions.primordial
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
+import assortment_of_things.abyss.misc.RATCampaignDistortionShader
 import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
-import assortment_of_things.misc.RATInteractionPlugin
-import assortment_of_things.misc.addPara
-import assortment_of_things.misc.fixVariant
-import assortment_of_things.misc.getAndLoadSprite
+import assortment_of_things.misc.*
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
@@ -18,6 +16,8 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManag
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.util.Misc
+import org.dark.shaders.distortion.DistortionShader
+import org.dark.shaders.distortion.RippleDistortion
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.makeImportant
@@ -73,7 +73,7 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
             }
 
         }
-        if (count < 200) {
+        if (count < 200 && !Global.getSettings().isDevMode) {
             optionPanel.setEnabled("Supply 200 units of abyssal matter to the catalyst", false)
             optionPanel.setTooltip("Supply 200 units of abyssal matter to the catalyst", "You do not have enough abyssal matter for this option.")
         }
@@ -94,10 +94,24 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
                 closeDialog()
             }
         }
-        if (count < 300) {
+        if (count < 300 && !Global.getSettings().isDevMode) {
             optionPanel.setEnabled("Supply 300 units of abyssal matter to the catalyst", false)
             optionPanel.setTooltip("Supply 300 units of abyssal matter to the catalyst", "You do not have enough abyssal matter for this option.")
         }
+
+      /*  createOption("Ripple") {
+           *//* GraphicLibEffects.CustomCampaignRippleDistortion(interactionTarget.location, Vector2f(), 1000000f, 75f, true, 1f, 360f, 1f
+                ,3f, 3f, 3f, 1f, 1f)*//*
+
+            val ripple = RippleDistortion(interactionTarget.location, Vector2f())
+            ripple.intensity = 50f
+            ripple.size = 1000f
+            ripple.fadeInSize(3.15f)
+            ripple.fadeOutIntensity(3.5f)
+            RATCampaignDistortionShader.addDistortion(ripple)
+
+            closeDialog()
+        }*/
 
         addLeaveOption()
     }
@@ -141,6 +155,12 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
             if (!playedSound) {
                 playedSound = true
                 Global.getSoundPlayer().playSound("rat_genesis_system_sound", 0.8f, 1.2f, catalyst.location, Vector2f())
+
+                GraphicLibEffects.CustomCampaignRippleDistortion(catalyst.location, Vector2f(), 2000f, 15f, true, 0f, 360f, 1f
+                    ,1f, 1f, 1f, 1f, 1f)
+
+                GraphicLibEffects.CustomCampaignBubbleDistortion(catalyst.location, Vector2f(), 1000f , 25f, true, 0f, 360f, 1f
+                    ,0.1f, 0.1f, 1f, 0.3f, 1f)
             }
 
             if (!teleportedNextFrame && fleet != null) {

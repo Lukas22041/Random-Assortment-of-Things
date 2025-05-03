@@ -3,6 +3,7 @@ package assortment_of_things
 import assortment_of_things.abyss.AbyssCampaignListener
 import assortment_of_things.scripts.ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.misc.RATCampaignDistortionShader
 import assortment_of_things.abyss.procgen.AbyssGenerator
 import assortment_of_things.abyss.procgen.BiomeAtmosphereRenderer
 import assortment_of_things.abyss.procgen.BiomeMusicHandler
@@ -134,6 +135,8 @@ class RATModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
+
+        LunaCampaignRenderer.addTransientRenderer(RATCampaignDistortionShader())
 
         LunaCampaignRenderer.addTransientRenderer(BiomeAtmosphereRenderer())
 
