@@ -3,6 +3,8 @@ package assortment_of_things.combat
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.combat.*
 import assortment_of_things.abyss.entities.light.*
+import assortment_of_things.abyss.entities.primordial.PrimordialPhotosphere
+import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
 import assortment_of_things.abyss.procgen.biomes.SeaOfSolitude
 import assortment_of_things.backgrounds.neural.NeuralShardScript
 import assortment_of_things.backgrounds.zero_day.ZeroDayScript
@@ -185,6 +187,10 @@ class CombatHandler : EveryFrameCombatPlugin
         //Background
         var backgroundBrightness = 40
         backgroundBrightness += (75 * lightLevel * darknessLevel).toInt()
+        if (dominant is PrimordialWaters) {
+            backgroundBrightness -= 20
+            currentDarkColor = currentDarkColor.darker()
+        }
 
         var background = currentBackgroundColor.setBrightness(backgroundBrightness)
 
@@ -213,7 +219,7 @@ class CombatHandler : EveryFrameCombatPlugin
             var plugin = source.customPlugin as AbyssalLight
             if (MathUtils.getDistance(source.location, Global.getSector().playerFleet.location) < (plugin.radius / 10) - 10)
             {
-                if (plugin is AbyssalPhotosphere || plugin is AbyssalBeacon || plugin is AbyssalDecayingPhotosphere || plugin is AbyssalColossalPhotosphere) {
+                if (plugin is AbyssalPhotosphere || plugin is AbyssalBeacon || plugin is AbyssalDecayingPhotosphere || plugin is AbyssalColossalPhotosphere || plugin is PrimordialPhotosphere) {
                     lightSource = source
                 }
                 break
@@ -233,6 +239,13 @@ class CombatHandler : EveryFrameCombatPlugin
 
             if (plugin is AbyssalDecayingPhotosphere) {
                 engine!!.addLayeredRenderingPlugin(CombatDecayingPhotosphereRenderer(lightSource))
+            }
+
+            if (plugin is PrimordialPhotosphere) {
+                var biome = AbyssUtils.getBiomeManager().getBiomeOfClass(PrimordialWaters::class.java) as PrimordialWaters
+                if (biome.getLevel() != 0f) {
+                    engine!!.addLayeredRenderingPlugin(CombatPrimordialPhotosphereRenderer(lightSource))
+                }
             }
 
             if (plugin is AbyssalBeacon) {

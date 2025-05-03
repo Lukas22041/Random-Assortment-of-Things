@@ -170,6 +170,8 @@ class GenesisInteraction : RATInteractionPlugin() {
         entity.addTag(AbyssTags.ABYSS_WRECK)
         entity.addTag("Dont_Show_Salvage_Option")
         entity.makeImportant("")
+        entity.setDiscoverable(null)
+        entity.setSensorProfile(null)
     }
 
     fun generateWormWreck() {
@@ -181,6 +183,8 @@ class GenesisInteraction : RATInteractionPlugin() {
         entity.addTag(AbyssTags.ABYSS_WRECK)
         entity.addTag("Dont_Show_Salvage_Option")
         entity.makeImportant("")
+        entity.setDiscoverable(null)
+        entity.setSensorProfile(null)
     }
 
 }

@@ -59,6 +59,26 @@ object ReflectionUtils {
         return getFieldHandle.invoke(field, instanceToGetFrom)
     }
 
+    fun getFieldOfType(type: Class<*>, instanceToGetFrom: Any)  : Any?
+    {
+        var decFieldsA: Array<Any> = instanceToGetFrom.javaClass.declaredFields as Array<Any>
+        var fields: MutableList<Any> = decFieldsA.toMutableList()
+        var nonDecFieldsA: Array<Any> = instanceToGetFrom.javaClass.fields as Array<Any>
+        var nonDecFields: MutableList<Any> = nonDecFieldsA.toMutableList()
+
+        fields.addAll(nonDecFields)
+
+        for (field: Any in fields)
+        {
+            setFieldAccessibleHandle.invoke(field, true)
+            var fieldType: Class<*> = getFieldTypeHandle.invoke(field) as Class<*>
+            if (fieldType == type) {
+                return getFieldHandle.invoke(field, instanceToGetFrom) as Any?
+            }
+        }
+        return null
+    }
+
     fun hasMethodOfName(name: String, instance: Any, contains: Boolean = false) : Boolean {
         val instancesOfMethods: Array<out Any> = instance.javaClass.getDeclaredMethods() as Array<out Any>
 

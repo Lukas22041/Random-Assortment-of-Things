@@ -126,6 +126,8 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
         var radius = 3
 
+        cells = cells.filter { it.getAround(radius).none { it.isFake } }
+
         //Ensure it doesnt pick a biome border with any biome that can not be overwritten
         cells = cells.filter { center -> center.getAround(radius).none { it.getBiome()?.canBeOverwritten() == false} }
 
@@ -197,11 +199,16 @@ class PrimordialWaters() : BaseAbyssBiome() {
         plugin.radius = 15000f
 
         //Activation Station
+        var angle = MathUtils.getRandomNumberInRange(0f, 360f)
         var catalyst = system!!.addCustomEntity("rat_primordial_catalyst_${Misc.genUID()}", "Primordial Catalyst", "rat_abyss_primordial_activator", Factions.NEUTRAL)
-        catalyst.setCircularOrbitWithSpin(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), 800f, -120f, 5f, 6f)
+        catalyst.setCircularOrbitWithSpin(photosphere, angle, 800f, -120f, 5f, 6f)
 
         this.catalyst = catalyst
 
+        var fabricator = system!!.addCustomEntity("rat_abyss_primordial_fabricator_${Misc.genUID()}", "Primordial Fabricator", "rat_abyss_primordial_fabricator", Factions.NEUTRAL)
+        fabricator.setCircularOrbitWithSpin(photosphere, angle + MathUtils.getRandomNumberInRange(60f, 90f), 500f, -110f, 5f, 6f)
+        fabricator.setDiscoverable(null)
+        fabricator.setSensorProfile(null)
     }
 
 

@@ -6,12 +6,14 @@ import assortment_of_things.abyss.boss.GenesisInteraction
 import assortment_of_things.abyss.boss.GenesisReencounterInteractionPlugin
 import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.interactions.AbyssSensorInteraction
+import assortment_of_things.abyss.interactions.AbyssalWreckInteraction
 import assortment_of_things.abyss.interactions.ethereal.AbyssalRaphaelInteraction
 import assortment_of_things.abyss.interactions.primordial.PrimordialCatalystInteraction
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
+import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.interactions.ExoshipLockedOutInteraction
@@ -164,11 +166,10 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
             }
 
-            /*
 
             if (interactionTarget.hasTag(AbyssTags.ABYSS_WRECK)) {
                 return PluginPick(AbyssalWreckInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-            }*/
+            }
 
             if (interactionTarget.hasTag("rat_exo_hideout")) {
                 return PluginPick(ExotechHideoutInteraction(), CampaignPlugin.PickPriority.HIGHEST)
