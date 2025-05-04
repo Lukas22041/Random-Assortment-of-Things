@@ -112,6 +112,10 @@
 		  "executive":"graphics/portraits/rat_exo_exec.png",
 		},
 		
+		"rat_illustrations": {
+			"genesis":"graphics/illustrations/rat_genesis.jpg",
+		},
+		
 		"rat_preload": {
 		  "1":"graphics/icons/abilities/rat_singularity_jump_returnal.png",
 		  "2":"graphics/icons/intel/rat_archivist_intel.png",

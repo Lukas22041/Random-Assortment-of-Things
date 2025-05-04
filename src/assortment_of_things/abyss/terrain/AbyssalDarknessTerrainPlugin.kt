@@ -6,7 +6,9 @@ import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.entities.light.AbyssalBeacon
 import assortment_of_things.abyss.entities.light.AbyssalColossalPhotosphere
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.entities.light.AbyssalPhotosphere
 import assortment_of_things.abyss.entities.primordial.PrimordialPhotosphere
+import assortment_of_things.abyss.procgen.biomes.EtherealShores
 import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.levelBetween
@@ -14,7 +16,6 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
-import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
@@ -27,6 +28,7 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.bounty.ui.drawOutlined
 import org.magiclib.kotlin.setAlpha
+import java.awt.Color
 import java.util.*
 
 class AbyssalDarknessTerrainPlugin : BaseTerrain() {
@@ -154,7 +156,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
             if (entity.customEntitySpec.id == "rat_abyss_sensor" || entity.customEntitySpec.id == "rat_decaying_abyss_sensor") {
 
-                if (!entity.hasTag("scanned")) continue
+                if (!entity.hasTag("scanned") && !Global.getSettings().isDevMode) continue
 
                 var plugin = entity.customPlugin as AbyssSensorEntity
                 var biome = plugin.biome ?: continue
@@ -165,7 +167,48 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
                 fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
                 fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
 
-                fractureText!!.drawOutlined(entity.location.x * factor - (fractureText!!.width / 2), (entity.location.y + 600) * factor + (fractureText!!.height))
+                var loc = entity.location
+                var height = 700f
+                if (entity.orbitFocus != null) {
+                    loc = entity.orbitFocus.location
+                    if (entity.orbitFocus.customPlugin is AbyssalColossalPhotosphere) {
+                        height += 700f
+                    }
+                }
+
+                fractureText!!.drawOutlined(loc.x * factor - (fractureText!!.width / 2), (loc.y + height) * factor + (fractureText!!.height))
+            }
+
+            if (entity.customEntitySpec.id == "rat_abyss_primordial_photosphere") {
+
+                if (!entity.customEntitySpec.isShowIconOnMap) continue
+
+                var plugin = entity.customPlugin as PrimordialPhotosphere
+                var biome = plugin.biome ?: continue
+
+                fractureText!!.text = biome.getDisplayName()
+                fractureText!!.fontSize = 600f * factor
+                fractureText!!.baseColor = biome.getTooltipColor().setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+                fractureText!!.drawOutlined(entity.location.x * factor - (fractureText!!.width / 2), (entity.location.y + 700) * factor + (fractureText!!.height))
+            }
+
+            if (entity.customEntitySpec.id == "rat_abyss_photosphere_sierra") {
+
+                if (entity.sensorProfile == null) continue
+
+                var plugin = entity.customPlugin as AbyssalPhotosphere
+                var biome = AbyssUtils.getBiomeManager().getBiome(EtherealShores::class.java) ?: continue
+
+                fractureText!!.text = biome.getDisplayName()
+                fractureText!!.fontSize = 600f * factor
+                fractureText!!.baseColor = biome.getTooltipColor().setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+                fractureText!!.drawOutlined(entity.location.x * factor - (fractureText!!.width / 2), (entity.location.y + 700) * factor + (fractureText!!.height))
             }
         }
 
@@ -195,7 +238,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         for (sources in lightsources)
         {
             var extra = 0f
-            if (sources.customPlugin is AbyssalColossalPhotosphere) extra += 2500
+            if (sources.customPlugin is AbyssalColossalPhotosphere) extra += 3500
             if (MathUtils.getDistance(sources.location, radarCenter) >= radarRadius + extra) continue
 
             var loc = Vector2f((sources.location.x - radarCenter.x) * factor, (sources.location.y - radarCenter.y) * factor)
@@ -207,20 +250,20 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             if (plugin.radius >= 50000) continue
 
             var skipRendering = false
-            var isStenceling = false
+            var fadeIn = 1f
             if (plugin is PrimordialPhotosphere) {
                 var biome = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
                 var level = biome.getLevel()
                 if (level > 0 && level < 1) {
-                    isStenceling = true
-                    //biome.startStencil(false)
+                    fadeIn = biome.getLevel()
+                    //biome.startStencil(true)
                 } else if (level <= 0) {
                     skipRendering = true
                 }
             }
 
             if (!skipRendering) {
-                halo!!.alphaMult = 1f * alphaMult
+                halo!!.alphaMult = 1f * alphaMult * fadeIn
                 halo!!.color = color.setAlpha(75)
 
                 halo!!.setSize(radius / 20, radius / 20)
@@ -236,7 +279,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             }
 
 
-           // if (isStenceling) GL11.glDisable(GL11.GL_STENCIL_TEST)
+            //if (isStenceling) GL11.glDisable(GL11.GL_STENCIL_TEST)
 
         }
 
@@ -390,7 +433,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
                 var current = 1 - ((1 - mult) * lightLevel)
 
-                fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "$name", current, fleet.stats.detectedRangeMod)
+                fleet.stats.addTemporaryModMult(0.1f, this.toString(), "$name", current, fleet.stats.detectedRangeMod)
 
                 /*if (depth == AbyssDepth.Shallow) {
                     fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Darkness", 1 - (0.25f * lightLevel), fleet.stats.detectedRangeMod)

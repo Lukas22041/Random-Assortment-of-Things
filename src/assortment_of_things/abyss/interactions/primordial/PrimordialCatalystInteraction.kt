@@ -2,7 +2,6 @@ package assortment_of_things.abyss.interactions.primordial
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
-import assortment_of_things.abyss.misc.RATCampaignDistortionShader
 import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
 import assortment_of_things.misc.*
 import assortment_of_things.strings.RATItems
@@ -16,8 +15,6 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManag
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.loading.Description
 import com.fs.starfarer.api.util.Misc
-import org.dark.shaders.distortion.DistortionShader
-import org.dark.shaders.distortion.RippleDistortion
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.makeImportant
@@ -26,6 +23,12 @@ import java.util.*
 class PrimordialCatalystInteraction : RATInteractionPlugin() {
 
     override fun init() {
+
+        if (interactionTarget.hasTag("completed")) {
+            textPanel.addPara("The station continues to generate small pulses, the transformed landscape providing more energy dense material to sustain itself through.")
+            addLeaveOption()
+            return
+        }
 
         textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
 
@@ -45,7 +48,8 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
         var path = "graphics/icons/cargo/rat_abyssal_matter.png"
         Global.getSettings().getAndLoadSprite(path)
         var img = tooltip.beginImageWithText(path, 48f)
-        img.addPara("Pure samples of Abyssal Matter are required for this action. Atleast 200 units are needed for a larger reaction to occur. Supplying even more may increase the intensity of whatever will occur.", 0f,
+        img.addPara("Pure samples of Abyssal Matter are required for this action. Atleast 200 units are needed for a larger reaction to occur. " /*+
+                "Supplying even more may increase the intensity of whatever will occur."*/, 0f,
             Misc.getTextColor(), Misc.getHighlightColor(), "Abyssal Matter", "200")
         tooltip.addImageWithText(0f)
 
@@ -56,6 +60,8 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
 
         createOption("Supply 200 units of abyssal matter to the catalyst") {
             clearOptions()
+
+            interactionTarget.addTag("completed")
 
             cargo.removeCommodity("rat_abyssal_matter", 200f)
 
@@ -78,8 +84,11 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
             optionPanel.setTooltip("Supply 200 units of abyssal matter to the catalyst", "You do not have enough abyssal matter for this option.")
         }
 
-        createOption("Supply 300 units of abyssal matter to the catalyst") {
+       /* createOption("Supply 300 units of abyssal matter to the catalyst") {
             clearOptions()
+
+            interactionTarget.addTag("completed")
+
             cargo.removeCommodity("rat_abyssal_matter", 300f)
 
             textPanel.addPara("Your team prepares the transfer of abyssal matter towards the entities storage hold, " +
@@ -97,7 +106,7 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
         if (count < 300 && !Global.getSettings().isDevMode) {
             optionPanel.setEnabled("Supply 300 units of abyssal matter to the catalyst", false)
             optionPanel.setTooltip("Supply 300 units of abyssal matter to the catalyst", "You do not have enough abyssal matter for this option.")
-        }
+        }*/
 
       /*  createOption("Ripple") {
            *//* GraphicLibEffects.CustomCampaignRippleDistortion(interactionTarget.location, Vector2f(), 1000000f, 75f, true, 1f, 360f, 1f
@@ -125,7 +134,7 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
         var spawnedFleet = false
 
         var system = AbyssUtils.getSystem()
-        var biome = AbyssUtils.getBiomeManager().getBiomeOfClass(PrimordialWaters::class.java) as PrimordialWaters
+        var biome = AbyssUtils.getBiomeManager().getBiome(PrimordialWaters::class.java) as PrimordialWaters
         var photosphere = biome.majorLightsources.first()
 
         var spawnDistance = 200f
@@ -165,7 +174,7 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
 
             if (!teleportedNextFrame && fleet != null) {
                 teleportedNextFrame = true
-                fleet!!.setCircularOrbitWithSpin(photosphere, angle, spawnDistance, 90f, 3f, 3f)
+                fleet!!.setCircularOrbitWithSpin(photosphere, angle, spawnDistance, -90f, 3f, 3f)
             }
 
             if (!spawnedFleet && MathUtils.getDistance(catalyst, singularitySpawnLoc) < biome.getRadius()) {

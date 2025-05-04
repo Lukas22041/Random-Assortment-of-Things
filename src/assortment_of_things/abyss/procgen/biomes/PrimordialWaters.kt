@@ -34,7 +34,7 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
 
     private var biomeColor = Color(140, 0, 250)
-    private var darkBiomeColor = Color(44, 0, 77)
+    private var darkBiomeColor = Color(51, 0, 89)
 
     private var inactiveBiomeColor = Color(184, 176, 191)
     private var inactiveDarkBiomeColor = Color(66, 63, 69)

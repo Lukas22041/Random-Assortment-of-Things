@@ -18,10 +18,7 @@ import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.campaign.WarpingSpriteRenderer
 import exerelin.campaign.backgrounds.CharacterBackgroundUtils
-import org.dark.shaders.light.LightShader
-import org.dark.shaders.light.StandardLight
 import org.lazywizard.lazylib.MathUtils
-import org.lwjgl.util.vector.Vector3f
 import org.magiclib.kotlin.setBrightness
 
 
@@ -242,7 +239,7 @@ class CombatHandler : EveryFrameCombatPlugin
             }
 
             if (plugin is PrimordialPhotosphere) {
-                var biome = AbyssUtils.getBiomeManager().getBiomeOfClass(PrimordialWaters::class.java) as PrimordialWaters
+                var biome = AbyssUtils.getBiomeManager().getBiome(PrimordialWaters::class.java) as PrimordialWaters
                 if (biome.getLevel() != 0f) {
                     engine!!.addLayeredRenderingPlugin(CombatPrimordialPhotosphereRenderer(lightSource))
                 }

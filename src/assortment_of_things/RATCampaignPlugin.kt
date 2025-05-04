@@ -9,6 +9,7 @@ import assortment_of_things.abyss.interactions.AbyssSensorInteraction
 import assortment_of_things.abyss.interactions.AbyssalWreckInteraction
 import assortment_of_things.abyss.interactions.ethereal.AbyssalRaphaelInteraction
 import assortment_of_things.abyss.interactions.primordial.PrimordialCatalystInteraction
+import assortment_of_things.abyss.interactions.primordial.PrimordialFabricatorInteraction
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
@@ -163,6 +164,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 "rat_decaying_abyss_sensor" -> return PluginPick(AbyssSensorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
 
                 "rat_abyss_primordial_activator" -> return PluginPick(PrimordialCatalystInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_primordial_fabricator" -> return PluginPick(PrimordialFabricatorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
 
             }
 

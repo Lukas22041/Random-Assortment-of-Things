@@ -31,6 +31,7 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
 
     var rotation = 0f
 
+
     override fun advance(amount: Float) {
         super.advance(amount)
 

@@ -110,7 +110,7 @@ class PrimordialWatersTerrain() : BaseFogTerrain() {
            // GL11.glPushMatrix()
 
             color = biome.getDarkBiomeColor()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
-            if (RATSettings.brighterAbyss!!) biome.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            if (RATSettings.brighterAbyss!!) color = biome.getDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
             biome.startStencil(false)
             super.render(layer, viewport)
             biome.endStencil()
@@ -121,7 +121,7 @@ class PrimordialWatersTerrain() : BaseFogTerrain() {
 
             //Outer
             color = biome.getInactiveDarkBiomeColor().setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
-            if (RATSettings.brighterAbyss!!) biome.getInactiveDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
+            if (RATSettings.brighterAbyss!!) color =biome.getInactiveDarkBiomeColor()?.brighter()?.setAlpha(225) ?: AbyssUtils.DARK_ABYSS_COLOR
             biome.startStencil(true)
             super.render(layer, viewport)
             biome.endStencil()

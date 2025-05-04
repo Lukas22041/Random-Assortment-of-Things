@@ -29,7 +29,7 @@ class AbyssBiomeManager {
 
     var biomes = ArrayList<BaseAbyssBiome>()
     fun getBiome(biomeId: String) = biomes.find { it.getBiomeID() == biomeId }
-    fun getBiomeOfClass(biome: Class<*>) = biomes.find { it.javaClass.name == biome.name }
+    fun getBiome(biome: Class<*>) = biomes.find { it.javaClass.name == biome.name }
 
     //Get the lower left coordinate of a cell in World coordinates
     fun toWorldX(gridX: Int) = (gridX * cellSize - xOffset).toFloat()
