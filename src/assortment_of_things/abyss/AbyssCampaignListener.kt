@@ -20,6 +20,8 @@ class AbyssCampaignListener : RATBaseCampaignEventListener() {
             loot!!.addWeapons("rat_azazel_blade", 4)
             loot!!.addWeapons("rat_apollyons_end", 3)
 
+            loot.addCommodity("rat_abyssal_matter", 200f)
+
         }
 
     }
