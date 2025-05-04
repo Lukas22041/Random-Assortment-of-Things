@@ -26,12 +26,13 @@ object ArtifactUtils {
             if (id.startsWith("#") || id == "") continue
             val name = row.getString("name")
             val pluginPath = row.getString("plugin")
+            var tags = row.getString("tags").split(",").map { it.trim() }
             val dropWeight = row.getDouble("dropWeight").toFloat()
             val dropGroup = row.getString("dropGroup")
             val spritePath = row.getString("spritePath")
             Global.getSettings().loadTexture(spritePath)
 
-            var spec = ArtifactSpec(id, name, pluginPath, dropWeight, dropGroup, spritePath)
+            var spec = ArtifactSpec(id, name, pluginPath, tags, dropWeight, dropGroup, spritePath)
             artifacts.add(spec)
         }
     }

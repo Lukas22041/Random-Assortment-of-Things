@@ -4,6 +4,7 @@ data class ArtifactSpec(
     var id: String,
     var name: String,
     var pluginPath: String,
+    var tags: List<String>,
     var dropWeight: Float,
     var dropGroup: String,
     var spritePath: String)

@@ -1,6 +1,8 @@
 package assortment_of_things.abyss.interactions.primordial
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.artifacts.ArtifactSpec
+import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.*
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FleetMemberPickerListener
@@ -355,10 +357,12 @@ class PrimordialFabricatorInteraction : RATInteractionPlugin() {
 
         for ((hullmod, cost) in list) {
 
-            var container = scroller.addLunaElement(width, 50f).apply {
+            var container = scroller.addLunaElement(width-15, 50f).apply {
                 enableTransparency = true
-                borderAlpha = 0.0f
-                backgroundAlpha = 0.0f
+                borderAlpha = 0.5f
+                backgroundAlpha = 0.2f
+                backgroundColor = Color(0,0,0)
+
             }
 
             var designType = hullmod.manufacturer
@@ -427,7 +431,7 @@ class PrimordialFabricatorInteraction : RATInteractionPlugin() {
                     consumeAbyssalMatter(cost)
 
                     textPanel.setFontSmallInsignia()
-                    textPanel.addParagraph("Acquirred the \"${hullmod.displayName}\" Alteration", Misc.getPositiveHighlightColor())
+                    textPanel.addParagraph("Fabricated the \"${hullmod.displayName}\" Alteration", Misc.getPositiveHighlightColor())
                     textPanel.setFontInsignia()
 
                     Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_alteration_install", hullmod.id), 1f)
@@ -462,7 +466,139 @@ class PrimordialFabricatorInteraction : RATInteractionPlugin() {
 
     }
 
+    fun getArtifactCosts() : HashMap<ArtifactSpec, Int> {
+        var map = HashMap<ArtifactSpec, Int>()
+        var specs = ArtifactUtils.artifacts
+
+        for (artifact in specs) {
+            for (tag in artifact.tags) {
+                if (tag.contains("rat_fabricatable")) {
+                    var cost = tag.trim().replace("rat_fabricatable_", "").toInt()
+                    map.put(artifact, cost)
+                }
+            }
+        }
+
+        return map
+    }
+
     fun fabricateArtifacts(parent: CustomPanelAPI) {
+        var subpanel = parent.createCustomPanel(width, height, null)
+        parent.addComponent(subpanel)
+
+        subpanel.position.inTL(0f, 42f)
+
+        var subelement = subpanel.createUIElement(width, height, false)
+        subpanel.addUIElement(subelement)
+
+        var header = subelement.addSectionHeading("Fabricate Artifacts", Alignment.MID, 0f)
+        subelement.addSpacer(10f)
+
+        subelement.addPara("Your team enters some kind of production hall that appears unlike the others. It doesn't take them long to discover a control panel for this facility. From within a selection of unique artifacts can be selected for production.")
+
+        subelement.addSpacer(10f)
+
+        subelement.addSectionHeading("Selection", Alignment.MID, 0f)
+
+        var artifactCosts = getArtifactCosts()
+
+        var scrollerPanel = subpanel.createCustomPanel(width, 400f, null)
+        subpanel.addComponent(scrollerPanel)
+        scrollerPanel.position.inTL(0f, 100f)
+
+        var scroller = scrollerPanel.createUIElement(width, 400f, true)
+        scroller.addSpacer(10f)
+
+        var list = artifactCosts.toList().sortedWith(compareByDescending<Pair<ArtifactSpec, Int>>({it.second}).thenBy { it.first.name })
+
+        for ((artifact, cost) in list) {
+
+            var container = scroller.addLunaElement(width -15 , 240f).apply {
+                enableTransparency = true
+                borderAlpha = 0.9f
+                backgroundAlpha = 0.5f
+                backgroundColor = Color(0, 0, 0)
+            }
+
+            var inner = container.innerElement
+
+            inner.addTitle("${artifact.name}").position.setXAlignOffset(10f).setYAlignOffset(-10f)
+            inner.addSpacer(10f)
+
+            var designType = "Artifact"
+            var col = Misc.getDesignTypeColor(designType)
+
+            inner.addPara("Design type: $designType", 0f, Misc.getGrayColor(), col, designType)
+            inner.addSpacer(5f)
+
+            inner.addPara("An ancient artifact that can be integrated into a fleet to provide additional benefits. Only one can be active at a time. More information will be provided via the \"Artifacts\" intel tab (located in the \"Personal\" section) when integrating for the first time.",
+            0f, Misc.getGrayColor(), Misc.getGrayColor())
+            inner.addSpacer(5f)
+
+            var plugin = ArtifactUtils.getPlugin(artifact)
+
+            plugin.addDescription(inner)
+
+            inner.addSpacer(10f)
+            var costPara = inner.addPara("Requires $cost units of Abyssal Matter", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "$cost")
+
+            costPara.position.inTL(container.width/2-costPara.computeTextWidth(costPara.text)/2, container.height-costPara.computeTextHeight(costPara.text)-10-5-32)
+
+
+            var fabricate = LongIconedButton(Global.getSettings().getAndLoadSprite("graphics/ui/rat_fabricator_refit.png"), "Fabricate", Misc.getDarkPlayerColor(), inner, width-35f, 32f).apply {
+                borderAlpha = 0.6f
+                backgroundAlpha = 0.6f
+
+                onHoverEnter {
+                    playScrollSound()
+                }
+
+                onClick {
+                    if (getAbyssalMatter() < cost) {
+                        playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                        return@onClick
+                    }
+
+                    Global.getSoundPlayer().playUISound(Sounds.STORY_POINT_SPEND, 1f, 1f)
+                    consumeAbyssalMatter(cost)
+
+                    textPanel.setFontSmallInsignia()
+                    textPanel.addParagraph("Fabricated the \"${artifact.name}\" Artifact", Misc.getPositiveHighlightColor())
+                    textPanel.setFontInsignia()
+
+                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_artifact", artifact.id), 1f)
+                }
+            }
+
+            fabricate.position.inTL(10f, container.height-fabricate.height-10)
+
+            fabricate.advance {
+                var alpha = 0.6f
+                if (getAbyssalMatter() < cost) {
+                    alpha -= 0.2f
+                    costPara.setHighlightColor(Misc.getNegativeHighlightColor())
+                }
+                else {
+                    costPara.setHighlightColor(Misc.getHighlightColor())
+
+                }
+
+                if (fabricate.isHovering) {
+                    alpha += 0.3f
+                    fabricate.extraAlpha = 0.3f
+                } else {
+                    fabricate.extraAlpha = 0f
+                }
+
+                fabricate.borderAlpha = alpha
+                fabricate.backgroundAlpha = alpha
+            }
+
+
+            scroller.addSpacer(10f)
+        }
+
+        scrollerPanel.addUIElement(scroller)
 
     }
 
