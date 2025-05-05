@@ -160,7 +160,7 @@ class SymbiosisListener(var ship: ShipAPI) : AdvanceableListener {
         var sizeToMainain = when(ship.hullSize) {
             ShipAPI.HullSize.CRUISER -> 200
             ShipAPI.HullSize.DESTROYER -> 100
-            ShipAPI.HullSize.FRIGATE -> 500
+            ShipAPI.HullSize.FRIGATE -> 50
             else -> 0
         }
 

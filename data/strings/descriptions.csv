@@ -102,6 +102,17 @@ rat_gabriel,SHIP,"A terrifying presence, being virtually invisible on radar scop
 
 Please register your Tri-Tachyon datapad to receive the latest news and updates.",,,
 ,,,,,,,
+rat_prayer,SHIP,"IDENTIFICATION ERROR: Target matches no known class of ship in the Domain registry or historical reference. Submit data for temporary entry? Processing. ERROR // DOMAIN INFOSEC VIOLATION THRESHOLD WARNING
+// retry?
+ Processing. ERROR // A prayer from the damned
+// retry?
+ Processing. ERROR // ERROR
+// process failed.
+
+IMMEDIATELY contact DOMAIN INFOSEC to review compliance with Domain Information Security Standards.",Unidentified Vessel,"UNKNOWN ENTRY
+
+Please register your Tri-Tachyon datapad to receive the latest news and updates.",,,
+,,,,,,,
 rat_saint,SHIP,"IDENTIFICATION ERROR: Target matches no known class of ship in the Domain registry or historical reference. Submit data for temporary entry? Processing. ERROR // DOMAIN INFOSEC VIOLATION THRESHOLD WARNING
 // retry?
  Processing. ERROR // From the depths
