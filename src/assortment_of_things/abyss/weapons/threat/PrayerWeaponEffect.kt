@@ -1,13 +1,14 @@
 package assortment_of_things.abyss.weapons.threat
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.combat.CombatEngineAPI
 import com.fs.starfarer.api.combat.CombatEntityAPI
-import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.MissileAPI
+import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.impl.combat.threat.BaseFragmentMissileEffect
 import com.fs.starfarer.api.impl.combat.threat.RoilingSwarmEffect
-import com.fs.starfarer.api.impl.combat.threat.RoilingSwarmEffect.RoilingSwarmParams
-import com.fs.starfarer.api.impl.combat.threat.RoilingSwarmEffect.SwarmMember
+import com.fs.starfarer.api.impl.combat.threat.RoilingSwarmEffect.*
+import com.fs.starfarer.api.util.Misc
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 
@@ -20,7 +21,30 @@ class PrayerWeaponEffect : BaseFragmentMissileEffect() {
     var SERAPH_COLOR_CORE = Color(196, 20, 35).darker()
 
     override fun withEMPArc(): Boolean {
-        return false
+        return true
+    }
+
+    override fun advance(amount: Float, engine: CombatEngineAPI?, weapon: WeaponAPI?) {
+        val ship = weapon!!.ship ?: return
+
+        val swarm = getSwarmFor(ship)
+        val active = swarm?.numActiveMembers ?: 0
+        val required = numFragmentsToFire
+        var disable = active < required
+        if (ship.system.effectLevel <= 0.5f) disable = true //Only enabled with the shipsystem active
+
+        //Disable if below 10 fragments so that other weapons can also fire a bit.
+        var autopilot = Global.getCombatEngine()?.combatUI?.isAutopilotOn ?: false
+        if (ship != Global.getCombatEngine().playerShip || autopilot) {
+            if (swarm.numActiveMembers <= 10) {
+                disable = true
+            }
+        }
+
+        weapon!!.isForceDisabled = disable
+
+
+        showNoFragmentSwarmWarning(weapon, ship)
     }
 
     override fun configureMissileSwarmParams(params: RoilingSwarmParams) {
@@ -35,10 +59,12 @@ class PrayerWeaponEffect : BaseFragmentMissileEffect() {
         params.maxSpeed = missile.maxSpeed + 10f
         params.outspeedAttachedEntityBy = 0f
 
+        var core = Misc.interpolateColor(CORE_COLOR, SERAPH_COLOR_CORE, 0.80f)
+        var fringe = Misc.interpolateColor(FRINGE_COLOR, SERAPH_COLOR, 0.80f)
 
         //params.flashFringeColor = Misc.setAlpha(FRINGE_COLOR, 50);
-        params.flashFringeColor = SERAPH_COLOR
-        params.flashCoreColor = SERAPH_COLOR_CORE
+        params.flashFringeColor = core
+        params.flashCoreColor = fringe
 
         params.flashCoreRadiusMult = 0f
         //params.renderFlashOnSameLayer = true;
@@ -79,8 +105,8 @@ class PrayerWeaponEffect : BaseFragmentMissileEffect() {
         super.swarmAdvance(amount, missile, swarm)
     }
 
-    override fun getEMPResistance(): Int {
-        return 3
+    override fun getNumOtherMembersToTransfer(): Int {
+        return 2
     }
 
     override fun explodeOnFizzling(): Boolean {

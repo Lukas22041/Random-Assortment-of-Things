@@ -348,7 +348,7 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
         aiUpdateInterval.advance(amount)
         if (aiUpdateInterval.intervalElapsed()) {
             var swarm = RoilingSwarmEffect.getSwarmFor(ship)
-            if (swarm.numActiveMembers <= swarm.params.baseMembersToMaintain * 0.8f) {
+            if (swarm.numActiveMembers <= swarm.params.baseMembersToMaintain * 0.9f) {
                 if (findValidWrecks().isNotEmpty()) {
                     return true
                 }

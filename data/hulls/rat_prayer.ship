@@ -62,7 +62,7 @@
       "mount": "HARDPOINT",
       "arc": 5,
       "angle": 0,
-      "locations": [11, -0]
+      "locations": [11.5, -0]
     }
   ],
   "engineSlots": [
