@@ -15,6 +15,9 @@
     "automated",
     "rat_abyssal_threat"
   ],
+  "builtInWeapons": {
+    "WS0001": "rat_prayer_missile_wep"
+  },
   "weaponSlots": [
     {
       "id": "WS0002",
@@ -51,6 +54,15 @@
       "arc": 5,
       "angle": 135,
       "locations": [-13, 30]
+    },
+    {
+      "id": "WS0001",
+      "size": "SMALL",
+      "type": "BUILT_IN",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [11, -0]
     }
   ],
   "engineSlots": [
