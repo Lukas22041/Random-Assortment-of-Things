@@ -1,0 +1,57 @@
+{
+    "displayName": "Type 3000",
+    "fluxCapacitors": 10,
+    "fluxVents": 4,
+    "goalVariant": false,
+    "hullId": "rat_prayer",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "magazines",
+    ],
+    "permaMods": [
+        "rat_controller",
+        "sc_skill_controller",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_prayer_Type3000",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "heavy_mass_driver",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "voidblaster",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_prayer_missile_wep",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0007": "kinetic_fragments",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0006": "neutron_torpedo",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

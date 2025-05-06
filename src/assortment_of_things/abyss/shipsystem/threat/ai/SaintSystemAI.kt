@@ -1,11 +1,9 @@
 package assortment_of_things.abyss.shipsystem.threat.ai
 
 import com.fs.starfarer.api.combat.*
-import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
-import com.fs.starfarer.api.util.IntervalUtil
 import org.lwjgl.util.vector.Vector2f
 
-class PrayerSystemAI : ShipSystemAIScript {
+class SaintSystemAI : ShipSystemAIScript {
 
     var ship: ShipAPI? = null
 
