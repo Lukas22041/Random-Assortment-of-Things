@@ -168,6 +168,7 @@ class CombatPhotosphereRenderer(var photosphere: SectorEntityToken) : BaseCombat
         center!!.color = color.setAlpha(130)
         center!!.renderAtCenter(location.x, location.y)
 
+        band1!!.isAdditiveBlend = false
         band1!!.color = color.setAlpha(45)
         band1!!.render(location.x, location.y, viewport!!.alphaMult)
 

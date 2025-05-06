@@ -19,6 +19,9 @@ class PrayerShipSystem : BaseShipSystemScript() {
 
     var fireInterval = IntervalUtil(0.3f, 0.3f)
 
+
+    var activated = false
+
     override fun apply(stats: MutableShipStatsAPI?, id: String,  state: ShipSystemStatsScript.State?,  effectLevel: Float) {
         super.apply(stats, id, state, effectLevel)
 
@@ -32,6 +35,16 @@ class PrayerShipSystem : BaseShipSystemScript() {
         if (!addedRenderer) {
             addedRenderer = true
             Global.getCombatEngine().addLayeredRenderingPlugin(PrayerGlowRenderer(ship))
+        }
+
+        if (!activated && system.isActive) {
+            activated = true
+            ship.mass *= 2
+        }
+
+        if (!system.isActive && activated) {
+            activated = false
+            ship.mass /= 2
         }
 
         //Extra AI, aside from just the base burn drive one.
@@ -48,8 +61,13 @@ class PrayerShipSystem : BaseShipSystemScript() {
 
         if (system.isActive) {
 
-            if (system.state == ShipSystemAPI.SystemState.IN || system.state == ShipSystemAPI.SystemState.ACTIVE) {
+
+            if (system.state == ShipSystemAPI.SystemState.IN || system.effectLevel >= 0.5f) {
                 ship.giveCommand(ShipCommand.ACCELERATE, null, 0)
+                ship.blockCommandForOneFrame(ShipCommand.DECELERATE)
+                ship.blockCommandForOneFrame(ShipCommand.ACCELERATE_BACKWARDS)
+                ship.blockCommandForOneFrame(ShipCommand.STRAFE_LEFT)
+                ship.blockCommandForOneFrame(ShipCommand.STRAFE_RIGHT)
             }
 
             //Slower firing rate during fade in

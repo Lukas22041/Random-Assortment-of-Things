@@ -60,7 +60,7 @@
       "size": "SMALL",
       "type": "BUILT_IN",
       "mount": "HARDPOINT",
-      "arc": 5,
+      "arc": 360,
       "angle": 0,
       "locations": [11.5, -0]
     }

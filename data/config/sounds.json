@@ -138,6 +138,10 @@
 		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_05.ogg","pitch":1,"volume":0.5},
     ],
 	
+	"rat_prayer_missile_wep_fire":[
+		{"file":"sounds/sfx_wpn_missiles/fragment_kinetic_fire_01.ogg","pitch":1,"volume":0.15},
+	],
+	
  	"abyss_haddock":[
 		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.9,"volume":0.8},
 	],

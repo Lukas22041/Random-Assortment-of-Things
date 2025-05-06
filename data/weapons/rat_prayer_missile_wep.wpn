@@ -21,5 +21,5 @@
 	"interruptibleBurst":false,
 	"projectileSpecId":"rat_prayer_missile_proj",
 	
-	"fireSoundTwo":"kinetic_fragments_fire",
+	"fireSoundTwo":"rat_prayer_missile_wep_fire",
 }
