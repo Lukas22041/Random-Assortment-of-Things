@@ -90,7 +90,7 @@ class CombatColossalPhotosphereRenderer(var photosphere: SectorEntityToken) : Ba
     }
 
     override fun getActiveLayers(): EnumSet<CombatEngineLayers> {
-        return EnumSet.of(CombatEngineLayers.PLANET_LAYER)
+        return EnumSet.of(CombatEngineLayers.BELOW_PLANETS)
     }
 
 

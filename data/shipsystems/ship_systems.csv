@@ -17,7 +17,7 @@ Temporal Stasis,rat_temporal_stasis,,,,,,,,,,10,0.1,2,24,,,,,,,,,,,,,graphics/ic
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Seraphim Drive,rat_seraphim_drive,,,,,,,,,,0.5,0,0.5,2,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,,TRUE,,graphics/icons/hullsys/phase_cloak.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Barrage Sequence,rat_prayer_system,,,,,,,,,,1.5,0,1.5,5,TRUE,,,,,,TRUE,,,TRUE,,movement,graphics/icons/hullsys/burn_drive.png
+Barrage Sequence,rat_prayer_system,,,,,,,,,,1.5,0,1.5,4,TRUE,,,,,,TRUE,,,TRUE,,movement,graphics/icons/hullsys/burn_drive.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Spatial Disturbance,rat_spatial_disturbance,,,,,,,,3,0.075,0.5,1,0.5,1.5,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 Primordial Cloak,rat_primordial_cloak,,,,,,,,,,1.5,6,0.5,15,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
