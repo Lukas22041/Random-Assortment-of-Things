@@ -94,6 +94,10 @@ class PrayerShipSystem : BaseShipSystemScript() {
     }
 
 
+    override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
+        return super.isUsable(system, ship) && ship!!.fullTimeDeployed >= 0.33f
+    }
+
     class PrayerGlowRenderer(var ship: ShipAPI) : BaseCombatLayeredRenderingPlugin() {
 
         var sprite = Global.getSettings().getAndLoadSprite("graphics/ships/rat_prayer_glow.png")

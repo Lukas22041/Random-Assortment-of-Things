@@ -35,7 +35,7 @@ class AbaddonLanceEffect : BaseCombatLayeredRenderingPlugin(), EveryFrameWeaponE
     var projectile: DamagingProjectileAPI? = null
 
     init {
-        Global.getCombatEngine().addLayeredRenderingPlugin(this)
+        Global.getCombatEngine()?.addLayeredRenderingPlugin(this)
 
         for (i in 0..10) {
             var color = Misc.interpolateColor(AbyssUtils.GENESIS_COLOR, Color(47, 111, 237), MathUtils.getRandomNumberInRange(0.25f, 1f))

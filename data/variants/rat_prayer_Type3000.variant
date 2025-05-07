@@ -2,7 +2,7 @@
     "displayName": "Type 3000",
     "fluxCapacitors": 10,
     "fluxVents": 4,
-    "goalVariant": false,
+    "goalVariant": true,
     "hullId": "rat_prayer",
     "hullMods": [
         "hardenedshieldemitter",
