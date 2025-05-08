@@ -356,10 +356,19 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         {
             var plugin = source.customPlugin as AbyssalLight
 
+
             var maxRadius = (plugin.radius / 10) + 10 + (Global.getSector().playerFleet.radius / 2)
             var minRadius = maxRadius * 0.85f
 
             var distance = MathUtils.getDistance(source.location, point)
+
+            if (plugin is PrimordialPhotosphere) {
+                var biome = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
+                var range = biome.getRadius()
+                var centerDist = MathUtils.getDistance(Global.getSector().playerFleet, biome.getStencilCenter())
+                if (centerDist >= range + Global.getSector().playerFleet.radius/2) continue
+            }
+
             if (distance < maxRadius) {
                 inAny = true
                 var level = (distance - minRadius) / (maxRadius - minRadius)
