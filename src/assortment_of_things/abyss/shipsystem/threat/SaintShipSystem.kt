@@ -1,17 +1,17 @@
 package assortment_of_things.abyss.shipsystem.threat
 
+import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.impl.combat.MineStrikeStats
-import com.fs.starfarer.api.impl.combat.threat.FragmentSwarmHullmod
-import com.fs.starfarer.api.impl.combat.threat.RoilingSwarmEffect
-import com.fs.starfarer.api.impl.combat.threat.SwarmLauncherEffect
+import com.fs.starfarer.api.impl.combat.threat.*
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import com.fs.starfarer.api.util.IntervalUtil
@@ -22,6 +22,7 @@ import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SaintShipSystem : BaseShipSystemScript() {
 
@@ -31,7 +32,6 @@ class SaintShipSystem : BaseShipSystemScript() {
 
     var activated = false
 
-    var spawnedShips = ArrayList<ShipAPI>()
     //var constructionSwarms = ArrayList<RoilingSwarmEffect>()
 
     override fun apply(stats: MutableShipStatsAPI?, id: String,  state: ShipSystemStatsScript.State?,  effectLevel: Float) {
@@ -43,6 +43,42 @@ class SaintShipSystem : BaseShipSystemScript() {
         var id = id + "_" + ship!!.id
 
         var system = ship.system
+
+        //Causes swarm launchers to not fire below 100 fragments
+        var swarm = RoilingSwarmEffect.getSwarmFor(ship) ?: return
+        if (swarm.members.count() <= 149) {
+            ship.addTag(ThreatShipConstructionScript.SHIP_UNDER_CONSTRUCTION)
+        } else {
+            ship.removeTag(ThreatShipConstructionScript.SHIP_UNDER_CONSTRUCTION)
+        }
+
+
+        //Stop Firing Fragment weapons if below 100 fragments, only allow fire from manual selections
+        var count = 130
+        if (ship.system.state == ShipSystemAPI.SystemState.ACTIVE) count = 50 //Allow it to use more while the system is active
+        if (/*ship.shipAI != null || Global.getCombatEngine()?.combatUI?.isAutopilotOn == true && */swarm.members.count() <= count) {
+
+
+            var selected = ReflectionUtils.get("selected", ship)
+
+            for (group in ship.weaponGroupsCopy) {
+                if (group != selected) {
+                    for (weapon in group.weaponsCopy) {
+                        if (weapon.effectPlugin is FragmentWeapon) {
+                            weapon.isForceNoFireOneFrame = true
+                        }
+                    }
+                }
+            }
+
+            /*for (weapon in ship.allWeapons) {
+                if (weapon.effectPlugin is BaseFragmentMissileEffect)    {
+                    if (weapon.)
+                    weapon.isForceNoFireOneFrame = true
+                }
+            }*/
+        }
+
 
         if (!addedRenderer) {
             addedRenderer = true
@@ -59,7 +95,6 @@ class SaintShipSystem : BaseShipSystemScript() {
         if (system.isActive && !activated) {
             activated = true
 
-
             //var locLeft = MathUtils.getPointOnCircumference(ship.location, ship.facing-90f-70f, ship.collisionRadius + 600f)
             //var locRight = MathUtils.getPointOnCircumference(ship.location, ship.facing-90f+70f, ship.collisionRadius + 600f)
 
@@ -68,6 +103,9 @@ class SaintShipSystem : BaseShipSystemScript() {
 
             spawnSwarm(ship, angleLeft)
             spawnSwarm(ship, angleRight)
+
+            ship.currentCR -= 0.075f
+            ship.currentCR = MathUtils.clamp(ship.currentCR, 0f, 1f)
         }
     }
 
@@ -129,8 +167,21 @@ class SaintShipSystem : BaseShipSystemScript() {
     }
 
     override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
+        var swarm = RoilingSwarmEffect.getSwarmFor(ship) ?: return false
+        if (swarm.numActiveMembers < 100 && !ship!!.system.isActive) return false
         return system!!.state != ShipSystemAPI.SystemState.IN
     }
+
+    override fun getInfoText(system: ShipSystemAPI?, ship: ShipAPI?): String? {
+        var swarm = RoilingSwarmEffect.getSwarmFor(ship)
+        if (swarm != null) {
+            if (swarm.numActiveMembers < 100 && !ship!!.system.isActive) {
+                return "Not enough fragments"
+            }
+        }
+        return null
+    }
+
 
 
     class SaintConstructionScript(var fighter: ShipAPI, var source: ShipAPI, var swarm: RoilingSwarmEffect, var plugin: SaintShipSystem) : BaseEveryFrameCombatPlugin() {
@@ -143,9 +194,22 @@ class SaintShipSystem : BaseShipSystemScript() {
 
         var newShip: ShipAPI? = null
 
+        var enableSuicideBurn = false
+        //var suicideBurnDur = 0f
+
         override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
 
             if (Global.getCombatEngine().isPaused) return
+
+            //if the shipsystem gets canceled before it becomes active
+            if (!source.system.isActive) {
+                if (fighter.isAlive) {
+                    Global.getCombatEngine().removeEntity(swarm.entity)
+                    Global.getCombatEngine().removeEntity(fighter)
+                    Global.getCombatEngine().removePlugin(this)
+                    return
+                }
+            }
 
             //Remove script
             if (newShip != null && !newShip!!.isAlive) {
@@ -158,17 +222,120 @@ class SaintShipSystem : BaseShipSystemScript() {
                 fade = MathUtils.clamp(fade, 0f, 1f)
                 newShip!!.alphaMult = fade
 
+                if (fade <= 0.6f) {
+                    newShip!!.blockCommandForOneFrame(ShipCommand.STRAFE_LEFT)
+                    newShip!!.blockCommandForOneFrame(ShipCommand.STRAFE_RIGHT)
+                   /* newShip!!.blockCommandForOneFrame(ShipCommand.TURN_LEFT)
+                    newShip!!.blockCommandForOneFrame(ShipCommand.TURN_RIGHT)*/
+                    newShip!!.blockCommandForOneFrame(ShipCommand.ACCELERATE)
+                    newShip!!.blockCommandForOneFrame(ShipCommand.DECELERATE)
+                    newShip!!.blockCommandForOneFrame(ShipCommand.ACCELERATE_BACKWARDS)
+                }
+
                 //Set to same target as ship, if there isnt one, set to escort instead.
                 var target = source.shipTarget
                 if (target != null) {
                     newShip!!.shipTarget = target
-                } else {
+                } else if (!enableSuicideBurn) {
                     newShip!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.ESCORT_OTHER_SHIP, 1f, source)
+                }
+
+                //Enable suicide burn if inactive.
+                if (source.system.state == ShipSystemAPI.SystemState.OUT || !source.system.isActive) {
+                    enableSuicideBurn = true
+                    newShip!!.addTag("rat_do_not_use_symbiosis")
+                    //newShip!!.addTag("rat_do_not_disable_system")
+                }
+
+
+                if (enableSuicideBurn) {
+
+                    if (!newShip!!.system.isActive) {
+                        //newShip!!.system.cooldownRemaining = -1f
+                        newShip!!.useSystem()
+                    }
+
+                    if (newShip!!.system.state == ShipSystemAPI.SystemState.ACTIVE) {
+                        newShip!!.system.forceState(ShipSystemAPI.SystemState.ACTIVE, 0f)
+                    }
+
+                    if (newShip!!.system.state == ShipSystemAPI.SystemState.OUT) {
+                        newShip!!.system.forceState(ShipSystemAPI.SystemState.IN, newShip!!.system.effectLevel)
+                    }
+
+                    /*if (newShip!!.system.state == ShipSystemAPI.SystemState.OUT) {
+                        var lv = newShip!!.system.effectLevel + 1f * amount
+                        lv = MathUtils.clamp(lv, 0f, 1f)
+                        newShip!!.system.forceState(ShipSystemAPI.SystemState.OUT, lv)
+
+                    }*/
+
+                   /* if (newShip!!.system.state == ShipSystemAPI.SystemState.OUT) {
+
+                    }*/
+
+                    var nearTarget = false
+
+                    if (newShip!!.shipTarget == null) {
+                        var newTarget: ShipAPI? = null
+                        var shortestDistance = Float.MAX_VALUE
+                        var iter = Global.getCombatEngine().shipGrid.getCheckIterator(newShip!!.location, 2000f, 2000f)
+                        for (target in iter) {
+                            if (target !is ShipAPI) continue
+                            if (target.owner == newShip!!.owner) continue
+
+                            var dist = MathUtils.getDistance(newShip!!, target)
+                            if (dist <= shortestDistance) {
+                                shortestDistance = dist
+                                newTarget = target
+                            }
+
+                            //Set (maneuver) target if the ship
+                        }
+                        newShip!!.shipTarget = newTarget
+                    }
+
+
+
+                    newShip!!.aiFlags.setFlag(AIFlags.DO_NOT_BACK_OFF, 5f)
+                    newShip!!.aiFlags.setFlag(AIFlags.DO_NOT_VENT, 5f)
+                    newShip!!.aiFlags.setFlag(AIFlags.DO_NOT_USE_SHIELDS, 5f) //Prevent Overloading
+                    newShip!!.aiFlags.setFlag(AIFlags.DO_NOT_USE_SHIELDS, 5f) //Prevent Overloading
+                    newShip!!.aiFlags.setFlag(AIFlags.IGNORES_ORDERS, 5f) //Prevent Overloading
+
+                    newShip!!.aiFlags.removeFlag(AIFlags.ESCORT_OTHER_SHIP)
+
+                    if (newShip!!.shipTarget != null) {
+                        var angle = Misc.getAngleInDegrees(newShip!!.location, newShip!!.shipTarget!!.location)
+                        newShip!!.aiFlags.setFlag(AIFlags.FACING_OVERRIDE_FOR_MOVE_AND_ESCORT_MANEUVERS, 5f, angle)
+
+                        var dist = MathUtils.getDistance(newShip!!, newShip!!.shipTarget)
+                        if (dist <= 15f) {
+                            nearTarget = true
+                        }
+                    }
+
+                    /*suicideBurnDur += 1f * amount
+                    if (suicideBurnDur >= 10f) {
+                        nearTarget = true
+                    }*/
+
+                    if (nearTarget || source.system.isCoolingDown) {
+                        //newShip.explosionScale
+                        //newShip!!.hitpoints = 0f
+
+                        Global.getCombatEngine().applyDamage(newShip!!, newShip!!.location, 100000f, DamageType.ENERGY, 0f, true, false, null)
+
+                        newShip!!.mutableStats.dynamic.getStat(Stats.EXPLOSION_RADIUS_MULT).modifyFlat("rat_explosion_radius_increase", 1.5f)
+                        newShip!!.mutableStats.dynamic.getStat(Stats.EXPLOSION_DAMAGE_MULT).modifyFlat("rat_explosion_radius_increase", 0.6f)
+                        Global.getCombatEngine().removePlugin(this)
+                        return
+                    }
                 }
             }
 
 
-            if (!spawned) {
+            if (!spawned || fade <= 0.20f) {
                 //Delayed Start
                 var effectLevel = source.system.effectLevel.levelBetween(0.15f, 0.4f)
 
@@ -179,6 +346,7 @@ class SaintShipSystem : BaseShipSystemScript() {
                     //var loc = MathUtils.getRandomPointInCircle(swarm.entity.location, 100f * effectLevel)
                     var loc = swarm.entity.location
                     loc = loc.plus(MathUtils.getRandomPointInCircle(Vector2f(), 75f * effectLevel))
+                    if (newShip != null) loc = newShip!!.location
 
                     for (i in 0 until 5) {
 
@@ -211,7 +379,7 @@ class SaintShipSystem : BaseShipSystemScript() {
 
                 manager.isSuppressDeploymentMessages = false
 
-                plugin.spawnedShips.add(newShip!!)
+                //plugin.spawnedShips.add(newShip!!)
 
                 var newSwarm = RoilingSwarmEffect.getSwarmFor(newShip)
                 //swarm.shouldDespawnAll()
@@ -221,6 +389,9 @@ class SaintShipSystem : BaseShipSystemScript() {
 
 
                 newShip!!.captain.setPersonality(Personalities.RECKLESS)
+
+                //Assign the same AI core.
+                newShip!!.captain = source.captain
 
                 //HullSize size = ship.getHullSize();
                 val config = ShipAIConfig()
@@ -236,7 +407,10 @@ class SaintShipSystem : BaseShipSystemScript() {
                 //newShip!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.ESCORT_OTHER_SHIP, 999999f, source)
                 //newShip!!.aiFlags.setFlag(ShipwideAIFlags.AIFlags.ESCORT_RANGE_MODIFIER, 999999f, 1000f)
 
-                newShip!!.mutableStats.dynamic.getMod(Stats.DEPLOYMENT_POINTS_MOD).modifyFlat("rat_saint_spawn", -12f)
+                newShip!!.mutableStats.armorDamageTakenMult.modifyMult("rat_weaker_prayers", 1.3f)
+                newShip!!.mutableStats.hullDamageTakenMult.modifyMult("rat_weaker_prayers", 1.3f)
+                newShip!!.mutableStats.shieldDamageTakenMult.modifyMult("rat_weaker_prayers", 1.2f)
+
 
             }
 
@@ -336,6 +510,8 @@ class SaintShipSystem : BaseShipSystemScript() {
         }
 
         override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
+
+            if (!ship.isAlive) return
 
             sprite.angle = ship.facing -90f
             sprite.alphaMult = ship.system.effectLevel

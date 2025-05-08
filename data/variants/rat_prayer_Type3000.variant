@@ -1,7 +1,7 @@
 {
     "displayName": "Type 3000",
     "fluxCapacitors": 10,
-    "fluxVents": 4,
+    "fluxVents": 5,
     "goalVariant": true,
     "hullId": "rat_prayer",
     "hullMods": [
@@ -17,28 +17,28 @@
     "variantId": "rat_prayer_Type3000",
     "weaponGroups": [
         {
-            "autofire": true,
-            "mode": "LINKED",
-            "weapons": {
-                "WS0002": "heavy_mass_driver",
-            }
-        },
-        {
-            "autofire": true,
+            "autofire": false,
             "mode": "LINKED",
             "weapons": {
                 "WS0003": "voidblaster",
             }
         },
         {
-            "autofire": true,
+            "autofire": false,
             "mode": "LINKED",
             "weapons": {
                 "WS0001": "rat_prayer_missile_wep",
             }
         },
         {
-            "autofire": true,
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "heavy_mass_driver",
+            }
+        },
+        {
+            "autofire": false,
             "mode": "LINKED",
             "weapons": {
                 "WS0007": "kinetic_fragments",
@@ -48,7 +48,7 @@
             "autofire": true,
             "mode": "LINKED",
             "weapons": {
-                "WS0006": "neutron_torpedo",
+                "WS0006": "unstable_fragment",
             }
         },
     ],

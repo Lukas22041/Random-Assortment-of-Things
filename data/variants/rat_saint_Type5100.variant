@@ -1,0 +1,57 @@
+{
+    "displayName": "Type 5100",
+    "fluxCapacitors": 29,
+    "fluxVents": 10,
+    "goalVariant": true,
+    "hullId": "rat_saint",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "magazines",
+        "targetingunit",
+    ],
+    "permaMods": [
+        "rat_controller",
+        "sc_skill_controller",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_saint_Type5100",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "heavy_mass_driver",
+                "WS0004": "heavy_mass_driver",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0012": "seeker_fragment",
+                "WS0011": "seeker_fragment",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0010": "kinetic_fragments",
+                "WS0009": "kinetic_fragments",
+                "WS0008": "kinetic_fragments",
+                "WS0007": "kinetic_fragments",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "voidblaster",
+                "WS0002": "voidblaster",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

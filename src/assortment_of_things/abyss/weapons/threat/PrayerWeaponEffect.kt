@@ -26,6 +26,7 @@ class PrayerWeaponEffect : BaseFragmentMissileEffect() {
 
     override fun advance(amount: Float, engine: CombatEngineAPI?, weapon: WeaponAPI?) {
         val ship = weapon!!.ship ?: return
+        if (!ship.isAlive) return
 
         val swarm = getSwarmFor(ship)
         val active = swarm?.numActiveMembers ?: 0

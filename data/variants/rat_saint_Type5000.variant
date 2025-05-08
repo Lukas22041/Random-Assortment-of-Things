@@ -1,0 +1,74 @@
+{
+    "displayName": "Type 5000",
+    "fluxCapacitors": 20,
+    "fluxVents": 10,
+    "goalVariant": true,
+    "hullId": "rat_saint",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "targetingunit",
+    ],
+    "permaMods": [
+        "rat_controller",
+        "sc_skill_controller",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_saint_Type5000",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0004": "heavy_mass_driver",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0012": "seeker_fragment",
+                "WS0011": "seeker_fragment",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS0008": "kinetic_fragments",
+                "WS0007": "kinetic_fragments",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "voidblaster",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "heavy_mass_driver",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0010": "light_mass_driver",
+                "WS0009": "light_mass_driver",
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "swarm_launcher",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

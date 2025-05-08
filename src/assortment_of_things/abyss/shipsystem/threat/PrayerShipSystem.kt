@@ -95,6 +95,7 @@ class PrayerShipSystem : BaseShipSystemScript() {
 
 
     override fun isUsable(system: ShipSystemAPI?, ship: ShipAPI?): Boolean {
+        //if (system!!.isActive && ship!!.hasTag("rat_do_not_disable_system")) return false
         return super.isUsable(system, ship) && ship!!.fullTimeDeployed >= 0.33f
     }
 
@@ -112,6 +113,8 @@ class PrayerShipSystem : BaseShipSystemScript() {
         }
 
         override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
+
+            if (!ship.isAlive) return
 
             sprite.angle = ship.facing -90f
             sprite.alphaMult = ship.system.effectLevel

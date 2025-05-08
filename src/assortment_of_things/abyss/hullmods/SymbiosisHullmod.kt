@@ -9,6 +9,7 @@ import com.fs.starfarer.api.combat.listeners.DamageListener
 import com.fs.starfarer.api.combat.listeners.DamageTakenModifier
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Stats
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.combat.RiftLanceEffect
 import com.fs.starfarer.api.impl.combat.threat.FragmentSwarmHullmod
 import com.fs.starfarer.api.impl.combat.threat.FragmentWeapon
@@ -72,6 +73,17 @@ class SymbiosisHullmod : BaseHullMod() {
 
 
         //stats.dynamic.getMod(Stats.SWARM_LAUNCHER_WING_SIZE_MOD).modifyFlat(id, -1f)
+
+        //Make Shrouded Hmods incomp
+        for (hullmod in Global.getSettings().allHullModSpecs) {
+            if (hullmod.hasTag(Tags.SHROUDED)) {
+                MagicIncompatibleHullmods.removeHullmodWithWarning(
+                    stats.getVariant(),
+                    hullmod.id,
+                    "rat_abyssal_threat"
+                );
+            }
+        }
 
         if(stats.getVariant().getHullMods().contains(HullMods.FRAGMENT_SWARM)){
             //if someone tries to install heavy armor, remove it
@@ -344,6 +356,8 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
 
 
     override fun shouldActivateAI(amount: Float): Boolean {
+
+        if (ship.hasTag("rat_do_not_use_symbiosis")) return false
 
         aiUpdateInterval.advance(amount)
         if (aiUpdateInterval.intervalElapsed()) {

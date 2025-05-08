@@ -41,7 +41,7 @@
     {
       "id": "WS0003",
       "size": "MEDIUM",
-      "type": "MISSILE",
+      "type": "COMPOSITE",
       "mount": "HARDPOINT",
       "arc": 5,
       "angle": 0,
@@ -50,7 +50,7 @@
     {
       "id": "WS0004",
       "size": "MEDIUM",
-      "type": "MISSILE",
+      "type": "COMPOSITE",
       "mount": "HARDPOINT",
       "arc": 5,
       "angle": 0,
