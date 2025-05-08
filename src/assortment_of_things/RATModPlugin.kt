@@ -11,6 +11,7 @@ import assortment_of_things.abyss.scripts.*
 import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.artifacts.AddArtifactHullmod
+import assortment_of_things.artifacts.ArtifactUIScript
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.scripts.AICoreDropReplacerScript
@@ -152,6 +153,7 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().addScript(ConstantTimeIncreaseScript())
         }
 
+        Global.getSector().addTransientScript(ArtifactUIScript())
         Global.getSector().addTransientScript(AICoreReplacerScript())
         Global.getSector().addTransientListener(AICoreDropReplacerScript())
         Global.getSector().addTransientScript(ApplyRATControllerToPlayerFleet())

@@ -91,6 +91,7 @@ object ArtifactUtils {
     {
         var player = Global.getSector().playerFleet
         var memory = player.memoryWithoutUpdate
+        ArtifactUtils.getActivePlugin()?.onRemove(Global.getSector().playerFleet, ArtifactUtils.STAT_MOD_ID)
         memory.set(activeArtifactKey, null)
     }
 
