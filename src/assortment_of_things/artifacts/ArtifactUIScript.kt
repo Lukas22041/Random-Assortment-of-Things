@@ -1,9 +1,8 @@
 package assortment_of_things.artifacts
 
+import assortment_of_things.artifacts.ui.ArtifactDisplayElement
 import assortment_of_things.misc.ReflectionUtils
-import assortment_of_things.misc.addPara
 import assortment_of_things.misc.getChildrenCopy
-import assortment_of_things.misc.getParent
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CoreUITabId
@@ -149,8 +148,31 @@ class ArtifactUIScript : EveryFrameScript {
 
         var inner = container.innerElement
 
-        var inactivePara = inner.addPara("No Artifact Active", 0f, Misc.getGrayColor(), Misc.getTextColor())
-        inactivePara.position.inTL(w/2-inactivePara.computeTextWidth(inactivePara.text)/2, h/2-inactivePara.computeTextHeight(inactivePara.text)/2)
+
+
+        var artifact = ArtifactUtils.getActiveArtifact()
+
+        if (artifact == null) {
+            var inactivePara = inner.addPara("No Artifact Active", 0f, Misc.getGrayColor(), Misc.getTextColor())
+            inactivePara.position.inTL(w/2-inactivePara.computeTextWidth(inactivePara.text)/2, h/2-inactivePara.computeTextHeight(inactivePara.text)/2)
+        } else {
+            var plugin = ArtifactUtils.getPlugin(artifact!!)
+            var display = ArtifactDisplayElement(artifact, inner, 40f, 40f)
+
+            display.position.inTL(10f, h/2 - display.height/2)
+
+            var designType = artifact.designType
+            var designColor = Misc.getDesignTypeColor(designType)
+
+            var title =  inner.addTitle("Artifact", Misc.getBasePlayerColor())
+            var para = inner.addTitle("${artifact.name}", designColor)
+            //para.position.inTL(w/2-para.computeTextWidth(para.text)/2+display.width/2, h/2-para.computeTextHeight(para.text)/2)
+
+            title.position.inTL(display.width +20f, h/2-title.computeTextHeight(title.text)/2-para.computeTextHeight(para.text)/2)
+            para.position.belowLeft(title as UIComponentAPI, 0f)
+        }
+
+
 
     }
 

@@ -1,13 +1,13 @@
-id,name,plugin,tags,dropWeight,dropGroup,spritePath
-computational_matrix,Computational Matrix,assortment_of_things.artifacts.plugins.ComputationalMatrix,rat_fabricatable_200,1,abyss,graphics/icons/artifacts/rat_computational_matrix.png
-defensive_array,Defensive Array,assortment_of_things.artifacts.plugins.DefensiveArrayArtifact,rat_fabricatable_200,1,abyss,graphics/icons/artifacts/rat_defensive_array.png
-miniature_forge,Miniature Forge,assortment_of_things.artifacts.plugins.MiniatureForgeArtifact,rat_fabricatable_200,1,abyss,graphics/icons/artifacts/rat_minature_forge.png
-hyperenergetic_generator,Hyperenergetic Generator,assortment_of_things.artifacts.plugins.HyperenergeticGeneratorArtifact,rat_fabricatable_200,1,abyss,graphics/icons/artifacts/rat_hyperenergetic_generator.png
-ordnance_overwrite,Ordnance Overwrite,assortment_of_things.artifacts.plugins.OrdnanceOverwriteArtifact,rat_fabricatable_200,1,abyss,graphics/icons/artifacts/rat_ordnance_overwrite.png
-,,,,,,
-,,,,,,
-,,,,,,
-rat_super_serum,Super Serum,assortment_of_things.artifacts.plugins.SuperSerumArtifact,,1,relics,graphics/icons/artifacts/rat_super_serum.png
-rat_transdimensional_accumalator,Transdimensional Accumalator,assortment_of_things.artifacts.plugins.TransdimensionalAccumalatorArtifact,,1,relics,graphics/icons/artifacts/rat_transdimensional_accumalator.png
-,,,,,,
-,,,,,,
+id,name,designType,plugin,tags,dropWeight,dropGroup,spritePath
+computational_matrix,Computational Matrix,Abyssal Artifact,assortment_of_things.artifacts.plugins.ComputationalMatrix,rat_fabricatable_200,1,abyss,graphics/icons/artifacts/rat_computational_matrix.png
+defensive_array,Defensive Array,Abyssal Artifact,assortment_of_things.artifacts.plugins.DefensiveArrayArtifact,rat_fabricatable_200,1,abyss,graphics/icons/artifacts/rat_defensive_array.png
+miniature_forge,Miniature Forge,Abyssal Artifact,assortment_of_things.artifacts.plugins.MiniatureForgeArtifact,rat_fabricatable_200,1,abyss,graphics/icons/artifacts/rat_minature_forge.png
+hyperenergetic_generator,Hyperenergetic Generator,Abyssal Artifact,assortment_of_things.artifacts.plugins.HyperenergeticGeneratorArtifact,rat_fabricatable_200,1,abyss,graphics/icons/artifacts/rat_hyperenergetic_generator.png
+ordnance_overwrite,Ordnance Overwrite,Abyssal Artifact,assortment_of_things.artifacts.plugins.OrdnanceOverwriteArtifact,rat_fabricatable_200,1,abyss,graphics/icons/artifacts/rat_ordnance_overwrite.png
+,,,,,,,
+,,,,,,,
+,,,,,,,
+rat_super_serum,Super Serum,Artifact,assortment_of_things.artifacts.plugins.SuperSerumArtifact,,1,relics,graphics/icons/artifacts/rat_super_serum.png
+rat_transdimensional_accumalator,Dimensional Accumalator,Artifact,assortment_of_things.artifacts.plugins.TransdimensionalAccumalatorArtifact,,1,relics,graphics/icons/artifacts/rat_transdimensional_accumalator.png
+,,,,,,,
+,,,,,,,

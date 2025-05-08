@@ -90,6 +90,10 @@ class ArtifactItem : BaseSpecialItemPlugin() {
         }
     }*/
 
+    override fun getDesignType(): String {
+        return artifactSpec?.designType ?: ""
+    }
+
     override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean, transferHandler: CargoTransferHandlerAPI?, stackSource: Any?) {
         super.createTooltip(tooltip, expanded, transferHandler, stackSource)
        // addTitleTooltip(tooltip, expanded, transferHandler, stackSource)

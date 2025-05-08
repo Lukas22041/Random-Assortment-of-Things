@@ -525,7 +525,7 @@ class PrimordialFabricatorInteraction : RATInteractionPlugin() {
             inner.addTitle("${artifact.name}").position.setXAlignOffset(10f).setYAlignOffset(-10f)
             inner.addSpacer(10f)
 
-            var designType = "Artifact"
+            var designType = artifact.designType
             var col = Misc.getDesignTypeColor(designType)
 
             inner.addPara("Design type: $designType", 0f, Misc.getGrayColor(), col, designType)
