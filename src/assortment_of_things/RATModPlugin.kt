@@ -33,6 +33,7 @@ import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import assortment_of_things.campaign.scripts.AICoreReplacerScript
+import assortment_of_things.campaign.scripts.SimUnlockerListener
 import assortment_of_things.exotech.ExoCampaignListener
 import assortment_of_things.exotech.ExotechGenerator
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
@@ -140,6 +141,8 @@ class RATModPlugin : BaseModPlugin() {
         LunaCampaignRenderer.addTransientRenderer(RATCampaignDistortionShader())
 
         LunaCampaignRenderer.addTransientRenderer(BiomeAtmosphereRenderer())
+
+        //Global.getSector().listenerManager.addListener(SimUnlockerListener())
 
         //TestFactor(1)
 

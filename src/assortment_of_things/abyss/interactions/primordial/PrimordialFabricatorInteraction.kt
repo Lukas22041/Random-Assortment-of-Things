@@ -513,7 +513,7 @@ class PrimordialFabricatorInteraction : RATInteractionPlugin() {
 
         for ((artifact, cost) in list) {
 
-            var container = scroller.addLunaElement(width -15 , 240f).apply {
+            var container = scroller.addLunaElement(width -15 , 280f).apply {
                 enableTransparency = true
                 borderAlpha = 0.9f
                 backgroundAlpha = 0.5f

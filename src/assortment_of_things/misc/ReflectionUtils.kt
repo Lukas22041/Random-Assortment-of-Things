@@ -125,6 +125,15 @@ object ReflectionUtils {
         return invokeMethodHandle.invoke(method, instance, arguments)
     }
 
+    fun getMethodsOfName(name: String, instance: Any): List<Any> {
+        val instancesOfMethods: Array<out Any> = instance.javaClass.getDeclaredMethods()
+        return instancesOfMethods.filter { getMethodNameHandle.invoke(it) == name }
+    }
+
+    fun rawInvoke(method: Any?, instance: Any, vararg arguments: Any?): Any? {
+        return invokeMethodHandle.invoke(method, instance, arguments)
+    }
+
     fun getField(fieldName: String, instanceToGetFrom: Any) : ReflectedField? {
         var field: Any? = null
         try {  field = instanceToGetFrom.javaClass.getField(fieldName) } catch (e: Throwable) {

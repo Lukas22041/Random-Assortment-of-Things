@@ -1,6 +1,5 @@
 package assortment_of_things.campaign.items
 
-import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.artifacts.ArtifactIntel
 import assortment_of_things.artifacts.ArtifactSpec
 import assortment_of_things.artifacts.ArtifactUtils
@@ -30,6 +29,7 @@ class ArtifactItem : BaseSpecialItemPlugin() {
         if (artifactSpec == null)
         {
             artifactSpec = ArtifactUtils.artifacts.first()
+            stack.specialDataIfSpecial.data = artifactSpec!!.id
         }
 
         plugin = ArtifactUtils.getPlugin(artifactSpec!!)
@@ -95,23 +95,28 @@ class ArtifactItem : BaseSpecialItemPlugin() {
     }
 
     override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean, transferHandler: CargoTransferHandlerAPI?, stackSource: Any?) {
-        super.createTooltip(tooltip, expanded, transferHandler, stackSource)
+        //super.createTooltip(tooltip, expanded, transferHandler, stackSource)
        // addTitleTooltip(tooltip, expanded, transferHandler, stackSource)
         val pad = 3f
-        val opad = 5f
+        val opad = 10f
         val small = 5f
         val h: Color = Misc.getHighlightColor()
         val g: Color = Misc.getGrayColor()
         var b: Color? = Misc.getButtonTextColor()
         b = Misc.getPositiveHighlightColor()
 
-        tooltip.addSpacer(5f)
+        tooltip.addTitle(getName())
+
+        val design = designType
+        Misc.addDesignTypePara(tooltip, design, opad)
+
+        tooltip.addPara(spec.desc, opad, Misc.getGrayColor(), Misc.getHighlightColor(), "Fleet")
+
+        tooltip.addSpacer(10f)
 
         plugin!!.addDescription(tooltip)
 
-        tooltip.addSpacer(5f)
-
-        var known = ArtifactUtils.getArtifactsInFleet().any { it.id == artifactSpec!!.id }
+        /*var known = ArtifactUtils.getArtifactsInFleet().any { it.id == artifactSpec!!.id }
         if (known)
         {
             tooltip.addPara("This type of artifact has already been added to the fleet.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
@@ -119,7 +124,7 @@ class ArtifactItem : BaseSpecialItemPlugin() {
         else
         {
             tooltip.addPara("Rightclick to add to fleet.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        }
+        }*/
 
 
         addCostLabel(tooltip, opad, transferHandler, stackSource)
@@ -127,15 +132,15 @@ class ArtifactItem : BaseSpecialItemPlugin() {
     }
 
     override fun hasRightClickAction(): Boolean {
-        return !ArtifactUtils.getArtifactsInFleet().any { it.id == artifactSpec!!.id }
+        return /*!ArtifactUtils.getArtifactsInFleet().any { it.id == artifactSpec!!.id }*/ false
     }
 
     override fun shouldRemoveOnRightClickAction(): Boolean {
-        return true
+        return /*true*/ false
     }
 
     override fun performRightClickAction() {
-        var stats = Global.getSector().playerPerson.stats
+        /*var stats = Global.getSector().playerPerson.stats
 
         Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
 
@@ -145,7 +150,7 @@ class ArtifactItem : BaseSpecialItemPlugin() {
         if (!Global.getSector().intelManager.hasIntelOfClass(ArtifactIntel::class.java))
         {
             Global.getSector().intelManager.addIntel(ArtifactIntel())
-        }
+        }*/
 
     }
 }

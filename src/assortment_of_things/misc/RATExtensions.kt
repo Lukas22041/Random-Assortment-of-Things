@@ -80,12 +80,30 @@ fun FleetMemberAPI.fixVariant() {
     if (this.variant.source != VariantSource.REFIT)
     {
         var variant = this.variant.clone();
-        variant.originalVariant = variant.hullVariantId;
+
+        //Setting the original variant causes weird things, so just give it a tag of the OG variant instead.
+        if (variant.originalVariant != null) {
+            variant.addTag("rat_og_variant_${variant.originalVariant}")
+        }
+
+        variant.originalVariant = null;
         variant.hullVariantId = Misc.genUID()
         variant.source = VariantSource.REFIT
         this.setVariant(variant, false, true)
     }
     this.updateStats()
+}
+
+fun ShipVariantAPI.getOriginalVariantRAT() : String? {
+    var og = this.originalVariant
+    if (og == null) {
+        for (tag in this.tags) {
+            if (tag.contains("rat_og_variant_")){
+                return tag.replace("rat_og_variant_", "")
+            }
+        }
+    }
+    return og
 }
 
 fun ShipVariantAPI.baseOrModSpec() : ShipHullSpecAPI{

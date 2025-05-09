@@ -26,9 +26,9 @@ class ComputationalMatrix : BaseArtifactPlugin() {
     override fun addDescription(tooltip: TooltipMakerAPI) {
 
         if (!isSiCEnabled) {
-            tooltip.addPara("All automated ships that are affected by the combat readiness penalty get an additional 15%% to their maximum CR.", 0f,
+            tooltip.addPara("All automated ships that are affected by the combat readiness penalty get an additional 10%% to their maximum CR.", 0f,
                 Misc.getTextColor(), Misc.getHighlightColor(),
-                "automated ships", "combat readiness penalty", "15%")
+                "automated ships", "combat readiness penalty", "10%")
         } else {
 
             var manager = AutomatedShipsManager.get()
@@ -63,7 +63,7 @@ class ComputationalMatrix : BaseArtifactPlugin() {
             if (!isSiCEnabled) {
                 if (!Automated.isAutomatedNoPenalty(stats))
                 {
-                    stats.maxCombatReadiness.modifyFlat(id, 0.15f, "Computation Matrix")
+                    stats.maxCombatReadiness.modifyFlat(id, 0.10f, "Computation Matrix")
                 }
             }
         }
