@@ -98,11 +98,11 @@ class RATModPlugin : BaseModPlugin() {
 
         LunaRefitManager.addRefitButton(AlterationRefitButton())
 
-        LunaRefitManager.addRefitButton(CrewConversionChronosRefitButton())
+        /*LunaRefitManager.addRefitButton(CrewConversionChronosRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionCosmosRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionSeraphRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionPrimordialRefitButton())
-        LunaRefitManager.addRefitButton(CrewConversionRemoveIntegratedRefitButton())
+        LunaRefitManager.addRefitButton(CrewConversionRemoveIntegratedRefitButton())*/
 
         LunaRefitManager.addRefitButton(DeltaAIRefitButton())
 

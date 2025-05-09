@@ -37,7 +37,7 @@ class ArtifactSelectorElement(var artifact: ArtifactSpec, tooltip: TooltipMakerA
         sprite.setSize(width, height)
         sprite.render(x, y)
 
-        if (selectedArtifact) {
+        if (isHovering) {
             sprite.color = color
             sprite.alphaMult = alphaMult * 0.2f
             sprite.setAdditiveBlend()
