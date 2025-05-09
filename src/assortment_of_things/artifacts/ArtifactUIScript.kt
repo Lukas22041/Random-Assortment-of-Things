@@ -25,6 +25,9 @@ class ArtifactUIScript : EveryFrameScript {
     @Transient
     var panel: CustomPanelAPI? = null
 
+    @Transient
+    var fleetPanel: UIPanelAPI? = null
+
     override fun isDone(): Boolean {
         return false
     }
@@ -60,8 +63,8 @@ class ArtifactUIScript : EveryFrameScript {
 
         if (core == null) return
 
-        var fleetPanel = ReflectionUtils.invoke("getCurrentTab", core) as UIPanelAPI? ?: return
-        var leftPanel = fleetPanel.getChildrenCopy().find { if (it is UIPanelAPI && it.getChildrenCopy().any { it is LabelAPI }) true else false } as UIPanelAPI ?: return
+        fleetPanel = ReflectionUtils.invoke("getCurrentTab", core) as UIPanelAPI? ?: return
+        var leftPanel = fleetPanel!!.getChildrenCopy().find { if (it is UIPanelAPI && it.getChildrenCopy().any { it is LabelAPI }) true else false } as UIPanelAPI ?: return
 
         var children = leftPanel.getChildrenCopy()
         if (panel != null && children.contains(panel!!)) {
@@ -88,6 +91,13 @@ class ArtifactUIScript : EveryFrameScript {
             last.position.setYAlignOffset(-10f)
         }
 
+    }
+
+    fun recreateFleetList() {
+        if (fleetPanel != null) {
+            var fleetListPanel = ReflectionUtils.invoke("getFleetPanel", fleetPanel!!)
+            ReflectionUtils.invoke("recreateUI", fleetListPanel!!, true)
+        }
     }
 
     fun recreate(panel: CustomPanelAPI, w: Float, h: Float) {
@@ -243,6 +253,7 @@ class ArtifactUIScript : EveryFrameScript {
                 }
 
                 recreate(ogPanel, ogWidth, ogHeight)
+                recreateFleetList()
                 closePopupPanel()
             }
 
