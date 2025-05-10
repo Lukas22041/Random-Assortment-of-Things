@@ -166,12 +166,12 @@ class AbyssTerrainPlugin : BaseTerrain() {
         var isStorming = cell.first?.isStorming == true
 
         tooltip.addTitle(name)
-        tooltip.addSpacer(10f)
+        tooltip.addSpacer(5f)
 
         //Fog & Storm stuff here
 
         dominant.addBiomeTooltip(tooltip)
-        tooltip.addSpacer(10f)
+        //tooltip.addSpacer(10f)
 
         if (inCloud)
         {

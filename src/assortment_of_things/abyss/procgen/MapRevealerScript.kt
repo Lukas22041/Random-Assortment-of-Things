@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.biomes.SeaOfHarmony
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CoreUITabId
@@ -45,7 +46,9 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
                 var playercell = biomeManager.getPlayerCell()
                 playercell.isDiscovered = true
 
-                playercell.getAround(3).forEach {
+                var rad = 3
+                if (playercell.depth != BiomeDepth.BORDER && playercell.getBiome() is SeaOfHarmony) rad = 4 //Larger reveal radius in sea of harmony
+                playercell.getAround(rad).forEach {
                     it.isDiscovered = true
                     it.getAdjacent().forEach { it.isPartialyDiscovered = true }
                 }

@@ -7,6 +7,7 @@ import assortment_of_things.abyss.procgen.AbyssProcgenUtils
 import assortment_of_things.abyss.procgen.BiomeCellData
 import assortment_of_things.abyss.procgen.BiomeParticleManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
+import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
@@ -59,7 +60,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
     }
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
-
+        tooltip.addPara("A biome almost devoid any signs of activity. Irregular but frequent pulses of energy can be faintly detected from multiple sources.")
     }
 
     override fun getGridAlphaMult(): Float {

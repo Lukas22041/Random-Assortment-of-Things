@@ -172,12 +172,12 @@ class CombatDecayingPhotosphereRenderer(var photosphere: SectorEntityToken) : Ba
 
 
 
-        band1!!.color = color.setAlpha(255)
+        band1!!.color = color.setAlpha(25)
         band1!!.isAdditiveBlend = false
         band1!!.render(location.x, location.y, viewport!!.alphaMult)
 
         center!!.setSize(radius * 1.8f , radius  * 1.8f)
-        center!!.color = color.setAlpha(155)
+        center!!.color = color.setAlpha(25)
         center!!.renderAtCenter(location.x, location.y)
 
 

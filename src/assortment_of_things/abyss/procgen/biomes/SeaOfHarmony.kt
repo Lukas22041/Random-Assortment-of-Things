@@ -6,6 +6,7 @@ import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.AbyssProcgenUtils
 import assortment_of_things.abyss.procgen.BiomeCellData
 import assortment_of_things.abyss.terrain.BaseFogTerrain
+import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -41,7 +42,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
     override fun getCombatNebulaMapTex() = "graphics/terrain/rat_combat/rat_combat_depths_map_harmony.png"
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
-
+        tooltip.addPara("A sea indiscrible with any other word than \"warm\". Colossal photospheres are spread throughout, illuminating almost every location within.", 0f)
     }
 
     override fun getVignetteLevel(): Float {
@@ -58,7 +59,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
         generateFogTerrain("rat_sea_of_harmony", "rat_terrain", "depths1", 0.6f)
 
-        var photosphereNum = MathUtils.getRandomNumberInRange(7, 7)
+        var photosphereNum = MathUtils.getRandomNumberInRange(8, 8)
 
         for (i in 0 until photosphereNum) {
 

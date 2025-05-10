@@ -5,6 +5,7 @@ import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
+import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.ids.Factions
@@ -85,7 +86,23 @@ class PrimordialWaters() : BaseAbyssBiome() {
     }
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
+        var radius = getRadius()
+        if (effectLevel <= 0) addNamelessTooltip(tooltip)
+        else if (effectLevel >= 1) addPrimordialTooltip(tooltip)
+        else if (MathUtils.getDistance(Global.getSector().playerFleet, getStencilCenter()) <= radius) {
+            addPrimordialTooltip(tooltip)
+        } else {
+            addNamelessTooltip(tooltip)
+        }
+    }
 
+    fun addNamelessTooltip(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("A quiet sea adjacent to the Sea of Tranquility. An occasional ping of energy can be detected from within, but no other sign of life exists.  ",
+            0f, Misc.getTextColor(), Color(255, 0, 50), "Sea of Tranquility")
+    }
+
+    fun addPrimordialTooltip(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("The root of the abyss, everywhere and also nowhere within, inert but active.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
     }
 
     override fun getMusicKeyId(): String? {

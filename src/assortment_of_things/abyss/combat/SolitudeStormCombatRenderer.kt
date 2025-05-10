@@ -28,7 +28,7 @@ class SolitudeStormCombatRenderer(var solitude: SeaOfSolitude) : BaseCombatLayer
         return false
     }
 
-    var stormInterval = IntervalUtil(12f, 22f)
+    var stormInterval = IntervalUtil(30f, 38f)
     var stormDuration = 0f
 
     var flicker1 = FlickerUtilV2Abyssal(0.5f)

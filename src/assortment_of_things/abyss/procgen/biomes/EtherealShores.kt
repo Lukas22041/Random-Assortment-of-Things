@@ -5,6 +5,7 @@ import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
+import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
@@ -45,7 +46,7 @@ class EtherealShores() : BaseAbyssBiome() {
     }
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
-
+        tooltip.addPara("A small, exotic bubble within the otherwise ruthless depths of the abyss. The matter colliding of your ship plays a calming harmony in its interiors.", 0f, Misc.getTextColor(), biomeColor)
     }
 
     override fun getGridAlphaMult(): Float {

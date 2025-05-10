@@ -6,6 +6,7 @@ import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.AbyssProcgenUtils
 import assortment_of_things.abyss.procgen.BiomeCellData
 import assortment_of_things.abyss.terrain.BaseFogTerrain
+import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -40,7 +41,7 @@ class SeaOfSerenity() : BaseAbyssBiome() {
     override fun getCombatNebulaMapTex() = "graphics/terrain/rat_combat/rat_combat_depths_map_serenity.png"
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
-
+        tooltip.addPara("A dark, uninviting place. Analysis of distant sensor detections reveal more man-made structures than in other biomes of the abyss.")
     }
 
     override fun getMaxDarknessMult(): Float {

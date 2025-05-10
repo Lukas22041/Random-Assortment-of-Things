@@ -50,7 +50,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
     }
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Placeholder")
+        tooltip.addPara("An endless sea of exotic matter, being always in motion. It shows characteristics not to disimiliar to hyperspace, but it shows just as many differences. ")
     }
 
     /** Called after all cells are generated */
@@ -62,8 +62,8 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
         var entrance = generateHyperspaceEntrance() //Pick entrance first
 
-        var fleet = spawnFleet(entrance)
-        fleet.setLocation(fleet.location.x + 500f, fleet.location.y + 500f)
+       /* var fleet = spawnFleet(entrance)
+        fleet.setLocation(fleet.location.x + 500f, fleet.location.y + 500f)*/
 
         var photosphereNum = MathUtils.getRandomNumberInRange(13, 16)
 
