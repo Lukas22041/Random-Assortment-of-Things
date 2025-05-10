@@ -58,7 +58,7 @@ class AbyssFleetScript(var fleet: CampaignFleetAPI, var source: SectorEntityToke
             var tactical = (fleet.ai as ModularFleetAIAPI).tacticalModule
             var target = tactical.target
 
-            var minDistToSource = 7500f
+            var minDistToSource = 5000f
             var maxDistToPlayer = 17500f
 
 
