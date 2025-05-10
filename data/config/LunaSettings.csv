@@ -22,7 +22,7 @@ Requires [Nexerelin v0.11.0x] or newer.",,,Expansion
 ,,,,,,,,
 rat_abyssHeader,The Abyssal Depths,Header,The Abyssal Depths,,,,,Expansion
 rat_abyssBrighter,Brighter Abyss,Boolean,false,,"Makes the abyss less dark, recommended if it turns out to be too dark on your screen.",,,Expansion
-rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the Abyss.
+#rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the Abyss.
 
 Hard mode greatly increases the strength of fleets found within the Abyss. Also adds slight player fleet scaling.",,,Expansion
 ,,,,,,,,

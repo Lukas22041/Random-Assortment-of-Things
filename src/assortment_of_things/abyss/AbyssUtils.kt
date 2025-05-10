@@ -16,9 +16,9 @@ import java.util.*
 import kotlin.collections.HashMap
 
 
-enum class AbyssDifficulty {
+/*enum class AbyssDifficulty {
     Normal, Hard
-}
+}*/
 
 object AbyssUtils {
 
@@ -81,10 +81,10 @@ object AbyssUtils {
         return false
     }
 
-    fun getDifficulty() : AbyssDifficulty {
+   /* fun getDifficulty() : AbyssDifficulty {
         if (RATSettings.abyssDifficulty == "Hard") return AbyssDifficulty.Hard
         return AbyssDifficulty.Normal
-    }
+    }*/
 
 
 

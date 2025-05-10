@@ -154,13 +154,15 @@ class ArtifactUIScript : EveryFrameScript {
         }
 
         container.onClick {
-            container.playClickSound()
             var stacks = ArtifactUtils.getArtifactsInCargo()
             if (stacks.isNotEmpty() || ArtifactUtils.getActiveArtifact() != null) {
+                container.playClickSound()
                 var popupH = getHeightRequired()+50+20
                 createPopupPanel(550f, popupH) {
                     addArtifactSelector(it, 550f, popupH, panel, w, h)
                 }
+            } else {
+                container.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
             }
         }
     }

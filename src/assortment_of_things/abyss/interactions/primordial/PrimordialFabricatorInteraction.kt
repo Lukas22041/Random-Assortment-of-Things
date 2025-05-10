@@ -531,7 +531,7 @@ class PrimordialFabricatorInteraction : RATInteractionPlugin() {
             inner.addPara("Design type: $designType", 0f, Misc.getGrayColor(), col, designType)
             inner.addSpacer(5f)
 
-            inner.addPara("An ancient artifact that can be integrated into a fleet to provide additional benefits. Only one can be active at a time. More information will be provided via the \"Artifacts\" intel tab (located in the \"Personal\" section) when integrating for the first time.",
+            inner.addPara("An extraordinary artifact that can be integrated into a fleet to provide additional benefits. Due to their complexity, only one can be active at a time. Integrate them from the \"Fleet\" menu.",
             0f, Misc.getGrayColor(), Misc.getGrayColor())
             inner.addSpacer(5f)
 
