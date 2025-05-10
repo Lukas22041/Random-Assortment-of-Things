@@ -62,7 +62,7 @@ object AbyssUtils {
     fun getBiomeManager() = getData().biomeManager
 
     @JvmStatic
-    fun getSystem() = getData().system
+    fun getSystem() = getData().system!!
 
     fun isShowFog() : Boolean {
         //return true

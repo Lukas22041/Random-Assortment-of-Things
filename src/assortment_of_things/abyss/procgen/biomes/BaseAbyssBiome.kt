@@ -25,6 +25,7 @@ import java.awt.Color
 abstract class BaseAbyssBiome {
 
     var data = AbyssUtils.getData()
+    var system = AbyssUtils.getSystem()!!
     var manager = AbyssUtils.getBiomeManager()
 
     var startingCell: BiomeCellData? = null

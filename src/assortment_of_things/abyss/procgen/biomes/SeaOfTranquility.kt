@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.*
+import assortment_of_things.abyss.scripts.AbyssFleetScript
 import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
@@ -12,10 +13,7 @@ import assortment_of_things.campaign.scripts.SimUnlockerListener
 import assortment_of_things.misc.addPara
 import assortment_of_things.misc.fixVariant
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CampaignFleetAPI
-import com.fs.starfarer.api.campaign.CampaignTerrainAPI
-import com.fs.starfarer.api.campaign.JumpPointAPI
-import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.Factions
@@ -65,7 +63,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         var entrance = generateHyperspaceEntrance() //Pick entrance first
 
         var fleet = spawnFleet(entrance)
-        fleet.setLocation(fleet.location.x, fleet.location.y + 500f)
+        fleet.setLocation(fleet.location.x + 500f, fleet.location.y + 500f)
 
         var photosphereNum = MathUtils.getRandomNumberInRange(13, 16)
 
@@ -103,14 +101,21 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
     }
 
-    //TODO Imlpement Procgen, make sure rewards are worse than in other biomes.
+    //TODO Procgen
+    // - Worse rewards than other biomes
+    // - Abyssal XO
+    // - Wrecks of Hegemony & Tritach fleets
+    // - Fabricators
+    // - Beacons
+    // - Droneships
+    // - No Seraphs
 
-    fun spawnFleet(entity: SectorEntityToken) : CampaignFleetAPI {
+    fun spawnFleet(source: SectorEntityToken) : CampaignFleetAPI {
         var random = Random()
         var factionID = "rat_abyssals"
         var fleetType = FleetTypes.PATROL_MEDIUM
 
-        var loc = entity.location
+        var loc = source.location
         var homeCell = manager.getCell(loc.x, loc.y)
         var depth = homeCell.intDepth
 
@@ -124,13 +129,10 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
         var points = basePoints + scaledPoints
 
-
-
         var factionAPI = Global.getSector().getFaction(factionID)
 
-
         val params = FleetParamsV3(null,
-            data.system!!.location,
+            source.locationInHyperspace,
             factionID,
             5f,
             fleetType,
@@ -174,9 +176,15 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
         fleet.addEventListener(SimUnlockerListener("rat_abyssals_sim"))
 
-        data.system!!.addEntity(fleet)
+        system.addEntity(fleet)
         fleet.setLocation(loc.x, loc.y)
 
+        fleet.clearAssignments()
+        fleet.addAssignment(FleetAssignment.DEFEND_LOCATION, source, 9999999f)
+        fleet.setLocation(source.location.x, source.location.y)
+        fleet.facing = random.nextFloat() * 360f
+
+        system.addScript(AbyssFleetScript(fleet, source, this))
 
         return fleet
     }
