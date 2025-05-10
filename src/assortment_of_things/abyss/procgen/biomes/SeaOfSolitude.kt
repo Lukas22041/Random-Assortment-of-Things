@@ -44,6 +44,9 @@ class SeaOfSolitude() : BaseAbyssBiome() {
         return darkBiomeColor
     }
 
+    override fun getCombatNebulaTex() = "graphics/terrain/rat_combat/rat_combat_depths_solitude.png"
+    override fun getCombatNebulaMapTex() = "graphics/terrain/rat_combat/rat_combat_depths_map_solitude.png"
+
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
         tooltip.addPara("Exotic matter moves violently and non-stop throughout the biome, leading to an enviroment that is constantly under the influence of charged particles. \n\n" +
                 "" +

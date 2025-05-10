@@ -93,6 +93,7 @@ class CombatHandler : EveryFrameCombatPlugin
             }
 
             if (AbyssUtils.isPlayerInAbyss()) {
+                Global.getCombatEngine().asteroids.forEach { Global.getCombatEngine().removeEntity(it) }
                 initAbyss()
             }
 

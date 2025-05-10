@@ -49,7 +49,7 @@ class SimUnlockerListener(var factionToUnlockFor: String = "rat_abyssals_sim") :
 
             for (member in members) {
 
-                val vid: String = plugin.getStockVariantId(member)
+                val vid: String? = plugin.getStockVariantId(member)
 
                 if (vid != null) {
                     if (!plugin.unlocksData.variants.contains(vid)) {

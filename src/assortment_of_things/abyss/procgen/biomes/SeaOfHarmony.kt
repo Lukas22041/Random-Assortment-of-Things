@@ -37,6 +37,9 @@ class SeaOfHarmony() : BaseAbyssBiome() {
         return darkBiomeColor
     }
 
+    override fun getCombatNebulaTex() = "graphics/terrain/rat_combat/rat_combat_depths_harmony.png"
+    override fun getCombatNebulaMapTex() = "graphics/terrain/rat_combat/rat_combat_depths_map_harmony.png"
+
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
 
     }

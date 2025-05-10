@@ -56,7 +56,9 @@ class EtherealShores() : BaseAbyssBiome() {
         return 1.25f
     }
 
-
+    override fun hasCombatNebula(): Boolean {
+        return false
+    }
 
     override fun getMusicKeyId(): String? {
         return null

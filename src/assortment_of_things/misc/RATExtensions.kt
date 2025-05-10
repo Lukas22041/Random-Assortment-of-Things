@@ -23,7 +23,15 @@ import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.lazywizard.lazylib.MathUtils
 
-var previouslyLoadedSprite = HashMap<String, Boolean>()
+object LoadedAssets {
+    var previouslyLoadedSprite = HashMap<String, Boolean>()
+
+    //For Java Use
+    @JvmStatic
+    fun loadTextureCached(filename: String) {
+        Global.getSettings().loadTextureCached(filename)
+    }
+}
 
 fun Float.levelBetween(min: Float, max: Float) : Float {
     var level = (this - min) / (max - min)
@@ -40,20 +48,22 @@ fun Any.logger() : Logger {
     return Global.getLogger(this::class.java).apply { level = Level.ALL }
 }
 
-fun SettingsAPI.getAndLoadSprite(filename: String) : SpriteAPI{
-    if (!previouslyLoadedSprite.contains(filename)) {
+fun SettingsAPI.loadTextureCached(filename: String) {
+    if (!LoadedAssets.previouslyLoadedSprite.contains(filename)) {
         this.loadTexture(filename)
-        previouslyLoadedSprite.put(filename, true)
+        LoadedAssets.previouslyLoadedSprite.put(filename, true)
+    }
+}
+
+fun SettingsAPI.getAndLoadSprite(filename: String) : SpriteAPI{
+    if (!LoadedAssets.previouslyLoadedSprite.contains(filename)) {
+        this.loadTexture(filename)
+        LoadedAssets.previouslyLoadedSprite.put(filename, true)
     }
     return this.getSprite(filename)
 }
 
-fun SettingsAPI.loadTextureCached(filename: String){
-    if (!previouslyLoadedSprite.contains(filename)) {
-        this.loadTexture(filename)
-        previouslyLoadedSprite.put(filename, true)
-    }
-}
+
 
 fun TooltipMakerAPI.addPara(str: String) = this.addPara(str, 0f)
 

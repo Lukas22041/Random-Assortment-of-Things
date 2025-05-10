@@ -54,6 +54,10 @@ class AbyssalWastes() : BaseAbyssBiome() {
         return particleColor
     }
 
+    override fun hasCombatNebula(): Boolean {
+        return false
+    }
+
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
 
     }

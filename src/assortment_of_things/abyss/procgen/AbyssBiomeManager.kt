@@ -59,13 +59,14 @@ class AbyssBiomeManager {
         biomes.clear()
         for (cell in cellList) { cell.setBiome(null) }
 
-
-
-        biomes.add(SeaOfTranquility())
-        biomes.add(SeaOfHarmony())
-        biomes.add(SeaOfSolitude())
-        biomes.add(SeaOfSerenity())
-        biomes.add(AbyssalWastes())
+        //I wanna randomise the sort order for those biomes as otherwise start positions tend to favor spawning certain biomes away from eachother
+        var toAdd = ArrayList<BaseAbyssBiome>()
+        toAdd.add(SeaOfTranquility())
+        toAdd.add(SeaOfHarmony())
+        toAdd.add(SeaOfSolitude())
+        toAdd.add(SeaOfSerenity())
+        biomes.addAll(toAdd.shuffled())
+        biomes.add(AbyssalWastes()) //Do prefer wastes being added last consistently though
 
         biomes.add(PrimordialWaters())
 
@@ -304,7 +305,10 @@ class AbyssBiomeManager {
             var deepest = biome.cells.maxOf { it.intDepth }
             var deepestCells = biome.cells.filter { it.intDepth == deepest || it.intDepth == deepest - 1 }
             biome.deepestCells.addAll(deepestCells)
+
+            biome.maxDepth = deepest
         }
+
 
     }
 

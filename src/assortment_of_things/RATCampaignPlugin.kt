@@ -43,7 +43,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
     override fun pickBattleCreationPlugin(opponent: SectorEntityToken?): PluginPick<BattleCreationPlugin>? {
 
-        if (opponent?.containingLocation == AbyssUtils.getData().system) {
+        if (opponent?.containingLocation == AbyssUtils.getSystem()) {
             return PluginPick<BattleCreationPlugin>(AbyssBattleCreationPlugin(), CampaignPlugin.PickPriority.HIGHEST)
         }
 

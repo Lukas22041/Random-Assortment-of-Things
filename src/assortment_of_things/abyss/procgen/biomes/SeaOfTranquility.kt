@@ -3,23 +3,24 @@ package assortment_of_things.abyss.procgen.biomes
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.entities.light.AbyssalLight
-import assortment_of_things.abyss.entities.light.AbyssalPhotosphere
-import assortment_of_things.abyss.procgen.AbyssBiomeManager
-import assortment_of_things.abyss.procgen.AbyssProcgenUtils
-import assortment_of_things.abyss.procgen.BiomeCellData
+import assortment_of_things.abyss.procgen.*
 import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
+import assortment_of_things.campaign.scripts.SimUnlockerListener
 import assortment_of_things.misc.addPara
+import assortment_of_things.misc.fixVariant
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
+import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor
-import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
@@ -59,10 +60,12 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
         var system = AbyssUtils.getSystem()!!
 
-        generateFogTerrain("rat_sea_of_tranquility", "rat_terrain", "depths1", 0.6f)
+        generateFogTerrain("rat_sea_of_tranquility", "rat_terrain", "depths1", 0.55f)
 
-        generateHyperspaceEntrance() //Pick entrance first
+        var entrance = generateHyperspaceEntrance() //Pick entrance first
 
+        var fleet = spawnFleet(entrance)
+        fleet.setLocation(fleet.location.x, fleet.location.y + 500f)
 
         var photosphereNum = MathUtils.getRandomNumberInRange(13, 16)
 
@@ -96,6 +99,86 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         if (sphere != null) {
             sensor.setCircularOrbitWithSpin(sphere, MathUtils.getRandomNumberInRange(0f, 360f), sphere.radius + sensor.radius + MathUtils.getRandomNumberInRange(100f, 250f), 90f, -10f, 10f)
         }
+
+
+    }
+
+    //TODO Imlpement Procgen, make sure rewards are worse than in other biomes.
+
+    fun spawnFleet(entity: SectorEntityToken) : CampaignFleetAPI {
+        var random = Random()
+        var factionID = "rat_abyssals"
+        var fleetType = FleetTypes.PATROL_MEDIUM
+
+        var loc = entity.location
+        var homeCell = manager.getCell(loc.x, loc.y)
+        var depth = homeCell.intDepth
+
+        var depthLevel = getDepthLevel(depth)
+        var invertedlevel = 1-depthLevel
+
+
+        var basePoints = MathUtils.getRandomNumberInRange(AbyssFleetFPData.TRANQUILITY_MIN_BASE_FP, AbyssFleetFPData.TRANQUILITY_MAX_BASE_FP)
+        //For Tranquility, it should actually get harder further for the center, unlike other biomes.
+        var scaledPoints = MathUtils.getRandomNumberInRange(AbyssFleetFPData.TRANQUILITY_MIN_SCALED_FP, AbyssFleetFPData.TRANQUILITY_MAX_SCALED_FP) * invertedlevel
+
+        var points = basePoints + scaledPoints
+
+
+
+        var factionAPI = Global.getSector().getFaction(factionID)
+
+
+        val params = FleetParamsV3(null,
+            data.system!!.location,
+            factionID,
+            5f,
+            fleetType,
+            points,  // combatPts
+            0f,  // freighterPts
+            0f,  // tankerPts
+            0f,  // transportPts
+            0f,  // linerPts
+            0f,  // utilityPts
+            0f // qualityMod
+        )
+        params.random = random
+        params.withOfficers = false
+
+        //Tranquility should have a lower chance for capitals.
+        if (random.nextFloat() >= 0.7f) {
+            params.maxShipSize = 3
+        }
+
+        val fleet = FleetFactoryV3.createFleet(params)
+
+        for (member in fleet.fleetData.membersListCopy) {
+            member.fixVariant()
+            member.variant.addTag(Tags.TAG_NO_AUTOFIT)
+        }
+
+        fleet.inflateIfNeeded()
+
+        AbyssUtils.initAbyssalFleetBehaviour(fleet, random)
+
+        //Stronger cores on border
+        AbyssFleetEquipUtils.addAICores(fleet, 0f, invertedlevel)
+
+        var alterationChancePerShip = 0.15f + (0.05f * invertedlevel)
+        AbyssFleetEquipUtils.addAlterationsToFleet(fleet, alterationChancePerShip, random)
+
+        var zeroSmodWeight = 2f
+        var oneSmodWeight = 1f + (0.5f*invertedlevel)
+        var twoSmodWeight = 0f
+        AbyssFleetEquipUtils.inflate(fleet, zeroSmodWeight, oneSmodWeight, twoSmodWeight)
+
+        fleet.addEventListener(SimUnlockerListener("rat_abyssals_sim"))
+
+        data.system!!.addEntity(fleet)
+        fleet.setLocation(loc.x, loc.y)
+
+
+        return fleet
     }
 
 
@@ -118,11 +201,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
 
 
-
-
-
-
-    fun generateHyperspaceEntrance() {
+    fun generateHyperspaceEntrance() : SectorEntityToken {
         var manager = AbyssUtils.getBiomeManager()
         var system = AbyssUtils.getSystem()
         var hyperspace = Global.getSector().hyperspace
@@ -204,6 +283,8 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
         var beacon = Global.getSector().hyperspace.addCustomEntity("", "Warning Beacon", "rat_abyss_warning_beacon", Factions.NEUTRAL)
         beacon.setCircularOrbit(entrancePoint, MathUtils.getRandomNumberInRange(0f, 360f), 320f, 120f)
+
+        return exit
     }
 
     fun generateAbyssTerrainInHyperspace(location: Vector2f) {

@@ -2,7 +2,6 @@ package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.misc.MiscReplacement
-import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin.SpeedBoostScript
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin.CellStateTracker
 import com.fs.starfarer.api.EveryFrameScript
@@ -10,14 +9,19 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.fleet.FleetMemberAPI
+import com.fs.starfarer.api.impl.campaign.abilities.EmergencyBurnAbility
 import com.fs.starfarer.api.impl.campaign.ids.Abilities
+import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lwjgl.util.vector.Vector2f
 import java.awt.Color
-import java.util.EnumSet
+import java.util.*
+import kotlin.math.min
 
 class AbyssTerrainPlugin : BaseTerrain() {
 
@@ -111,8 +115,8 @@ class AbyssTerrainPlugin : BaseTerrain() {
             }
 
             if (cell.first?.isStorming == true && !MiscReplacement.isSlowMoving(fleet) && !goDarkActive) {
-
-                cell.second.applyStormStrikes(cell.first, fleet, days)
+                //cell.second.applyStormStrikes(cell.first, fleet, days)
+               applyStormStrikes(cell.first!!, fleet, days)
             }
         }
 
@@ -186,6 +190,116 @@ class AbyssTerrainPlugin : BaseTerrain() {
             tooltip!!.addPara("Abyssal Storms may damage members of the fleet if it is moving through it at high speeds."
                 , 0f, Misc.getTextColor(), Misc.getHighlightColor(), "damage")
 
+        }
+    }
+
+    var STORM_DAMAGE_FRACTION = 0.2f //Hyperspace is 0.3f
+    var STORM_MIN_STRIKE_DAMAGE = 0.05f //Hyperspace is 0.05f
+    var STORM_MAX_STRIKE_DAMAGE = 0.50f //Hyperspace is 0.95f
+    fun applyStormStrikes(cell: CellStateTracker, fleet: CampaignFleetAPI, days: Float) {
+        if (cell.flicker != null && cell.flicker.wait > 0) {
+            cell.flicker.numBursts = 0
+            cell.flicker.wait = 0f
+            cell.flicker.newBurst()
+        }
+
+        if (cell.flicker == null || !cell.flicker.isPeakFrame) return
+
+
+        //fleet.addScript(new HyperStormBoost(cell, fleet));
+        val key = "\$stormStrikeTimeout"
+        val mem = fleet.memoryWithoutUpdate
+        if (mem.contains(key)) return
+        //boolean canDamage = !mem.contains(key);
+        mem[key, true] =
+            (OldHyperspaceTerrainPlugin.STORM_MIN_TIMEOUT + (OldHyperspaceTerrainPlugin.STORM_MAX_TIMEOUT - OldHyperspaceTerrainPlugin.STORM_MIN_TIMEOUT) * Math.random()).toFloat()
+
+
+        //if ((float) Math.random() > STORM_STRIKE_CHANCE && false) return;
+        val members = fleet.fleetData.membersListCopy
+        if (members.isEmpty()) return
+
+        var totalValue = 0f
+        for (member in members) {
+            totalValue += member.stats.suppliesToRecover.modifiedValue
+        }
+        if (totalValue <= 0) return
+
+        val strikeValue = totalValue * STORM_DAMAGE_FRACTION * (0.5f + Math.random().toFloat() * 0.5f)
+
+
+//		int index = Misc.random.nextInt(members.size());
+//		FleetMemberAPI member = members.get(index);
+        val ebCostThresholdMult = 4f
+
+        val picker = WeightedRandomPicker<FleetMemberAPI>()
+        val preferNotTo = WeightedRandomPicker<FleetMemberAPI>()
+        for (member in members) {
+            var w = 1f
+            if (member.isMothballed) w *= 0.1f
+
+
+            val ebCost = EmergencyBurnAbility.getCRCost(member, fleet)
+            if (ebCost * ebCostThresholdMult > member.repairTracker.cr) {
+                preferNotTo.add(member, w)
+            } else {
+                picker.add(member, w)
+            }
+        }
+        if (picker.isEmpty) {
+            picker.addAll(preferNotTo)
+        }
+
+        val member = picker.pick() ?: return
+
+        val crPerDep = member.deployCost
+        val suppliesPerDep = member.stats.suppliesToRecover.modifiedValue
+        if (suppliesPerDep <= 0 || crPerDep <= 0) return
+
+        var strikeDamage = crPerDep * strikeValue / suppliesPerDep
+        if (strikeDamage < STORM_MIN_STRIKE_DAMAGE) strikeDamage = STORM_MIN_STRIKE_DAMAGE
+
+        val resistance = member.stats.dynamic.getValue(Stats.CORONA_EFFECT_MULT)
+        strikeDamage *= resistance
+
+        if (strikeDamage > STORM_MAX_STRIKE_DAMAGE) strikeDamage = STORM_MAX_STRIKE_DAMAGE
+
+
+//		if (fleet.isPlayerFleet()) {
+//			System.out.println("wefw34gerg");
+//		}
+        val currCR = member.repairTracker.baseCR
+        var crDamage = min(currCR, strikeDamage)
+
+        val ebCost = EmergencyBurnAbility.getCRCost(member, fleet)
+        if (currCR >= ebCost * ebCostThresholdMult) {
+            crDamage = min(currCR - ebCost * 1.5f, crDamage)
+        }
+
+        if (crDamage > 0) {
+            member.repairTracker.applyCREvent(-crDamage, "hyperstorm", "Hyperspace storm strike")
+        }
+
+        var hitStrength = member.stats.armorBonus.computeEffective(member.hullSpec.armorRating)
+        hitStrength *= strikeDamage / crPerDep
+        if (hitStrength > 0) {
+            member.status.applyDamage(hitStrength)
+            if (member.status.hullFraction < 0.01f) {
+                member.status.hullFraction = 0.01f
+            }
+        }
+
+        if (fleet.isPlayerFleet) {
+            var verb = "suffers"
+            var c = Misc.getNegativeHighlightColor()
+            if (hitStrength <= 0) {
+                verb = "avoids"
+                //c = Misc.getPositiveHighlightColor();
+                c = Misc.getTextColor()
+            }
+            Global.getSector().campaignUI.addMessage(member.shipName + " " + verb + " damage from the storm", c)
+
+            Global.getSector().campaignUI.showHelpPopupIfPossible("chmHyperStorm")
         }
     }
 

@@ -1,5 +1,7 @@
 package assortment_of_things.abyss;
 
+import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome;
+import assortment_of_things.misc.LoadedAssets;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.combat.*;
@@ -27,9 +29,6 @@ import java.util.Random;
 
 //TODO make work for new system
 public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
-
-
-
 
     public static float ABYSS_SHIP_SPEED_PENALTY = 20f;
     public static float ABYSS_MISSILE_SPEED_PENALTY = 20f;
@@ -290,7 +289,7 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
 
         float numRings = 0;
 
-        Color coronaColor = null;
+        /*Color coronaColor = null;
         // this assumes that all nebula in a system are of the same color
         for (CampaignTerrainAPI terrain : playerFleet.getContainingLocation().getTerrainCopy()) {
             //if (terrain.getType().equals(Terrain.NEBULA)) {
@@ -347,37 +346,43 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
                     numRings++;
                 }
             }
-        }
+        }*/
 
-        nebulaTex = "graphics/terrain/rat_combat_depths1.png";
-        nebulaMapTex = "graphics/terrain/rat_combat_depths1_map.png";
+        BaseAbyssBiome biome = AbyssUtils.getBiomeManager().getDominantBiome();
 
-        if (nebulaTex != null) {
+        if (biome.hasCombatNebula() && new Random().nextFloat() >= 0.5f) {
+            LoadedAssets.loadTextureCached(biome.getCombatNebulaTex());
+            LoadedAssets.loadTextureCached(biome.getCombatNebulaMapTex());
+
+            nebulaTex = biome.getCombatNebulaTex();
+            nebulaMapTex = biome.getCombatNebulaMapTex();
+
+            /* nebulaTex = "graphics/terrain/rat_combat_depths1.png";
+            nebulaMapTex = "graphics/terrain/rat_combat_depths1_map.png";*/
+
             loader.setNebulaTex(nebulaTex);
             loader.setNebulaMapTex(nebulaMapTex);
-        }
 
-        if (coronaColor != null) {
-            loader.setBackgroundGlowColor(coronaColor);
-        }
-
-        int numNebula = 15;
-        if (inNebula) {
-            numNebula = 100;
-        }
-        if (!inNebula && playerFleet.isInHyperspace()) {
-            numNebula = 0;
-        }
-
-        for (int i = 0; i < numNebula; i++) {
-            float x = random.nextFloat() * width - width/2;
-            float y = random.nextFloat() * height - height/2;
-            float radius = 100f + random.nextFloat() * 400f;
+            int numNebula = 15;
             if (inNebula) {
-                radius += 100f + 500f * random.nextFloat();
+                numNebula = 100;
             }
-            loader.addNebula(x, y, radius);
+            if (!inNebula && playerFleet.isInHyperspace()) {
+                numNebula = 0;
+            }
+
+            for (int i = 0; i < numNebula; i++) {
+                float x = random.nextFloat() * width - width/2;
+                float y = random.nextFloat() * height - height/2;
+                float radius = 100f + random.nextFloat() * 400f;
+                if (inNebula) {
+                    radius += 100f + 500f * random.nextFloat();
+                }
+                loader.addNebula(x, y, radius);
+            }
         }
+
+
 
         //Dont need asteroids in the abyss
 

@@ -56,6 +56,10 @@ class PrimordialWaters() : BaseAbyssBiome() {
         return inactiveDarkBiomeColor
     }
 
+    override fun hasCombatNebula(): Boolean {
+        return false
+    }
+
     override fun getTooltipColor(): Color {
         if (effectLevel <= 0) return getInactiveBiomeColor()
         if (effectLevel >= 1) return getBiomeColor()

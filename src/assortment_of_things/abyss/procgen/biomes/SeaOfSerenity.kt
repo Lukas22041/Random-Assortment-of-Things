@@ -36,6 +36,9 @@ class SeaOfSerenity() : BaseAbyssBiome() {
         return darkBiomeColor
     }
 
+    override fun getCombatNebulaTex() = "graphics/terrain/rat_combat/rat_combat_depths_serenity.png"
+    override fun getCombatNebulaMapTex() = "graphics/terrain/rat_combat/rat_combat_depths_map_serenity.png"
+
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
 
     }

@@ -24,7 +24,8 @@ import java.awt.Color
 
 abstract class BaseAbyssBiome {
 
-
+    var data = AbyssUtils.getData()
+    var manager = AbyssUtils.getBiomeManager()
 
     var startingCell: BiomeCellData? = null
     var cells = ArrayList<BiomeCellData>()
@@ -34,7 +35,7 @@ abstract class BaseAbyssBiome {
     var deepCells = ArrayList<BiomeCellData>() //Also includes deepest cells
 
     var deepestCells = ArrayList<BiomeCellData>() //Should be worked with first as to be reserved for important things
-
+    var maxDepth = 0
 
     //Generated before Init. Mostly required to create appropiate grid sizes for the nebula terrain.
     var leftMostCell: Int = 0
@@ -72,6 +73,10 @@ abstract class BaseAbyssBiome {
     open fun getMaxDarknessMult() = 0.75f
 
     open fun getGridAlphaMult() = 1f
+
+    open fun hasCombatNebula() = true
+    open fun getCombatNebulaTex() = "graphics/terrain/rat_combat/rat_combat_depths.png"
+    open fun getCombatNebulaMapTex() = "graphics/terrain/rat_combat/rat_combat_depths_map.png"
 
     //If null, will not change the music while within the biome and continue the prior ones.
     open fun getMusicKeyId() : String? = "rat_music_abyss_merged"
@@ -136,7 +141,6 @@ abstract class BaseAbyssBiome {
 
         var data = AbyssUtils.getData()
         var system = data.system
-        var manager = data.biomeManager
         var otherBiomes = manager.biomes.filter { it != this }
 
        /* val w = AbyssBiomeManager.width / 200
@@ -325,6 +329,11 @@ abstract class BaseAbyssBiome {
         var pick = deepestCells.filter { !it.claimed }.randomOrNull()
         pick?.claimed = true
         return pick
+    }
+
+    fun getDepthLevel(depth: Int) : Float {
+        if (maxDepth == 0) return 1f
+        return MathUtils.clamp(depth.toFloat() / maxDepth.toFloat(), 0f, 1f)
     }
 
  }
