@@ -93,7 +93,6 @@ class CombatHandler : EveryFrameCombatPlugin
             }
 
             if (AbyssUtils.isPlayerInAbyss()) {
-                Global.getCombatEngine().asteroids.forEach { Global.getCombatEngine().removeEntity(it) }
                 initAbyss()
             }
 
@@ -257,7 +256,8 @@ class CombatHandler : EveryFrameCombatPlugin
 
 
     fun advanceAbyss(amount: Float) {
-
+        var asteroids = ArrayList(Global.getCombatEngine().asteroids)
+        asteroids.forEach { Global.getCombatEngine().removeEntity(it) }
     }
 
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {

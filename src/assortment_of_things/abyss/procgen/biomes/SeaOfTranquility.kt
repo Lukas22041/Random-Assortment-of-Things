@@ -160,7 +160,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             if (abyssXOOrbit != null) {
                 var drone = AbyssProcgenUtils.createAbyssalDrone(system, this)
                 drone.addTag("rat_abyssal_xo_entity")
-                station.setCircularOrbitWithSpin(abyssXOOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), abyssXOOrbit.distance, abyssXOOrbit.orbitDays, -20f, 20f)
+                drone.setCircularOrbitWithSpin(abyssXOOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), abyssXOOrbit.distance, abyssXOOrbit.orbitDays, -20f, 20f)
             }
         }
 
