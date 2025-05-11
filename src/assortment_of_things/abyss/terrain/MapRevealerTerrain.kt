@@ -8,6 +8,7 @@ import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.impl.combat.dweller.WarpingSpriteRendererUtilV2
+import org.lazywizard.lazylib.MathUtils
 import java.util.*
 
 class MapRevealerTerrain : BaseTerrain() {
@@ -57,7 +58,9 @@ class MapRevealerTerrain : BaseTerrain() {
                     //var loc = cell.getWorldCenter()
                     var loc = cell.getWorldCenter()
                     fog!!.angle = cell.renderAngle
-                    fog!!.alphaMult = alphaMult * alpha
+
+                    //Mult *2 as otherwise, while this is fading out, you can see through the fog
+                    fog!!.alphaMult = MathUtils.clamp(MathUtils.clamp(alphaMult * 2f, 0f, 1f) * alpha , 0f, 1f)
 
                     fog!!.renderAtCenter(loc.x * factor, loc.y * factor)
 
