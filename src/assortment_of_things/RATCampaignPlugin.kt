@@ -5,8 +5,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.boss.GenesisInteraction
 import assortment_of_things.abyss.boss.GenesisReencounterInteractionPlugin
 import assortment_of_things.abyss.entities.hyper.AbyssalFracture
-import assortment_of_things.abyss.interactions.AbyssSensorInteraction
-import assortment_of_things.abyss.interactions.AbyssalWreckInteraction
+import assortment_of_things.abyss.interactions.*
 import assortment_of_things.abyss.interactions.ethereal.AbyssalRaphaelInteraction
 import assortment_of_things.abyss.interactions.primordial.PrimordialCatalystInteraction
 import assortment_of_things.abyss.interactions.primordial.PrimordialFabricatorInteraction
@@ -166,6 +165,10 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 "rat_abyss_primordial_activator" -> return PluginPick(PrimordialCatalystInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_abyss_primordial_fabricator" -> return PluginPick(PrimordialFabricatorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
 
+                "rat_abyss_fabrication" -> return PluginPick(FabrictationStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_drone" -> return PluginPick(AbyssalProbeInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_transmitter" -> return PluginPick(TransmitterInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_research" -> return PluginPick(AbyssalResearchStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
 

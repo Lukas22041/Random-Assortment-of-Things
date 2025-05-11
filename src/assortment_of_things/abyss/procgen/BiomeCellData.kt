@@ -38,6 +38,12 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
         return worldCenter.plus(MathUtils.getRandomPointInCircle(Vector2f(), radius))
     }
 
+    fun getRandomLocationInCell() : Vector2f {
+        var x = MathUtils.getRandomNumberInRange(worldX, worldX+AbyssBiomeManager.cellSize)
+        var y = MathUtils.getRandomNumberInRange(worldY, worldY+AbyssBiomeManager.cellSize)
+        return Vector2f(x, y)
+    }
+
     fun getBiome() : BaseAbyssBiome? {
         if (isFake) return manager.getBiome("abyssal_wastes")
         return biomePlugin

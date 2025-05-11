@@ -31,6 +31,16 @@ object AbyssProcgenUtils {
         return array
     }
 
+    fun createResearchStation(system: StarSystemAPI, biome: BaseAbyssBiome) : SectorEntityToken {
+        var research = system!!.addCustomEntity("rat_abyss_research_${biome.getBiomeID()}_${Misc.genUID()}", "Abyssal Research Station", "rat_abyss_research", Factions.NEUTRAL)
+        return research
+    }
+
+    fun createAbyssalDrone(system: StarSystemAPI, biome: BaseAbyssBiome) : SectorEntityToken {
+        var drone = system!!.addCustomEntity("rat_abyss_drone_${biome.getBiomeID()}_${Misc.genUID()}", "Abyssal Droneship", "rat_abyss_drone", Factions.NEUTRAL)
+        return drone
+    }
+
     fun addLightsource(entity: SectorEntityToken, radius: Float, color: Color? = AbyssUtils.ABYSS_COLOR.setAlpha(50)) : AbyssalLightsource {
         var lightsource = entity.containingLocation.addCustomEntity("rat_lightsource_${Misc.genUID()}", "", "rat_lightsource", Factions.NEUTRAL)
         lightsource.setCircularOrbit(entity, 0f, 0f, 1000f)

@@ -17,6 +17,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec
+import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.DropData
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.PerShipData
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.ShipCondition
@@ -78,6 +79,12 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
                 drop.value = 500
                 dropValue.add(drop)
 
+                drop = DropData()
+                drop.chances = 1
+                drop.group = "rat_abyss_alterations_rare"
+                drop.valueMult = 0.75f
+                dropRandom.add(drop)
+
                 var mult = when(member.hullSpec.hullSize) {
                     HullSize.FRIGATE -> 1f
                     HullSize.DESTROYER -> 1.5f
@@ -86,7 +93,8 @@ class AbyssalWreckInteraction : RATInteractionPlugin() {
                     else -> 1f
                 }
 
-                var salvage = SalvageEntity.generateSalvage(random, mult, mult, 1f, 1f, dropValue, dropRandom)
+                var salvage = SalvageEntity.generateSalvage(random, mult, 1f, 1f, 1f, dropValue, dropRandom)
+
 
                 visualPanel.showLoot("Loot", salvage, true) {
                     closeDialog()

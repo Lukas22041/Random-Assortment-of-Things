@@ -47,7 +47,7 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
                 playercell.isDiscovered = true
 
                 var rad = 3
-                if (playercell.depth != BiomeDepth.BORDER && playercell.getBiome() is SeaOfHarmony) rad = 4 //Larger reveal radius in sea of harmony
+                //if (playercell.depth != BiomeDepth.BORDER && playercell.getBiome() is SeaOfHarmony) rad = 4 //Larger reveal radius in sea of harmony
                 playercell.getAround(rad).forEach {
                     it.isDiscovered = true
                     it.getAdjacent().forEach { it.isPartialyDiscovered = true }

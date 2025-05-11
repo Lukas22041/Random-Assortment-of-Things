@@ -23,8 +23,7 @@ class AbyssalGrid : BaseHullMod() {
 
         if (Global.getSector()?.characterData?.person != null) {
             if (Misc.getAllowedRecoveryTags().contains(Tags.AUTOMATED_RECOVERABLE)
-                || stats!!.variant.hasHullMod("rat_abyssal_conversion") ||
-                stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion") || stats!!.variant.hasHullMod("rat_seraph_conversion")) {
+                || stats!!.variant.hasHullMod("rat_abyssal_conversion")) {
                 stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
             }
             else {

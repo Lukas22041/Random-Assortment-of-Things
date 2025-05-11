@@ -42,7 +42,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
     override fun getCombatNebulaMapTex() = "graphics/terrain/rat_combat/rat_combat_depths_map_harmony.png"
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("A sea indiscrible with any other word than \"warm\". Colossal photospheres are spread throughout, illuminating almost every location within.", 0f)
+        tooltip.addPara("A biome indiscrible with any other word than \"warm\". Colossal photospheres are spread throughout, illuminating almost every location within.", 0f)
     }
 
     override fun getVignetteLevel(): Float {

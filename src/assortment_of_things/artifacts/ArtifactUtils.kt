@@ -126,7 +126,7 @@ object ArtifactUtils {
         memory.set(activeArtifactKey, spec.id)
     }
 
-    fun generateArtifactLoot(cargo: CargoAPI, dropGroup: String, chance: Float, attempts: Int, random: Random)
+   /* fun generateArtifactLoot(cargo: CargoAPI, dropGroup: String, chance: Float, attempts: Int, random: Random)
     {
         var picker = WeightedRandomPicker<ArtifactSpec>()
         picker.random = random
@@ -143,7 +143,7 @@ object ArtifactUtils {
             var pick = picker.pick()
             cargo.addSpecial(SpecialItemData("rat_artifact", pick.id), 1f)
         }
-    }
+    }*/
 
     /*fun generateArtifactNoDupe(cargo: CargoAPI, dropGroup: String, random: Random)
     {

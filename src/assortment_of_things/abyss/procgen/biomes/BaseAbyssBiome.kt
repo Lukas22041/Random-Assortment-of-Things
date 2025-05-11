@@ -9,14 +9,13 @@ import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
-import com.fs.starfarer.api.EveryFrameScript
-import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
@@ -79,6 +78,9 @@ abstract class BaseAbyssBiome {
     open fun getCombatNebulaTex() = "graphics/terrain/rat_combat/rat_combat_depths.png"
     open fun getCombatNebulaMapTex() = "graphics/terrain/rat_combat/rat_combat_depths_map.png"
 
+    /* Multiplier applied to loot drops for entities within the biome. */
+    open fun getLootMult() = 1.25f
+
     //If null, will not change the music while within the biome and continue the prior ones.
     open fun getMusicKeyId() : String? = "rat_music_abyss_merged"
 
@@ -95,6 +97,46 @@ abstract class BaseAbyssBiome {
     abstract fun init()
 
     var majorLightsources = ArrayList<SectorEntityToken>()
+    var lightsourceOrbits = ArrayList<LightsourceOrbit>()
+
+    fun pickOrbit(sources: List<LightsourceOrbit>) : LightsourceOrbit? {
+        var pick = sources.randomOrNull()
+        lightsourceOrbits.remove(pick)
+        return pick
+    }
+
+    fun pickOrbitByDepth(sources: List<LightsourceOrbit>) : LightsourceOrbit? {
+        var picker = WeightedRandomPicker<LightsourceOrbit>()
+        sources.forEach { picker.add(it, it.depth.toFloat()) }
+
+        var pick = picker.pick()
+        lightsourceOrbits.remove(pick)
+        return pick
+    }
+
+    data class LightsourceOrbit(var lightsource: SectorEntityToken, var distance: Float, val orbitDays: Float, var depth: Int, var index: Int) {
+        fun setClaimedByMajor() {
+            lightsource.memoryWithoutUpdate.set("\$rat_claimed_major", true)
+        }
+
+        fun isClaimedByMajor() : Boolean {
+            return lightsource.memoryWithoutUpdate.get("\$rat_claimed_major") == true
+        }
+    }
+
+    fun generateLightsourceOrbits() {
+        for (lightsource in majorLightsources) {
+            var orbit = MathUtils.getRandomNumberInRange(50f, 100f)
+            var days = 50f
+            var cell = manager.getCell(lightsource)
+            var depth = cell.intDepth
+            for (i in 0 until 3) {
+                orbit += MathUtils.getRandomNumberInRange(200f, 350f)
+                days += 35f
+                lightsourceOrbits.add(LightsourceOrbit(lightsource, orbit, days, depth, i))
+            }
+        }
+    }
 
     open fun spawnParticlesForCell(particleManager: BiomeParticleManager, cell: BiomeCellData) {
 

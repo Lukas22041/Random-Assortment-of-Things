@@ -38,6 +38,7 @@ Primordial Stream,rat_primordial_stream,3,0,Hull Alteration,"rat_alteration, rat
 ,,,,,,,,,,,,,,,,,,,
 ##Misc,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,
+,,,#NOTE: Weights have been moved to dropgroups,,,,,,,,,,,,,,,,
 AI Conversion,rat_automated_conversion,3,1,Hull Alteration,"rat_alteration, no_drop_salvage,  no_build_in, restricted, abyss, codex_unlockable, rat_fabricatable_150",Special,25000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.AIConvertedShip,,,,graphics/hullmods/rat_ai_conversion.png
 Delta Assistant,rat_delta_assistant,3,1,Hull Alteration,"rat_alteration, no_drop_salvage,  no_build_in, restricted, abyss, codex_unlockable, rat_fabricatable_150",Special,25000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.DeltaAIAssistantHullmod,,,,graphics/hullmods/rat_delta_ai.png
 Unaffected Deployment,rat_unaffected,3,1,Hull Alteration,"rat_alteration, no_drop_salvage,  no_build_in, restricted, abyss, codex_unlockable, rat_fabricatable_150",Special,25000,FALSE,FALSE,,0,0,0,0,assortment_of_things.abyss.hullmods.basic.UnaffectedDeploymentHullmod,,,,graphics/hullmods/rat_unaffected.png

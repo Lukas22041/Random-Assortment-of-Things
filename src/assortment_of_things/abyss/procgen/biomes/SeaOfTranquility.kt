@@ -91,14 +91,21 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             /*entity.setDiscoverable(true)
             entity.detectedRangeMod.modifyFlat("test", 5000f)*/
         }
+        generateLightsourceOrbits()
+        populateEntities()
 
-        var sensor = AbyssProcgenUtils.createSensorArray(system, this)
+        /*var sensor = AbyssProcgenUtils.createSensorArray(system, this)
         var sphere = majorLightsources.randomOrNull()
         if (sphere != null) {
             sensor.setCircularOrbitWithSpin(sphere, MathUtils.getRandomNumberInRange(0f, 360f), sphere.radius + sensor.radius + MathUtils.getRandomNumberInRange(100f, 250f), 90f, -10f, 10f)
-        }
+        }*/
 
 
+    }
+
+    //Worse than any other biome
+    override fun getLootMult(): Float {
+        return 0.75f
     }
 
     //TODO Procgen
@@ -110,7 +117,84 @@ class SeaOfTranquility() : BaseAbyssBiome() {
     // - Droneships
     // - No Seraphs
 
-    fun spawnFleet(source: SectorEntityToken) : CampaignFleetAPI {
+    fun populateEntities() {
+
+        var random = Random()
+
+        //Spawn Orbital fleets around lightsources
+        for (lightsource in majorLightsources) {
+            var maxFleets = 2
+            var spawnChancePer = /*0.75f*/ 0.66f
+            for (i in 0 until maxFleets) {
+                if (random.nextFloat() >= spawnChancePer) continue
+                spawnDefenseFleet(lightsource)
+            }
+        }
+
+        var sensorOrbit = pickOrbitByDepth(lightsourceOrbits.filter { !it.isClaimedByMajor() && it.index == 0 })
+        if (sensorOrbit != null) {
+            sensorOrbit.setClaimedByMajor()
+            var sensor = AbyssProcgenUtils.createSensorArray(system, this)
+            sensor.setCircularOrbitWithSpin(sensorOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), sensorOrbit.distance, sensorOrbit.orbitDays, -20f, 20f)
+        }
+
+        //Research station can be either orbit or random loc
+        var station = AbyssProcgenUtils.createResearchStation(system, this)
+        if (random.nextFloat() >= 0.5f) {
+            var researchOrbit = pickOrbit(lightsourceOrbits.filter { !it.isClaimedByMajor() && it.index == 0 || it.index == 1 })
+            if (researchOrbit != null) {
+                researchOrbit.setClaimedByMajor()
+                station.setCircularOrbitWithSpin(researchOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), researchOrbit.distance, researchOrbit.orbitDays, -20f, 20f)
+            }
+        } else {
+            var pick = pickAndClaimCell()
+            if (pick != null) {
+                var loc = pick.getRandomLocationInCell()
+                station.setLocation(loc.x, loc.y)
+            }
+        }
+
+        //Abyssal XO wreck
+        if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+            var abyssXOOrbit = pickOrbit(lightsourceOrbits.filter { it.index != 0 })
+            if (abyssXOOrbit != null) {
+                var drone = AbyssProcgenUtils.createAbyssalDrone(system, this)
+                drone.addTag("rat_abyssal_xo_entity")
+                station.setCircularOrbitWithSpin(abyssXOOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), abyssXOOrbit.distance, abyssXOOrbit.orbitDays, -20f, 20f)
+            }
+        }
+
+
+        //Iterate over remaining orbits, randomly place things within them.
+        for (orbit in ArrayList(lightsourceOrbits)) {
+            if (random.nextFloat() > /*0.25f*/ 0.3f) {
+                lightsourceOrbits.remove(orbit)
+
+            }
+        }
+
+        //Graveyard of hegemony and/or tritach ships
+        var graveyardCell = pickAndClaimAdjacentOrSmaller()
+        if (graveyardCell != null) {
+
+        }
+
+        //Guarantee a Morkoth wreck somewhere
+        var morkothCell = pickAndClaimCell()
+        if (morkothCell != null) {
+
+        }
+
+        //Populate locations without anything major near them.
+        //Fabricators, Transmitters, Droneships, Abyssal Wrecks
+        var picks = MathUtils.getRandomNumberInRange(7, 10)
+        for (i in 0 until picks) {
+            var pick = pickAndClaimCell() ?: continue
+        }
+
+    }
+
+    fun spawnDefenseFleet(source: SectorEntityToken) : CampaignFleetAPI {
         var random = Random()
         var factionID = "rat_abyssals"
         var fleetType = FleetTypes.PATROL_MEDIUM
@@ -147,10 +231,10 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         params.random = random
         params.withOfficers = false
 
-        //Tranquility should have a lower chance for capitals.
-        if (random.nextFloat() >= 0.7f) {
-            params.maxShipSize = 3
-        }
+        //if (random.nextFloat() >= 0.7f) {
+        //Tranquility should have no capitals
+        params.maxShipSize = 3
+        //}
 
         val fleet = FleetFactoryV3.createFleet(params)
 

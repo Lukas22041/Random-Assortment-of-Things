@@ -46,7 +46,7 @@ class EtherealShores() : BaseAbyssBiome() {
     }
 
     override fun addBiomeTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("A small, exotic bubble within the otherwise ruthless depths of the abyss. The matter colliding of your ship plays a calming harmony in its interiors.", 0f, Misc.getTextColor(), biomeColor)
+        tooltip.addPara("A small, exotic bubble within the otherwise ruthless depths of the abyss, bordering the hostile Abyssal Wastes. The matter colliding of your ship plays a calming harmony in its interiors.", 0f, Misc.getTextColor(), Color(150, 140, 140), "Abyssal Wastes")
     }
 
     override fun getGridAlphaMult(): Float {

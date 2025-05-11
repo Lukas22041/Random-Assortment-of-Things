@@ -5,6 +5,7 @@ import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.FleetEncounterContextPlugin
 import com.fs.starfarer.api.campaign.SpecialItemData
+import org.lazywizard.lazylib.MathUtils
 
 class AbyssCampaignListener : RATBaseCampaignEventListener() {
 
@@ -20,7 +21,7 @@ class AbyssCampaignListener : RATBaseCampaignEventListener() {
             loot!!.addWeapons("rat_azazel_blade", 4)
             loot!!.addWeapons("rat_apollyons_end", 3)
 
-            loot.addCommodity("rat_abyssal_matter", 200f)
+            loot.addCommodity("rat_abyssal_matter", 200f + MathUtils.getRandomNumberInRange(1f, 10f))
 
         }
 
