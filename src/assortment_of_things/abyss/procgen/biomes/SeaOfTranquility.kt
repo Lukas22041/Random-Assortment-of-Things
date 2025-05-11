@@ -314,11 +314,9 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         //Generates terrain around hyperspace
         generateAbyssTerrainInHyperspace(hyperspaceLocation)
 
-        //Set up fractures
-        var id = Misc.genUID()
 
-        var entrance = hyperspace.addCustomEntity("abyss_fracture_" + id + "_1", "Abyssal Fracture", "rat_abyss_fracture", Factions.NEUTRAL)
-        var exit = system.addCustomEntity("abyss_fracture_" + id + "_2", "Abyssal Fracture", "rat_abyss_fracture", Factions.NEUTRAL)
+        var entrance = hyperspace.addCustomEntity("abyss_fracture_entrance", "Abyssal Fracture", "rat_abyss_fracture", Factions.NEUTRAL)
+        var exit = system.addCustomEntity("abyss_fracture_exit", "Abyssal Fracture", "rat_abyss_fracture", Factions.NEUTRAL)
 
         data.hyperspaceFracture = entrance
         data.abyssFracture = exit
