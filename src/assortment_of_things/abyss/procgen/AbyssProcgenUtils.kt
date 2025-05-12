@@ -3,42 +3,134 @@ package assortment_of_things.abyss.procgen
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssSensorEntity
 import assortment_of_things.abyss.entities.light.AbyssalLightsource
+import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
+import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
+import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin.DerelictType
+import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.util.WeightedRandomPicker
+import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
+import java.util.*
 
 object AbyssProcgenUtils {
 
+    class EntityRotationScript(var entity: SectorEntityToken) : EveryFrameScript {
+
+        var speed = MathUtils.getRandomNumberInRange(-3.5f, 3.5f)
+
+        override fun isDone(): Boolean {
+            return false
+        }
+
+        override fun runWhilePaused(): Boolean {
+            return false
+        }
+
+        override fun advance(amount: Float) {
+            entity.facing += speed * amount
+        }
+
+    }
+
+    fun spawnEntity(system: StarSystemAPI, biome: BaseAbyssBiome, type: String) : SectorEntityToken {
+        var entity = system.addCustomEntity("${type}_${biome.getBiomeID()}_${Misc.genUID()}", null, type, Factions.NEUTRAL)
+        entity.addScript(EntityRotationScript(entity))
+        return entity
+    }
+
+    fun createRandomDerelictShip(system: StarSystemAPI, faction: String = "rat_abyssals", isNoLarges: Boolean = false) : SectorEntityToken{
+        val params = DerelictShipEntityPlugin.createRandom(faction, pickDerelictType(Random(), isNoLarges), Random(), DerelictShipEntityPlugin.getDefaultSModProb())
+
+        val entity = BaseThemeGenerator.addSalvageEntity(Random(), system, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
+        entity.setDiscoverable(true)
+        entity.addTag(params.ship.variantId)
+
+        return entity
+    }
+
+    fun createRandomDerelictAbyssalShip(system: StarSystemAPI, faction: String = "rat_abyssals", isNoLarges: Boolean = false) : SectorEntityToken{
+        var entity = createRandomDerelictShip(system, faction, isNoLarges)
+        entity.addTag(AbyssTags.ABYSS_WRECK)
+        return entity
+    }
+
+    fun createDerelictShip(system: StarSystemAPI, variant: String) : SectorEntityToken{
+        val params = DerelictShipEntityPlugin.createVariant(variant, Random(), DerelictShipEntityPlugin.getDefaultSModProb())
+
+        val entity = BaseThemeGenerator.addSalvageEntity(Random(), system, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
+        entity.addTag(variant)
+        entity.setDiscoverable(true)
+
+        return entity
+    }
+
+    fun createDerelictAbyssalShip(system: StarSystemAPI, variant: String) : SectorEntityToken {
+        var entity = createDerelictShip(system, variant)
+        entity.addTag(AbyssTags.ABYSS_WRECK)
+        return entity
+    }
+
+    fun pickDerelictType(random: Random?, isNoLarges: Boolean): DerelictType {
+        val picker = WeightedRandomPicker<DerelictType>(random)
+
+        //picker.add(DerelictType.CIVILIAN, 10f)
+        if (!isNoLarges) picker.add(DerelictType.LARGE, 5f)
+        picker.add(DerelictType.MEDIUM, 10f)
+        picker.add(DerelictType.SMALL, 20f)
+
+        return picker.pick()
+    }
+
     fun createSensorArray(system: StarSystemAPI, biome: BaseAbyssBiome) : SectorEntityToken {
-        var array = system!!.addCustomEntity("rat_sensor_abyss_${biome.getBiomeID()}_${Misc.genUID()}", "Sensor Array", "rat_abyss_sensor", Factions.NEUTRAL)
+        var array = spawnEntity(system, biome, "rat_abyss_sensor")
         var plugin = array.customPlugin as AbyssSensorEntity
         plugin.biome = biome
         return array
     }
 
     fun createDecayingSensorArray(system: StarSystemAPI, biome: BaseAbyssBiome) : SectorEntityToken {
-        var array = system!!.addCustomEntity("rat_sensor_abyss_${biome.getBiomeID()}_${Misc.genUID()}", "Deteriorating Sensor Array", "rat_decaying_abyss_sensor", Factions.NEUTRAL)
+        var array = spawnEntity(system, biome, "rat_decaying_abyss_sensor")
         var plugin = array.customPlugin as AbyssSensorEntity
         plugin.biome = biome
         return array
     }
 
     fun createResearchStation(system: StarSystemAPI, biome: BaseAbyssBiome) : SectorEntityToken {
-        var research = system!!.addCustomEntity("rat_abyss_research_${biome.getBiomeID()}_${Misc.genUID()}", "Abyssal Research Station", "rat_abyss_research", Factions.NEUTRAL)
+        var research = spawnEntity(system, biome, "rat_abyss_research")
         return research
     }
 
+    fun createFabricatorStation(system: StarSystemAPI, biome: BaseAbyssBiome) : SectorEntityToken {
+        var fabricator = spawnEntity(system, biome, "rat_abyss_fabrication")
+        return fabricator
+    }
+
     fun createAbyssalDrone(system: StarSystemAPI, biome: BaseAbyssBiome) : SectorEntityToken {
-        var drone = system!!.addCustomEntity("rat_abyss_drone_${biome.getBiomeID()}_${Misc.genUID()}", "Abyssal Droneship", "rat_abyss_drone", Factions.NEUTRAL)
+        var drone = spawnEntity(system, biome, "rat_abyss_drone")
         return drone
+    }
+
+    fun addLightsourceWithBiomeColor(entity: SectorEntityToken, biome: BaseAbyssBiome, radius: Float, alpha: Int,) : AbyssalLightsource {
+        var lightsource = entity.containingLocation.addCustomEntity("rat_lightsource_${biome.getBiomeID()}_${Misc.genUID()}", "", "rat_lightsource", Factions.NEUTRAL)
+        lightsource.setCircularOrbit(entity, 0f, 0f, 1000f)
+
+        var plugin = lightsource.customPlugin as AbyssalLightsource
+        plugin.radius = radius
+        plugin.color = biome.getBiomeColor().setAlpha(alpha)
+        return plugin
     }
 
     fun addLightsource(entity: SectorEntityToken, radius: Float, color: Color? = AbyssUtils.ABYSS_COLOR.setAlpha(50)) : AbyssalLightsource {

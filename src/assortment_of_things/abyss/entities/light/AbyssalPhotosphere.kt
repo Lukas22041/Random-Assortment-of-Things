@@ -2,6 +2,7 @@ package assortment_of_things.abyss.entities.light
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.misc.addPara
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
@@ -11,6 +12,8 @@ import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.DynamicRingBand
+import org.lazywizard.lazylib.MathUtils
+import org.magiclib.kotlin.getDistance
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
@@ -30,7 +33,7 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
     var center: SpriteAPI? = null
 
     var rotation = 0f
-
+    var visited = false
 
     override fun advance(amount: Float) {
         super.advance(amount)
@@ -38,6 +41,10 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         if (entity == null) return
         initSpritesIfNull()
         band1!!.advance(amount)
+
+        if (!visited &&  entity.getDistance(Global.getSector().playerFleet) <= radius/7.5f) {
+            visited = true
+        }
     }
 
     fun initSpritesIfNull()
@@ -91,7 +98,7 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         var posX = entity.location.x
         var posY = entity.location.y
 
-        if (!viewport!!.isNearViewport(entity.location, radius)) return
+        if (!viewport!!.isNearViewport(entity.location, radius/2)) return
 
         lightColor = color
 
@@ -134,6 +141,9 @@ class AbyssalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         super.createMapTooltip(tooltip, expanded)
 
         tooltip!!.addPara("Photosphere", 0f, Misc.getTextColor(), color, "Photosphere")
+        if (!visited) {
+            tooltip.addPara("This photosphere has been discovered, but not yet visited.", 0f, Misc.getGrayColor(), Misc.getHighlightColor())
+        }
 
     }
 }

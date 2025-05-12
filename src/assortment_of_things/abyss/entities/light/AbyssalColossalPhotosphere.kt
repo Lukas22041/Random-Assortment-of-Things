@@ -11,6 +11,7 @@ import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.DynamicRingBand
+import org.magiclib.kotlin.getDistance
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
@@ -31,12 +32,18 @@ class AbyssalColossalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
 
     var rotation = 0f
 
+    var visited = false
+
     override fun advance(amount: Float) {
         super.advance(amount)
 
         if (entity == null) return
         initSpritesIfNull()
         band1!!.advance(amount * 0.33f)
+
+        if (!visited &&  entity.getDistance(Global.getSector().playerFleet) <= radius/10f) {
+            visited = true
+        }
     }
 
     fun initSpritesIfNull()
@@ -90,7 +97,8 @@ class AbyssalColossalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         var posX = entity.location.x
         var posY = entity.location.y
 
-        if (!viewport!!.isNearViewport(entity.location, radius)) return
+        //if (!viewport!!.isNearViewport(entity.location, radius)) return
+        if (!viewport!!.isNearViewport(entity.location, radius/2)) return
 
         lightColor = color
 
@@ -134,6 +142,8 @@ class AbyssalColossalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         super.createMapTooltip(tooltip, expanded)
 
         tooltip!!.addPara("Colossal Photosphere", 0f, Misc.getTextColor(), color, "Colossal Photosphere")
-
+        if (!visited) {
+            tooltip.addPara("This photosphere has been discovered, but not yet visited.", 0f, Misc.getGrayColor(), Misc.getHighlightColor())
+        }
     }
 }

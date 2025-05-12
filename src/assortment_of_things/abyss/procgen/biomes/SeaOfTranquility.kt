@@ -21,6 +21,7 @@ import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
@@ -83,22 +84,15 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             majorLightsources.add(entity)
 
             //Have some photospheres with cleared terrain, some not.
-            if (Random().nextFloat() >= 0.5f) {
-                AbyssProcgenUtils.clearTerrainAround(terrain as BaseFogTerrain, entity, MathUtils.getRandomNumberInRange(250f, 600f))
+            if (Random().nextFloat() >= 0.4f) {
+                AbyssProcgenUtils.clearTerrainAround(terrain as BaseFogTerrain, entity, MathUtils.getRandomNumberInRange(250f, 800f))
             }
 
             entity.sensorProfile = 1f
-            /*entity.setDiscoverable(true)
-            entity.detectedRangeMod.modifyFlat("test", 5000f)*/
         }
+
         generateLightsourceOrbits()
         populateEntities()
-
-        /*var sensor = AbyssProcgenUtils.createSensorArray(system, this)
-        var sphere = majorLightsources.randomOrNull()
-        if (sphere != null) {
-            sensor.setCircularOrbitWithSpin(sphere, MathUtils.getRandomNumberInRange(0f, 360f), sphere.radius + sensor.radius + MathUtils.getRandomNumberInRange(100f, 250f), 90f, -10f, 10f)
-        }*/
 
 
     }
@@ -119,6 +113,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
     fun populateEntities() {
 
+        var wreckFaction = "rat_abyssals"
         var random = Random()
 
         //Spawn Orbital fleets around lightsources
@@ -135,7 +130,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         if (sensorOrbit != null) {
             sensorOrbit.setClaimedByMajor()
             var sensor = AbyssProcgenUtils.createSensorArray(system, this)
-            sensor.setCircularOrbitWithSpin(sensorOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), sensorOrbit.distance, sensorOrbit.orbitDays, -20f, 20f)
+            sensor.setCircularOrbit(sensorOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), sensorOrbit.distance, sensorOrbit.orbitDays)
         }
 
         //Research station can be either orbit or random loc
@@ -144,7 +139,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             var researchOrbit = pickOrbit(lightsourceOrbits.filter { !it.isClaimedByMajor() && it.index == 0 || it.index == 1 })
             if (researchOrbit != null) {
                 researchOrbit.setClaimedByMajor()
-                station.setCircularOrbitWithSpin(researchOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), researchOrbit.distance, researchOrbit.orbitDays, -20f, 20f)
+                station.setCircularOrbit(researchOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), researchOrbit.distance, researchOrbit.orbitDays)
             }
         } else {
             var pick = pickAndClaimCell()
@@ -160,39 +155,110 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             if (abyssXOOrbit != null) {
                 var drone = AbyssProcgenUtils.createAbyssalDrone(system, this)
                 drone.addTag("rat_abyssal_xo_entity")
-                drone.setCircularOrbitWithSpin(abyssXOOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), abyssXOOrbit.distance, abyssXOOrbit.orbitDays, -20f, 20f)
+                drone.setCircularOrbit(abyssXOOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), abyssXOOrbit.distance, abyssXOOrbit.orbitDays)
             }
         }
 
+        var orbitPicks = WeightedRandomPicker<String>(random)
+        orbitPicks.add("rat_abyss_fabrication",1f)
+        orbitPicks.add("rat_abyss_drone",3.5f)
+        orbitPicks.add("rat_abyss_transmitter",0.75f)
+        orbitPicks.add("wreck",0.5f)
 
         //Iterate over remaining orbits, randomly place things within them.
         for (orbit in ArrayList(lightsourceOrbits)) {
             if (random.nextFloat() > /*0.25f*/ 0.3f) {
                 lightsourceOrbits.remove(orbit)
 
+                var entityPick = orbitPicks.pick()
+                var entity: SectorEntityToken? = null
+
+                if (entityPick != "wreck") {
+                    entity = AbyssProcgenUtils.spawnEntity(system, this, entityPick)
+                } else {
+                    entity = AbyssProcgenUtils.createRandomDerelictAbyssalShip(system, wreckFaction)
+                }
+                entity.setCircularOrbit(orbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), orbit.distance, orbit.orbitDays)
             }
         }
 
         //Graveyard of hegemony and/or tritach ships
-        var graveyardCell = pickAndClaimAdjacentOrSmaller()
+        var graveyardCell = pickAndClaimCell()
         if (graveyardCell != null) {
 
+            var onslaught = AbyssProcgenUtils.createDerelictShip(system, "onslaught_Standard")
+            var loc = graveyardCell.getWorldCenterWithCircleOffset(AbyssBiomeManager.cellSize*0.25f)
+            onslaught.setLocation(loc.x, loc.y)
+
+            var variants = Global.getSettings().hullIdToVariantListMap.get("rat_morkoth")
+            var wreck = AbyssProcgenUtils.createDerelictAbyssalShip(system, variants!!.random())
+            loc = MathUtils.getRandomPointOnCircumference(loc, MathUtils.getRandomNumberInRange(100f, 200f))
+            wreck.location.set(loc.x, loc.y)
+
+            for (i in 0 until MathUtils.getRandomNumberInRange(6, 7)) {
+                //var loc = graveyardCell.getWorldCenterWithCircleOffset(AbyssBiomeManager.cellSize*0.9f)
+                var loc = graveyardCell.getWorldCenterWithCircleOffset(AbyssBiomeManager.cellSize*0.8f)
+                if (random.nextFloat() >= 0.5f) {
+                    wreck = AbyssProcgenUtils.createRandomDerelictShip(system, "hegemony", isNoLarges = true)
+                } else {
+                    wreck = AbyssProcgenUtils.createRandomDerelictAbyssalShip(system, isNoLarges = true)
+                }
+                wreck.setLocation(loc.x, loc.y)
+            }
         }
 
-        //Guarantee a Morkoth wreck somewhere
+
+       /* //Guarantee a Morkoth wreck somewhere //Now part of the graveyard
         var morkothCell = pickAndClaimCell()
         if (morkothCell != null) {
+            var loc = morkothCell.getRandomLocationInCell()
+            var variants = Global.getSettings().hullIdToVariantListMap.get("rat_morkoth")
+            var wreck = AbyssProcgenUtils.createDerelictAbyssalShip(system, variants!!.random())
+            wreck.location.set(loc.x, loc.y)
+        }*/
 
-        }
+        var unclaimedCellPicks = WeightedRandomPicker<String>(random)
+        unclaimedCellPicks.add("rat_abyss_fabrication",0.75f)
+        unclaimedCellPicks.add("rat_abyss_drone",0.5f)
+        unclaimedCellPicks.add("rat_abyss_transmitter",1f)
+        unclaimedCellPicks.add("wreck",1f)
 
         //Populate locations without anything major near them.
         //Fabricators, Transmitters, Droneships, Abyssal Wrecks
         var picks = MathUtils.getRandomNumberInRange(7, 10)
         for (i in 0 until picks) {
-            var pick = pickAndClaimCell() ?: continue
+            var pick = pickAndClaimCellIncludingBorder() ?: continue //Populate Border regions too
+            var loc = pick.getRandomLocationInCell()
+
+            var entityPick = unclaimedCellPicks.pick()
+
+            var entity: SectorEntityToken? = null
+
+            if (entityPick != "wreck") {
+                entity = AbyssProcgenUtils.spawnEntity(system, this, entityPick)
+            } else {
+                entity = AbyssProcgenUtils.createRandomDerelictAbyssalShip(system, wreckFaction)
+            }
+
+            entity.setLocation(loc.x, loc.y)
+
+            if (entityPick == "rat_abyss_fabrication") {
+                if (random.nextFloat() >= 0.5f) {
+                    spawnDefenseFleet(entity)
+                }
+                //AbyssProcgenUtils.addLightsourceWithBiomeColor(entity, this, 2500f, 15)
+            }
         }
 
     }
+
+
+
+
+
+
+
+
 
     fun spawnDefenseFleet(source: SectorEntityToken) : CampaignFleetAPI {
         var random = Random()

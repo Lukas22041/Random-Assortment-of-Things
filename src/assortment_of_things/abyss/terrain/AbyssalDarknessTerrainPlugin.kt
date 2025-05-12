@@ -247,7 +247,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             var plugin = sources.customPlugin as AbyssalLight
             var radius = plugin.radius * factor
             var color = plugin.lightColor
-            if (plugin.radius >= 50000) continue
+            if (plugin.radius >= 52000) continue
 
             var skipRendering = false
             var fadeIn = 1f

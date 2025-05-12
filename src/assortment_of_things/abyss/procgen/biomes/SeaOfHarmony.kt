@@ -61,19 +61,33 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
         var photosphereNum = MathUtils.getRandomNumberInRange(8, 8)
 
+        //Spawn an even larger colossal first.
+        var first = true
         for (i in 0 until photosphereNum) {
 
             //Claim all cells around a larger pattern
-            var cell: BiomeCellData? = pickAndClaimAroundNoOtherBiome(3) ?: break
+            var cell: BiomeCellData? = null
+
+            if (first) {
+                cell = pickAndClaimDeep() ?: break
+                cell!!.getAround(3).forEach {
+                    it.claimed = true
+                }
+            } else {
+                cell = pickAndClaimAroundNoOtherBiome(3) ?: break
+            }
 
             var loc = cell!!.getWorldCenter().plus(MathUtils.getRandomPointInCircle(Vector2f(), AbyssBiomeManager.cellSize * 0.5f))
 
             var entity = system!!.addCustomEntity("rat_abyss_colossal_photosphere_${Misc.genUID()}", "Colossal Photosphere", "rat_abyss_colossal_photosphere", Factions.NEUTRAL)
             entity.setLocation(loc.x, loc.y)
             entity.radius = 600f
+            if (first) entity.radius += 400f
 
             var plugin = entity.customPlugin as AbyssalLight
-            plugin.radius = MathUtils.getRandomNumberInRange(entity.radius + 42500f, entity.radius + 45000f)
+            var lightRadius = MathUtils.getRandomNumberInRange(entity.radius + 42500f, entity.radius + 45000f)
+            if (first) lightRadius += 4000f
+            plugin.radius = lightRadius
 
             majorLightsources.add(entity)
 
@@ -83,6 +97,12 @@ class SeaOfHarmony() : BaseAbyssBiome() {
             entity.sensorProfile = 1f
             /*entity.setDiscoverable(true)
             entity.detectedRangeMod.modifyFlat("test", 5000f)*/
+
+            if (first) {
+                entity.addTag("rat_supersized_colossal")
+            }
+
+            first = false
         }
 
         var sensor = AbyssProcgenUtils.createSensorArray(system!!, this)

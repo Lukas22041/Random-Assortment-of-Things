@@ -246,6 +246,10 @@ abstract class BaseAbyssBiome {
         return cells.filter { !it.claimed && it.depth != BiomeDepth.BORDER } //Major things should not spawn in border cells
     }
 
+    fun getUnclaimedCellsIncludingBorder() : List<BiomeCellData> {
+        return cells.filter { !it.claimed } //Major things should not spawn in border cells
+    }
+
     /*fun getUnclaimedAdjacent() : List<BiomeCellData> {
         var list = ArrayList<BiomeCellData>()
         for (cell in cells) {
@@ -278,6 +282,12 @@ abstract class BaseAbyssBiome {
 
     fun pickAndClaimCell() : BiomeCellData? {
         var pick = getUnclaimedCells().randomOrNull()
+        pick?.claimed = true
+        return pick
+    }
+
+    fun pickAndClaimCellIncludingBorder() : BiomeCellData? {
+        var pick = getUnclaimedCellsIncludingBorder().randomOrNull()
         pick?.claimed = true
         return pick
     }

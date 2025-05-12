@@ -12,6 +12,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.FlickerUtilV2
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.DynamicRingBand
+import org.magiclib.kotlin.getDistance
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
@@ -35,6 +36,8 @@ class AbyssalDecayingPhotosphere() : BaseCustomEntityPlugin(), AbyssalLight {
     var flicker1 = FlickerUtilV2(0.15f)
     var flicker2 = FlickerUtilV2(0.33f)
 
+    var visited = false
+
     override fun advance(amount: Float) {
         super.advance(amount)
 
@@ -43,6 +46,10 @@ class AbyssalDecayingPhotosphere() : BaseCustomEntityPlugin(), AbyssalLight {
         band1!!.advance(amount)
         flicker1.advance(amount * 0.15f)
         flicker2.advance(amount * 0.33f)
+
+        if (!visited &&  entity.getDistance(Global.getSector().playerFleet) <= radius/7.5) {
+            visited = true
+        }
     }
 
     fun initSpritesIfNull()
@@ -96,9 +103,8 @@ class AbyssalDecayingPhotosphere() : BaseCustomEntityPlugin(), AbyssalLight {
         var posX = entity.location.x
         var posY = entity.location.y
 
-
-
-        if (!viewport!!.isNearViewport(entity.location, radius)) return
+        //if (!viewport!!.isNearViewport(entity.location, radius)) return
+        if (!viewport!!.isNearViewport(entity.location, radius/2)) return
 
         if (layer == CampaignEngineLayers.TERRAIN_7A)
         {
@@ -143,6 +149,8 @@ class AbyssalDecayingPhotosphere() : BaseCustomEntityPlugin(), AbyssalLight {
         super.createMapTooltip(tooltip, expanded)
 
         tooltip!!.addPara("Decaying Photosphere", 0f, Misc.getTextColor(), Color(150, 140, 140), "Decaying Photosphere")
-
+        if (!visited) {
+            tooltip.addPara("This photosphere has been discovered, but not yet visited.", 0f, Misc.getGrayColor(), Misc.getHighlightColor())
+        }
     }
 }

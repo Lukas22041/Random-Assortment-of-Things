@@ -407,7 +407,7 @@
 		"scaleIconWithZoom":true,
 		"detectionRange":3500,
 		"discoverable":true,
-		"tags":["has_interaction_dialog", "neutrino", "major"],
+		"tags":["has_interaction_dialog", "neutrino", "major", "rat_abyss_biome_wreck_visual"],
 		"layers":[TERRAIN_7A], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 	},
 	
@@ -434,7 +434,7 @@
 		"detectionRange":4000,
 		"discoveryXP":5000,
 		"discoverable":true,
-		"tags":["has_interaction_dialog", "neutrino", "major"],
+		"tags":["has_interaction_dialog", "neutrino", "major", "rat_abyss_biome_wreck_visual"],
 		"layers":[TERRAIN_7A], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 	},
 	
@@ -461,7 +461,7 @@
 		"detectionRange":3500,
 		"discoveryXP":1000,
 		"discoverable":true,
-		"tags":["has_interaction_dialog", "neutrino", "major"],
+		"tags":["has_interaction_dialog", "neutrino", "major", "rat_abyss_biome_wreck_visual"],
 		"layers":[TERRAIN_7A], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 	},
 	
@@ -488,7 +488,7 @@
 		"detectionRange":2000,
 		"discoveryXP":500,
 		"discoverable":true,
-		"tags":["has_interaction_dialog", "neutrino"],
+		"tags":["has_interaction_dialog", "neutrino", "rat_abyss_biome_wreck_visual"],
 		"layers":[TERRAIN_7A], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 	},
 	
@@ -509,7 +509,7 @@
 		"scaleIconWithZoom":true,
 		"customDescriptionId":"rat_abyss_transmitter",
 		"interactionImage":"graphics/illustrations/rat_abyss_entity.jpg",
-		"tags":["has_interaction_dialog", "neutrino_high"],
+		"tags":["has_interaction_dialog", "neutrino_high", "rat_abyss_biome_wreck_visual"],
 		"layers":[TERRAIN_7A], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 		"pluginClass":"assortment_of_things.abyss.entities.procgen.AbyssTransmitter",
 	},

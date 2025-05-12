@@ -13,6 +13,7 @@ import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.DynamicRingBand
 import org.lazywizard.lazylib.MathUtils
+import org.magiclib.kotlin.getDistance
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
@@ -34,6 +35,8 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
 
     var rotationSpeed = MathUtils.getRandomNumberInRange(0.015f, 0.020f)
 
+    var visited = false
+
     override fun advance(amount: Float) {
         super.advance(amount)
 
@@ -54,6 +57,10 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
         radius = baseRadius + extra
 
         entity.facing += rotationSpeed
+
+        if (!visited &&  entity.getDistance(Global.getSector().playerFleet) <= (baseRadius+extraRadius)/8f) {
+            visited = true
+        }
     }
 
     fun easeInOutSine(x: Float): Float {
@@ -88,6 +95,8 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
         initSpritesIfNull()
 
         lightColor = color
+
+        if (!viewport!!.isNearViewport(entity.location, radius/2)) return
 
         if (layer == CampaignEngineLayers.ABOVE)
         {
@@ -125,6 +134,8 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
         super.createMapTooltip(tooltip, expanded)
 
         tooltip!!.addPara("Abyssal Beacon", 0f, Misc.getTextColor(), color, "Abyssal Beacon")
-
+        if (!visited) {
+            tooltip.addPara("This beacon has been discovered, but not yet visited.", 0f, Misc.getGrayColor(), Misc.getHighlightColor())
+        }
     }
 }
