@@ -128,7 +128,7 @@ abstract class BaseAbyssBiome {
         }
     }
 
-    fun generateLightsourceOrbits() {
+    open fun generateLightsourceOrbits() {
         for (lightsource in majorLightsources) {
             var orbit = MathUtils.getRandomNumberInRange(50f, 100f)
             var days = 50f
@@ -136,7 +136,7 @@ abstract class BaseAbyssBiome {
             var depth = cell.intDepth
             for (i in 0 until 3) {
                 orbit += MathUtils.getRandomNumberInRange(200f, 350f)
-                days += 35f
+                days += MathUtils.getRandomNumberInRange(32.5f, 35f)
                 lightsourceOrbits.add(LightsourceOrbit(this, lightsource, orbit, days, depth, i))
             }
         }

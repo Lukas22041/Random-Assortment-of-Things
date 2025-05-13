@@ -8,6 +8,7 @@ import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -24,6 +25,7 @@ import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
+import kotlin.math.min
 
 object AbyssProcgenUtils {
 
@@ -42,7 +44,41 @@ object AbyssProcgenUtils {
         override fun advance(amount: Float) {
             entity.facing += speed * amount
         }
+    }
 
+    //Fleets base their defense range to the target based on the targets radius,
+    //So using invisible tokens allows changing that distance dynamicly.
+    class DynamicPatrolTokenScript(var token: CustomCampaignEntityAPI, var minDistance: Float, var maxDistance: Float, var minDays: Float, var maxDays: Float) : EveryFrameScript {
+
+        var daysTilReset = MathUtils.getRandomNumberInRange(minDays, maxDays)
+        var clock = Global.getSector().clock
+
+        override fun isDone(): Boolean {
+            return false
+        }
+
+        override fun runWhilePaused(): Boolean {
+            return false
+        }
+
+
+        override fun advance(amount: Float) {
+            daysTilReset -= clock.convertToDays(amount)
+            if (daysTilReset <= 0) {
+                daysTilReset = MathUtils.getRandomNumberInRange(minDays, maxDays)
+                token.radius = MathUtils.getRandomNumberInRange(minDistance, maxDistance)
+            }
+        }
+    }
+
+    fun createPatrolToken(target: SectorEntityToken, system: StarSystemAPI, biome: BaseAbyssBiome, minDistance: Float, maxDistance: Float, minDays: Float, maxDays: Float) : CustomCampaignEntityAPI {
+        var token = system.addCustomEntity("rat_abyss_token${Misc.genUID()}", "", "rat_abyss_token", Factions.NEUTRAL)
+        token.setCircularOrbit(target, 0.1f, 0.1f, 999f)
+        token.radius = MathUtils.getRandomNumberInRange(minDistance, maxDistance)
+
+        token.addScript(DynamicPatrolTokenScript(token, minDistance, maxDistance, minDays, maxDays))
+
+        return token
     }
 
     fun spawnEntity(system: StarSystemAPI, biome: BaseAbyssBiome, type: String) : SectorEntityToken {

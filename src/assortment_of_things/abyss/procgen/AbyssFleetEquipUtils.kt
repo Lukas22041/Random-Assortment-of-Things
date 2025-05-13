@@ -86,11 +86,11 @@ object AbyssFleetEquipUtils {
 
     }
 
-    fun addAICores(fleet: CampaignFleetAPI, extraChance: Float, depthLevel: Float)
+    fun addAICores(fleet: CampaignFleetAPI, extraChance: Float)
     {
         var random = Random()
 
-        var corePercentage = 0.3f + (0.1f * depthLevel)
+        var corePercentage = 0.4f
         corePercentage += extraChance
 
         var members = fleet.fleetData.membersListCopy.filter { it.captain == null || !it.captain.isAICore }

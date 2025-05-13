@@ -158,7 +158,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
         }
 
         var orbitPicks = WeightedRandomPicker<String>(random)
-        orbitPicks.add("rat_abyss_fabrication",1f)
+        orbitPicks.add("rat_abyss_accumalator",1f)
         orbitPicks.add("rat_abyss_drone",3.5f)
         orbitPicks.add("rat_abyss_transmitter",0.75f)
         orbitPicks.add("wreck",0.5f)
@@ -181,7 +181,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
         }
 
         var unclaimedCellPicks = WeightedRandomPicker<String>(random)
-        unclaimedCellPicks.add("rat_abyss_fabrication",0.75f)
+        unclaimedCellPicks.add("rat_abyss_accumalator",0.75f)
         unclaimedCellPicks.add("rat_abyss_drone",0.5f)
         unclaimedCellPicks.add("rat_abyss_transmitter",1f)
         unclaimedCellPicks.add("wreck",1f)
@@ -205,7 +205,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
 
             entity.setLocation(loc.x, loc.y)
 
-            if (entityPick == "rat_abyss_fabrication") {
+            if (entityPick == "rat_abyss_accumalator") {
                 if (random.nextFloat() >= 0.5f) {
                     spawnDefenseFleet(entity)
                 }
@@ -231,9 +231,9 @@ class SeaOfSolitude() : BaseAbyssBiome() {
         var depthLevel = getDepthLevel(depth)
 
         var basePoints = MathUtils.getRandomNumberInRange(AbyssFleetStrengthData.SOLITUDE_MIN_BASE_FP, AbyssFleetStrengthData.SOLITUDE_MAX_BASE_FP)
-        var scaledPoints = MathUtils.getRandomNumberInRange(AbyssFleetStrengthData.SOLITUDE_MIN_SCALED_FP, AbyssFleetStrengthData.SOLITUDE_MAX_SCALED_FP) * depthLevel
+        //var scaledPoints = MathUtils.getRandomNumberInRange(AbyssFleetStrengthData.SOLITUDE_MIN_SCALED_FP, AbyssFleetStrengthData.SOLITUDE_MAX_SCALED_FP) * depthLevel
 
-        var points = (basePoints + scaledPoints) * fpMult
+        var points = (basePoints /*+ scaledPoints*/) * fpMult
 
         var factionAPI = Global.getSector().getFaction(factionID)
 
@@ -257,7 +257,8 @@ class SeaOfSolitude() : BaseAbyssBiome() {
         params.maxShipSize = 3
         var doctrine = Global.getSector().getFaction(factionID).doctrine.clone()
         doctrine.shipSize = 3
-        doctrine.numShips = 4
+        //if (random.nextFloat() >= 0.5f) doctrine.shipSize = 2
+        doctrine.numShips = 5
         params.doctrineOverride = doctrine
 
         val fleet = FleetFactoryV3.createFleet(params)
@@ -272,7 +273,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
         AbyssUtils.initAbyssalFleetBehaviour(fleet, random)
 
         //Stronger cores on border
-        AbyssFleetEquipUtils.addAICores(fleet, AbyssFleetStrengthData.SOLITUDE_AI_CORE_CHANCE, depthLevel)
+        AbyssFleetEquipUtils.addAICores(fleet, AbyssFleetStrengthData.SOLITUDE_AI_CORE_CHANCE)
 
         var alterationChancePerShip = AbyssFleetStrengthData.SOLITUDE_ALTERATION_CHANCE + (0.05f * depth)
         AbyssFleetEquipUtils.addAlterationsToFleet(fleet, alterationChancePerShip, random)

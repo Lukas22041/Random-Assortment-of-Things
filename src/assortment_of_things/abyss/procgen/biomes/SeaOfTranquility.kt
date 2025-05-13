@@ -332,7 +332,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         AbyssUtils.initAbyssalFleetBehaviour(fleet, random)
 
         //Stronger cores on border
-        AbyssFleetEquipUtils.addAICores(fleet, AbyssFleetStrengthData.TRANQUILITY_AI_CORE_CHANCE, invertedlevel)
+        AbyssFleetEquipUtils.addAICores(fleet, AbyssFleetStrengthData.TRANQUILITY_AI_CORE_CHANCE)
 
         var alterationChancePerShip = AbyssFleetStrengthData.TRANQUILITY_ALTERATION_CHANCE + (0.05f * invertedlevel)
         AbyssFleetEquipUtils.addAlterationsToFleet(fleet, alterationChancePerShip, random)
