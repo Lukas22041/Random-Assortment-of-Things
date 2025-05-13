@@ -126,11 +126,26 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             }
         }
 
-        var sensorOrbit = pickOrbitByDepth(lightsourceOrbits.filter { !it.isClaimedByMajor() && it.index == 0 })
+        /*var sensorOrbit = pickOrbitByDepth(lightsourceOrbits.filter { !it.isClaimedByMajor() && it.index == 0 })
         if (sensorOrbit != null) {
             sensorOrbit.setClaimedByMajor()
             var sensor = AbyssProcgenUtils.createSensorArray(system, this)
             sensor.setCircularOrbit(sensorOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), sensorOrbit.distance, sensorOrbit.orbitDays)
+        }*/
+
+        var sensor = AbyssProcgenUtils.createSensorArray(system, this)
+        if (random.nextFloat() >= 0.5f) {
+            var researchOrbit = pickOrbit(lightsourceOrbits.filter { !it.isClaimedByMajor() && it.index == 0 })
+            if (researchOrbit != null) {
+                researchOrbit.setClaimedByMajor()
+                sensor.setCircularOrbit(researchOrbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), researchOrbit.distance, researchOrbit.orbitDays)
+            }
+        } else {
+            var pick = pickAndClaimCell()
+            if (pick != null) {
+                var loc = pick.getRandomLocationInCell()
+                sensor.setLocation(loc.x, loc.y)
+            }
         }
 
         //Research station can be either orbit or random loc
@@ -176,7 +191,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
                 if (entityPick != "wreck") {
                     entity = AbyssProcgenUtils.spawnEntity(system, this, entityPick)
                 } else {
-                    entity = AbyssProcgenUtils.createRandomDerelictAbyssalShip(system, wreckFaction)
+                    entity = AbyssProcgenUtils.createRandomDerelictAbyssalShip(system, wreckFaction, isNoLarges = true)
                 }
                 entity.setCircularOrbit(orbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), orbit.distance, orbit.orbitDays)
             }
@@ -237,7 +252,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             if (entityPick != "wreck") {
                 entity = AbyssProcgenUtils.spawnEntity(system, this, entityPick)
             } else {
-                entity = AbyssProcgenUtils.createRandomDerelictAbyssalShip(system, wreckFaction)
+                entity = AbyssProcgenUtils.createRandomDerelictAbyssalShip(system, wreckFaction, isNoLarges = true)
             }
 
             entity.setLocation(loc.x, loc.y)
@@ -260,7 +275,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
 
 
-    fun spawnDefenseFleet(source: SectorEntityToken) : CampaignFleetAPI {
+    fun spawnDefenseFleet(source: SectorEntityToken, fpMult: Float = 1f) : CampaignFleetAPI {
         var random = Random()
         var factionID = "rat_abyssals"
         var fleetType = FleetTypes.PATROL_MEDIUM
@@ -273,11 +288,11 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         var invertedlevel = 1-depthLevel
 
 
-        var basePoints = MathUtils.getRandomNumberInRange(AbyssFleetFPData.TRANQUILITY_MIN_BASE_FP, AbyssFleetFPData.TRANQUILITY_MAX_BASE_FP)
+        var basePoints = MathUtils.getRandomNumberInRange(AbyssFleetStrengthData.TRANQUILITY_MIN_BASE_FP, AbyssFleetStrengthData.TRANQUILITY_MAX_BASE_FP)
         //For Tranquility, it should actually get harder further for the center, unlike other biomes.
-        var scaledPoints = MathUtils.getRandomNumberInRange(AbyssFleetFPData.TRANQUILITY_MIN_SCALED_FP, AbyssFleetFPData.TRANQUILITY_MAX_SCALED_FP) * invertedlevel
+        var scaledPoints = MathUtils.getRandomNumberInRange(AbyssFleetStrengthData.TRANQUILITY_MIN_SCALED_FP, AbyssFleetStrengthData.TRANQUILITY_MAX_SCALED_FP) * invertedlevel
 
-        var points = basePoints + scaledPoints
+        var points = (basePoints + scaledPoints) * fpMult
 
         var factionAPI = Global.getSector().getFaction(factionID)
 
@@ -314,14 +329,14 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         AbyssUtils.initAbyssalFleetBehaviour(fleet, random)
 
         //Stronger cores on border
-        AbyssFleetEquipUtils.addAICores(fleet, 0f, invertedlevel)
+        AbyssFleetEquipUtils.addAICores(fleet, AbyssFleetStrengthData.TRANQUILITY_AI_CORE_CHANCE, invertedlevel)
 
-        var alterationChancePerShip = 0.15f + (0.05f * invertedlevel)
+        var alterationChancePerShip = AbyssFleetStrengthData.TRANQUILITY_ALTERATION_CHANCE + (0.05f * invertedlevel)
         AbyssFleetEquipUtils.addAlterationsToFleet(fleet, alterationChancePerShip, random)
 
-        var zeroSmodWeight = 2f
-        var oneSmodWeight = 1f + (0.5f*invertedlevel)
-        var twoSmodWeight = 0f
+        var zeroSmodWeight = AbyssFleetStrengthData.TRANQUILITY_ZERO_SMODS_WEIGHT
+        var oneSmodWeight = AbyssFleetStrengthData.TRANQUILITY_ONE_SMODS_WEIGHT + (0.5f*invertedlevel)
+        var twoSmodWeight = AbyssFleetStrengthData.TRANQUILITY_TWO_SMODS_WEIGHT
         AbyssFleetEquipUtils.inflate(fleet, zeroSmodWeight, oneSmodWeight, twoSmodWeight)
 
         fleet.addEventListener(SimUnlockerListener("rat_abyssals_sim"))

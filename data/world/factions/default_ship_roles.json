@@ -31,8 +31,8 @@
 		"rat_chuul_Support":0.5,
 		"rat_chuul_Override":0.25,
 		
-		"rat_raguel_Attack":5,
-		"rat_raguel_Strike":5,
+		"rat_raguel_Attack":4,
+		"rat_raguel_Strike":4,
 		
 		#Exo
 
@@ -43,8 +43,11 @@
 		"rat_chuul_Support":2,
 		"rat_chuul_Override":0.5,
 		
-		"rat_sariel_Attack":8,
-		"rat_sariel_Strike":8,
+		"rat_raguel_Attack":0.5,
+		"rat_raguel_Strike":0.5,
+		
+		"rat_sariel_Attack":2.5,
+		"rat_sariel_Strike":2.5,
 		
 		#Exo
 		"rat_tylos_Standard":5,
@@ -66,8 +69,11 @@
 		"rat_aboleth_m_Overdriven":0.5,
 		"rat_aboleth_m_Support":0.5,
 		
-		"rat_gabriel_Attack":0.3,
-		"rat_gabriel_Burst":0.3,
+		"rat_sariel_Attack":1.5,
+		"rat_sariel_Strike":1.5,
+		
+		"rat_gabriel_Attack":1,
+		"rat_gabriel_Burst":1,
 		
 		
 		#Exo
@@ -80,6 +86,9 @@
 		"rat_morkoth_Attack":6,
 		"rat_morkoth_Anchor":4,
 		"rat_morkoth_Support":2,
+		
+		"rat_gabriel_Attack":0.5,
+		"rat_gabriel_Burst":0.5,
 		
 		#"rat_genesis_Standard":0.00000000001,
 	},

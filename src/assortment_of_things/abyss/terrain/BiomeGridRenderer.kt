@@ -29,7 +29,7 @@ class BiomeGridRenderer : BaseTerrain() {
         var manager = data.biomeManager
         var cells = manager.getCells()
 
-        var playerCell = manager.getPlayerCell()
+        //var playerCell = manager.getPlayerCell()
         //var surrounding = playerCell.getAround(3)
 
 
@@ -60,7 +60,7 @@ class BiomeGridRenderer : BaseTerrain() {
                 color = Misc.getHighlightColor()
             }*/
             //if (cell.isStartingPoint) color = Misc.getPositiveHighlightColor()
-            if (cell == playerCell) color = Misc.getBasePlayerColor()
+            //if (cell == playerCell) color = Misc.getBasePlayerColor()
 
 
 

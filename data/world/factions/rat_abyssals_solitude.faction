@@ -1,20 +1,20 @@
 {
-	id:"rat_abyssals_deep_seraph",
-	"displayName":"Seraphim",
-	"displayNameWithArticle":"the seraphim",
+	id:"rat_abyssals_solitude",
+	"displayName":"Abyssal",
+	"displayNameWithArticle":"the abyssals",
 	"displayNameLong":"Abyssal",
-	"displayNameLongWithArticle":"the Seraphim",
-	"entityNamePrefix":"Seraphim",
-	"personNamePrefix":"Seraphim",
+	"displayNameLongWithArticle":"the Abyssals",
+	"entityNamePrefix":"Abyssal",
+	"personNamePrefix":"Abyssal",
 	"personNamePrefixAOrAn":"an",
 	"displayNameIsOrAre":"are",
 	
 	"logo":"graphics/factions/rat_abyssals.png",
-	"crest":"graphics/factions/crest_rat_seraphim.png",
+	"crest":"graphics/factions/crest_rat_abyssals.png",
 	"shipNamePrefix":"ABS",
 	
-	"color":[196, 20, 35,255],
-	"baseUIColor":[196, 20, 35,255],
+	"color":[255, 0, 100,255],
+	"baseUIColor":[255, 0, 100,255],
 	#"color":[100,100,100,255],
 	#"baseUIColor":[155,155,155,255],
 	
@@ -42,12 +42,12 @@
 	},
 	# ships the faction gets access to when importing S&W out-of-faction
 	"shipsWhenImporting":{
-		"tags":["rat_seraph"],
+		"tags":["rat_abyssals", "rat_seraph"],
 		"hulls":[
 		],
 	},
 	"knownShips":{
-		"tags":["rat_seraph"],
+		"tags":["rat_abyssals", "rat_seraph"],
 		"hulls":[
 		],
 	},
@@ -58,7 +58,7 @@
 		],
 	},
 	"knownFighters":{
-		"tags":["rat_abyssals"],
+		"tags":["rat_abyssals", "rat_seraph"],
 		"fighters":[
 		],
 	},
@@ -68,7 +68,7 @@
 		],
 	},
 	"knownWeapons":{
-		"tags":["base_bp", "lowtech_bp", "midline_bp", "hightech_bp", "missile_bp", "rat_abyssals"],
+		"tags":["base_bp", "lowtech_bp", "midline_bp", "hightech_bp", "missile_bp", "rat_abyssals", "rat_seraph"],
 		"weapons":[
 			"lightneedler",
 			"railgun",
@@ -189,14 +189,16 @@
 		},
 	},
 	"custom":{
+		"rat_abyss_faction":true,
 		"engageWhenEvenStrength":true,
 		"allowsTransponderOffTrade":true, # to prevent cargoscan dialog from "patrols"
 		"postsNoBounties":true,
 		"fightToTheLast":true, # order a full assault instead of retreating, in most cases
 	},	
+	
 	"fleetTypeNames":{
 		"patrolSmall":"Lookout",
-		"patrolMedium":"Vanguard",
+		"patrolMedium":"Defenders",
 		"patrolLarge":"Eradicators",
 		"battlestation":"Nexus",
 	},

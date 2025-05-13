@@ -118,7 +118,7 @@ class GenesisInteraction : RATInteractionPlugin() {
             tooltip.setParaFont(Fonts.ORBITRON_12)
             tooltip.addPara("(Hover over the icon for a detailed description)", 0f, Misc.getGrayColor(), Misc.getGrayColor())
             var fake = Global.getFactory().createPerson()
-            fake.setFaction("rat_abyssals_deep")
+            fake.setFaction("rat_abyssals_primordials")
             fake.stats.setSkillLevel(skillSpec.id, 1f)
             tooltip.addSkillPanel(fake, 0f)
 

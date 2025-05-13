@@ -90,7 +90,7 @@ object AbyssFleetEquipUtils {
     {
         var random = Random()
 
-        var corePercentage = 0.3f + (0.2f * depthLevel)
+        var corePercentage = 0.3f + (0.1f * depthLevel)
         corePercentage += extraChance
 
         var members = fleet.fleetData.membersListCopy.filter { it.captain == null || !it.captain.isAICore }

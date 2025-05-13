@@ -1,20 +1,20 @@
 {
-	id:"rat_abyssals_primordials",
-	"displayName":"Primordial",
-	"displayNameWithArticle":"the primordials",
-	"displayNameLong":"Primordial",
-	"displayNameLongWithArticle":"the Primordials",
-	"entityNamePrefix":"Primordial",
-	"personNamePrefix":"Primordial",
+	id:"rat_abyssals_harmony",
+	"displayName":"Abyssal",
+	"displayNameWithArticle":"the abyssals",
+	"displayNameLong":"Abyssal",
+	"displayNameLongWithArticle":"the Abyssals",
+	"entityNamePrefix":"Abyssal",
+	"personNamePrefix":"Abyssal",
 	"personNamePrefixAOrAn":"an",
 	"displayNameIsOrAre":"are",
 	
-	"logo":"graphics/factions/rat_primordials.png",
-	"crest":"graphics/factions/rat_primordials_crest.png",
+	"logo":"graphics/factions/rat_abyssals.png",
+	"crest":"graphics/factions/crest_rat_abyssals.png",
 	"shipNamePrefix":"ABS",
 	
-	"color":[140, 0, 250,255],
-	"baseUIColor":[140, 0, 250,255],
+	"color":[255, 64, 50,255],
+	"baseUIColor":[255, 64, 50,255],
 	#"color":[100,100,100,255],
 	#"baseUIColor":[155,155,155,255],
 	
@@ -42,17 +42,13 @@
 	},
 	# ships the faction gets access to when importing S&W out-of-faction
 	"shipsWhenImporting":{
-		"tags":[],
+		"tags":["rat_abyssals"],
 		"hulls":[
-			"rat_genesis",
-			"rat_genesis_serpent_head",
 		],
 	},
 	"knownShips":{
-		"tags":[],
+		"tags":["rat_abyssals"],
 		"hulls":[
-			"rat_genesis",
-			"rat_genesis_serpent_head",
 		],
 	},
 	# listing ships here will make the faction mostly use them even if other hulls become available
@@ -169,9 +165,9 @@
 	"illegalCommodities":[
 	],
 	"music":{
-		"encounter_neutral":"rat_abyss_interaction2",
-		"encounter_hostile":"rat_abyss_interaction2",
-		"encounter_friendly":"rat_abyss_interaction2",
+		"encounter_neutral":"rat_abyss_encounter",
+		"encounter_hostile":"rat_abyss_encounter",
+		"encounter_friendly":"rat_abyss_encounter",
 	},	
 	#"internalComms":"hegemony_internal",
 	"portraits":{
@@ -199,6 +195,7 @@
 		"postsNoBounties":true,
 		"fightToTheLast":true, # order a full assault instead of retreating, in most cases
 	},	
+	
 	"fleetTypeNames":{
 		"patrolSmall":"Lookout",
 		"patrolMedium":"Defenders",
