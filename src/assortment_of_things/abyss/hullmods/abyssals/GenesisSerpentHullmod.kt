@@ -251,10 +251,10 @@ class GenesisSerpentHullmod : BaseHullMod() {
         private val parentInterval = IntervalTracker(.15f, .25f)
         private val repulseInterval = IntervalTracker(.1f, .1f)
 
-        val NUMBER_OF_SEGMENTS = 4
+        val NUMBER_OF_SEGMENTS = 6
         var RANGE = 60f // Flexibility constant. Range of movement of each segment.
         var REALIGNMENT_CONSTANT = 100f // Elasticity constant. How quickly the body unfurls after being curled up.
-        private val SEGMENT_NAMES = arrayOf("SEGMENT1", "SEGMENT2", "SEGMENT3", "SEGMENT4")
+        private val SEGMENT_NAMES = arrayOf("SEGMENT1", "SEGMENT2", "SEGMENT3", "SEGMENT4", "SEGMENT5", "SEGMENT6")
 
         //NOTE! Careful trying to optimize this code, things can easily stop working
 
