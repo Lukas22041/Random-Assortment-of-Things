@@ -6,10 +6,10 @@ import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
+import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
-import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -21,7 +21,6 @@ import org.lazywizard.lazylib.VectorUtils
 import org.lazywizard.lazylib.combat.CombatUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
-import java.awt.Color
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -253,10 +252,11 @@ class GenesisSerpentHullmod : BaseHullMod() {
 
         val NUMBER_OF_SEGMENTS = 6
         var RANGE = 60f // Flexibility constant. Range of movement of each segment.
-        var REALIGNMENT_CONSTANT = 100f // Elasticity constant. How quickly the body unfurls after being curled up.
+        var REALIGNMENT_CONSTANT = 200f // Elasticity constant. How quickly the body unfurls after being curled up.
         private val SEGMENT_NAMES = arrayOf("SEGMENT1", "SEGMENT2", "SEGMENT3", "SEGMENT4", "SEGMENT5", "SEGMENT6")
 
         //NOTE! Careful trying to optimize this code, things can easily stop working
+
 
         override fun advance(amount: Float) {
 
@@ -277,7 +277,26 @@ class GenesisSerpentHullmod : BaseHullMod() {
                 }
             }
 
+            //Try making it keep moving around other ships
+            if (ship.aiFlags.hasFlag(AIFlags.PREFER_LEFT_BROADSIDE) || ship.aiFlags.hasFlag(AIFlags.PREFER_RIGHT_BROADSIDE)) {
 
+                var enableAcceleration = true
+                var target = ship.aiFlags.getCustom(AIFlags.MANEUVER_TARGET)
+                if (target is ShipAPI) {
+                    var angle = Misc.getAngleInDegrees(ship.location, target.location)
+                    angle -= ship.facing //0 If directly looking at target
+
+                    if (angle in -35f..35f) {
+                        enableAcceleration = false
+                    }
+                }
+
+                println(enableAcceleration)
+                if (enableAcceleration) {
+                    ship.giveCommand(ShipCommand.ACCELERATE, null, 0)
+                }
+
+            }
 
             ship.hitpoints = hitpoints
             for (child in children) {

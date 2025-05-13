@@ -33,9 +33,9 @@ class GenesisConstructHullmod : BaseHullMod() {
 
         stats!!.weaponTurnRateBonus.modifyMult(id, 1.5f)
 
-        stats!!.energyWeaponDamageMult.modifyMult(id, 1.2f)
-        stats.energyRoFMult.modifyMult(id, 1.2f)
-        stats!!.energyWeaponFluxCostMod.modifyMult(id, 0.8f)
+        stats!!.energyWeaponDamageMult.modifyMult(id, 1.15f)
+        stats.energyRoFMult.modifyMult(id, 1.15f)
+        stats!!.energyWeaponFluxCostMod.modifyMult(id, 0.85f)
 
         stats!!.energyWeaponRangeBonus.modifyFlat(id, 200f)
 
@@ -68,12 +68,12 @@ class GenesisConstructHullmod : BaseHullMod() {
 
         tooltip!!.addSpacer(5f)
         tooltip.addPara("" +
-                "Energy weapons operate at 20%% increased damage, fire rate, and lower flux cost. They also have an increased base range of 200 units." +
+                "Energy weapons operate at 15%% increased damage, fire rate, and lower flux cost. They also have an increased base range of 200 units." +
                 "\n\n" +
                 "The ships distorted grid takes 50%% less emp damage and has full immunity against abyssal storms and similar hazards." +
                 "",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "\"Primordial Sea\"","Energy weapons", "20%", "200", "2", "4", "6", "50%", "abyssal storms")
+            "\"Primordial Sea\"","Energy weapons", "15%", "200", "2", "4", "6", "50%", "abyssal storms")
 
 
 
