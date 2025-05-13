@@ -6,7 +6,10 @@ import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import assortment_of_things.misc.addPara
+import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
 import com.fs.starfarer.api.impl.campaign.ghosts.BaseSensorGhost
@@ -75,6 +78,10 @@ class EtherealShores() : BaseAbyssBiome() {
         return false
     }
 
+    override fun isMainBiome(): Boolean {
+        return false
+    }
+
     //Place the biome between two other biomes
     override fun preDepthScan() {
         var manager = AbyssUtils.getBiomeManager()
@@ -107,6 +114,11 @@ class EtherealShores() : BaseAbyssBiome() {
 
     override fun getBackgroundColor(): Color {
         return super.getBackgroundColor().darker()
+    }
+
+    override fun spawnDefenseFleet(source: SectorEntityToken, fpMult: Float): CampaignFleetAPI {
+        var fleet = Global.getFactory().createEmptyFleet("rat_abyssals", "",false)
+        return fleet
     }
 
     /** Called after all cells are generated */

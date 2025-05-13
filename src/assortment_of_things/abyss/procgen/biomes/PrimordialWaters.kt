@@ -7,6 +7,7 @@ import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -121,6 +122,15 @@ class PrimordialWaters() : BaseAbyssBiome() {
     //Should not be overwriteable by another minibiome
     override fun canBeOverwritten(): Boolean {
         return false
+    }
+
+    override fun isMainBiome(): Boolean {
+        return false
+    }
+
+    override fun spawnDefenseFleet(source: SectorEntityToken, fpMult: Float): CampaignFleetAPI {
+        var fleet = Global.getFactory().createEmptyFleet("rat_abyssals", "",false)
+        return fleet
     }
 
     //Place the biome between two other biomes

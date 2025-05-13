@@ -9,6 +9,7 @@ import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldBaseTiledTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
@@ -61,6 +62,7 @@ abstract class BaseAbyssBiome {
 
     open fun shouldGenerateBiome() : Boolean = true
     open fun canBeOverwritten() : Boolean = true //If a biome allows its cells from being overwritten during generation
+    open fun isMainBiome() : Boolean = true
 
     open fun getSystemLightColor() = getDarkBiomeColor()
     open fun getTooltipColor() = getBiomeColor()
@@ -96,6 +98,8 @@ abstract class BaseAbyssBiome {
     /** Called after all cells are generated */
     abstract fun init()
 
+    abstract fun spawnDefenseFleet(source: SectorEntityToken, fpMult: Float = 1f) : CampaignFleetAPI
+
     var majorLightsources = ArrayList<SectorEntityToken>()
     var lightsourceOrbits = ArrayList<LightsourceOrbit>()
 
@@ -114,7 +118,7 @@ abstract class BaseAbyssBiome {
         return pick
     }
 
-    data class LightsourceOrbit(var lightsource: SectorEntityToken, var distance: Float, val orbitDays: Float, var depth: Int, var index: Int) {
+    data class LightsourceOrbit(var biome: BaseAbyssBiome, var lightsource: SectorEntityToken, var distance: Float, val orbitDays: Float, var depth: Int, var index: Int) {
         fun setClaimedByMajor() {
             lightsource.memoryWithoutUpdate.set("\$rat_claimed_major", true)
         }
@@ -133,7 +137,7 @@ abstract class BaseAbyssBiome {
             for (i in 0 until 3) {
                 orbit += MathUtils.getRandomNumberInRange(200f, 350f)
                 days += 35f
-                lightsourceOrbits.add(LightsourceOrbit(lightsource, orbit, days, depth, i))
+                lightsourceOrbits.add(LightsourceOrbit(this, lightsource, orbit, days, depth, i))
             }
         }
     }

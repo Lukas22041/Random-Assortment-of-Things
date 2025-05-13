@@ -7,6 +7,8 @@ import assortment_of_things.abyss.procgen.AbyssProcgenUtils
 import assortment_of_things.abyss.procgen.BiomeCellData
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.misc.addPara
+import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -86,6 +88,12 @@ class SeaOfSerenity() : BaseAbyssBiome() {
         if (sphere != null) {
             sensor.setCircularOrbitWithSpin(sphere, MathUtils.getRandomNumberInRange(0f, 360f), sphere.radius + sensor.radius + MathUtils.getRandomNumberInRange(100f, 250f), 90f, -10f, 10f)
         }
+    }
+
+
+    override fun spawnDefenseFleet(source: SectorEntityToken, fpMult: Float): CampaignFleetAPI {
+        var fleet = Global.getFactory().createEmptyFleet("rat_abyssals", "",false)
+        return fleet
     }
 
 }

@@ -9,6 +9,7 @@ import assortment_of_things.abyss.interactions.*
 import assortment_of_things.abyss.interactions.ethereal.AbyssalRaphaelInteraction
 import assortment_of_things.abyss.interactions.primordial.PrimordialCatalystInteraction
 import assortment_of_things.abyss.interactions.primordial.PrimordialFabricatorInteraction
+import assortment_of_things.abyss.interactions.unique.AbyssSarielOutpostInteraction
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
@@ -169,6 +170,8 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 "rat_abyss_drone" -> return PluginPick(AbyssalProbeInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_abyss_transmitter" -> return PluginPick(TransmitterInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_abyss_research" -> return PluginPick(AbyssalResearchStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+
+                "rat_sariel_outpost" -> return PluginPick(AbyssSarielOutpostInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
 

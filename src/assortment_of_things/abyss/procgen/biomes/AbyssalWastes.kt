@@ -8,6 +8,9 @@ import assortment_of_things.abyss.procgen.BiomeCellData
 import assortment_of_things.abyss.procgen.BiomeParticleManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.misc.addPara
+import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
@@ -120,6 +123,33 @@ class AbyssalWastes() : BaseAbyssBiome() {
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    override fun spawnDefenseFleet(source: SectorEntityToken, fpMult: Float): CampaignFleetAPI {
+        var fleet = Global.getFactory().createEmptyFleet("rat_abyssals", "",false)
+        return fleet
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     override fun spawnParticlesForCell(particleManager: BiomeParticleManager, cell: BiomeCellData) {
         //super.spawnParticlesForCell(particleManager, cell) //Replace the particle spawner

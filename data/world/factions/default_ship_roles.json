@@ -46,8 +46,8 @@
 		"rat_raguel_Attack":0.5,
 		"rat_raguel_Strike":0.5,
 		
-		"rat_sariel_Attack":2.5,
-		"rat_sariel_Strike":2.5,
+		"rat_sariel_Attack":3,
+		"rat_sariel_Strike":3,
 		
 		#Exo
 		"rat_tylos_Standard":5,

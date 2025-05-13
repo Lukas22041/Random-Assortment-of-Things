@@ -145,6 +145,9 @@ class SeaOfTranquility() : BaseAbyssBiome() {
             if (pick != null) {
                 var loc = pick.getRandomLocationInCell()
                 sensor.setLocation(loc.x, loc.y)
+                if (random.nextFloat() >= 0.25f) {
+                    spawnDefenseFleet(sensor)
+                }
             }
         }
 
@@ -275,7 +278,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
 
 
-    fun spawnDefenseFleet(source: SectorEntityToken, fpMult: Float = 1f) : CampaignFleetAPI {
+    override fun spawnDefenseFleet(source: SectorEntityToken, fpMult: Float) : CampaignFleetAPI {
         var random = Random()
         var factionID = "rat_abyssals"
         var fleetType = FleetTypes.PATROL_MEDIUM

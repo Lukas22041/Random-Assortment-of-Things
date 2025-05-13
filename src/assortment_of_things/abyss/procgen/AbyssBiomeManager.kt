@@ -108,6 +108,8 @@ class AbyssBiomeManager {
 
         initBiomes()
 
+        postGeneration()
+
         //Apply music keys to all entities spawned
         for (entity in AbyssUtils.getSystem()!!.customEntities) {
             var cell = getCell(entity)
@@ -125,6 +127,16 @@ class AbyssBiomeManager {
 
             entity.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, musicKey)
         }
+    }
+
+    fun postGeneration() {
+        var system = AbyssUtils.getSystem()
+        var mainBiomes = biomes.filter { it.isMainBiome() }
+
+        var remainingOrbits = mainBiomes.flatMap { it.lightsourceOrbits }
+        var unclaimedCells = mainBiomes.flatMap { it.getUnclaimedCellsIncludingBorder() }
+
+        var sarielOutpost = AbyssProcgenUtils.spawnEntityAtOrbitOrLightsource(system, "rat_sariel_outpost", remainingOrbits.filter { it.index != 0 }, unclaimedCells, false, 0f)
     }
 
     fun getCurrentBiomeColor() : Color{

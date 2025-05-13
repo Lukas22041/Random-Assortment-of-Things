@@ -51,6 +51,43 @@ object AbyssProcgenUtils {
         return entity
     }
 
+    //Claims the cell, if picked
+    fun spawnEntityAtOrbitOrLightsource(system: StarSystemAPI, type: String, orbits: List<BaseAbyssBiome.LightsourceOrbit>, cells: List<BiomeCellData>, isMajor: Boolean, defenseFleetChance: Float) : SectorEntityToken? {
+
+        var orbit: BaseAbyssBiome.LightsourceOrbit? = null
+        var cell: BiomeCellData? = null
+
+
+        orbit = orbits.randomOrNull()
+        cell = cells.randomOrNull()
+
+        //If either of them is null, guarantee one of them is picked atleast.
+        var pickOrbit = Random().nextFloat() >= 0.5f
+        if (orbit != null && (pickOrbit || cell == null)) {
+            var biome = orbit.biome
+            biome.lightsourceOrbits.remove(orbit) //Remove from lightsources list
+            if (isMajor) orbit.setClaimedByMajor()
+
+            var entity = spawnEntity(system, biome, type)
+            entity.setCircularOrbit(orbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), orbit.distance, orbit.orbitDays)
+            return entity
+        }
+        else if (cell != null) {
+            var biome = cell.getBiome()
+            var loc = cell.getRandomLocationInCell()
+            cell.claimed = true
+
+            var entity = spawnEntity(system, biome!!, type)
+            entity.setLocation(loc.x, loc.y)
+            if (Random().nextFloat() <= defenseFleetChance) {
+                biome.spawnDefenseFleet(entity)
+            }
+            return entity
+        }
+
+        return null
+    }
+
     fun createRandomDerelictShip(system: StarSystemAPI, faction: String = "rat_abyssals", isNoLarges: Boolean = false) : SectorEntityToken{
         val params = DerelictShipEntityPlugin.createRandom(faction, pickDerelictType(Random(), isNoLarges), Random(), DerelictShipEntityPlugin.getDefaultSModProb())
 
