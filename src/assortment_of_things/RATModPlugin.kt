@@ -118,8 +118,6 @@ class RATModPlugin : BaseModPlugin() {
             LightData.readLightDataCSV("data/config/rat_lights_data.csv");
             TextureData.readTextureDataCSV("data/config/rat_texture_data.csv")
         }
-
-
     }
 
     override fun onDevModeF8Reload() {
