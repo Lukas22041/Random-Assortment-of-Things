@@ -144,7 +144,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
         //Spawn Orbital fleets around lightsources
         for (lightsource in majorLightsources) {
             var maxFleets = 4
-            var spawnChancePer = /*0.75f*/ 0.50f
+            var spawnChancePer = /*0.75f*/ 0.60f
             for (i in 0 until maxFleets) {
                 if (random.nextFloat() >= spawnChancePer) continue
                 spawnDefenseFleet(lightsource)

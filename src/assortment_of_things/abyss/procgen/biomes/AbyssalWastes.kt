@@ -216,7 +216,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
         //Fabricators, Transmitters, Droneships, Abyssal Wrecks
         var picks = MathUtils.getRandomNumberInRange(7, 10)
         for (i in 0 until picks) {
-            var pick = pickAndClaimCellIncludingBorder() ?: continue //Populate Border regions too
+            var pick = pickAndClaimCell() ?: continue //Should not spawn things of this biome near the border
             var loc = pick.getRandomLocationInCell()
 
             var entityPick = unclaimedCellPicks.pick()

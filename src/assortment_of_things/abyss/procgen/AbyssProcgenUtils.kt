@@ -29,6 +29,15 @@ import kotlin.math.min
 
 object AbyssProcgenUtils {
 
+    fun setAbyssalMatterDrop(sectorEntityToken: SectorEntityToken, amount: Float) {
+        sectorEntityToken.memoryWithoutUpdate.set("\$rat_abyssal_drop", amount)
+    }
+
+    fun getAbyssalMatterDrop(sectorEntityToken: SectorEntityToken) : Float {
+        var drop = sectorEntityToken.memoryWithoutUpdate.get("\$rat_abyssal_drop") as Float? ?: 0f
+        return drop
+    }
+
     class EntityRotationScript(var entity: SectorEntityToken) : EveryFrameScript {
 
         var speed = MathUtils.getRandomNumberInRange(-3.5f, 3.5f)

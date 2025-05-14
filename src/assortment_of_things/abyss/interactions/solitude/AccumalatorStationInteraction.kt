@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.interactions.solitude
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.AbyssProcgenUtils
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.Global
@@ -96,6 +97,8 @@ class AccumalatorStationInteraction : RATInteractionPlugin() {
                 var mult = biome?.getLootMult() ?: 1f
 
                 var salvage = SalvageEntity.generateSalvage(random, mult, mult, 1f, 1f, dropValue, dropRandom)
+                salvage.addCommodity("rat_abyssal_matter", AbyssProcgenUtils.getAbyssalMatterDrop(interactionTarget))
+                salvage.sort()
 
                 visualPanel.showLoot("Loot", salvage, true) {
                     closeDialog()

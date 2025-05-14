@@ -20,6 +20,13 @@ import org.lwjgl.input.Keyboard
 class AbyssSensorInteraction : RATInteractionPlugin() {
     override fun init() {
 
+        if (AbyssUtils.isAnyFleetTargetingPlayer())
+        {
+            textPanel.addPara("As there are currently hostile targets following the fleet's steps, safe interaction with the sensor array seems impossible.")
+            addLeaveOption()
+            return
+        }
+
         textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
 
         if (!interactionTarget.hasTag("scanned")) {
