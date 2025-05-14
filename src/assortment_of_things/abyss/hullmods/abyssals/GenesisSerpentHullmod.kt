@@ -291,7 +291,6 @@ class GenesisSerpentHullmod : BaseHullMod() {
                     }
                 }
 
-                println(enableAcceleration)
                 if (enableAcceleration) {
                     ship.giveCommand(ShipCommand.ACCELERATE, null, 0)
                 }

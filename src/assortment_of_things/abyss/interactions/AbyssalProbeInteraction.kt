@@ -115,7 +115,7 @@ class AbyssalProbeInteraction : RATInteractionPlugin() {
             dropValue.add(drop)
 
             drop = DropData()
-            drop.chances = 1
+            drop.chances = 2
             drop.group = "rat_abyss_alterations_rare"
             dropRandom.add(drop)
 

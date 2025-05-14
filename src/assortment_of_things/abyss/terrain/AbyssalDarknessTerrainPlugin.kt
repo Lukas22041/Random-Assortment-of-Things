@@ -11,6 +11,7 @@ import assortment_of_things.abyss.entities.primordial.PrimordialPhotosphere
 import assortment_of_things.abyss.procgen.biomes.EtherealShores
 import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
 import assortment_of_things.misc.RATSettings
+import assortment_of_things.misc.addPara
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
@@ -19,6 +20,7 @@ import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
+import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -491,6 +493,16 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
         tooltip!!.addPara("The density of the abyssal matter makes barely any radiation able to get past it. Decreases the Sensor Detection range by up to $maxDarkness%%" +
                 "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Detection", "$maxDarkness%")
+        tooltip.addSpacer(5f)
+
+        tooltip.addSectionHeading("Sensor Darkness", Alignment.MID, 0f)
+        tooltip.addSpacer(5f)
+
+        tooltip.addPara("No known maps of this location exists, combined with the limited sensor range, much of the map is uncharted. " +
+                "Your fleet will document more about the enviroment as explore it.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "map")
+
+
         tooltip.addSpacer(5f)
 
     }

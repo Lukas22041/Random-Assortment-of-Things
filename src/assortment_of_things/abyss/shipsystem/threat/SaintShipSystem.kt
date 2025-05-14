@@ -327,7 +327,7 @@ class SaintShipSystem : BaseShipSystemScript() {
                         Global.getCombatEngine().applyDamage(newShip!!, newShip!!.location, 100000f, DamageType.ENERGY, 0f, true, false, null)
 
                         newShip!!.mutableStats.dynamic.getStat(Stats.EXPLOSION_RADIUS_MULT).modifyFlat("rat_explosion_radius_increase", 1.5f)
-                        newShip!!.mutableStats.dynamic.getStat(Stats.EXPLOSION_DAMAGE_MULT).modifyFlat("rat_explosion_radius_increase", 0.6f)
+                        newShip!!.mutableStats.dynamic.getStat(Stats.EXPLOSION_DAMAGE_MULT).modifyFlat("rat_explosion_radius_increase", 0.8f)
                         Global.getCombatEngine().removePlugin(this)
                         return
                     }

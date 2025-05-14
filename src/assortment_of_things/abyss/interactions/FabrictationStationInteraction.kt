@@ -63,7 +63,7 @@ class FabrictationStationInteraction : RATInteractionPlugin() {
                 dropRandom.add(drop)*/
 
                 drop = DropData()
-                drop.chances = 3
+                drop.chances = 4
                 drop.group = "rat_abyss_alterations_rare"
                 dropRandom.add(drop)
 

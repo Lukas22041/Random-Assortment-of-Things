@@ -144,7 +144,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
         //Spawn Orbital fleets around lightsources
         for (lightsource in majorLightsources) {
             var maxFleets = 4
-            var spawnChancePer = /*0.75f*/ 0.55f
+            var spawnChancePer = /*0.75f*/ 0.50f
             for (i in 0 until maxFleets) {
                 if (random.nextFloat() >= spawnChancePer) continue
                 spawnDefenseFleet(lightsource)
@@ -302,7 +302,6 @@ class SeaOfHarmony() : BaseAbyssBiome() {
         params.withOfficers = false
 
         var doctrine = Global.getSector().getFaction(factionID).doctrine.clone()
-        doctrine.shipSize = 4
         doctrine.numShips = 2
         params.doctrineOverride = doctrine
 

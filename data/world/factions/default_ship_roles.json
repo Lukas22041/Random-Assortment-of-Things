@@ -92,4 +92,14 @@
 		
 		#"rat_genesis_Standard":0.00000000001,
 	},
+	
+	"rat_threatPrayer":{
+		"rat_prayer_Type3000":10,
+	},
+	
+	"rat_threatSaint":{
+		"rat_saint_Type5000":10,
+		"rat_saint_Type5100":10,
+	},
+	
 }

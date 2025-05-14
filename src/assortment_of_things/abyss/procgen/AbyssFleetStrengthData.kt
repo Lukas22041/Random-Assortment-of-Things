@@ -52,13 +52,14 @@ object AbyssFleetStrengthData {
 
     //Harmony
     //Maximum Possible is 192FP
-    var HARMONY_ALTERATION_CHANCE = 0.4f
-    var HARMONY_AI_CORE_CHANCE = 0.4f //AI Core chance is 0.3 + 0.1 for depth scaling, this is added on top of it.
+    var HARMONY_ALTERATION_CHANCE = 0.35f
+    var HARMONY_AI_CORE_CHANCE = 0.3f //AI Core chance is 0.3 + 0.1 for depth scaling, this is added on top of it.
     var HARMONY_MIN_BASE_FP = 104f
     var HARMONY_MAX_BASE_FP = 192f
     var HARMONY_ZERO_SMODS_WEIGHT = 0.75f
     var HARMONY_ONE_SMODS_WEIGHT = 0.5f
     var HARMONY_TWO_SMODS_WEIGHT = 1f
 
+    //Threat biome has its own Generation, so no point in placing it down here.
 
 }
