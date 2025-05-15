@@ -277,6 +277,8 @@ class PrimordialWaters() : BaseAbyssBiome() {
 
     fun startStencil(reverse: Boolean) {
 
+
+
         GL11.glClearStencil(0);
         GL11.glStencilMask(0xff);
         //set everything to 0

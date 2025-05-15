@@ -10,9 +10,7 @@ import assortment_of_things.abyss.entities.light.AbyssalPhotosphere
 import assortment_of_things.abyss.entities.primordial.PrimordialPhotosphere
 import assortment_of_things.abyss.procgen.biomes.EtherealShores
 import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
-import assortment_of_things.misc.RATSettings
-import assortment_of_things.misc.addPara
-import assortment_of_things.misc.levelBetween
+import assortment_of_things.misc.*
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
@@ -23,13 +21,17 @@ import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.ui.UIComponentAPI
+import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
+import com.fs.state.AppDriver
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ui.LazyFont
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.bounty.ui.drawOutlined
 import org.magiclib.kotlin.setAlpha
+import second_in_command.misc.getHeight
 import java.awt.Color
 import java.util.*
 
@@ -221,8 +223,11 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
     override fun renderOnRadar(radarCenter: Vector2f, factor: Float, alphaMult: Float) {
         super.renderOnRadar(radarCenter, factor, alphaMult)
 
+        //Global.getSettings().setFloat("campaignRadarRadius", 8000f)
+
         var data = AbyssUtils.getData() ?: return
         var system = AbyssUtils.getSystem() ?: return
+        var primordial = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
 
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
@@ -239,17 +244,37 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
         for (sources in lightsources)
         {
+            var plugin = sources.customPlugin as AbyssalLight
+
             var extra = 0f
             if (sources.customPlugin is AbyssalColossalPhotosphere) extra += 3500
+            if (plugin is AbyssalColossalPhotosphere) {
+                var primLevel = primordial.getLevel()
+                /* if (primLevel > 0 && primLevel < 0.5) {
+                     var level = primLevel.levelBetween(0f, 0.25f)
+                     radius *= 1 -(0.5f*level)
+                 }
+                 if (primLevel > 0.5 && primLevel < 1) {
+                     var level = primLevel.levelBetween(1f, 0.755f)
+                     radius *= 1 -(0.5f*level)
+                 }*/
+
+                /*if (primLevel > 0f && primLevel < 1f) {
+                    extra = 0f
+                }*/
+            }
             if (MathUtils.getDistance(sources.location, radarCenter) >= radarRadius + extra) continue
+
+
 
             var loc = Vector2f((sources.location.x - radarCenter.x) * factor, (sources.location.y - radarCenter.y) * factor)
 
 
-            var plugin = sources.customPlugin as AbyssalLight
+
             var radius = plugin.radius * factor
+
             var color = plugin.lightColor
-            if (plugin.radius >= 52000) continue
+            //if (plugin.radius >= 52000) continue
 
             var skipRendering = false
             var fadeIn = 1f
@@ -275,11 +300,10 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
                 halo!!.alphaMult = 1f * alphaMult
                 halo!!.color = color.setAlpha(55)
 
-                halo!!.setSize(radius / 2, radius / 2)
+                halo!!.setSize(radius / 2f, radius / 2f)
                 halo!!.setAdditiveBlend()
                 halo!!.renderAtCenter(loc.x, loc.y)
             }
-
 
             //if (isStenceling) GL11.glDisable(GL11.GL_STENCIL_TEST)
 

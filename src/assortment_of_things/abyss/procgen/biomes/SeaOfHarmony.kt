@@ -7,7 +7,6 @@ import assortment_of_things.abyss.procgen.*
 import assortment_of_things.abyss.scripts.AbyssFleetScript
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.campaign.scripts.SimUnlockerListener
-import assortment_of_things.misc.addPara
 import assortment_of_things.misc.fixVariant
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
@@ -64,6 +63,22 @@ class SeaOfHarmony() : BaseAbyssBiome() {
         return 1.1f
     }
 
+    /*//Dont Spawn any photosphere to close to primordial waters
+    fun pickAndClaimAroundNoOtherBiomeAndNoPrim(radius: Int) : BiomeCellData? {
+        var list = ArrayList<BiomeCellData>()
+        for (cell in getUnclaimedCells()) {
+            if (cell.getAround(radius).any { it.claimed || it.getBiome() != cell.getBiome() }) continue
+            if (cell.getAround(radius+2).any { it.getBiome() is PrimordialWaters}) continue
+            list.add(cell)
+        }
+        var pick = list.randomOrNull() ?: return null
+
+        pick.claimed = true
+        pick.getAround(radius).forEach { it.claimed = true }
+
+        return pick
+    }*/
+
     /** Called after all cells are generated */
     override fun init() {
         var system = AbyssUtils.getSystem()
@@ -96,7 +111,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
             if (first) entity.radius += 400f
 
             var plugin = entity.customPlugin as AbyssalLight
-            var lightRadius = MathUtils.getRandomNumberInRange(entity.radius + 42500f, entity.radius + 45000f)
+            var lightRadius = MathUtils.getRandomNumberInRange(entity.radius + 41500f, entity.radius + 43000f)
             if (first) lightRadius += 4000f
             plugin.radius = lightRadius
 

@@ -14,7 +14,9 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.loading.Description
+import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
+import com.fs.state.AppDriver
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.makeImportant
@@ -75,6 +77,11 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
 
             createOption("Wait") {
                 Global.getSector().addScript(BiomeTransformScript(interactionTarget))
+
+                var state = AppDriver.getInstance().currentState
+                var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI
+                core.setOpacity(0.0f)
+
                 closeDialog()
             }
 
@@ -108,23 +115,40 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
             optionPanel.setTooltip("Supply 300 units of abyssal matter to the catalyst", "You do not have enough abyssal matter for this option.")
         }*/
 
-      /*  createOption("Ripple") {
-           *//* GraphicLibEffects.CustomCampaignRippleDistortion(interactionTarget.location, Vector2f(), 1000000f, 75f, true, 1f, 360f, 1f
-                ,3f, 3f, 3f, 1f, 1f)*//*
-
-            val ripple = RippleDistortion(interactionTarget.location, Vector2f())
-            ripple.intensity = 50f
-            ripple.size = 1000f
-            ripple.fadeInSize(3.15f)
-            ripple.fadeOutIntensity(3.5f)
-            RATCampaignDistortionShader.addDistortion(ripple)
-
-            closeDialog()
-        }*/
-
         addLeaveOption()
     }
 
+    class FadeInUIAFterTransformScript() : EveryFrameScript {
+
+        var finished = false
+        var fade = 0f
+
+        override fun isDone(): Boolean {
+            return finished
+        }
+
+        override fun runWhilePaused(): Boolean {
+           return true
+        }
+
+
+        override fun advance(amount: Float) {
+            if (!Global.getSector().isPaused) {
+                fade += 1f * amount
+            }
+
+            var alpha = MathUtils.clamp(fade, 0f, 1f)
+
+            var state = AppDriver.getInstance().currentState
+            var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI
+            core.setOpacity(alpha)
+
+            if (fade >= 1f) {
+                finished = true
+            }
+        }
+
+    }
 
     class BiomeTransformScript(var catalyst: SectorEntityToken) : EveryFrameScript {
 
@@ -182,9 +206,15 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
                 fleet = createFleet()
             }
 
+            //Force invisible ui, just in case the player reloaded
+            var state = AppDriver.getInstance().currentState
+            var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI
+            core.setOpacity(0f)
+
             biome.effectLevel += 0.25f * amount
             if (biome.effectLevel >= 1f) {
                 finished = true
+                Global.getSector().addScript(FadeInUIAFterTransformScript())
             }
 
         }

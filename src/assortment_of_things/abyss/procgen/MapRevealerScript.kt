@@ -2,6 +2,7 @@ package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.biomes.SeaOfHarmony
+import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CoreUITabId
@@ -55,7 +56,7 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
             }
         }
 
-        if (Global.getSector().campaignUI.currentCoreTab == CoreUITabId.MAP) {
+        if (Global.getSector().campaignUI.currentCoreTab == CoreUITabId.MAP || RATSettings.enableMinimap!!) {
             for (cell in biomeManager.getCells()) {
                 if (cell.isDiscovered) {
                     if (cell.discoveryFader >= 0) {
