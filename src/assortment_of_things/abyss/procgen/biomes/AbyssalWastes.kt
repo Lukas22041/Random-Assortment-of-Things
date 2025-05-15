@@ -195,13 +195,8 @@ class AbyssalWastes() : BaseAbyssBiome() {
                 lightsourceOrbits.remove(orbit)
 
                 var entityPick = orbitPicks.pick()
-                var entity: SectorEntityToken? = null
+                var entity = AbyssProcgenUtils.spawnEntity(system, this, entityPick)
 
-                if (entityPick != "wreck") {
-                    entity = AbyssProcgenUtils.spawnEntity(system, this, entityPick)
-                } else {
-                    entity = AbyssProcgenUtils.createRandomDerelictAbyssalShip(system, wreckFaction)
-                }
                 entity.setCircularOrbit(orbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), orbit.distance, orbit.orbitDays)
             }
         }
@@ -221,13 +216,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
 
             var entityPick = unclaimedCellPicks.pick()
 
-            var entity: SectorEntityToken? = null
-
-            if (entityPick != "wreck") {
-                entity = AbyssProcgenUtils.spawnEntity(system, this, entityPick)
-            } else {
-                entity = AbyssProcgenUtils.createRandomDerelictAbyssalShip(system, wreckFaction)
-            }
+            var entity = AbyssProcgenUtils.spawnEntity(system, this, entityPick)
 
             entity.setLocation(loc.x, loc.y)
 

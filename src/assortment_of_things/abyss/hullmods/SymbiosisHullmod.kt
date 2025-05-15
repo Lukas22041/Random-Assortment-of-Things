@@ -385,6 +385,7 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
             if (!wreck.isHulk) continue
             if (wreck.isFighter) continue
             if (MathUtils.getDistance(ship, wreck) > max) continue
+            if (wreck.variant.hasHullMod("shard_spawner")) continue //Prevent omegas from being turned to scrap
             //if (wreck.hasTag("symbiosis_claimed") && !claimed.contains(wreck)) continue
             list.add(wreck)
         }

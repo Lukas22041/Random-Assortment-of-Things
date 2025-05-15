@@ -168,7 +168,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         }
 
         //Abyssal XO wreck
-        if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+        if (Global.getSettings().modManager.isModEnabled("second_in_command") && !Global.getSector().characterData.memoryWithoutUpdate.contains("\$rat_started_abyss")) {
             var abyssXOOrbit = pickOrbit(lightsourceOrbits.filter { it.index != 0 })
             if (abyssXOOrbit != null) {
                 var drone = AbyssProcgenUtils.createAbyssalDrone(system, this)

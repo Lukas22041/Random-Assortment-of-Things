@@ -1,3 +1,50 @@
+Version 3.0.0-Beta3
+Save compatible with beta1-2
+
+-> Adjusted the "Abyssal Symphony" to be less broken with ships that have infinite ppt, i.e OnslaughtMk1.
+-> Gave Abyssal Threat its own design type, rather than just Threat.
+-> Abyssal XO should no longer spawn with the depth diver start, as you already have one.
+-> Fixed Abyssal Threat ships being able to turn omega ships in to fragments.
+-> The version checker file should now work for the beta.
+
+
+
+Version 3.0.0-Beta2
+Save compatible with beta1
+
+-> Fixed an issue that made the mod reliant on Second-in-Command
+
+
+
+Version 3.0.0-Beta1
+Not save compatible
+
+-> Entirely reworked the abyssal depths.
+  -> Removed the dungeon concept, the depths are instead a single, large system now.
+  -> Added Biomes.
+  -> Added the ability to craft a limited amount of alterations and artifacts. 
+  -> Added (Abyssal) Threat.
+  -> Added the Sensor Darkness mechanic.
+  -> Reduced the average and maximum damage done by abyssal storms.
+  -> Removed the abyssal major event.
+-> Artifacts are now accessed from the "Fleet" menu instead of intel.
+-> Added Metallic Paintjobs for baseline abyss ships, credits to Nia Tahl.
+-> Removed the Abyss Difficulty options for now, might be re-added later on.
+-> The "Computational Matrix" Artifact now provides +90 auto points instead if your using SiC.
+-> "Abyssal Adaptability" no longer provides a timeflow boost for ships with the Chronos Core.
+-> "Abyssal Crew Conversion" no longer allows integrating cores & acquiring their skills.
+-> Increased the cooldown of the "Abyssal Cloak" Shipsystem from 15s to 18s.
+-> Decreases the Morkoths Armor Rating from 1300 to 1200.
+-> Decreases the Morkoths Hitpoints from 18000 to 16000.
+-> Reduced the burst damage from Seadragon DEMs from 450 to 400.
+-> Increased the size of the azazel by an additional segment.
+-> Fixed some issues with the azazels behaviour.
+-> Slightly decreases the speed of all baseline abyssal ships.
+-> Fixed ships continuing to have limited tooltips despite their codex entries being unlocked.
+-> Potentialy fixed the gilgamesh not being recoverable.
+
+
+
 Version 2.6.10
 Save Compatible
 

@@ -12,7 +12,7 @@ Seraphim Drive,rat_seraphim_drive,0,,Seraph,codex_require_related,,3000,FALSE,TR
 Fighter Configuration,rat_fighter_configuration,0,,Seraph,codex_require_related,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.AbyssalFighterConfiguration,,,,graphics/hullmods/rat_fighter_configuration.png
 ,,,,,,,,,,,,,,,,,,,
 #Abyssal Threat,,,,,,,,,,,,,,,,,,,
-Symbiosis,rat_abyssal_threat,0,,???,codex_require_related,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.SymbiosisHullmod,,,,graphics/hullmods/rat_symbiosis.png
+Symbiosis,rat_abyssal_threat,0,,Abyssal Threat,codex_require_related,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.SymbiosisHullmod,,,,graphics/hullmods/rat_symbiosis.png
 ,,,,,,,,,,,,,,,,,,,
 Beginning and the End,rat_genesis_hullmod,0,,Primordial,codex_require_related,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.GenesisHullmod,,,,graphics/hullmods/rat_genesis_hullmod.png
 Primordial Serpent,rat_genesis_serpent_hullmod,0,,Primordial,codex_require_related,,3000,FALSE,TRUE,FALSE,0,0,0,0,assortment_of_things.abyss.hullmods.abyssals.GenesisSerpentHullmod,,,,graphics/hullmods/rat_genesis_serpent_hullmod.png
