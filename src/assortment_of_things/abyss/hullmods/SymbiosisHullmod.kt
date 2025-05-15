@@ -7,6 +7,7 @@ import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.combat.listeners.DamageListener
 import com.fs.starfarer.api.combat.listeners.DamageTakenModifier
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Tags
@@ -76,7 +77,7 @@ class SymbiosisHullmod : BaseHullMod() {
 
         //Make Shrouded Hmods incomp
         for (hullmod in Global.getSettings().allHullModSpecs) {
-            if (hullmod.hasTag(Tags.SHROUDED)) {
+            if (hullmod.hasTag(Tags.SHROUDED) && stats.variant.hasHullMod(hullmod.id)) {
                 MagicIncompatibleHullmods.removeHullmodWithWarning(
                     stats.getVariant(),
                     hullmod.id,
@@ -85,14 +86,22 @@ class SymbiosisHullmod : BaseHullMod() {
             }
         }
 
-        if(stats.getVariant().getHullMods().contains(HullMods.FRAGMENT_SWARM)){
-            //if someone tries to install heavy armor, remove it
-            MagicIncompatibleHullmods.removeHullmodWithWarning(
-                stats.getVariant(),
-                HullMods.FRAGMENT_SWARM,
-                "rat_abyssal_threat"
-            );
+        var blocked = ArrayList<String>()
+        blocked.add(HullMods.FRAGMENT_SWARM)
+        blocked.add(HullMods.SECONDARY_FABRICATOR)
+        blocked.add(HullMods.FRAGMENT_COORDINATOR)
+
+        for (block in blocked) {
+            if(stats.getVariant().hasHullMod(block)){
+                MagicIncompatibleHullmods.removeHullmodWithWarning(
+                    stats.getVariant(),
+                    block,
+                    "rat_abyssal_threat"
+                );
+            }
         }
+
+
 
         stats.sensorProfile.modifyMult(id, 0.5f)
 

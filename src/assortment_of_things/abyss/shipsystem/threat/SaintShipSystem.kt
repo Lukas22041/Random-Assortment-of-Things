@@ -3,6 +3,7 @@ package assortment_of_things.abyss.shipsystem.threat
 import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
+import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
@@ -58,13 +59,12 @@ class SaintShipSystem : BaseShipSystemScript() {
         if (ship.system.state == ShipSystemAPI.SystemState.ACTIVE) count = 50 //Allow it to use more while the system is active
         if (/*ship.shipAI != null || Global.getCombatEngine()?.combatUI?.isAutopilotOn == true && */swarm.members.count() <= count) {
 
-
             var selected = ReflectionUtils.get("selected", ship)
 
             for (group in ship.weaponGroupsCopy) {
                 if (group != selected) {
                     for (weapon in group.weaponsCopy) {
-                        if (weapon.effectPlugin is FragmentWeapon) {
+                        if (weapon.effectPlugin is FragmentWeapon && weapon.spec.weaponId != "voltaic_discharge") {
                             weapon.isForceNoFireOneFrame = true
                         }
                     }
@@ -101,15 +101,20 @@ class SaintShipSystem : BaseShipSystemScript() {
             var angleLeft = ship.facing + 90f + 30f
             var angleRight = ship.facing - 90f - 30f
 
-            spawnSwarm(ship, angleLeft)
-            spawnSwarm(ship, angleRight)
+            //Always pick one of the two, just randomise which side they spawn on
+            var variants = ArrayList<String>()
+            variants.add("rat_prayer_Type3000")
+            variants.add("rat_prayer_Type3100")
+
+            spawnSwarm(ship, variants.randomAndRemove(), angleLeft)
+            spawnSwarm(ship, variants.randomAndRemove(), angleRight)
 
             ship.currentCR -= 0.075f
             ship.currentCR = MathUtils.clamp(ship.currentCR, 0f, 1f)
         }
     }
 
-    fun spawnSwarm(ship: ShipAPI, angle: Float) {
+    fun spawnSwarm(ship: ShipAPI, variantId: String, angle: Float) {
 
         //Spawn Wing
         val wingId = "saint_construction_swarm_wing"
@@ -161,7 +166,7 @@ class SaintShipSystem : BaseShipSystemScript() {
 
         sourceSwarm.transferMembersTo(swarm, 50)
 
-        Global.getCombatEngine().addPlugin(SaintConstructionScript(fighter, ship, swarm, this))
+        Global.getCombatEngine().addPlugin(SaintConstructionScript(variantId, fighter, ship, swarm, this))
 
         //constructionSwarms.add(sourceSwarm)
     }
@@ -184,7 +189,7 @@ class SaintShipSystem : BaseShipSystemScript() {
 
 
 
-    class SaintConstructionScript(var fighter: ShipAPI, var source: ShipAPI, var swarm: RoilingSwarmEffect, var plugin: SaintShipSystem) : BaseEveryFrameCombatPlugin() {
+    class SaintConstructionScript(var variantId: String, var fighter: ShipAPI, var source: ShipAPI, var swarm: RoilingSwarmEffect, var plugin: SaintShipSystem) : BaseEveryFrameCombatPlugin() {
 
         var particleInterval = IntervalUtil(0.05f, 0.05f)
 
@@ -371,7 +376,7 @@ class SaintShipSystem : BaseShipSystemScript() {
                 var loc = fighter.location
 
                 //newShip = manager.spawnShipOrWing("rat_prayer_Type3000", loc, facing, 0f, null)
-                var variant = Global.getSettings().getVariant("rat_prayer_Type3000")
+                var variant = Global.getSettings().getVariant(variantId)
                 newShip = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, source.owner, source.currentCR, loc, facing)
                 newShip!!.velocity.set(fighter.velocity)
                 newShip!!.alphaMult = 0f

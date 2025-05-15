@@ -95,6 +95,7 @@
 	
 	"rat_threatPrayer":{
 		"rat_prayer_Type3000":10,
+		"rat_prayer_Type3100":10,
 	},
 	
 	"rat_threatSaint":{

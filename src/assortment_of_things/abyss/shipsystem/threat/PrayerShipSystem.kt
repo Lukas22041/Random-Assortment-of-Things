@@ -61,6 +61,19 @@ class PrayerShipSystem : BaseShipSystemScript() {
 
         if (system.isActive) {
 
+            //Make the ship not use its weapon if it could make use of voltaic discharge
+            if (ship.shipAI != null) {
+                var swarm = RoilingSwarmEffect.getSwarmFor(ship)
+
+                if (swarm.numActiveMembers <= 11) {
+                    if (ship.allWeapons.any { it.spec.weaponId == "voltaic_discharge" }) {
+                        var builtin = ship.allWeapons.find { it.spec.weaponId == "rat_prayer_missile_wep" }
+                        if (builtin != null) {
+                            builtin.isForceNoFireOneFrame = true
+                        }
+                    }
+                }
+            }
 
             if (system.state == ShipSystemAPI.SystemState.IN || system.effectLevel >= 0.5f) {
                 ship.giveCommand(ShipCommand.ACCELERATE, null, 0)

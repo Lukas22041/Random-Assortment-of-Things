@@ -1,7 +1,7 @@
 {
     "displayName": "Type 5100",
     "fluxCapacitors": 29,
-    "fluxVents": 10,
+    "fluxVents": 8,
     "goalVariant": true,
     "hullId": "rat_saint",
     "hullMods": [
@@ -36,8 +36,6 @@
             "autofire": true,
             "mode": "ALTERNATING",
             "weapons": {
-                "WS0010": "kinetic_fragments",
-                "WS0009": "kinetic_fragments",
                 "WS0008": "kinetic_fragments",
                 "WS0007": "kinetic_fragments",
             }
@@ -48,6 +46,14 @@
             "weapons": {
                 "WS0001": "voidblaster",
                 "WS0002": "voidblaster",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0010": "voltaic_discharge",
+                "WS0009": "voltaic_discharge",
             }
         },
     ],
