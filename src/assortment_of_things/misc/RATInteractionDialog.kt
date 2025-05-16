@@ -564,6 +564,10 @@ class FIDOverride(defenders: CampaignFleetAPI, dialog: InteractionDialogAPI, plu
                 entity.removeScriptsOfClass(FleetAdvanceScript::class.java)
 
                 dialog.promptText = "You decide to..." //Gone after return, for some reason?
+
+                RatInteraction.targetMemory.unset("\$hasDefenders")
+                RatInteraction.targetMemory.unset("\$defenderFleet")
+                RatInteraction.targetMemory.set("\$defenderFleetDefeated", true)
                 RatInteraction.defeatedDefenders()
             }
             else

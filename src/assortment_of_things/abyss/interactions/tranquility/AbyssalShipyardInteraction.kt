@@ -34,8 +34,8 @@ class AbyssalShipyardInteraction : RATInteractionPlugin() {
 
         textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
 
-        var defender = interactionTarget.memoryWithoutUpdate.get("\$defenderFleet")
-        if (defender == null) {
+        var defender = interactionTarget.memoryWithoutUpdate.get("\$defenderFleetDefeated")
+        if (defender != null) {
             textPanel.addPara("Scans indicate that there is nothing of value remaining.")
             addLeaveOption()
             return
