@@ -19,6 +19,7 @@ object ReflectionUtils {
     private val getMethodNameHandle = MethodHandles.lookup().findVirtual(methodClass, "getName", MethodType.methodType(String::class.java))
     private val invokeMethodHandle = MethodHandles.lookup().findVirtual(methodClass, "invoke", MethodType.methodType(Any::class.java, Any::class.java, Array<Any>::class.java))
 
+    @JvmStatic
     fun set(fieldName: String, instanceToModify: Any, newValue: Any?)
     {
         var field: Any? = null

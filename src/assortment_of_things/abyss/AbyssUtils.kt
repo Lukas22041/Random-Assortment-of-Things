@@ -40,6 +40,7 @@ object AbyssUtils {
 
     var ABYSS_COLOR = Color(255, 0, 50)
     var DARK_ABYSS_COLOR = Color(77, 0, 15) // 30% Brightness
+    var SERAPH_COLOR = Color(196, 20, 35)
     var GENESIS_COLOR = Color(140, 0, 250)
     var SIERRA_COLOR = Color(205,155,255,255)
     var FACTION_ID = "rat_abyssals"

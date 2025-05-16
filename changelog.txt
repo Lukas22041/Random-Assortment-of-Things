@@ -1,3 +1,13 @@
+Version 3.0.0-Beta5
+Save compatible with beta1-4
+
+-> Added the "Abyssal Shipyard" encounter to the Sea of Tranquility (Requires a new save).
+  -> Rewards a sidegrade version of an existing ability.
+-> The Converted Sariel should no longer be able to spawn in the Abyssal Wastes.
+-> Fixed a visual bug that occured in the Primordial Waters on the radar.
+
+
+
 Version 3.0.0-Beta4
 Save compatible with beta1-3
 

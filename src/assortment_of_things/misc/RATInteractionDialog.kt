@@ -64,6 +64,14 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
         this.targetMemory = dialog.interactionTarget.memoryWithoutUpdate
         this.memory = Global.getSector().memoryWithoutUpdate
 
+        showInteractionImage()
+
+        init()
+    }
+
+    abstract fun init()
+
+    fun showInteractionImage() {
         if (dialog.interactionTarget.hasTag("rat_abyss_biome_wreck_visual")) {
             var manager = AbyssUtils.getBiomeManager()
             var biome = manager.getCell(interactionTarget).getBiome()!!
@@ -98,10 +106,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
 
             //visualPanel.showImageVisual(dialog.interactionTarget.customInteractionDialogImageVisual)
         }
-        init()
     }
-
-    abstract fun init()
 
    /* fun createOption(optionName: String, function: RATInteractionPlugin.(String) -> Unit)
     {
@@ -534,7 +539,7 @@ class FIDOverride(defenders: CampaignFleetAPI, dialog: InteractionDialogAPI, plu
     override fun notifyLeave(dialog: InteractionDialogAPI) {
         // nothing in there we care about keeping; clearing to reduce savefile size
         val entity = dialog.interactionTarget
-        defenders.getMemoryWithoutUpdate().clear()
+        //defenders.getMemoryWithoutUpdate().clear() Was called before, but this causes issues with SiC.
         // there's a "standing down" assignment given after a battle is finished that we don't care about
         defenders.clearAssignments()
         defenders.deflate()
@@ -551,13 +556,14 @@ class FIDOverride(defenders: CampaignFleetAPI, dialog: InteractionDialogAPI, plu
                 val p = SDMParams()
                 p.entity = entity
                 p.factionId = defenders.getFaction().getId()
-                val plugin =
-                    Global.getSector().genericPlugins.pickPlugin(SalvageDefenderModificationPlugin::class.java, p)
+                val plugin = Global.getSector().genericPlugins.pickPlugin(SalvageDefenderModificationPlugin::class.java, p)
                 plugin?.reportDefeated(p, entity, defenders)
                 memory.unset("\$hasDefenders")
                 memory.unset("\$defenderFleet")
                 memory.set("\$defenderFleetDefeated", true)
                 entity.removeScriptsOfClass(FleetAdvanceScript::class.java)
+
+                dialog.promptText = "You decide to..." //Gone after return, for some reason?
                 RatInteraction.defeatedDefenders()
             }
             else

@@ -2,11 +2,8 @@ package assortment_of_things.abyss.interactions
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssProcgenUtils
-import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATInteractionPlugin
-import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.*
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 
@@ -16,7 +13,7 @@ import org.magiclib.kotlin.getSalvageSeed
 import java.util.*
 import kotlin.collections.ArrayList
 
-class FabrictationStationInteraction : RATInteractionPlugin() {
+class FabricatorInteraction : RATInteractionPlugin() {
 
     override fun init() {
 
@@ -35,7 +32,6 @@ class FabrictationStationInteraction : RATInteractionPlugin() {
         textPanel.addPara("Your fleet approaches the fabrication station.")
 
         textPanel.addPara(Global.getSettings().getDescription(interactionTarget.customDescriptionId, Description.Type.CUSTOM).text1)
-
 
         createOption("Explore") {
             clearOptions()

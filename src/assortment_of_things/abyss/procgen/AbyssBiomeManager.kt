@@ -137,24 +137,33 @@ class AbyssBiomeManager {
         var remainingOrbits = mainBiomes.flatMap { it.lightsourceOrbits }
         var unclaimedCells = mainBiomes.flatMap { it.getUnclaimedCellsIncludingBorder() }
 
-        var sarielOutpost = AbyssProcgenUtils.spawnEntityAtOrbitOrLightsource(system, "rat_sariel_outpost", remainingOrbits.filter { it.index != 0 }, unclaimedCells, false, 0f)
+        var sarielOutpost = AbyssProcgenUtils.spawnEntityAtOrbitOrLightsource(system, "rat_sariel_outpost", remainingOrbits.filter { it.index != 0 && it.biome !is AbyssalWastes }, unclaimedCells.filter { it.getBiome() !is AbyssalWastes }, false, 0f)
 
+        remainingOrbits = mainBiomes.flatMap { it.lightsourceOrbits }
+        unclaimedCells = mainBiomes.flatMap { it.getUnclaimedCellsIncludingBorder() }
 
         generateAbyssalMatter()
     }
 
     fun generateAbyssalMatter() {
         var system = AbyssUtils.getSystem()
-        var researchStations = system.customEntities.filter { it.customEntitySpec.id == "rat_abyss_research" }
 
+        var minibossStations = system.customEntities.filter { it.customEntitySpec.tags.contains("rat_miniboss") }
+        var perMiniboss = 45f
+        for (miniboss in minibossStations) {
+            AbyssProcgenUtils.setAbyssalMatterDrop(miniboss, perMiniboss + MathUtils.getRandomNumberInRange(-3f, 3f))
+        }
+
+        var researchAmount = 200f
+        var researchStations = system.customEntities.filter { it.customEntitySpec.id == "rat_abyss_research" }
         for (research in researchStations) {
-            AbyssProcgenUtils.setAbyssalMatterDrop(research, MathUtils.getRandomNumberInRange(30f, 35f))
+            AbyssProcgenUtils.setAbyssalMatterDrop(research, researchAmount / minibossStations.count() + MathUtils.getRandomNumberInRange(-3f, 3f))
         }
 
         //Eliminate around half of the choices
-        var others = system.customEntities.filter { Random().nextFloat() >= 0.4f && it.customEntitySpec.id == "rat_abyss_fabrication" || it.customEntitySpec.id == "rat_abyss_accumalator" }.shuffled()
+        var others = system.customEntities.filter { Random().nextFloat() >= 0.6f && it.customEntitySpec.id == "rat_abyss_fabrication" || it.customEntitySpec.id == "rat_abyss_accumalator" }.shuffled()
 
-        var remaining = 400f
+        var remaining = 200f
         var perOther = remaining / others.size
 
         for (other in others) {

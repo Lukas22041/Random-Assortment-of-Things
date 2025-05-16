@@ -3,6 +3,8 @@ package assortment_of_things.abyss.procgen.biomes
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.items.cores.officer.ChronosCore
+import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.procgen.*
 import assortment_of_things.abyss.scripts.AbyssFleetScript
 import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
@@ -12,6 +14,7 @@ import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import assortment_of_things.campaign.scripts.SimUnlockerListener
 import assortment_of_things.misc.addPara
 import assortment_of_things.misc.fixVariant
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
@@ -26,6 +29,7 @@ import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
+import second_in_command.SCUtils
 import java.awt.Color
 import java.util.Random
 
@@ -102,6 +106,53 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         return 0.75f
     }
 
+    fun spawnMiniboss() {
+        var orbit = pickOrbit(lightsourceOrbits.filter { !it.isClaimedByMajor() && it.index == 0 })
+        if (orbit == null) return
+
+        var shipyard = AbyssProcgenUtils.spawnEntity(system, this,"rat_abyssal_shipyard")
+        shipyard.setCircularOrbit(orbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), orbit.distance, orbit.orbitDays)
+
+        var faction = "rat_abyssals"
+        var fleet = Global.getFactory().createEmptyFleet(faction, "Protectors",false)
+        shipyard.memoryWithoutUpdate.set("\$defenderFleet", fleet)
+
+        var morkoth = fleet.fleetData.addFleetMember("rat_morkoth_Anchor")
+        var abolethM = fleet.fleetData.addFleetMember("rat_aboleth_m_Attack")
+        var abolethF = fleet.fleetData.addFleetMember("rat_aboleth_Attack")
+        var chull1 = fleet.fleetData.addFleetMember("rat_chuul_Attack")
+        var chull2 = fleet.fleetData.addFleetMember("rat_chuul_Strike")
+        var chull3 = fleet.fleetData.addFleetMember("rat_chuul_Support")
+        var makara1 = fleet.fleetData.addFleetMember("rat_makara_Attack")
+        var makara2 = fleet.fleetData.addFleetMember("rat_makara_Attack")
+        var merrow1 = fleet.fleetData.addFleetMember("rat_merrow_Support")
+        var merrow2 = fleet.fleetData.addFleetMember("rat_merrow_Support")
+
+        for (member in fleet.fleetData.membersListCopy) {
+            member.fixVariant()
+            member.variant.addTag(Tags.TAG_NO_AUTOFIT)
+        }
+
+        morkoth.captain = ChronosCore().createPerson(RATItems.CHRONOS_CORE, faction, Random())
+
+        abolethM.captain = ChronosCore().createPerson(RATItems.CHRONOS_CORE, faction, Random())
+        abolethF.captain = CosmosCore().createPerson(RATItems.COSMOS_CORE, faction, Random())
+
+        chull1.captain = ChronosCore().createPerson(RATItems.COSMOS_CORE, faction, Random())
+        chull2.captain = CosmosCore().createPerson(RATItems.COSMOS_CORE, faction, Random())
+
+        morkoth.variant.addMod("rat_qualityAssurance")
+
+        for (member in fleet.fleetData.membersListCopy) {
+            member.updateStats()
+            member.repairTracker.cr = member.repairTracker.maxCR
+        }
+
+        if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+            SCUtils.getFleetData(fleet) //Generate Skills
+        }
+    }
+
     //TODO Procgen
     // - Worse rewards than other biomes
     // - Abyssal XO
@@ -125,6 +176,8 @@ class SeaOfTranquility() : BaseAbyssBiome() {
                 spawnDefenseFleet(lightsource)
             }
         }
+
+        spawnMiniboss()
 
         /*var sensorOrbit = pickOrbitByDepth(lightsourceOrbits.filter { !it.isClaimedByMajor() && it.index == 0 })
         if (sensorOrbit != null) {

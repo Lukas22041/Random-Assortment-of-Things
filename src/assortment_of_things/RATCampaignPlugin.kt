@@ -10,6 +10,7 @@ import assortment_of_things.abyss.interactions.ethereal.AbyssalRaphaelInteractio
 import assortment_of_things.abyss.interactions.primordial.PrimordialCatalystInteraction
 import assortment_of_things.abyss.interactions.primordial.PrimordialFabricatorInteraction
 import assortment_of_things.abyss.interactions.solitude.AccumalatorStationInteraction
+import assortment_of_things.abyss.interactions.tranquility.AbyssalShipyardInteraction
 import assortment_of_things.abyss.interactions.unique.AbyssSarielOutpostInteraction
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
@@ -170,10 +171,13 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 "rat_abyss_primordial_fabricator" -> return PluginPick(PrimordialFabricatorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
 
                 //Generic
-                "rat_abyss_fabrication" -> return PluginPick(FabrictationStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_fabrication" -> return PluginPick(FabricatorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_abyss_drone" -> return PluginPick(AbyssalProbeInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_abyss_transmitter" -> return PluginPick(TransmitterInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_abyss_research" -> return PluginPick(AbyssalResearchStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+
+                //Minibosses
+                "rat_abyssal_shipyard" -> return PluginPick(AbyssalShipyardInteraction(), CampaignPlugin.PickPriority.HIGHEST)
 
                 //Unique
                 "rat_sariel_outpost" -> return PluginPick(AbyssSarielOutpostInteraction(), CampaignPlugin.PickPriority.HIGHEST)
