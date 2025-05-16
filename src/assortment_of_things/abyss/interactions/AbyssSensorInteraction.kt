@@ -82,9 +82,9 @@ class AbyssSensorInteraction : RATInteractionPlugin() {
         var path = "graphics/icons/intel/rat_abyss_sensor.png"
         Global.getSettings().getAndLoadSprite(path)
         var img = tooltip.beginImageWithText(path, 48f)
-        var para = img.addPara("Updated map data for the ${biome.getDisplayName()}. Your fleets sensor range is increased by 100% while moving throughout the biome.")
+        var para = img.addPara("Updated map data for the ${biome.getDisplayName()}. Your fleets sensor range is increased by 50% while moving throughout the biome.")
 
-        para.setHighlight("${biome.getDisplayName()}", "100%")
+        para.setHighlight("${biome.getDisplayName()}", "50%")
         para.setHighlightColors(biome.getTooltipColor(), Misc.getHighlightColor())
 
         tooltip.addImageWithText(0f)

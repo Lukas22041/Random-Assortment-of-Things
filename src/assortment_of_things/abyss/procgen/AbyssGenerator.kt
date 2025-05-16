@@ -102,7 +102,7 @@ object AbyssGenerator {
 
 
         //Teleport
-        var playerFleet = Global.getSector().playerFleet
+       /* var playerFleet = Global.getSector().playerFleet
         var currentLocation = playerFleet.containingLocation
         var targetSystem = system
 
@@ -111,7 +111,7 @@ object AbyssGenerator {
         Global.getSector().setCurrentLocation(targetSystem)
 
         //playerFleet.location.set(data.abyssFracture!!.location)
-        playerFleet.setLocation(data.abyssFracture!!.location.x, data.abyssFracture!!.location.y)
+        playerFleet.setLocation(data.abyssFracture!!.location.x, data.abyssFracture!!.location.y)*/
 
         //generateHyperspaceEntrance() //Moved to tranquility biome plugin
     }

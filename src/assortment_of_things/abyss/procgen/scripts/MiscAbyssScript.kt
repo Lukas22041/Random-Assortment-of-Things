@@ -24,7 +24,7 @@ class MiscAbyssScript : EveryFrameScript {
 
         var playerFleet = Global.getSector().playerFleet
 
-        var sensorStrength = 1f
+        var sensorStrength = 0.5f
         for ((biome, level) in levels) {
             if (biome.isSensorRevealed) {
                 sensorStrength += 1f * level
