@@ -2,7 +2,7 @@ Version 3.0.0-Beta6
 Save compatible with beta1-5
 
 -> Fixed a bug that teleported you to the abyss on save creation.
-
+-> Decreased the Sensor Range increase from Sensor Arrays from 100% to 50%.
 
 
 Version 3.0.0-Beta5
