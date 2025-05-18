@@ -12,7 +12,6 @@ import com.fs.starfarer.campaign.CampaignState
 import com.fs.starfarer.campaign.fleet.FleetMember
 import com.fs.starfarer.ui.impl.StandardTooltipV2
 import com.fs.state.AppDriver
-import second_in_command.misc.getChildrenCopy
 
 class WhichModScript : EveryFrameScript {
 
@@ -100,11 +99,23 @@ class WhichModScript : EveryFrameScript {
                     var modname: String? = null
                     if (mod != null) modname = mod.name
 
-                    if (modname != null && codexTooltip.text == "Press F2 to open Codex") {
-                        codexTooltip.text += " - Data provided by $modname"
+                    if (modname != null && (codexTooltip.text == "Press F2 to open Codex" || codexTooltip.text == "F1 more info  F2 open Codex" || codexTooltip.text == "F1 hide  F2 open Codex")) {
+
+                        var originalText = codexTooltip.text
+
+                        var text = "$originalText - Data provided by $modname"
+
+                        codexTooltip.text = text
                         codexTooltip.position.setSize(codexTooltip.computeTextWidth(codexTooltip.text), codexTooltip.position.height)
-                        codexTooltip.setHighlight("F2", modname)
-                        codexTooltip.setHighlightColors(Misc.getHighlightColor(), Misc.getBasePlayerColor())
+
+                        if (codexTooltip.position.width +30> tooltip.position.width) {
+                            text = "$originalText - $modname"
+                            codexTooltip.text = text
+                            codexTooltip.position.setSize(codexTooltip.computeTextWidth(codexTooltip.text), codexTooltip.position.height)
+                        }
+
+                        codexTooltip.setHighlight("F1", "F2", modname)
+                        codexTooltip.setHighlightColors(Misc.getHighlightColor(), Misc.getHighlightColor(), Misc.getBasePlayerColor())
                     }
                 }
             }
