@@ -1,6 +1,7 @@
 package assortment_of_things.abyss;
 
 import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome;
+import assortment_of_things.abyss.procgen.biomes.SeaOfTranquility;
 import assortment_of_things.misc.LoadedAssets;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
@@ -543,13 +544,15 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
     public WeightedRandomPicker<String> getAvailableObjectives() {
         WeightedRandomPicker<String> objectivePicker = new WeightedRandomPicker<>();
 
+        var biome = AbyssUtils.getBiomeManager().getDominantBiome();
+
         objectivePicker.add(SENSOR, 1f);
         objectivePicker.add(SENSOR, 1f);
         objectivePicker.add(NAV, 1f);
         objectivePicker.add(NAV, 1f);
         objectivePicker.add(COMM, 1f);
-        objectivePicker.add("rat_deactivated_drone", 0.9f);
-        objectivePicker.add("rat_deactivated_drone", 0.1f);
+        if (biome.hasDeactivatedDroneshipObjective()) objectivePicker.add("rat_deactivated_drone", 0.9f);
+        if (biome.hasDeactivatedDroneshipObjective()) objectivePicker.add("rat_deactivated_drone", 0.1f);
 
         return objectivePicker;
     }
@@ -557,12 +560,15 @@ public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
     public WeightedRandomPicker<String> getAvailableCentralObjectives() {
         WeightedRandomPicker<String> objectivePicker = new WeightedRandomPicker<>();
 
+        var biome = AbyssUtils.getBiomeManager().getDominantBiome();
+
         float chance = 0.2f;
         /*if (AbyssUtils.INSTANCE.getSystemData(Global.getSector().getPlayerFleet().getStarSystem()).getDepth() == AbyssDepth.Deep) {
             chance += 0.3f;
         }*/
 
-        objectivePicker.add("rat_deactivated_drone_large", chance);
+        //Do not spawn it in sea of tranquility
+        if (biome.hasDeactivatedDroneshipObjective() && !(biome instanceof SeaOfTranquility)) objectivePicker.add("rat_deactivated_drone_large", chance);
 
         return objectivePicker;
     }

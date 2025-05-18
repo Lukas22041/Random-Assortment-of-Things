@@ -63,6 +63,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
         return 1.1f
     }
 
+
     /*//Dont Spawn any photosphere to close to primordial waters
     fun pickAndClaimAroundNoOtherBiomeAndNoPrim(radius: Int) : BiomeCellData? {
         var list = ArrayList<BiomeCellData>()

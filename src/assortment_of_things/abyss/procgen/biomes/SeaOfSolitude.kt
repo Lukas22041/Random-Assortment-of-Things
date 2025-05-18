@@ -53,6 +53,10 @@ class SeaOfSolitude() : BaseAbyssBiome() {
         return darkBiomeColor
     }
 
+    override fun hasSeraphs(): Boolean {
+        return true
+    }
+
     override fun getCombatNebulaTex() = "graphics/terrain/rat_combat/rat_combat_depths_solitude.png"
     override fun getCombatNebulaMapTex() = "graphics/terrain/rat_combat/rat_combat_depths_map_solitude.png"
 

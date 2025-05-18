@@ -57,6 +57,10 @@ class SeaOfSerenity() : BaseAbyssBiome() {
         return 0.6f
     }
 
+    override fun hasSeraphs(): Boolean {
+        return true
+    }
+
     /** Called after all cells are generated */
     override fun init() {
 

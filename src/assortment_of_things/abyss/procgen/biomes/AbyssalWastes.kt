@@ -91,7 +91,9 @@ class AbyssalWastes() : BaseAbyssBiome() {
         return 0.5f
     }
 
-
+    override fun hasDeactivatedDroneshipObjective(): Boolean {
+        return false
+    }
 
     override fun getMusicKeyId(): String {
         return "music_campaign_abyssal"

@@ -94,8 +94,9 @@ class WhichModScript : EveryFrameScript {
             } else if (RATSettings.whichModShips!!) {
                 var member = ReflectionUtils.getFieldOfType(FleetMember::class.java, tooltip)
                 if (member is FleetMemberAPI) {
-                    var spec = member.baseOrModSpec()
-                    var mod = member.baseOrModSpec().sourceMod
+                    var spec = member.hullSpec
+                    var mod = spec.sourceMod
+                    if (mod == null) mod = member.baseOrModSpec().sourceMod //Skins might have issues otherwise
                     var modname: String? = null
                     if (mod != null) modname = mod.name
 

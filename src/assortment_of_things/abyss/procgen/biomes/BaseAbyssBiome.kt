@@ -80,6 +80,9 @@ abstract class BaseAbyssBiome {
     open fun getCombatNebulaTex() = "graphics/terrain/rat_combat/rat_combat_depths.png"
     open fun getCombatNebulaMapTex() = "graphics/terrain/rat_combat/rat_combat_depths_map.png"
 
+    open fun hasSeraphs() = false
+    open fun hasDeactivatedDroneshipObjective() = true
+
     /* Multiplier applied to loot drops for entities within the biome. */
     open fun getLootMult() = 1.25f
 
