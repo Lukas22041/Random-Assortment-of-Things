@@ -173,7 +173,7 @@ class CombatHandler : EveryFrameCombatPlugin
         var dominant = manager.getDominantBiome()
 
         var darkness = data.darknessTerrain ?: return
-        var lightLevel = 1-darkness.getLightlevel() //1 If full brightness
+        var lightLevel = 1-darkness.getLightlevel(Global.getSector().playerFleet) //1 If full brightness
         var darknessLevel = darkness.getDarknessMult() //Biome dependent darkness mult
 
         var currentColor = manager.getCurrentBiomeColor()

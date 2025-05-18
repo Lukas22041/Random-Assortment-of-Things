@@ -2,9 +2,6 @@ package assortment_of_things.misc
 
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.MinimapUI
-import com.fs.starfarer.api.GameState
-import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.ShipAPI
 import lunalib.lunaSettings.LunaSettings
 import lunalib.lunaSettings.LunaSettingsListener
 
@@ -47,6 +44,11 @@ object RATSettings : LunaSettingsListener
     //Escprt
     var escortEnabled = LunaSettings.getBoolean(modID, "rat_escortEnabled")
 
+    //Which Mod
+    var whichModShips = LunaSettings.getBoolean(modID, "rat_whichModShips")
+    var whichModWeapons = LunaSettings.getBoolean(modID, "rat_whichModWeapons")
+    var whichModFighters = LunaSettings.getBoolean(modID, "rat_whichModFighters")
+    var whichModHullmods = LunaSettings.getBoolean(modID, "rat_whichModHullmods")
 
     //Parallel Construction
     var parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")
@@ -95,6 +97,11 @@ object RATSettings : LunaSettingsListener
         procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
 
         escortEnabled = LunaSettings.getBoolean(modID, "rat_escortEnabled")
+
+        whichModShips = LunaSettings.getBoolean(modID, "rat_whichModShips")
+        whichModWeapons = LunaSettings.getBoolean(modID, "rat_whichModWeapons")
+        whichModFighters = LunaSettings.getBoolean(modID, "rat_whichModFighters")
+        whichModHullmods = LunaSettings.getBoolean(modID, "rat_whichModHullmods")
 
         parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")
         parallelApplyToNPCs = LunaSettings.getBoolean(modID, "rat_parallelApplyToNPCs")

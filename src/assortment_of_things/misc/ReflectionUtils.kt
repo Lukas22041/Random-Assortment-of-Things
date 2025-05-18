@@ -50,10 +50,29 @@ object ReflectionUtils {
         }
     }
 
-    fun get(fieldName: String, instanceToGetFrom: Any): Any? {
+    fun get(fieldName: String, instanceToGetFrom: Any) : Any? {
         var field: Any? = null
         try {  field = instanceToGetFrom.javaClass.getField(fieldName) } catch (e: Throwable) {
             try {  field = instanceToGetFrom.javaClass.getDeclaredField(fieldName) } catch (e: Throwable) { }
+        }
+
+        setFieldAccessibleHandle.invoke(field, true)
+        return getFieldHandle.invoke(field, instanceToGetFrom)
+    }
+
+    fun getWithSuper(fieldName: String, instanceToGetFrom: Any, limit: Int, clazz: Class<*>? = null) : Any?
+    {
+        if (limit < 0) return null
+
+        var field: Any? = null
+        var claz = clazz
+        if (claz == null) claz = instanceToGetFrom.javaClass
+
+        try {  field = instanceToGetFrom.javaClass.getField(fieldName) } catch (e: Throwable) {
+            try {  field = instanceToGetFrom.javaClass.getDeclaredField(fieldName) } catch (e: Throwable) { }
+        }
+        if (field == null) {
+            return getWithSuper(fieldName, instanceToGetFrom, limit-1, claz.superclass)
         }
 
         setFieldAccessibleHandle.invoke(field, true)
@@ -74,6 +93,11 @@ object ReflectionUtils {
             setFieldAccessibleHandle.invoke(field, true)
             var fieldType: Class<*> = getFieldTypeHandle.invoke(field) as Class<*>
             if (fieldType == type) {
+                return getFieldHandle.invoke(field, instanceToGetFrom) as Any?
+            }
+
+            //check for the super too
+            if (fieldType.superclass == type) {
                 return getFieldHandle.invoke(field, instanceToGetFrom) as Any?
             }
         }

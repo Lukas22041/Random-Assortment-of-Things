@@ -51,6 +51,14 @@ rat_creditsText,,Text,"[Credits:]
 [KingAlfonzo] - Helped writing some Interactions. ",,,,,Expansion
 ,,,,,,,,
 #Enhancements,,,,,,,,
+,,,,,,,,
+rat_whichModHeader,Which Mod is this From,Header,Which Mod is this From,,,,,Enhancement
+rat_whichModText,,Text,Displays the source mod of certain pieces of content when hovering over the relevant tooltips. Generaly only works if they have codex entries. Mod names may be shortened if their to long.,,,,,Enhancement
+rat_whichModShips,Display for Ships,Boolean,true,,,,,Enhancement
+rat_whichModWeapons,Display for Weapons,Boolean,true,,,,,Enhancement
+rat_whichModFighters,Display for Fighters,Boolean,true,,,,,Enhancement
+rat_whichModHullmods,Display for Hullmods,Boolean,true,,,,,Enhancement
+,,,,,,,,
 rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,Enhancement
 rat_parallelEnabled,Enable Parallel Construction,Boolean,false,,"Removes the queue system in Colony Construction, allowing everything to be built at the same time.",,,Enhancement
 rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,,"If set to true and parallel construction is enabled, NPC markets will benefit from the same effect.",,,Enhancement

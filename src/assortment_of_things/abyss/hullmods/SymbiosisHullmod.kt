@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.hullmods
 
+import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
@@ -114,7 +115,6 @@ class SymbiosisHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String?) {
-
 
         if (!ship.hasListenerOfClass(SymbiosisListener::class.java)) {
             var listener = SymbiosisListener(ship)

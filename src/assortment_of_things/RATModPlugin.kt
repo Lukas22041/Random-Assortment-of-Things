@@ -154,6 +154,7 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().addScript(ConstantTimeIncreaseScript())
         }
 
+        Global.getSector().addTransientScript(WhichModScript())
         Global.getSector().addTransientScript(ArtifactUIScript())
         Global.getSector().addTransientScript(AICoreReplacerScript())
         Global.getSector().addTransientListener(AICoreDropReplacerScript())

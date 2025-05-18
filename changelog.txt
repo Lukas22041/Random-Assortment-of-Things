@@ -1,3 +1,11 @@
+Version 3.0.0-Beta7
+Save compatible with beta1-6
+
+-> Added the "Which Mod is this From" utility.
+  -> Displays which mod a ship, weapon, fighter or hullmod is from at the bottom of the tooltip.
+  -> Enabled by default, can be disabled in the Lunalib configurations.
+
+
 Version 3.0.0-Beta6
 Save compatible with beta1-5
 

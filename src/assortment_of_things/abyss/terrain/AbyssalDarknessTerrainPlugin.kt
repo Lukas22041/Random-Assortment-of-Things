@@ -248,21 +248,21 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
             var extra = 0f
             if (sources.customPlugin is AbyssalColossalPhotosphere) extra += 3500
-            if (plugin is AbyssalColossalPhotosphere) {
+           /* if (plugin is AbyssalColossalPhotosphere) {
                 var primLevel = primordial.getLevel()
-                /* if (primLevel > 0 && primLevel < 0.5) {
+                *//* if (primLevel > 0 && primLevel < 0.5) {
                      var level = primLevel.levelBetween(0f, 0.25f)
                      radius *= 1 -(0.5f*level)
                  }
                  if (primLevel > 0.5 && primLevel < 1) {
                      var level = primLevel.levelBetween(1f, 0.755f)
                      radius *= 1 -(0.5f*level)
-                 }*/
+                 }*//*
 
-                /*if (primLevel > 0f && primLevel < 1f) {
+                *//*if (primLevel > 0f && primLevel < 1f) {
                     extra = 0f
-                }*/
-            }
+                }*//*
+            }*/
             if (MathUtils.getDistance(sources.location, radarCenter) >= radarRadius + extra) continue
 
 
@@ -370,8 +370,9 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         return true
     }
 
-    fun getLightlevel() : Float {
-        var point = Global.getSector().playerFleet.location
+    fun getLightlevel(target: SectorEntityToken) : Float {
+        //var point = Global.getSector().playerFleet.location
+        var point = target.location
         var system = entity.starSystem
         var data = AbyssUtils.getData()
 
@@ -383,7 +384,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             var plugin = source.customPlugin as AbyssalLight
 
 
-            var maxRadius = (plugin.radius / 10) + 10 + (Global.getSector().playerFleet.radius / 2)
+            var maxRadius = (plugin.radius / 10) + 10 + (target.radius / 2)
             var minRadius = maxRadius * 0.85f
 
             var distance = MathUtils.getDistance(source.location, point)
@@ -391,8 +392,8 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             if (plugin is PrimordialPhotosphere) {
                 var biome = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
                 var range = biome.getRadius()
-                var centerDist = MathUtils.getDistance(Global.getSector().playerFleet, biome.getStencilCenter())
-                if (centerDist >= range + Global.getSector().playerFleet.radius/2) continue
+                var centerDist = MathUtils.getDistance(target, biome.getStencilCenter())
+                if (centerDist >= range + target.radius/2) continue
             }
 
             if (distance < maxRadius) {
@@ -412,6 +413,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         return highestMult
     }
 
+    //Doesnt really need to be dependent on the entities position, as there would rarely be a case where the difference would matter
     fun getDarknessMult() : Float {
         var mananger = AbyssUtils.getBiomeManager()
         var levels = mananger.getBiomeLevels()
@@ -458,7 +460,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         {
             var fleet = entity
 
-            var lightLevel = getLightlevel() // 1 At total darkness
+            var lightLevel = getLightlevel(fleet) // 1 At total darkness
 
             //if (lightLevel != 0f) {
 
@@ -490,7 +492,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         var system = entity.starSystem
 
         var name = getDarknessName(getDarknessMult())
-        var mult = (getLightlevel() * 100).toInt()
+        var mult = (getLightlevel(Global.getSector().playerFleet) * 100).toInt()
 
         return "$name ($mult%)"
     }

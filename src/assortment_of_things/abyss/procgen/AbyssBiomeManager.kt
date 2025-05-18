@@ -154,10 +154,10 @@ class AbyssBiomeManager {
             AbyssProcgenUtils.setAbyssalMatterDrop(miniboss, perMiniboss + MathUtils.getRandomNumberInRange(-3f, 3f))
         }
 
-        var researchAmount = 200f
+        var perResearch = 40f
         var researchStations = system.customEntities.filter { it.customEntitySpec.id == "rat_abyss_research" }
         for (research in researchStations) {
-            AbyssProcgenUtils.setAbyssalMatterDrop(research, researchAmount / minibossStations.count() + MathUtils.getRandomNumberInRange(-3f, 3f))
+            AbyssProcgenUtils.setAbyssalMatterDrop(research, perResearch + MathUtils.getRandomNumberInRange(-3f, 3f))
         }
 
         //Eliminate around half of the choices
