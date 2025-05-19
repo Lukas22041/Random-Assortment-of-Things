@@ -1,10 +1,12 @@
 package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.util.IntervalUtil
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
@@ -14,13 +16,60 @@ import kotlin.math.floor
 
 open class BaseFogTerrain : OldHyperspaceTerrainPlugin(), BiomeTerrain {
 
+    var manager = AbyssUtils.getBiomeManager()
     var biomePlugin: BaseAbyssBiome? = null
+    var aroundInterval = IntervalUtil(0.25f, 0.33f)
+    var isAround = true
+
     override fun getBiome(): BaseAbyssBiome? {
         return biomePlugin
     }
 
     override fun hasTooltip(): Boolean {
         return false
+    }
+
+    override fun advance(amount: Float) {
+        if (biomePlugin == null) return
+
+        var player = Global.getSector().playerFleet
+        if (player.containingLocation != entity?.containingLocation) return
+
+        //Didnt have the manager in the older version#
+        if (manager == null || aroundInterval == null) {
+            isAround = true
+            aroundInterval = IntervalUtil(0.25f, 0.33f)
+            manager = AbyssUtils.getBiomeManager()
+        }
+
+        //Check if any of the nearby biomes should be advanced, dont call it every frame.
+        aroundInterval.advance(amount)
+        if (aroundInterval.intervalElapsed()) {
+            var around = manager.getPlayerCell().getAround(4)
+            if (around.any { it.getBiome() == biomePlugin }) {
+                isAround = true
+            } else {
+                isAround = false
+            }
+        }
+
+        if (isAround) {
+            super.advance(amount)
+        }
+
+        /*var topLeftCell  = manager.getCell(biomePlugin!!.leftMostCell, biomePlugin!!.bottomMostCell)
+        var locX = topLeftCell.worldX
+        var locY = topLeftCell.worldY
+        var cellSize = AbyssBiomeManager.cellSize
+        var extra = cellSize*1.5f //Start advancing if the player is 2 cells distanced
+        var w = biomePlugin!!.cellsWidth * cellSize
+        var h = biomePlugin!!.cellsHeight * cellSize
+
+        if (player.location.x in (locX-extra)..(locX+w+extra) && player.location.y in (locY-extra)..(locY+h+extra)) {
+            println(this::class.java)
+            super.advance(amount)
+        }*/
+
     }
 
     override fun getRenderColor(): Color {

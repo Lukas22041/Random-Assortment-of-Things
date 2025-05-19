@@ -45,11 +45,15 @@ class BiomeParticleManager(var manager: AbyssBiomeManager) : LunaCampaignRenderi
 
     var particles = ArrayList<AbyssalLightParticle>()
 
-    var particleInterval = IntervalUtil(0.2f, 0.2f)
+    var particleInterval = IntervalUtil(0.2f, 0.25f)
 
     @Transient
     var halo: SpriteAPI? = null
 
+    fun readResolve() : Any {
+        particleInterval = IntervalUtil(0.2f, 0.25f)
+        return this
+    }
 
     override fun isExpired(): Boolean {
         return false
@@ -111,7 +115,6 @@ class BiomeParticleManager(var manager: AbyssBiomeManager) : LunaCampaignRenderi
 
             particle.velocity = particle.velocity.rotate(particle.adjustment * amount)
 
-
             var x = particle.velocity.x * amount
             var y = particle.velocity.y * amount
             var velocity = Vector2f(x, y)
@@ -127,6 +130,8 @@ class BiomeParticleManager(var manager: AbyssBiomeManager) : LunaCampaignRenderi
 
             for (cell in surrounding) {
                 var biome = cell.getBiome()
+                var reduction = 0
+                if (cell != playerCell) reduction = 1
                 biome?.spawnParticlesForCell(this, cell)
             }
         }

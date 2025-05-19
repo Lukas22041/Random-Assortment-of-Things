@@ -331,7 +331,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
 
         var count = 7
         var fadeInOverwrite = false
-        if (particleManager.particles.size <= 50) {
+        if (particleManager.particles.size <= 100) {
             count *= 4
             fadeInOverwrite = true
         }

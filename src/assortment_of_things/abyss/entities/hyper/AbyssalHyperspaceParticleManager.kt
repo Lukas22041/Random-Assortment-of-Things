@@ -151,7 +151,7 @@ class AbyssalHyperspaceParticleManager() : BaseCustomEntityPlugin() {
     }
 
     override fun getRenderRange(): Float {
-        return 1000000f
+        return 100000f
     }
 
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {

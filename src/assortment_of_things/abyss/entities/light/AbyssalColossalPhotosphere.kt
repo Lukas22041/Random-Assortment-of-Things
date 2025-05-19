@@ -41,7 +41,7 @@ class AbyssalColossalPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         initSpritesIfNull()
         band1!!.advance(amount * 0.33f)
 
-        if (!visited &&  entity.getDistance(Global.getSector().playerFleet) <= radius/10f) {
+        if (!visited &&  entity.getDistance(Global.getSector().playerFleet) <= radius/13f) {
             visited = true
         }
     }

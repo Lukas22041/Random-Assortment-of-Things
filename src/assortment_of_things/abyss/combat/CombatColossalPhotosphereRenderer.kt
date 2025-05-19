@@ -110,6 +110,7 @@ class CombatColossalPhotosphereRenderer(var photosphere: SectorEntityToken) : Ba
         return radius
     }
 
+
     override fun render(layer: CombatEngineLayers?, viewport: ViewportAPI?) {
 
         var adjustedOffset = Vector2f(offset.x * viewport!!.viewMult, offset.y * viewport.viewMult)
@@ -189,5 +190,6 @@ class CombatColossalPhotosphereRenderer(var photosphere: SectorEntityToken) : Ba
 
 
     }
+
 
 }

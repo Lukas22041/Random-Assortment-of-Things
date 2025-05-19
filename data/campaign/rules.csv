@@ -8,7 +8,12 @@ greetingRATSerenity,OpenCommLink,"$faction.id == rat_abyssals_serenity score:100
 greetingRATHarmony,OpenCommLink,"$faction.id == rat_abyssals_harmony score:1000
 ",$entity.ignorePlayerCommRequests = true 1,The opposing fleet does not respond to the comm-request,cutCommLink:Cut the comm link,
 greetingRATWastes,OpenCommLink,"$faction.id == rat_abyssals_wastes score:1000
-",$entity.ignorePlayerCommRequests = true 1,The opposing fleet does not respond to the comm-request,cutCommLink:Cut the comm link,
+","$ignorePlayerCommRequests = true 1
+ShowThreatPersonVisual","???? DELUSE ???? MISGOT
+
+*** ALICIT REIFICATE ***
+
+INTERDICTORATE PROACT: UNFABRICATE",cutCommLink:Cut the comm link,
 ,,,,,,
 ratAbyssGateOpt,PopulateGateOptions,"$global.gatesActive
 $global.playerCanUseGates

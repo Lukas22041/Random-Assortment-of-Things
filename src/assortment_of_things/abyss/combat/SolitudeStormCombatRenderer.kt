@@ -22,8 +22,6 @@ class SolitudeStormCombatRenderer(var solitude: SeaOfSolitude) : BaseCombatLayer
 
     var thunder = Global.getSettings().getAndLoadSprite("graphics/fx/rat_solitude_thunder.png")
 
-
-
     override fun isExpired(): Boolean {
         return false
     }

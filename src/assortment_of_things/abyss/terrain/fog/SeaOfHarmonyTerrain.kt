@@ -21,8 +21,6 @@ class SeaOfHarmonyTerrain() : BaseFogTerrain() {
     var color = AbyssUtils.ABYSS_COLOR
 
     override fun advance(amount: Float) {
-        var currentsystem = entity?.containingLocation ?: return
-        if (Global.getSector().playerFleet.containingLocation != currentsystem) return
         super.advance(amount)
     }
 

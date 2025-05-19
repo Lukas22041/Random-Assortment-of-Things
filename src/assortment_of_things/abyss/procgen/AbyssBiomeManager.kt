@@ -29,7 +29,9 @@ class AbyssBiomeManager {
     }
 
     var biomes = ArrayList<BaseAbyssBiome>()
-    fun getBiome(biomeId: String) = biomes.find { it.getBiomeID() == biomeId }
+    private var biomeMap = HashMap<String, BaseAbyssBiome>() //Should be better performance than the old solution
+    //fun getBiome(biomeId: String) = biomes.find { it.getBiomeID() == biomeId }
+    fun getBiome(biomeId: String) = biomeMap.get(biomeId)
     fun getBiome(biome: Class<*>) = biomes.find { it.javaClass.name == biome.name }
 
     //Get the lower left coordinate of a cell in World coordinates
@@ -52,7 +54,16 @@ class AbyssBiomeManager {
 
     //var cells = ArrayList<ArrayList>
 
-  
+    fun readResolve() : Any {
+        //Fix for existing saves, may remove later
+
+        biomeMap = HashMap<String, BaseAbyssBiome>()
+        for (biome in biomes) {
+            biomeMap.put(biome.getBiomeID(), biome)
+        }
+
+        return this
+    }
 
     fun init() {
 
@@ -76,6 +87,11 @@ class AbyssBiomeManager {
             biomes.add(EtherealShores())
         }
 
+        //Put all biomes in to a map
+        biomeMap = HashMap<String, BaseAbyssBiome>()
+        for (biome in biomes) {
+            biomeMap.put(biome.getBiomeID(), biome)
+        }
 
         //var cells = cellArray.sumOf { it.size }
 

@@ -192,7 +192,7 @@ object AbyssFleetEquipUtils {
         }
     }
 
-    private fun inflateShip(member: FleetMemberAPI, commander: PersonAPI, chance: WeightedRandomPicker<Int>)
+    fun inflateShip(member: FleetMemberAPI, commander: PersonAPI, chance: WeightedRandomPicker<Int>)
     {
         var smods = chance.pick()
         member.fixVariant()

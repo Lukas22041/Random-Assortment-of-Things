@@ -21,7 +21,6 @@ import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI
 import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.combat.threat.DisposableThreatFleetManager
 import com.fs.starfarer.api.impl.combat.threat.DisposableThreatFleetManager.FabricatorEscortStrength
-import com.fs.starfarer.api.impl.combat.threat.DisposableThreatFleetManager.ThreatFleetCreationParams
 import com.fs.starfarer.api.impl.combat.threat.ThreatFIDConfig
 import com.fs.starfarer.api.impl.combat.threat.ThreatFleetBehaviorScript
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -270,6 +269,8 @@ class AbyssalWastes() : BaseAbyssBiome() {
                 var core =  SeraphCore().createPerson(RATItems.SERAPH_CORE, fleet.faction.id, random)
                 member.captain = core
                 member.repairTracker.cr += 0.15f
+
+
             }
 
         }
@@ -280,13 +281,23 @@ class AbyssalWastes() : BaseAbyssBiome() {
 
         //TODO Add Seraph cores to the seraph threat
 
-        var alterationChancePerShip = AbyssFleetStrengthData.SOLITUDE_ALTERATION_CHANCE + (0.05f * depth)
+        var alterationChancePerShip = 0.25f
         AbyssFleetEquipUtils.addAlterationsToFleet(fleet, alterationChancePerShip, random)
 
-        var zeroSmodWeight = AbyssFleetStrengthData.SOLITUDE_ZERO_SMODS_WEIGHT
-        var oneSmodWeight = AbyssFleetStrengthData.SOLITUDE_ONE_SMODS_WEIGHT
-        var twoSmodWeight = AbyssFleetStrengthData.SOLITUDE_TWO_SMODS_WEIGHT
-        AbyssFleetEquipUtils.inflate(fleet, zeroSmodWeight, oneSmodWeight, twoSmodWeight)
+        var zeroSmodWeight = 0.4f
+        var oneSmodWeight = 1.25f
+        var twoSmodWeight = 1f
+        //Do not inflate every ship since threat botes have 1k OP.
+        //AbyssFleetEquipUtils.inflate(fleet, zeroSmodWeight, oneSmodWeight, twoSmodWeight)
+        var chance = WeightedRandomPicker<Int>()
+        chance.add(0, zeroSmodWeight)
+        chance.add(1, oneSmodWeight)
+        chance.add(2, twoSmodWeight)
+        for (member in fleet.fleetData.membersListCopy) {
+            if (member.baseOrModSpec().hasTag("rat_abyss_threat")) {
+                AbyssFleetEquipUtils.inflateShip(member, fleet.commander, chance)
+            }
+        }
 
         fleet.addEventListener(SimUnlockerListener("rat_abyssals_sim"))
 
@@ -588,7 +599,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
 
         var count = 3
         var fadeInOverwrite = false
-        if (particleManager.particles.size <= 50) {
+        if (particleManager.particles.size <= 100) {
             count *= 4
             fadeInOverwrite = true
         }

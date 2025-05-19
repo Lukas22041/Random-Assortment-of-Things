@@ -59,7 +59,7 @@ class AbyssFleetScript(var fleet: CampaignFleetAPI, var source: SectorEntityToke
             var target = tactical.target
 
             var minDistToSource = 5000f
-            var maxDistToPlayer = 17500f
+            var maxDistToPlayer = 16000f
 
 
 
