@@ -1,3 +1,14 @@
+Version 3.0.0-Beta9
+Save compatible with beta8
+
+-> Added additional compatibility for more content for the Which Mod feature & configs for those in the settings.
+-> Slight performance improvements for the Artifact and WhichMod UI
+-> Fixed the Whichmod feature working on a few more things than supposed to.
+-> Made codex entries for RAT skills unlockable.
+-> The genesis now deals 25% less damage while in phase 2.
+
+
+
 Version 3.0.0-Beta8
 Save compatible with beta7
 

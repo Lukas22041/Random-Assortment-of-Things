@@ -257,6 +257,10 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship.mutableStats.ballisticWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f + (0.60f * level))
             ship.mutableStats.missileWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f + (0.60f * level))
 
+            ship.mutableStats.energyWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f + (0.25f*level))
+            ship.mutableStats.ballisticWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f + (0.25f*level))
+            ship.mutableStats.missileWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f + (0.25f*level))
+
             var color = AbyssUtils.GENESIS_COLOR.setAlpha(75)
             var jitterColor = color.setAlpha(55)
             var jitterUnderColor = color.setAlpha(150)
@@ -301,6 +305,11 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship.mutableStats.energyWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f)
             ship.mutableStats.ballisticWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f)
             ship.mutableStats.missileWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f)
+
+            ship.mutableStats.energyWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f)
+            ship.mutableStats.ballisticWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f)
+            ship.mutableStats.missileWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f)
+
 
             var color = AbyssUtils.GENESIS_COLOR.setAlpha(75)
             var jitterColor = color.setAlpha(55)

@@ -49,6 +49,10 @@ object RATSettings : LunaSettingsListener
     var whichModWeapons = LunaSettings.getBoolean(modID, "rat_whichModWeapons")
     var whichModFighters = LunaSettings.getBoolean(modID, "rat_whichModFighters")
     var whichModHullmods = LunaSettings.getBoolean(modID, "rat_whichModHullmods")
+    var whichModCargo = LunaSettings.getBoolean(modID, "rat_whichModCargo")
+    var whichModIndustries = LunaSettings.getBoolean(modID, "rat_whichModIndustries")
+    var whichModConditions = LunaSettings.getBoolean(modID, "rat_whichModConditions")
+    var whichModSkills = LunaSettings.getBoolean(modID, "rat_whichModSkills")
 
     //Parallel Construction
     var parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")
@@ -102,6 +106,9 @@ object RATSettings : LunaSettingsListener
         whichModWeapons = LunaSettings.getBoolean(modID, "rat_whichModWeapons")
         whichModFighters = LunaSettings.getBoolean(modID, "rat_whichModFighters")
         whichModHullmods = LunaSettings.getBoolean(modID, "rat_whichModHullmods")
+        whichModCargo = LunaSettings.getBoolean(modID, "rat_whichModCargo")
+        whichModIndustries = LunaSettings.getBoolean(modID, "rat_whichModIndustries")
+        whichModConditions = LunaSettings.getBoolean(modID, "rat_whichModConditions")
 
         parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")
         parallelApplyToNPCs = LunaSettings.getBoolean(modID, "rat_parallelApplyToNPCs")

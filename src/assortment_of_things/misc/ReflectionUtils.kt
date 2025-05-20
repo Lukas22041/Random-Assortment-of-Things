@@ -167,6 +167,19 @@ object ReflectionUtils {
 
         if (field == null) return null
 
+        setFieldAccessibleHandle.invoke(field, true)
+        return ReflectedField(field)
+    }
+
+    fun getField(fieldName: String, clazz: Class<*>) : ReflectedField? {
+        var field: Any? = null
+        try {  field = clazz.getField(fieldName) } catch (e: Throwable) {
+            try {  field = clazz.getDeclaredField(fieldName) } catch (e: Throwable) { }
+        }
+
+        if (field == null) return null
+
+        setFieldAccessibleHandle.invoke(field, true)
         return ReflectedField(field)
     }
 
@@ -179,6 +192,21 @@ object ReflectionUtils {
 
         try { method = clazz.getMethod(methodName, *methodType.parameterArray())  }
             catch (e: Throwable) {
+            try {  method = clazz.getDeclaredMethod(methodName, *methodType.parameterArray()) } catch (e: Throwable) { }
+        }
+
+        if (method == null) return null
+        return ReflectedMethod(method)
+    }
+
+    fun getMethod(methodName: String, clazz: Class<*>, vararg arguments: Any?) : ReflectedMethod? {
+        var method: Any? = null
+
+        val args = arguments.map { it!!::class.javaPrimitiveType ?: it::class.java }
+        val methodType = MethodType.methodType(Void.TYPE, args)
+
+        try { method = clazz.getMethod(methodName, *methodType.parameterArray())  }
+        catch (e: Throwable) {
             try {  method = clazz.getDeclaredMethod(methodName, *methodType.parameterArray()) } catch (e: Throwable) { }
         }
 
@@ -217,7 +245,7 @@ object ReflectionUtils {
     }
 
     class ReflectedField(private val field: Any) {
-        fun get(): Any? = getFieldHandle.invoke(field)
+        fun get(instance: Any?): Any? = getFieldHandle.invoke(field, instance)
         fun set(instance: Any?, value: Any?) {
             setFieldHandle.invoke(field, instance, value)
         }

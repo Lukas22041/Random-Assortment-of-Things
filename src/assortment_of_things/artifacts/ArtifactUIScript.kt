@@ -28,6 +28,9 @@ class ArtifactUIScript : EveryFrameScript {
     @Transient
     var fleetPanel: UIPanelAPI? = null
 
+    @Transient
+    var getChildrenCopyMethod: ReflectionUtils.ReflectedMethod? = null
+
     override fun isDone(): Boolean {
         return false
     }
@@ -63,10 +66,15 @@ class ArtifactUIScript : EveryFrameScript {
 
         if (core == null) return
 
-        fleetPanel = ReflectionUtils.invoke("getCurrentTab", core) as UIPanelAPI? ?: return
-        var leftPanel = fleetPanel!!.getChildrenCopy().find { if (it is UIPanelAPI && it.getChildrenCopy().any { it is LabelAPI }) true else false } as UIPanelAPI ?: return
 
-        var children = leftPanel.getChildrenCopy()
+
+        fleetPanel = ReflectionUtils.invoke("getCurrentTab", core) as UIPanelAPI? ?: return
+        if (getChildrenCopyMethod == null) {
+            getChildrenCopyMethod = ReflectionUtils.getMethod("getChildrenCopy", fleetPanel!!)
+        }
+        var leftPanel = (getChildrenCopyMethod!!.invoke(fleetPanel) as List<UIComponentAPI>).find { if (it is UIPanelAPI && (getChildrenCopyMethod!!.invoke(it) as List<UIComponentAPI>).any { it is LabelAPI }) true else false } as UIPanelAPI ?: return
+
+        var children = (getChildrenCopyMethod!!.invoke(leftPanel) as List<UIComponentAPI>)
         if (panel != null && children.contains(panel!!)) {
             return
         }
