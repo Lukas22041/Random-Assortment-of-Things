@@ -169,6 +169,7 @@ class ExogridHullmod : BaseHullMod() {
         element.render {
             sprite.setSize(tooltip.widthSoFar + 20, tooltip.heightSoFar + 10)
             sprite.setAdditiveBlend()
+            sprite.alphaMult = 0.5f
             sprite.render(tooltip.position.x, tooltip.position.y)
         }
     }

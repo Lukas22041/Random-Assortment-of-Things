@@ -22,12 +22,10 @@ class ArtifactTooltip(var artifact: ArtifactSpec?, var addInstallDesc: Boolean, 
 
     override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean, tooltipParam: Any) {
 
-        if (!Global.CODEX_TOOLTIP_MODE) {
+        if (!Global.CODEX_TOOLTIP_MODE && artifact != null) {
             tooltip.codexEntryId = CodexHandler.getArtifactsEntryId(artifact!!.id)
             CodexHandler.reportPlayerAwareOfThing(artifact!!.id, CodexHandler.ARTIFACT_UNLOCK_CAT, CodexHandler.getArtifactsEntryId(artifact!!.id),true)
         }
-
-
 
         if (artifact == null) {
 

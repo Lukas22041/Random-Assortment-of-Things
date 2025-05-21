@@ -99,7 +99,8 @@ class WhichModScript : EveryFrameScript {
 
                             var originalText = "F2 open codex"
                             if (codexTooltip.text.contains("F1 cycle weapon info")) {
-                                originalText = "F1 cycle weapons F2 codex"
+                                //originalText = "F1 cycle weapons F2 codex"
+                                originalText = "F1 weapons F2 codex"
                             }
                             if (codexTooltip.text.contains("F1 more info")) {
                                 originalText = "F1 more info F2 codex"

@@ -165,7 +165,7 @@ class AbyssBiomeManager {
         var system = AbyssUtils.getSystem()
 
         var minibossStations = system.customEntities.filter { it.customEntitySpec.tags.contains("rat_miniboss") }
-        var perMiniboss = 45f
+        var perMiniboss = /*45f*/ 65f
         for (miniboss in minibossStations) {
             AbyssProcgenUtils.setAbyssalMatterDrop(miniboss, perMiniboss + MathUtils.getRandomNumberInRange(-3f, 3f))
         }
@@ -179,7 +179,7 @@ class AbyssBiomeManager {
         //Eliminate around half of the choices
         var others = system.customEntities.filter { Random().nextFloat() >= 0.6f && it.customEntitySpec.id == "rat_abyss_fabrication" || it.customEntitySpec.id == "rat_abyss_accumalator" }.shuffled()
 
-        var remaining = 200f
+        var remaining = 250f
         var perOther = remaining / others.size
 
         for (other in others) {

@@ -3,6 +3,7 @@ package assortment_of_things.artifacts.plugins
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.artifacts.BaseArtifactPlugin
 import assortment_of_things.misc.addPara
+import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
@@ -31,10 +32,13 @@ class ComputationalMatrix : BaseArtifactPlugin() {
                 "automated ships", "combat readiness penalty", "10%")
         } else {
 
-            var manager = AutomatedShipsManager.get()
             var provided = points.toInt()
-            var maximum = manager.getMaximumDP().toInt()
-            var used = manager.getUsedDP()
+            var maximum = 0
+            if (Global.getCurrentState() != GameState.TITLE) {
+                var manager = AutomatedShipsManager.get()
+                maximum = manager.getMaximumDP().toInt()
+            }
+
             tooltip.addPara("+$provided automated ship points", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+$provided")
 
             tooltip.addSpacer(10f)

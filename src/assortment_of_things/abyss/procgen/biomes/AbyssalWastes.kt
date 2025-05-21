@@ -2,6 +2,7 @@ package assortment_of_things.abyss.procgen.biomes
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.entities.procgen.AbyssTransmitter
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
 import assortment_of_things.abyss.procgen.*
 import assortment_of_things.abyss.scripts.AbyssFleetScript
@@ -106,7 +107,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
        //generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1", 0.6f)
 
 
-        var photosphereNum = MathUtils.getRandomNumberInRange(10, 13)
+        var photosphereNum = MathUtils.getRandomNumberInRange(11, 12)
 
         for (i in 0 until photosphereNum) {
 
@@ -186,7 +187,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
 
         var orbitPicks = WeightedRandomPicker<String>(random)
         orbitPicks.add("rat_abyss_fabrication",1f)
-        orbitPicks.add("rat_abyss_drone",3.5f)
+        orbitPicks.add("rat_abyss_drone",3f)
         orbitPicks.add("rat_abyss_transmitter",0.75f)
         //orbitPicks.add("wreck",0.5f)
 
@@ -205,12 +206,12 @@ class AbyssalWastes() : BaseAbyssBiome() {
         var unclaimedCellPicks = WeightedRandomPicker<String>(random)
         unclaimedCellPicks.add("rat_abyss_fabrication",0.75f)
         unclaimedCellPicks.add("rat_abyss_drone",0.5f)
-        unclaimedCellPicks.add("rat_abyss_transmitter",1f)
+        unclaimedCellPicks.add("rat_abyss_transmitter",0.75f)
         //unclaimedCellPicks.add("wreck",1f)
 
         //Populate locations without anything major near them.
         //Fabricators, Transmitters, Droneships, Abyssal Wrecks
-        var picks = MathUtils.getRandomNumberInRange(7, 10)
+        var picks = MathUtils.getRandomNumberInRange(8, 13)
         for (i in 0 until picks) {
             var pick = pickAndClaimCell() ?: continue //Should not spawn things of this biome near the border
             var loc = pick.getRandomLocationInCell()

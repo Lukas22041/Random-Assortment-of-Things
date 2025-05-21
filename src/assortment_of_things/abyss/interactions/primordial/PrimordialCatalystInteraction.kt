@@ -180,8 +180,13 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
 
         override fun advance(amount: Float) {
 
+            var mult = 1f
+            if (Global.getSector().isFastForwardIteration) {
+                mult = Global.getSettings().getFloat("campaignSpeedupMult")
+            }
+
             if (delay >= 0f) {
-                delay -= amount
+                delay -= amount / mult
                 return
             }
 
@@ -211,7 +216,7 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
             var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI
             core.setOpacity(0f)
 
-            biome.effectLevel += 0.25f * amount
+            biome.effectLevel += 0.25f * amount / mult
             if (biome.effectLevel >= 1f) {
                 finished = true
                 Global.getSector().addScript(FadeInUIAFterTransformScript())

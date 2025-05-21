@@ -28,7 +28,6 @@ class AbyssAmbientSoundPlayer : EveryFrameScript {
                 mult = Global.getSettings().getFloat("campaignSpeedupMult")
             }
 
-
             interval.advance(amount / mult)
         }
         else {

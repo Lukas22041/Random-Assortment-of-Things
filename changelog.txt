@@ -1,3 +1,15 @@
+Version 3.0.0-Beta10
+Save compatible with beta9
+
+-> Added the miniboss for the sea of solitude.
+-> Increased the cost of integrating the abyssal grid.
+-> Alterations, AI cores, Artifacts and Consumeable Industries should now display codex entries.
+-> Using the "Abyssal Burn" ability in the depths now changes the fleets engine color to the color the biome its in.
+-> Fixed the abyss system not generating with a hyperspace anchor.
+-> Fixed an issue where ships in the mod were using the wrong sounds for opening/closing their shields.
+
+
+
 Version 3.0.0-Beta9
 Save compatible with beta8
 

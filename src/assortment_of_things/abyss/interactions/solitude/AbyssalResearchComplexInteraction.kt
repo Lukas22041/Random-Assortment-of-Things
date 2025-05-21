@@ -53,7 +53,7 @@ class AbyssalResearchComplexInteraction : RATInteractionPlugin() {
             tooltip.addTitle("Abyssal Matter")
             tooltip.addSpacer(5f)
             tooltip.addPara("“Abyssal Matter, the reason all of us are here, is the most exciting thing i’ve been able to study in my whole life…It is the most mutable material we’ve come across, impulses from electromagnetic waves, gravitational condensing and further physical stimuli allow us to manipulate it in any way we want. Be that reshaping the material in to new forms, or creating controlled emissions of energy\n" + "\n" +
-                    "…this would be if we fully understand how it reacted to those, yet. We come closer with most attempts, but others entirely upend everything we know about it so far.\n" + "\n" +
+                    "…this would be if we fully understand how it reacted to those, yet. We come closer with most attempts, but others entirely upend everything we know about it.\n" + "\n" +
                     "One of our recent experiments has been the most interesting so far. When exposed to electric stimuli, it transmits on to other attached samples. Now, if those samples are separated and the same test is repeated, the signal continues to transmit on to the other sample, despite their physical distance.”\n",
                 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
 
@@ -71,7 +71,7 @@ class AbyssalResearchComplexInteraction : RATInteractionPlugin() {
                     "As with many things, the “why” has yet to be worked out though…for what reason do those differences exist, and how did they come to be?”\n")
 
             para.setHighlight("Sea of Tranquility", "Resplendent Sea", "Sea of Harmony")
-            para.setHighlightColors(Color(255, 0, 50), Color(240,230,140), Color(255, 64, 50))
+            para.setHighlightColors(Color(255, 0, 50), Color(199, 191, 117), Color(255, 84, 50))
 
             textPanel.addTooltip()
         }

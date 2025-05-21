@@ -6,7 +6,7 @@
     {
         "major":3,
         "minor":0,
-        "patch":0-Beta9 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
+        "patch":0-Beta10 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
     },
 	
 	#Link towards a direct download, fetched from the online version file

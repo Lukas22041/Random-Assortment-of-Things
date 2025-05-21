@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.entities.procgen
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.biomes.AbyssalWastes
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -52,6 +53,10 @@ class AbyssTransmitter : BaseCustomEntityPlugin() {
                 var data = AbyssUtils.getBiomeManager()
                 var cell = data.getCell(entity)
                 color = cell.getBiome()?.getBiomeColor()
+
+                if (cell.getBiome() is AbyssalWastes) {
+                    color = Color(199, 191, 117)
+                }
             }
             else {
                 color = Color(0, 230, 120, 255)

@@ -203,7 +203,8 @@ class SeaOfHarmony() : BaseAbyssBiome() {
         }
 
         var orbitPicks = WeightedRandomPicker<String>(random)
-        orbitPicks.add("rat_abyss_fabrication",1.5f)
+        orbitPicks.add("rat_abyss_fabrication",0.75f)
+        orbitPicks.add("rat_abyss_accumalator",0.75f)
         orbitPicks.add("rat_abyss_drone",3.5f)
         orbitPicks.add("rat_abyss_transmitter",0.75f)
         orbitPicks.add("wreck",0.5f)
@@ -223,7 +224,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
                 }
                 entity.setCircularOrbit(orbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), orbit.distance, orbit.orbitDays)
 
-                if (entityPick == "rat_abyss_fabrication") {
+                if (entityPick == "rat_abyss_fabrication" || entityPick == "rat_abyss_accumalator") {
                     if (random.nextFloat() >= 0.75f) {
                         spawnDefenseFleet(entity)
                     }
@@ -233,6 +234,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
         var unclaimedCellPicks = WeightedRandomPicker<String>(random)
         unclaimedCellPicks.add("rat_abyss_fabrication",1f)
+        unclaimedCellPicks.add("rat_abyss_accumalator",1f)
         unclaimedCellPicks.add("rat_abyss_drone",0.5f)
         unclaimedCellPicks.add("rat_abyss_transmitter",1f)
         unclaimedCellPicks.add("wreck",1f)
@@ -256,7 +258,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
             entity.setLocation(loc.x, loc.y)
 
-            if (entityPick == "rat_abyss_fabrication") {
+            if (entityPick == "rat_abyss_fabrication" || entityPick == "rat_abyss_accumalator") {
                 if (random.nextFloat() >= 0.33f) {
                     spawnDefenseFleet(entity)
                 }
