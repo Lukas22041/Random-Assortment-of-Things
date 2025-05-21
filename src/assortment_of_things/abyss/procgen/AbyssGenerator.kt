@@ -37,7 +37,7 @@ object AbyssGenerator {
         system.memoryWithoutUpdate.set(MusicPlayerPluginImpl.MUSIC_SET_MEM_KEY, "rat_music_abyss")
 
 
-
+        system.generateAnchorIfNeeded()
 
 
         system.backgroundTextureFilename = "graphics/backgrounds/abyss/Abyss2.jpg"

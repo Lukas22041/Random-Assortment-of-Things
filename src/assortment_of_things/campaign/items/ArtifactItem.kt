@@ -4,6 +4,7 @@ import assortment_of_things.artifacts.ArtifactIntel
 import assortment_of_things.artifacts.ArtifactSpec
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.artifacts.BaseArtifactPlugin
+import assortment_of_things.misc.CodexHandler
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoStackAPI
 import com.fs.starfarer.api.campaign.CargoTransferHandlerAPI
@@ -104,6 +105,9 @@ class ArtifactItem : BaseSpecialItemPlugin() {
         val g: Color = Misc.getGrayColor()
         var b: Color? = Misc.getButtonTextColor()
         b = Misc.getPositiveHighlightColor()
+
+        tooltip.codexEntryId = CodexHandler.getArtifactsEntryId(artifactSpec!!.id)
+        CodexHandler.reportPlayerAwareOfThing(artifactSpec!!.id, CodexHandler.ARTIFACT_UNLOCK_CAT, CodexHandler.getArtifactsEntryId(artifactSpec!!.id),true)
 
         tooltip.addTitle(getName())
 

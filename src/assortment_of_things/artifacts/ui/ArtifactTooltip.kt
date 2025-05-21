@@ -2,13 +2,16 @@ package assortment_of_things.artifacts.ui
 
 import assortment_of_things.artifacts.ArtifactSpec
 import assortment_of_things.artifacts.ArtifactUtils
+import assortment_of_things.misc.CodexHandler
 import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.impl.SharedUnlockData
+import com.fs.starfarer.api.impl.codex.CodexDataV2
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator
 import com.fs.starfarer.api.util.Misc
 
-class ArtifactTooltip(var artifact: ArtifactSpec?, var addInstallDesc: Boolean) : TooltipCreator {
+class ArtifactTooltip(var artifact: ArtifactSpec?, var addInstallDesc: Boolean, var isCodex: Boolean = false) : TooltipCreator {
     override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
         return false
     }
@@ -18,6 +21,13 @@ class ArtifactTooltip(var artifact: ArtifactSpec?, var addInstallDesc: Boolean) 
     }
 
     override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean, tooltipParam: Any) {
+
+        if (!Global.CODEX_TOOLTIP_MODE) {
+            tooltip.codexEntryId = CodexHandler.getArtifactsEntryId(artifact!!.id)
+            CodexHandler.reportPlayerAwareOfThing(artifact!!.id, CodexHandler.ARTIFACT_UNLOCK_CAT, CodexHandler.getArtifactsEntryId(artifact!!.id),true)
+        }
+
+
 
         if (artifact == null) {
 
@@ -61,7 +71,7 @@ class ArtifactTooltip(var artifact: ArtifactSpec?, var addInstallDesc: Boolean) 
         if (addInstallDesc) {
             tooltip.addSpacer(10f)
             tooltip.addPara("Click to integrate another artifact.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        } else {
+        } else if (!isCodex){
             tooltip.addSpacer(10f)
             var active = ArtifactUtils.getActiveArtifact()
 

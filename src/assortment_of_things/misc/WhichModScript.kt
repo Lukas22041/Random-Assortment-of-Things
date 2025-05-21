@@ -22,6 +22,7 @@ class WhichModScript : EveryFrameScript {
         "codex_hullmod_",
         "codex_item_",
         "codex_commodity_",
+        "codex_artifacts_",
         "codex_industry_",
         "codex_condition_",
         "codex_skill_",
@@ -79,7 +80,7 @@ class WhichModScript : EveryFrameScript {
                 if (codexEntryId.contains("codex_weapon_") && !RATSettings.whichModWeapons!!) return
                 else if (codexEntryId.contains("codex_fighter_") && !RATSettings.whichModFighters!!) return
                 else if (codexEntryId.contains("codex_hullmod_") && !RATSettings.whichModHullmods!!) return
-                else if (codexEntryId.contains("codex_item_") || codexEntryId.contains("codex_commodity_") && !RATSettings.whichModCargo!!) return
+                else if (codexEntryId.contains("codex_item_") || codexEntryId.contains("codex_commodity_") || codexEntryId.contains("codex_artifacts_") && !RATSettings.whichModCargo!!) return
                 else if (codexEntryId.contains("codex_industry_")  && !RATSettings.whichModIndustries!!) return
                 else if (codexEntryId.contains("codex_condition_")  && !RATSettings.whichModConditions!!) return
                 else if ((codexEntryId.contains("codex_skill_") || codexEntryId.contains("codex_ability_") || codexEntryId.contains("codex_sic_aptitude_")) && !RATSettings.whichModSkills!!) {

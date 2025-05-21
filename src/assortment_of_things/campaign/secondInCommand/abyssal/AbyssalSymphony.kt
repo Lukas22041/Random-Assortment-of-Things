@@ -59,6 +59,8 @@ class AbyssalSymphonyScript(var ship: ShipAPI) : AdvanceableListener {
     }
 
     override fun advance(amount: Float) {
+        if (!ship.isAlive) return
+
         var ppt = ship.peakTimeRemaining
 
         if (ppt > 0) {

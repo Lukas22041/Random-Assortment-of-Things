@@ -11,10 +11,13 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.campaign.econ.SubmarketAPI
 import com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.impl.SharedUnlockData
+import com.fs.starfarer.api.impl.codex.CodexDataV2
 import com.fs.starfarer.api.loading.HullModSpecAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
+import second_in_command.misc.codex.CodexHandler
 import java.awt.Color
 import java.util.*
 
@@ -174,6 +177,9 @@ class AlterationInstallerItem : BaseSpecialItemPlugin() {
         tooltip.addTitle(name)
         val design = hullmodSpec!!.manufacturer
         Misc.addDesignTypePara(tooltip, design, opad)
+
+        tooltip.codexEntryId = CodexDataV2.getHullmodEntryId(hullmodSpec!!.id)
+        SharedUnlockData.get().reportPlayerAwareOfHullmod(hullmodSpec!!.id,true)
 
         var c = Misc.getTextColor()
         if (useGray) c = Misc.getGrayColor()

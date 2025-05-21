@@ -53,7 +53,7 @@ rat_creditsText,,Text,"[Credits:]
 #Enhancements,,,,,,,,
 ,,,,,,,,
 rat_whichModHeader,Which Mod is this From,Header,Which Mod is this From,,,,,Enhancement
-rat_whichModText,,Text,Displays the source mod of certain pieces of content when hovering over the relevant tooltips. Generaly only works if they have codex entries. Mod names may be shortened if their to long.,,,,,Enhancement
+rat_whichModText,,Text,Displays the source mod of certain pieces of content when hovering over the relevant tooltips. Generaly only works if they have [codex entries]. Mod names may be shortened if their to long.,,,,,Enhancement
 rat_whichModShips,Display for Ships,Boolean,true,,,,,Enhancement
 rat_whichModWeapons,Display for Weapons,Boolean,true,,,,,Enhancement
 rat_whichModFighters,Display for Fighters,Boolean,true,,,,,Enhancement

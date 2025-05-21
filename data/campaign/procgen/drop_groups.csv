@@ -82,14 +82,14 @@ item_rat_artifact:miniature_forge,rat_abyss_artifact_very_rare,1
 item_rat_artifact:hyperenergetic_generator,rat_abyss_artifact_very_rare,1
 item_rat_artifact:ordnance_overwrite,rat_abyss_artifact_very_rare,1
 ,,
-nothing,rat_abyss_artifact_rare,95%
+nothing,rat_abyss_artifact_rare,97%
 item_rat_artifact:computational_matrix,rat_abyss_artifact_rare,1
 item_rat_artifact:defensive_array,rat_abyss_artifact_rare,1
 item_rat_artifact:miniature_forge,rat_abyss_artifact_rare,1
 item_rat_artifact:hyperenergetic_generator,rat_abyss_artifact_rare,1
 item_rat_artifact:ordnance_overwrite,rat_abyss_artifact_rare,1
 ,,
-nothing,rat_abyss_artifact_common,30%
+nothing,rat_abyss_artifact_common,40%
 item_rat_artifact:computational_matrix,rat_abyss_artifact_common,1
 item_rat_artifact:defensive_array,rat_abyss_artifact_common,1
 item_rat_artifact:miniature_forge,rat_abyss_artifact_common,1

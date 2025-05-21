@@ -37,7 +37,7 @@ class FabricatorInteraction : RATInteractionPlugin() {
             clearOptions()
             textPanel.addPara("You navigate through long corridors of extractors, refineries and processors. " + "This type of station appears to have been specialised in using the exotic matter of the abyss for the production of unique tools.")
 
-            textPanel.addPara("The material present all around the abyss seems to be useful for ship components that wouldn't be possible with other materials but it can not be safely transported elsewhere, meaning all production had to be done localy. " + "Due to this, none of the products seem to have any presence in the present day sector.")
+            textPanel.addPara("The material present all around the abyss seems to be useful for ship components that wouldn't be possible with other materials but it can not be safely transported elsewhere, meaning all production had to be done localy. " + "They appear to have never made a presence in the sector.")
 
             createOption("Begin salvage operations") {
                 clearOptions()

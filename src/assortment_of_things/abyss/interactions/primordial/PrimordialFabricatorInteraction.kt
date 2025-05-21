@@ -191,8 +191,8 @@ class PrimordialFabricatorInteraction : RATInteractionPlugin() {
         subelement.addSpacer(10f)
 
         subelement.addPara("This hangar enables the modification of existing ships to integrate the Abyssal Grid hullmod. " +
-                "This process requires 40/50/75/100 units of Abyssal Matter, based on the hullsize of the selected ship.", 0f,
-            Misc.getTextColor(), Misc.getHighlightColor(), "Abyssal Grid","40","50","75", "100", "Abyssal Matter" )
+                "This process requires 75/100/125/150 units of Abyssal Matter, based on the hullsize of the selected ship.", 0f,
+            Misc.getTextColor(), Misc.getHighlightColor(), "Abyssal Grid", "75","100","125", "150", "Abyssal Matter" )
 
 /*
         var list = ArrayList<FleetMemberAPI>()
@@ -258,10 +258,10 @@ class PrimordialFabricatorInteraction : RATInteractionPlugin() {
             modify.playClickSound()
 
             var costs = HashMap<HullSize, Int>()
-            costs.put(HullSize.FRIGATE, 40)
-            costs.put(HullSize.DESTROYER, 50)
-            costs.put(HullSize.CRUISER, 75)
-            costs.put(HullSize.CAPITAL_SHIP, 100)
+            costs.put(HullSize.FRIGATE, 75)
+            costs.put(HullSize.DESTROYER, 100)
+            costs.put(HullSize.CRUISER, 125)
+            costs.put(HullSize.CAPITAL_SHIP, 150)
 
             var picks = Global.getSector().playerFleet.fleetData.membersListCopy
             picks = picks.filter { getAbyssalMatter() > costs.get(it.hullSpec.hullSize)!!  }

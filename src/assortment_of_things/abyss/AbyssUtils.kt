@@ -70,6 +70,7 @@ object AbyssUtils {
         return !Global.getSettings().isDevMode
     }
 
+    @JvmStatic
     fun isPlayerInAbyss() = isInAbyss(Global.getSector()?.playerFleet)
 
     fun isInAbyss(entity: SectorEntityToken?) : Boolean {

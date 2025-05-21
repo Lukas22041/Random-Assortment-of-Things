@@ -2,6 +2,7 @@ package assortment_of_things.abyss.procgen.biomes
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.items.cores.officer.SeraphCore
 import assortment_of_things.abyss.misc.FlickerUtilV2Abyssal
 import assortment_of_things.abyss.procgen.*
 import assortment_of_things.abyss.scripts.AbyssFleetScript
@@ -9,6 +10,7 @@ import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.campaign.scripts.SimUnlockerListener
 import assortment_of_things.misc.fixVariant
 import assortment_of_things.misc.getAndLoadSprite
+import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
@@ -30,6 +32,7 @@ import lunalib.lunaUtil.campaign.LunaCampaignRenderingPlugin
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ext.plus
 import org.lwjgl.util.vector.Vector2f
+import second_in_command.SCUtils
 import java.awt.Color
 import java.util.*
 
@@ -110,6 +113,48 @@ class SeaOfSolitude() : BaseAbyssBiome() {
     }
 
 
+    fun spawnMiniboss() {
+        var orbit = pickOrbit(lightsourceOrbits.filter { !it.isClaimedByMajor() && it.index == 0 })
+        if (orbit == null) return
+
+        var complex = AbyssProcgenUtils.spawnEntity(system, this,"rat_abyss_research_complex")
+        complex.setCircularOrbit(orbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), orbit.distance, orbit.orbitDays)
+
+        var faction = "rat_abyssals_solitude"
+        var fleet = Global.getFactory().createEmptyFleet(faction, "Protectors",false)
+        complex.memoryWithoutUpdate.set("\$defenderFleet", fleet)
+
+        var gabriel = fleet.fleetData.addFleetMember("rat_gabriel_Attack")
+
+        fleet.fleetData.addFleetMember("rat_sariel_Attack")
+        fleet.fleetData.addFleetMember("rat_sariel_Attack")
+        fleet.fleetData.addFleetMember("rat_sariel_Strike")
+
+        fleet.fleetData.addFleetMember("rat_raguel_Attack")
+        fleet.fleetData.addFleetMember("rat_raguel_Attack")
+        fleet.fleetData.addFleetMember("rat_raguel_Attack")
+        fleet.fleetData.addFleetMember("rat_raguel_Strike")
+        fleet.fleetData.addFleetMember("rat_raguel_Strike")
+
+        for (member in fleet.fleetData.membersListCopy) {
+            member.fixVariant()
+            member.variant.addTag(Tags.TAG_NO_AUTOFIT)
+            member.captain = SeraphCore().createPerson(RATItems.SERAPH_CORE, faction, Random())
+        }
+
+        AbyssFleetEquipUtils.inflate(fleet, 0.5f, 1f, 2f)
+
+        for (member in fleet.fleetData.membersListCopy) {
+            member.updateStats()
+            member.repairTracker.cr = member.repairTracker.maxCR
+        }
+
+        if (Global.getSettings().modManager.isModEnabled("second_in_command")) {
+            SCUtils.getFleetData(fleet) //Generate Skills
+        }
+    }
+
+
 
     fun populateEntities() {
 
@@ -125,6 +170,8 @@ class SeaOfSolitude() : BaseAbyssBiome() {
                 spawnDefenseFleet(lightsource)
             }
         }
+
+        spawnMiniboss()
 
         //Sensor Array can be either orbit or random loc, to make them slightly more difficult to find
         var sensor = AbyssProcgenUtils.createSensorArray(system, this)
@@ -146,7 +193,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
         }
 
         //Research station can be either orbit or random loc
-        var station = AbyssProcgenUtils.createResearchStation(system, this)
+      /*  var station = AbyssProcgenUtils.createResearchStation(system, this)
         if (random.nextFloat() >= 0.5f) {
             var researchOrbit = pickOrbit(lightsourceOrbits.filter { !it.isClaimedByMajor() && it.index == 0 || it.index == 1 })
             if (researchOrbit != null) {
@@ -159,7 +206,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
                 var loc = pick.getRandomLocationInCell()
                 station.setLocation(loc.x, loc.y)
             }
-        }
+        }*/
 
         var orbitPicks = WeightedRandomPicker<String>(random)
         orbitPicks.add("rat_abyss_accumalator",1f)

@@ -195,7 +195,21 @@ class AbyssBiomeManager {
         var color = Color(0, 0,0, 0)
         color = color.setAlpha(255)
         for (level in levels) {
+
             var bColor = level.key.getBiomeColor()
+
+            if (level.key is PrimordialWaters) {
+                var prim = level.key as PrimordialWaters
+                var effectLevel = prim.effectLevel
+                if (effectLevel <= 0) bColor = prim.getInactiveBiomeColor()
+                if (effectLevel >= 1) bColor = prim.getBiomeColor()
+
+                var radius = prim.getRadius()
+                if (MathUtils.getDistance(Global.getSector().playerFleet, prim.getStencilCenter()) <= radius) {
+                    bColor = prim.getBiomeColor()
+                } else bColor = prim.getInactiveBiomeColor()
+            }
+
             color = Color((color.red + (bColor.red * level.value).toInt()), (color.green + (bColor.green * level.value).toInt()), (color.blue + (bColor.blue * level.value).toInt()))
         }
 

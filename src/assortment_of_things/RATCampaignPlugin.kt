@@ -9,6 +9,7 @@ import assortment_of_things.abyss.interactions.*
 import assortment_of_things.abyss.interactions.ethereal.AbyssalRaphaelInteraction
 import assortment_of_things.abyss.interactions.primordial.PrimordialCatalystInteraction
 import assortment_of_things.abyss.interactions.primordial.PrimordialFabricatorInteraction
+import assortment_of_things.abyss.interactions.solitude.AbyssalResearchComplexInteraction
 import assortment_of_things.abyss.interactions.solitude.AccumalatorStationInteraction
 import assortment_of_things.abyss.interactions.tranquility.AbyssalShipyardInteraction
 import assortment_of_things.abyss.interactions.unique.AbyssSarielOutpostInteraction
@@ -178,6 +179,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
                 //Minibosses
                 "rat_abyssal_shipyard" -> return PluginPick(AbyssalShipyardInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_research_complex" -> return PluginPick(AbyssalResearchComplexInteraction(), CampaignPlugin.PickPriority.HIGHEST)
 
                 //Unique
                 "rat_sariel_outpost" -> return PluginPick(AbyssSarielOutpostInteraction(), CampaignPlugin.PickPriority.HIGHEST)

@@ -70,6 +70,9 @@ class RATModPlugin : BaseModPlugin() {
     override fun onApplicationLoad() {
         super.onApplicationLoad()
 
+        //CodexHandler.onApplicationLoad()
+
+
         val currentDate = Date()
         //var currentDate = Date(1698530401L * 1000)
         val startDate = Date(1761865200L * 1000)

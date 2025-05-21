@@ -179,12 +179,12 @@ object AbyssFleetEquipUtils {
         HullMods.TURRETGYROS
     )
 
-    fun inflate(fleet: CampaignFleetAPI, zeroSmodWeight: Float, oneSmodWeight: Float, threeSmodWeight: Float) {
+    fun inflate(fleet: CampaignFleetAPI, zeroSmodWeight: Float, oneSmodWeight: Float, twoSmodWeight: Float) {
 
         var chance = WeightedRandomPicker<Int>()
         chance.add(0, zeroSmodWeight)
         chance.add(1, oneSmodWeight)
-        chance.add(2, threeSmodWeight)
+        chance.add(2, twoSmodWeight)
 
         for (member in fleet.fleetData.membersListCopy)
         {

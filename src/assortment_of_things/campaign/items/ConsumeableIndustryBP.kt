@@ -10,6 +10,8 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.campaign.econ.SubmarketAPI
 import com.fs.starfarer.api.campaign.impl.items.BaseSpecialItemPlugin
 import com.fs.starfarer.api.graphics.SpriteAPI
+import com.fs.starfarer.api.impl.SharedUnlockData
+import com.fs.starfarer.api.impl.codex.CodexDataV2
 import com.fs.starfarer.api.loading.IndustrySpecAPI
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -84,7 +86,10 @@ class ConsumeableIndustryBP : BaseSpecialItemPlugin() {
         var b = Misc.getButtonTextColor()
         b = Misc.getPositiveHighlightColor()
         val industryId = stack.specialDataIfSpecial.data
-        val known = Global.getSector().playerFaction.knowsIndustry(industryId)
+        val known = Global.getSector().playerFaction.knowsIndustry(industry!!.id)
+
+        tooltip.codexEntryId = CodexDataV2.getIndustryEntryId(industry!!.id)
+        SharedUnlockData.get().reportPlayerAwareOfIndustry(industry!!.id,true)
 
         tooltip.addSpacer(10f)
         tooltip.addPara("Enables the construction of a ${industry!!.name}, to match the performance specified the provided specialised nanoforge is required to construct and maintain it. Due to this only one such structure can be constructed. The nanoforge is reuseable if the structure were to be demolished.", 0f,

@@ -1,5 +1,7 @@
 package assortment_of_things.abyss.abilities;
 
+import assortment_of_things.abyss.AbyssUtils;
+import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome;
 import assortment_of_things.misc.ReflectionUtils;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.BattleAPI;
@@ -73,6 +75,12 @@ public class AbyssalBurnAbility extends BaseToggleAbility {
             //view.getContrailColor().shift(getModId(), new Color(50,50,50,155), 1f, 1f, .5f);
 
             Color color = new Color(196, 20, 35);
+
+            if (AbyssUtils.isPlayerInAbyss()) {
+                color = AbyssUtils.getBiomeManager().getCurrentBiomeColor().darker();
+                color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 155);
+            }
+
             view.getContrailColor().shift(getModId(), color, 1f, 1f, 0.75f * level);
             view.getEngineColor().shift(getModId(), color, 1f, 1f, 0.5f * level);
             //view.getGlowColor().shift(getModId(), color, 1f, 1f, 0.5f * level);
@@ -114,6 +122,13 @@ public class AbyssalBurnAbility extends BaseToggleAbility {
         AbilityPlugin emergency = fleet.getAbility("emergency_burn");
         if (emergency != null) {
             if (emergency.isInProgress() && isActive()) {
+                deactivate();
+            }
+        }
+
+        AbilityPlugin interdiction = fleet.getAbility("interdiction_pulse");
+        if (interdiction != null) {
+            if (interdiction.isInProgress()) {
                 deactivate();
             }
         }
@@ -309,6 +324,13 @@ public class AbyssalBurnAbility extends BaseToggleAbility {
         AbilityPlugin emergency = (BaseDurationAbility) fleet.getAbility("emergency_burn");
         if (emergency != null) {
             if (emergency.isInProgress()) {
+                return false;
+            }
+        }
+
+        AbilityPlugin interdict = (BaseDurationAbility) fleet.getAbility("interdiction_pulse");
+        if (interdict != null) {
+            if (interdict.isInProgress()) {
                 return false;
             }
         }

@@ -393,6 +393,7 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
             if (wreck !is ShipAPI) continue
             if (!wreck.isHulk) continue
             if (wreck.isFighter) continue
+            if (wreck.parentStation != null) continue //Dont work on modules
             if (MathUtils.getDistance(ship, wreck) > max) continue
             if (wreck.variant.hasHullMod("shard_spawner")) continue //Prevent omegas from being turned to scrap
             //if (wreck.hasTag("symbiosis_claimed") && !claimed.contains(wreck)) continue
@@ -446,8 +447,8 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
 
                     var offset = wreck.location
 
-                    wreck.exactBounds.update(wreck.location, wreck.facing)
-                    var bound = wreck.exactBounds.segments.random().p1
+                    wreck.exactBounds?.update(wreck.location, wreck.facing)
+                    var bound = wreck.exactBounds?.segments?.random()?.p1 ?: wreck.location
 
                     offset = bound
                     if (Random.nextFloat() >= 0.8f) offset = wreck.location
