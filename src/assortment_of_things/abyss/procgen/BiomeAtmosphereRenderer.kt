@@ -39,9 +39,6 @@ class BiomeAtmosphereRenderer : LunaCampaignRenderingPlugin {
 
         var warper = AbyssUtils.getData().warper
         warper?.overwriteColor = manager.getCurrentBackgroundColor()
-        //TODO Set warper color here
-
-
 
     }
 
@@ -54,18 +51,19 @@ class BiomeAtmosphereRenderer : LunaCampaignRenderingPlugin {
         var data = AbyssUtils.getData()
         if (Global.getSector()?.playerFleet?.containingLocation != data.system) return
 
-        //TODO put in to init
-        shader = ShaderLib.loadShader(
-            Global.getSettings().loadText("data/shaders/baseVertex.shader"),
-            Global.getSettings().loadText("data/shaders/rat_biomeAtmosphereFragment.shader"))
-        if (shader != 0) {
-            GL20.glUseProgram(shader)
+        if (shader == 0) {
+            shader = ShaderLib.loadShader(
+                Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+                Global.getSettings().loadText("data/shaders/rat_biomeAtmosphereFragment.shader"))
+            if (shader != 0) {
+                GL20.glUseProgram(shader)
 
-            GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
 
-            GL20.glUseProgram(0)
-        } else {
-            var test = ""
+                GL20.glUseProgram(0)
+            } else {
+                var test = ""
+            }
         }
 
         //Screen texture can be unloaded if graphicslib shaders are disabled, causing a blackscreen
@@ -78,7 +76,7 @@ class BiomeAtmosphereRenderer : LunaCampaignRenderingPlugin {
 
             ShaderLib.beginDraw(shader);
             GL20.glUniform1f(GL20.glGetUniformLocation(shader, "saturation"), saturation)
-            GL20.glUniform3f(GL20.glGetUniformLocation(shader, "colorMult"), 1.2f, 1.1f, 1.2f)
+            GL20.glUniform3f(GL20.glGetUniformLocation(shader, "colorMult"), 1.2f, 1.1f, 1.1f)
 
             GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture());

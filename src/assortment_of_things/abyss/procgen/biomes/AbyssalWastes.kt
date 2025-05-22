@@ -280,8 +280,6 @@ class AbyssalWastes() : BaseAbyssBiome() {
 
         AbyssUtils.initAbyssalFleetBehaviour(fleet, random)
 
-        //TODO Add Seraph cores to the seraph threat
-
         var alterationChancePerShip = 0.25f
         AbyssFleetEquipUtils.addAlterationsToFleet(fleet, alterationChancePerShip, random)
 

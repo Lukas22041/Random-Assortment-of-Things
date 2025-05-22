@@ -27,8 +27,6 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
     var drones = ArrayList<ShipAPI>()
     var activated = false
 
-
-    //TODO Fix
     override fun init(engine: CombatEngineAPI?, objective: BattleObjectiveAPI?) {
         super.init(engine, objective)
 

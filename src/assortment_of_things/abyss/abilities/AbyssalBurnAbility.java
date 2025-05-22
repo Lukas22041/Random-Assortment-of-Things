@@ -268,7 +268,7 @@ public class AbyssalBurnAbility extends BaseToggleAbility {
 
         float pad = 10f;
 
-        tooltip.addPara("Enables a procedure based on the sustatined burn on all ships in the fleet, specificly tweaked for the landscape of the abyssal depths.", pad);
+        tooltip.addPara("Enables a procedure based on the sustained burn on all ships in the fleet, specificly tweaked for the landscape of the abyssal depths.", pad);
 
         /*tooltip.addPara("Switch the drives of all ships in the fleet to a mode suited for long-distance travel. " +
                 "The fleet has to stop briefly to make the switch-over. ", pad);*/

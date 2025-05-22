@@ -124,24 +124,6 @@ class BiomeCellData(var manager: AbyssBiomeManager, var gridX: Int, var gridY: I
         return result
     }
 
-    /*//Surrounding tiles based on range entered, includes itself, includes fake cells
-    //TODO improve the performance a lot
-    fun getAround(radius: Int, parent: BiomeCellData=this) : List<BiomeCellData> {
-        var list = ArrayList<BiomeCellData>()
-        if (radius == 0) {
-            return list
-        }
-
-        for (cell in parent.getAdjacent()) {
-            list.add(cell)
-            list.addAll(getAround(radius-1, cell))
-        }
-
-       var result = list.distinct()
-
-        return result
-    }*/
-
     fun getEmptyAdjacent() = getAdjacent().filter { it.getBiome() == null && !it.isFake }
     fun getEmptySurrounding() = getSurrounding().filter { it.getBiome() == null && !it.isFake }
     fun getEmptyAround(radius: Int) = getAround(0).filter { it.getBiome() == null && !it.isFake }

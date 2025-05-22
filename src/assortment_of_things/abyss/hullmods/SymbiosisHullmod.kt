@@ -267,7 +267,6 @@ class SymbiosisDamageDealtListener() : DamageListener, DamageTakenModifier /*Dam
     var lastTarget: ShipAPI? = null
     var lastPoint = Vector2f()
 
-    //TODO check if the fighter is part of a wing of a ship with symbiosis
     override fun reportDamageApplied(source: Any?, target: CombatEntityAPI?, result: ApplyDamageResultAPI?) {
 
         if (target !is ShipAPI) return

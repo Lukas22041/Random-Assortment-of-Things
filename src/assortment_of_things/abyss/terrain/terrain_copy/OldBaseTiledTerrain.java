@@ -496,8 +496,7 @@ public abstract class OldBaseTiledTerrain extends BaseTerrain {
 	}
 	
 	public float getMaxEffectRadius(Vector2f locFrom) {
-		// TODO: do intersection check from locFrom to an actual filled tile?
-		
+
 		float size = getTileSize();
 		float renderSize = getTileRenderSize();
 		float w = tiles.length * size * 0.5f + (renderSize - size) * 0.5f;

@@ -550,8 +550,6 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
                 var offset = 400f - (200 * level) //Closer in darker biomes
 
-                //TODO change based on darkness level
-
                 vignette.alphaMult = (0.85f + (0.05f * level)) * biomeVignetteLevel //Darker in darker biomes
                 if (RATSettings.brighterAbyss!!) vignette.alphaMult = 0.6f + (0.05f * level)
                 vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)

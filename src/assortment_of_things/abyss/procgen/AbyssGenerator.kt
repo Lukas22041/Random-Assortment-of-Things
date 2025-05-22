@@ -45,7 +45,7 @@ object AbyssGenerator {
 
         system.addTerrain("rat_biome_grid_renderer", null)
         data.warper = AbyssBackgroundWarper(system, 8, 0.33f)
-        data.warper!!.overwriteColor = AbyssUtils.DARK_ABYSS_COLOR //TODO, dynamicly change the overwrite color
+        data.warper!!.overwriteColor = AbyssUtils.DARK_ABYSS_COLOR
 
 
         //Biomes

@@ -58,7 +58,7 @@ class AbyssalProbeInteraction : RATInteractionPlugin() {
                     createOption("Recover the person in the cryo-pod") {
                         clearOptions()
 
-                        textPanel.addPara("The crew innitates the procedure for recovering the person inside the cryo-pod and brings them abboard the fleet. It takes a while, but after a few hours they appear to be ready to talk.")
+                        textPanel.addPara("The crew innitates the procedure for recovering the person inside the cryo-pod and brings them aboard the fleet. It takes a while, but after a few hours they appear to be ready to talk.")
 
                         textPanel.addPara("But any hopes for leads is immediately erased, as it appears that they have forgotten some things. They still remember who they are, but have no recollection of what transpired the few times they awoke from their cryosleep.",
                             Misc.getTextColor(), Misc.getHighlightColor(), "")

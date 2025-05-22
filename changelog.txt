@@ -1,3 +1,11 @@
+Version 3.0.0-Beta11
+Save compatible with beta10
+
+-> Fix for a (GPU) performance issue.
+-> Fixed two minor spelling mistakes.
+
+
+
 Version 3.0.0-Beta10
 Save compatible with beta9
 

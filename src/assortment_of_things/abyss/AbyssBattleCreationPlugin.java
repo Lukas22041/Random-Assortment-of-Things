@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//TODO make work for new system
 public class AbyssBattleCreationPlugin implements BattleCreationPlugin {
 
     public static float ABYSS_SHIP_SPEED_PENALTY = 20f;
