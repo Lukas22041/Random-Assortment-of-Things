@@ -20,6 +20,7 @@ abstract class BaseConsumeableIndustry() : BaseIndustry() {
     }
 
     override fun showWhenUnavailable(): Boolean {
+        if (getStack() != null) return true
         return false
     }
 

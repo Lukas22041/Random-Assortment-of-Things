@@ -246,7 +246,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship.mutableStats.hullDamageTakenMult.modifyMult("genesis_phase_2", 0.75f * level)
             ship.mutableStats.armorDamageTakenMult.modifyMult("genesis_phase_2", 0.75f * level)
 
-            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.5f + (0.55f * level))
+            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.4f + (0.6f * level))
             ship.mutableStats.turnAcceleration.modifyMult("genesis_phase_2", 0.50f  + (0.55f * level))
 
             ship.mutableStats.energyRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.35f * level))
@@ -295,7 +295,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship.mutableStats.hullDamageTakenMult.modifyMult("genesis_phase_2", 0f)
             ship.mutableStats.armorDamageTakenMult.modifyMult("genesis_phase_2", 0f)
 
-            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.5f)
+            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.4f)
             ship.mutableStats.turnAcceleration.modifyMult("genesis_phase_2", 0.50f)
 
             ship.mutableStats.energyRoFMult.modifyMult("genesis_phase_2", 0.75f)

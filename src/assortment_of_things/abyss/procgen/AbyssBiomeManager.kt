@@ -177,7 +177,7 @@ class AbyssBiomeManager {
         }
 
         //Eliminate around half of the choices
-        var others = system.customEntities.filter { Random().nextFloat() >= 0.6f && it.customEntitySpec.id == "rat_abyss_fabrication" || it.customEntitySpec.id == "rat_abyss_accumalator" }.shuffled()
+        var others = system.customEntities.filter { Random().nextFloat() >= 0.5f && it.customEntitySpec.id == "rat_abyss_fabrication" || it.customEntitySpec.id == "rat_abyss_accumalator" }.shuffled()
 
         var remaining = 250f
         var perOther = remaining / others.size
