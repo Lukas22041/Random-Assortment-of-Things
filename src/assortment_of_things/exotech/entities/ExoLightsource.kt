@@ -24,9 +24,6 @@ class ExoLightsource : BaseCustomEntityPlugin() {
     fun initSpritesIfNull()
     {
         if (halo == null) {
-            if (entity.starSystem != null) {
-                color = AbyssUtils.getSystemData(entity.starSystem).getColor().setAlpha(50)
-            }
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
         }
     }

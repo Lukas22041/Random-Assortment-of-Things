@@ -1,227 +1,179 @@
 package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssBorder
 import assortment_of_things.abyss.misc.MiscReplacement
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
-import assortment_of_things.misc.addPara
-import assortment_of_things.misc.getAndLoadSprite
+import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin.CellStateTracker
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
-import com.fs.starfarer.api.campaign.TerrainAIFlags
+import com.fs.starfarer.api.fleet.FleetMemberAPI
+import com.fs.starfarer.api.impl.campaign.abilities.EmergencyBurnAbility
 import com.fs.starfarer.api.impl.campaign.ids.Abilities
-import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin
+import com.fs.starfarer.api.impl.campaign.ids.Stats
+import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
 import com.fs.starfarer.api.ui.Alignment
-import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
-import org.lazywizard.lazylib.ui.LazyFont
-import org.lwjgl.opengl.GL11
+import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lwjgl.util.vector.Vector2f
-import org.magiclib.kotlin.setAlpha
 import java.awt.Color
+import java.util.*
+import kotlin.math.min
 
-class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
+class AbyssTerrainPlugin : BaseTerrain() {
 
-    var id = Misc.genUID()
+    var data = AbyssUtils.getData()
+    var manager = AbyssUtils.getBiomeManager()
 
-    @Transient
-    var sprite = Global.getSettings().getAndLoadSprite("graphics/backgrounds/abyss/Abyss2ForRift.jpg")
+    override fun containsEntity(other: SectorEntityToken?): Boolean {
+        return true
+    }
 
-    @Transient
-    var wormhole = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
+    override fun containsPoint(point: Vector2f?, radius: Float): Boolean {
+        return true
+    }
 
-    @Transient
-    var wormhole2 = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
+    override fun getRenderRange(): Float {
+        return 10000000f
+    }
 
-    var font: LazyFont? = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
-
-   /* override fun isInAbyss(other: SectorEntityToken?): Boolean {
-        return false
-    }*/
-
-    override fun advance(amount: Float) {
-        var currentsystem = entity?.containingLocation ?: return
-        if (Global.getSector().playerFleet.containingLocation != currentsystem) return
-        super.advance(amount)
+    var layer = EnumSet.of(CampaignEngineLayers.ABOVE)
+    override fun getActiveLayers(): EnumSet<CampaignEngineLayers> {
+        return layer
     }
 
 
-    override fun getRenderColor(): Color {
-        return AbyssUtils.getSystemData(entity.starSystem).getDarkColor()
-    }
-
-    override fun renderOnMap(factor: Float, alphaMult: Float) {
-        super.renderOnMap(factor, alphaMult)
-
-        if (sprite == null) {
-            sprite = Global.getSettings().getAndLoadSprite("graphics/backgrounds/abyss/Abyss2ForRift.jpg")
-            wormhole = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
-            wormhole2 = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
-        }
-
-        if (font == null) {
-            font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
-        }
-
-        if (entity == null) return
-
-        var system = AbyssUtils.getSystemData(entity.starSystem)
-        var color = system.getColor()
-
-        var width = 55000f * factor
-        var height = 55000f * factor
-
-        var x = -width / 2
-        var y = -height / 2
-
-        var border = system.system.customEntities.find { it.customEntitySpec.id == "rat_abyss_border" } ?: return
-        var plugin = border.customPlugin
-        if (plugin !is AbyssBorder) return
-
-
-        var radius = plugin.radius * factor
-
-        startStencil(radius, Vector2f(), 100)
-
-        sprite.setSize(width, height)
-        sprite.color = color
-        sprite.alphaMult = 0.4f * alphaMult
-        sprite.setNormalBlend()
-        sprite.render(x, y)
-
-        /*sprite.setAdditiveBlend()
-        sprite.alphaMult = 0.2f
-        sprite.render(x, y)*/
-
-        wormhole.setSize(width * 1.3f, width *  1.3f)
-        wormhole.setAdditiveBlend()
-        wormhole.alphaMult = 0.2f * alphaMult
-        wormhole.color = color
-        wormhole.renderAtCenter(x + width / 2, y + height / 2)
-
-        wormhole2.setSize(width * 1.35f, width *  1.35f)
-        wormhole2.setAdditiveBlend()
-        wormhole2.alphaMult = 0.1f * alphaMult
-        wormhole2.color = Color(50, 0, 255)
-        wormhole2.renderAtCenter(x + width / 2, y + height / 2)
-
-        endStencil()
-
-        renderBorder(radius, color.setAlpha(50), 100)
-
-
-    }
-
-
-
-    fun save()
-    {
-        params.tiles = null
-        savedTiles = encodeTiles(tiles)
-
-        savedActiveCells.clear()
-
-        for (i in activeCells.indices) {
-            for (j in activeCells[0].indices) {
-                val curr = activeCells[i][j]
-                if (curr != null && isTileVisible(i, j)) {
-                    savedActiveCells.add(curr)
+    fun isAnyInCloud(entityToken: SectorEntityToken) : Boolean {
+        for (biome in manager.biomes) {
+            if (biome.terrain is BaseFogTerrain) {
+                if ((biome.terrain as BaseFogTerrain).isInClouds(entityToken)) {
+                    return true
                 }
             }
         }
+
+        return false
     }
 
+    fun getAnyTilePreferStorm(loc: Vector2f, radius: Float) : Pair<CellStateTracker?, BaseFogTerrain> {
+        var any: Pair<CellStateTracker?, BaseFogTerrain>? = null
+        for (biome in manager.biomes) {
+            if (biome.terrain is BaseFogTerrain) {
 
+                var tile = (biome.terrain as BaseFogTerrain).getTilePreferStorm(loc, radius)
+                var cell: CellStateTracker? = null
+                if (tile != null) {
+                    cell = (biome.terrain as BaseFogTerrain).activeCells.get(tile[0]).get(tile[1])
+                }
 
+                if (cell?.isStorming == true) {
+                    return Pair(cell, biome.terrain as BaseFogTerrain)
+                }
+
+                any = Pair(cell, biome.terrain as BaseFogTerrain) //Return non storming
+            }
+        }
+
+        return any!!
+    }
+
+    override fun getEffectCategory(): String {
+        return "rat_abyss_terrain"
+    }
 
     override fun applyEffect(entity: SectorEntityToken?, days: Float) {
-        //super.applyEffect(entity, days)
+        if (entity !is CampaignFleetAPI) return
+        var fleet = entity
 
-        var currentsystem = entity?.containingLocation ?: return
-        if (Global.getSector().playerFleet.containingLocation != currentsystem) {
-            return
-        }
+        var isInclouds = isAnyInCloud(entity)
+        if (isInclouds) {
 
-        if (entity is CampaignFleetAPI)
-        {
-            var fleet = entity as CampaignFleetAPI
-            val inCloud = this.isInClouds(fleet)
-            val tile = getTilePreferStorm(fleet.getLocation(), fleet.getRadius())
-            var cell: CellStateTracker? = null
-            if (tile != null) {
-                cell = activeCells[tile[0]][tile[1]]
+            var cell = getAnyTilePreferStorm(fleet.location, fleet.radius)
+
+            if (fleet.isPlayerFleet) {
+                if (!fleet.hasScriptOfClass(SpeedBoostScript::class.java)) {
+                    fleet.addScript(SpeedBoostScript(
+                        fleet,this))
+                }
+            } else {
+                fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_1", "In abyssal fog", 1.5f, fleet.stats.fleetwideMaxBurnMod)
+                fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_2", "In abyssal fog", 1.5f, fleet.stats.accelerationMult)
             }
 
-           // fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Abyss", 1.5f, fleet.stats.sensorRangeMod)
-
-            if (isInClouds(fleet))
-            {
-
-                if (fleet.isPlayerFleet) {
-                    if (!fleet.hasScriptOfClass(SpeedBoostScript::class.java)) {
-                        fleet.addScript(SpeedBoostScript(fleet, this))
-                    }
-                } else {
-                    fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_1", "In abyssal fog", 1.5f, fleet.stats.fleetwideMaxBurnMod)
-                    fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_2", "In abyssal fog", 1.5f, fleet.stats.accelerationMult)
-                }
-
-
-
-                if (cell != null && cell.isSignaling && cell.signal < 0.2f) {
-                    cell.signal = 0f
-                }
-
-                var goDark = Global.getSector().playerFleet.getAbility(Abilities.GO_DARK)
-                var goDarkActive = false
-
-                if (goDark != null) {
-                    goDarkActive = goDark.isActive
-                }
-
-                if (cell != null && cell.isStorming && !MiscReplacement.isSlowMoving(fleet) && !goDarkActive) {
-
-                    applyStormStrikes(cell, fleet, days)
-                }
+            if (cell.first != null && cell.first!!.isSignaling && cell.first!!.signal < 0.2f) {
+                cell.first!!.signal = 0f
             }
 
+            var goDark = Global.getSector().playerFleet.getAbility(Abilities.GO_DARK)
+            var goDarkActive = false
 
+            if (goDark != null) {
+                goDarkActive = goDark.isActive
+            }
+
+            if (cell.first?.isStorming == true && !MiscReplacement.isSlowMoving(fleet) && !goDarkActive) {
+                //cell.second.applyStormStrikes(cell.first, fleet, days)
+               applyStormStrikes(cell.first!!, fleet, days)
+            }
         }
+
     }
 
-    override fun getModId(): String {
-        return super.getModId() + id
+    override fun getTerrainName(): String {
+        var name = ""
+        var player = Global.getSector().playerFleet
+
+        var dominant = manager.getDominantBiome()
+
+        val inCloud = isAnyInCloud(player)
+        var cell = getAnyTilePreferStorm(player.location, player.radius)
+
+        name = dominant.getDisplayName()
+
+        if (cell.first?.isStorming == true) name += " (Storm)"
+        else if (inCloud) name += " (Fog)"
+
+        return name
     }
 
-    override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
 
-        val player = Global.getSector().playerFleet
-        if (player.containingLocation != entity.containingLocation)  return
+    override fun hasTooltip(): Boolean {
+        return true
+    }
 
-        val inCloud = this.isInClouds(player)
+    override fun isTooltipExpandable(): Boolean {
+        return false
+    }
 
-        tooltip!!.addTitle(terrainName)
+    override fun getNameColor(): Color {
+        var dominant = manager.getDominantBiome()
+        //return manager.getCurrentTooltipColor()
+        return dominant.getTooltipColor()
+    }
+
+    override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean) {
+        var player = Global.getSector().playerFleet
+
+        var dominant = manager.getDominantBiome()
+
+        var name = dominant.getDisplayName()
+
+        val inCloud = isAnyInCloud(player)
+        var cell = getAnyTilePreferStorm(player.location, player.radius)
+        var isStorming = cell.first?.isStorming == true
+
+        tooltip.addTitle(name)
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("A unique location within hyperspace. Discovered with the settlement of the sector, and quickly exploited for its unique resources. " +
-                "Post-collapse humanity however did not have the resources for working within this hostile environment, making it quasi isolated from the sector since.", 0f)
+        //Fog & Storm stuff here
 
-        tooltip.addSpacer(5f)
+        dominant.addBiomeTooltip(tooltip)
+        //tooltip.addSpacer(10f)
 
-        tooltip!!.addPara("Due to a unique interaction between the fleet's sensors and the abyssal matter, it is possible to detect structures at further distances than normal, but without any identifying data. " +
-                "" +
-                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "detect", "structures")
-
-        tooltip.addSpacer(5f)
-
-        tooltip.addPara("The Transverse Jump ability can not be used due to spatial interference. However the unique bending of the surrounding space allows the exit of this location by flying outside of its perceived bounds. This area is marked by a circle on the tripads map.",
-            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Transverse Jump", "exit", "map")
-
-        if (isInClouds(player))
+        if (inCloud)
         {
             tooltip.addSpacer(5f)
             tooltip.addSectionHeading("Abyssal Fog", Alignment.MID, 0f)
@@ -230,166 +182,131 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
                     "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "burn speed", "50%")
         }
 
-        if (isInStorm(player))
+        if (isStorming)
         {
             tooltip.addSpacer(5f)
             tooltip.addSectionHeading("Abyssal Storm", Alignment.MID, 0f)
             tooltip.addSpacer(5f)
             tooltip!!.addPara("Abyssal Storms may damage members of the fleet if it is moving through it at high speeds."
                 , 0f, Misc.getTextColor(), Misc.getHighlightColor(), "damage")
-          /*  tooltip!!.addPara("Abyssal Storms damage the fleet's ships if they are moving quickly. \n\n" +
-                    "They emit a unique type of wavelength that travels far through abyssal matter, making it possible to track their collision " +
-                    "with large objects, with the site of impact showing up on the map. " +
-                    "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "damage", "wavelength", "map")*/
+
+        }
+    }
+
+    var STORM_DAMAGE_FRACTION = 0.2f //Hyperspace is 0.3f
+    var STORM_MIN_STRIKE_DAMAGE = 0.05f //Hyperspace is 0.05f
+    var STORM_MAX_STRIKE_DAMAGE = 0.50f //Hyperspace is 0.95f
+    fun applyStormStrikes(cell: CellStateTracker, fleet: CampaignFleetAPI, days: Float) {
+        if (cell.flicker != null && cell.flicker.wait > 0) {
+            cell.flicker.numBursts = 0
+            cell.flicker.wait = 0f
+            cell.flicker.newBurst()
         }
 
-    }
+        if (cell.flicker == null || !cell.flicker.isPeakFrame) return
 
 
+        //fleet.addScript(new HyperStormBoost(cell, fleet));
+        val key = "\$stormStrikeTimeout"
+        val mem = fleet.memoryWithoutUpdate
+        if (mem.contains(key)) return
+        //boolean canDamage = !mem.contains(key);
+        mem[key, true] =
+            (OldHyperspaceTerrainPlugin.STORM_MIN_TIMEOUT + (OldHyperspaceTerrainPlugin.STORM_MAX_TIMEOUT - OldHyperspaceTerrainPlugin.STORM_MIN_TIMEOUT) * Math.random()).toFloat()
 
-    override fun getTerrainName(): String {
-        val player = Global.getSector().playerFleet
-        val inCloud = this.isInClouds(player)
 
+        //if ((float) Math.random() > STORM_STRIKE_CHANCE && false) return;
+        val members = fleet.fleetData.membersListCopy
+        if (members.isEmpty()) return
 
-        if (isInStorm(player)) return "Abyssal Storm"
-        if (inCloud) return "Abyssal Fog"
-        return "Abyssal Depths"
-    }
-
-    fun isInStorm(entity: SectorEntityToken) : Boolean
-    {
-        val tile = getTilePreferStorm(entity.location, entity.radius)
-        var cell: CellStateTracker? = null
-        if (tile != null) {
-            cell = activeCells[tile[0]][tile[1]]
+        var totalValue = 0f
+        for (member in members) {
+            totalValue += member.stats.suppliesToRecover.modifiedValue
         }
-        if (cell != null && cell.isStorming) return true
-        return false
-    }
+        if (totalValue <= 0) return
 
-    override fun isTooltipExpandable(): Boolean {
-        return false
-    }
-
-    //Cant have multiple systems with the terrain without this
-    override fun getTerrainId(): String {
-        return super.getTerrainId() + id
-    }
-
-    override fun hasAIFlag(flag: Any?): Boolean {
-       // return super.hasAIFlag(flag)
-        return false
-    }
-
-    override fun hasAIFlag(flag: Any?, fleet: CampaignFleetAPI?): Boolean {
-        if (flag == TerrainAIFlags.MOVES_FLEETS) return true
-        return false
-    }
+        val strikeValue = totalValue * STORM_DAMAGE_FRACTION * (0.5f + Math.random().toFloat() * 0.5f)
 
 
+//		int index = Misc.random.nextInt(members.size());
+//		FleetMemberAPI member = members.get(index);
+        val ebCostThresholdMult = 4f
+
+        val picker = WeightedRandomPicker<FleetMemberAPI>()
+        val preferNotTo = WeightedRandomPicker<FleetMemberAPI>()
+        for (member in members) {
+            var w = 1f
+            if (member.isMothballed) w *= 0.1f
 
 
-
-    fun renderBorder(radius: Float, color: Color, circlePoints: Int) {
-        var c = color
-        GL11.glPushMatrix()
-
-        GL11.glTranslatef(0f, 0f, 0f)
-        GL11.glRotatef(0f, 0f, 0f, 1f)
-
-        GL11.glDisable(GL11.GL_TEXTURE_2D)
-
-
-        GL11.glEnable(GL11.GL_BLEND)
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-
-
-        GL11.glColor4f(c.red / 255f,
-            c.green / 255f,
-            c.blue / 255f,
-            c.alpha / 255f * (1f))
-
-        GL11.glEnable(GL11.GL_LINE_SMOOTH)
-        GL11.glBegin(GL11.GL_LINE_STRIP)
-
-        val x = 0f
-        val y = 0f
-
-
-        for (i in 0..circlePoints) {
-            val angle: Double = (2 * Math.PI * i / circlePoints)
-            val vertX: Double = Math.cos(angle) * (radius)
-            val vertY: Double = Math.sin(angle) * (radius)
-            GL11.glVertex2d(x + vertX, y + vertY)
+            val ebCost = EmergencyBurnAbility.getCRCost(member, fleet)
+            if (ebCost * ebCostThresholdMult > member.repairTracker.cr) {
+                preferNotTo.add(member, w)
+            } else {
+                picker.add(member, w)
+            }
+        }
+        if (picker.isEmpty) {
+            picker.addAll(preferNotTo)
         }
 
-        GL11.glEnd()
-        GL11.glPopMatrix()
-    }
+        val member = picker.pick() ?: return
 
-    fun startStencil(radius: Float, location: Vector2f, circlePoints: Int) {
+        val crPerDep = member.deployCost
+        val suppliesPerDep = member.stats.suppliesToRecover.modifiedValue
+        if (suppliesPerDep <= 0 || crPerDep <= 0) return
 
-        GL11.glClearStencil(0);
-        GL11.glStencilMask(0xff);
-        //set everything to 0
-        GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
+        var strikeDamage = crPerDep * strikeValue / suppliesPerDep
+        if (strikeDamage < STORM_MIN_STRIKE_DAMAGE) strikeDamage = STORM_MIN_STRIKE_DAMAGE
 
-        //disable drawing colour, enable stencil testing
-        GL11.glColorMask(false, false, false, false); //disable colour
-        GL11.glEnable(GL11.GL_STENCIL_TEST); //enable stencil
+        val resistance = member.stats.dynamic.getValue(Stats.CORONA_EFFECT_MULT)
+        strikeDamage *= resistance
 
-        // ... here you render the part of the scene you want masked, this may be a simple triangle or square, or for example a monitor on a computer in your spaceship ...
-        //begin masking
-        //put 1s where I want to draw
-        GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xff); // Do not test the current value in the stencil buffer, always accept any value on there for drawing
-        GL11.glStencilMask(0xff);
-        GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE); // Make every test succeed
+        if (strikeDamage > STORM_MAX_STRIKE_DAMAGE) strikeDamage = STORM_MAX_STRIKE_DAMAGE
 
-        // <draw a quad that dictates you want the boundaries of the panel to be>
 
-        GL11.glBegin(GL11.GL_POLYGON) // Middle circle
+//		if (fleet.isPlayerFleet()) {
+//			System.out.println("wefw34gerg");
+//		}
+        val currCR = member.repairTracker.baseCR
+        var crDamage = min(currCR, strikeDamage)
 
-        val x = location.x
-        val y = location.y
-
-        for (i in 0..circlePoints) {
-
-            var extra = 0f
-
-            val angle: Double = (2 * Math.PI * i / circlePoints)
-            val vertX: Double = Math.cos(angle) * (radius + extra)
-            val vertY: Double = Math.sin(angle) * (radius + extra)
-            GL11.glVertex2d(x + vertX, y + vertY)
+        val ebCost = EmergencyBurnAbility.getCRCost(member, fleet)
+        if (currCR >= ebCost * ebCostThresholdMult) {
+            crDamage = min(currCR - ebCost * 1.5f, crDamage)
         }
 
-        GL11.glEnd()
+        if (crDamage > 0) {
+            member.repairTracker.applyCREvent(-crDamage, "hyperstorm", "Hyperspace storm strike")
+        }
 
-        //GL11.glRectf(x, y, x + width, y + height)
+        var hitStrength = member.stats.armorBonus.computeEffective(member.hullSpec.armorRating)
+        hitStrength *= strikeDamage / crPerDep
+        if (hitStrength > 0) {
+            member.status.applyDamage(hitStrength)
+            if (member.status.hullFraction < 0.01f) {
+                member.status.hullFraction = 0.01f
+            }
+        }
 
-        GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP); // Make sure you will no longer (over)write stencil values, even if any test succeeds
-        GL11.glColorMask(true, true, true, true); // Make sure we draw on the backbuffer again.
+        if (fleet.isPlayerFleet) {
+            var verb = "suffers"
+            var c = Misc.getNegativeHighlightColor()
+            if (hitStrength <= 0) {
+                verb = "avoids"
+                //c = Misc.getPositiveHighlightColor();
+                c = Misc.getTextColor()
+            }
+            Global.getSector().campaignUI.addMessage(member.shipName + " " + verb + " damage from the storm", c)
 
-
-
-
-        GL11.glStencilFunc(GL11.GL_EQUAL, 0, 0xFF); // Now we will only draw pixels where the corresponding stencil buffer value equals 1
-        //Ref 0 causes the content to not display in the specified area, 1 causes the content to only display in that area.
-
-        // <draw the lines>
-
+            Global.getSector().campaignUI.showHelpPopupIfPossible("chmHyperStorm")
+        }
     }
 
-    fun endStencil() {
-        GL11.glDisable(GL11.GL_STENCIL_TEST);
-    }
-
-    class SpeedBoostScript(var fleet: CampaignFleetAPI, var terrain: OldHyperspaceTerrainPlugin) : EveryFrameScript {
-
-        var done = false
+    class SpeedBoostScript(var fleet: CampaignFleetAPI, var terrain: AbyssTerrainPlugin) : EveryFrameScript {
 
         override fun isDone(): Boolean {
-            return done
+            return false
         }
 
         override fun runWhilePaused(): Boolean {
@@ -398,20 +315,17 @@ class AbyssTerrainPlugin() : OldHyperspaceTerrainPlugin() {
 
         override fun advance(amount: Float) {
 
-            val inCloud = terrain.isInClouds(fleet)
-            val tile = terrain.getTilePreferStorm(fleet.getLocation(), fleet.getRadius())
-            var cell: CellStateTracker? = null
-            if (tile != null) {
-                cell = terrain.activeCells[tile[0]][tile[1]]
+            var inCloud = false
+            if (AbyssUtils.isPlayerInAbyss()) {
+                inCloud = terrain.isAnyInCloud(fleet)
             }
 
-            if (terrain.isInClouds(fleet)) {
+            if (inCloud) {
                 fleet.stats.fleetwideMaxBurnMod.modifyMult(terrain.modId + "fog_1", 1.5f, "In abyssal fog")
                 fleet.stats.accelerationMult.modifyMult(terrain.modId + "fog_2", 1.5f, "In abyssal fog")
             } else {
                 fleet.stats.fleetwideMaxBurnMod.unmodify(terrain.modId + "fog_1")
                 fleet.stats.accelerationMult.unmodify(terrain.modId + "fog_2")
-                done = true
             }
         }
     }

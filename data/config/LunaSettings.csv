@@ -22,7 +22,7 @@ Requires [Nexerelin v0.11.0x] or newer.",,,Expansion
 ,,,,,,,,
 rat_abyssHeader,The Abyssal Depths,Header,The Abyssal Depths,,,,,Expansion
 rat_abyssBrighter,Brighter Abyss,Boolean,false,,"Makes the abyss less dark, recommended if it turns out to be too dark on your screen.",,,Expansion
-rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the Abyss.
+#rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the Abyss.
 
 Hard mode greatly increases the strength of fleets found within the Abyss. Also adds slight player fleet scaling.",,,Expansion
 ,,,,,,,,
@@ -51,6 +51,18 @@ rat_creditsText,,Text,"[Credits:]
 [KingAlfonzo] - Helped writing some Interactions. ",,,,,Expansion
 ,,,,,,,,
 #Enhancements,,,,,,,,
+,,,,,,,,
+rat_whichModHeader,Which Mod is this From,Header,Which Mod is this From,,,,,Enhancement
+rat_whichModText,,Text,Displays the source mod of certain pieces of content when hovering over the relevant tooltips. Generaly only works if they have [codex entries]. Mod names may be shortened if their to long.,,,,,Enhancement
+rat_whichModShips,Display for Ships,Boolean,true,,,,,Enhancement
+rat_whichModWeapons,Display for Weapons,Boolean,true,,,,,Enhancement
+rat_whichModFighters,Display for Fighters,Boolean,true,,,,,Enhancement
+rat_whichModHullmods,Display for Hullmods,Boolean,true,,,,,Enhancement
+rat_whichModCargo,Display for Cargo,Boolean,true,,,,,Enhancement
+rat_whichModSkills,Display for Skills & Abilities,Boolean,true,,,,,Enhancement
+rat_whichModIndustries,Display for Industries,Boolean,true,,,,,Enhancement
+rat_whichModConditions,Display for Market Conditions,Boolean,true,,,,,Enhancement
+,,,,,,,,
 rat_parallelHeader,Parallel Construction,Header,Parallel Construction,,,,,Enhancement
 rat_parallelEnabled,Enable Parallel Construction,Boolean,false,,"Removes the queue system in Colony Construction, allowing everything to be built at the same time.",,,Enhancement
 rat_parallelApplyToNPCs,Apply to NPCs,Boolean,false,,"If set to true and parallel construction is enabled, NPC markets will benefit from the same effect.",,,Enhancement

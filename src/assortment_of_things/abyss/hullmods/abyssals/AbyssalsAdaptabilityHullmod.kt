@@ -158,9 +158,9 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             stats.systemRegenBonus.modifyMult(id, 0.5f)
         }
         else if (isChronosCore(stats.fleetMember)) {
-            stats.timeMult.modifyMult(id, 1.1f)
-            stats.systemCooldownBonus.modifyMult(id, 0.9f)
-            stats.systemRegenBonus.modifyMult(id, 1.1f)
+            //stats.timeMult.modifyMult(id, 1.1f)
+            stats.systemCooldownBonus.modifyMult(id, 0.8f)
+            stats.systemRegenBonus.modifyMult(id, 1.2f)
         }
         else if (isCosmosCore(stats.fleetMember)) {
             stats.hardFluxDissipationFraction.modifyFlat(id, 0.05f)
@@ -188,7 +188,7 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
 
-        if (isChronosCore(ship!!)) {
+        /*if (isChronosCore(ship!!)) {
             var mod = 1.1f
             var modID = ship.id + "abyssal_adaptability"
 
@@ -199,7 +199,7 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             else {
                 Global.getCombatEngine().timeMult.unmodify(modID + ship.id)
             }
-        }
+        }*/
     }
 
     override fun getDisplaySortOrder(): Int {
@@ -266,8 +266,8 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
         tooltip.addSpacer(10f)
 
         var chronosImage = tooltip.beginImageWithText("graphics/icons/cargo/rat_chronos_core.png", 32f)
-        chronosImage.addPara("Provides the ship with a 10%% increase in timeflow and the shipsystems cooldown recovers 10%% faster.", 0f,
-            chronosColor, Misc.getHighlightColor(), "10%", "10%")
+        chronosImage.addPara("Shipsystem cooldowns and charges recover 20%% faster.", 0f,
+            chronosColor, Misc.getHighlightColor(), "20%")
         tooltip.addImageWithText(0f)
 
         tooltip.addSpacer(10f)

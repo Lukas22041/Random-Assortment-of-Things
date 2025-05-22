@@ -36,6 +36,8 @@
         {"SEGMENT1": "rat_genesis_serpent_spine_Standard"},
         {"SEGMENT2": "rat_genesis_serpent_segment_Standard"},
         {"SEGMENT3": "rat_genesis_serpent_spine_Standard"},
-        {"SEGMENT4": "rat_genesis_serpent_system_Standard"},
+        {"SEGMENT4": "rat_genesis_serpent_segment_Standard"},
+        {"SEGMENT5": "rat_genesis_serpent_spine_Standard"},
+        {"SEGMENT6": "rat_genesis_serpent_system_Standard"},
     ],
 }

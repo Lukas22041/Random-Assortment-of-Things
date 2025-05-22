@@ -1,0 +1,25 @@
+{
+	"id":"rat_saint_system",
+	"type":"STAT_MOD",
+	"aiType":"CUSTOM",
+	"aiScript":"assortment_of_things.abyss.shipsystem.threat.ai.SaintSystemAI",	
+	
+	"runScriptWhileIdle":true,
+	#"canUseWhileRightClickSystemOn":true,
+	
+	"statsScript":"assortment_of_things.abyss.shipsystem.threat.SaintShipSystem",
+	
+	"useSound":"system_construction_swarm",
+	"outOfUsesSound":"gun_out_of_ammo",
+	
+	"aiHints":{
+		"threatRange":800,
+		"threatAmount":4,
+		"threatAngle":0,
+		"threatArc":360,
+	}
+}
+
+
+
+

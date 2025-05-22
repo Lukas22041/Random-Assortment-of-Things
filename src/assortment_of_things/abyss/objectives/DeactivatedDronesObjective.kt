@@ -4,7 +4,6 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
-import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.misc.baseOrModSpec
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
@@ -32,15 +31,15 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
         super.init(engine, objective)
 
         var system = Global.getSector().playerFleet.starSystem
-        var data = AbyssUtils.getSystemData(system)
-
+        var data = AbyssUtils.getData()
+        var biome = AbyssUtils.getBiomeManager().getDominantBiome()
 
         var corePicker = WeightedRandomPicker<PersonAPI?>()
         corePicker.add(ChronosCore().createPerson(RATItems.CHRONOS_CORE, Factions.NEUTRAL, Random()), 1f)
         corePicker.add(CosmosCore().createPerson(RATItems.COSMOS_CORE, Factions.NEUTRAL, Random()), 1f)
         corePicker.add(null, 1.5f)
 
-        if (data.depth == AbyssDepth.Deep) {
+        if (biome.hasSeraphs()) {
             corePicker.add(SeraphCore().createPerson(RATItems.SERAPH_CORE, Factions.NEUTRAL, Random()), 0.5f)
         }
 
@@ -52,6 +51,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
 
         if (objective!!.type == "rat_deactivated_drone") {
             var typePicker = WeightedRandomPicker<String>()
+
             typePicker.add("small", 1f)
             typePicker.add("medium", 0.75f)
             typePicker.add("large", 0.5f)
@@ -67,7 +67,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
                 variantPicker.add("rat_chuul_Attack", 0.15f)
                 variantPicker.add("rat_chuul_Strike", 0.15f)
 
-                if (data.depth == AbyssDepth.Deep) {
+                if (biome.hasSeraphs()) {
                     variantPicker.add("rat_raguel_Attack", 0.1f)
                     variantPicker.add("rat_raguel_Strike", 0.1f)
                 }
@@ -83,7 +83,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
                 variantPicker.add("rat_chuul_Attack", 1f)
                 variantPicker.add("rat_chuul_Strike", 1f)
 
-                if (data.depth == AbyssDepth.Deep) {
+                if (biome.hasSeraphs()) {
                     variantPicker.add("rat_raguel_Attack", 0.2f)
                     variantPicker.add("rat_raguel_Strike", 0.2f)
 
@@ -101,7 +101,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
                 variantPicker.add("rat_aboleth_m_Strike", 1f)
                 variantPicker.add("rat_aboleth_m_Overdriven", 0.25f)
 
-                if (data.depth == AbyssDepth.Deep) {
+                if (biome.hasSeraphs()) {
                     variantPicker.add("rat_sariel_Attack", 0.2f)
                     variantPicker.add("rat_sariel_Strike", 0.2f)
                 }
@@ -113,7 +113,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
             typePicker.add("morkoth", 1f)
             typePicker.add("pack", 1f)
 
-            if (data.depth == AbyssDepth.Deep) {
+            if (biome.hasSeraphs()) {
                 typePicker.add("seraph", 1f)
                 typePicker.add("seraph_large", 0.75f)
             }
@@ -147,7 +147,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
                 variantPicker.add("rat_chuul_Attack", 0.33f)
                 variantPicker.add("rat_chuul_Strike", 0.33f)
 
-                if (data.depth == AbyssDepth.Deep) {
+                if (biome.hasSeraphs()) {
                     variantPicker.add("rat_raguel_Attack", 0.1f)
                     variantPicker.add("rat_raguel_Strike", 0.1f)
                 }
@@ -181,7 +181,6 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
                 drone.captain.setPersonality(Personalities.RECKLESS)
             }
         }
-
 
     }
 

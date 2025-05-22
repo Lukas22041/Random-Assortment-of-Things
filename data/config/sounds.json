@@ -2,7 +2,7 @@
 
 #collapseopen MUSIC
 	
-"music":{
+	"music":{
 		####################################
 		# "source" can also be a directory #
 		####################################
@@ -12,6 +12,11 @@
 		],
 		
 		"rat_music_abyss2":[
+			{"file":"ImpendingPresence.ogg","source":"sounds/rat/music","volume":0.8},
+		],
+		
+		"rat_music_abyss_merged":[
+			{"file":"EchoesOfTheDepths.ogg","source":"sounds/rat/music","volume":0.8},
 			{"file":"ImpendingPresence.ogg","source":"sounds/rat/music","volume":0.8},
 		],
 		
@@ -73,6 +78,80 @@
 	
 # collapseclose
 	},
+	
+	
+	#Fix Dewller sounds on other hullstyles
+	"engine_loop":{
+		"ABYSSAL":{"sounds":[10,11,12,13,14], "pitch":1, "volume":0.5},
+		"ABYSSAL_SERAPH":{"sounds":[10,11,12,13,14], "pitch":1, "volume":0.5},
+		"ABYSSAL_SIERRA":{"sounds":[10,11,12,13,14], "pitch":1, "volume":0.5},
+		"RAT_PRIMORDIAL":{"sounds":[10,11,12,13,14], "pitch":1, "volume":0.5},
+		"RAT_EXO":{"sounds":[10,11,12,13,14], "pitch":1, "volume":0.5},
+	},
+	
+	#Fix Dewller sounds on other hullstyles
+	"engine_accelerate":{ # played when ship receives an "engine boost" from having zero flux 
+		"ABYSSAL":{"sounds":[0,1,2], "pitch":1, "volume":1},
+		"ABYSSAL_SERAPH":{"sounds":[0,1,2], "pitch":1, "volume":1},
+		"ABYSSAL_SIERRA":{"sounds":[0,1,2], "pitch":1, "volume":1},
+		"RAT_PRIMORDIAL":{"sounds":[0,1,2], "pitch":1, "volume":1},
+		"RAT_EXO":{"sounds":[0,1,2], "pitch":1, "volume":1},
+	},
+	
+	
+	
+	#Fix Dewller sounds on other hullstyles
+	"shield_burnout":{ # played when a ship overloads
+		"ABYSSAL":{"sounds":[0], "pitch":1, "volume":1},
+		"ABYSSAL_SERAPH":{"sounds":[0], "pitch":1, "volume":1},
+		"ABYSSAL_SIERRA":{"sounds":[0], "pitch":1, "volume":1},
+		"RAT_PRIMORDIAL":{"sounds":[0], "pitch":1, "volume":1},
+		"RAT_EXO":{"sounds":[0], "pitch":1, "volume":1},
+	},
+	
+	
+	"emp_loop":{ # played to accompany the lighning arcs displayed when a ship is overloaded
+		"ABYSSAL":{"sounds":[0], "pitch":1, "volume":1},
+		"ABYSSAL_SERAPH":{"sounds":[0], "pitch":1, "volume":1},
+		"ABYSSAL_SIERRA":{"sounds":[0], "pitch":1, "volume":1},
+		"RAT_PRIMORDIAL":{"sounds":[0], "pitch":1, "volume":1},
+		"RAT_EXO":{"sounds":[0], "pitch":1, "volume":1},
+	},
+
+	"flux_loop":{ # played while a ship is venting flux
+		"ABYSSAL":{"sounds":[0], "pitch":1, "volume":1},
+		"ABYSSAL_SERAPH":{"sounds":[0], "pitch":1, "volume":1},
+		"ABYSSAL_SIERRA":{"sounds":[0], "pitch":1, "volume":1},
+		"RAT_PRIMORDIAL":{"sounds":[0], "pitch":1, "volume":1},
+		"RAT_EXO":{"sounds":[0], "pitch":1, "volume":1},
+	},	
+
+	"vent_flux":{ # played once when a ship starts venting flux
+		"ABYSSAL":{"sounds":[0], "pitch":1, "volume":1},
+		"ABYSSAL_SERAPH":{"sounds":[0], "pitch":1, "volume":1},
+		"ABYSSAL_SIERRA":{"sounds":[0], "pitch":1, "volume":1},
+		"RAT_PRIMORDIAL":{"sounds":[0], "pitch":1, "volume":1},
+		"RAT_EXO":{"sounds":[0], "pitch":1, "volume":1},
+	},	
+	
+	# Similar setup to engine loop - defines which of the two sounds to use, and
+	# what pitch/volume to use them at, depending on ship style and size
+	"shield_lower":{
+		"ABYSSAL":{"sounds":[0,1,2], "pitch":1, "volume":0.75},
+		"ABYSSAL_SERAPH":{"sounds":[0,1,2], "pitch":1, "volume":0.75},
+		"ABYSSAL_SIERRA":{"sounds":[0,1,2], "pitch":1, "volume":0.75},
+		"RAT_PRIMORDIAL":{"sounds":[0,1,2], "pitch":1, "volume":0.75},
+		"RAT_EXO":{"sounds":[0,1,2], "pitch":1, "volume":0.75},
+	},
+	"shield_raise":{
+		"ABYSSAL":{"sounds":[0,1,2], "pitch":1, "volume":0.75},
+		"ABYSSAL_SERAPH":{"sounds":[0,1,2], "pitch":1, "volume":0.75},
+		"ABYSSAL_SIERRA":{"sounds":[0,1,2], "pitch":1, "volume":0.75},
+		"RAT_PRIMORDIAL":{"sounds":[0,1,2], "pitch":1, "volume":0.75},
+		"RAT_EXO":{"sounds":[0,1,2], "pitch":1, "volume":0.75},
+	},
+	
+	
 
 	"rat_raguel_system_concordshift_fire":[
 		{"file":"sounds/sfx_wpn_energy/rift_explosion_01.ogg","pitch":0.9,"volume":0.8},
@@ -124,6 +203,18 @@
 		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_04.ogg","pitch":1,"volume":0.5},
 		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_05.ogg","pitch":1,"volume":0.5},
     ],
+	
+	"rat_abyss_solitude_storm_sounds":[
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_01.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_02.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_03.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_04.ogg","pitch":1,"volume":0.5},
+		{"file":"sounds/sfx_terrain/terrain_hyperspace_deep_storm_lightning_05.ogg","pitch":1,"volume":0.5},
+    ],
+	
+	"rat_prayer_missile_wep_fire":[
+		{"file":"sounds/sfx_wpn_missiles/fragment_kinetic_fire_01.ogg","pitch":1,"volume":0.15},
+	],
 	
  	"abyss_haddock":[
 		{"file":"sounds/sfx_wpn_energy/antimatter_blaster_fire_01.ogg","pitch":0.9,"volume":0.8},

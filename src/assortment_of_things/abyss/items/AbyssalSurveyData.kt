@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.items
 
-import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
 import assortment_of_things.scripts.AtMarketListener
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
@@ -67,7 +66,7 @@ class AbyssalSurveyData : BaseSpecialItemPlugin() {
 
     override fun performRightClickAction() {
 
-        var factor = object : BaseOneTimeFactor(15) {
+       /* var factor = object : BaseOneTimeFactor(15) {
 
             override fun getDesc(intel: BaseEventIntel?): String {
                 return "Studied Survey Data"
@@ -85,6 +84,6 @@ class AbyssalSurveyData : BaseSpecialItemPlugin() {
             }
         }
         AbyssalDepthsEventIntel.addFactorCreateIfNecessary(factor, null)
-        Global.getSoundPlayer().playUISound("ui_survey_found_5", 1f, 0.8f)
+        Global.getSoundPlayer().playUISound("ui_survey_found_5", 1f, 0.8f)*/
     }
 }

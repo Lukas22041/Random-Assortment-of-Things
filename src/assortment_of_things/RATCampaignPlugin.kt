@@ -4,14 +4,20 @@ import assortment_of_things.abyss.AbyssBattleCreationPlugin
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.boss.GenesisInteraction
 import assortment_of_things.abyss.boss.GenesisReencounterInteractionPlugin
-import assortment_of_things.abyss.entities.AbyssalFracture
-import assortment_of_things.abyss.entities.AbyssalFractureSmall
+import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.interactions.*
-import assortment_of_things.abyss.misc.AbyssTags
+import assortment_of_things.abyss.interactions.ethereal.AbyssalRaphaelInteraction
+import assortment_of_things.abyss.interactions.primordial.PrimordialCatalystInteraction
+import assortment_of_things.abyss.interactions.primordial.PrimordialFabricatorInteraction
+import assortment_of_things.abyss.interactions.solitude.AbyssalResearchComplexInteraction
+import assortment_of_things.abyss.interactions.solitude.AccumalatorStationInteraction
+import assortment_of_things.abyss.interactions.tranquility.AbyssalShipyardInteraction
+import assortment_of_things.abyss.interactions.unique.AbyssSarielOutpostInteraction
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.items.cores.officer.PrimordialCore
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
+import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.interactions.ExoshipLockedOutInteraction
@@ -40,7 +46,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
     override fun pickBattleCreationPlugin(opponent: SectorEntityToken?): PluginPick<BattleCreationPlugin>? {
 
-        if (opponent?.containingLocation?.hasTag(AbyssUtils.SYSTEM_TAG) == true) {
+        if (opponent?.containingLocation == AbyssUtils.getSystem()) {
             return PluginPick<BattleCreationPlugin>(AbyssBattleCreationPlugin(), CampaignPlugin.PickPriority.HIGHEST)
         }
 
@@ -122,17 +128,15 @@ class RATCampaignPlugin : BaseCampaignPlugin()
         }
 
         var plugin = interactionTarget.customPlugin
+
         if (plugin is AbyssalFracture)  {
             if (plugin.connectedEntity != null) {
-
-                if (interactionTarget.hasTag("rat_final_fracture")) {
-                    return PluginPick(FinalFractureInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-                }
-                else {
-                    Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(plugin.connectedEntity, ""), 0.01f)
-                }
+                Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(plugin.connectedEntity, ""), 0.01f)
+                return null
             }
         }
+
+        /*
         if (plugin is AbyssalFractureSmall)  {
 
             var system = AbyssUtils.getAbyssData().lastExitFractureSystem
@@ -140,7 +144,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
             Global.getSector().doHyperspaceTransition(Global.getSector().playerFleet, interactionTarget, JumpPointAPI.JumpDestination(token, ""), 0.01f)
 
-        }
+        }*/
         if (interactionTarget.hasTag("rat_abyss_entrance")) {
 
             var fracture = interactionTarget.memoryWithoutUpdate.get("\$rat_jumpoint_destination_override") as SectorEntityToken
@@ -158,6 +162,34 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 return PluginPick(AbyssalRaphaelInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
 
+            when (id) {
+                //Sensors
+                "rat_abyss_sensor" -> return PluginPick(AbyssSensorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_decaying_abyss_sensor" -> return PluginPick(AbyssSensorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+
+                //Primordial
+                "rat_abyss_primordial_activator" -> return PluginPick(PrimordialCatalystInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_primordial_fabricator" -> return PluginPick(PrimordialFabricatorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+
+                //Generic
+                "rat_abyss_fabrication" -> return PluginPick(FabricatorInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_drone" -> return PluginPick(AbyssalProbeInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_transmitter" -> return PluginPick(TransmitterInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_research" -> return PluginPick(AbyssalResearchStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+
+                //Minibosses
+                "rat_abyssal_shipyard" -> return PluginPick(AbyssalShipyardInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+                "rat_abyss_research_complex" -> return PluginPick(AbyssalResearchComplexInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+
+                //Unique
+                "rat_sariel_outpost" -> return PluginPick(AbyssSarielOutpostInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+
+                //Solitude
+                "rat_abyss_accumalator" -> return PluginPick(AccumalatorStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
+
+            }
+
+
             if (interactionTarget.hasTag(AbyssTags.ABYSS_WRECK)) {
                 return PluginPick(AbyssalWreckInteraction(), CampaignPlugin.PickPriority.HIGHEST)
             }
@@ -167,7 +199,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
             }
 
 
-            when (id) {
+            /*when (id) {
                 "rat_abyss_rift_station" -> return PluginPick(RiftStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_abyss_fabrication" -> return PluginPick(FabrictationStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_abyss_accumalator" -> return PluginPick(AccumalatorStationInteraction(), CampaignPlugin.PickPriority.HIGHEST)
@@ -177,7 +209,7 @@ class RATCampaignPlugin : BaseCampaignPlugin()
                 "rat_abyss_unknown_lab" -> return PluginPick(AbyssalUnknownLabInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_military_outpost" -> return PluginPick(AbyssalMilitaryOutpostInteraction(), CampaignPlugin.PickPriority.HIGHEST)
                 "rat_sariel_outpost" -> return PluginPick(AbyssSarielOutpostInteraction(), CampaignPlugin.PickPriority.HIGHEST)
-            }
+            }*/
         }
 
 

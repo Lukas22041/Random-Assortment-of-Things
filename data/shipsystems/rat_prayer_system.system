@@ -1,0 +1,26 @@
+{
+	"id":"rat_prayer_system",
+	#"type":"STAT_MOD",
+	#"aiType":"CUSTOM",
+	#"aiScript":"assortment_of_things.abyss.shipsystem.threat.ai.PrayerSystemAI",
+	"type":"ENGINE_MOD",
+	"aiType":"BURN_DRIVE_TOGGLE",
+
+	"aiHints":{
+		"activeSpeedIncrease":135,
+		"burstMovementPotential":0,
+		"averageSpeedIncrease":135,
+	},
+
+	"statsScript":"assortment_of_things.abyss.shipsystem.threat.PrayerShipSystem",
+	"runScriptWhilePaused":true, # only for the player's ship
+	"runScriptWhileIdle":true,  # this means unapply() never gets called
+	"blockActionsWhileChargingDown":false,
+	
+	"canNotCauseOverload":true,
+	
+	"useSound":"system_burn_drive_activate",
+	"loopSound":"system_burn_drive_loop",
+	"deactivateSound":"system_burn_drive_deactivate",
+	"outOfUsesSound":"engine_disabled",
+}

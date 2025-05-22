@@ -1,14 +1,13 @@
 package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssBorder
-import assortment_of_things.abyss.entities.AbyssalFracture
-import assortment_of_things.abyss.entities.AbyssalLight
+import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.misc.MiscReplacement
 import assortment_of_things.abyss.terrain.terrain_copy.OldHyperspaceTerrainPlugin
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.addPara
 import assortment_of_things.misc.getAndLoadSprite
+import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.combat.ViewportAPI
@@ -247,8 +246,8 @@ class AbyssTerrainInHyperspacePlugin() : OldHyperspaceTerrainPlugin() {
             if (isInClouds(fleet))
             {
                 if (fleet.isPlayerFleet) {
-                    if (!fleet.hasScriptOfClass(AbyssTerrainPlugin.SpeedBoostScript::class.java)) {
-                        fleet.addScript(AbyssTerrainPlugin.SpeedBoostScript(fleet, this))
+                    if (!fleet.hasScriptOfClass(SpeedBoostScript::class.java)) {
+                        fleet.addScript(SpeedBoostScript(fleet, this))
                     }
                 } else {
                     fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_1", "In abyssal fog", 1.5f, fleet.stats.fleetwideMaxBurnMod)
@@ -290,10 +289,9 @@ class AbyssTerrainInHyperspacePlugin() : OldHyperspaceTerrainPlugin() {
         tooltip!!.addTitle(terrainName)
         tooltip.addSpacer(5f)
 
-        tooltip.addPara("A unique location within hyperspace. Discovered with the settlement of the sector, and quickly exploited for its unique resources. " +
-                "Post-collapse humanity however did not have the resources for working within this hostile environment, making it quasi isolated from the sector since.", 0f)
+        tooltip.addPara("A unique location within hyperspace. ", 0f)
 
-        tooltip.addSpacer(5f)
+      /*  tooltip.addSpacer(5f)
 
         tooltip!!.addPara("Due to a unique interaction between the fleet's sensors and the abyssal matter, it is possible to detect structures at further distances than normal, but without any identifying data. " +
                 "" +
@@ -302,7 +300,7 @@ class AbyssTerrainInHyperspacePlugin() : OldHyperspaceTerrainPlugin() {
         tooltip.addSpacer(5f)
 
         tooltip.addPara("The Transverse Jump ability can not be used due to spatial interference. However the unique bending of the surrounding space allows the exit of this location by flying outside of its perceived bounds. This area is marked by a circle on the tripads map.",
-            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Transverse Jump", "exit", "map")
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Transverse Jump", "exit", "map")*/
 
         if (isInClouds(player))
         {
@@ -330,12 +328,12 @@ class AbyssTerrainInHyperspacePlugin() : OldHyperspaceTerrainPlugin() {
 
 
 
-    override fun getTerrainName(): String {
+    override fun getTerrainName(): String? {
         val player = Global.getSector().playerFleet
         val inCloud = this.isInClouds(player)
 
         if (getLevel() <= 0.5f)  {
-            return ""
+            return null
         }
 
         if (isInStorm(player)) return "Abyssal Storm"
@@ -378,4 +376,35 @@ class AbyssTerrainInHyperspacePlugin() : OldHyperspaceTerrainPlugin() {
         return false
     }
 
+    class SpeedBoostScript(var fleet: CampaignFleetAPI, var terrain: OldHyperspaceTerrainPlugin) : EveryFrameScript {
+
+        var done = false
+
+        override fun isDone(): Boolean {
+            return done
+        }
+
+        override fun runWhilePaused(): Boolean {
+            return false
+        }
+
+        override fun advance(amount: Float) {
+
+            val inCloud = terrain.isInClouds(fleet)
+            val tile = terrain.getTilePreferStorm(fleet.getLocation(), fleet.getRadius())
+            var cell: CellStateTracker? = null
+            if (tile != null) {
+                cell = terrain.activeCells[tile[0]][tile[1]]
+            }
+
+            if (terrain.isInClouds(fleet)) {
+                fleet.stats.fleetwideMaxBurnMod.modifyMult(terrain.modId + "fog_1", 1.5f, "In abyssal fog")
+                fleet.stats.accelerationMult.modifyMult(terrain.modId + "fog_2", 1.5f, "In abyssal fog")
+            } else {
+                fleet.stats.fleetwideMaxBurnMod.unmodify(terrain.modId + "fog_1")
+                fleet.stats.accelerationMult.unmodify(terrain.modId + "fog_2")
+                done = true
+            }
+        }
+    }
 }

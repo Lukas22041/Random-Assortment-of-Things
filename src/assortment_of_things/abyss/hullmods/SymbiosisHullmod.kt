@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.hullmods
 
+import assortment_of_things.misc.ReflectionUtils
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
@@ -7,8 +8,10 @@ import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI
 import com.fs.starfarer.api.combat.listeners.DamageListener
 import com.fs.starfarer.api.combat.listeners.DamageTakenModifier
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Stats
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.combat.RiftLanceEffect
 import com.fs.starfarer.api.impl.combat.threat.FragmentSwarmHullmod
 import com.fs.starfarer.api.impl.combat.threat.FragmentWeapon
@@ -73,14 +76,33 @@ class SymbiosisHullmod : BaseHullMod() {
 
         //stats.dynamic.getMod(Stats.SWARM_LAUNCHER_WING_SIZE_MOD).modifyFlat(id, -1f)
 
-        if(stats.getVariant().getHullMods().contains(HullMods.FRAGMENT_SWARM)){
-            //if someone tries to install heavy armor, remove it
-            MagicIncompatibleHullmods.removeHullmodWithWarning(
-                stats.getVariant(),
-                HullMods.FRAGMENT_SWARM,
-                "rat_abyssal_threat"
-            );
+        //Make Shrouded Hmods incomp
+        for (hullmod in Global.getSettings().allHullModSpecs) {
+            if (hullmod.hasTag(Tags.SHROUDED) && stats.variant.hasHullMod(hullmod.id)) {
+                MagicIncompatibleHullmods.removeHullmodWithWarning(
+                    stats.getVariant(),
+                    hullmod.id,
+                    "rat_abyssal_threat"
+                );
+            }
         }
+
+        var blocked = ArrayList<String>()
+        blocked.add(HullMods.FRAGMENT_SWARM)
+        blocked.add(HullMods.SECONDARY_FABRICATOR)
+        blocked.add(HullMods.FRAGMENT_COORDINATOR)
+
+        for (block in blocked) {
+            if(stats.getVariant().hasHullMod(block)){
+                MagicIncompatibleHullmods.removeHullmodWithWarning(
+                    stats.getVariant(),
+                    block,
+                    "rat_abyssal_threat"
+                );
+            }
+        }
+
+
 
         stats.sensorProfile.modifyMult(id, 0.5f)
 
@@ -93,7 +115,6 @@ class SymbiosisHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI, id: String?) {
-
 
         if (!ship.hasListenerOfClass(SymbiosisListener::class.java)) {
             var listener = SymbiosisListener(ship)
@@ -160,7 +181,7 @@ class SymbiosisListener(var ship: ShipAPI) : AdvanceableListener {
         var sizeToMainain = when(ship.hullSize) {
             ShipAPI.HullSize.CRUISER -> 200
             ShipAPI.HullSize.DESTROYER -> 100
-            ShipAPI.HullSize.FRIGATE -> 500
+            ShipAPI.HullSize.FRIGATE -> 50
             else -> 0
         }
 
@@ -246,7 +267,6 @@ class SymbiosisDamageDealtListener() : DamageListener, DamageTakenModifier /*Dam
     var lastTarget: ShipAPI? = null
     var lastPoint = Vector2f()
 
-    //TODO check if the fighter is part of a wing of a ship with symbiosis
     override fun reportDamageApplied(source: Any?, target: CombatEntityAPI?, result: ApplyDamageResultAPI?) {
 
         if (target !is ShipAPI) return
@@ -345,10 +365,12 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
 
     override fun shouldActivateAI(amount: Float): Boolean {
 
+        if (ship.hasTag("rat_do_not_use_symbiosis")) return false
+
         aiUpdateInterval.advance(amount)
         if (aiUpdateInterval.intervalElapsed()) {
             var swarm = RoilingSwarmEffect.getSwarmFor(ship)
-            if (swarm.numActiveMembers <= swarm.params.baseMembersToMaintain * 0.8f) {
+            if (swarm.numActiveMembers <= swarm.params.baseMembersToMaintain * 0.9f) {
                 if (findValidWrecks().isNotEmpty()) {
                     return true
                 }
@@ -370,7 +392,9 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
             if (wreck !is ShipAPI) continue
             if (!wreck.isHulk) continue
             if (wreck.isFighter) continue
+            if (wreck.parentStation != null) continue //Dont work on modules
             if (MathUtils.getDistance(ship, wreck) > max) continue
+            if (wreck.variant.hasHullMod("shard_spawner")) continue //Prevent omegas from being turned to scrap
             //if (wreck.hasTag("symbiosis_claimed") && !claimed.contains(wreck)) continue
             list.add(wreck)
         }
@@ -422,8 +446,8 @@ class SymbiosisSubsystem(var listener: SymbiosisListener, ship: ShipAPI) : Magic
 
                     var offset = wreck.location
 
-                    wreck.exactBounds.update(wreck.location, wreck.facing)
-                    var bound = wreck.exactBounds.segments.random().p1
+                    wreck.exactBounds?.update(wreck.location, wreck.facing)
+                    var bound = wreck.exactBounds?.segments?.random()?.p1 ?: wreck.location
 
                     offset = bound
                     if (Random.nextFloat() >= 0.8f) offset = wreck.location

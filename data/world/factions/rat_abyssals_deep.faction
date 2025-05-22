@@ -189,6 +189,7 @@
 		},
 	},
 	"custom":{
+		"rat_abyss_faction":true,
 		"engageWhenEvenStrength":true,
 		"allowsTransponderOffTrade":true, # to prevent cargoscan dialog from "patrols"
 		"postsNoBounties":true,

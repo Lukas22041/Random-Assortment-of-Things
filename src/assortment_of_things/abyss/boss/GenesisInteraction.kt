@@ -5,27 +5,19 @@ import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.misc.RATInteractionPlugin
 import assortment_of_things.misc.VignettePanelPlugin
 import assortment_of_things.misc.getAndLoadSprite
-import assortment_of_things.misc.randomAndRemove
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
-import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
-import com.fs.starfarer.api.campaign.InteractionDialogAPI
-import com.fs.starfarer.api.combat.BattleCreationContext
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
-import com.fs.starfarer.api.impl.campaign.FleetEncounterContext
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.FIDConfig
-import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.FIDDelegate
 import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.util.Misc
-import lunalib.lunaUtil.LunaCommons
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
-import org.magiclib.achievements.MagicAchievement
 import org.magiclib.achievements.MagicAchievementManager
 import org.magiclib.kotlin.makeImportant
 import java.util.*
@@ -126,7 +118,7 @@ class GenesisInteraction : RATInteractionPlugin() {
             tooltip.setParaFont(Fonts.ORBITRON_12)
             tooltip.addPara("(Hover over the icon for a detailed description)", 0f, Misc.getGrayColor(), Misc.getGrayColor())
             var fake = Global.getFactory().createPerson()
-            fake.setFaction("rat_abyssals_deep")
+            fake.setFaction("rat_abyssals_primordials")
             fake.stats.setSkillLevel(skillSpec.id, 1f)
             tooltip.addSkillPanel(fake, 0f)
 
@@ -147,13 +139,13 @@ class GenesisInteraction : RATInteractionPlugin() {
                 Global.getSector().intelManager.addIntelToTextPanel(intel, textPanel)*/
 
 
-                var fracture = AbyssUtils.getAbyssData().hyperspaceFracture
+               /* var fracture = AbyssUtils.getData().hyperspaceFracture
                 var probe = fracture!!.containingLocation.addCustomEntity("rat_genesis_refight", "Unknown Memorial", "rat_genesis_memorial", Factions.NEUTRAL)
 
                 probe.setCircularOrbitWithSpin(fracture, MathUtils.getRandomNumberInRange(0f, 360f), 350f, 150f, 1f, 2f)
                 probe.addTag("rat_genesis_refight")
 
-                Misc.makeImportant(probe, null)
+                Misc.makeImportant(probe, null)*/
 
 
                 createOption("Leave") {
@@ -178,6 +170,8 @@ class GenesisInteraction : RATInteractionPlugin() {
         entity.addTag(AbyssTags.ABYSS_WRECK)
         entity.addTag("Dont_Show_Salvage_Option")
         entity.makeImportant("")
+        entity.setDiscoverable(null)
+        entity.setSensorProfile(null)
     }
 
     fun generateWormWreck() {
@@ -189,6 +183,8 @@ class GenesisInteraction : RATInteractionPlugin() {
         entity.addTag(AbyssTags.ABYSS_WRECK)
         entity.addTag("Dont_Show_Salvage_Option")
         entity.makeImportant("")
+        entity.setDiscoverable(null)
+        entity.setSensorProfile(null)
     }
 
 }

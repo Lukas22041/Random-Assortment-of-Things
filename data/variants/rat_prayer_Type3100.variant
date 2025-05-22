@@ -1,0 +1,50 @@
+{
+    "displayName": "Type 3100",
+    "fluxCapacitors": 8,
+    "fluxVents": 3,
+    "goalVariant": true,
+    "hullId": "rat_prayer",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "magazines",
+    ],
+    "permaMods": [
+        "rat_controller",
+    ],
+    "sMods": [],
+    "suppressedMods": [],
+    "variantId": "rat_prayer_Type3100",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0003": "voidblaster",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0001": "rat_prayer_missile_wep",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0002": "heavy_mass_driver",
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS0007": "voltaic_discharge",
+                "WS0006": "voltaic_discharge",
+            }
+        },
+    ],
+    "wings": [],
+    "modules": [],
+}

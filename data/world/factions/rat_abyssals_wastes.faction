@@ -1,0 +1,146 @@
+{
+	id:"rat_abyssals_wastes",
+	"displayName":"Threat",
+	"displayNameWithArticle":"the Threat",
+	"displayNameLong":"Threat",
+	"displayNameLongWithArticle":"the Threat",
+	"entityNamePrefix":"",
+	"personNamePrefix":"",
+	"personNamePrefixAOrAn":"a",
+	"displayNameIsOrAre":"are",
+	
+	"logo":"graphics/factions/threat.png",
+	"crest":"graphics/factions/crest_threat.png",
+	"shipNamePrefix":"",
+	
+	"color":[130,155,145,255],
+	"baseUIColor":[130,155,145,255],
+	#"color":[100,100,100,255],
+	#"baseUIColor":[155,155,155,255],
+	
+	#"darkUIColor":[31,94,112,175],
+	#"gridUIColor":[70,200,255,75],
+	
+	"showInIntelTab":false,
+	
+	"shipNameSources":{
+		"MERCANTILE":1,
+		"SPACE":1,
+		"DERELICT_DRONE":1,
+	},
+	"names":{
+		"ai":1,
+	},
+	"variantOverrides":{
+	},
+	# multiplier for how often hulls show up in the faction's fleets
+	"hullFrequency":{
+		"tags":{
+		},
+		"hulls":{
+		},
+	},
+	# ships the faction gets access to when importing S&W out-of-faction
+	"shipsWhenImporting":{
+		"tags":["threat", "rat_abyss_threat"],
+		"hulls":[
+		],
+	},
+	"knownShips":{
+		"tags":["threat", "rat_abyss_threat"],
+		"hulls":[
+		],
+	},
+	# listing ships here will make the faction mostly use them even if other hulls become available
+	"priorityShips":{
+		"tags":[],
+		"hulls":[
+		],
+	},
+	"knownFighters":{
+		"tags":["threat", "rat_abyss_threat"],
+		"fighters":[
+		],
+	},
+	"priorityFighters":{
+		"tags":["rat_abyss_threat"],
+		"fighters":[
+		],
+	},
+	"knownWeapons":{
+		"tags":["threat", "rat_abyss_threat"],
+		"weapons":[
+		],
+	},
+	"priorityWeapons":{
+		"tags":[],
+		"weapons":[
+		],
+	},
+	"knownHullMods":{
+		"tags":["standard", "threat", "rat_abyss_threat"],
+		"hullMods":[
+		],
+	},
+	"factionDoctrine":{
+		"warships":4,
+		"carriers":2,
+		"phaseShips":1,
+		
+		"officerQuality":3,
+		"shipQuality":3,
+		"numShips":3,
+		
+		"shipSize":4,
+		
+		"aggression":3, # doesn't matter since automated ships are super aggressive regardless
+		
+		"combatFreighterProbability":0,     				# instead of some portion of the freighters in a fleet
+		"combatFreighterCombatUseFraction":1,				# as part of the normal combat lineup
+		"combatFreighterCombatUseFractionWhenPriority":1,   # as part of normal combat lineup, when marked as priority ship
+		"autofitRandomizeProbability":0.25,
+
+		"commanderSkillsShuffleProbability":1,
+		"commanderSkills":[ # unlike other factions, can get up to 3 skills depending
+			"electronic_warfare",
+			"flux_regulation",
+			"coordinated_maneuvers",
+		],
+	},
+	
+	"illegalCommodities":[
+	],
+	"music":{
+		"encounter_neutral":"music_threat_encounter_hostile",
+		"encounter_hostile":"music_threat_encounter_hostile",
+		"encounter_friendly":"music_threat_encounter_hostile",
+	},	
+	#"internalComms":"hegemony_internal",
+	"portraits":{
+		"standard_male":[
+			"graphics/portraits/threat.png",
+		],
+		"standard_female":[
+			"graphics/portraits/threat.png",
+		],
+	},
+	"ranks":{
+		"ranks":{
+		},
+		"posts":{
+		},
+	},
+	"custom":{
+		"rat_abyss_faction":true,
+		"engageWhenEvenStrength":true,
+		"allowsTransponderOffTrade":true, # to prevent cargoscan dialog from "patrols"
+		"postsNoBounties":true,
+		"fightToTheLast":true, # order a full assault instead of retreating, in most cases
+		
+	},	
+	"fleetTypeNames":{
+		"patrolSmall":"First Arrival", 
+		"patrolMedium":"Second Arrival", 
+		"patrolLarge":"Third Arrival", 
+	},
+},

@@ -2,26 +2,37 @@ package assortment_of_things.abyss.terrain
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.*
-import assortment_of_things.abyss.intel.event.AbyssalDepthsEventIntel
-import assortment_of_things.abyss.procgen.AbyssDepth
-import assortment_of_things.misc.RATSettings
+import assortment_of_things.abyss.entities.hyper.AbyssalFracture
+import assortment_of_things.abyss.entities.light.AbyssalBeacon
+import assortment_of_things.abyss.entities.light.AbyssalColossalPhotosphere
+import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.entities.light.AbyssalPhotosphere
+import assortment_of_things.abyss.entities.primordial.PrimordialPhotosphere
+import assortment_of_things.abyss.procgen.biomes.EtherealShores
+import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
+import assortment_of_things.misc.*
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
-import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.terrain.BaseTerrain
+import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.ui.UIComponentAPI
+import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
+import com.fs.state.AppDriver
 import org.lazywizard.lazylib.MathUtils
 import org.lazywizard.lazylib.ui.LazyFont
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.bounty.ui.drawOutlined
 import org.magiclib.kotlin.setAlpha
+import second_in_command.misc.getHeight
+import java.awt.Color
 import java.util.*
 
 class AbyssalDarknessTerrainPlugin : BaseTerrain() {
@@ -39,7 +50,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
     var fractureText:LazyFont.DrawableString? = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
 
     @Transient
-    var exitText:LazyFont.DrawableString? = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+    var biomeText:LazyFont.DrawableString? = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
 
     var id = Misc.genUID()
 
@@ -72,40 +83,18 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
     }
 
     override fun renderOnMap(factor: Float, alphaMult: Float) {
-        var system = AbyssUtils.getSystemData(entity.starSystem)
+        var data = AbyssUtils.getData()
+        var system = AbyssUtils.getSystem()
 
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
-            fractureText = font!!.createText("", system.getColor().setAlpha(255), 800f)
-        }
-
-        if (exitText == null) {
-            exitText = font!!.createText("", system.getColor().setAlpha(255), 800f)
+            fractureText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+            biomeText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
         }
 
         if (halo == null) {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
         }
-
-        var border = system.system.customEntities.find { it.customEntitySpec.id == "rat_abyss_border" } ?: return
-        var plugin = border.customPlugin
-        if (exitText != null && plugin is AbyssBorder) {
-            var radius = plugin.radius * factor
-
-            exitText!!.text = "Exit"
-            exitText!!.fontSize = 600f * factor
-            exitText!!.baseColor = system.getColor().setAlpha((255 * alphaMult).toInt())
-            exitText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            exitText!!.blendSrc = GL11.GL_SRC_ALPHA
-
-            exitText!!.drawOutlined(-exitText!!.width / 2, radius + (exitText!!.height / 2))
-            exitText!!.drawOutlined(-exitText!!.width / 2, -radius + (exitText!!.height / 2))
-            exitText!!.drawOutlined(-radius - (exitText!!.width / 2), exitText!!.height / 2)
-            exitText!!.drawOutlined(radius - (exitText!!.width / 2), exitText!!.height / 2)
-        }
-
-
-
 
         var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
         for (source in lightsources)
@@ -114,112 +103,248 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
 
             var plugin = source.customPlugin as AbyssalLight
             var radius = plugin.radius * factor
-            var color = plugin.color
+            if (plugin is AbyssalBeacon) radius = (plugin.baseRadius + plugin.extraRadius) * factor
+            var color = plugin.lightColor
 
-            halo!!.alphaMult = 0.6f * alphaMult
-            halo!!.color = color.setAlpha(75)
+            var skipRendering = false
+            var isStenceling = false
+            if (plugin is PrimordialPhotosphere) {
+                var biome = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
+                var level = biome.getLevel()
+                if (level > 0 && level < 1) {
+                    isStenceling = true
+                    biome.startStencil(true)
+                } else if (level <= 0) {
+                    skipRendering = true
+                }
+            }
 
-            halo!!.setSize(radius / 20, radius / 20)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
+            if (!skipRendering) {
+                halo!!.alphaMult = 0.6f * alphaMult
+                halo!!.color = color.setAlpha(75)
 
-            halo!!.alphaMult = 0.8f * alphaMult
-            halo!!.color = color.setAlpha(55)
+                halo!!.setSize(radius / 20, radius / 20)
+                halo!!.setAdditiveBlend()
+                halo!!.renderAtCenter(loc.x, loc.y)
 
-            halo!!.setSize(radius / 2, radius / 2)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
+                halo!!.alphaMult = 0.8f * alphaMult
+                halo!!.color = color.setAlpha(55)
+
+                halo!!.setSize(radius / 2, radius / 2)
+                halo!!.setAdditiveBlend()
+                halo!!.renderAtCenter(loc.x, loc.y)
+            }
+
+            if (isStenceling) GL11.glDisable(GL11.GL_STENCIL_TEST)
+
+        }
+
+        for (entity in system!!.customEntities) {
+
+
+            if (entity.customEntitySpec.id == "rat_abyss_fracture") {
+                var plugin = entity.customPlugin
+                if (plugin !is AbyssalFracture) continue
+
+                var destination = plugin.connectedEntity?.containingLocation ?: continue
+
+                var destinationName = destination.nameWithNoType ?: continue
+                fractureText!!.text = destinationName
+                fractureText!!.fontSize = 600f * factor
+                fractureText!!.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+                fractureText!!.drawOutlined(entity.location.x * factor - (fractureText!!.width / 2), (entity.location.y + 600) * factor + (fractureText!!.height))
+            }
+
+            if (entity.customEntitySpec.id == "rat_abyss_sensor" || entity.customEntitySpec.id == "rat_decaying_abyss_sensor") {
+
+                if (!entity.hasTag("scanned") && !Global.getSettings().isDevMode) continue
+
+                var plugin = entity.customPlugin as AbyssSensorEntity
+                var biome = plugin.biome ?: continue
+
+                fractureText!!.text = biome.getDisplayName()
+                fractureText!!.fontSize = 600f * factor
+                fractureText!!.baseColor = biome.getTooltipColor().setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+                var loc = entity.location
+                var height = 700f
+                if (entity.orbitFocus != null) {
+                    loc = entity.orbitFocus.location
+                    if (entity.orbitFocus.customPlugin is AbyssalColossalPhotosphere) {
+                        height += 700f
+                    }
+                }
+
+                fractureText!!.drawOutlined(loc.x * factor - (fractureText!!.width / 2), (loc.y + height) * factor + (fractureText!!.height))
+            }
+
+            if (entity.customEntitySpec.id == "rat_abyss_primordial_photosphere") {
+
+                if (!entity.customEntitySpec.isShowIconOnMap) continue
+
+                var plugin = entity.customPlugin as PrimordialPhotosphere
+                var biome = plugin.biome ?: continue
+
+                fractureText!!.text = biome.getDisplayName()
+                fractureText!!.fontSize = 600f * factor
+                fractureText!!.baseColor = biome.getTooltipColor().setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+                fractureText!!.drawOutlined(entity.location.x * factor - (fractureText!!.width / 2), (entity.location.y + 700) * factor + (fractureText!!.height))
+            }
+
+            if (entity.customEntitySpec.id == "rat_abyss_photosphere_sierra") {
+
+                if (entity.sensorProfile == null) continue
+
+                var plugin = entity.customPlugin as AbyssalPhotosphere
+                var biome = AbyssUtils.getBiomeManager().getBiome(EtherealShores::class.java) ?: continue
+
+                fractureText!!.text = biome.getDisplayName()
+                fractureText!!.fontSize = 600f * factor
+                fractureText!!.baseColor = biome.getTooltipColor().setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+                fractureText!!.drawOutlined(entity.location.x * factor - (fractureText!!.width / 2), (entity.location.y + 700) * factor + (fractureText!!.height))
+            }
         }
 
 
-        for (fracture in system.system.customEntities) {
-            if (fracture.customEntitySpec.id != "rat_abyss_fracture") continue
-            var plugin = fracture.customPlugin
-            if (plugin !is AbyssalFracture) continue
 
-            var destination = plugin.connectedEntity?.containingLocation ?: continue
-            if ((destination is StarSystemAPI && !destination.isEnteredByPlayer)) continue
-
-            var destinationName = destination.nameWithNoType ?: continue
-            fractureText!!.text = destinationName
-            fractureText!!.fontSize = 400f * factor
-            fractureText!!.baseColor = system.getColor().setAlpha((255 * alphaMult).toInt())
-            fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
-
-            fractureText!!.drawOutlined(fracture.location.x * factor - (fractureText!!.width / 2), (fracture.location.y + 600) * factor + (fractureText!!.height))
-
-        }
     }
 
     override fun renderOnRadar(radarCenter: Vector2f, factor: Float, alphaMult: Float) {
         super.renderOnRadar(radarCenter, factor, alphaMult)
 
-        var system = AbyssUtils.getSystemData(entity.starSystem) ?: return
+        //Global.getSettings().setFloat("campaignRadarRadius", 8000f)
 
+        var data = AbyssUtils.getData() ?: return
+        var system = AbyssUtils.getSystem() ?: return
+        var primordial = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
+
+        if (font == null) {
+            font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
+            fractureText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+            biomeText = font!!.createText("", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
+        }
 
         if (halo == null) {
             halo = Global.getSettings().getSprite("rat_terrain", "halo")
         }
-
 
         val radarRadius = Global.getSettings().getFloat("campaignRadarRadius") + 2000
         var lightsources = entity.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
 
         for (sources in lightsources)
         {
-            if (MathUtils.getDistance(sources.location, radarCenter) >= radarRadius) continue
+            var plugin = sources.customPlugin as AbyssalLight
+
+            var extra = 0f
+            if (sources.customPlugin is AbyssalColossalPhotosphere) extra += 3500
+           /* if (plugin is AbyssalColossalPhotosphere) {
+                var primLevel = primordial.getLevel()
+                *//* if (primLevel > 0 && primLevel < 0.5) {
+                     var level = primLevel.levelBetween(0f, 0.25f)
+                     radius *= 1 -(0.5f*level)
+                 }
+                 if (primLevel > 0.5 && primLevel < 1) {
+                     var level = primLevel.levelBetween(1f, 0.755f)
+                     radius *= 1 -(0.5f*level)
+                 }*//*
+
+                *//*if (primLevel > 0f && primLevel < 1f) {
+                    extra = 0f
+                }*//*
+            }*/
+            if (MathUtils.getDistance(sources.location, radarCenter) >= radarRadius + extra) continue
+
+
 
             var loc = Vector2f((sources.location.x - radarCenter.x) * factor, (sources.location.y - radarCenter.y) * factor)
 
 
-            var plugin = sources.customPlugin as AbyssalLight
+
             var radius = plugin.radius * factor
-            var color = plugin.color
-            if (plugin.radius >= 50000) continue
 
-            halo!!.alphaMult = 1f * alphaMult
-            halo!!.color = color.setAlpha(75)
+            var color = plugin.lightColor
+            //if (plugin.radius >= 52000) continue
 
-            halo!!.setSize(radius / 20, radius / 20)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
+            var skipRendering = false
+            var fadeIn = 1f
+            if (plugin is PrimordialPhotosphere) {
+                var biome = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
+                var level = biome.getLevel()
+                if (level > 0 && level < 1) {
+                    fadeIn = biome.getLevel()
+                    //biome.startStencil(true)
+                } else if (level <= 0) {
+                    skipRendering = true
+                }
+            }
 
-            halo!!.alphaMult = 1f * alphaMult
-            halo!!.color = color.setAlpha(55)
+            if (!skipRendering) {
+                halo!!.alphaMult = 1f * alphaMult * fadeIn
+                halo!!.color = color.setAlpha(75)
 
-            halo!!.setSize(radius / 2, radius / 2)
-            halo!!.setAdditiveBlend()
-            halo!!.renderAtCenter(loc.x, loc.y)
+                halo!!.setSize(radius / 20, radius / 20)
+                halo!!.setAdditiveBlend()
+                halo!!.renderAtCenter(loc.x, loc.y)
+
+                halo!!.alphaMult = 1f * alphaMult
+                halo!!.color = color.setAlpha(55)
+
+                halo!!.setSize(radius / 2f, radius / 2f)
+                halo!!.setAdditiveBlend()
+                halo!!.renderAtCenter(loc.x, loc.y)
+            }
+
+            //if (isStenceling) GL11.glDisable(GL11.GL_STENCIL_TEST)
+
         }
 
+        for (entity in system.customEntities) {
 
+            if (MathUtils.getDistance(entity.location, radarCenter) >= radarRadius) continue
 
+            if (entity.customEntitySpec.id == "rat_abyss_fracture") {
+                var plugin = entity.customPlugin
+                if (plugin !is AbyssalFracture) continue
 
+                var destination = plugin.connectedEntity?.containingLocation ?: continue
 
-        if (font == null) {
-            font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
-            fractureText = font!!.createText("", system.getColor().setAlpha(255), 800f)
-        }
+                var destinationName = destination.nameWithNoType ?: continue
+                fractureText!!.text = destinationName
+                fractureText!!.fontSize = 800f * factor
+                fractureText!!.baseColor = AbyssUtils.ABYSS_COLOR.setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+                fractureText!!.drawOutlined((entity.location.x - radarCenter.x) * factor - (fractureText!!.width / 2), (entity.location.y - radarCenter.y + 800) * factor + (fractureText!!.height))
+            }
 
-        for (fracture in system.system.customEntities) {
+            /*if (entity.customEntitySpec.id == "rat_abyss_sensor" || entity.customEntitySpec.id == "rat_decaying_abyss_sensor") {
 
-            if (MathUtils.getDistance(fracture.location, radarCenter) >= radarRadius) continue
+                if (!entity.hasTag("scanned")) continue
 
-            if (fracture.customEntitySpec.id != "rat_abyss_fracture") continue
-            var plugin = fracture.customPlugin
-            if (plugin !is AbyssalFracture) continue
+                var plugin = entity.customPlugin as AbyssSensorEntity
+                var biome = plugin.biome ?: continue
 
-            var destination = plugin.connectedEntity?.containingLocation ?: continue
-            if ((destination is StarSystemAPI && !destination.isEnteredByPlayer)) continue
+                fractureText!!.text = biome.getDisplayName()
+                fractureText!!.fontSize = 800f * factor
+                fractureText!!.baseColor = biome.getTooltipColor().setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
 
-            var destinationName = destination.nameWithNoType ?: continue
-            fractureText!!.text = destinationName
-            fractureText!!.fontSize = 800f * factor
-            fractureText!!.baseColor = system.getColor().setAlpha((255 * alphaMult).toInt())
-            fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
-            fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
-            fractureText!!.drawOutlined((fracture.location.x - radarCenter.x) * factor - (fractureText!!.width / 2), (fracture.location.y - radarCenter.y + 800) * factor + (fractureText!!.height))
+                fractureText!!.drawOutlined((entity.location.x - radarCenter.x) * factor - (fractureText!!.width / 2), (entity.location.y - radarCenter.y + 600) * factor + (fractureText!!.height))
+
+            }*/
+
         }
     }
 
@@ -245,11 +370,11 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         return true
     }
 
-    fun getDarknessMult() : Float {
-        var point = Global.getSector().playerFleet.location
+    fun getLightlevel(target: SectorEntityToken) : Float {
+        //var point = Global.getSector().playerFleet.location
+        var point = target.location
         var system = entity.starSystem
-        var data = AbyssUtils.getSystemData(system)
-        var depth = data.depth
+        var data = AbyssUtils.getData()
 
         var highestMult = 0f
         var inAny = false
@@ -258,13 +383,23 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         {
             var plugin = source.customPlugin as AbyssalLight
 
-            var maxRadius = (plugin.radius / 10) + 10 + (Global.getSector().playerFleet.radius / 2)
+
+            var maxRadius = (plugin.radius / 10) + 10 + (target.radius / 2)
             var minRadius = maxRadius * 0.85f
 
             var distance = MathUtils.getDistance(source.location, point)
+
+            if (plugin is PrimordialPhotosphere) {
+                var biome = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
+                var range = biome.getRadius()
+                var centerDist = MathUtils.getDistance(target, biome.getStencilCenter())
+                if (centerDist >= range + target.radius/2) continue
+            }
+
             if (distance < maxRadius) {
                 inAny = true
                 var level = (distance - minRadius) / (maxRadius - minRadius)
+                if (source.customEntitySpec?.id == "rat_abyss_decaying_photosphere") level = MathUtils.clamp(level, 0.5f, 1f)
                 if (level >= highestMult) {
                     highestMult = level
                 }
@@ -278,74 +413,124 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
         return highestMult
     }
 
+    //Doesnt really need to be dependent on the entities position, as there would rarely be a case where the difference would matter
+    fun getDarknessMult() : Float {
+        var mananger = AbyssUtils.getBiomeManager()
+        var levels = mananger.getBiomeLevels()
+
+        var mult = 1f
+
+        for ((biome, level) in levels) {
+            var baseDarknessMult = biome.getMaxDarknessMult()
+            //var negation = (1 - baseDarknessMult) * level
+
+            var negation = 1-baseDarknessMult
+
+            mult *= baseDarknessMult + negation * (1-level)  /* - negation*/
+            var test = ""
+        }
+
+        return mult
+    }
+
+    fun getDarknessName(darknessMult: Float) : String {
+
+        name = "Darkness"
+
+        /*if (darknessMult <= 0.75f) {
+            name = "Darkness"
+        }*/
+
+        if (darknessMult <= 0.65f) {
+            name = "Extreme Darkness"
+        }
+        if (darknessMult <= 0.55f) {
+            name = "Total Darkness"
+        }
+        return name
+    }
+
     override fun applyEffect(entity: SectorEntityToken?, days: Float) {
         super.applyEffect(entity, days)
         var system = entity!!.starSystem
 
-        var data = AbyssUtils.getSystemData(system)
-        var depth = data.depth
+        var data = AbyssUtils.getData()
 
         if (entity is CampaignFleetAPI)
         {
             var fleet = entity
 
-            var darknessMult = getDarknessMult()
+            var lightLevel = getLightlevel(fleet) // 1 At total darkness
 
-            if (darknessMult != 0f) {
-                if (depth == AbyssDepth.Shallow) {
-                    fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Darkness", 1 - (0.25f * darknessMult), fleet.stats.detectedRangeMod)
+            //if (lightLevel != 0f) {
+
+                var mult = getDarknessMult()
+
+                var name = getDarknessName(mult)
+
+                var current = 1 - ((1 - mult) * lightLevel)
+
+                fleet.stats.addTemporaryModMult(0.1f, this.toString(), "$name", current, fleet.stats.detectedRangeMod)
+
+                /*if (depth == AbyssDepth.Shallow) {
+                    fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Darkness", 1 - (0.25f * lightLevel), fleet.stats.detectedRangeMod)
 
                 }
 
                 if (depth == AbyssDepth.Deep) {
-                    fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Extreme Darkness", 1 -(0.50f * darknessMult), fleet.stats.detectedRangeMod)
+                    fleet.stats.addTemporaryModMult(0.1f, this.modId + "abyss_1", "Extreme Darkness", 1 -(0.50f * lightLevel), fleet.stats.detectedRangeMod)
                 }
 
                 if (AbyssalDepthsEventIntel.get()?.isStageActive(AbyssalDepthsEventIntel.Stage.IN_THE_DARK) == true) {
-                    fleet.stats.addTemporaryModMult(0.1f, id,  "In the Dark",  1 - (0.10f * darknessMult), fleet.stats.detectedRangeMod)
-                }
-            }
+                    fleet.stats.addTemporaryModMult(0.1f, id,  "In the Dark",  1 - (0.10f * lightLevel), fleet.stats.detectedRangeMod)
+                }*/
+           // }
         }
     }
 
     override fun getTerrainName(): String {
         var system = entity.starSystem
-        var data = AbyssUtils.getSystemData(system)
-        var depth = data.depth
 
-        var mult = (getDarknessMult() * 100).toInt()
+        var name = getDarknessName(getDarknessMult())
+        var mult = (getLightlevel(Global.getSector().playerFleet) * 100).toInt()
 
-
-        if (depth == AbyssDepth.Shallow) return "Darkness ($mult%)"
-        if (depth == AbyssDepth.Deep) return "Extreme Darkness ($mult%)"
-
-        return ""
+        return "$name ($mult%)"
     }
 
     override fun hasTooltip(): Boolean {
         return true
     }
 
+    override fun isTooltipExpandable(): Boolean {
+        return false
+    }
+
     override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
-        super.createTooltip(tooltip, expanded)
+        //super.createTooltip(tooltip, expanded)
 
         var system = entity.starSystem
-        var data = AbyssUtils.getSystemData(system)
-        var depth = data.depth
 
         tooltip!!.addTitle(terrainName)
         tooltip.addSpacer(5f)
 
-        if (depth == AbyssDepth.Shallow) {
-            tooltip!!.addPara("The density of the abyssal matter makes barely any radiation able to get past it. Decreases the Sensor Detection range by up to 25%%" +
-                    "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Detection", "25%")
-            tooltip.addSpacer(5f)
-        }
-        if (depth == AbyssDepth.Deep) {
-            tooltip!!.addPara("The density of the abyssal matter causes any light or other type of radiation to diminish close to its source. Decreases the Sensor Detection range by up to 50%%" +
-                    "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Detection", "50%")
-            tooltip.addSpacer(5f)
-        }
+        var dominant = AbyssUtils.getBiomeManager().getDominantBiome()
+        var maxDarkness = 100-(dominant.getMaxDarknessMult() * 100).toInt()
+        var mult = getDarknessMult()
+
+        tooltip!!.addPara("The density of the abyssal matter makes barely any radiation able to get past it. Decreases the Sensor Detection range by up to $maxDarkness%%" +
+                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Sensor Detection", "$maxDarkness%")
+        tooltip.addSpacer(5f)
+
+        tooltip.addSectionHeading("Sensor Darkness", Alignment.MID, 0f)
+        tooltip.addSpacer(5f)
+
+        tooltip.addPara("No known maps of this location exists, combined with the limited sensor range, much of the map is uncharted. " +
+                "Your fleet will document more about the enviroment as explore it.",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "map")
+
+
+        tooltip.addSpacer(5f)
+
     }
 
     override fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?) {
@@ -356,11 +541,17 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             var playerfleet = Global.getSector().playerFleet
             if (entity.containingLocation == playerfleet.containingLocation) {
 
-                var offset = 400f
+                var levels = AbyssUtils.getBiomeManager().getBiomeLevels()
+                var biomeVignetteLevel = levels.map { it.key.getVignetteLevel() * it.value }.sum()
 
 
-                vignette.alphaMult = 0.9f
-                if (RATSettings.brighterAbyss!!) vignette.alphaMult = 0.6f
+                var darknessMult = getDarknessMult()
+                var level = 1 - darknessMult.levelBetween(0.5f, 0.75f)
+
+                var offset = 400f - (200 * level) //Closer in darker biomes
+
+                vignette.alphaMult = (0.85f + (0.05f * level)) * biomeVignetteLevel //Darker in darker biomes
+                if (RATSettings.brighterAbyss!!) vignette.alphaMult = 0.6f + (0.05f * level)
                 vignette.setSize(viewport!!.visibleWidth + offset, viewport!!.visibleHeight + offset)
                 vignette.render(viewport!!.llx - (offset / 2), viewport!!.lly - (offset / 2))
 

@@ -2,6 +2,7 @@ package assortment_of_things.campaign.ui
 
 import assortment_of_things.abyss.hullmods.BaseAlteration
 import assortment_of_things.misc.BorderedPanelPlugin
+import assortment_of_things.misc.addNegativePara
 import assortment_of_things.misc.addPara
 import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
@@ -49,6 +50,20 @@ class AlterationRefitButton : BaseRefitButton() {
 
     override fun hasPanel(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
         return true
+    }
+
+    override fun isClickable(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
+        if (variant?.hasTag("svc") == true) return false //Void creatures
+        return super.isClickable(member, variant, market)
+    }
+
+    override fun hasTooltip(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?): Boolean {
+        if (variant?.hasTag("svc") == true) return true //Void creatures
+        return super.hasTooltip(member, variant, market)
+    }
+
+    override fun addTooltip(tooltip: TooltipMakerAPI,member: FleetMemberAPI?,variant: ShipVariantAPI?, market: MarketAPI?) {
+        tooltip.addNegativePara("Can not be used on Void Creatures.")
     }
 
     override fun onPanelClose(member: FleetMemberAPI?, variant: ShipVariantAPI?, market: MarketAPI?) {

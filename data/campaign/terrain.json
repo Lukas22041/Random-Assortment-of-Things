@@ -1,17 +1,75 @@
 {
-	"rat_depths":{
+	
+	
+	
+	"rat_hyperspace_rendering":{
+		"plugin":"assortment_of_things.campaign.ui.HyperspaceRenderingTerrainPlugin",
+	},
+	
+	
+	### Abyss
+	"rat_biome_grid_renderer":{
+		"plugin":"assortment_of_things.abyss.terrain.BiomeGridRenderer",
+	},
+	
+	#Managing Terrain
+	"rat_abyss_terrain":{
 		"plugin":"assortment_of_things.abyss.terrain.AbyssTerrainPlugin",
-		
-		
+	},
+	
+	
+	#Fog Terrains
+	"rat_sea_of_tranquility":{
+		"plugin":"assortment_of_things.abyss.terrain.fog.SeaOfTranquilityTerrain",
 		"loopTwo":"terrain_hyperspace_deep",
-		
 		"loopFour":"terrain_hyperspace_storm",
 		"custom":{
-
+			"stormSound":"rat_abyss_storm_sounds",
+		},
+	},
+	"rat_sea_of_serenity":{
+		"plugin":"assortment_of_things.abyss.terrain.fog.SeaOfSerenityTerrain",
+		"loopTwo":"terrain_hyperspace_deep",
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
+			"stormSound":"rat_abyss_storm_sounds",
+		},
+	},
+	"rat_sea_of_harmony":{
+		"plugin":"assortment_of_things.abyss.terrain.fog.SeaOfHarmonyTerrain",
+		"loopTwo":"terrain_hyperspace_deep",
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
+			"stormSound":"rat_abyss_storm_sounds",
+		},
+	},
+	"rat_sea_of_solitude":{
+		"plugin":"assortment_of_things.abyss.terrain.fog.SeaOfSolitudeTerrain",
+		"loopTwo":"terrain_hyperspace_deep",
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
 			"stormSound":"rat_abyss_storm_sounds",
 		},
 	},
 	
+	"rat_ethereal_shores":{
+		"plugin":"assortment_of_things.abyss.terrain.fog.EtherealShoresTerrain",
+		"loopTwo":"terrain_hyperspace_deep",
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
+			"stormSound":"rat_abyss_storm_sounds",
+		},
+	},
+	"rat_primordial_waters":{
+		"plugin":"assortment_of_things.abyss.terrain.fog.PrimordialWatersTerrain",
+		"loopTwo":"terrain_hyperspace_deep",
+		"loopFour":"terrain_hyperspace_storm",
+		"custom":{
+			"stormSound":"rat_abyss_storm_sounds",
+		},
+	},
+	
+	#Terrain for the Hyperspace Fracture
 	"rat_depths_in_hyper":{
 		"plugin":"assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin",
 		
@@ -24,22 +82,18 @@
 			"stormSound":"rat_abyss_storm_sounds",
 		},
 	},
+
+	#Darkness
 	
 	"rat_depths_darkness":{
 		"plugin":"assortment_of_things.abyss.terrain.AbyssalDarknessTerrainPlugin",
 	},
-	
-	"rat_abyss_ionicstorm":{
-		"plugin":"assortment_of_things.abyss.terrain.AbyssalIonicStorm",
+
+	#Sensor Fog
+	"rat_map_revealer":{
+		"plugin":"assortment_of_things.abyss.terrain.MapRevealerTerrain",
 	},
 	
-	"rat_hyperspace_rendering":{
-		"plugin":"assortment_of_things.campaign.ui.HyperspaceRenderingTerrainPlugin",
-	},
-	
-	"rat_abyssal_depthsV2":{
-		"plugin":"assortment_of_things.abyss.rework.AbyssalDepthsTerrainV2",
-	},
 	
 	"rat_exo_nebula":{
 		"plugin":"assortment_of_things.exotech.terrain.ExotechHyperNebula",
@@ -53,6 +107,7 @@
 			"stormSound":"rat_abyss_storm_sounds",
 		},
 	},
+	
 	
 }
 

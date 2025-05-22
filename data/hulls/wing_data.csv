@@ -7,7 +7,7 @@ rat_shield_object_wing,rat_shield_object_variant,"no_drop, no_sell, low",1,,5,5,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,9
 rat_ceto,rat_ceto_Fighter,"no_sell, fighter, fighter6, auto_fighter, restricted, codex_unlockable, no_dealer",3,,8,14,V,4000,500,,2,FIGHTER,Fighter Drone,10,8000,,,,,,,,,,,,,2223
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+saint_construction_swarm_wing,attack_swarm_Saint_Construction,"no_drop, no_sell",0,,6,10,BOX,100000,700,,1,FIGHTER,Fragments,20,20000,,,,,,,,,,,,,31
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Exo,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,

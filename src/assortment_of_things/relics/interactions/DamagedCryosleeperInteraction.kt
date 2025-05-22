@@ -56,7 +56,6 @@ class DamagedCryosleeperInteraction : RATInteractionPlugin() {
         createOption("Salvage the cryosleeper") {
             clearOptions()
             var random = Random(interactionTarget.getSalvageSeed())
-            var depth = AbyssUtils.getSystemData(interactionTarget.starSystem).depth
 
             var dropRandom = ArrayList<SalvageEntityGenDataSpec.DropData>()
             var dropValue = ArrayList<SalvageEntityGenDataSpec.DropData>()

@@ -21,14 +21,12 @@ class AbyssAmbientSoundPlayer : EveryFrameScript {
 
     override fun advance(amount: Float) {
 
-        var system = Global.getSector()?.playerFleet?.containingLocation ?: return
 
-        if (system.hasTag(AbyssUtils.SYSTEM_TAG)) {
+        if (AbyssUtils.isPlayerInAbyss()) {
             var mult = 1f
             if (Global.getSector().isFastForwardIteration) {
                 mult = Global.getSettings().getFloat("campaignSpeedupMult")
             }
-
 
             interval.advance(amount / mult)
         }

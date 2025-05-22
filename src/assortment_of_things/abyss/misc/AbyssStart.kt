@@ -36,7 +36,6 @@ import second_in_command.SCUtils
 //Loosely based on the SoTF dustkeeper start
 class AbyssStart : CustomStart() {
 
-
     override fun getDisabledTooltip(): String? {
 
         if (!RATSettings.enableAbyss!!) {
@@ -179,7 +178,6 @@ class AbyssStart : CustomStart() {
                 Global.getSector().getPlayerPerson().getStats().setSkillLevel(Skills.AUTOMATED_SHIPS, 1f);
             }
 
-
             NGCAddStandardStartingScript.adjustStartingHulls(fleet)
 
             for (member in fleet.fleetData.membersListCopy) {
@@ -187,7 +185,7 @@ class AbyssStart : CustomStart() {
                 member.fixVariant()
 
                 if (member.baseOrModSpec().hullId == "rat_aboleth_m") {
-                    member.variant!!.addMod("rat_chronos_conversion")
+                    member.variant!!.addMod("rat_abyssal_conversion")
                     member.isFlagship = true
                     fleet.fleetData.setFlagship(member)
                 }
@@ -239,7 +237,7 @@ class AbyssStart : CustomStart() {
         member.repairTracker.cr = 0.7f
 
         if (member.baseOrModSpec().hullId == "rat_aboleth_m") {
-            member.variant!!.addMod("rat_chronos_conversion")
+            member.variant!!.addMod("rat_abyssal_conversion")
             member.isFlagship = true
             fleet.fleetData.setFlagship(member)
         }

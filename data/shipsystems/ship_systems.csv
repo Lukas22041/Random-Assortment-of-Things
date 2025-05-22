@@ -6,7 +6,7 @@ name,id,flux/second,f/s (base rate),f/s (base cap),flux/use,f/u (base rate),f/u 
 #Abyssal Synergy,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Abyssal Current,rat_abyssal_current,,,,,,,,,,1,3,0.5,12,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 Abyssal Skimmer,rat_abyssal_skimmer,,,,,,,,3,0.1,0.25,0.1,1,0,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
-Abyssal Cloak,rat_abyssal_cloak,,,,,,,,,,1.5,6,0.5,15,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
+Abyssal Cloak,rat_abyssal_cloak,,,,,,,,,,1.5,6,0.5,18,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
 Abyssal Charge,rat_abyssal_charge,,,,,,,,,,0.5,0.5,1.5,22,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -16,6 +16,9 @@ Abyssal Shift,rat_raphael_system,,,,,,,,2,0.1,0.2,3,0.25,0.25,,,TRUE,TRUE,TRUE,,
 Temporal Stasis,rat_temporal_stasis,,,,,,,,,,10,0.1,2,24,,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Seraphim Drive,rat_seraphim_drive,,,,,,,,,,0.5,0,0.5,2,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,,TRUE,,graphics/icons/hullsys/phase_cloak.png
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Barrage Sequence,rat_prayer_system,,,,,,,,,,1.5,0,1.5,4,TRUE,,,,,,TRUE,,,TRUE,,movement,graphics/icons/hullsys/burn_drive.png
+Reawakening,rat_saint_system,,,,,,,,,,3.5,30,10,12,TRUE,,,,,,,,,TRUE,,,graphics/icons/hullsys/construction_swarm.png
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Spatial Disturbance,rat_spatial_disturbance,,,,,,,,3,0.075,0.5,1,0.5,1.5,,,,,,,,,,,,,graphics/icons/hullsys/ammo_feeder.png
 Primordial Cloak,rat_primordial_cloak,,,,,,,,,,1.5,6,0.5,15,TRUE,,,,,,,,,,,,graphics/icons/hullsys/phase_cloak.png

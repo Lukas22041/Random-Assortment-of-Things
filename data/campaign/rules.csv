@@ -1,11 +1,19 @@
 id,trigger,conditions,script,text,options,notes
 greetingRATAbyssalsHostile,OpenCommLink,"$faction.id == rat_abyssals score:1000
 ",$entity.ignorePlayerCommRequests = true 1,The opposing fleet does not respond to the comm-request,cutCommLink:Cut the comm link,
-greetingRATDeepAbyssalsHostile,OpenCommLink,"$faction.id == rat_abyssals_deep score:1000
+greetingRATSolitude,OpenCommLink,"$faction.id == rat_abyssals_solitude score:1000
 ",$entity.ignorePlayerCommRequests = true 1,The opposing fleet does not respond to the comm-request,cutCommLink:Cut the comm link,
-greetingRATDeepAbyssalsSeraphHostile,OpenCommLink,"$faction.id == rat_abyssals_deep_seraph score:1000
+greetingRATSerenity,OpenCommLink,"$faction.id == rat_abyssals_serenity score:1000
 ",$entity.ignorePlayerCommRequests = true 1,The opposing fleet does not respond to the comm-request,cutCommLink:Cut the comm link,
-,,,,,,
+greetingRATHarmony,OpenCommLink,"$faction.id == rat_abyssals_harmony score:1000
+",$entity.ignorePlayerCommRequests = true 1,The opposing fleet does not respond to the comm-request,cutCommLink:Cut the comm link,
+greetingRATWastes,OpenCommLink,"$faction.id == rat_abyssals_wastes score:1000
+","$ignorePlayerCommRequests = true 1
+ShowThreatPersonVisual","???? DELUSE ???? MISGOT
+
+*** ALICIT REIFICATE ***
+
+INTERDICTORATE PROACT: UNFABRICATE",cutCommLink:Cut the comm link,
 ,,,,,,
 ratAbyssGateOpt,PopulateGateOptions,"$global.gatesActive
 $global.playerCanUseGates

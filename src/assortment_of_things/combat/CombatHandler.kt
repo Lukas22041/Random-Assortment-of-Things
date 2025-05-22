@@ -1,26 +1,25 @@
 package assortment_of_things.combat
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssalPhotosphere
-import assortment_of_things.abyss.procgen.AbyssDepth
-import assortment_of_things.abyss.procgen.AbyssProcgen
-import assortment_of_things.abyss.procgen.types.IonicStormAbyssType
-import assortment_of_things.abyss.scripts.AbyssCombatHueApplier
-import assortment_of_things.abyss.scripts.ResetBackgroundScript
+import assortment_of_things.abyss.combat.*
+import assortment_of_things.abyss.entities.light.*
+import assortment_of_things.abyss.entities.primordial.PrimordialPhotosphere
+import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
+import assortment_of_things.abyss.procgen.biomes.SeaOfSolitude
 import assortment_of_things.backgrounds.neural.NeuralShardScript
 import assortment_of_things.backgrounds.zero_day.ZeroDayScript
 import assortment_of_things.misc.RATSettings
-import assortment_of_things.misc.ThreatFragmentShader
+import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.misc.escort.EscortOrdersManager
-import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.PlanetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.input.InputEventAPI
+import com.fs.starfarer.campaign.WarpingSpriteRenderer
 import exerelin.campaign.backgrounds.CharacterBackgroundUtils
 import org.lazywizard.lazylib.MathUtils
+import org.magiclib.kotlin.setBrightness
 
 
 class CombatHandler : EveryFrameCombatPlugin
@@ -93,7 +92,11 @@ class CombatHandler : EveryFrameCombatPlugin
                 }
             }
 
-            var system = Global.getSector()?.playerFleet?.starSystem ?: return
+            if (AbyssUtils.isPlayerInAbyss()) {
+                initAbyss()
+            }
+
+            /*var system = Global.getSector()?.playerFleet?.starSystem ?: return
             if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
             {
                 var data = AbyssUtils.getSystemData(system)
@@ -111,13 +114,13 @@ class CombatHandler : EveryFrameCombatPlugin
 
                 ResetBackgroundScript.resetBackground = true
 
-               /* if (darkness!!.containsEntity(Global.getSector().playerFleet)) {
+               *//* if (darkness!!.containsEntity(Global.getSector().playerFleet)) {
                     CombatEngine.getBackground().color = color.darker()
                 }
                 else {
                     if (depth == AbyssDepth.Shallow) CombatEngine.getBackground().color = color.brighter()
                     if (depth == AbyssDepth.Deep) CombatEngine.getBackground().color = color.brighter().brighter().brighter()
-                }*/
+                }*//*
 
                // Global.getCombatEngine().isRenderStarfield = false
                 if (darkness!!.containsEntity(Global.getSector().playerFleet)) {
@@ -159,7 +162,102 @@ class CombatHandler : EveryFrameCombatPlugin
 
 
             }
+*/        }
+    }
+
+    fun initAbyss() {
+        var engine = Global.getCombatEngine()
+
+        var data = AbyssUtils.getData()
+        var manager = AbyssUtils.getBiomeManager()
+        var dominant = manager.getDominantBiome()
+
+        var darkness = data.darknessTerrain ?: return
+        var lightLevel = 1-darkness.getLightlevel(Global.getSector().playerFleet) //1 If full brightness
+        var darknessLevel = darkness.getDarknessMult() //Biome dependent darkness mult
+
+        var currentColor = manager.getCurrentBiomeColor()
+        var currentDarkColor = manager.getCurrentDarkBiomeColor()
+        var currentBackgroundColor = manager.getCurrentBackgroundColor()
+        var currentLightColor = manager.getCurrentSystemLightColor()
+
+        //Background
+        var backgroundBrightness = 40
+        backgroundBrightness += (75 * lightLevel * darknessLevel).toInt()
+        if (dominant is PrimordialWaters) {
+            backgroundBrightness -= 20
+            currentDarkColor = currentDarkColor.darker()
         }
+
+        var background = currentBackgroundColor.setBrightness(backgroundBrightness)
+
+        Global.getCombatEngine().backgroundColor = background
+
+        //Background Warper
+        var warper = CombatBackgroundWarper(8, 0.25f)
+        ReflectionUtils.setFieldOfType(WarpingSpriteRenderer::class.java, Global.getCombatEngine(), warper)
+        warper.overwriteColor = background
+
+
+        //Hue
+        engine.addLayeredRenderingPlugin(AbyssCombatHueApplier(currentDarkColor, lightLevel, darknessLevel))
+
+        //Sea of Solitude rendering
+        if (dominant is SeaOfSolitude) {
+            Global.getCombatEngine().addLayeredRenderingPlugin(SolitudeStormCombatRenderer(dominant))
+            Global.getCombatEngine().addLayeredRenderingPlugin(SolitudeStormParticleCombatRenderer(dominant.getParticleColor(), dominant.getDarkBiomeColor()))
+        }
+
+        //Display Lightsources in combat
+        var lightSource: SectorEntityToken? = null
+        var lightSources = Global.getSector().playerFleet.containingLocation.customEntities.filter { it.customPlugin is AbyssalLight }
+        for (source in lightSources)
+        {
+            var plugin = source.customPlugin as AbyssalLight
+            if (MathUtils.getDistance(source.location, Global.getSector().playerFleet.location) < (plugin.radius / 10) - 10)
+            {
+                if (plugin is AbyssalPhotosphere || plugin is AbyssalBeacon || plugin is AbyssalDecayingPhotosphere || plugin is AbyssalColossalPhotosphere || plugin is PrimordialPhotosphere) {
+                    lightSource = source
+                }
+                break
+            }
+        }
+
+        if (lightSource != null) {
+            var plugin = lightSource.customPlugin
+
+            if (plugin is AbyssalPhotosphere) {
+                engine!!.addLayeredRenderingPlugin(CombatPhotosphereRenderer(lightSource))
+            }
+
+            if (plugin is AbyssalColossalPhotosphere) {
+                engine!!.addLayeredRenderingPlugin(CombatColossalPhotosphereRenderer(lightSource))
+            }
+
+            if (plugin is AbyssalDecayingPhotosphere) {
+                engine!!.addLayeredRenderingPlugin(CombatDecayingPhotosphereRenderer(lightSource))
+            }
+
+            if (plugin is PrimordialPhotosphere) {
+                var biome = AbyssUtils.getBiomeManager().getBiome(PrimordialWaters::class.java) as PrimordialWaters
+                if (biome.getLevel() != 0f) {
+                    engine!!.addLayeredRenderingPlugin(CombatPrimordialPhotosphereRenderer(lightSource))
+                }
+            }
+
+            if (plugin is AbyssalBeacon) {
+                engine!!.addLayeredRenderingPlugin(CombatBeaconRenderer(lightSource, currentLightColor))
+            }
+        }
+
+
+
+    }
+
+
+    fun advanceAbyss(amount: Float) {
+        var asteroids = ArrayList(Global.getCombatEngine().asteroids)
+        asteroids.forEach { Global.getCombatEngine().removeEntity(it) }
     }
 
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {
@@ -225,7 +323,12 @@ class CombatHandler : EveryFrameCombatPlugin
         if (Global.getCurrentState() != GameState.TITLE && Global.getSector() != null)
         {
             var system = Global.getSector()?.playerFleet?.starSystem ?: return
-            if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
+
+            if (AbyssUtils.isPlayerInAbyss()) {
+                advanceAbyss(amount)
+            }
+
+            /*if (system.hasTag(AbyssUtils.SYSTEM_TAG) && Global.getCombatEngine().missionId == null)
             {
 
                 var data = AbyssUtils.getSystemData(system)
@@ -294,7 +397,7 @@ class CombatHandler : EveryFrameCombatPlugin
                         ship.mutableStats.empDamageTakenMult.modifyMult("rat_ionicstorm", 1.20f)
                     }
                 }
-            }
+            }*/
         }
     }
 

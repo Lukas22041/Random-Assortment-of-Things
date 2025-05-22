@@ -3,6 +3,7 @@ By Tartiflette
  */
 package assortment_of_things.misc;
 
+import assortment_of_things.abyss.misc.RATCampaignDistortionShader;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.combat.CombatEntityAPI;
 import java.awt.Color;
@@ -132,5 +133,82 @@ public class GraphicLibEffects {
         } 
         DistortionShader.addDistortion(ripple);
         
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static void CustomCampaignBubbleDistortion (Vector2f loc, Vector2f vel, float size, float intensity, boolean flip, float angle, float arc, float edgeSmooth, float fadeIn, float last, float fadeOut, float growthTime, float shrinkTime){
+        if (!Global.getSettings().getModManager().isModEnabled("shaderLib")) return;
+
+        WaveDistortion wave = new WaveDistortion(loc, vel);
+
+        wave.setIntensity(intensity);
+        wave.setSize(size);
+        wave.setArc(angle-arc/2,angle+arc/2);
+        if(edgeSmooth!=0){
+            wave.setArcAttenuationWidth(edgeSmooth);
+        }
+        wave.flip(flip);
+        if(fadeIn!=0){
+            wave.fadeInIntensity(fadeIn);
+        }
+        wave.setLifetime(last);
+        if(fadeOut!=0){
+            wave.setAutoFadeIntensityTime(fadeOut);
+//            wave.fadeOutIntensity(fadeOut);
+        } else {
+            wave.setAutoFadeIntensityTime(99);
+        }
+        if(growthTime!=0){
+            wave.fadeInSize(growthTime);
+        }
+        if(shrinkTime!=0){
+            wave.setAutoFadeSizeTime(shrinkTime);
+//            wave.fadeOutSize(shrinkTime);
+        } else {
+            wave.setAutoFadeSizeTime(99);
+        }
+        RATCampaignDistortionShader.addDistortion(wave);
+    }
+
+    public static RippleDistortion CustomCampaignRippleDistortion (Vector2f loc, Vector2f vel, float size, float intensity, boolean flip, float angle, float arc, float edgeSmooth, float fadeIn, float last, float fadeOut, float growthTime, float shrinkTime){
+        if (!Global.getSettings().getModManager().isModEnabled("shaderLib")) return null;
+
+        RippleDistortion ripple = new RippleDistortion(loc, vel);
+
+        ripple.setIntensity(intensity);
+        ripple.setSize(size);
+        ripple.setArc(angle-arc/2,angle+arc/2);
+        if(edgeSmooth!=0){
+            ripple.setArcAttenuationWidth(edgeSmooth);
+        }
+        ripple.flip(flip);
+        if(fadeIn!=0){
+            ripple.fadeInIntensity(fadeIn);
+        }
+        ripple.setLifetime(last);
+        if(fadeOut!=0){
+            ripple.setAutoFadeIntensityTime(fadeOut);
+        }
+        if(growthTime!=0){
+            ripple.fadeInSize(growthTime);
+        }
+        if(shrinkTime!=0){
+            ripple.setAutoFadeSizeTime(shrinkTime);
+        }
+        ripple.setFrameRate(60);
+        RATCampaignDistortionShader.addDistortion(ripple);
+
+        return ripple;
     }
 }

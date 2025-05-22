@@ -1,7 +1,6 @@
 package assortment_of_things.exotech.entities
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.intel.AbyssWarningBeaconIntel
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.strings.RATTags
 import com.fs.starfarer.api.Global

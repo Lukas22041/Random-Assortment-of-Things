@@ -19,9 +19,13 @@
 		"Abyss":[255, 0, 50, 255],
 		"Abyssal":[255, 0, 50, 255],
 		"Seraph":[242, 48, 65, 255],
+		"Abyssal Threat":[167,119,118, 255],
 		"Primordial":[140, 0, 250, 255],
 		"Modular Weapon":[158, 50, 230,255],
-		"Artifact":[97, 21, 212, 255],
+		
+		"Artifact":[102, 22, 222, 255],
+		"Abyssal Artifact":[212, 21, 50, 255],
+		
 		"Forge-Assisted":[235, 164, 49, 255],
 		"Exo-Tech":[252, 190, 18, 255],
 		"Experimental Exo-Tech":[252, 190, 18, 255],
@@ -64,8 +68,8 @@
 		  "depths1_glow":"graphics/terrain/rat_depths1_glow.png",
 		  "depths1_map":"graphics/terrain/rat_depths1_map.png",
 		  
-		  "depths1_combat":"graphics/terrain/rat_combat_depths1.png",
-		  "depths1_map_combat":"graphics/terrain/rat_combat_depths1_map.png",
+		  #"depths1_combat":"graphics/terrain/rat_combat_depths1.png",
+		  #"depths1_map_combat":"graphics/terrain/rat_combat_depths1_map.png",
 		  
 		  #"depths2":"graphics/terrain/rat_depths2.png",
 		  #"depths2_glow":"graphics/terrain/rat_depths2_glow.png",
@@ -110,6 +114,10 @@
 		  "xander":"graphics/portraits/rat_exo2.png",
 		  "defector":"graphics/portraits/rat_exo3.png",
 		  "executive":"graphics/portraits/rat_exo_exec.png",
+		},
+		
+		"rat_illustrations": {
+			"genesis":"graphics/illustrations/rat_genesis.jpg",
 		},
 		
 		"rat_preload": {

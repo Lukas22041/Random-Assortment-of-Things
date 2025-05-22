@@ -1,2 +1,5 @@
 name,id,type,tags,activationDays,activationCooldown,durationDays,deactivationDays,deactivationCooldown,unlockedAtStart,defaultForAIFleet,musicSuppression,uiOn,uiOff,uiLoop,worldOn,worldOff,worldLoop,icon,plugin,ai,desc,sortOrder
+,,,,,,,,,,,,,,,,,,,,,,
+Abyssal Burn,rat_abyssal_burn,TOGGLE,disabled_by_interdict,0.05,,,0.05,,FALSE,FALSE,,ui_sustained_burn_on,ui_sustained_burn_off,ui_sustained_burn_loop,world_sustained_burn_on,world_sustained_burn_off,,graphics/icons/abilities/rat_abyssal_burn.png,assortment_of_things.abyss.abilities.AbyssalBurnAbility,com.fs.starfarer.api.impl.campaign.abilities.ai.SustainedBurnAbilityAI,Boost burn level at the cost of acceleration and wind-up time.,500
+,,,,,,,,,,,,,,,,,,,,,,
 Manage Exoship,rat_exoship_management,DURATION,,0,,0,,0,,,,,,,,,,graphics/icons/abilities/rat_exoship_management_transit_frame1.png,assortment_of_things.exotech.abilities.ManageExoshipAbility,,,2222

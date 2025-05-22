@@ -29,7 +29,6 @@ public class OpenGLUtil {
 
         for (int i = 0; i < numPoints; i++) {
 
-            //todo make this use lazylib's fancy method
             Vector2f innerEdge = MathUtils.getPointOnCircumference(loc, radius - (thickness / 2f), angleBetweenPoints * i);
             Vector2f outerEdge = MathUtils.getPointOnCircumference(loc, radius + (thickness / 2f), angleBetweenPoints * i);
 

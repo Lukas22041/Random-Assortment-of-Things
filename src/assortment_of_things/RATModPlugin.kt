@@ -3,20 +3,21 @@ package assortment_of_things
 import assortment_of_things.abyss.AbyssCampaignListener
 import assortment_of_things.scripts.ParallelConstruction
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssalFracture
+import assortment_of_things.abyss.misc.RATCampaignDistortionShader
 import assortment_of_things.abyss.procgen.AbyssGenerator
-import assortment_of_things.abyss.procgen.AbyssProcgen
-import assortment_of_things.abyss.rework.AbyssGeneratorV2
+import assortment_of_things.abyss.procgen.BiomeAtmosphereRenderer
+import assortment_of_things.abyss.procgen.BiomeMusicHandler
 import assortment_of_things.abyss.scripts.*
 import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
+import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.artifacts.AddArtifactHullmod
+import assortment_of_things.artifacts.ArtifactUIScript
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.scripts.AICoreDropReplacerScript
 import assortment_of_things.campaign.scripts.ApplyRATControllerToPlayerFleet
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
-import assortment_of_things.exotech.scripts.ChangeExoIntelState
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
@@ -24,8 +25,6 @@ import assortment_of_things.snippets.DropgroupTestSnippet
 import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.JumpPointAPI
-import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignEngine
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaRefit.LunaRefitManager
@@ -34,18 +33,13 @@ import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
 import assortment_of_things.campaign.scripts.AICoreReplacerScript
-import assortment_of_things.campaign.scripts.render.RATCampaignRenderer
+import assortment_of_things.campaign.scripts.SimUnlockerListener
 import assortment_of_things.exotech.ExoCampaignListener
 import assortment_of_things.exotech.ExotechGenerator
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
 import assortment_of_things.misc.*
 import assortment_of_things.misc.escort.EscortRefitButton
-import com.fs.starfarer.api.EveryFrameScript
-import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.DelayedActionScript
-import com.fs.starfarer.campaign.CampaignState
-import com.fs.state.AppDriver
 import com.thoughtworks.xstream.XStream
 import lunalib.lunaUtil.campaign.LunaCampaignRenderer
 import java.util.*
@@ -61,8 +55,23 @@ class RATModPlugin : BaseModPlugin() {
 
     }
 
+    override fun onAboutToStartGeneratingCodex() {
+        CodexHandler.onAboutToStartGeneratingCodex()
+    }
+
+    override fun onAboutToLinkCodexEntries() {
+        CodexHandler.onAboutToLinkCodexEntries()
+    }
+
+    override fun onCodexDataGenerated() {
+        CodexHandler.onCodexDataGenerated()
+    }
+
     override fun onApplicationLoad() {
         super.onApplicationLoad()
+
+        //CodexHandler.onApplicationLoad()
+
 
         val currentDate = Date()
         //var currentDate = Date(1698530401L * 1000)
@@ -92,11 +101,11 @@ class RATModPlugin : BaseModPlugin() {
 
         LunaRefitManager.addRefitButton(AlterationRefitButton())
 
-        LunaRefitManager.addRefitButton(CrewConversionChronosRefitButton())
+        /*LunaRefitManager.addRefitButton(CrewConversionChronosRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionCosmosRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionSeraphRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionPrimordialRefitButton())
-        LunaRefitManager.addRefitButton(CrewConversionRemoveIntegratedRefitButton())
+        LunaRefitManager.addRefitButton(CrewConversionRemoveIntegratedRefitButton())*/
 
         LunaRefitManager.addRefitButton(DeltaAIRefitButton())
 
@@ -112,8 +121,6 @@ class RATModPlugin : BaseModPlugin() {
             LightData.readLightDataCSV("data/config/rat_lights_data.csv");
             TextureData.readTextureDataCSV("data/config/rat_texture_data.csv")
         }
-
-
     }
 
     override fun onDevModeF8Reload() {
@@ -132,6 +139,12 @@ class RATModPlugin : BaseModPlugin() {
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
 
+        LunaCampaignRenderer.addTransientRenderer(RATCampaignDistortionShader())
+
+        LunaCampaignRenderer.addTransientRenderer(BiomeAtmosphereRenderer())
+
+        //Global.getSector().listenerManager.addListener(SimUnlockerListener())
+
         //TestFactor(1)
 
         /*if (!LunaCampaignRenderer.hasRendererOfClass(RATCampaignRenderer::class.java)) {
@@ -144,7 +157,8 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().addScript(ConstantTimeIncreaseScript())
         }
 
-        Global.getSector().addTransientScript(ChangeMainMenuColorScript())
+        Global.getSector().addTransientScript(WhichModScript())
+        Global.getSector().addTransientScript(ArtifactUIScript())
         Global.getSector().addTransientScript(AICoreReplacerScript())
         Global.getSector().addTransientListener(AICoreDropReplacerScript())
         Global.getSector().addTransientScript(ApplyRATControllerToPlayerFleet())
@@ -182,8 +196,9 @@ class RATModPlugin : BaseModPlugin() {
 
       //  Global.getSector().playerFleet.fleetData.officersCopy.random().person.stats.setSkillLevel("rat_auto_engineer", 1f)*/
 
-        Global.getSector().addTransientScript(DisableTransverseScript())
+        //Global.getSector().addTransientScript(DisableTransverseScript())
         Global.getSector().addTransientScript(AbyssAmbientSoundPlayer())
+        Global.getSector().addTransientScript(BiomeMusicHandler())
         //Global.getSector().addTransientListener(AbyssDoctrineListener(false))
         //Global.getSector().listenerManager.addListener(AbyssalFleetInflationListener(), true)
 
@@ -241,7 +256,7 @@ class RATModPlugin : BaseModPlugin() {
     fun generateAbyss() {
         if (RATSettings.enableAbyss!!)
         {
-            if (AbyssUtils.getAbyssData().systemsData.isEmpty()) {
+            /*if (AbyssUtils.getAbyssData().systemsData.isEmpty()) {
                 for (faction in Global.getSector().allFactions)
                 {
                     if (faction.id == "rat_abyssals" || faction.id == "rat_abyssals_deep") continue
@@ -253,6 +268,12 @@ class RATModPlugin : BaseModPlugin() {
                 Global.getSector().memoryWithoutUpdate.set("\$rat_alteration_random", random)
 
                 AbyssGenerator().beginGeneration()
+            }*/
+
+            var data = AbyssUtils.getData()
+            if (!data.hasGenerated) {
+                data.hasGenerated = true
+                AbyssGenerator.init()
             }
 
           //AbyssGeneratorV2.generate()
@@ -332,10 +353,10 @@ class RATModPlugin : BaseModPlugin() {
     }
 
     override fun onNewGameAfterProcGen() {
-        generateAbyss()
+        //generateAbyss()
 
         if (Global.getSector().characterData.memoryWithoutUpdate.get("\$rat_started_abyss") == true) {
-            Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", "rat_abyss_gate")
+            Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", "abyss_fracture_exit")
 
         }
 
@@ -365,7 +386,24 @@ class RATModPlugin : BaseModPlugin() {
     override fun beforeGameSave() {
         super.beforeGameSave()
 
-        for (system in Global.getSector().starSystems.filter { it.hasTag(AbyssUtils.SYSTEM_TAG) })
+
+        var data = AbyssUtils.getData()
+        var biomes = data.biomeManager?.biomes
+        if (biomes != null) {
+            for (biome in biomes) {
+                var terrain = biome.terrain
+                if (terrain is BaseFogTerrain) {
+                    terrain.save()
+                }
+            }
+        }
+
+        var hyperTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is AbyssTerrainInHyperspacePlugin }
+        if (hyperTerrain != null) {
+            (hyperTerrain.plugin as AbyssTerrainInHyperspacePlugin).save()
+        }
+
+       /* for (system in Global.getSector().starSystems.filter { it.hasTag(AbyssUtils.SYSTEM_TAG) })
         {
             var abyssPlugin = AbyssProcgen.getAbyssTerrainPlugin(system)
             if (abyssPlugin != null)
@@ -373,10 +411,7 @@ class RATModPlugin : BaseModPlugin() {
                 abyssPlugin.save()
             }
         }
-        var hyperTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is AbyssTerrainInHyperspacePlugin }
-        if (hyperTerrain != null) {
-            (hyperTerrain.plugin as AbyssTerrainInHyperspacePlugin ).save()
-        }
+        */
 
         var hyperExoTerrain = Global.getSector().hyperspace.terrainCopy.find { it.plugin is ExotechHyperNebula }
         if (hyperExoTerrain != null) {

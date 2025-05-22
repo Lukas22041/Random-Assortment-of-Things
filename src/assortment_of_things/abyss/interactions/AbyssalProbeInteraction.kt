@@ -1,12 +1,9 @@
 package assortment_of_things.abyss.interactions
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.artifacts.ArtifactUtils
 import assortment_of_things.misc.RATInteractionPlugin
-import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.*
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 
@@ -61,7 +58,7 @@ class AbyssalProbeInteraction : RATInteractionPlugin() {
                     createOption("Recover the person in the cryo-pod") {
                         clearOptions()
 
-                        textPanel.addPara("The crew innitates the procedure for recovering the person inside the cryo-pod and brings them abboard the fleet. It takes a while, but after a few hours they appear to be ready to talk.")
+                        textPanel.addPara("The crew innitates the procedure for recovering the person inside the cryo-pod and brings them aboard the fleet. It takes a while, but after a few hours they appear to be ready to talk.")
 
                         textPanel.addPara("But any hopes for leads is immediately erased, as it appears that they have forgotten some things. They still remember who they are, but have no recollection of what transpired the few times they awoke from their cryosleep.",
                             Misc.getTextColor(), Misc.getHighlightColor(), "")
@@ -107,23 +104,23 @@ class AbyssalProbeInteraction : RATInteractionPlugin() {
         createOption("Begin salvage operations") {
             clearOptions()
             var random = Random(interactionTarget.getSalvageSeed())
-            var depth = AbyssUtils.getSystemData(interactionTarget.starSystem).depth
 
             var dropRandom = ArrayList<DropData>()
             var dropValue = ArrayList<DropData>()
             var drop = DropData()
 
-
-
             drop = DropData()
             drop.group = "basic"
-            drop.value = 5000
+            drop.value = 6000
             dropValue.add(drop)
-
-
 
             drop = DropData()
             drop.chances = 2
+            drop.group = "rat_abyss_alterations_rare"
+            dropRandom.add(drop)
+
+            drop = DropData()
+            drop.chances = 1
             drop.group = "rat_abyss_probe"
             dropRandom.add(drop)
 
@@ -132,7 +129,10 @@ class AbyssalProbeInteraction : RATInteractionPlugin() {
             drop.group = "rat_abyss_weapons"
             dropRandom.add(drop)
 
-
+            drop = DropData()
+            drop.chances = 1
+            drop.group = "rat_abyss_artifact_very_rare"
+            dropRandom.add(drop)
 
             drop = DropData()
             drop.chances = 1
@@ -155,16 +155,12 @@ class AbyssalProbeInteraction : RATInteractionPlugin() {
             drop.group = "weapons2"
             dropRandom.add(drop)
 
-
-            var mult = when(depth) {
-                AbyssDepth.Shallow -> 1f
-                AbyssDepth.Deep -> 1.5f
-                else -> 1f
-            }
+            var biome = AbyssUtils.getBiomeManager().getCell(interactionTarget).getBiome()
+            var mult = biome?.getLootMult() ?: 1f
 
             var salvage = SalvageEntity.generateSalvage(random, mult, mult, 1f, 1f, dropValue, dropRandom)
 
-            ArtifactUtils.generateArtifactLoot(salvage, "abyss", 0.025f, 1, random)
+            //ArtifactUtils.generateArtifactLoot(salvage, "abyss", 0.025f, 1, random)
 
             visualPanel.showLoot("Loot", salvage, true) {
                 closeDialog()

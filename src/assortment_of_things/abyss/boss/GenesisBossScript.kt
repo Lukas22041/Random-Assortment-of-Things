@@ -1,7 +1,6 @@
 package assortment_of_things.abyss.boss
 
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.entities.AbyssalStormParticleManager
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaActivator
@@ -59,7 +58,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     var wormhole = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
     var wormhole2 = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
 
-    var particles = ArrayList<AbyssalStormParticleManager.AbyssalLightParticle>()
+    var particles = ArrayList<GenesisParticleManager.GenesisParticle>()
 
     var particleInterval = IntervalUtil(0.2f, 0.2f)
     var halo = Global.getSettings().getSprite("rat_terrain", "halo")
@@ -247,7 +246,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship.mutableStats.hullDamageTakenMult.modifyMult("genesis_phase_2", 0.75f * level)
             ship.mutableStats.armorDamageTakenMult.modifyMult("genesis_phase_2", 0.75f * level)
 
-            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.5f + (0.55f * level))
+            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.4f + (0.6f * level))
             ship.mutableStats.turnAcceleration.modifyMult("genesis_phase_2", 0.50f  + (0.55f * level))
 
             ship.mutableStats.energyRoFMult.modifyMult("genesis_phase_2", 0.75f + (0.35f * level))
@@ -257,6 +256,10 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship.mutableStats.energyWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f + (0.60f * level))
             ship.mutableStats.ballisticWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f + (0.60f * level))
             ship.mutableStats.missileWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f + (0.60f * level))
+
+            ship.mutableStats.energyWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f + (0.25f*level))
+            ship.mutableStats.ballisticWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f + (0.25f*level))
+            ship.mutableStats.missileWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f + (0.25f*level))
 
             var color = AbyssUtils.GENESIS_COLOR.setAlpha(75)
             var jitterColor = color.setAlpha(55)
@@ -292,7 +295,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship.mutableStats.hullDamageTakenMult.modifyMult("genesis_phase_2", 0f)
             ship.mutableStats.armorDamageTakenMult.modifyMult("genesis_phase_2", 0f)
 
-            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.5f)
+            ship.mutableStats.maxSpeed.modifyMult("genesis_phase_2", 0.4f)
             ship.mutableStats.turnAcceleration.modifyMult("genesis_phase_2", 0.50f)
 
             ship.mutableStats.energyRoFMult.modifyMult("genesis_phase_2", 0.75f)
@@ -302,6 +305,11 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             ship.mutableStats.energyWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f)
             ship.mutableStats.ballisticWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f)
             ship.mutableStats.missileWeaponRangeBonus.modifyMult("genesis_phase_2", 0.40f)
+
+            ship.mutableStats.energyWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f)
+            ship.mutableStats.ballisticWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f)
+            ship.mutableStats.missileWeaponDamageMult.modifyMult("genesis_phase_2", 0.75f)
+
 
             var color = AbyssUtils.GENESIS_COLOR.setAlpha(75)
             var jitterColor = color.setAlpha(55)
@@ -489,7 +497,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
                     var alpha = MathUtils.getRandomNumberInRange(0.25f, 0.45f)
 
-                    particles.add(AbyssalStormParticleManager.AbyssalLightParticle(fadeIn,
+                    particles.add(GenesisParticleManager.GenesisParticle(fadeIn,
                         duration,
                         fadeOut,
                         AbyssUtils.GENESIS_COLOR,
@@ -924,29 +932,29 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
     fun handleParticles(amount: Float) {
         for (particle in ArrayList(particles)) {
 
-            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeIn) {
+            if (particle.state == GenesisParticleManager.GenesisParticle.ParticleState.FadeIn) {
                 particle.fadeIn -= 1 * amount
 
                 var level = (particle.fadeIn - 0f) / (particle.maxFadeIn - 0f)
                 particle.level = 1 - level
 
                 if (particle.fadeIn < 0) {
-                    particle.state = AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.Mid
+                    particle.state = GenesisParticleManager.GenesisParticle.ParticleState.Mid
                 }
             }
 
-            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.Mid) {
+            if (particle.state == GenesisParticleManager.GenesisParticle.ParticleState.Mid) {
                 particle.duration -= 1 * amount
 
 
                 particle.level = 1f
 
                 if (particle.duration < 0) {
-                    particle.state = AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeOut
+                    particle.state = GenesisParticleManager.GenesisParticle.ParticleState.FadeOut
                 }
             }
 
-            if (particle.state == AbyssalStormParticleManager.AbyssalLightParticle.ParticleState.FadeOut) {
+            if (particle.state == GenesisParticleManager.GenesisParticle.ParticleState.FadeOut) {
                 particle.fadeOut -= 1 * amount
 
                 particle.level = (particle.fadeOut - 0f) / (particle.maxFadeOut - 0f)

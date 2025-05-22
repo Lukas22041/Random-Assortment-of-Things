@@ -1,6 +1,5 @@
 package assortment_of_things.abyss.shipsystem
 
-import assortment_of_things.abyss.procgen.AbyssDepth
 import assortment_of_things.combat.AfterImageRenderer
 import assortment_of_things.exotech.shipsystems.ArkasShipsystem
 import assortment_of_things.misc.getAndLoadSprite
@@ -46,6 +45,37 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
         }
     }
 
+    override fun unapply(stats: MutableShipStatsAPI?, id: String?) {
+        ship = stats!!.entity as ShipAPI
+        var id = id + "_" + ship!!.getId()
+        var system = ship!!.system
+
+        if (target != null) {
+            target!!.isPhased = false
+            target!!.mutableStats.hullDamageTakenMult.unmodify(id)
+            target!!.alphaMult = 1f
+
+            for (wing in target!!.allWings) {
+                for (fighter in wing.wingMembers) {
+                    fighter.isPhased = false
+                }
+            }
+
+            target!!.setCustomData("rat_temporal_stasis_target", false)
+
+            //Potentialy fix the time related bug
+            target!!.mutableStats.timeMult.unmodify(id)
+            Global.getCombatEngine().timeMult.unmodify(id)
+
+            isCountingTimer = false
+            target = null
+
+            if (changedPostProcess) {
+                changedPostProcess = false
+                PostProcessShader.resetDefaults()
+            }
+        }
+    }
 
     override fun apply(stats: MutableShipStatsAPI?, id: String?,  state: ShipSystemStatsScript.State?, effectLevel: Float) {
         ship = stats!!.entity as ShipAPI
@@ -70,6 +100,10 @@ class TemporalStasisShipsystem : BaseShipSystemScript(), AdvanceableListener {
                 }
 
                 target!!.setCustomData("rat_temporal_stasis_target", false)
+
+                //Potentialy fix the time related bug
+                target!!.mutableStats.timeMult.unmodify(id)
+                Global.getCombatEngine().timeMult.unmodify(id)
 
                 isCountingTimer = false
                 target = null

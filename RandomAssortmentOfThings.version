@@ -1,19 +1,19 @@
 {
-    "masterVersionFile":"https://raw.githubusercontent.com/Lukas22041/Random-Assortment-of-Things/main/RandomAssortmentOfThings.version",
+    "masterVersionFile":"https://raw.githubusercontent.com/Lukas22041/Random-Assortment-of-Things/refs/heads/main/RandomAssortmentOfThings.version",
     "modName":"Random Assortment of Things",
 	"modThreadId":26260,
     "modVersion":
     {
-        "major":2,
-        "minor":6,
-        "patch":10 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
+        "major":3,
+        "minor":0,
+        "patch":0 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
     },
 	
 	#Link towards a direct download, fetched from the online version file
 	"directDownloadURL":"https://github.com/Lukas22041/Random-Assortment-of-Things/releases/latest/download/Random-Assortment-of-Things.zip",
 	
 	#Link towards a directly accessible text file, which can be used to display a changelog ingame, is fetched from the online version file.
-	"changelogURL":"https://raw.githubusercontent.com/Lukas22041/Random-Assortment-of-Things/main/changelog.txt",
+	"changelogURL":"https://raw.githubusercontent.com/Lukas22041/Random-Assortment-of-Things/refs/heads/main/changelog.txt",
 
 
 	

@@ -47,13 +47,13 @@
       "locations": [-236, -0]
     },
     {
-      "id": "SEGMENT4",
+      "id": "SEGMENT6",
       "size": "LARGE",
       "type": "STATION_MODULE",
       "mount": "HARDPOINT",
       "arc": 90,
       "angle": 0,
-      "locations": [-315, -0]
+      "locations": [-456, -0]
     },
     {
       "id": "WS0001",
@@ -81,6 +81,24 @@
       "arc": 80,
       "angle": -90,
       "locations": [-4, -32]
+    },
+    {
+      "id": "SEGMENT4",
+      "size": "LARGE",
+      "type": "STATION_MODULE",
+      "mount": "HARDPOINT",
+      "arc": 90,
+      "angle": 0,
+      "locations": [-308, -0]
+    },
+    {
+      "id": "SEGMENT5",
+      "size": "LARGE",
+      "type": "STATION_MODULE",
+      "mount": "HARDPOINT",
+      "arc": 90,
+      "angle": 0,
+      "locations": [-376, -0]
     }
   ],
   "engineSlots": [

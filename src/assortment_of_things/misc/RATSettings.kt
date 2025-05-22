@@ -2,9 +2,6 @@ package assortment_of_things.misc
 
 import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.MinimapUI
-import com.fs.starfarer.api.GameState
-import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.ShipAPI
 import lunalib.lunaSettings.LunaSettings
 import lunalib.lunaSettings.LunaSettingsListener
 
@@ -16,7 +13,7 @@ object RATSettings : LunaSettingsListener
     //Abyss
     var enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
     var brighterAbyss = LunaSettings.getBoolean(modID, "rat_abyssBrighter")
-    var abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
+    //var abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
 
     //Exotech
     var exoEnabled = LunaSettings.getBoolean(modID, "rat_exotechEnabled")
@@ -47,6 +44,15 @@ object RATSettings : LunaSettingsListener
     //Escprt
     var escortEnabled = LunaSettings.getBoolean(modID, "rat_escortEnabled")
 
+    //Which Mod
+    var whichModShips = LunaSettings.getBoolean(modID, "rat_whichModShips")
+    var whichModWeapons = LunaSettings.getBoolean(modID, "rat_whichModWeapons")
+    var whichModFighters = LunaSettings.getBoolean(modID, "rat_whichModFighters")
+    var whichModHullmods = LunaSettings.getBoolean(modID, "rat_whichModHullmods")
+    var whichModCargo = LunaSettings.getBoolean(modID, "rat_whichModCargo")
+    var whichModIndustries = LunaSettings.getBoolean(modID, "rat_whichModIndustries")
+    var whichModConditions = LunaSettings.getBoolean(modID, "rat_whichModConditions")
+    var whichModSkills = LunaSettings.getBoolean(modID, "rat_whichModSkills")
 
     //Parallel Construction
     var parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")
@@ -76,7 +82,7 @@ object RATSettings : LunaSettingsListener
     {
         enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
         brighterAbyss = LunaSettings.getBoolean(modID, "rat_abyssBrighter")
-        abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
+        //abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
 
         exoEnabled = LunaSettings.getBoolean(modID, "rat_exotechEnabled")
 
@@ -95,6 +101,14 @@ object RATSettings : LunaSettingsListener
         procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
 
         escortEnabled = LunaSettings.getBoolean(modID, "rat_escortEnabled")
+
+        whichModShips = LunaSettings.getBoolean(modID, "rat_whichModShips")
+        whichModWeapons = LunaSettings.getBoolean(modID, "rat_whichModWeapons")
+        whichModFighters = LunaSettings.getBoolean(modID, "rat_whichModFighters")
+        whichModHullmods = LunaSettings.getBoolean(modID, "rat_whichModHullmods")
+        whichModCargo = LunaSettings.getBoolean(modID, "rat_whichModCargo")
+        whichModIndustries = LunaSettings.getBoolean(modID, "rat_whichModIndustries")
+        whichModConditions = LunaSettings.getBoolean(modID, "rat_whichModConditions")
 
         parallelEnabled = LunaSettings.getBoolean(modID, "rat_parallelEnabled")
         parallelApplyToNPCs = LunaSettings.getBoolean(modID, "rat_parallelApplyToNPCs")

@@ -1,7 +1,7 @@
 package assortment_of_things.misc
 
+import assortment_of_things.abyss.AbyssData
 import assortment_of_things.abyss.AbyssUtils
-import assortment_of_things.abyss.procgen.AbyssData
 import assortment_of_things.exotech.ExoData
 import assortment_of_things.exotech.ExoUtils
 import com.fs.starfarer.api.Global
@@ -22,9 +22,16 @@ import com.fs.starfarer.api.util.Misc
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.lazywizard.lazylib.MathUtils
-import kotlin.reflect.KClass
 
-var previouslyLoadedSprite = HashMap<String, Boolean>()
+object LoadedAssets {
+    var previouslyLoadedSprite = HashMap<String, Boolean>()
+
+    //For Java Use
+    @JvmStatic
+    fun loadTextureCached(filename: String) {
+        Global.getSettings().loadTextureCached(filename)
+    }
+}
 
 fun Float.levelBetween(min: Float, max: Float) : Float {
     var level = (this - min) / (max - min)
@@ -41,20 +48,22 @@ fun Any.logger() : Logger {
     return Global.getLogger(this::class.java).apply { level = Level.ALL }
 }
 
-fun SettingsAPI.getAndLoadSprite(filename: String) : SpriteAPI{
-    if (!previouslyLoadedSprite.contains(filename)) {
+fun SettingsAPI.loadTextureCached(filename: String) {
+    if (!LoadedAssets.previouslyLoadedSprite.contains(filename)) {
         this.loadTexture(filename)
-        previouslyLoadedSprite.put(filename, true)
+        LoadedAssets.previouslyLoadedSprite.put(filename, true)
+    }
+}
+
+fun SettingsAPI.getAndLoadSprite(filename: String) : SpriteAPI{
+    if (!LoadedAssets.previouslyLoadedSprite.contains(filename)) {
+        this.loadTexture(filename)
+        LoadedAssets.previouslyLoadedSprite.put(filename, true)
     }
     return this.getSprite(filename)
 }
 
-fun SettingsAPI.loadTextureCached(filename: String){
-    if (!previouslyLoadedSprite.contains(filename)) {
-        this.loadTexture(filename)
-        previouslyLoadedSprite.put(filename, true)
-    }
-}
+
 
 fun TooltipMakerAPI.addPara(str: String) = this.addPara(str, 0f)
 
@@ -81,12 +90,30 @@ fun FleetMemberAPI.fixVariant() {
     if (this.variant.source != VariantSource.REFIT)
     {
         var variant = this.variant.clone();
-        variant.originalVariant = variant.hullVariantId;
+
+        //Setting the original variant causes weird things, so just give it a tag of the OG variant instead.
+        if (variant.originalVariant != null) {
+            variant.addTag("rat_og_variant_${variant.originalVariant}")
+        }
+
+        variant.originalVariant = null;
         variant.hullVariantId = Misc.genUID()
         variant.source = VariantSource.REFIT
         this.setVariant(variant, false, true)
     }
     this.updateStats()
+}
+
+fun ShipVariantAPI.getOriginalVariantRAT() : String? {
+    var og = this.originalVariant
+    if (og == null) {
+        for (tag in this.tags) {
+            if (tag.contains("rat_og_variant_")){
+                return tag.replace("rat_og_variant_", "")
+            }
+        }
+    }
+    return og
 }
 
 fun ShipVariantAPI.baseOrModSpec() : ShipHullSpecAPI{
@@ -136,7 +163,7 @@ fun SectorEntityToken.isLooted() : Boolean {
 }
 
 fun SectorAPI.getAbyssData() : AbyssData {
-    return AbyssUtils.getAbyssData()
+    return AbyssUtils.getData()
 }
 
 fun SectorAPI.getExoData() : ExoData {

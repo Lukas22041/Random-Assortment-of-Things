@@ -1,0 +1,172 @@
+{
+  "hullName": "Prayer Unit",
+  "hullId": "rat_prayer",
+  "hullSize": "FRIGATE",
+  "spriteName": "graphics/ships/rat_prayer.png",
+  "style": "THREAT",
+  "height": 120,
+  "width": 122,
+  "center": [61, 60],
+  "collisionRadius": 102,
+  "shieldCenter": [5, -0],
+  "shieldRadius": 88,
+  "viewOffset": 0,
+  "builtInMods": [
+    "automated",
+    "rat_abyssal_threat"
+  ],
+  "builtInWeapons": {
+    "WS0001": "rat_prayer_missile_wep"
+  },
+  "weaponSlots": [
+    {
+      "id": "WS0002",
+      "size": "MEDIUM",
+      "type": "UNIVERSAL",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 0,
+      "locations": [36, 16]
+    },
+    {
+      "id": "WS0003",
+      "size": "MEDIUM",
+      "type": "UNIVERSAL",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": -0,
+      "locations": [36, -16]
+    },
+    {
+      "id": "WS0006",
+      "size": "SMALL",
+      "type": "SYNERGY",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": -135,
+      "locations": [-13, -30]
+    },
+    {
+      "id": "WS0007",
+      "size": "SMALL",
+      "type": "SYNERGY",
+      "mount": "HARDPOINT",
+      "arc": 5,
+      "angle": 135,
+      "locations": [-13, 30]
+    },
+    {
+      "id": "WS0001",
+      "size": "SMALL",
+      "type": "BUILT_IN",
+      "mount": "HARDPOINT",
+      "arc": 360,
+      "angle": 0,
+      "locations": [11.5, -0]
+    }
+  ],
+  "engineSlots": [
+    {
+      "location": [-43, -0],
+      "length": 48,
+      "width": 16,
+      "angle": 180,
+      "contrailSize": 64,
+      "style": "THREAT"
+    },
+    {
+      "location": [-43, -4],
+      "length": 24,
+      "width": 12,
+      "angle": 180,
+      "contrailSize": 64,
+      "style": "THREAT"
+    },
+    {
+      "location": [-43, 4],
+      "length": 24,
+      "width": 12,
+      "angle": -180,
+      "contrailSize": 64,
+      "style": "THREAT"
+    },
+    {
+      "location": [-5.5, -45],
+      "length": 24,
+      "width": 12,
+      "angle": -140,
+      "contrailSize": 64,
+      "style": "THREAT"
+    },
+    {
+      "location": [-5.5, 45],
+      "length": 24,
+      "width": 12,
+      "angle": 140,
+      "contrailSize": 64,
+      "style": "THREAT"
+    },
+    {
+      "location": [-3, -48],
+      "length": 18,
+      "width": 6,
+      "angle": -130,
+      "contrailSize": 64,
+      "style": "THREAT"
+    },
+    {
+      "location": [-3, 48],
+      "length": 18,
+      "width": 6,
+      "angle": 135,
+      "contrailSize": 64,
+      "style": "THREAT"
+    },
+    {
+      "location": [-9, -42],
+      "length": 18,
+      "width": 6,
+      "angle": -150.5,
+      "contrailSize": 64,
+      "style": "THREAT"
+    },
+    {
+      "location": [-9, 42],
+      "length": 18,
+      "width": 6,
+      "angle": 150.5,
+      "contrailSize": 64,
+      "style": "THREAT"
+    }
+  ],
+  "bounds": [
+    -43.5, 6,
+    -55.5, 9,
+    -56.5, 18,
+    -52.5, 25,
+    -31, 34.5,
+    -23, 30,
+    -5, 46.5,
+    12, 53,
+    30.5, 61.5,
+    30, 46,
+    58.5, 47,
+    54.5, 38.5,
+    39.5, 33.5,
+    46.5, 29,
+    46.5, -29,
+    39.5, -33.5,
+    54.5, -38.5,
+    58.5, -47,
+    30, -46,
+    30.5, -61.5,
+    12, -53,
+    -5, -46.5,
+    -23, -30,
+    -31, -34.5,
+    -52.5, -25,
+    -56.5, -18,
+    -55.5, -9,
+    -43.5, -6
+  ]
+}

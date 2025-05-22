@@ -16,19 +16,19 @@ class DisableTransverseScript : EveryFrameScript {
     }
 
     override fun advance(amount: Float) {
-        var system = Global.getSector().playerFleet.containingLocation
+       /* var system = Global.getSector().playerFleet.containingLocation
         if (system.hasTag(AbyssUtils.SYSTEM_TAG)) {
             var ability = Global.getSector().playerFleet.getAbility(Abilities.TRANSVERSE_JUMP)
             ability?.cooldownLeft = 1f
 
-           /* Global.getSettings().getFactionSpec("player").color = AbyssUtils.ABYSS_COLOR
+           *//* Global.getSettings().getFactionSpec("player").color = AbyssUtils.ABYSS_COLOR
             Global.getSettings().getFactionSpec("player").baseUIColor = AbyssUtils.ABYSS_COLOR
             Global.getSettings().getFactionSpec("player").darkUIColor = AbyssUtils.ABYSS_COLOR
             Global.getSettings().getFactionSpec("player").brightUIColor = AbyssUtils.ABYSS_COLOR
             Global.getSettings().getFactionSpec("player").secondaryUIColor = AbyssUtils.ABYSS_COLOR
             Global.getSettings().getFactionSpec("player").gridUIColor = AbyssUtils.ABYSS_COLOR
 
-            Global.getSettings().basePlayerColor*/
-        }
+            Global.getSettings().basePlayerColor*//*
+        }*/
     }
 }

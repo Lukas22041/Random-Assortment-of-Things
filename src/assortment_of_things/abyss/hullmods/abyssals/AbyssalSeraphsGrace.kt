@@ -18,13 +18,8 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
     fun isInAbyss() : Boolean {
         var isInAbyss = false
-        if (Global.getSector() != null && Global.getSector().playerFleet != null) {
-            if (Global.getSector().playerFleet.containingLocation != null)
-            {
-                if (Global.getSector().playerFleet.containingLocation.hasTag(AbyssUtils.SYSTEM_TAG)) {
-                    isInAbyss = true
-                }
-            }
+        if (AbyssUtils.isPlayerInAbyss()) {
+            isInAbyss = true
         }
 
         if (Global.getSettings().modManager.isModEnabled("second_in_command")) {

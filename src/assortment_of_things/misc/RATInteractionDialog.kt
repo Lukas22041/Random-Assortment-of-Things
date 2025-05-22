@@ -1,5 +1,7 @@
 package assortment_of_things.misc
 
+import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.procgen.biomes.*
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.InteractionDialogImageVisual
 import com.fs.starfarer.api.campaign.*
@@ -62,7 +64,40 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
         this.targetMemory = dialog.interactionTarget.memoryWithoutUpdate
         this.memory = Global.getSector().memoryWithoutUpdate
 
-        if (dialog.interactionTarget.customInteractionDialogImageVisual != null)
+        showInteractionImage()
+
+        init()
+    }
+
+    abstract fun init()
+
+    fun showInteractionImage() {
+        if (dialog.interactionTarget.hasTag("rat_abyss_biome_wreck_visual")) {
+            var manager = AbyssUtils.getBiomeManager()
+            var biome = manager.getCell(interactionTarget).getBiome()!!
+
+            var path = when (biome) {
+                is PrimordialWaters -> "graphics/illustrations/rat_abyss_wreckage_primordial.jpg"
+                is EtherealShores -> "graphics/illustrations/rat_abyss_wreckage_ethereal.jpg"
+                is SeaOfSerenity -> "graphics/illustrations/rat_abyss_wreckag_serenity.jpg"
+                is SeaOfHarmony -> "graphics/illustrations/rat_abyss_wreckage_harmony.jpg"
+                is SeaOfSolitude -> "graphics/illustrations/rat_abyss_wreckag_solitude.jpg"
+                is AbyssalWastes -> "graphics/illustrations/rat_abyss_wreckage_wastes.jpg"
+                else -> "graphics/illustrations/rat_abyss_wreckage.jpg"
+            }
+
+            if (biome is PrimordialWaters) {
+                var level = biome.getLevel()
+                if (level <= 0) {
+                    path = "graphics/illustrations/rat_abyss_wreckage_nameless.jpg"
+                }
+            }
+
+            var sprite = Global.getSettings().getAndLoadSprite(path)
+            var interactionImage = InteractionDialogImageVisual(path, sprite.width, sprite.height)
+            visualPanel.showImageVisual(interactionImage)
+        }
+        else if (dialog.interactionTarget.customInteractionDialogImageVisual != null)
         {
             var path = dialog.interactionTarget.customInteractionDialogImageVisual.spriteName
             var sprite = Global.getSettings().getAndLoadSprite(path)
@@ -71,10 +106,7 @@ abstract class RATInteractionPlugin() : InteractionDialogPlugin
 
             //visualPanel.showImageVisual(dialog.interactionTarget.customInteractionDialogImageVisual)
         }
-        init()
     }
-
-    abstract fun init()
 
    /* fun createOption(optionName: String, function: RATInteractionPlugin.(String) -> Unit)
     {
@@ -507,7 +539,7 @@ class FIDOverride(defenders: CampaignFleetAPI, dialog: InteractionDialogAPI, plu
     override fun notifyLeave(dialog: InteractionDialogAPI) {
         // nothing in there we care about keeping; clearing to reduce savefile size
         val entity = dialog.interactionTarget
-        defenders.getMemoryWithoutUpdate().clear()
+        //defenders.getMemoryWithoutUpdate().clear() Was called before, but this causes issues with SiC.
         // there's a "standing down" assignment given after a battle is finished that we don't care about
         defenders.clearAssignments()
         defenders.deflate()
@@ -524,13 +556,18 @@ class FIDOverride(defenders: CampaignFleetAPI, dialog: InteractionDialogAPI, plu
                 val p = SDMParams()
                 p.entity = entity
                 p.factionId = defenders.getFaction().getId()
-                val plugin =
-                    Global.getSector().genericPlugins.pickPlugin(SalvageDefenderModificationPlugin::class.java, p)
+                val plugin = Global.getSector().genericPlugins.pickPlugin(SalvageDefenderModificationPlugin::class.java, p)
                 plugin?.reportDefeated(p, entity, defenders)
                 memory.unset("\$hasDefenders")
                 memory.unset("\$defenderFleet")
                 memory.set("\$defenderFleetDefeated", true)
                 entity.removeScriptsOfClass(FleetAdvanceScript::class.java)
+
+                dialog.promptText = "You decide to..." //Gone after return, for some reason?
+
+                RatInteraction.targetMemory.unset("\$hasDefenders")
+                RatInteraction.targetMemory.unset("\$defenderFleet")
+                RatInteraction.targetMemory.set("\$defenderFleetDefeated", true)
                 RatInteraction.defeatedDefenders()
             }
             else

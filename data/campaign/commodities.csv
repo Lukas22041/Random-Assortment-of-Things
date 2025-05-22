@@ -1,4 +1,6 @@
 name,id,demand class,base price,export value,price variability,utility,origin,tags,stack size,cargo space,icon,sound id,sound id drop,order,economyTier,econUnitOrigUnused,econUnit,baseRaidDanger,eU * base value,iconWidthMult,plugin,desc
+Abyssal Matter,rat_abyssal_matter,rat_abyssal_matter,1000,,0,1,,"nonecon, no_loss_from_combat, codex_unlockable",1000,1,graphics/icons/cargo/rat_abyssal_matter.png,ui_cargo_fuel,ui_cargo_fuel_drop,15.125,,,,,,1,,
+,,,,,,,,,,,,,,,,,,,,,,
 Chronos Core,rat_chronos_core,ai_cores,,,0,50,,"nonecon, no_loss_from_combat, codex_unlockable",1000,0,graphics/icons/cargo/rat_chronos_core.png,ai_core_pickup,ui_alpha_core_drop,40,,,,HIGH,,1,,
 Cosmos Core,rat_cosmos_core,ai_cores,,,0,50,,"nonecon, no_loss_from_combat, codex_unlockable",1000,0,graphics/icons/cargo/rat_cosmos_core.png,ai_core_pickup,ui_alpha_core_drop,40,,,,HIGH,,1,,
 Seraph Core,rat_seraph_core,ai_cores,,,0,80,,"nonecon, no_loss_from_combat, codex_unlockable",1000,0,graphics/icons/cargo/rat_seraph_core.png,ai_core_pickup,ui_alpha_core_drop,40,,,,HIGH,,1,,
