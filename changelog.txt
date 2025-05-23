@@ -1,5 +1,5 @@
 Version 3.0.1
-Not save compatible
+Save Compatible with 3.0.0
 
 -> Made the Saint Unit more likely to use its shipsystems against groups of smaller ships.
 -> Fixed "Abyssal Burn" not being disabled by transverse jump.
