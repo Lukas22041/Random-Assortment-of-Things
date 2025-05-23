@@ -4,6 +4,7 @@ import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.combat.*
 import assortment_of_things.abyss.entities.light.*
 import assortment_of_things.abyss.entities.primordial.PrimordialPhotosphere
+import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import assortment_of_things.abyss.procgen.biomes.PrimordialWaters
 import assortment_of_things.abyss.procgen.biomes.SeaOfSolitude
 import assortment_of_things.backgrounds.neural.NeuralShardScript
@@ -18,6 +19,7 @@ import com.fs.starfarer.api.combat.*
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.campaign.WarpingSpriteRenderer
 import exerelin.campaign.backgrounds.CharacterBackgroundUtils
+import org.dark.shaders.post.PostProcessShader
 import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.setBrightness
 
@@ -252,12 +254,23 @@ class CombatHandler : EveryFrameCombatPlugin
 
 
 
+        var levels = manager.getBiomeLevels()
+        var saturation = levels.map { it.key.getSaturation() * it.value }.sum()
+
+        engine.customData.set("rat_current_abyss_biome", dominant)
+        engine.customData.set("rat_current_abyss_saturation", saturation)
     }
 
 
     fun advanceAbyss(amount: Float) {
         var asteroids = ArrayList(Global.getCombatEngine().asteroids)
         asteroids.forEach { Global.getCombatEngine().removeEntity(it) }
+
+        var saturation = Global.getCombatEngine().customData.get("rat_current_abyss_saturation") as Float?
+        if (saturation != null) {
+            PostProcessShader.setSaturation(false, saturation)
+        }
+
     }
 
     override fun processInputPreCoreControls(amount: Float, events: MutableList<InputEventAPI>?) {

@@ -255,9 +255,9 @@ class AbyssalWastes() : BaseAbyssBiome() {
         var factionAPI = Global.getSector().getFaction(factionID)
 
         var picker = WeightedRandomPicker<FabricatorEscortStrength>()
-        picker.add(FabricatorEscortStrength.LOW, 5f)
+        picker.add(FabricatorEscortStrength.LOW, 4.5f)
         picker.add(FabricatorEscortStrength.MEDIUM, 5.5f)
-        picker.add(FabricatorEscortStrength.HIGH, 4.5f)
+        picker.add(FabricatorEscortStrength.HIGH, 5f)
         var strength = picker.pick()
 
         val fleet = createThreatFleet(0, 0, 0, strength, null)
@@ -270,10 +270,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
                 var core =  SeraphCore().createPerson(RATItems.SERAPH_CORE, fleet.faction.id, random)
                 member.captain = core
                 member.repairTracker.cr += 0.15f
-
-
             }
-
         }
 
         fleet.inflateIfNeeded()

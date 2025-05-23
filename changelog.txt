@@ -1,3 +1,12 @@
+Version 3.0.1
+Not save compatible
+
+-> Made the Saint Unit more likely to use its shipsystems against groups of smaller ships.
+-> Fixed "Abyssal Burn" not being disabled by transverse jump.
+-> Abyssal Wastes and Sea of Harmony now apply their change in color saturation in-combat too.
+
+
+
 Version 3.0.0
 Not save compatible
 

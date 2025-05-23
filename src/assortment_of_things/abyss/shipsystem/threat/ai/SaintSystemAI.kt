@@ -45,6 +45,7 @@ class SaintSystemAI : ShipSystemAIScript {
         if (interval.intervalElapsed()) {
             if (ship!!.fluxLevel >= 0.86f) return
 
+            var count = 0
             var iter = Global.getCombatEngine().shipGrid.getCheckIterator(ship!!.location, 2000f, 2000f)
             for (target in iter) {
                 if (target !is ShipAPI) continue
@@ -52,15 +53,24 @@ class SaintSystemAI : ShipSystemAIScript {
                 if (target.owner == ship!!.owner) continue
 
 
-                //Ignore the requirement later on in to fights.
-                if ((ship!!.hitpoints / ship!!.maxHitpoints) >= 0.7 || ship!!.currentCR <= 0.4f) {
-                    if (target!!.hullSize == ShipAPI.HullSize.FRIGATE && target.deployCost <= 14) return
-                    if (target!!.hullSize == ShipAPI.HullSize.DESTROYER && target.deployCost <= 15) return
+                var maxDist = 1600f
+                if (target.isCapital) {
+                    maxDist = 2000f
+                }
+                if (MathUtils.getDistance(ship, target) >= maxDist) {
+                    continue
                 }
 
-                var maxDist = 1600f
-                if (target.isCapital) maxDist = 2000f
-                if (MathUtils.getDistance(ship, target) >= maxDist) continue
+                count += 1 //If theres multiple ships, be more likely to use it regardless
+                //Ignore the requirement later on in to fights.
+                if ((ship!!.hitpoints / ship!!.maxHitpoints) >= 0.7 || ship!!.currentCR <= 0.4f) {
+                    if (target!!.hullSize == ShipAPI.HullSize.FRIGATE && target.deployCost <= 14 && count <= 1) {
+                        continue
+                    }
+                    if (target!!.hullSize == ShipAPI.HullSize.DESTROYER && target.deployCost <= 15 && count <= 1) {
+                        continue
+                    }
+                }
 
                 ship!!.useSystem()
                 return

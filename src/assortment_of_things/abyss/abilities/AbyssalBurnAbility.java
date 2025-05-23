@@ -133,6 +133,13 @@ public class AbyssalBurnAbility extends BaseToggleAbility {
             }
         }
 
+        AbilityPlugin transverse = (BaseDurationAbility) fleet.getAbility("fracture_jump");
+        if (transverse != null) {
+            if (transverse.isInProgress()) {
+                deactivate();
+            }
+        }
+
 
         //System.out.println("Level: " + level);
         //level = 0.01f;
@@ -331,6 +338,13 @@ public class AbyssalBurnAbility extends BaseToggleAbility {
         AbilityPlugin interdict = (BaseDurationAbility) fleet.getAbility("interdiction_pulse");
         if (interdict != null) {
             if (interdict.isInProgress()) {
+                return false;
+            }
+        }
+
+        AbilityPlugin transverse = (BaseDurationAbility) fleet.getAbility("fracture_jump");
+        if (transverse != null) {
+            if (transverse.isInProgress()) {
                 return false;
             }
         }
