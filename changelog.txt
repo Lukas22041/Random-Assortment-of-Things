@@ -1,3 +1,12 @@
+Version 3.0.3
+Save Compatible with 3.0.0+
+
+-> Heavily reduced the timeflow bonus of abyssal requiem.
+-> Fixed Which mod not working on certain items again.
+-> Decreased the droprate of alterations on abyssal droneships.
+
+
+
 Version 3.0.2
 Save Compatible with 3.0.0+
 

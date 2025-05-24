@@ -155,7 +155,7 @@ class AbyssalRequiem : RATBaseShipSkill() {
             /*GraphicLibEffects.CustomRippleDistortion(Vector2f(ship.location), Vector2f(), ship.collisionRadius * 3f, 100f, false, ship.facing, 360f, 1f
                 ,0f, 3f, 1f, 0f, 1f)*/
 
-            val shipTimeMult = 1 + (60f * level)
+            val shipTimeMult = 1 + (10f * level)
             var actualAmount = amount * shipTimeMult
 
 
