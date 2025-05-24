@@ -1,6 +1,7 @@
 Version 3.0.2
 Save Compatible with 3.0.0+
 
+-> Fixed an issue that could make ships with the Abyssal Grid hullmod unrecoverable.
 -> Fixed the Which mod feature not working on Individual Ship Blueprints.
 
 
