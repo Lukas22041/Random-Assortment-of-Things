@@ -17,6 +17,7 @@ import com.fs.state.AppDriver
 class WhichModScript : EveryFrameScript {
 
     var allowed = listOf(
+        "codex_hull_",
         "codex_weapon_",
         "codex_fighter_",
         "codex_hullmod_",
@@ -77,7 +78,8 @@ class WhichModScript : EveryFrameScript {
 
                 if (allowed.none { codexEntryId.contains(it) }) return
 
-                if (codexEntryId.contains("codex_weapon_") && !RATSettings.whichModWeapons!!) return
+                if (codexEntryId.contains("codex_hull_") && !RATSettings.whichModShips!!) return
+                else if (codexEntryId.contains("codex_weapon_") && !RATSettings.whichModWeapons!!) return
                 else if (codexEntryId.contains("codex_fighter_") && !RATSettings.whichModFighters!!) return
                 else if (codexEntryId.contains("codex_hullmod_") && !RATSettings.whichModHullmods!!) return
                 else if (codexEntryId.contains("codex_item_") || codexEntryId.contains("codex_commodity_") || codexEntryId.contains("codex_artifacts_") && !RATSettings.whichModCargo!!) return

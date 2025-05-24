@@ -1,3 +1,10 @@
+Version 3.0.2
+Save Compatible with 3.0.0+
+
+-> Fixed the Which mod feature not working on Individual Ship Blueprints.
+
+
+
 Version 3.0.1
 Save Compatible with 3.0.0
 
