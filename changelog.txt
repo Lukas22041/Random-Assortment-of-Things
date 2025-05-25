@@ -1,3 +1,10 @@
+Version 3.0.4
+Save Compatible with 3.0.0+
+
+-> Fixed a crash that occured if the abyssal depths are disabled and the player entered combat.
+
+
+
 Version 3.0.3
 Save Compatible with 3.0.0+
 

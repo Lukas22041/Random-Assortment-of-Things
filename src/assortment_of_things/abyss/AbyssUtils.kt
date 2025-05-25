@@ -9,6 +9,7 @@ import assortment_of_things.strings.RATItems
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI
 import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
 import com.fs.starfarer.api.characters.PersonAPI
@@ -63,7 +64,7 @@ object AbyssUtils {
     fun getBiomeManager() = getData().biomeManager
 
     @JvmStatic
-    fun getSystem() = getData().system!!
+    fun getSystem(): StarSystemAPI? = getData().system
 
     fun isShowFog() : Boolean {
         //return true

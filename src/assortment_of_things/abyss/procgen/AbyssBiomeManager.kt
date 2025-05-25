@@ -153,7 +153,7 @@ class AbyssBiomeManager {
         var remainingOrbits = mainBiomes.flatMap { it.lightsourceOrbits }
         var unclaimedCells = mainBiomes.flatMap { it.getUnclaimedCellsIncludingBorder() }
 
-        var sarielOutpost = AbyssProcgenUtils.spawnEntityAtOrbitOrLightsource(system, "rat_sariel_outpost", remainingOrbits.filter { it.index != 0 && it.biome !is AbyssalWastes }, unclaimedCells.filter { it.getBiome() !is AbyssalWastes }, false, 0f)
+        var sarielOutpost = AbyssProcgenUtils.spawnEntityAtOrbitOrLightsource(system!!, "rat_sariel_outpost", remainingOrbits.filter { it.index != 0 && it.biome !is AbyssalWastes }, unclaimedCells.filter { it.getBiome() !is AbyssalWastes }, false, 0f)
 
         remainingOrbits = mainBiomes.flatMap { it.lightsourceOrbits }
         unclaimedCells = mainBiomes.flatMap { it.getUnclaimedCellsIncludingBorder() }
@@ -164,7 +164,7 @@ class AbyssBiomeManager {
     fun generateAbyssalMatter() {
         var system = AbyssUtils.getSystem()
 
-        var minibossStations = system.customEntities.filter { it.customEntitySpec.tags.contains("rat_miniboss") }
+        var minibossStations = system!!.customEntities.filter { it.customEntitySpec.tags.contains("rat_miniboss") }
         var perMiniboss = /*45f*/ 65f
         for (miniboss in minibossStations) {
             AbyssProcgenUtils.setAbyssalMatterDrop(miniboss, perMiniboss + MathUtils.getRandomNumberInRange(-3f, 3f))

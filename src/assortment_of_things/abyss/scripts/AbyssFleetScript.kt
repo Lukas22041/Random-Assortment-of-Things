@@ -68,13 +68,13 @@ class AbyssFleetScript(var fleet: CampaignFleetAPI, var source: SectorEntityToke
 
                 //If the source despawned, permanently remove.
                 if (!isSourceAlive) {
-                    system.removeEntity(fleet)
+                    system!!.removeEntity(fleet)
                     isAlive = false
                     finished = true
                     fleet.removeEventListener(this)
                     return
                 } else {
-                    system.removeEntity(fleet)
+                    system!!.removeEntity(fleet)
                     isAlive = false
                 }
 
@@ -82,7 +82,7 @@ class AbyssFleetScript(var fleet: CampaignFleetAPI, var source: SectorEntityToke
             }
 
             if (!isAlive && distanceToPlayer < maxDistToPlayer && isPlayerInAbyss) {
-                system.addEntity(fleet)
+                system!!.addEntity(fleet)
                 isAlive = true
             }
 
