@@ -255,9 +255,9 @@ class AbyssalWastes() : BaseAbyssBiome() {
         var factionAPI = Global.getSector().getFaction(factionID)
 
         var picker = WeightedRandomPicker<FabricatorEscortStrength>()
-        picker.add(FabricatorEscortStrength.LOW, 4.5f)
+        picker.add(FabricatorEscortStrength.LOW, 2.5f)
         picker.add(FabricatorEscortStrength.MEDIUM, 5.5f)
-        picker.add(FabricatorEscortStrength.HIGH, 5f)
+        picker.add(FabricatorEscortStrength.HIGH, 5.5f)
         var strength = picker.pick()
 
         val fleet = createThreatFleet(0, 0, 0, strength, null)

@@ -1,3 +1,11 @@
+Version 3.0.5
+Save Compatible with 3.0.0+
+
+-> Made it more likely for larger [THREAT] to spawn in the Abyssal wastes (New saves only).
+-> Fixed an issue that made abyssal storms able to hit a fleet despite slow-moving at low fps.
+
+
+
 Version 3.0.4
 Save Compatible with 3.0.0+
 

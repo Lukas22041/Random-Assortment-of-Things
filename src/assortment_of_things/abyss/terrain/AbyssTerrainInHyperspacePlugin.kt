@@ -245,14 +245,17 @@ class AbyssTerrainInHyperspacePlugin() : OldHyperspaceTerrainPlugin() {
 
             if (isInClouds(fleet))
             {
-                if (fleet.isPlayerFleet) {
+               /* if (fleet.isPlayerFleet) {
                     if (!fleet.hasScriptOfClass(SpeedBoostScript::class.java)) {
                         fleet.addScript(SpeedBoostScript(fleet, this))
                     }
                 } else {
                     fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_1", "In abyssal fog", 1.5f, fleet.stats.fleetwideMaxBurnMod)
                     fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_2", "In abyssal fog", 1.5f, fleet.stats.accelerationMult)
-                }
+                }*/
+
+                fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_1", "In abyssal fog", 1.5f, fleet.stats.fleetwideMaxBurnMod)
+                fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_2", "In abyssal fog", 1.5f, fleet.stats.accelerationMult)
 
                 if (cell != null && cell.isSignaling && cell.signal < 0.2f) {
                     cell.signal = 0f
@@ -376,6 +379,7 @@ class AbyssTerrainInHyperspacePlugin() : OldHyperspaceTerrainPlugin() {
         return false
     }
 
+    //Unused now
     class SpeedBoostScript(var fleet: CampaignFleetAPI, var terrain: OldHyperspaceTerrainPlugin) : EveryFrameScript {
 
         var done = false

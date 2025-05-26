@@ -93,7 +93,7 @@ class AbyssTerrainPlugin : BaseTerrain() {
 
             var cell = getAnyTilePreferStorm(fleet.location, fleet.radius)
 
-            if (fleet.isPlayerFleet) {
+           /* if (fleet.isPlayerFleet) {
                 if (!fleet.hasScriptOfClass(SpeedBoostScript::class.java)) {
                     fleet.addScript(SpeedBoostScript(
                         fleet,this))
@@ -101,7 +101,10 @@ class AbyssTerrainPlugin : BaseTerrain() {
             } else {
                 fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_1", "In abyssal fog", 1.5f, fleet.stats.fleetwideMaxBurnMod)
                 fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_2", "In abyssal fog", 1.5f, fleet.stats.accelerationMult)
-            }
+            }*/
+
+            fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_1", "In abyssal fog", 1.5f, fleet.stats.fleetwideMaxBurnMod)
+            fleet.stats.addTemporaryModMult(0.1f, this.modId + "fog_2", "In abyssal fog", 1.5f, fleet.stats.accelerationMult)
 
             if (cell.first != null && cell.first!!.isSignaling && cell.first!!.signal < 0.2f) {
                 cell.first!!.signal = 0f
@@ -303,6 +306,7 @@ class AbyssTerrainPlugin : BaseTerrain() {
         }
     }
 
+    //Unused now.
     class SpeedBoostScript(var fleet: CampaignFleetAPI, var terrain: AbyssTerrainPlugin) : EveryFrameScript {
 
         override fun isDone(): Boolean {
