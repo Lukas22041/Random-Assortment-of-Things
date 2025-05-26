@@ -56,7 +56,12 @@ class AccumalatorStationInteraction : RATInteractionPlugin() {
                  dropRandom.add(drop)*/
 
                 drop = DropData()
-                drop.chances = 4
+                drop.group = "basic"
+                drop.value = 12500
+                dropValue.add(drop)
+
+                drop = DropData()
+                drop.chances = 3
                 drop.group = "rat_abyss_alterations_rare"
                 dropRandom.add(drop)
 
@@ -80,6 +85,7 @@ class AccumalatorStationInteraction : RATInteractionPlugin() {
                 drop = DropData()
                 drop.chances = 1
                 drop.group = "blueprints"
+                drop.valueMult = 0.75f
                 dropRandom.add(drop)
 
                 drop = DropData()

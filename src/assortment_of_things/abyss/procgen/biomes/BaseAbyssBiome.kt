@@ -84,7 +84,7 @@ abstract class BaseAbyssBiome {
     open fun hasDeactivatedDroneshipObjective() = true
 
     /* Multiplier applied to loot drops for entities within the biome. */
-    open fun getLootMult() = 1.25f
+    open fun getLootMult() = 1f
 
     //If null, will not change the music while within the biome and continue the prior ones.
     open fun getMusicKeyId() : String? = "rat_music_abyss_merged"

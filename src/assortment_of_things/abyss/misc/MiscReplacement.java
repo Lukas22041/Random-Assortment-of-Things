@@ -6,6 +6,8 @@ import com.fs.starfarer.api.impl.campaign.ids.Stats;
 
 public class MiscReplacement {
 
+    //TODO Replace this with vanillas method once alex fixes the acceleration bug
+    // https://fractalsoftworks.com/forum/index.php?topic=33194.msg483524
     public static boolean isSlowMoving(CampaignFleetAPI fleet) {
         float fleetBurn = fleet.getCurrBurnLevel();
         float slowBurn = getGoSlowBurnLevel(fleet) + 1.05f; //Bugs out on lower FPS otherwise;

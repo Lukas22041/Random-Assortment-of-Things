@@ -52,6 +52,11 @@ object CodexHandler {
         CodexDataV2.ENTRIES.put(modEntry.id, modEntry)
 
         addArtifactsEntries(modEntry)
+
+        //Link Abyssal Threat
+        //TODO Add the Sariel version once done
+        CodexDataV2.makeRelated(CodexDataV2.getShipEntryId("rat_raguel"), CodexDataV2.getShipEntryId("rat_prayer"))
+        CodexDataV2.makeRelated(CodexDataV2.getShipEntryId("rat_gabriel"), CodexDataV2.getShipEntryId("rat_saint"))
     }
 
     fun addArtifactsEntries(modEntry: CodexEntryV2) {

@@ -47,25 +47,18 @@ class FabricatorInteraction : RATInteractionPlugin() {
                 var dropValue = ArrayList<DropData>()
                 var drop = DropData()
 
-
-
                 drop = DropData()
                 drop.group = "basic"
                 drop.value = 12500
                 dropValue.add(drop)
 
-               /* drop = DropData()
-                drop.chances = 1
-                drop.group = "abyss_guaranteed_alt"
-                dropRandom.add(drop)*/
-
                 drop = DropData()
-                drop.chances = 4
+                drop.chances = 3
                 drop.group = "rat_abyss_alterations_rare"
                 dropRandom.add(drop)
 
                 drop = DropData()
-                drop.chances = 3
+                drop.chances = 4
                 drop.group = "rat_abyss_weapons"
                 dropRandom.add(drop)
 
@@ -84,6 +77,7 @@ class FabricatorInteraction : RATInteractionPlugin() {
                 drop = DropData()
                 drop.chances = 1
                 drop.group = "blueprints"
+                drop.valueMult = 0.75f
                 dropRandom.add(drop)
 
                 drop = DropData()

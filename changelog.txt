@@ -1,3 +1,13 @@
+Version 3.0.6
+Save Compatible with 3.0.0+
+
+-> Slightly increased the amount of fleets spawned on photospheres in the Sea of Harmony (New saves only).
+-> Clarified parts of the Saint Units shipsystem description.
+-> Slightly reduced drop rates of items in the abyssal depths
+-> Slight adjustments to related entries in the codex.
+
+
+
 Version 3.0.5
 Save Compatible with 3.0.0+
 
