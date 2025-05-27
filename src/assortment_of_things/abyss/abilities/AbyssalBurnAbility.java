@@ -101,7 +101,7 @@ public class AbyssalBurnAbility extends BaseToggleAbility {
         int key = Keyboard.getKeyIndex(stop);
 
         if (!Keyboard.isKeyDown(key) && fleet.getGoSlowOneFrame()) {
-            ReflectionUtils.set("goSlowOneFrame", fleet, false);
+            ReflectionUtils.set("goSlowOneFrame", fleet, false, null);
         }
 
 

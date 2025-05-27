@@ -197,7 +197,7 @@ class CombatHandler : EveryFrameCombatPlugin
 
         //Background Warper
         var warper = CombatBackgroundWarper(8, 0.25f)
-        ReflectionUtils.setFieldOfType(WarpingSpriteRenderer::class.java, Global.getCombatEngine(), warper)
+        ReflectionUtils.set(null,  Global.getCombatEngine(), warper, WarpingSpriteRenderer::class.java,)
         warper.overwriteColor = background
 
 

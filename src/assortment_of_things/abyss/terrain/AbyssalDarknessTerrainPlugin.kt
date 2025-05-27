@@ -85,6 +85,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
     override fun renderOnMap(factor: Float, alphaMult: Float) {
         var data = AbyssUtils.getData()
         var system = AbyssUtils.getSystem()
+        var manager = data.biomeManager
 
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)
@@ -109,7 +110,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
             var skipRendering = false
             var isStenceling = false
             if (plugin is PrimordialPhotosphere) {
-                var biome = AbyssUtils.getBiomeManager().getBiome("primordial_waters") as PrimordialWaters
+                var biome = manager.getBiome("primordial_waters") as PrimordialWaters
                 var level = biome.getLevel()
                 if (level > 0 && level < 1) {
                     isStenceling = true
@@ -183,9 +184,7 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
                 fractureText!!.drawOutlined(loc.x * factor - (fractureText!!.width / 2), (loc.y + height) * factor + (fractureText!!.height))
             }
 
-            if (entity.customEntitySpec.id == "rat_abyss_primordial_photosphere") {
-
-                if (!entity.customEntitySpec.isShowIconOnMap) continue
+            if (entity.customEntitySpec.id == "rat_abyss_primordial_photosphere" && entity.customEntitySpec.isShowIconOnMap) {
 
                 var plugin = entity.customPlugin as PrimordialPhotosphere
                 var biome = plugin.biome ?: continue
@@ -197,6 +196,22 @@ class AbyssalDarknessTerrainPlugin : BaseTerrain() {
                 fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
 
                 fractureText!!.drawOutlined(entity.location.x * factor - (fractureText!!.width / 2), (entity.location.y + 700) * factor + (fractureText!!.height))
+            }
+            else if (entity.customEntitySpec.id == "rat_abyss_primordial_activator") {
+
+                if (entity.isDiscoverable && !Global.getSettings().isDevMode) continue
+
+                var biome = manager.getCell(entity).getBiome() ?: continue
+                if (biome !is PrimordialWaters) continue
+                if (biome.getLevel() > 0) continue
+
+                fractureText!!.text = biome.getDisplayName()
+                fractureText!!.fontSize = 600f * factor
+                fractureText!!.baseColor = biome.getTooltipColor().setAlpha((255 * alphaMult).toInt())
+                fractureText!!.blendDest = GL11.GL_ONE_MINUS_SRC_ALPHA
+                fractureText!!.blendSrc = GL11.GL_SRC_ALPHA
+
+                fractureText!!.drawOutlined(biome.biomeWorldCenter.x * factor - (fractureText!!.width / 2), (biome.biomeWorldCenter.y + 50) * factor + (fractureText!!.height))
             }
 
             if (entity.customEntitySpec.id == "rat_abyss_photosphere_sierra") {

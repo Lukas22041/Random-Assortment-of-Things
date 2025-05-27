@@ -78,7 +78,7 @@ class MinimapUI : EveryFrameScript {
 
         if (map != null && !Global.getSector().isPaused)
         {
-            ReflectionUtils.invoke("centerOn", map!!, Global.getSector().playerFleet.location, declared = true)
+            ReflectionUtils.invoke("centerOn", map!!, Global.getSector().playerFleet.location)
             //(map as void).centerOn(Global.getSector().playerFleet.location)
         }
         if ((frames > 1 && !added) || lastLocation != Global.getSector().playerFleet.containingLocation || reset)

@@ -57,13 +57,20 @@ fun TooltipMakerAPI.addWindow(to: UIPanelAPI, width: Float, height: Float, lambd
 // CustomPanelAPI implements the same Listener that a ButtonAPI requires,
 // A CustomPanel then happens to trigger its CustomUIPanelPlugin buttonPressed() method
 // thus we can map our functions into a CustomUIPanelPlugin, and have them be triggered
-private class ButtonListener(button: ButtonAPI) : BaseCustomUIPanelPlugin() {
+private class ButtonListener(var button: ButtonAPI) : BaseCustomUIPanelPlugin() {
     private val onClickFunctions = mutableListOf<() -> Unit>()
 
+    var buttonListener = Global.getSettings().createCustom(0f, 0f, this)
+
     init {
-        val buttonListener = Global.getSettings().createCustom(0f, 0f, this)
-        val setListenerMethod = ReflectionUtils.getMethodsOfName("setListener", button)[0]
-        ReflectionUtils.rawInvoke(setListenerMethod, button, buttonListener)
+        /*val setListenerMethod = ReflectionUtils.getMethodsOfName("setListener", button)[0]
+        ReflectionUtils.rawInvoke(setListenerMethod, button, buttonListener)*/
+
+        var method = ReflectionUtils.getMethod("setListener", button.javaClass, null, null, null)
+        method!!.invoke(button, buttonListener)
+
+        //ReflectionUtils.invoke("setListener", button, buttonListener)
+
     }
 
     override fun buttonPressed(buttonId: Any?) {

@@ -37,7 +37,7 @@ class AbyssTitleScreen : BaseLunaTitleScreenPlugin() {
         CombatEngine.replaceBackground("graphics/backgrounds/abyss/Abyss2.jpg", true)
 
         var warper = CombatBackgroundWarper(8, 0.25f)
-        ReflectionUtils.setFieldOfType(WarpingSpriteRenderer::class.java, Global.getCombatEngine(), warper)
+        ReflectionUtils.set(null, Global.getCombatEngine(), warper, WarpingSpriteRenderer::class.java)
         warper.overwriteColor = c
 
         Global.getSoundPlayer().playCustomMusic(1, 1, "rat_music_abyss", true)

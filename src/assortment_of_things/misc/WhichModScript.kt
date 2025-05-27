@@ -31,9 +31,9 @@ class WhichModScript : EveryFrameScript {
         "codex_sic_aptitude_"
     )
 
-    var screenPanelField = ReflectionUtils.getField("screenPanel", CampaignState::class.java)!!
+    /*var screenPanelField = ReflectionUtils.getField("screenPanel", CampaignState::class.java)!!
     var getCodexEntryMethod = ReflectionUtils.getMethod("getCodexEntryId", StandardTooltipV2::class.java)!!
-    var getChildrenCopyMethod: ReflectionUtils.ReflectedMethod? = null
+    var getChildrenCopyMethod: ReflectionUtils.ReflectedMethod? = null*/
 
     override fun isDone(): Boolean {
         return false
@@ -54,15 +54,11 @@ class WhichModScript : EveryFrameScript {
         if (state !is CampaignState) return
 
         //var screenPanel = ReflectionUtils.get("screenPanel", state) as UIPanelAPI ?: return
-        var screenPanel = screenPanelField.get(state) as UIPanelAPI ?: return
+        var screenPanel = ReflectionUtils.get("screenPanel", state) as UIPanelAPI ?: return
 
-        if (getChildrenCopyMethod == null) {
-            getChildrenCopyMethod = ReflectionUtils.getMethod("getChildrenCopy", screenPanel)!!
-        }
+        var tooltip = screenPanel.getChildrenCopy().find { it is StandardTooltipV2 } as UIPanelAPI? ?: return
 
-        var tooltip = (getChildrenCopyMethod!!.invoke(screenPanel) as List<UIComponentAPI>).find { it is StandardTooltipV2 } as UIPanelAPI? ?: return
-
-        var codexTooltip = (getChildrenCopyMethod!!.invoke(tooltip) as List<UIComponentAPI>).find { it is LabelAPI } as LabelAPI?
+        var codexTooltip = tooltip.getChildrenCopy().find { it is LabelAPI } as LabelAPI?
 
         if (codexTooltip != null) {
 
@@ -72,7 +68,7 @@ class WhichModScript : EveryFrameScript {
 
 
 
-            var codexEntryId = getCodexEntryMethod.invoke(tooltip) as String?
+            var codexEntryId = ReflectionUtils.invoke("getCodexEntryId", tooltip) as String?
 
             if (codexEntryId != null) {
 
@@ -139,8 +135,8 @@ class WhichModScript : EveryFrameScript {
                         }
                     }
                 }
-            } else if (RATSettings.whichModShips!!) {
-                var member = ReflectionUtils.getFieldOfType(FleetMember::class.java, tooltip)
+            } else if (RATSettings.whichModShips!! && ReflectionUtils.hasVariableOfType(FleetMember::class.java, tooltip)) {
+                var member = ReflectionUtils.get(null, tooltip, FleetMember::class.java)
                 if (member is FleetMemberAPI) {
                     var spec = member.hullSpec
                     var mod = spec.sourceMod

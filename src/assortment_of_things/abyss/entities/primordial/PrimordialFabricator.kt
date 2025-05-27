@@ -47,7 +47,7 @@ class PrimordialFabricator : BaseCustomEntityPlugin() {
                 entity.removeTag(Tags.NO_ENTITY_TOOLTIP)
                 entity.removeTag(Tags.NON_CLICKABLE)
                 var indicator = ReflectionUtils.invoke("getIndicator", entity)
-                var fader = ReflectionUtils.getFieldOfType(Fader::class.java, indicator!!) as Fader
+                var fader = ReflectionUtils.get(null, indicator!!, Fader::class.java) as Fader
                 fader.durationIn = 0.75f //Base is 0.25
                 entity.fadeInIndicator()
             } else {
