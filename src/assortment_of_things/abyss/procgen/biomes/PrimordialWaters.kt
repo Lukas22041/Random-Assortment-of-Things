@@ -147,7 +147,7 @@ class PrimordialWaters() : BaseAbyssBiome() {
         var cells = cellsFull.filter { center -> center.getSurrounding().any {
             surrounding -> center.getBiome() != surrounding.getBiome() && !surrounding.isFake && surrounding.getBiome() is SeaOfTranquility } }
 
-        cells = cells.filter { it.getAdjacent().none { it.getBiome() is AbyssalWastes } }
+        //cells = cells.filter { it.getAdjacent().none { it.getBiome() is AbyssalWastes } }
 
         //More generous search, in case it cant find a connection to the sea of tranquility without also being in the wastes
         if (cells.isEmpty()) {
@@ -165,9 +165,11 @@ class PrimordialWaters() : BaseAbyssBiome() {
                     surrounding -> center.getBiome() != surrounding.getBiome() } }
         }
 
+        var midstep = ArrayList(cells)
+
         var radius = 3
 
-        cells = cells.filter { it.getAround(radius).none { it.isFake } }
+        cells = midstep.filter { it.getAround(radius).none { it.isFake } }
 
         //Ensure it doesnt pick a biome border with any biome that can not be overwritten
         cells = cells.filter { center -> center.getAround(radius).none { it.getBiome()?.canBeOverwritten() == false} }

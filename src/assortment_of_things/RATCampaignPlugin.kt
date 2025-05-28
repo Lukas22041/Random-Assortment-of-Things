@@ -46,7 +46,8 @@ class RATCampaignPlugin : BaseCampaignPlugin()
 
     override fun pickBattleCreationPlugin(opponent: SectorEntityToken?): PluginPick<BattleCreationPlugin>? {
 
-        if (opponent?.containingLocation == AbyssUtils.getSystem()) {
+        //Nullchecked because if the containing location is null, this happens.
+        if (opponent?.containingLocation == AbyssUtils.getSystem() && AbyssUtils.getSystem() != null) {
             return PluginPick<BattleCreationPlugin>(AbyssBattleCreationPlugin(), CampaignPlugin.PickPriority.HIGHEST)
         }
 

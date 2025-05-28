@@ -109,13 +109,13 @@ class AbyssFleetScript(var fleet: CampaignFleetAPI, var source: SectorEntityToke
                     fleet.memoryWithoutUpdate[MemFlags.FLEET_IGNORED_BY_OTHER_FLEETS] = false
                 }
 
-                //Patrol if it has no source, before it despawns
-                if (!isSourceAlive && !fleet.isCurrentAssignment(FleetAssignment.PATROL_SYSTEM)) {
+                //Patrol if it has no source, before it despawns. Check for standing down, as thats whats set after story point disengage.
+                if (!isSourceAlive && !fleet.isCurrentAssignment(FleetAssignment.PATROL_SYSTEM) && !fleet.isCurrentAssignment(FleetAssignment.STANDING_DOWN)) {
                     fleet.clearAssignments()
                     fleet.addAssignment(FleetAssignment.PATROL_SYSTEM, source, 9999999f)
                 }
-                //Ensure the location keeps being defended.
-                else if (!fleet.isCurrentAssignment(FleetAssignment.DEFEND_LOCATION)) {
+                //Ensure the location keeps being defended. Check for standing down, as thats whats set after story point disengage.
+                else if (!fleet.isCurrentAssignment(FleetAssignment.DEFEND_LOCATION) && !fleet.isCurrentAssignment(FleetAssignment.STANDING_DOWN)) {
                     fleet.clearAssignments()
                     fleet.addAssignment(FleetAssignment.DEFEND_LOCATION, source, 9999999f)
                 }
