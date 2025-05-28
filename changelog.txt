@@ -1,3 +1,14 @@
+Version 3.0.7
+Save Compatible with 3.0.0+
+
+-> Nameless Sea should now show its name on the map if discovered.
+-> Now caches Reflection calls to improve on performance.
+-> Potentialy fixed a rare procgen crash in the abyss.
+-> Fixed a crash that occured if you had the abyss disabled and were fighting a fleet that werent technicly part of a starsystem.
+-> Fixed abyssal fleets pursuing you despite using story-point disengages.
+
+
+
 Version 3.0.6
 Save Compatible with 3.0.0+
 
