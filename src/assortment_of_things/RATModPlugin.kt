@@ -204,13 +204,13 @@ class RATModPlugin : BaseModPlugin() {
 
         generateAbyss()
 
-        if (RATSettings.relicsEnabled!! && Global.getSector().memoryWithoutUpdate.get("\$rat_relics_generated") == null) {
+        if (RATSettings.relicsEnabled!! ) {
             var generator = RelicsGenerator()
 
-            if (RATSettings.relicsEnabledStations!!) {
+            if (RATSettings.relicsEnabledStations!! && Global.getSector().memoryWithoutUpdate.get("\$rat_relics_generated") == null ) {
                 generator.generateStations()
             }
-            if (RATSettings.relicsEnabledConditions!!) {
+            if (RATSettings.relicsEnabledConditions!! && Global.getSector().memoryWithoutUpdate.get("\$rat_relics_conditions_generated") == null ) {
                 generator.generateConditions()
             }
         }

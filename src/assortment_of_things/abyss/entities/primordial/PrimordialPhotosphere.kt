@@ -45,6 +45,7 @@ class PrimordialPhotosphere : BaseCustomEntityPlugin(), AbyssalLight {
         super.advance(amount)
 
         if (entity == null) return
+        if (!AbyssUtils.isPlayerInAbyss()) return
         initSpritesIfNull()
         band1!!.advance(amount)
 

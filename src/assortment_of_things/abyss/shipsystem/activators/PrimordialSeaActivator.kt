@@ -21,6 +21,7 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL13
 import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.setAlpha
 import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
 import java.util.*
@@ -474,7 +475,7 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
         var segments = 100
 
         if (layer == CombatEngineLayers.JUST_BELOW_WIDGETS) {
-            if (ShaderLib.getScreenTexture() != 0) {
+           /* if (ShaderLib.getScreenTexture() != 0) {
 
 
 
@@ -502,7 +503,7 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
                 GL11.glDisable(GL11.GL_BLEND);
                 ShaderLib.screenDraw(ShaderLib.getScreenTexture(), GL13.GL_TEXTURE0 + 0)
                 ShaderLib.exitDraw()
-            }
+            }*/
         }
 
         if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER) {

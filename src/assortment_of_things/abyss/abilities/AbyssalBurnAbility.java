@@ -74,11 +74,11 @@ public class AbyssalBurnAbility extends BaseToggleAbility {
         for (FleetMemberViewAPI view : getFleet().getViews()) {
             //view.getContrailColor().shift(getModId(), new Color(50,50,50,155), 1f, 1f, .5f);
 
-            Color color = new Color(196, 20, 35);
+            Color color = new Color(196, 20, 35, 125);
 
             if (AbyssUtils.isPlayerInAbyss()) {
                 color = AbyssUtils.getBiomeManager().getCurrentBiomeColor().darker();
-                color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 155);
+                color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 125);
             }
 
             view.getContrailColor().shift(getModId(), color, 1f, 1f, 0.75f * level);

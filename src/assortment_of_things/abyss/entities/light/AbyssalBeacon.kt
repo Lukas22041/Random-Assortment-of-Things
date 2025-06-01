@@ -41,6 +41,8 @@ class AbyssalBeacon : BaseCustomEntityPlugin(), AbyssalLight {
         super.advance(amount)
 
         if (entity == null) return
+        if (!AbyssUtils.isPlayerInAbyss()) return
+
         initSpritesIfNull()
 
         fader.advance(amount)

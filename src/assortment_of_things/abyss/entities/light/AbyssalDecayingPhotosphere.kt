@@ -42,6 +42,7 @@ class AbyssalDecayingPhotosphere() : BaseCustomEntityPlugin(), AbyssalLight {
         super.advance(amount)
 
         if (entity == null) return
+        if (!AbyssUtils.isPlayerInAbyss()) return
         initSpritesIfNull()
         band1!!.advance(amount)
         flicker1.advance(amount * 0.15f)

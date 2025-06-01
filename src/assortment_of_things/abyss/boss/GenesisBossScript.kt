@@ -759,7 +759,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             vignette.render(viewport!!.llx - (offset * 0.5f), viewport!!.lly - (offset * 0.5f))
 
 
-            if (ShaderLib.getScreenTexture() != 0 && activateZone) {
+            /*if (ShaderLib.getScreenTexture() != 0 && activateZone) {
                 var screenLoc = ShaderLib.transformWorldToScreen(ship.location)
                 var screenLocUV = ShaderLib.transformScreenToUV(screenLoc)
 
@@ -784,7 +784,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                 GL11.glDisable(GL11.GL_BLEND);
                 ShaderLib.screenDraw(ShaderLib.getScreenTexture(), GL13.GL_TEXTURE0 + 0)
                 ShaderLib.exitDraw()
-            }
+            }*/
         }
 
         if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER && (phase == Phases.P2 || phase == Phases.P3) && ship.isAlive) {

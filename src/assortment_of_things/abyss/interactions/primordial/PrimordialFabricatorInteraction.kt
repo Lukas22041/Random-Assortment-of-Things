@@ -30,7 +30,7 @@ class PrimordialFabricatorInteraction : RATInteractionPlugin() {
         textPanel.addPara("Your fleet approaches the fabricator and teams are send in to inspect its interiors. " +
                 "Vast production halls, hangars and development centers can be found in good condition across the structure, albeit all inactive.")
 
-        textPanel.addPara("It appears most utilities within the station require addition abyssal matter to function.")
+        textPanel.addPara("It appears most utilities within the station require additional abyssal matter to function.")
 
         var tooltip = textPanel.beginTooltip()
 

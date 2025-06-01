@@ -1,3 +1,13 @@
+Version 3.0.8
+Save Compatible with 3.0.0+
+
+-> Decreased the engine brightness of the abyssal burn ability.
+-> Fixed an issue that caused Photospheres to count as visited if you were within the same coordinates in other systems.
+-> Fixed a graphical issue with the genesis.
+-> Fixed a bug that made certain conditions able to generate multiple times in some circumstances.
+
+
+
 Version 3.0.7
 Save Compatible with 3.0.0+
 
