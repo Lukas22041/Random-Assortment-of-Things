@@ -1,3 +1,10 @@
+Version 3.0.9
+Save Compatible with 3.0.0+
+
+-> Fixed a crash that occurs when saving and loading during the transition in the primordial waters biome.
+
+
+
 Version 3.0.8
 Save Compatible with 3.0.0+
 

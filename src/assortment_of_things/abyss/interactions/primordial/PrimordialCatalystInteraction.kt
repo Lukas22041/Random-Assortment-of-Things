@@ -79,8 +79,8 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
                 Global.getSector().addScript(BiomeTransformScript(interactionTarget))
 
                 var state = AppDriver.getInstance().currentState
-                var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI
-                core.setOpacity(0.0f)
+                var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI?
+                core?.opacity = 0f
 
                 closeDialog()
             }
@@ -213,8 +213,8 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
 
             //Force invisible ui, just in case the player reloaded
             var state = AppDriver.getInstance().currentState
-            var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI
-            core.setOpacity(0f)
+            var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI?
+            core?.opacity = 0f
 
             biome.effectLevel += 0.25f * amount / mult
             if (biome.effectLevel >= 1f) {

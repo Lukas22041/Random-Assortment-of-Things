@@ -90,7 +90,8 @@ internal object ReflectionUtils {
         val clazz = instance.javaClass
         val args = arguments.map { it!!::class.javaPrimitiveType ?: it::class.java }
 
-        return getMethod(methodName, instance.javaClass, returnType, parameterCount, args)!!.invoke(instance, *arguments)
+        var method = getMethod(methodName, instance.javaClass, returnType, parameterCount, args) ?: return null
+        return method.invoke(instance, *arguments)
     }
 
     //Cache for field names to reduce reflection calls during UI Crawling
@@ -171,8 +172,13 @@ internal object ReflectionUtils {
                 }
             }
 
+            //Should not crash just because it could not find it.
+            if (targetField == null) {
+                return null
+            }
+
             setFieldAccessibleHandle.invoke(targetField, true)
-            ReflectedField(targetField!!)
+            ReflectedField(targetField)
         }
     }
 
@@ -213,7 +219,14 @@ internal object ReflectionUtils {
                 break
             }
 
-            ReflectedMethod(targetMethod!!) //Returns the method
+            //Should not crash just because it could not find it.
+            if (targetMethod == null) {
+                return null
+            }
+
+            var method = ReflectedMethod(targetMethod)
+            //Returns the method
+            method
         }
     }
 

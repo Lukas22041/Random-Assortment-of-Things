@@ -47,13 +47,20 @@ public class RATCampaignDistortionShader implements LunaCampaignRenderingPlugin 
     private boolean validated = false;
     private boolean validatedAux = false;
 
+    public static List<DistortionAPI> distortions = new ArrayList<>();
+
+    Object readResolve() {
+        distortions = new ArrayList<>();
+        return this;
+    }
 
     public static List<DistortionAPI> getDistortions() {
-        List<DistortionAPI> distortions = (List<DistortionAPI>) Global.getSector().getMemoryWithoutUpdate().get("$rat_distortions");
+       /* List<DistortionAPI> distortions = (List<DistortionAPI>) Global.getSector().getMemoryWithoutUpdate().get("$rat_distortions");
         if (distortions == null) {
             distortions = new ArrayList<>();
             Global.getSector().getMemoryWithoutUpdate().set("$rat_distortions", distortions);
         }
+        return distortions;*/
         return distortions;
     }
 
