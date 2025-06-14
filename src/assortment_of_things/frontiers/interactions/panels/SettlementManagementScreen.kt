@@ -10,7 +10,7 @@ import assortment_of_things.frontiers.ui.SiteDisplayElement
 import assortment_of_things.misc.*
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.InteractionDialogPlugin
-import com.fs.starfarer.api.campaign.listeners.ColonyDecivListener
+import com.fs.starfarer.api.campaign.listeners.PlayerColonizationListener
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -560,8 +560,8 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
         Global.getSector().removeScript(data.mananger)
         Global.getSector().listenerManager.removeListener(data.mananger)
 
-        for (listener in Global.getSector().listenerManager.getListeners(ColonyDecivListener::class.java)) {
-            listener.reportColonyDecivilized(data.settlementEntity.market, true)
+        for (listener in Global.getSector().listenerManager.getListeners(PlayerColonizationListener::class.java)) {
+            listener.reportPlayerAbandonedColony(data.settlementEntity.market)
         }
 
         Global.getSector().intelManager.removeIntel(data.intel)
