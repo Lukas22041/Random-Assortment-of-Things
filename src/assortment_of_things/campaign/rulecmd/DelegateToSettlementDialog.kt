@@ -27,6 +27,7 @@ class DelegateToSettlementDialog() : BaseCommandPlugin() {
         newPlugin.init(dialog)
 
         for (listener in Global.getSector().allListeners) {
+            listener.reportPlayerClosedMarket(data.primaryPlanet.market)
             listener.reportPlayerOpenedMarket(data.settlementEntity.market)
         }
 
