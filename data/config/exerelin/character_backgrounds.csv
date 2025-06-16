@@ -1,9 +1,9 @@
 id,name,shortDescription,longDescription,order,iconPath,plugin
 #rat_station_commander,Station Commander,,,20,graphics/icons/markets/orbital_station.png,assortment_of_things.backgrounds.CommanderBackground
-rat_comradery,Comradery,"None of your achivements were made alone, but together with your trusted partner, the only person you feel equal to.",,50,graphics/icons/backgrounds/rat_comradery.png,assortment_of_things.backgrounds.ComraderyBackground
-rat_bounty,High Value Target,Some factions are less than happy with your continued influence on the sector.,,51,graphics/icons/backgrounds/rat_high_value.png,assortment_of_things.backgrounds.BountyBackground
-rat_force_in_numbers,Force in numbers,You are renowned all over the sector for your unique style of wolfpack-like fleet strategies.,,52,graphics/icons/backgrounds/rat_force.png,assortment_of_things.backgrounds.ForceBackground
-rat_personal_army,Personal Army,Your experience as a military official assists your endeavours to this day.,,53,graphics/icons/backgrounds/rat_army.png,assortment_of_things.backgrounds.ArmyBackground
-rat_neural_shard,Neural Shard,"You once salvaged a powerful, experimental neural device, creating a one-man army from your persona alone.",,54,graphics/icons/backgrounds/rat_neural_shard.png,assortment_of_things.backgrounds.NeuralShardBackground
-rat_zero_day,Zero Day Exploit ,"You spent your days messing with any tech that you can find, eventualy discovering an exploit in guidance systems that no one else is aware of.",,55,graphics/icons/backgrounds/rat_zero_day.png,assortment_of_things.backgrounds.ZeroDayBackground
+rat_comradery,Comradery,"No captain flies alone. You share your achievements with a trusted partner, as your only equal.",,50,graphics/icons/backgrounds/rat_comradery.png,assortment_of_things.backgrounds.ComraderyBackground
+rat_bounty,High Value Target,"Some factions are displeased with your continued influence on the Sector.",,51,graphics/icons/backgrounds/rat_high_value.png,assortment_of_things.backgrounds.BountyBackground
+rat_force_in_numbers,Force in numbers,"You are renowned across the Sector for your unique wolfpack fleet stratagem.",,52,graphics/icons/backgrounds/rat_force.png,assortment_of_things.backgrounds.ForceBackground
+rat_personal_army,Personal Army,"Your experience as a military official leaves you uniquely equipped to face the challenges of a post-collapse society.",,53,graphics/icons/backgrounds/rat_army.png,assortment_of_things.backgrounds.ArmyBackground
+rat_neural_shard,Neural Shard,"You salvaged an experimental neural device, capable of creating a one-man army mapped to the tendrils of your psyche.",,54,graphics/icons/backgrounds/rat_neural_shard.png,assortment_of_things.backgrounds.NeuralShardBackground
+rat_zero_day,Zero Day Exploit ,"Years spent tinkering with technology led to the discovery of a root exploit in guidance systems no one else is aware of.",,55,graphics/icons/backgrounds/rat_zero_day.png,assortment_of_things.backgrounds.ZeroDayBackground
 rat_exotech,Personal Exoship,,,56,graphics/factions/rat_exo_crest.png,assortment_of_things.backgrounds.ExoBackground
