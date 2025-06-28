@@ -1,3 +1,10 @@
+Version 3.1.1
+Save Compatible with 3.0.0+
+
+-> Fixed a crash that could occur when looking at tooltips
+
+
+
 Version 3.1.0
 Save Compatible with 3.0.0+
 

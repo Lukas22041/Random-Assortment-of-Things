@@ -62,7 +62,7 @@ class AICoreTooltipScript : EveryFrameScript {
 
 
 
-            var stack = ReflectionUtils.get(null, tooltip, CargoItemStack::class.java) as CargoStackAPI ?: return
+            var stack = ReflectionUtils.get(null, tooltip, CargoItemStack::class.java) as CargoStackAPI? ?: return
 
             var tooltip = tooltip as TooltipMakerAPI
 

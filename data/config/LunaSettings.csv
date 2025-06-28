@@ -21,7 +21,7 @@ rat_backgroundsEnabled,"Enable ""Backgrounds""",Boolean,true,,"Adds more unique 
 Requires [Nexerelin v0.11.0x] or newer.",,,Expansion
 ,,,,,,,,
 rat_abyssHeader,The Abyssal Depths,Header,The Abyssal Depths,,,,,Expansion
-rat_abyssScale,Abyssal Depths Size,Radio,Base,"Base, 150%","Adjusts the size of the Abyssal Depths. The feature is designed around the base size, so other scales may not have the intended gameplay. This also increases the amount of procedual stations and photospheres. [Increasing the size can be very performance intensive while your in the system.] Only in effect for new saves.",,,Expansion
+rat_abyssScale,Abyssal Depths Size,Radio,Base,"Base, 150%","Adjusts the size of the Abyssal Depths. The feature is designed around the base size, so other scales may not have the intended gameplay. This also increases the amount of procedual stations and photospheres. [Increasing the size can be very performance intensive while youre in the system.] Only in effect for new saves.",,,Expansion
 rat_abyssBrighter,Brighter Abyss,Boolean,false,,"Makes the abyss less dark, recommended if it turns out to be too dark on your screen.",,,Expansion
 #rat_abyssDifficulty,Abyss Difficulty,Radio,Normal,"Normal, Hard","Changes the difficulty curve of the Abyss.
 
