@@ -47,7 +47,7 @@ class DefensiveDronesCondition : BaseMarketConditionPlugin() {
 
         tooltip!!.addSpacer(10f)
         tooltip.addPara("This planet hosts several autonomous launch platforms for defensive drones. Despite their age, they are still functional, even if severely weaker than in their prime.\n\n" +
-                "Automaticly launches up to 3 derelict drone fleets to protect the planet and system. The strength of the fleets depends on the planets fleet size multiplier." +
+                "Automatically launches up to 3 derelict drone fleets to protect the planet and system. The strength of the fleets depends on the planets fleet size multiplier." +
                 "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "3", "derelict", "fleet size")
         tooltip.addSpacer(10f)
         tooltip.addPara("+1 demand for ship hulls and weapons", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+1")

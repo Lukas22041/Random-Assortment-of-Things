@@ -35,6 +35,7 @@ import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
 import java.util.*
 
+//No longer used. AICoreTooltipScript is the replacement.
 class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
 
     lateinit var commoditySpec: CommoditySpecAPI
@@ -67,7 +68,17 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
     override fun init(stack: CargoStackAPI) {
         super.init(stack)
 
-        var data = stack.specialDataIfSpecial.data
+        //Turn all special item ai cores to commodities, to keep the change of the system save compatible
+
+        var data = stack.specialDataIfSpecial.data ?: return
+      /*  if (data == "") return
+
+        var cargo = stack.cargo
+        cargo.addCommodity(data, stack.size)
+        cargo.removeStack(stack)*/
+
+        //No Longer Required
+        //return
 
         if (!cores.keys.contains(data)) {
             data = "rat_chronos_core"
@@ -99,6 +110,17 @@ class AICoreSpecialItemPlugin : BaseSpecialItemPlugin() {
     }
 
     override fun render(x: Float, y: Float, w: Float, h: Float, alphaMult: Float, glowMult: Float, renderer: SpecialItemPlugin.SpecialItemRendererAPI?) {
+
+        var data = stack.specialDataIfSpecial.data ?: return
+        if (data == "") return
+
+        var cargo = stack.cargo
+        cargo.addCommodity(data, stack.size)
+        cargo.removeStack(stack)
+
+
+        return
+
         var centerX = x+w/2
         var centerY = y+h/2
 
