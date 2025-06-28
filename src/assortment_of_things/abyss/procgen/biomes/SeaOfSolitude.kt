@@ -81,7 +81,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
 
         generateFogTerrain("rat_sea_of_solitude", "rat_terrain", "depths1", 0.45f)
 
-        var photosphereNum = MathUtils.getRandomNumberInRange(12, 14)
+        var photosphereNum = (MathUtils.getRandomNumberInRange(12, 14) * manager.scaleMult).toInt()
 
         for (i in 0 until photosphereNum) {
 
@@ -239,7 +239,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
 
         //Populate locations without anything major near them.
         //Fabricators, Transmitters, Droneships, Abyssal Wrecks
-        var picks = MathUtils.getRandomNumberInRange(7, 10)
+        var picks = (MathUtils.getRandomNumberInRange(7, 10) * manager.scaleMult).toInt()
         for (i in 0 until picks) {
             var pick = pickAndClaimCellIncludingBorder() ?: continue //Populate Border regions too
             var loc = pick.getRandomLocationInCell()

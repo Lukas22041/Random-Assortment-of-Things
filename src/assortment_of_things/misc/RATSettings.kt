@@ -12,6 +12,7 @@ object RATSettings : LunaSettingsListener
 
     //Abyss
     var enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
+    var abyssScale = LunaSettings.getString(modID, "rat_abyssScale")
     var brighterAbyss = LunaSettings.getBoolean(modID, "rat_abyssBrighter")
     //var abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
 
@@ -81,6 +82,7 @@ object RATSettings : LunaSettingsListener
     fun loadSettings()
     {
         enableAbyss = LunaSettings.getBoolean(modID, "rat_abyssEnabled")
+        abyssScale = LunaSettings.getString(modID, "rat_abyssScale")
         brighterAbyss = LunaSettings.getBoolean(modID, "rat_abyssBrighter")
         //abyssDifficulty = LunaSettings.getString(modID, "rat_abyssDifficulty")
 

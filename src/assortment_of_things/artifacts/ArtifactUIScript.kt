@@ -10,12 +10,14 @@ import com.fs.starfarer.api.campaign.CargoStackAPI
 import com.fs.starfarer.api.campaign.CoreUITabId
 import com.fs.starfarer.api.campaign.SpecialItemData
 import com.fs.starfarer.api.ui.*
+import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.campaign.CampaignState
 import com.fs.starfarer.campaign.ui.UITable
 import com.fs.state.AppDriver
 import lunalib.lunaExtensions.addLunaElement
 import lunalib.lunaUI.elements.LunaElement
+import lunalib.lunaUtil.LunaCommons
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
 import java.awt.Color
@@ -108,6 +110,10 @@ class ArtifactUIScript : EveryFrameScript {
         var element = panel!!.createUIElement(300f, h, false)
         panel!!.addUIElement(element)
 
+        var hasArtifact = ArtifactUtils.getArtifactsInFleet().isNotEmpty()
+        var fade = 0f
+        var fader = FaderUtil(0f, 1f, 1f, false, false)
+
         var container = element.addLunaElement(w, h).apply {
             enableTransparency = true
             borderAlpha = 0.7f
@@ -124,6 +130,33 @@ class ArtifactUIScript : EveryFrameScript {
                 borderAlpha = 0.7f
                 backgroundColor = Color(0, 0, 0)
                // backgroundAlpha = 0.5f
+            }
+
+            advance {
+                if (hasArtifact && LunaCommons.getBoolean("assortment_of_things", "hasHoveredOverArtifactBefore") != true) {
+
+                    fader.advance(it)
+                    if (fader.brightness >= 1)
+                    {
+                        fader.fadeOut()
+                    }
+                    else if (fader.brightness <= 0)
+                    {
+                        fader.fadeIn()
+                    }
+
+                    backgroundColor = Color(10, 25, 35)
+
+                    borderAlpha = 0.7f + (0.3f * fader.brightness)
+                    backgroundAlpha = 0.6f + (0.4f * fader.brightness)
+
+                    if (isHovering) {
+                        borderAlpha = 1f
+                        backgroundColor = Color(10, 10, 20)
+                        backgroundAlpha = 0.6f
+                        LunaCommons.set("assortment_of_things", "hasHoveredOverArtifactBefore", true)
+                    }
+                }
             }
 
         }

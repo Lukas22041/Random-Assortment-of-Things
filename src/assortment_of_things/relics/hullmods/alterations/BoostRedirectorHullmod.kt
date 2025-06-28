@@ -13,7 +13,7 @@ class BoostRedirectorHullmod : BaseAlteration() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         super.applyEffectsBeforeShipCreation(hullSize, stats, id)
 
-        stats!!.zeroFluxSpeedBoost.modifyMult(id, 0.2f)
+        stats!!.zeroFluxSpeedBoost.modifyMult(id, 0.5f)
         stats.zeroFluxMinimumFluxLevel.modifyFlat(id, 0.10f)
     }
 
@@ -39,8 +39,8 @@ class BoostRedirectorHullmod : BaseAlteration() {
         var nc = Misc.getNegativeHighlightColor()
 
         tooltip!!.addSpacer(5f)
-        tooltip.addPara("The zero flux engine boost is reduced to only 20%% of its original value. It can now trigger aslong as the ship is below 10%% flux. The rest of the energy is redirected to increasing the ships ballistic and energy ammunition recharge rate by 75%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "zero flux engine boost", "20%", "10%", "75%")
+        tooltip.addPara("The zero flux engine boost is reduced to only 50%% of its original value. It can now trigger aslong as the ship is below 10%% flux. While the zero-flux boost is active, the rest of the energy is redirected to increasing the ships ballistic and energy ammunition recharge rate by 75%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "zero flux engine boost", "50%", "10%", "75%")
 
     }
 }

@@ -2,6 +2,7 @@ package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.biomes.*
+import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -15,18 +16,29 @@ import java.util.Random
 class AbyssBiomeManager {
 
     companion object {
-        //var width = 52000 * 2 //*3 //TODO Look for something that is a bit larger than vanilla * 2, dividable by 2000 //Vanilla scaled
-        //var height = 52000 * 1 //*2 //TODO Look for something that is a bit larger than vanilla, dividable by 2000 //Vanilla scaled
-        var width = 56000 * 2 //4 more cells
-        var height = 56000 * 1 //2 more cells
+
         var cellSize = 2000 //Might want to try 4000 instead later, or 3000 with a different width/height. Would help in places where a cell is only 1 tile big between other biomes
 
-        var rows = width / cellSize
-        var columns = height / cellSize
+        //var width = 52000 * 2 //*3 //TODO Look for something that is a bit larger than vanilla * 2, dividable by 2000 //Vanilla scaled
+        //var height = 52000 * 1 //*2 //TODO Look for something that is a bit larger than vanilla, dividable by 2000 //Vanilla scaled
 
-        var xOffset = width / 2
-        var yOffset = height / 2
     }
+
+    var scaleMult: Float = when(RATSettings.abyssScale) {
+        "Base" -> 1f
+        //"125%" -> 1.25f
+        "150%" -> 1.5f
+        else -> 1f
+    }
+
+    var width = Math.round(56000 * 2 * scaleMult)
+    var height = Math.round(56000 * 1 * scaleMult)
+
+    var rows = width / cellSize
+    var columns = height / cellSize
+
+    var xOffset = width / 2
+    var yOffset = height / 2
 
     var biomes = ArrayList<BaseAbyssBiome>()
     private var biomeMap = HashMap<String, BaseAbyssBiome>() //Should be better performance than the old solution
@@ -60,6 +72,21 @@ class AbyssBiomeManager {
         biomeMap = HashMap<String, BaseAbyssBiome>()
         for (biome in biomes) {
             biomeMap.put(biome.getBiomeID(), biome)
+        }
+
+        //Those variables used to be statics, now their part of the manager that persists
+        //This fixes them being 0 on old saves
+        if (width == 0) {
+            scaleMult = 1f
+
+            width = 56000 * 2
+            height = 56000 * 1
+
+            rows = width / cellSize
+            columns = height / cellSize
+
+            xOffset = width / 2
+            yOffset = height / 2
         }
 
         return this
@@ -165,12 +192,12 @@ class AbyssBiomeManager {
         var system = AbyssUtils.getSystem()
 
         var minibossStations = system!!.customEntities.filter { it.customEntitySpec.tags.contains("rat_miniboss") }
-        var perMiniboss = /*45f*/ 65f
+        var perMiniboss = /*45f*/ 65f/* * scaleMult*/
         for (miniboss in minibossStations) {
             AbyssProcgenUtils.setAbyssalMatterDrop(miniboss, perMiniboss + MathUtils.getRandomNumberInRange(-3f, 3f))
         }
 
-        var perResearch = 40f
+        var perResearch = 40f /** scaleMult*/
         var researchStations = system.customEntities.filter { it.customEntitySpec.id == "rat_abyss_research" }
         for (research in researchStations) {
             AbyssProcgenUtils.setAbyssalMatterDrop(research, perResearch + MathUtils.getRandomNumberInRange(-3f, 3f))
@@ -179,7 +206,7 @@ class AbyssBiomeManager {
         //Eliminate around half of the choices
         var others = system.customEntities.filter { Random().nextFloat() >= 0.5f && it.customEntitySpec.id == "rat_abyss_fabrication" || it.customEntitySpec.id == "rat_abyss_accumalator" }.shuffled()
 
-        var remaining = 250f
+        var remaining = 250f * scaleMult
         var perOther = remaining / others.size
 
         for (other in others) {

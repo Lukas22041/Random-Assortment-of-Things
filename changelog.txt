@@ -1,3 +1,16 @@
+Version 3.1.0
+Save Compatible with 3.0.0+
+
+-> Added an option to increase the size of the abyssal depths by 150%.
+-> The Artifacts Widget now pulses visualy when you have an artifact and never used the system before.
+-> The "Boost Redirector" alteration now only decreases the zero flux boost by 50% instead of 80%.
+-> Made the description of the "Boost Redirector" alteration less confusing.
+-> RAT AI Cores can now be given to factions like other AI cores.
+--> Slightly reduces the value of most RAT AI cores to adjust for this.
+-> Fixed an issue that made it possible to dupe RAT AI Cores.
+
+
+
 Version 3.0.9
 Save Compatible with 3.0.0+
 

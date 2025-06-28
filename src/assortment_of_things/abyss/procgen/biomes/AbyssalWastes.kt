@@ -107,7 +107,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
        //generateFogTerrain("rat_abyss_test", "rat_terrain", "depths1", 0.6f)
 
 
-        var photosphereNum = MathUtils.getRandomNumberInRange(11, 12)
+        var photosphereNum = (MathUtils.getRandomNumberInRange(11, 12) * manager.scaleMult).toInt()
 
         for (i in 0 until photosphereNum) {
 
@@ -211,7 +211,7 @@ class AbyssalWastes() : BaseAbyssBiome() {
 
         //Populate locations without anything major near them.
         //Fabricators, Transmitters, Droneships, Abyssal Wrecks
-        var picks = MathUtils.getRandomNumberInRange(8, 13)
+        var picks = (MathUtils.getRandomNumberInRange(8, 13) * manager.scaleMult).toInt()
         for (i in 0 until picks) {
             var pick = pickAndClaimCell() ?: continue //Should not spawn things of this biome near the border
             var loc = pick.getRandomLocationInCell()

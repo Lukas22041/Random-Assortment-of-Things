@@ -88,7 +88,7 @@ class EtherealShores() : BaseAbyssBiome() {
         var picks = manager.getCells()/*.filter { it.getBiome() == null }*/
         //Do not let it spawn at the edges
         //var cell = picks.filter { it.gridX != 0 && it.gridX != AbyssBiomeManager.width && it.gridY != 0 && it.gridY != AbyssBiomeManager.height }.random()
-        var cellsFull = picks.filter { it.gridX > 0 && it.gridX < AbyssBiomeManager.rows -1 && it.gridY > 0 && it.gridY < AbyssBiomeManager.columns -1 }
+        var cellsFull = picks.filter { it.gridX > 0 && it.gridX < manager.rows -1 && it.gridY > 0 && it.gridY < manager.columns -1 }
 
         //Only cells where any of their surrounding biome cells is not their own biome, and only on the border of the abyssal wastes
         var cells = cellsFull.filter { center -> center.getSurrounding().any { surrounding -> center.getBiome() != surrounding.getBiome() && !surrounding.isFake && surrounding.getBiome() is AbyssalWastes } }

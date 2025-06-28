@@ -184,7 +184,6 @@ public class AbyssalBurnAbility extends BaseToggleAbility {
 //		}
 
 
-
         fleet.getStats().getFleetwideMaxBurnMod().modifyFlat(getModId(), burnModifier, "Abyssal burn");
         fleet.getStats().getFleetwideMaxBurnMod().modifyMult(getModId(), burnMult, "Abyssal burn");
         fleet.getStats().getFleetwideMaxBurnMod().modifyPercent(getModId(), MAX_BURN_PERCENT, "Abyssal burn");

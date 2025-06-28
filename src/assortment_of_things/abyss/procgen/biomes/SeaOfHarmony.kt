@@ -86,7 +86,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
         generateFogTerrain("rat_sea_of_harmony", "rat_terrain", "depths1", 0.6f)
 
-        var photosphereNum = MathUtils.getRandomNumberInRange(8, 8)
+        var photosphereNum = (MathUtils.getRandomNumberInRange(8, 8) * manager.scaleMult).toInt()
 
         //Spawn an even larger colossal first.
         var first = true
@@ -241,7 +241,7 @@ class SeaOfHarmony() : BaseAbyssBiome() {
 
         //Populate locations without anything major near them.
         //Fabricators, Transmitters, Droneships, Abyssal Wrecks
-        var picks = MathUtils.getRandomNumberInRange(11, 13)
+        var picks = (MathUtils.getRandomNumberInRange(11, 13) * manager.scaleMult).toInt()
         for (i in 0 until picks) {
             var pick = pickAndClaimCellIncludingBorder() ?: continue //Populate Border regions too
             var loc = pick.getRandomLocationInCell()
