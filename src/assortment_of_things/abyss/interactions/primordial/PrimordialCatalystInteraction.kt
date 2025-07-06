@@ -140,8 +140,8 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
             var alpha = MathUtils.clamp(fade, 0f, 1f)
 
             var state = AppDriver.getInstance().currentState
-            var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI
-            core.setOpacity(alpha)
+            var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI?
+            core?.setOpacity(alpha)
 
             if (fade >= 1f) {
                 finished = true

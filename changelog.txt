@@ -1,3 +1,10 @@
+Version 3.1.3
+Save Compatible with 3.0.0+
+
+-> Fixed an issue that made you unable to load a save that got made right after activating the catalyst.
+
+
+
 Version 3.1.2
 Save Compatible with 3.0.0+
 
