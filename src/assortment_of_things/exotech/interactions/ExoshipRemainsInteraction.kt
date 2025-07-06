@@ -242,7 +242,8 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
         textPanel.addPara("With the defending ship defeated, the fleet is able to close in on the target. \n\n" +
                 "But before you continue further in, the fleet makes note of discovering some type of AI-Core not typicaly seen within the sector inside of the automated drone. The crew recovers this artifact for later inspection.")
 
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_ai_core_special", "rat_exo_processor"), 1f)
+        //Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_ai_core_special", "rat_exo_processor"), 1f)
+        Global.getSector().playerFleet.cargo.addCommodity("rat_exo_processor", 1f)
 
         var tooltip = textPanel.beginTooltip()
 
