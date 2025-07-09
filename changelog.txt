@@ -1,3 +1,12 @@
+Version 3.1.4
+Save Compatible with 3.0.0+
+
+-> Fixed an issue where you could acquire a bugged version of the Neuro Core.
+-> Updated the Abyssal XO to work with Second-in-Commands automated points config.
+--> Make sure to update both RAT and SiC if you use both.
+
+
+
 Version 3.1.3
 Save Compatible with 3.0.0+
 

@@ -103,7 +103,8 @@ class NeuralLaboratoryInteraction : RATInteractionPlugin() {
                     textPanel.addPara("\"Im glad to be of your assistance.\"")
 
                     //Global.getSector().playerFleet.cargo.addCommodity("rat_neuro_core", 1f)
-                    Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_ai_core_special", "rat_neuro_core"), 1f)
+                    //Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_ai_core_special", "rat_neuro_core"), 1f)
+                    Global.getSector().playerFleet.cargo.addCommodity("rat_neuro_core", 1f)
 
                     AddRemoveCommodity.addCommodityGainText("rat_neuro_core", 1, textPanel)
 

@@ -15,6 +15,7 @@ import com.fs.starfarer.api.impl.hullmods.Automated
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCUtils
+import second_in_command.misc.SCSettings
 import second_in_command.scripts.AutomatedShipsManager
 
 class ComputationalMatrix : BaseArtifactPlugin() {
@@ -32,7 +33,7 @@ class ComputationalMatrix : BaseArtifactPlugin() {
                 "automated ships", "combat readiness penalty", "10%")
         } else {
 
-            var provided = points.toInt()
+            var provided = (points * SCSettings.autoPointsMult).toInt()
             var maximum = 0
             if (Global.getCurrentState() != GameState.TITLE) {
                 var manager = AutomatedShipsManager.get()
@@ -76,7 +77,7 @@ class ComputationalMatrix : BaseArtifactPlugin() {
 
     override fun onInstall(fleet: CampaignFleetAPI, id: String) {
         if (isSiCEnabled) {
-            Global.getSector().playerPerson.stats.dynamic.getMod("sc_auto_dp").modifyFlat(id+"_external", points, "Computational Matrix Artifact")
+            Global.getSector().playerPerson.stats.dynamic.getMod("sc_auto_dp").modifyFlat(id+"_external", points * SCSettings.autoPointsMult, "Computational Matrix Artifact")
         }
     }
 

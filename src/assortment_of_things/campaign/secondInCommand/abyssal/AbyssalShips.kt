@@ -11,13 +11,14 @@ import com.fs.starfarer.api.util.Misc
 import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
 import second_in_command.SCUtils
+import second_in_command.misc.SCSettings
 import second_in_command.scripts.AutomatedShipsManager
 import second_in_command.skills.automated.SCBaseAutoPointsSkillPlugin
 import kotlin.math.roundToInt
 
 class AbyssalShips : SCBaseAutoPointsSkillPlugin() {
     override fun getProvidedPoints(): Int {
-        return 120
+        return (120 * SCSettings.autoPointsMult).toInt()
     }
 
 
