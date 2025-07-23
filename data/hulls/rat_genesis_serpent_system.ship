@@ -12,6 +12,7 @@
   "shieldRadius": 109.5,
   "viewOffset": 0,
   "builtInMods": [
+    "automated",
     "reduced_explosion",
     "always_detaches",
     "rat_genesis_construct_hullmod"

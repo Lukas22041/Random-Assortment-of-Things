@@ -163,6 +163,7 @@ class AlterationRefitButton : BaseRefitButton() {
         var canBeRemoved = true
         if (installedAlteration != null) {
             var plugin = Global.getSettings().scriptClassLoader.loadClass(installedAlteration.effectClass).newInstance() as BaseAlteration
+            plugin.init(installedAlteration)
             canBeRemoved = plugin.canUninstallAlteration(member, variant, market)
         }
 
@@ -233,6 +234,7 @@ class AlterationRefitButton : BaseRefitButton() {
                 }
                 else if (!canBeRemoved) {
                     var plugin = Global.getSettings().scriptClassLoader.loadClass(installedAlteration!!.effectClass).newInstance() as BaseAlteration
+                    plugin.init(installedAlteration)
                     plugin.cannotUninstallAlterationTooltip(tooltip, member, variant, 400f)
                 }
             }
@@ -286,6 +288,7 @@ class AlterationRefitButton : BaseRefitButton() {
 
             var alteration = Global.getSettings().getHullModSpec(stack.specialDataIfSpecial.data)
             var plugin = Global.getSettings().scriptClassLoader.loadClass(alteration.effectClass).newInstance() as BaseAlteration
+            plugin.init(alteration)
 
             var isInstallable = plugin.canInstallAlteration(member, variant, market)
             if (variant.hasHullMod(alteration.id)) isInstallable = false

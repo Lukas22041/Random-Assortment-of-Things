@@ -12,6 +12,7 @@
   "shieldRadius": 249.5,
   "viewOffset": 0,
   "builtInMods": [
+    "automated",
     "rat_genesis_hullmod",
     "rat_primordial_sea_hullmod"
   ],

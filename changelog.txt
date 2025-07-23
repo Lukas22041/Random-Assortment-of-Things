@@ -1,3 +1,19 @@
+Version 3.1.5
+Save Compatible with 3.0.0+
+
+-> Reworked the "Abyssal Crew Conversion" Alteration.
+--> It now works on all automated ships.
+--> Cores can be integrated again to provide their signature skill and activate the "Abyssal Adaptability" hullmods effect.
+--> It now keeps the ship as "Automated", applying the AI Points penalty, but also being effected by automation skills.
+--> Humans count as a 2x multiplier for points, integrating a core increases it to 3x.
+--> If you can't use Automated Ships, it instead provides +70% combat readiness (Bringing the ship to 40%).
+
+-> The \"Abyssal Adaptability" hullmow now has an effect for the Boss core, which showns in the tooltip after its been acquired once.
+-> Nerfed the "Mending" skill from complete immunity to a 60% reduction in d-mod chance, to adjust for "Engineerings" capstones.
+-> Fixed a bug that sometimes made abyssal ships with AI cores gain the shipsystem cooldown penalty.
+
+
+
 Version 3.1.4
 Save Compatible with 3.0.0+
 

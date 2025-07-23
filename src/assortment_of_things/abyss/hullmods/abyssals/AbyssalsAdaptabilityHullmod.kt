@@ -1,5 +1,6 @@
 package assortment_of_things.abyss.hullmods.abyssals
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.hullmods.HullmodTooltipAbyssParticles
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.strings.RATItems
@@ -14,6 +15,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.FaderUtil
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import org.magiclib.achievements.MagicAchievementManager
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
@@ -41,6 +43,10 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             {
                 color = Color(0, 150, 255)
             }
+            if (isPrimordialCore(ship))
+            {
+                color = Color(100, 20, 250)
+            }
 
             return color
         }
@@ -50,6 +56,11 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             var color = Color(150, 0 ,255)
 
             if (isSeraphCore(ship))
+            {
+                color = Color(156, 20, 35, 255)
+            }
+
+            if (isPrimordialCore(ship))
             {
                 color = Color(156, 20, 35, 255)
             }
@@ -148,16 +159,13 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             stats!!.variant.removeTag(Tags.SHIP_LIMITED_TOOLTIP)
         }*/
 
-        var conversions = listOf("rat_abyssal_conversion", "rat_chronos_conversion", "rat_cosmos_conversion", "rat_seraph_conversion", "rat_primordial_conversion")
+       /* var conversions = listOf("rat_abyssal_conversion", "rat_chronos_conversion", "rat_cosmos_conversion", "rat_seraph_conversion", "rat_primordial_conversion")
         if (conversions.none { stats!!.variant.hullMods.contains(it) } && !stats!!.variant.hasHullMod(HullMods.AUTOMATED)) {
             stats!!.variant.addPermaMod(HullMods.AUTOMATED)
-        }
+        }*/
 
-        if (stats.fleetMember.captain == null || stats.fleetMember.captain.isDefault) {
-            stats.systemCooldownBonus.modifyMult(id, 1.50f)
-            stats.systemRegenBonus.modifyMult(id, 0.5f)
-        }
-        else if (isChronosCore(stats.fleetMember)) {
+
+        if (isChronosCore(stats.fleetMember)) {
             //stats.timeMult.modifyMult(id, 1.1f)
             stats.systemCooldownBonus.modifyMult(id, 0.8f)
             stats.systemRegenBonus.modifyMult(id, 1.2f)
@@ -179,12 +187,15 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
             )
             stats.armorBonus.modifyFlat(id, armor.get(stats.fleetMember.variant.hullSize)!!)
             stats.hullBonus.modifyMult(id, 1.1f)
+        } else if (isPrimordialCore(stats.fleetMember)) {
+            stats.zeroFluxMinimumFluxLevel.modifyFlat(id, 0.25f)
         }
 
 
         //stats!!.getDynamic().getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0f);
 
     }
+
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
 
@@ -208,6 +219,12 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         super.applyEffectsAfterShipCreation(ship, id)
+
+        if (ship == null) return
+        if (ship.captain == null || ship.captain.isDefault) {
+            ship.mutableStats.systemCooldownBonus.modifyMult(id, 1.50f)
+            ship.mutableStats.systemRegenBonus.modifyMult(id, 0.5f)
+        }
 
         if (Global.getCombatEngine() == null) return
         var renderer = AbyssalCoreRenderer(ship!!)
@@ -253,6 +270,7 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
         var chronosSelected = isChronosCore(ship)
         var cosmosSelected = isCosmosCore(ship)
         var seraphSelected = isSeraphCore(ship)
+        var primSelected = isPrimordialCore(ship)
 
         var chronosColor = Misc.getTextColor()
         if (!chronosSelected) chronosColor = Misc.getGrayColor()
@@ -262,6 +280,9 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
 
         var seraphColor = Misc.getTextColor()
         if (!seraphSelected) seraphColor = Misc.getGrayColor()
+
+        var primColor = Misc.getTextColor()
+        if (!primSelected) primColor = Misc.getGrayColor()
 
         tooltip.addSpacer(10f)
 
@@ -283,6 +304,14 @@ class AbyssalsAdaptabilityHullmod : BaseHullMod() {
         seraphCore.addPara("Worsens the shield efficiency by 0.2 but increases the ships armor by 100/150/250/350 and increases the ships hitpoints by 10%%.", 0f,
             seraphColor, Misc.getHighlightColor(), "0.2", "100", "150", "250", "350", "10%")
         tooltip.addImageWithText(0f)
+
+        if (MagicAchievementManager.getInstance()?.getAchievement("rat_beatSingularity")?.isComplete != true || primSelected) {
+            tooltip.addSpacer(10f)
+            var primCore = tooltip.beginImageWithText("graphics/icons/cargo/rat_primordial_core.png", 32f)
+            primCore.addPara("Enables the ships zero flux boost to activate as long as the ship stays at or below 25%% flux.", 0f,
+                primColor, Misc.getHighlightColor(), "zero flux boost", "25%")
+            tooltip.addImageWithText(0f)
+        }
 
         //End
 

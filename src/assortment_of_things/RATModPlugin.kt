@@ -101,6 +101,13 @@ class RATModPlugin : BaseModPlugin() {
 
         LunaRefitManager.addRefitButton(AlterationRefitButton())
 
+        LunaRefitManager.addRefitButton(CrewConversionChronosRefitButton())
+        LunaRefitManager.addRefitButton(CrewConversionCosmosRefitButton())
+        LunaRefitManager.addRefitButton(CrewConversionSeraphRefitButton())
+        LunaRefitManager.addRefitButton(CrewConversionPrimordialRefitButton())
+        LunaRefitManager.addRefitButton(CrewConversionRemoveIntegratedRefitButton())
+
+
         /*LunaRefitManager.addRefitButton(CrewConversionChronosRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionCosmosRefitButton())
         LunaRefitManager.addRefitButton(CrewConversionSeraphRefitButton())
@@ -159,6 +166,7 @@ class RATModPlugin : BaseModPlugin() {
 
         Global.getSector().addTransientScript(AICoreTooltipScript())
         Global.getSector().addTransientScript(WhichModScript())
+        Global.getSector().addTransientScript(CrewConversionScript())
         Global.getSector().addTransientScript(ArtifactUIScript())
         //Global.getSector().addTransientScript(AICoreReplacerScript())
         //Global.getSector().addTransientListener(AICoreDropReplacerScript())

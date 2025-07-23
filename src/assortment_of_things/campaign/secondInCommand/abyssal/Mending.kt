@@ -19,7 +19,7 @@ class Mending : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData?, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("Automated ships can no longer acquire additional d-mods", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Automated ships are 60%% less likely to acquire d-mods", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Automated ships are almost always recoverable if lost in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
@@ -27,7 +27,7 @@ class Mending : SCBaseSkillPlugin() {
     override fun callEffectsFromSeparateSkill(stats: MutableShipStatsAPI, hullSize: ShipAPI.HullSize, id: String) {
 
         if (stats.isAutomated()) {
-            stats.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0f)
+            stats.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0.40f)
             stats.dynamic.getMod(Stats.INDIVIDUAL_SHIP_RECOVERY_MOD).modifyFlat(id, 2f)
         }
     }

@@ -29,16 +29,16 @@ class GenesisHullmod : BaseHullMod() {
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
 
-        var conversions = listOf("rat_abyssal_conversion", "rat_chronos_conversion", "rat_cosmos_conversion", "rat_seraph_conversion", "rat_primordial_conversion")
+       /* var conversions = listOf("rat_abyssal_conversion", "rat_chronos_conversion", "rat_cosmos_conversion", "rat_seraph_conversion", "rat_primordial_conversion")
         if (conversions.none { stats!!.variant.hullMods.contains(it) } && !stats!!.variant.hasHullMod( HullMods.AUTOMATED)) {
             stats!!.variant.addPermaMod(HullMods.AUTOMATED)
-        }
+        }*/
 
         if (stats!!.fleetMember?.fleetData?.fleet?.faction?.id == "rat_abyssals_primordials") {
             stats.crewLossMult.modifyMult("test", 0f)
             stats.crLossPerSecondPercent.modifyMult("test", 0f)
         } else {
-            if (Global.getSector()?.characterData?.person != null) {
+            /*if (Global.getSector()?.characterData?.person != null) {
                 if (Misc.getAllowedRecoveryTags().contains(Tags.AUTOMATED_RECOVERABLE) || conversions.any { stats!!.variant.hullMods.contains(it) }) {
                     if (!stats.variant.hasTag("rat_really_not_recoverable")) {
                         stats!!.variant.removeTag(Tags.VARIANT_UNBOARDABLE)
@@ -47,7 +47,7 @@ class GenesisHullmod : BaseHullMod() {
                 else {
                     stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
                 }
-            }
+            }*/
         }
 
 

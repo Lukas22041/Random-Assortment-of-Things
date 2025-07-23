@@ -12,6 +12,7 @@
   "shieldRadius": 73.5,
   "viewOffset": 0,
   "builtInMods": [
+    "automated",
     "rat_abyssal_core",
     "rat_abyssal_grid"
   ],

@@ -22,6 +22,7 @@ import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.getSalvageSeed
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 import java.util.*
@@ -93,6 +94,7 @@ object AbyssProcgenUtils {
     fun spawnEntity(system: StarSystemAPI, biome: BaseAbyssBiome, type: String) : SectorEntityToken {
         var entity = system.addCustomEntity("${type}_${biome.getBiomeID()}_${Misc.genUID()}", null, type, Factions.NEUTRAL)
         entity.addScript(EntityRotationScript(entity))
+        entity.getSalvageSeed() //Ensures that a salvage seed gets generated.
         return entity
     }
 

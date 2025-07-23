@@ -32,16 +32,16 @@ class GenesisSerpentHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: HullSize, stats: MutableShipStatsAPI, id: String) {
         var member = stats.fleetMember
 
-        if (!stats!!.variant.hasHullMod("rat_abyssal_conversion") && !stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats!!.variant.hasHullMod("rat_seraph_conversion")  && !stats.variant.hasHullMod(
+        /*if (!stats!!.variant.hasHullMod("rat_abyssal_conversion") && !stats!!.variant.hasHullMod("rat_chronos_conversion") && !stats!!.variant.hasHullMod("rat_cosmos_conversion") && !stats!!.variant.hasHullMod("rat_seraph_conversion")  && !stats.variant.hasHullMod(
                 HullMods.AUTOMATED)) {
             stats.variant.addPermaMod(HullMods.AUTOMATED)
-        }
+        }*/
 
         if (stats.fleetMember?.fleetData?.fleet?.faction?.id == "rat_abyssals_primordials") {
             stats.crewLossMult.modifyMult("test", 0f)
             stats.crLossPerSecondPercent.modifyMult("test", 0f)
         } else {
-            if (Global.getSector()?.characterData?.person != null) {
+           /* if (Global.getSector()?.characterData?.person != null) {
                 if (Misc.getAllowedRecoveryTags().contains(Tags.AUTOMATED_RECOVERABLE)
                     || stats!!.variant.hasHullMod("rat_abyssal_conversion") ||
                     stats!!.variant.hasHullMod("rat_chronos_conversion") || stats!!.variant.hasHullMod("rat_cosmos_conversion") || stats!!.variant.hasHullMod("rat_seraph_conversion")) {
@@ -50,7 +50,7 @@ class GenesisSerpentHullmod : BaseHullMod() {
                 else {
                     stats!!.variant.addTag(Tags.VARIANT_UNBOARDABLE)
                 }
-            }
+            }*/
         }
     }
 

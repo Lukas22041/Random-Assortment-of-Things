@@ -12,6 +12,7 @@
   "shieldRadius": 173.5,
   "viewOffset": 0,
   "builtInMods": [
+    "automated",
     "rat_abyssal_grid",
     "rat_seraphs_grace",
     "rat_seraphim_drive",
