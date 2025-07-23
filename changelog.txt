@@ -9,7 +9,7 @@ Issue: Abyssal Ships on existing saves may no longer be recoverable.
 --> Humans count as a 2x multiplier for points, integrating a core increases it to 3x.
 --> If you can't use Automated Ships, it instead provides +70% combat readiness (Bringing the ship to 40%).
 
--> The \"Abyssal Adaptability" hullmow now has an effect for the Boss core, which showns in the tooltip after its been acquired once.
+-> The "Abyssal Adaptability" hullmow now has an effect for the Boss core, which showns in the tooltip after its been acquired once.
 -> Nerfed the "Mending" skill from complete immunity to a 60% reduction in d-mod chance, to adjust for "Engineerings" capstones.
 -> Fixed a bug that sometimes made abyssal ships with AI cores gain the shipsystem cooldown penalty.
 
