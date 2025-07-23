@@ -1,5 +1,6 @@
 Version 3.1.5
-Save Compatible with 3.0.0+
+Somewhat Save Compatible with 3.0.0+
+Issue: Abyssal Ships on existing saves may no longer be recoverable.
 
 -> Reworked the "Abyssal Crew Conversion" Alteration.
 --> It now works on all automated ships.
