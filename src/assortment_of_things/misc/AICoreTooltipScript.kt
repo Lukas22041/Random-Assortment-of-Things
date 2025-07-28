@@ -170,7 +170,7 @@ class AICoreTooltipScript : EveryFrameScript {
 
 
             var codexTooltip = tooltip.getChildrenCopy().find { it is LabelAPI } as LabelAPI?
-            codexTooltip!!.position.inTL(15f, tooltip.position.height+3)
+            codexTooltip?.position?.inTL(15f, tooltip.position.height+3)
 
 
           /*  tooltip.addPara("Test")

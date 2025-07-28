@@ -3,16 +3,31 @@ package assortment_of_things.exotech.hullmods
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import org.magiclib.util.MagicIncompatibleHullmods
 import java.awt.Color
 
 class ApheidasHullmod : BaseHullMod() {
 
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
-        stats!!.empDamageTakenMult.modifyMult(id, 0.75f)
+
+        //Not compatible with shrouded and fragment hmods
+        for (hullmod in stats!!.variant.hullMods) {
+            var spec = Global.getSettings().getHullModSpec(hullmod)
+            if (spec.hasTag("shrouded") || spec.hasTag("fragment")) {
+                MagicIncompatibleHullmods.removeHullmodWithWarning(
+                    stats.getVariant(),
+                    hullmod,
+                    "rat_apheidas_hullmod"
+                );
+            }
+        }
+
+        stats.empDamageTakenMult.modifyMult(id, 0.75f)
         stats.weaponDamageTakenMult.modifyMult(id, 0.75f)
 
         stats.energyWeaponRangeBonus.modifyPercent(id, 20f)
