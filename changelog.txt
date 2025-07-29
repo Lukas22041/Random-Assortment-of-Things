@@ -1,3 +1,10 @@
+Version 3.1.7
+Save Compatible with 3.0.0+
+
+-> Fixed the "Raphael-class" being counted as an automated ship.
+
+
+
 Version 3.1.6
 Save Compatible with 3.0.0+
 

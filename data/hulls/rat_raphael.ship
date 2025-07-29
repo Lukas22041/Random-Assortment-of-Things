@@ -12,7 +12,6 @@
   "shieldRadius": 124.5,
   "viewOffset": 0,
   "builtInMods": [
-    "automated",
     "rat_raphaels_grace",
     "phasefield",
   ],
