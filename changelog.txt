@@ -1,3 +1,11 @@
+Version 3.1.6
+Save Compatible with 3.0.0+
+
+-> The "Apheidas-class" can no longer equip shrouded or fragment hullmods.
+-> Fixed a rare crash when hovering over RAT's AI Cores in cargo.
+
+
+
 Version 3.1.5
 Somewhat Save Compatible with 3.0.0+
 Issue: Abyssal Ships on existing saves may no longer be recoverable.
