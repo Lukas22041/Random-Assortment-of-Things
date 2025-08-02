@@ -82,11 +82,11 @@ class RATModPlugin : BaseModPlugin() {
         }*/
 
         if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 1 && Calendar.getInstance().get(Calendar.MONTH) == Calendar.APRIL) {
-            isHalloween = true
+            WhichModScript.isAprilFirst = true
         }
 
         if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 31 && Calendar.getInstance().get(Calendar.MONTH) == Calendar.OCTOBER) {
-            WhichModScript.isAprilFirst = true
+            isHalloween = true
         }
 
        /* Global.getSettings().loadFont("graphics/fonts/monocraft24.fnt")

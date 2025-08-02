@@ -1,3 +1,10 @@
+Version 3.1.8
+Save Compatible with 3.0.0+
+
+-> Fixed some issues related to the rare title screens.
+
+
+
 Version 3.1.7
 Save Compatible with 3.0.0+
 
