@@ -73,12 +73,20 @@ class RATModPlugin : BaseModPlugin() {
         //CodexHandler.onApplicationLoad()
 
 
-        val currentDate = Date()
+        /*val currentDate = Date()
         //var currentDate = Date(1698530401L * 1000)
         val startDate = Date(1761865200L * 1000)
         val endDate = Date(1761973200L * 1000)
         if (startDate.before(currentDate) && endDate.after(currentDate)) {
             isHalloween = true
+        }*/
+
+        if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 1 && Calendar.getInstance().get(Calendar.MONTH) == Calendar.APRIL) {
+            isHalloween = true
+        }
+
+        if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 31 && Calendar.getInstance().get(Calendar.MONTH) == Calendar.OCTOBER) {
+            WhichModScript.isAprilFirst = true
         }
 
        /* Global.getSettings().loadFont("graphics/fonts/monocraft24.fnt")

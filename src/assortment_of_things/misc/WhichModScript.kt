@@ -2,6 +2,7 @@ package assortment_of_things.misc
 
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.ModSpecAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.codex.CodexDataV2
 import com.fs.starfarer.api.loading.WeaponSpecAPI
@@ -15,6 +16,12 @@ import com.fs.starfarer.ui.impl.StandardTooltipV2
 import com.fs.state.AppDriver
 
 class WhichModScript : EveryFrameScript {
+
+    companion object {
+        //Randomises what mod it tells you something is from
+        var isAprilFirst = false
+        var rememberedAprilFirstMods = HashMap<String, ModSpecAPI>()
+    }
 
     var allowed = listOf(
         "codex_hull_",
@@ -90,8 +97,17 @@ class WhichModScript : EveryFrameScript {
             var codexEntry =  CodexDataV2.getEntry(codexEntryId)
             if (codexEntry != null) {
                 var source = codexEntry.sourceMod
+
+                //Pick a random mod on april first, but keep it consistent, shouldnt re-randomise on each hover
+                if (isAprilFirst) {
+                    source = rememberedAprilFirstMods.getOrPut(codexEntryId!!) {
+                        Global.getSettings().modManager.availableModsCopy.random()
+                    }
+                }
+
                 if (source != null) {
                     var modname = source.name
+
                     if (modname != null) {
                         if (codexTooltip.text == "Press F2 to open Codex" || codexTooltip.text.contains("F2 open Codex")) {
 
@@ -141,6 +157,13 @@ class WhichModScript : EveryFrameScript {
                     var spec = member.hullSpec
                     var mod = spec.sourceMod
                     if (mod == null) mod = member.baseOrModSpec().sourceMod //Skins might have issues otherwise
+
+                    if (isAprilFirst) {
+                        mod = rememberedAprilFirstMods.getOrPut(spec.baseHullId) {
+                            Global.getSettings().modManager.availableModsCopy.random()
+                        }
+                    }
+
                     var modname: String? = null
                     if (mod != null) modname = mod.name
 
