@@ -1,7 +1,9 @@
 package assortment_of_things.exotech.entities
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.campaign.scripts.render.RATCampaignRenderer
 import assortment_of_things.exotech.ExoUtils
+import assortment_of_things.misc.ReflectionUtils
 import assortment_of_things.misc.getAndLoadSprite
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
@@ -13,6 +15,7 @@ import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.*
+import com.fs.starfarer.campaign.CustomCampaignEntity
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
@@ -57,6 +60,18 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     var afterimageColor1 = Color(248,172,44, 75)
     var afterimageColor2 = Color(130,4,189, 0)
     var afterimageInterval = IntervalUtil(0.05f, 0.05f)
+
+    fun readResolve() : ExoshipEntity {
+        //Fix for a change in render layers made in an update
+        var base = entity as CustomCampaignEntity?
+        if (base != null && base.activeLayers.contains(CampaignEngineLayers.STATIONS)) {
+            base.activeLayers.clear()
+            ReflectionUtils.set("firstLayer", base, CampaignEngineLayers.TERRAIN_7A)
+            base.activeLayers.add(CampaignEngineLayers.TERRAIN_7A)
+            base.activeLayers.add(CampaignEngineLayers.TERRAIN_7)
+        }
+        return this
+    }
 
   /*  var delay = 8f
     var active = false*/
@@ -198,17 +213,17 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
 
 
-                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, entity.containingLocation, entity,
+                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.TERRAIN_7, entity.containingLocation, entity,
                     afterimageColor1.setAlpha((75 * velLevel).toInt()), afterimageColor2, 0.5f + 1.75f * level, 0f)
 
 
 
                 if (warpModule.state != ExoshipWarpModule.State.Arrival) {
 
-                    RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, entity.containingLocation, entity,
+                    RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.TERRAIN_7, entity.containingLocation, entity,
                         afterimageColor1.setAlpha((25 * velLevel).toInt()), afterimageColor2, 0.5f + 1f * level, 1f * level, scale = 2f)
 
-                    RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.ABOVE_STATIONS, entity.containingLocation, entity,
+                    RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.TERRAIN_SLIPSTREAM, entity.containingLocation, entity,
                         afterimageColor1.setAlpha((50 * velLevel).toInt()), afterimageColor2, 0.5f + 0.75f * level, 2f * level, scale = 1.5f)
                 }
 
@@ -254,7 +269,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         velLevel = velLevel.coerceIn(0f, 1f)
 
-        if (layer == CampaignEngineLayers.STATIONS) {
+        if (layer == CampaignEngineLayers.TERRAIN_7A) {
             glow!!.alphaMult = 1f
             glow!!.angle = entity.facing - 90
             glow!!.setSize(95f, 140f)
@@ -289,7 +304,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             engineGlow.render(alphaMult)
         }
 
-        if (layer == CampaignEngineLayers.BELOW_STATIONS) {
+        if (layer == CampaignEngineLayers.TERRAIN_7) {
 
             if (velLevel >= 0.7) {
 

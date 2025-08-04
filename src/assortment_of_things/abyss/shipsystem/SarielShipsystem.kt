@@ -55,11 +55,16 @@ class SarielShipsystem : BaseShipSystemScript() {
             HullmodUtils.removeNegation(id, stats.beamWeaponRangeBonus, stats)
         }
 
-        stats.maxSpeed.modifyFlat(id, 20f * effectLevel)
-        stats.maxTurnRate.modifyMult(id, 1 + (0.5f * effectLevel))
-        stats.turnAcceleration.modifyMult(id, 1 + (0.5f * effectLevel))
-        stats.acceleration.modifyMult(id, 1 + (0.5f * effectLevel))
-        stats.deceleration.modifyMult(id, 1 + (0.5f * effectLevel))
+        if (state == ShipSystemStatsScript.State.ACTIVE || state == ShipSystemStatsScript.State.IN) {
+            ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_BACK_OFF, 0.15f)
+            ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_BACK_OFF_EVEN_WHILE_VENTING, 0.15f)
+        }
+
+        stats.maxSpeed.modifyFlat(id, 15f * effectLevel)
+        stats.maxTurnRate.modifyMult(id, 1 + (0.3f * effectLevel))
+        stats.turnAcceleration.modifyMult(id, 1 + (0.3f * effectLevel))
+        stats.acceleration.modifyMult(id, 1 + (0.3f * effectLevel))
+        stats.deceleration.modifyMult(id, 1 + (0.3f * effectLevel))
 
 
         stats.shieldDamageTakenMult.modifyMult(id, 1 - (0.4f * effectLevel))

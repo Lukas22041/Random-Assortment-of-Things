@@ -51,7 +51,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
 
 
         if (isInAbyss) {
-            stats!!.maxSpeed.modifyFlat(id, 15f)
+            stats!!.maxSpeed.modifyFlat(id, 10f)
             stats!!.armorBonus.modifyFlat(id, 100f)
             stats!!.fluxDissipation.modifyFlat(id, 100f)
             stats!!.fluxCapacity.modifyFlat(id, 500f)
@@ -115,7 +115,7 @@ class AbyssalSeraphsGrace : BaseHullMod() {
         tooltip.addRow(
             Alignment.MID, Misc.getTextColor(), "Max Speed",
             Alignment.MID, sectorColor, "+0",
-            Alignment.MID, abyssColor, "+15",
+            Alignment.MID, abyssColor, "+10",
             )
 
         tooltip.addRow(

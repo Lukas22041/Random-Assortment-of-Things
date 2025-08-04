@@ -1,3 +1,12 @@
+Version 3.1.9
+
+-> The Exoship can now be set to warp towards the Abyssal Depths
+-> The Sariels Shipsystem now makes the Sariel behave more aggresively while active.
+-> Reduced the Sariels Shipsystem speed increase from 20 to 15.
+-> Reduced the "Seraphs Grace" Hullmods in-abyss speed boost from 15 to 10.
+
+
+
 Version 3.1.8
 Save Compatible with 3.0.0+
 

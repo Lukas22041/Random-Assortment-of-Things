@@ -49,7 +49,7 @@ class ManageExoshipAbility : BaseDurationAbility() {
 
         if (Global.CODEX_TOOLTIP_MODE) return
 
-        var exoship = ExoUtils.getExoData().getPlayerExoship()
+        var exoship = ExoUtils.getExoData().getPlayerExoship()!!
         var exoshipPlugin = ExoUtils.getExoData().getPlayerExoshipPlugin()
         var playerModule = exoshipPlugin.playerModule
 

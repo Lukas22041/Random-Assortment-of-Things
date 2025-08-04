@@ -82,8 +82,8 @@ class ExoData {
         this.playerExoship = exoship
     }
 
-    fun getPlayerExoship() : SectorEntityToken {
-        return playerExoship!!
+    fun getPlayerExoship() : SectorEntityToken? {
+        return playerExoship
     }
 
     fun getPlayerExoshipPlugin() : ExoshipEntity {

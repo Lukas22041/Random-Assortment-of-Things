@@ -229,7 +229,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
                 var afterimageColor2 = Color(130,4,189, 0)
                 var afterimageLoc = MathUtils.getPointOnCircumference(exoshipEntity.location, distance * step, exoshipEntity.facing)
 
-                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, exoshipEntity.containingLocation, exoshipEntity,
+                RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.TERRAIN_7, exoshipEntity.containingLocation, exoshipEntity,
                     afterimageColor1.setAlpha(alpha.toInt()) ,afterimageColor2, duration, 0f, location = afterimageLoc)
             }
 
@@ -314,7 +314,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
             var afterimageColor2 = Color(130,4,189, 0)
             var afterimageLoc = MathUtils.getPointOnCircumference(spawnLoc, distance * step, exoshipEntity.facing + 180)
 
-            RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.BELOW_STATIONS, destinationSystem!!, exoshipEntity,
+            RATCampaignRenderer.getAfterimageRenderer().addAfterimage(CampaignEngineLayers.TERRAIN_7, destinationSystem!!, exoshipEntity,
                 afterimageColor1.setAlpha(alpha.toInt()) ,afterimageColor2, duration, 0f, location = afterimageLoc)
         }
 

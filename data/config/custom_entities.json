@@ -41,7 +41,7 @@
 		"renderCircleIndicator":false,
 		"renderCircleIndicatorSelectionFlash":false,
 		"tags":[],
-		"layers":[TERRAIN_SLIPSTREAM], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"layers":[TERRAIN_7], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 		"pluginClass":"assortment_of_things.abyss.entities.hyper.AbyssalFracture",
 	},
 	"rat_abyss_in_hyper_particle_spawner":{
@@ -1074,7 +1074,7 @@
 		"scaleNameWithZoom":false,
 		"scaleIconWithZoom":true,
 		"tags":["has_interaction_dialog"],
-		"layers":[STATIONS, BELOW_STATIONS, ], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+		"layers":[TERRAIN_7A, TERRAIN_7], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
 		"pluginClass":"assortment_of_things.exotech.entities.ExoshipEntity",
 	},
 	

@@ -24,4 +24,6 @@ class AbyssData {
     var hyperspaceFracture: SectorEntityToken? = null
     var abyssFracture: SectorEntityToken? = null
 
+    var iconSystem: StarSystemAPI? = null
+
 }

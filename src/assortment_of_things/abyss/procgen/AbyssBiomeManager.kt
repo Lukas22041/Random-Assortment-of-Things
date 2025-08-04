@@ -2,6 +2,9 @@ package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.biomes.*
+import assortment_of_things.exotech.ExoUtils
+import assortment_of_things.exotech.entities.ExoshipEntity
+import assortment_of_things.exotech.entities.ExoshipWarpModule
 import assortment_of_things.misc.RATSettings
 import assortment_of_things.misc.levelBetween
 import com.fs.starfarer.api.Global
@@ -549,6 +552,17 @@ class AbyssBiomeManager {
 
     fun getPlayerCell() : BiomeCellData {
         var playerFleet = Global.getSector().playerFleet
+
+        //Fix visual issues with the exoship in the abyssal depths by using the exoships location and not the player fleets
+        var exo = ExoUtils.getExoData()
+        var ship = exo.getPlayerExoship()
+        if (ship != null) {
+            var plugin = ship.customPlugin as ExoshipEntity
+            if (plugin.warpModule.state != ExoshipWarpModule.State.Inactive && plugin.warpModule.playerJoined) {
+                return getCell(ship)
+            }
+        }
+
         return getCell(playerFleet)
     }
 

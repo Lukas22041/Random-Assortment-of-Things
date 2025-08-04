@@ -480,6 +480,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
         //Set up fake system
         var iconSystem = Global.getSector().createStarSystem("Abyssal Depths")
+        data.iconSystem = iconSystem
         iconSystem.addTag(Tags.THEME_HIDDEN)
         iconSystem.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
         //iconSystem.initNonStarCenter()

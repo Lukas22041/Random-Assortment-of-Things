@@ -97,31 +97,28 @@ class AbyssalFracture : BaseCustomEntityPlugin() {
 
         initBandIfNull()
 
-        if (layer == CampaignEngineLayers.TERRAIN_SLIPSTREAM)
-        {
-            center!!.setSize(170f, 170f)
-            center!!.color = Color(0, 0, 0)
-            center!!.renderAtCenter(entity.location.x, entity.location.y)
+        center!!.setSize(170f, 170f)
+        center!!.color = Color(0, 0, 0)
+        center!!.renderAtCenter(entity.location.x, entity.location.y)
 
-            var color = AbyssUtils.ABYSS_COLOR.darker().darker().setAlpha(75)
+        var color = AbyssUtils.ABYSS_COLOR.darker().darker().setAlpha(75)
 
 
-            /* band1!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(100)
-             band2!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(200)*/
+        /* band1!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(100)
+         band2!!.color = AbyssUtils.ABYSS_COLOR.setAlpha(200)*/
 
-            if (colorOverride != null) color = colorOverride!!
+        if (colorOverride != null) color = colorOverride!!
 
-            band1!!.color = color.setAlpha(100)
-            band2!!.color = color.setAlpha(200)
+        band1!!.color = color.setAlpha(100)
+        band2!!.color = color.setAlpha(200)
 
-            if (entity.containingLocation.isHyperspace) {
-                band1!!.color = color.setAlpha(75)
-                band2!!.color = color.setAlpha(150)
-            }
-
-            band1!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)
-            band2!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)
+        if (entity.containingLocation.isHyperspace) {
+            band1!!.color = color.setAlpha(75)
+            band2!!.color = color.setAlpha(150)
         }
+
+        band1!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)
+        band2!!.render(entity.location.x, entity.location.y, viewport!!.alphaMult)
     }
 
 

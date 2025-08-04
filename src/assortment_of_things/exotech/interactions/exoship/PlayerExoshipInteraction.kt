@@ -1,5 +1,6 @@
 package assortment_of_things.exotech.interactions.exoship
 
+import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.entities.ExoshipEntity
 import assortment_of_things.exotech.interactions.exoship.ui.ExoCheckbox
@@ -10,6 +11,7 @@ import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BaseCampaignEntityPickerListener
 import com.fs.starfarer.api.campaign.CoreUITabId
+import com.fs.starfarer.api.campaign.JumpPointAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
@@ -237,8 +239,25 @@ class PlayerExoshipInteraction(var openedFromAbility: Boolean) : ExoshipInteract
 
         createOption("Select Destination") {
             var entities = Global.getSector().economy.marketsCopy.filter { !it.isHidden }.map { it.primaryEntity }.toMutableList()
-            var centers = entities.addAll(Global.getSector().starSystems.filter {
+            entities.addAll(Global.getSector().starSystems.filter {
                 !it.hasTag(Tags.THEME_HIDDEN) && !it.hasTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER) && !it.hasTag(Tags.SYSTEM_ABYSSAL) }.map { it.center }.filter { it != null })
+
+            var abyss = AbyssUtils.getSystem()
+            if (abyss != null) {
+                var data = AbyssUtils.getData()
+                var system = data.iconSystem
+
+                //Work around since older versions didnt keep track of the icon system
+                if (system == null) {
+                    var jumppoint = Global.getSector().hyperspace.jumpPoints.find { it.hasTag("rat_abyss_entrance") }
+                    if (jumppoint is JumpPointAPI) {
+                        system = jumppoint.destinationStarSystem
+                    }
+                }
+                if (system != null) {
+                    entities.add(system!!.center)
+                }
+            }
 
             dialog.showCampaignEntityPicker("Select a destination", "Destination", "Confirm", Global.getSector().getFaction("rat_exotech"),
                 entities, object : BaseCampaignEntityPickerListener() {
@@ -246,6 +265,10 @@ class PlayerExoshipInteraction(var openedFromAbility: Boolean) : ExoshipInteract
                     var arrowList = ArrayList<ArrowData>()
 
                     override fun getMenuItemNameOverrideFor(entity: SectorEntityToken?): String? {
+
+                        if (entity?.containingLocation?.name?.contains("Abyssal Depths") == true) {
+                            return "Abyssal Fracture"
+                        }
 
                         if (entity?.starSystem?.center == entity) {
                             return "Random Orbit"
@@ -260,6 +283,9 @@ class PlayerExoshipInteraction(var openedFromAbility: Boolean) : ExoshipInteract
                         if (entity?.containingLocation != interactionTarget.containingLocation) {
                             scrollerY = element.externalScroller.yOffset
                             selectedDestination = entity
+                            if (entity?.containingLocation?.name?.contains("Abyssal Depths") == true) {
+                                selectedDestination = AbyssUtils.getData().abyssFracture
+                            }
                             recreateManagementOptions()
                         }
                     }
