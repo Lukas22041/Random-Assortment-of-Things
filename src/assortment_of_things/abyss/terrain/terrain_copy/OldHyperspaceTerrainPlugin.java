@@ -440,10 +440,12 @@ public class OldHyperspaceTerrainPlugin extends OldBaseTiledTerrain { // impleme
 			}
 		} else if (currLayer == GLOW) {
 			if (tracker != null && signal > 0) {
-				GL11.glColor4ub((byte)color.getRed(),
-						(byte)color.getGreen(),
-						(byte)color.getBlue(),
-						(byte)((float)color.getAlpha() * currAlpha * 1f * signal));
+				//Usually set to 225 because, increased to 245 for added contrast
+				Color c = Misc.setAlpha(color, 225).brighter();
+				GL11.glColor4ub((byte)c.getRed(),
+						(byte)c.getGreen(),
+						(byte)c.getBlue(),
+						(byte)((float)c.getAlpha() * currAlpha * 1f * signal));
 			} else {
 				return;
 			}

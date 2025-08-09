@@ -269,7 +269,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
 
         velLevel = velLevel.coerceIn(0f, 1f)
 
-        if (layer == CampaignEngineLayers.TERRAIN_7A) {
+        if (layer == CampaignEngineLayers.TERRAIN_7A || layer == CampaignEngineLayers.STATIONS) {
             glow!!.alphaMult = 1f
             glow!!.angle = entity.facing - 90
             glow!!.setSize(95f, 140f)
@@ -304,7 +304,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
             engineGlow.render(alphaMult)
         }
 
-        if (layer == CampaignEngineLayers.TERRAIN_7) {
+        if (layer == CampaignEngineLayers.TERRAIN_7 || layer == CampaignEngineLayers.BELOW_STATIONS) {
 
             if (velLevel >= 0.7) {
 

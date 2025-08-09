@@ -90,7 +90,8 @@ class ExoBackground : BaseCharacterBackground() {
 
 
         //Give Processor
-        Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_ai_core_special", "rat_exo_processor"), 1f)
+        //Global.getSector().playerFleet.cargo.addSpecial(SpecialItemData("rat_ai_core_special", "rat_exo_processor"), 1f)
+        Global.getSector().playerFleet.cargo.addCommodity("rat_exo_processor", 1f)
 
         //Set Tags
 
