@@ -1,12 +1,22 @@
 package assortment_of_things.misc
 
-import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.ui.MinimapUI
 import lunalib.lunaSettings.LunaSettings
 import lunalib.lunaSettings.LunaSettingsListener
 
 object RATSettings : LunaSettingsListener
 {
+
+    //Legacy options, should no longer be used, only there to prevent old files from crashing.
+    //Those old files remain to keep save compatibility from before the split in to a seperate mod.
+    @JvmStatic
+    var procgenScaleModifier = "Vanilla"
+    @JvmStatic
+    var procgenHyperspaceCloudMod = 0.8f
+
+
+
+
 
     var modID = "assortment_of_things"
 
@@ -33,14 +43,10 @@ object RATSettings : LunaSettingsListener
     var backgroundsEnabled = LunaSettings.getBoolean(modID, "rat_backgroundsEnabled")
     var backgroundsAbilityKeybind = LunaSettings.getInt(modID, "rat_backgroundSpecialHotkey")
 
-    //Procgen
-    @JvmStatic
-    var procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
-    @JvmStatic
-    var procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
 
-    var hullmodLootFrequency = LunaSettings.getFloat(modID, "rat_hullmodBPLootFrequency")
-    var shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")
+
+    /*var hullmodLootFrequency = LunaSettings.getFloat(modID, "rat_hullmodBPLootFrequency")
+    var shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")*/
 
     //Escprt
     var escortEnabled = LunaSettings.getBoolean(modID, "rat_escortEnabled")
@@ -99,8 +105,8 @@ object RATSettings : LunaSettingsListener
         backgroundsEnabled = LunaSettings.getBoolean(modID, "rat_backgroundsEnabled")
         backgroundsAbilityKeybind = LunaSettings.getInt(modID, "rat_backgroundSpecialHotkey")
 
-        procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
-        procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")
+        /*procgenScaleModifier = LunaSettings.getString(modID, "rat_systemScaleV2")
+        procgenHyperspaceCloudMod = LunaSettings.getFloat(modID, "rat_hyperspaceCloudsMod")*/
 
         escortEnabled = LunaSettings.getBoolean(modID, "rat_escortEnabled")
 
@@ -117,8 +123,8 @@ object RATSettings : LunaSettingsListener
 
         disableHelp = LunaSettings.getBoolean(modID, "rat_forceDisableHelp")
 
-        hullmodLootFrequency = LunaSettings.getFloat(modID, "rat_hullmodBPLootFrequency")
-        shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")
+        /*hullmodLootFrequency = LunaSettings.getFloat(modID, "rat_hullmodBPLootFrequency")
+        shipLootFrequency = LunaSettings.getFloat(modID, "rat_shipBPLootFrequency")*/
 
         enableMinimap = LunaSettings.getBoolean(modID, "rat_enableMinimap")
         minimapShape = LunaSettings.getString(modID, "rat_minimapShape")
@@ -126,6 +132,6 @@ object RATSettings : LunaSettingsListener
         minimapFueloverlay = LunaSettings.getBoolean(modID, "rat_minimapFuel")
         MinimapUI.reset = true
 
-        LootModifier.modifySpawns()
+        //LootModifier.modifySpawns()
     }
 }

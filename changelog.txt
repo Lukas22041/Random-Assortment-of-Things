@@ -1,4 +1,17 @@
+Version 3.2.0
+Save Compatible with 3.0.0+
+
+-> Moved the Sector Procedual Generation Configurations in to a seperate mod.
+-> Increased the brightness of abyssal storms.
+-> Fixed the Exotech Background giving a bugged AI Core.
+
+The Procedual Generation Configs have been moved to a seperate mod, mainly for the reason that their the most painful piece to update across game versions and that without it, RAT may in many cases work without any other change, likewise i would prefer to not spoil myself on new content within each game update when updating the mod. The new mod will no longer be maintained by myself, and is free to adopt by anyone that wants to once a new game version releases.
+The new mod is called "ProcGenConfigs".
+
+
+
 Version 3.1.9
+Save Compatible with 3.0.0+
 
 -> The Exoship can now be set to warp towards the Abyssal Depths
 -> The Sariels Shipsystem now makes the Sariel behave more aggresively while active.

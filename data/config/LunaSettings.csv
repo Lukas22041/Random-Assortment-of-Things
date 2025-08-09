@@ -85,30 +85,7 @@ rat_minimapStarscape,Starscape Mode,Boolean,false,,"Displays the mini-map in ""S
 rat_minimapFuel,Enable Fuel Overlay,Boolean,true,,"Shows the fuel range overlay on the mini-map in hyperspace. 
 ",,,Enhancement
 ,,,,,,,,
-rat_miscHeader,Miscellaneous,Header,Miscellaneous,,,,,Enhancement
-rat_forceDisableHelp,Force disable help pop-ups,Boolean,false,,"Disables help pop-ups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, [does not re-enable] help pop-ups if disabled.",,,Enhancement
-,,,,,,,,
-,,,,,,,,
-#Procgen,,,,,,,,
-rat_procgenHeader,Procedural Generation Tweaks,Header,Procedural Generation Config,,,,,Procgen
-rat_procgenText,,Text,"Changes to how Starsector's procedural generation works. 
-This section is a simplified and more idiot-proof version of Adjusted Sector.
-[If Adjusted Sector is installed], this section is [ignored] and Adjusted Sector's configs are used instead.",,,,,Procgen
-rat_systemScaleV2,Change amount of generated star systems,Radio,Vanilla,"Vanilla, 150%, 200%, 250%","Changes the amount of generated star systems. 
-Increasing generated systems incurs a [heavy performance cost].
-
-Vanilla themes will scale with the amount of systems, modded themes may not.",,,Procgen
-rat_hyperspaceCloudsMod,Hyperspace Clouds Spawn Modifier,Double,0.8,,"Adjusts the amount of hyperspace clouds spawned during sector generation. Vanilla uses a value of 0.8. A lower value will spawn fewer, a value of 0 spawns none.",0,1.0,Procgen
-#rat_improvedMisc,Improved Miscellaneous Theme,Boolean,false,,"Improves the ""Miscellaneous"" Theme. Starsector generates this theme as a filler for systems that didn't receive anything special during procgen. In vanilla, those systems rarely give anything of worth, often spawning completely empty systems. Toggling this will prevent those from ever being empty, and gives them a lot more loot.",,,Procgen
-,,,,,,,,
-rat_lootHeader,Loot Tweaks,Header,Loot Tweaks,,,,,Procgen
-rat_hullmodBPLootFrequency,Hullmod BP Loot Frequency,Double,1,,"Multiplies the amount of hullmod blueprints received via salvaging. Useful when playing with mods that add their own hullmods.
-
-Can be changed mid-save.",1.0,3.0,Procgen
-rat_shipBPLootFrequency,Ship BP Loot Frequency,Double,1,,"Multiplies the amount of ship blueprints received via salvaging. Useful when playing with lots of mods that add ships to the loot pool. Since ship blueprints sell for a high price, this option can become quite overpowered if set too high.
-
-Can be changed mid-save.",1.0,3.0,Procgen
-,,,,,,,,
-,,,,,,,,
+rat_miscHeader,Miscellaneous,Header,Miscellaneous,,,,,Miscellaneous
+rat_forceDisableHelp,Force disable help pop-ups,Boolean,false,,"Disables help pop-ups in a save even if they were enabled during save creation. Only refreshes on save reloads or newly created saves, [does not re-enable] help pop-ups if disabled.",,,Miscellaneous
 ,,,,,,,,
 ,,,,,,,,

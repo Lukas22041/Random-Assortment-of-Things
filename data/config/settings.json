@@ -1,6 +1,6 @@
  {
  	"plugins":{		
-		"newGameSectorProcGen":"assortment_of_things.campaign.procgen.RATSectorProcGen",
+		#"newGameSectorProcGen":"assortment_of_things.campaign.procgen.RATSectorProcGen", No Longer part of RAT but is in a seperate mod
 		"RatCombatHandler":"assortment_of_things.combat.CombatHandler",
 		"RatAfterImageRenderer":"assortment_of_things.combat.AfterImageRenderer",
 		#"RatParallaxParticleRenderer":"assortment_of_things.combat.ParallaxParticleRenderer",

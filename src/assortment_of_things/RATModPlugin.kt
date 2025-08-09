@@ -13,7 +13,6 @@ import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.artifacts.AddArtifactHullmod
 import assortment_of_things.artifacts.ArtifactUIScript
 import assortment_of_things.artifacts.ArtifactUtils
-import assortment_of_things.campaign.procgen.LootModifier
 import assortment_of_things.campaign.scripts.AICoreDropReplacerScript
 import assortment_of_things.campaign.scripts.ApplyRATControllerToPlayerFleet
 import assortment_of_things.campaign.ui.*
@@ -22,7 +21,6 @@ import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.relics.RelicsGenerator
 import assortment_of_things.scripts.AtMarketListener
 import assortment_of_things.snippets.DropgroupTestSnippet
-import assortment_of_things.snippets.ProcgenDebugSnippet
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.campaign.CampaignEngine
@@ -93,10 +91,10 @@ class RATModPlugin : BaseModPlugin() {
         Fonts.DEFAULT_SMALL = "graphics/fonts/monocraft24.fnt"*/
 
 
-        LunaDebug.addSnippet(ProcgenDebugSnippet())
+        //LunaDebug.addSnippet(ProcgenDebugSnippet())
         LunaDebug.addSnippet(DropgroupTestSnippet())
 
-        LootModifier.saveOriginalData()
+        //LootModifier.saveOriginalData()
 
         LunaSettings.addSettingsListener(RATSettings)
 
@@ -251,7 +249,7 @@ class RATModPlugin : BaseModPlugin() {
             Global.getSector().addTransientScript(MinimapUI())
         }
 
-        LootModifier.modifySpawns()
+        //LootModifier.modifySpawns()
 
         Global.getSector().registerPlugin(RATCampaignPlugin())
         Global.getSector().addTransientScript(ParallelConstruction())

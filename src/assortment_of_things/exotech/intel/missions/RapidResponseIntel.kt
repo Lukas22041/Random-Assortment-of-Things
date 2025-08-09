@@ -1,6 +1,5 @@
 package assortment_of_things.exotech.intel.missions
 
-import assortment_of_things.campaign.procgen.vannilaThemes.RATRemnantThemeGenerator
 import assortment_of_things.misc.fixVariant
 import assortment_of_things.misc.getExoData
 import assortment_of_things.misc.loadTextureCached
