@@ -1,3 +1,12 @@
+Version 3.2.1
+Save Compatible
+
+- The expedition hub will no longer bring in hulls, to avoid messing with the nanoforge buff. 
+- Slightly increased how much heavy machinery is recovered from ruins by the expedition hub.
+- Potentialy fixed an issue that caused the which mod feature to stop working during some sessions.
+
+
+
 Version 3.2.0
 Save Compatible with 3.0.0+
 

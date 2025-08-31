@@ -46,7 +46,6 @@ class ExpeditionHubIndustry : BaseConsumeableIndustry(), EconomyTickListener {
         else {
             getDemand(Commodities.SHIPS).quantity.unmodifyFlat("rat_expedition_hub_0")
             getDemand(Commodities.FUEL).quantity.unmodifyFlat("rat_expedition_hub_1")
-
         }
 
         refreshResourceState()
@@ -300,7 +299,7 @@ class ExpeditionHubIndustry : BaseConsumeableIndustry(), EconomyTickListener {
         var volatiles = 0
 
         var metals = 0
-        var ships = 0
+        //var ships = 0
         var heavy_machinery = 0
 
         for (result in expeditionResults) {
@@ -337,10 +336,10 @@ class ExpeditionHubIndustry : BaseConsumeableIndustry(), EconomyTickListener {
                     Conditions.VOLATILES_ABUNDANT -> volatiles += 2
                     Conditions.VOLATILES_PLENTIFUL -> volatiles += 3
 
-                    Conditions.RUINS_SCATTERED -> { metals += 1; ships += 1; heavy_machinery += 0 }
-                    Conditions.RUINS_WIDESPREAD -> { metals += 1; ships += 2; heavy_machinery += 1 }
-                    Conditions.RUINS_EXTENSIVE -> { metals += 2; ships += 3; heavy_machinery += 1}
-                    Conditions.RUINS_VAST -> { metals += 3; ships += 4; heavy_machinery += 2}
+                    Conditions.RUINS_SCATTERED -> { metals += 1; /*ships += 1*/; heavy_machinery += 1 }
+                    Conditions.RUINS_WIDESPREAD -> { metals += 1; /*ships += 2*/; heavy_machinery += 2 }
+                    Conditions.RUINS_EXTENSIVE -> { metals += 2; /*ships += 3*/; heavy_machinery += 2}
+                    Conditions.RUINS_VAST -> { metals += 3; /*ships += 4*/; heavy_machinery += 3}
                 }
             }
 
@@ -354,7 +353,7 @@ class ExpeditionHubIndustry : BaseConsumeableIndustry(), EconomyTickListener {
         supply("rat_expedition_hub_4", Commodities.VOLATILES, MathUtils.clamp(volatiles, 0, maxSupply), currentName)
 
         supply("rat_expedition_hub_5", Commodities.METALS, MathUtils.clamp(metals, 0, maxSupply), currentName)
-        supply("rat_expedition_hub_7", Commodities.SHIPS, MathUtils.clamp(ships, 0, maxSupply), currentName)
+        //supply("rat_expedition_hub_7", Commodities.SHIPS, MathUtils.clamp(ships, 0, maxSupply), currentName)
         supply("rat_expedition_hub_7", Commodities.HEAVY_MACHINERY, MathUtils.clamp(heavy_machinery, 0, maxSupply), currentName)
     }
 

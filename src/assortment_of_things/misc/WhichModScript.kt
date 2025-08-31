@@ -63,131 +63,138 @@ class WhichModScript : EveryFrameScript {
         //var screenPanel = ReflectionUtils.get("screenPanel", state) as UIPanelAPI ?: return
         var screenPanel = ReflectionUtils.get("screenPanel", state) as UIPanelAPI ?: return
 
-        var tooltip = screenPanel.getChildrenCopy().find { it is StandardTooltipV2 } as UIPanelAPI? ?: return
+        //var tooltip = screenPanel.getChildrenCopy().find { it is StandardTooltipV2 } as UIPanelAPI? ?: return
+        var tooltips = screenPanel.getChildrenCopy().filter { it is StandardTooltipV2 } as List<StandardTooltipV2>
 
-        var codexTooltip = tooltip.getChildrenCopy().find { it is LabelAPI } as LabelAPI?
+        //Iterate over all potential tooltips, as another tooltip being added may be found first and block this otherwise
+        //though i cant see how that would happen, it may explain why sometimes whichmod suddenly stops working.
+        for (tooltip in tooltips) {
+            var codexTooltip = tooltip.getChildrenCopy().find { it is LabelAPI } as LabelAPI?
 
-        if (codexTooltip != null) {
+            if (codexTooltip != null) {
 
-            /*if (getCodexEntryMethod == null) {
-                getCodexEntryMethod = ReflectionUtils.getMethod("getCodexEntryId", tooltip)
-            }*/
+                /*if (getCodexEntryMethod == null) {
+                    getCodexEntryMethod = ReflectionUtils.getMethod("getCodexEntryId", tooltip)
+                }*/
 
 
 
-            var codexEntryId = ReflectionUtils.invoke("getCodexEntryId", tooltip) as String?
+                var codexEntryId = ReflectionUtils.invoke("getCodexEntryId", tooltip) as String?
 
-            if (codexEntryId != null) {
+                if (codexEntryId != null) {
 
-                if (allowed.none { codexEntryId.contains(it) }) return
+                    if (allowed.none { codexEntryId.contains(it) }) return
 
-                if (codexEntryId.contains("codex_hull_") && !RATSettings.whichModShips!!) return
-                else if (codexEntryId.contains("codex_weapon_") && !RATSettings.whichModWeapons!!) return
-                else if (codexEntryId.contains("codex_fighter_") && !RATSettings.whichModFighters!!) return
-                else if (codexEntryId.contains("codex_hullmod_") && !RATSettings.whichModHullmods!!) return
-                else if ((codexEntryId.contains("codex_item_") || codexEntryId.contains("codex_commodity_") || codexEntryId.contains("codex_artifacts_")) && !RATSettings.whichModCargo!!) return
-                else if (codexEntryId.contains("codex_industry_")  && !RATSettings.whichModIndustries!!) return
-                else if (codexEntryId.contains("codex_condition_")  && !RATSettings.whichModConditions!!) return
-                else if ((codexEntryId.contains("codex_skill_") || codexEntryId.contains("codex_ability_") || codexEntryId.contains("codex_sic_aptitude_")) && !RATSettings.whichModSkills!!) {
-                    return
-                }
-
-            }
-
-            var codexEntry =  CodexDataV2.getEntry(codexEntryId)
-            if (codexEntry != null) {
-                var source = codexEntry.sourceMod
-
-                //Pick a random mod on april first, but keep it consistent, shouldnt re-randomise on each hover
-                if (isAprilFirst) {
-                    source = rememberedAprilFirstMods.getOrPut(codexEntryId!!) {
-                        Global.getSettings().modManager.availableModsCopy.random()
+                    if (codexEntryId.contains("codex_hull_") && !RATSettings.whichModShips!!) return
+                    else if (codexEntryId.contains("codex_weapon_") && !RATSettings.whichModWeapons!!) return
+                    else if (codexEntryId.contains("codex_fighter_") && !RATSettings.whichModFighters!!) return
+                    else if (codexEntryId.contains("codex_hullmod_") && !RATSettings.whichModHullmods!!) return
+                    else if ((codexEntryId.contains("codex_item_") || codexEntryId.contains("codex_commodity_") || codexEntryId.contains("codex_artifacts_")) && !RATSettings.whichModCargo!!) return
+                    else if (codexEntryId.contains("codex_industry_")  && !RATSettings.whichModIndustries!!) return
+                    else if (codexEntryId.contains("codex_condition_")  && !RATSettings.whichModConditions!!) return
+                    else if ((codexEntryId.contains("codex_skill_") || codexEntryId.contains("codex_ability_") || codexEntryId.contains("codex_sic_aptitude_")) && !RATSettings.whichModSkills!!) {
+                        return
                     }
+
                 }
 
-                if (source != null) {
-                    var modname = source.name
+                var codexEntry =  CodexDataV2.getEntry(codexEntryId)
+                if (codexEntry != null) {
+                    var source = codexEntry.sourceMod
 
-                    if (modname != null) {
-                        if (codexTooltip.text == "Press F2 to open Codex" || codexTooltip.text.contains("F2 open Codex")) {
-
-                            var originalText = "F2 open codex"
-                            if (codexTooltip.text.contains("F1 cycle weapon info")) {
-                                //originalText = "F1 cycle weapons F2 codex"
-                                originalText = "F1 weapons F2 codex"
-                            }
-                            if (codexTooltip.text.contains("F1 more info")) {
-                                originalText = "F1 more info F2 codex"
-                            }
-                            else if (codexTooltip.text.contains("F1 hide")) {
-                                originalText = "F1 hide F2 codex"
-                            }
-
-                            var text = originalText + " - $modname"
-
-                            var toLong = false
-
-                            codexTooltip.text = text
-                            codexTooltip.position.setSize(codexTooltip.computeTextWidth(codexTooltip.text), codexTooltip.position.height)
-
-                            while (codexTooltip.position.width +30> tooltip.position.width) {
-                                toLong = true
-                                modname = modname.substring(0, modname.lastIndex-1)
-                                text = originalText + " - $modname"
-                                codexTooltip.text = text
-                                codexTooltip.position.setSize(codexTooltip.computeTextWidth(codexTooltip.text), codexTooltip.position.height)
-                            }
-
-                            if (toLong) {
-                                modname = modname.substring(0, modname.lastIndex-1) + "..."
-                                text = originalText + " - $modname"
-                                codexTooltip.text = text
-                                codexTooltip.position.setSize(tooltip.position.width-30, codexTooltip.position.height)
-                            }
-
-
-                            codexTooltip.setHighlight("F1","F2", modname)
-                            codexTooltip.setHighlightColors(Misc.getHighlightColor(), Misc.getHighlightColor(), Misc.getBasePlayerColor())
-                        }
-                    }
-                }
-            } else if (RATSettings.whichModShips!! && ReflectionUtils.hasVariableOfType(FleetMember::class.java, tooltip)) {
-                var member = ReflectionUtils.get(null, tooltip, FleetMember::class.java)
-                if (member is FleetMemberAPI) {
-                    var spec = member.hullSpec
-                    var mod = spec.sourceMod
-                    if (mod == null) mod = member.baseOrModSpec().sourceMod //Skins might have issues otherwise
-
+                    //Pick a random mod on april first, but keep it consistent, shouldnt re-randomise on each hover
                     if (isAprilFirst) {
-                        mod = rememberedAprilFirstMods.getOrPut(spec.baseHullId) {
+                        source = rememberedAprilFirstMods.getOrPut(codexEntryId!!) {
                             Global.getSettings().modManager.availableModsCopy.random()
                         }
                     }
 
-                    var modname: String? = null
-                    if (mod != null) modname = mod.name
+                    if (source != null) {
+                        var modname = source.name
 
-                    if (modname != null && (codexTooltip.text == "Press F2 to open Codex" || codexTooltip.text == "F1 more info  F2 open Codex" || codexTooltip.text == "F1 hide  F2 open Codex")) {
+                        if (modname != null) {
+                            if (codexTooltip.text == "Press F2 to open Codex" || codexTooltip.text.contains("F2 open Codex")) {
 
-                        var originalText = codexTooltip.text
+                                var originalText = "F2 open codex"
+                                if (codexTooltip.text.contains("F1 cycle weapon info")) {
+                                    //originalText = "F1 cycle weapons F2 codex"
+                                    originalText = "F1 weapons F2 codex"
+                                }
+                                if (codexTooltip.text.contains("F1 more info")) {
+                                    originalText = "F1 more info F2 codex"
+                                }
+                                else if (codexTooltip.text.contains("F1 hide")) {
+                                    originalText = "F1 hide F2 codex"
+                                }
 
-                        var text = "$originalText - Data provided by $modname"
+                                var text = originalText + " - $modname"
 
-                        codexTooltip.text = text
-                        codexTooltip.position.setSize(codexTooltip.computeTextWidth(codexTooltip.text), codexTooltip.position.height)
+                                var toLong = false
 
-                        if (codexTooltip.position.width +30> tooltip.position.width) {
-                            text = "$originalText - $modname"
-                            codexTooltip.text = text
-                            codexTooltip.position.setSize(codexTooltip.computeTextWidth(codexTooltip.text), codexTooltip.position.height)
+                                codexTooltip.text = text
+                                codexTooltip.position.setSize(codexTooltip.computeTextWidth(codexTooltip.text), codexTooltip.position.height)
+
+                                while (codexTooltip.position.width +30> tooltip.position.width) {
+                                    toLong = true
+                                    modname = modname.substring(0, modname.lastIndex-1)
+                                    text = originalText + " - $modname"
+                                    codexTooltip.text = text
+                                    codexTooltip.position.setSize(codexTooltip.computeTextWidth(codexTooltip.text), codexTooltip.position.height)
+                                }
+
+                                if (toLong) {
+                                    modname = modname.substring(0, modname.lastIndex-1) + "..."
+                                    text = originalText + " - $modname"
+                                    codexTooltip.text = text
+                                    codexTooltip.position.setSize(tooltip.position.width-30, codexTooltip.position.height)
+                                }
+
+
+                                codexTooltip.setHighlight("F1","F2", modname)
+                                codexTooltip.setHighlightColors(Misc.getHighlightColor(), Misc.getHighlightColor(), Misc.getBasePlayerColor())
+                            }
+                        }
+                    }
+                } else if (RATSettings.whichModShips!! && ReflectionUtils.hasVariableOfType(FleetMember::class.java, tooltip)) {
+                    var member = ReflectionUtils.get(null, tooltip, FleetMember::class.java)
+                    if (member is FleetMemberAPI) {
+                        var spec = member.hullSpec
+                        var mod = spec.sourceMod
+                        if (mod == null) mod = member.baseOrModSpec().sourceMod //Skins might have issues otherwise
+
+                        if (isAprilFirst) {
+                            mod = rememberedAprilFirstMods.getOrPut(spec.baseHullId) {
+                                Global.getSettings().modManager.availableModsCopy.random()
+                            }
                         }
 
-                        codexTooltip.setHighlight("F1", "F2", modname)
-                        codexTooltip.setHighlightColors(Misc.getHighlightColor(), Misc.getHighlightColor(), Misc.getBasePlayerColor())
+                        var modname: String? = null
+                        if (mod != null) modname = mod.name
+
+                        if (modname != null && (codexTooltip.text == "Press F2 to open Codex" || codexTooltip.text == "F1 more info  F2 open Codex" || codexTooltip.text == "F1 hide  F2 open Codex")) {
+
+                            var originalText = codexTooltip.text
+
+                            var text = "$originalText - Data provided by $modname"
+
+                            codexTooltip.text = text
+                            codexTooltip.position.setSize(codexTooltip.computeTextWidth(codexTooltip.text), codexTooltip.position.height)
+
+                            if (codexTooltip.position.width +30> tooltip.position.width) {
+                                text = "$originalText - $modname"
+                                codexTooltip.text = text
+                                codexTooltip.position.setSize(codexTooltip.computeTextWidth(codexTooltip.text), codexTooltip.position.height)
+                            }
+
+                            codexTooltip.setHighlight("F1", "F2", modname)
+                            codexTooltip.setHighlightColors(Misc.getHighlightColor(), Misc.getHighlightColor(), Misc.getBasePlayerColor())
+                        }
                     }
                 }
             }
         }
+
+
 
 
 
