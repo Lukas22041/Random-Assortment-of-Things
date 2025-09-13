@@ -64,7 +64,7 @@ class WhichModScript : EveryFrameScript {
         var screenPanel = ReflectionUtils.get("screenPanel", state) as UIPanelAPI ?: return
 
         //var tooltip = screenPanel.getChildrenCopy().find { it is StandardTooltipV2 } as UIPanelAPI? ?: return
-        var tooltips = screenPanel.getChildrenCopy().filter { it is StandardTooltipV2 } as List<StandardTooltipV2>
+        var tooltips = screenPanel.getChildrenCopy().filter { it is StandardTooltipV2 } as List<UIPanelAPI>
 
         //Iterate over all potential tooltips, as another tooltip being added may be found first and block this otherwise
         //though i cant see how that would happen, it may explain why sometimes whichmod suddenly stops working.

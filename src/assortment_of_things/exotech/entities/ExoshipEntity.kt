@@ -64,7 +64,7 @@ class ExoshipEntity : BaseCustomEntityPlugin() {
     fun readResolve() : ExoshipEntity {
         //Fix for a change in render layers made in an update
         var base = entity as CustomCampaignEntity?
-        if (base != null && base.activeLayers.contains(CampaignEngineLayers.STATIONS)) {
+        if (base != null && base?.activeLayers?.contains(CampaignEngineLayers.STATIONS) == true) {
             base.activeLayers.clear()
             ReflectionUtils.set("firstLayer", base, CampaignEngineLayers.TERRAIN_7A)
             base.activeLayers.add(CampaignEngineLayers.TERRAIN_7A)
