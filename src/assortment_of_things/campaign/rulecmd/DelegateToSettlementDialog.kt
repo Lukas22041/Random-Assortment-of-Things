@@ -2,6 +2,7 @@ package assortment_of_things.campaign.rulecmd
 
 import assortment_of_things.frontiers.FrontiersUtils
 import assortment_of_things.frontiers.interactions.SettlementInteraction
+import com.fs.starfarer.api.campaign.CampaignEventListener
 import com.fs.starfarer.api.campaign.InteractionDialogAPI
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin
@@ -24,6 +25,11 @@ class DelegateToSettlementDialog() : BaseCommandPlugin() {
         dialog.plugin = newPlugin
         dialog.interactionTarget = data.settlementEntity
         newPlugin.init(dialog)
+
+        for (listener in Global.getSector().allListeners) {
+            listener.reportPlayerClosedMarket(data.primaryPlanet.market)
+            listener.reportPlayerOpenedMarket(data.settlementEntity.market)
+        }
 
         return true
     }
