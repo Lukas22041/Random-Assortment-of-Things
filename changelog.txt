@@ -1,3 +1,12 @@
+Version 3.2.3
+Save Compatible
+
+Version 3.2.3
+
+- Added console-commands autocomplete support for when the AddSpecial command is used for alterations, artifacts and forge-assisted blueprints.
+
+
+
 Version 3.2.2
 Save Compatible
 

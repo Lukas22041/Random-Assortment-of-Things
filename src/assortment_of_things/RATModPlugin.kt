@@ -40,7 +40,9 @@ import assortment_of_things.misc.escort.EscortRefitButton
 import com.fs.starfarer.api.util.DelayedActionScript
 import com.thoughtworks.xstream.XStream
 import lunalib.lunaUtil.campaign.LunaCampaignRenderer
+import java.lang.Exception
 import java.util.*
+
 
 
 class RATModPlugin : BaseModPlugin() {
@@ -51,6 +53,17 @@ class RATModPlugin : BaseModPlugin() {
 
         var isHalloween = false
 
+    }
+
+    init {
+        //Provide a better crash message when using an outdated version, not just the "missing interface" one
+        var console = Global.getSettings().modManager.getModSpec("lw_console")
+        if (console != null) {
+            if (console.version.contains("2024") || console.version.contains("2025") || console.version.contains("2023")) {
+                throw Exception("\n\nYour version of console commands (${console.version}) is outdated. " +
+                        "Version 4.0.4 or above is required. Older versions used a different version format, and mod-managers may not link to the correct version. \n")
+            }
+        }
     }
 
     override fun onAboutToStartGeneratingCodex() {

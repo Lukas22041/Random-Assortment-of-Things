@@ -1,0 +1,2 @@
+listenerId,listenerClass,priority
+RATAddSpecialSuggestionsListener,assortment_of_things.misc.RATAddSpecialSuggestionListener,0
