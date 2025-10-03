@@ -25,7 +25,7 @@ class RATAddSpecialSuggestionListener : CommandListenerWithSuggestion {
         val specialItemID = previous[0]
 
         //Check for matching special item
-        when (specialItemID.lowercase(Locale.getDefault())) {
+        when (specialItemID.lowercase()) {
             "rat_alteration_install" -> suggestions.addAll(Global.getSettings().allHullModSpecs.filter { it.effect is BaseAlteration }.map { it.id })
             "rat_consumeable_industry" -> suggestions.addAll(Global.getSettings().allIndustrySpecs.filter { it.hasTag("rat_consumeable_industry" ) }.map { it.id })
             "rat_artifact" -> suggestions.addAll(ArtifactUtils.artifacts.map { it.id })
