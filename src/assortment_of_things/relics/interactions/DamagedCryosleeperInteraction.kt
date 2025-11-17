@@ -29,9 +29,9 @@ class DamagedCryosleeperInteraction : RATInteractionPlugin() {
 
                 textPanel.addPara("As your fleet moves in closer, new energy signatures are detected near the cryosleeper.")
 
-                textPanel.addPara("An automated drone is firing upon any kind of debris in its view. It appears that what sealed the fate of this ship is a defect in a protocol of its voyages defender.")
+                textPanel.addPara("An automated drone is firing upon any kind of debris in its view. It appears that what sealed the fate of this ship is a defect in a protocol of its voyage's defender.")
 
-                textPanel.addPara("Any attempt to approach will most likely result in it as picking us as the next piece of \"debris\".")
+                textPanel.addPara("Any attempt to approach will most likely result in it picking us as the next piece of \"debris\".")
 
                 triggerDefenders()
 
@@ -47,10 +47,10 @@ class DamagedCryosleeperInteraction : RATInteractionPlugin() {
 
         clearOptions()
 
-        textPanel.addPara("Once the threat has been disabled the crew makes its way towards the cryosleepers interior. As expected the cryopods life-support has long gone offline, not a single one showing a signal of life.")
+        textPanel.addPara("Once the threat has been disabled the crew makes its way towards the cryosleeper's interior. As expected the cryopods' life-support has long gone offline, not a single one showing a signal of life.")
 
 
-        textPanel.addPara("This cryosleeper seems rather well supplied with equipment for the construction of an innitial colony. It is especialy well prepared for the habitation of a planet with few ressources.")
+        textPanel.addPara("This cryosleeper seems rather well supplied with equipment for the construction of an initial colony. It is especialy well prepared for the habitation of a planet with few resources.")
 
 
         createOption("Salvage the cryosleeper") {
