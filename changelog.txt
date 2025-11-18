@@ -1,3 +1,11 @@
+Version 3.2.4
+
+- Made the settlement monthly report intel notification clickable.
+- Implemented grammatical fixes to the damaged cryosleeper interaction by Aussiemon
+- Fixed a bug that made the Chronos Core apply the timeflow effect twice, giving a much higher increase than intended.
+
+
+
 Version 3.2.3
 
 - Added console-commands autocomplete support for when the AddSpecial command is used for alterations, artifacts and forge-assisted blueprints.

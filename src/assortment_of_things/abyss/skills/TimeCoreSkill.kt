@@ -40,7 +40,7 @@ class TimeCoreSkill : RATBaseShipSkill() {
             }
         }
 
-        stats.timeMult.modifyMult(modID, 1.15f)
+        //stats.timeMult.modifyMult(modID, 1.15f)
         stats.acceleration.modifyMult(modID, 1.25f)
         stats.deceleration.modifyMult(modID, 1.25f)
         stats.turnAcceleration.modifyMult(modID, 1.25f)
@@ -48,8 +48,8 @@ class TimeCoreSkill : RATBaseShipSkill() {
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
-        stats!!.timeMult.unmodify(modID)
-        stats.acceleration.unmodify(modID)
+        //stats!!.timeMult.unmodify(modID)
+        stats!!.acceleration.unmodify(modID)
         stats.deceleration.unmodify(modID)
         stats.turnAcceleration.unmodify(modID)
         stats.zeroFluxSpeedBoost.unmodify(modID)

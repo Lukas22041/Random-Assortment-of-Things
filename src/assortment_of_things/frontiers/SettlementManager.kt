@@ -4,6 +4,7 @@ import assortment_of_things.frontiers.submarkets.SettlementStoragePlugin
 import assortment_of_things.misc.RATSettings
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.comm.CommMessageAPI
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.campaign.econ.MonthlyReport
 import com.fs.starfarer.api.campaign.listeners.EconomyTickListener
@@ -210,7 +211,7 @@ class SettlementManager(var settlement: SettlementData) : EveryFrameScript, Econ
         }
 
         if (!next.isEmpty) {
-            Global.getSector().campaignUI.addMessage(settlement.intel)
+            Global.getSector().campaignUI.addMessage(settlement.intel, CommMessageAPI.MessageClickAction.INTEL_TAB)
         }
 
         settlement.previousMonthsProduction.clear()
