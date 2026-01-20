@@ -60,7 +60,7 @@ class ComraderyInteraction(var factionID: String) : RATInteractionPlugin() {
             Global.getSector().playerFleet.fleetData.addOfficer(person)
             closeDialog()
         }
-        optionPanel.addOptionConfirmation("Confirm", "Are you sure you want to finish the creation of this officer? It can not be changed again at a later point.", "Confirm", "Back")
+        optionPanel.addOptionConfirmation("Confirm", "Are you sure you want to finish the creation of this officer? It cannot be changed later.", "Confirm", "Back")
     }
 
     fun refreshScreen() {
