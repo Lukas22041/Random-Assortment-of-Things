@@ -5,6 +5,7 @@ import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaActivator
 import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaRenderer
+import assortment_of_things.abyss.shipsystem.activators.PrimordialSeaRenderer.Companion
 import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.StateBasedTimer
 import assortment_of_things.misc.getAndLoadSprite
@@ -759,32 +760,49 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             vignette.render(viewport!!.llx - (offset * 0.5f), viewport!!.lly - (offset * 0.5f))
 
 
-            /*if (ShaderLib.getScreenTexture() != 0 && activateZone) {
-                var screenLoc = ShaderLib.transformWorldToScreen(ship.location)
-                var screenLocUV = ShaderLib.transformScreenToUV(screenLoc)
+            if (ShaderLib.getScreenTexture() != 0 && activateZone) {
+                // World-space center
+                val worldCenter = ship.location
 
-                var secPoint = MathUtils.getPointOnCircumference(ship.location, radius-2, 0f)
-                var secPointScreen = ShaderLib.transformWorldToScreen(secPoint)
-                var secPointsUV = ShaderLib.transformScreenToUV(secPointScreen)
+                // World-space point on the circle (same radius as your system)
+                val radiusWorld = radius // whatever your system range is, in world units
+                val worldEdge = MathUtils.getPointOnCircumference(worldCenter, radiusWorld, 0f)
 
-                var pointDist = MathUtils.getDistance(screenLocUV, secPointsUV)
+                // Screen-space positions (pixels)
+                val screenCenter = ShaderLib.transformWorldToScreen(worldCenter)
+                val screenEdge = ShaderLib.transformWorldToScreen(worldEdge)
 
-                var noiseMult = 1f
-                if (Global.getCombatEngine().isSimulation) noiseMult = 0.5f;
+                // Radius in *screen pixels*
+                val radiusPx = MathUtils.getDistance(screenCenter, screenEdge)
 
-                ShaderLib.beginDraw(PrimordialSeaRenderer.shader);
+                // Center in UV space (RTT UV, matching gl_TexCoord)
+                val centerUV = ShaderLib.transformScreenToUV(screenCenter)
+
+                val screenWidth = Global.getSettings().screenWidthPixels
+                val screenHeight = Global.getSettings().screenHeightPixels
+
+                ShaderLib.beginDraw(PrimordialSeaRenderer.shader)
+
                 GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "intensity"), 0.5f)
 
-                GL20.glUniform2f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "screenLocUV"), screenLocUV.x, screenLocUV.y)
-                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "range"), pointDist)
+                GL20.glUniform2f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "centerUV"), centerUV.x, centerUV.y)
 
-                GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0);
-                GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture());
+                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "radiusPx"), radiusPx)
 
-                GL11.glDisable(GL11.GL_BLEND);
-                ShaderLib.screenDraw(ShaderLib.getScreenTexture(), GL13.GL_TEXTURE0 + 0)
+                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "screenWidth"), screenWidth)
+                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "screenHeight"), screenHeight)
+
+                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "visibleU"), ShaderLib.getVisibleU())
+                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "visibleV"), ShaderLib.getVisibleV())
+
+                GL13.glActiveTexture(GL13.GL_TEXTURE0)
+                GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture())
+
+                GL11.glDisable(GL11.GL_BLEND)
+                ShaderLib.screenDraw(ShaderLib.getScreenTexture(), GL13.GL_TEXTURE0)
+
                 ShaderLib.exitDraw()
-            }*/
+            }
         }
 
         if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER && (phase == Phases.P2 || phase == Phases.P3) && ship.isAlive) {

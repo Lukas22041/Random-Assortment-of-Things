@@ -1,31 +1,49 @@
-
-
 uniform sampler2D tex;
-vec2 texCoord = gl_TexCoord[0].xy;
 
-uniform vec2 screenLocUV;
-uniform float range;
+// Center of the circle in *UV* space (RTT UV, same as gl_TexCoord)
+uniform vec2 centerUV;
+
+// Radius of the circle in *screen pixels*
+uniform float radiusPx;
+
+// Screen size in pixels
+uniform float screenWidth;
+uniform float screenHeight;
+
+// Visible portion of the RTT texture (from ShaderLib)
+uniform float visibleU;
+uniform float visibleV;
+
 uniform float intensity;
 
 void main() {
-	vec4 col = texture2D(tex, texCoord);
+    vec2 texCoord = gl_TexCoord[0].xy;
 
-	float dist = sqrt(pow(texCoord.x - screenLocUV.x, 2.0) + pow(texCoord.y - screenLocUV.y, 2.0));
+    // Convert UV delta to *screen pixels*
+    // texCoord.x spans [0, visibleU] over [0, screenWidth]
+    // texCoord.y spans [0, visibleV] over [0, screenHeight]
+    vec2 dUV = texCoord - centerUV;
 
-	if (dist <= range) {
-		float b = (col.r + col.g + col.b) / 3.0;
+    vec2 dPx = vec2(
+        dUV.x * (screenWidth  / visibleU),
+        dUV.y * (screenHeight / visibleV)
+    );
 
-		col.r *= 1.0 - 0.1 * intensity;
-		col.g *= 1.0 - 0.1 * intensity;
-		col.b *= 1.0 - 0.1 * intensity;
+    float distPx = length(dPx);
 
-		col.r += b * 0.4 * intensity;
-		col.g += b * 0.0 * intensity;
-		col.b += b * 0.75 * intensity;
-	} else {
-		
-	}
+    vec4 col = texture2D(tex, texCoord);
 
-	gl_FragColor = col;
+    if (distPx <= radiusPx) {
+        float b = (col.r + col.g + col.b) / 3.0;
 
+        col.r *= 1.0 - 0.1 * intensity;
+        col.g *= 1.0 - 0.1 * intensity;
+        col.b *= 1.0 - 0.1 * intensity;
+
+        col.r += b * 0.4 * intensity;
+        col.g += b * 0.0 * intensity;
+        col.b += b * 0.75 * intensity;
+    }
+
+    gl_FragColor = col;
 }

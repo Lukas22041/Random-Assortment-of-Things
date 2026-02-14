@@ -5,7 +5,6 @@ import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
-import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
@@ -21,11 +20,9 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL13
 import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
-import org.magiclib.kotlin.setAlpha
 import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
 import java.util.*
-import kotlin.collections.ArrayList
 
 class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
@@ -475,35 +472,51 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
         var segments = 100
 
         if (layer == CombatEngineLayers.JUST_BELOW_WIDGETS) {
-           /* if (ShaderLib.getScreenTexture() != 0) {
+            if (ShaderLib.getScreenTexture() != 0) {
+                // World-space center
+                val worldCenter = ship.location
 
+                // World-space point on the circle (same radius as your system)
+                val radiusWorld = radius // whatever your system range is, in world units
+                val worldEdge = MathUtils.getPointOnCircumference(worldCenter, radiusWorld, 0f)
 
+                // Screen-space positions (pixels)
+                val screenCenter = ShaderLib.transformWorldToScreen(worldCenter)
+                val screenEdge = ShaderLib.transformWorldToScreen(worldEdge)
 
-                var screenLoc = ShaderLib.transformWorldToScreen(ship.location)
-                var screenLocUV = ShaderLib.transformScreenToUV(screenLoc)
+                // Radius in *screen pixels*
+                val radiusPx = MathUtils.getDistance(screenCenter, screenEdge)
 
-                var secPoint = MathUtils.getPointOnCircumference(ship.location, radius-2, 0f)
-                var secPointScreen = ShaderLib.transformWorldToScreen(secPoint)
-                var secPointsUV = ShaderLib.transformScreenToUV(secPointScreen)
+                // Center in UV space (RTT UV, matching gl_TexCoord)
+                val centerUV = ShaderLib.transformScreenToUV(screenCenter)
 
-                var pointDist = MathUtils.getDistance(screenLocUV, secPointsUV)
+                val screenWidth = Global.getSettings().screenWidthPixels
+                val screenHeight = Global.getSettings().screenHeightPixels
 
-                var noiseMult = 1f
-                if (Global.getCombatEngine().isSimulation) noiseMult = 0.5f;
+                ShaderLib.beginDraw(shader)
 
-                ShaderLib.beginDraw(shader);
                 GL20.glUniform1f(GL20.glGetUniformLocation(shader, "intensity"), 1f)
 
-                GL20.glUniform2f(GL20.glGetUniformLocation(shader, "screenLocUV"), screenLocUV.x, screenLocUV.y)
-                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "range"), pointDist)
+                GL20.glUniform2f(GL20.glGetUniformLocation(shader, "centerUV"), centerUV.x, centerUV.y)
 
-                GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0);
-                GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture());
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "radiusPx"), radiusPx)
 
-                GL11.glDisable(GL11.GL_BLEND);
-                ShaderLib.screenDraw(ShaderLib.getScreenTexture(), GL13.GL_TEXTURE0 + 0)
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "screenWidth"), screenWidth)
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "screenHeight"), screenHeight)
+
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "visibleU"), ShaderLib.getVisibleU())
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "visibleV"), ShaderLib.getVisibleV())
+
+                GL13.glActiveTexture(GL13.GL_TEXTURE0)
+                GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture())
+
+                GL11.glDisable(GL11.GL_BLEND)
+                ShaderLib.screenDraw(ShaderLib.getScreenTexture(), GL13.GL_TEXTURE0)
+
                 ShaderLib.exitDraw()
-            }*/
+            }
+
+
         }
 
         if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER) {
