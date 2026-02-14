@@ -1,3 +1,16 @@
+Version 3.3.0
+
+- Slightly reduced the size of the abyssal depths.
+- Reduced the average amount of abyssal fleets a little.
+- Added a consumable to the abyssal depths that can reveal random parts of the map when used, mostly found on transmitters.
+- Reading the "blackout" log on the abyssal research complex now reveals the primordial catalysts location.
+- The undiscovered primordial catalyst now does occasional sensor pings that reach slightly beyond the biome.
+- The primordial catalyst now gets the "!" indicator on the map when discovered and not activated.
+- The Exoship should no longer get stuck targeting IndEvo planetoids.
+- Made the Abyss Custom start independent of MagicLib achivements being enabled.
+
+
+
 Version 3.2.4
 
 - Made the settlement monthly report intel notification clickable.

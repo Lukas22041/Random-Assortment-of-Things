@@ -2,6 +2,7 @@ package assortment_of_things.abyss.procgen.biomes
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.items.AbyssalSurveyData
 import assortment_of_things.abyss.items.cores.officer.SeraphCore
 import assortment_of_things.abyss.misc.FlickerUtilV2Abyssal
 import assortment_of_things.abyss.procgen.*
@@ -119,6 +120,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
 
         var complex = AbyssProcgenUtils.spawnEntity(system, this,"rat_abyss_research_complex")
         complex.setCircularOrbit(orbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), orbit.distance, orbit.orbitDays)
+        complex.addTag(AbyssalSurveyData.TAG_MAJOR_ENTITY)
 
         var faction = "rat_abyssals_solitude"
         var fleet = Global.getFactory().createEmptyFleet(faction, "Protectors",false)
@@ -164,7 +166,7 @@ class SeaOfSolitude() : BaseAbyssBiome() {
         //Spawn Orbital fleets around lightsources
         for (lightsource in majorLightsources) {
             var maxFleets = 2
-            var spawnChancePer = /*0.75f*/ 0.66f
+            var spawnChancePer = /*0.75f*/ 0.5f
             for (i in 0 until maxFleets) {
                 if (random.nextFloat() >= spawnChancePer) continue
                 spawnDefenseFleet(lightsource)

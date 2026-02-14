@@ -3,6 +3,7 @@ package assortment_of_things.abyss.procgen.biomes
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.hyper.AbyssalFracture
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.items.AbyssalSurveyData
 import assortment_of_things.abyss.items.cores.officer.ChronosCore
 import assortment_of_things.abyss.items.cores.officer.CosmosCore
 import assortment_of_things.abyss.procgen.*
@@ -112,6 +113,8 @@ class SeaOfTranquility() : BaseAbyssBiome() {
 
         var shipyard = AbyssProcgenUtils.spawnEntity(system, this,"rat_abyssal_shipyard")
         shipyard.setCircularOrbit(orbit.lightsource, MathUtils.getRandomNumberInRange(0f, 360f), orbit.distance, orbit.orbitDays)
+        shipyard.addTag(AbyssalSurveyData.TAG_MAJOR_ENTITY)
+
 
         var faction = "rat_abyssals"
         var fleet = Global.getFactory().createEmptyFleet(faction, "Protectors",false)
@@ -170,7 +173,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         //Spawn Orbital fleets around lightsources
         for (lightsource in majorLightsources) {
             var maxFleets = 2
-            var spawnChancePer = /*0.75f*/ 0.66f
+            var spawnChancePer = /*0.75f*/ 0.5f
             for (i in 0 until maxFleets) {
                 if (random.nextFloat() >= spawnChancePer) continue
                 spawnDefenseFleet(lightsource)

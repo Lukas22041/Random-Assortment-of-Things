@@ -2,12 +2,15 @@ package assortment_of_things.abyss.interactions.solitude
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.procgen.AbyssProcgenUtils
+import assortment_of_things.abyss.procgen.MapRevealerScript
 import assortment_of_things.misc.RATInteractionPlugin
 import assortment_of_things.misc.addPara
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.DropData
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageEntity
 import com.fs.starfarer.api.loading.Description
+import com.fs.starfarer.api.ui.MapParams
+import com.fs.starfarer.api.ui.MarkerData
 import com.fs.starfarer.api.util.Misc
 import org.magiclib.kotlin.getSalvageSeed
 import java.awt.Color
@@ -16,12 +19,18 @@ import kotlin.collections.ArrayList
 
 class AbyssalResearchComplexInteraction : RATInteractionPlugin() {
     override fun init() {
+
         if (AbyssUtils.isAnyFleetTargetingPlayer())
         {
             textPanel.addPara("As there are currently hostile targets following the fleet's steps, safe docking at the station seems impossible.")
             addLeaveOption()
             return
         }
+
+
+
+
+
 
         textPanel.addPara("Your fleet approaches the abyssal research complex.")
 
@@ -90,9 +99,13 @@ class AbyssalResearchComplexInteraction : RATInteractionPlugin() {
             para.setHighlightColors(Color(255, 0, 50))
 
             textPanel.addTooltip()
+
+            displayBlackoutLocation()
+
         }
 
         createOption("Salvage and Leave") {
+            MapRevealerScript.tempEnableReveal = false
             clearOptions()
 
             var random = Random(interactionTarget.getSalvageSeed())
@@ -146,6 +159,11 @@ class AbyssalResearchComplexInteraction : RATInteractionPlugin() {
             dropRandom.add(drop)
 
             drop = DropData()
+            drop.chances = 3
+            drop.group = "rat_abyss_transmitter"
+            dropRandom.add(drop)
+
+            drop = DropData()
             drop.chances = 4
             drop.group = "weapons2"
             dropRandom.add(drop)
@@ -163,6 +181,39 @@ class AbyssalResearchComplexInteraction : RATInteractionPlugin() {
         }
 
 
+    }
+
+    fun displayBlackoutLocation() {
+        var catalyst = AbyssUtils.getSystem()?.customEntities?.find { it.customEntitySpec.id == "rat_abyss_primordial_activator" }
+
+        //Reveal on Map
+        MapRevealerScript.tempEnableReveal = true
+        var biomeManager = AbyssUtils.getBiomeManager()
+        var playercell = biomeManager.getCell(catalyst!!)
+        playercell.isDiscovered = true
+
+        var rad = 3
+        playercell.getAround(rad).forEach {
+            it.isDiscovered = true
+            it.getAdjacent().forEach { it.isPartialyDiscovered = true }
+        }
+
+        //Add UI
+        var panel = visualPanel.showCustomPanel(500f, 600f, null)
+        var element = panel.createUIElement(500f, 600f, false)
+        panel.addUIElement(element)
+
+        var params = MapParams()
+        params.location = AbyssUtils.getSystem()
+        var marker = MarkerData(catalyst!!.location, AbyssUtils.getSystem())
+        params.markers = listOf(marker)
+        params.zoomLevel = 10f
+        params.centerOn = catalyst.location
+
+        element.addTitle("Estimated location of the blackouts source")
+        var map = element.createSectorMap(400f, 200f, params, null)
+        map.position.inTL(5f, 20f)
+        element.addComponent(map)
     }
 
 }

@@ -16,6 +16,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator
 import com.fs.starfarer.api.ui.Fonts
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaUtil.LunaCommons
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.achievements.MagicAchievementManager
@@ -151,6 +152,7 @@ class GenesisInteraction : RATInteractionPlugin() {
                 createOption("Leave") {
                     closeDialog()
                     MagicAchievementManager.getInstance().completeAchievement("rat_beatSingularity")
+                    LunaCommons.set("assortment_of_things", "rat_beatSingularity", true)
                 }
 
 

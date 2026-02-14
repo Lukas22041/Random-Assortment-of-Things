@@ -3,6 +3,7 @@ package assortment_of_things.abyss.procgen
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.AbyssSensorEntity
 import assortment_of_things.abyss.entities.light.AbyssalLightsource
+import assortment_of_things.abyss.items.AbyssalSurveyData
 import assortment_of_things.abyss.misc.AbyssTags
 import assortment_of_things.abyss.procgen.biomes.BaseAbyssBiome
 import assortment_of_things.abyss.terrain.BaseFogTerrain
@@ -180,6 +181,7 @@ object AbyssProcgenUtils {
 
     fun createSensorArray(system: StarSystemAPI, biome: BaseAbyssBiome) : SectorEntityToken {
         var array = spawnEntity(system, biome, "rat_abyss_sensor")
+        array.addTag(AbyssalSurveyData.TAG_MAJOR_ENTITY)
         var plugin = array.customPlugin as AbyssSensorEntity
         plugin.biome = biome
         return array
@@ -187,6 +189,7 @@ object AbyssProcgenUtils {
 
     fun createDecayingSensorArray(system: StarSystemAPI, biome: BaseAbyssBiome) : SectorEntityToken {
         var array = spawnEntity(system, biome, "rat_decaying_abyss_sensor")
+        array.addTag(AbyssalSurveyData.TAG_MAJOR_ENTITY)
         var plugin = array.customPlugin as AbyssSensorEntity
         plugin.biome = biome
         return array
@@ -194,6 +197,7 @@ object AbyssProcgenUtils {
 
     fun createResearchStation(system: StarSystemAPI, biome: BaseAbyssBiome) : SectorEntityToken {
         var research = spawnEntity(system, biome, "rat_abyss_research")
+        research.addTag(AbyssalSurveyData.TAG_MAJOR_ENTITY)
         return research
     }
 

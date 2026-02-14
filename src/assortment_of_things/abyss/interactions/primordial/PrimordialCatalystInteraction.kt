@@ -63,6 +63,7 @@ class PrimordialCatalystInteraction : RATInteractionPlugin() {
         createOption("Supply 200 units of abyssal matter to the catalyst") {
             clearOptions()
 
+            Misc.makeUnimportant(interactionTarget, "")
             interactionTarget.addTag("completed")
 
             cargo.removeCommodity("rat_abyssal_matter", 200f)

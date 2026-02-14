@@ -1,6 +1,7 @@
 package assortment_of_things.abyss.procgen
 
 import assortment_of_things.abyss.AbyssUtils
+import assortment_of_things.abyss.items.AbyssalSurveyData
 import assortment_of_things.abyss.procgen.biomes.*
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.entities.ExoshipEntity
@@ -34,8 +35,11 @@ class AbyssBiomeManager {
         else -> 1f
     }
 
-    var width = Math.round(56000 * 2 * scaleMult)
-    var height = Math.round(56000 * 1 * scaleMult)
+    //Old values
+    /*var width = Math.round(56000 * 2 * scaleMult)
+    var height = Math.round(56000 * 1 * scaleMult)*/
+    var width = Math.round(52000 * 2 * scaleMult)
+   var height = Math.round(52000 * 1 * scaleMult)
 
     var rows = width / cellSize
     var columns = height / cellSize
@@ -184,6 +188,8 @@ class AbyssBiomeManager {
         var unclaimedCells = mainBiomes.flatMap { it.getUnclaimedCellsIncludingBorder() }
 
         var sarielOutpost = AbyssProcgenUtils.spawnEntityAtOrbitOrLightsource(system!!, "rat_sariel_outpost", remainingOrbits.filter { it.index != 0 && it.biome !is AbyssalWastes }, unclaimedCells.filter { it.getBiome() !is AbyssalWastes }, false, 0f)
+        sarielOutpost?.addTag(AbyssalSurveyData.TAG_MAJOR_ENTITY)
+
 
         remainingOrbits = mainBiomes.flatMap { it.lightsourceOrbits }
         unclaimedCells = mainBiomes.flatMap { it.getUnclaimedCellsIncludingBorder() }

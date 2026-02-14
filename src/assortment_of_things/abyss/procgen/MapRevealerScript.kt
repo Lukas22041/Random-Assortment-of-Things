@@ -25,6 +25,7 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
     companion object {
         var revealDelay = 0f
         var revealSpeedMult = 1f
+        var tempEnableReveal = false
     }
 
     var interval = IntervalUtil(0.25f, 0.4f)
@@ -56,7 +57,7 @@ class MapRevealerScript(var biomeManager: AbyssBiomeManager) : EveryFrameScript 
             }
         }
 
-        if (Global.getSector().campaignUI.currentCoreTab == CoreUITabId.MAP || RATSettings.enableMinimap!!) {
+        if (Global.getSector().campaignUI.currentCoreTab == CoreUITabId.MAP || RATSettings.enableMinimap!! || tempEnableReveal) {
             for (cell in biomeManager.getCells()) {
                 if (cell.isDiscovered) {
                     if (cell.discoveryFader >= 0) {

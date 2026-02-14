@@ -82,8 +82,8 @@ nothing,rat_abyss_probe,50
 rat_chronos_core,rat_abyss_probe,2.5
 rat_cosmos_core,rat_abyss_probe,2.5
 ,,
-#nothing,rat_abyss_transmitter,100
-#item_rat_abyss_survey,rat_abyss_transmitter,80
+nothing,rat_abyss_transmitter,60
+item_rat_abyss_survey,rat_abyss_transmitter,40
 ,,
 "wpn_:{weaponSize:SMALL, tags:[rat_abyssals, !no_drop, !no_drop_salvage, !no_drop_salvage]}",rat_abyss_weapons,100
 "wpn_:{weaponSize:MEDIUM, tags:[rat_abyssals, !no_drop, !no_drop_salvage]}",rat_abyss_weapons,60

@@ -73,6 +73,11 @@ class AbyssalResearchStationInteraction : RATInteractionPlugin() {
 
                 drop = DropData()
                 drop.chances = 1
+                drop.group = "rat_abyss_transmitter"
+                dropRandom.add(drop)
+
+                drop = DropData()
+                drop.chances = 1
                 drop.group = "rat_abyss_artifact_common"
                 dropRandom.add(drop)
 

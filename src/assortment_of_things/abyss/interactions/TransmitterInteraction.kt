@@ -75,10 +75,10 @@ class TransmitterInteraction : RATInteractionPlugin() {
                 drop.valueMult = 0.5f
                 dropRandom.add(drop)
 
-                /*drop = DropData()
-                drop.chances = 2
+                drop = DropData()
+                drop.chances = 1
                 drop.group = "rat_abyss_transmitter"
-                dropRandom.add(drop)*/
+                dropRandom.add(drop)
 
                 drop = DropData()
                 drop.chances = 1

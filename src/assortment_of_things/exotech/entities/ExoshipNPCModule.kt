@@ -103,6 +103,8 @@ class ExoshipNPCModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnti
 
             for (planet in system.planets) {
                 if (planet.isStar) continue
+                if (planet.hasTag(Tags.NOT_RANDOM_MISSION_TARGET)) continue
+                if (planet.hasTag("indevo_planetoid")) continue
 
                 var weight = baseWeight
 

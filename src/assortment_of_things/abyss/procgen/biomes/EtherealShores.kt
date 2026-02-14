@@ -2,6 +2,7 @@ package assortment_of_things.abyss.procgen.biomes
 
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.light.AbyssalLight
+import assortment_of_things.abyss.items.AbyssalSurveyData
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
@@ -177,6 +178,7 @@ class EtherealShores() : BaseAbyssBiome() {
         val params = DerelictShipEntityPlugin.createVariant("rat_raphael_Hull", Random(), DerelictShipEntityPlugin.getDefaultSModProb())
         val raphael = BaseThemeGenerator.addSalvageEntity(Random(), system, Entities.WRECK, Factions.NEUTRAL, params) as CustomCampaignEntityAPI
         raphael.setDiscoverable(true)
+        raphael.addTag(AbyssalSurveyData.TAG_MAJOR_ENTITY)
 
         raphael.setCircularOrbit(photosphere, MathUtils.getRandomNumberInRange(0f, 360f), 280f, 90f)
 

@@ -3,6 +3,7 @@ package assortment_of_things.abyss.procgen.biomes
 import assortment_of_things.abyss.AbyssUtils
 import assortment_of_things.abyss.entities.light.AbyssalLight
 import assortment_of_things.abyss.procgen.AbyssBiomeManager
+import assortment_of_things.abyss.procgen.scripts.PrimordialCatalystPingScript
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.abyss.terrain.terrain_copy.OldNebulaEditor
 import assortment_of_things.misc.addPara
@@ -245,6 +246,8 @@ class PrimordialWaters() : BaseAbyssBiome() {
         var angle = MathUtils.getRandomNumberInRange(0f, 360f)
         var catalyst = system!!.addCustomEntity("rat_primordial_catalyst_${Misc.genUID()}", "Primordial Catalyst", "rat_abyss_primordial_activator", Factions.NEUTRAL)
         catalyst.setCircularOrbitWithSpin(photosphere, angle, 800f, -120f, 5f, 6f)
+        catalyst.addScript(PrimordialCatalystPingScript(catalyst))
+        Misc.makeImportant(catalyst, "")
 
         this.catalyst = catalyst
 
