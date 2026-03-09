@@ -22,6 +22,7 @@ import org.lwjgl.opengl.GL13
 import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.createDefaultShipAI
+import org.magiclib.kotlin.setAlpha
 import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
 import java.util.*
@@ -267,6 +268,19 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
             segment.hullSize = ShipAPI.HullSize.FIGHTER
             segment.collisionClass = CollisionClass.FIGHTER
+
+            // Handle weapon visibility
+            for (weapon in segment.allWeapons) {
+                if (MathUtils.getDistance(weapon.location, ship.location) <= range && segment.isAlive) {
+                    weapon.sprite.color = Color(255, 255, 255, 255)
+                    weapon.barrelSpriteAPI?.color = Color(255, 255, 255, 255)
+                    weapon.glowSpriteAPI?.color = weapon.glowSpriteAPI?.color!!.setAlpha(255)
+                } else {
+                    weapon.sprite.color = Color(0, 0, 0, 0)
+                    weapon.barrelSpriteAPI?.color = Color(0, 0, 0, 0)
+                    weapon.glowSpriteAPI?.color = weapon.glowSpriteAPI?.color!!.setAlpha(0)
+                }
+            }
 
             for (engine in segment.engineController.shipEngines) {
 
