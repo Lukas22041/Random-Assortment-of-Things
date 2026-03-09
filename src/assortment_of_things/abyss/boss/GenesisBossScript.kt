@@ -760,7 +760,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
             vignette.render(viewport!!.llx - (offset * 0.5f), viewport!!.lly - (offset * 0.5f))
 
 
-            if (ShaderLib.getScreenTexture() != 0 && activateZone) {
+            if (shader != 0 && ShaderLib.getScreenTexture() != 0 && activateZone) {
                 // World-space center
                 val worldCenter = ship.location
 
@@ -781,19 +781,19 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
                 val screenWidth = Global.getSettings().screenWidthPixels
                 val screenHeight = Global.getSettings().screenHeightPixels
 
-                ShaderLib.beginDraw(PrimordialSeaRenderer.shader)
+                ShaderLib.beginDraw(shader)
 
-                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "intensity"), 0.5f)
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "intensity"), 0.5f)
 
-                GL20.glUniform2f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "centerUV"), centerUV.x, centerUV.y)
+                GL20.glUniform2f(GL20.glGetUniformLocation(shader, "centerUV"), centerUV.x, centerUV.y)
 
-                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "radiusPx"), radiusPx)
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "radiusPx"), radiusPx)
 
-                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "screenWidth"), screenWidth)
-                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "screenHeight"), screenHeight)
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "screenWidth"), screenWidth.toFloat())
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "screenHeight"), screenHeight.toFloat())
 
-                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "visibleU"), ShaderLib.getVisibleU())
-                GL20.glUniform1f(GL20.glGetUniformLocation(PrimordialSeaRenderer.shader, "visibleV"), ShaderLib.getVisibleV())
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "visibleU"), ShaderLib.getVisibleU())
+                GL20.glUniform1f(GL20.glGetUniformLocation(shader, "visibleV"), ShaderLib.getVisibleV())
 
                 GL13.glActiveTexture(GL13.GL_TEXTURE0)
                 GL11.glBindTexture(GL11.GL_TEXTURE_2D, ShaderLib.getScreenTexture())

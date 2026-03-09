@@ -78,7 +78,7 @@ class AbyssalSurveyData : BaseSpecialItemPlugin() {
     }
 
     override fun hasRightClickAction(): Boolean {
-        return AbyssUtils.isPlayerInAbyss() && Global.getSector().campaignUI.currentInteractionDialog == null
+        return true
     }
 
     override fun shouldRemoveOnRightClickAction(): Boolean {
