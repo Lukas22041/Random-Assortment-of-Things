@@ -54,12 +54,12 @@ class PrimordialSeaHullmod : BaseHullMod() {
         tooltip.addPara("The spacewarping capabilities of the ship enable the Primordial Sea subsystem. " +
                 "When activated, it can overwrite nearby space with its own pocket dimension." +
                 "\n\n" +
-                "This dimension is home to exotic matter that the ship is able to freely shape into small formations, spawning an infinite number of frigates within. " +
+                "This dimension is home to exotic matter that the ship is able to freely shape into small formations, spawning an infinite number of frigates and serpents within. " +
                 "This matter however is unable to exist within real space, and as such the ships are unable to operate outside of the overwritten reality." +
                 "\n\n" +
-                "Those frigates are controlled by the same core as the ships.",
+                "Those ships are controlled by the same core as the ships.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(),
-            "Primordial Sea", "infinite", "frigates", "unable to operate", "controlled by the same core")
+            "Primordial Sea", "infinite", "frigates and serpents", "unable to operate", "controlled by the same core")
 
         tooltip!!.addLunaElement(0f, 0f).apply {
             render {particleSpawner.renderForeground(element, it)  }

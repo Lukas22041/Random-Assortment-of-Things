@@ -117,6 +117,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
     init {
         logger.level = Level.ALL
+        ship.setCustomData("rat_genesis_boss_active", true)
 
         ship.maxHitpoints *= 1.75f
         ship.mutableStats.armorBonus.modifyMult("rat_genesis_hp_for_more_armor_dmg", 1.4f)

@@ -1,3 +1,10 @@
+Version 3.3.1
+
+- The player-owned genesis now also spawns one azazel with its subsystem, and the subsystems duration has been increased by 4 seconds.
+- Fixed an issue that made some things invisible in the genesis fight.
+
+
+
 Version 3.3.0
 
 - Slightly reduced the size of the abyssal depths.

@@ -400,7 +400,7 @@ class GenesisSerpentHullmod : BaseHullMod() {
 
                         // don't make them go crazy fast, that causes other problems
                         if (near.velocity.length() < 100) {
-                            var force = 300
+                            var force = 200
                             // if they are getting really close, push harder
                             if (MathUtils.isWithinRange(tw.ship!!.location, near.location, 25f)) {
                                 force *= 2

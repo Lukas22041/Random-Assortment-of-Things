@@ -5,6 +5,7 @@ import assortment_of_things.misc.GraphicLibEffects
 import assortment_of_things.misc.getAndLoadSprite
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.ShipwideAIFlags.AIFlags
 import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.impl.campaign.ids.Personalities
@@ -20,9 +21,11 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL13
 import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector2f
+import org.magiclib.kotlin.createDefaultShipAI
 import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
 import java.util.*
+import kotlin.math.min
 
 class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
@@ -31,21 +34,23 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
     var maxRange = 3000f
 
     var apparations = ArrayList<ShipAPI>()
-    var renderer: PrimordialSeaRenderer = PrimordialSeaRenderer(ship, this, apparations)
+    var azazelSegments = ArrayList<ShipAPI>()
+    var renderer: PrimordialSeaRenderer = PrimordialSeaRenderer(ship, this, apparations, azazelSegments)
 
     var aiInterval = IntervalUtil(3f, 3f)
 
 
     init {
         Global.getCombatEngine().addLayeredRenderingPlugin(renderer)
+
     }
 
     override fun getBaseActiveDuration(): Float {
-        return 12f
+        return 16f
     }
 
     override fun getBaseCooldownDuration(): Float {
-        return 20f //20
+        return 22f //20
     }
 
     override fun getBaseInDuration(): Float {
@@ -129,12 +134,16 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         var extra = 0
         if (ship.variant.hasTag("rat_challenge_mode")) extra+=2
 
+        var minus = 0
+        var isBossVersion = ship.customData.get("rat_genesis_boss_active") == true
+        if (!isBossVersion) minus = 1
+
         /*if (ship.mutableStats?.fleetMember?.fleetData?.fleet?.faction?.id == "rat_abyssals_primordials") {
             extra += 1
         }*/
 
-        variants += generateSequence { "rat_genesis_frigate_support_Standard" }.take(4+extra)
-        variants += generateSequence { "rat_genesis_frigate_attack_Standard" }.take(4+extra)
+        variants += generateSequence { "rat_genesis_frigate_support_Standard" }.take(4+extra-minus)
+        variants += generateSequence { "rat_genesis_frigate_attack_Standard" }.take(4+extra-minus)
 
         var takenTargets = ArrayList<ShipAPI>()
 
@@ -162,6 +171,21 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
                 }
             }
         }
+
+        // Only spawn azazel if not in the boss version
+        if (!isBossVersion) {
+            var angle = ship.facing
+            if (Random().nextFloat() >= 0.5f) angle += 40f + MathUtils.getRandomNumberInRange(0f, 30f)
+            else angle -= 40f + MathUtils.getRandomNumberInRange(0f, 30f)
+
+            var azazelLoc = MathUtils.getPointOnCircumference(ship.location, MathUtils.getRandomNumberInRange(600f, 1100f), angle)
+            /*var azazelTarget = CombatUtils.getShipsWithinRange(ship.location, maxRange - 500).filter { !it.isFighter }.randomOrNull()
+            if (azazelTarget != null) {
+                azazelLoc = MathUtils.getRandomPointOnCircumference(azazelTarget.location, azazelTarget.collisionRadius + MathUtils.getRandomNumberInRange(400f, 600f))
+            }*/
+            // Use plugin to avoid ConcurrentModificationException when spawning modular ships
+            Global.getCombatEngine().addPlugin(AzazelSpawnPluginActivator(this, azazelLoc))
+        }
     }
 
 
@@ -173,6 +197,12 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         }
 
         apparations.clear()
+
+        for (segment in azazelSegments) {
+            Global.getCombatEngine().removeEntity(segment)
+        }
+
+        azazelSegments.clear()
     }
 
     override fun getAdvancesWhileDead(): Boolean {
@@ -222,6 +252,52 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
                 apparation.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 0f)
 
                 for (weapon in apparation.allWeapons) {
+                    weapon.stopFiring()
+                    weapon.setRemainingCooldownTo(0.5f)
+                }
+            }
+        }
+
+        // Handle azazel segments with same logic as frigates
+        for (segment in azazelSegments) {
+
+            segment.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_USE_SHIELDS, 1f)
+            segment.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_BACK_OFF, 1f)
+            segment.shield?.toggleOff()
+
+            segment.hullSize = ShipAPI.HullSize.FIGHTER
+            segment.collisionClass = CollisionClass.FIGHTER
+
+            for (engine in segment.engineController.shipEngines) {
+
+                if (MathUtils.getDistance(engine.location, ship.location) <= range && segment.isAlive) {
+                    engine.engineSlot.color = Color(178, 36, 69, 255)
+                    engine.engineSlot.glowAlternateColor = Color(178, 36, 69, 255)
+                    engine.engineSlot.glowSizeMult = 0.8f
+                }
+                else {
+                    engine.engineSlot.color = Color(0, 0, 0, 0)
+                    engine.engineSlot.glowAlternateColor = Color(0, 0, 0, 0)
+                    engine.engineSlot.glowSizeMult = 0f
+                }
+
+            }
+
+            segment.isForceHideFFOverlay = true
+
+            if (MathUtils.getDistance(segment.location, ship.location) <= range - segment.collisionRadius && state != State.OUT ) {
+                segment.isPhased = false
+                segment.isHoldFire = false
+                segment.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 1f)
+                segment.alphaMult = 1f
+            }
+            else {
+                segment.isPhased = true
+                segment.isHoldFireOneFrame = true
+                segment.allWeapons.forEach { it.stopFiring() }
+                segment.mutableStats.hullDamageTakenMult.modifyMult("rat_construct", 0f)
+
+                for (weapon in segment.allWeapons) {
                     weapon.stopFiring()
                     weapon.setRemainingCooldownTo(0.5f)
                 }
@@ -325,6 +401,100 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         return apparation
     }
 
+    fun spawnAzazel(targetLoc: Vector2f) {
+        val variant = Global.getSettings().getVariant("rat_genesis_serpent_head_Standard")
+        val manager = Global.getCombatEngine().getFleetManager(ship!!.owner)
+
+
+        Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = true
+        val azazel = spawnShipOrWingDirectly(variant, FleetMemberType.SHIP, ship!!.owner, ship!!.currentCR, Vector2f(100000f, 100000f), ship!!.facing) ?: return
+        azazel.fleetMember.id = Misc.genUID()
+        Global.getCombatEngine().getFleetManager(ship!!.owner).isSuppressDeploymentMessages = false
+
+        // Copy captain from Genesis ship
+        var ogCaptain = ship.captain
+        var core = Global.getSettings().createPerson()
+        core.portraitSprite = ogCaptain.portraitSprite
+        core.name = ship.captain.name
+
+        for (skill in ogCaptain.stats.skillsCopy) {
+            core.stats.setSkillLevel(skill.skill.id, skill.level)
+        }
+
+        azazel.captain = core
+        manager.removeDeployed(azazel, true)
+
+        // Hide all segments initially
+        azazel.spriteAPI.color = Color(0, 0, 0, 0)
+
+        // Collect all segments (main ship + child modules)
+        var segments = mutableListOf(azazel)
+        segments.addAll(azazel.childModulesCopy)
+
+        for (segment in segments) {
+
+            segment.hullSize = ShipAPI.HullSize.FIGHTER
+            segment.collisionClass = CollisionClass.FIGHTER
+
+            segment.spriteAPI.color = Color(0, 0, 0, 0)
+
+            for (weapon in segment.allWeapons) {
+                weapon.setRemainingCooldownTo(1f)
+
+                weapon.sprite.color = Color(0, 0, 0, 0)
+                weapon.barrelSpriteAPI?.color = Color(0, 0, 0, 0)
+                weapon.glowSpriteAPI?.color = Color(0, 0, 0, 0)
+            }
+
+            for (engine in segment.engineController.shipEngines) {
+                engine.engineSlot.color = Color(0, 0, 0, 0)
+                engine.engineSlot.glowAlternateColor = Color(0, 0, 0, 0)
+                engine.engineSlot.glowSizeMult = 0f
+            }
+
+            azazelSegments.add(segment)
+        }
+
+        Global.getCombatEngine().addEntity(azazel)
+
+        // Add all child segments to combat engine so they render
+        for (segment in azazel.childModulesCopy) {
+            Global.getCombatEngine().addEntity(segment)
+        }
+
+        var loc = findClearLocation(azazel, targetLoc)
+        azazel.location.set(loc)
+        var closest = CombatUtils.getShipsWithinRange(loc, 600f).filter { it != azazel && it.owner != azazel.owner }.randomOrNull()
+        if (closest != null) {
+            var angle = Misc.getAngleInDegrees(azazel.location, closest.location)
+            azazel.facing = angle
+        } else {
+            azazel.facing = ship.facing + MathUtils.getRandomNumberInRange(-20f, 20f)
+        }
+
+        var config = ShipAIConfig()
+
+        config.alwaysStrafeOffensively = true
+        config.backingOffWhileNotVentingAllowed = false
+        config.turnToFaceWithUndamagedArmor = false
+        config.burnDriveIgnoreEnemies = true
+
+        var carrier = variant.isCarrier && !ship.variant.isCombat
+        if (carrier) {
+            config.personalityOverride = Personalities.AGGRESSIVE
+            config.backingOffWhileNotVentingAllowed = true
+        }
+
+        azazel.shipAI = azazel.createDefaultShipAI(config)
+        azazel.shipAI.forceCircumstanceEvaluation()
+
+        azazel.shield?.toggleOff()
+        azazel.aiFlags.setFlag(ShipwideAIFlags.AIFlags.DO_NOT_USE_SHIELDS, 1f)
+        azazel.isHoldFireOneFrame = true
+
+        azazel.addTag("rat_azazel_from_activator")
+    }
+
     fun spawnShipOrWingDirectly(variant: ShipVariantAPI?, type: FleetMemberType?, owner: Int, combatReadiness: Float, location: Vector2f?, facing: Float): ShipAPI? {
         val member = Global.getFactory().createFleetMember(type, variant)
         member.owner = owner
@@ -394,7 +564,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
 
 }
 
-class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActivator, var apparations: List<ShipAPI>) : CombatLayeredRenderingPlugin {
+class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActivator, var apparations: List<ShipAPI>, var azazelSegments: List<ShipAPI>) : CombatLayeredRenderingPlugin {
 
     var sprite = Global.getSettings().getAndLoadSprite("graphics/backgrounds/abyss/Abyss2ForRift.jpg")
     var wormhole = Global.getSettings().getAndLoadSprite("graphics/fx/wormhole.png")
@@ -531,9 +701,9 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
             systemGlow2.renderAtCenter(ship.location.x, ship.location.y)
         }
 
-        startStencil(ship!!, radius, segments)
-
         if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER) {
+            startStencil(ship!!, radius, segments)
+
             systemGlow.setAdditiveBlend()
             systemGlow.alphaMult = (0.8f + (0.2f * fader.brightness))
             systemGlow.angle = ship.facing - 90
@@ -546,9 +716,12 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
 
             doJitter(ship, systemGlow, 0.5f, lastJitterLocations, 5, 2f)
             doJitter(ship, systemGlow, 0.3f, lastSecondJitterLocations, 5, 12f)
+
+            endStencil()
         }
 
         if (layer == CombatEngineLayers.BELOW_PLANETS) {
+            startStencil(ship!!, radius, segments)
 
             sprite.setSize(width, height)
             sprite.color = color
@@ -568,23 +741,19 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
             if (!Global.getCombatEngine().isPaused) wormhole2.angle += 0.05f
             wormhole2.color = Color(50, 0, 255)
             wormhole2.renderAtCenter(x + width / 2, y + height / 2)
-        }
 
-        if (layer == CombatEngineLayers.UNDER_SHIPS_LAYER) {
-            renderShips()
-        }
+            endStencil()
 
-        if (layer == CombatEngineLayers.ABOVE_SHIPS_LAYER) {
-            renderApparationGlow()
-        }
-
-        endStencil()
-
-        if (layer == CombatEngineLayers.BELOW_PLANETS) {
             renderBorder(ship!!, radius, color, segments)
         }
 
+        if (layer == CombatEngineLayers.UNDER_SHIPS_LAYER) {
+            startStencil(ship!!, radius, segments)
 
+            renderShips()
+
+            endStencil()
+        }
 
     }
 
@@ -605,57 +774,22 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
                 apparation.spriteAPI.renderAtCenter(apparation.location.x, apparation.location.y)
                 apparation.spriteAPI.color = Color(0, 0 ,0 ,0)
             }
-
-
-
-
-
-            /*for (weapon in apparation.allWeapons) {
-                weapon.sprite?.alphaMult = 1f
-                weapon.sprite?.renderAtCenter(weapon.location.x, weapon.location.y)
-                weapon.sprite?.alphaMult = 0f
-            }*/
         }
-    }
 
-    fun renderApparationGlow() {
+        // Handle azazel segments with same rendering logic
+        for (segment in azazelSegments) {
 
-        var range = activator.getCurrentRange()
+            if (!segment.isAlive) continue
 
-        for (apparation in apparations ) {
+            var inRange = MathUtils.getDistance(segment.location, ship.location) <= range - segment.collisionRadius
 
-            if (!apparation.isAlive) continue
-
-            var inRange = MathUtils.getDistance(apparation.location, ship.location) <= range - apparation.collisionRadius
-
-            apparation.spriteAPI.color = Color(255, 255, 255, 255)
-
-            var apparationGlow = apparation.customData.get("rat_ship_glow") as SpriteAPI?
-            if (apparationGlow == null) {
-                apparationGlow = Global.getSettings().getAndLoadSprite(apparation.hullSpec.spriteName.replace(".png", "") + "_glow.png")
-                apparation.setCustomData("rat_ship_glow", apparationGlow)
+            if (inRange) {
+                segment.spriteAPI.color = Color(255, 255, 255, 255)
             }
-
-            var lastLocation = apparation.customData.get("rat_apparation_glow_locations") as ArrayList<Vector2f>?
-            if (lastLocation == null) {
-                lastLocation = ArrayList<Vector2f>()
-                apparation.setCustomData("rat_apparation_glow_locations", lastLocation)
-            }
-
-            apparationGlow.setAdditiveBlend()
-            apparationGlow.alphaMult = (0.8f + (0.2f * fader.brightness))
-            apparationGlow.angle = apparation.facing - 90
-            apparationGlow.renderAtCenter(apparation.location.x, apparation.location.y)
-
-            apparationGlow.setAdditiveBlend()
-            apparationGlow.alphaMult = ((0.5f * fader.brightness))
-            apparationGlow.angle = apparation.facing - 90
-            apparationGlow.renderAtCenter(apparation.location.x, apparation.location.y)
-
-            doJitter(apparation, apparationGlow, 0.5f, lastLocation, 5, 3f)
-
-            if (!inRange) {
-                apparation.spriteAPI.color = Color(0, 0, 0, 0)
+            else {
+                segment.spriteAPI.color = Color(255, 255, 255, 255)
+                segment.spriteAPI.renderAtCenter(segment.location.x, segment.location.y)
+                segment.spriteAPI.color = Color(0, 0 ,0 ,0)
             }
         }
     }

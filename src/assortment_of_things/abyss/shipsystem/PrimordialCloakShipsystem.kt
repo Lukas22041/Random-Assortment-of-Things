@@ -32,6 +32,13 @@ class PrimordialCloakShipsystem : BaseShipSystemScript() {
         var player = ship == Global.getCombatEngine().getPlayerShip();
         var id = id + "_" + ship!!.id
 
+        //Activator spawned azazel does not use its shipsystem.
+        if (ship.hasTag("rat_azazel_from_activator")) {
+            if (ship.system.isActive) {
+                ship.system.forceState(ShipSystemAPI.SystemState.COOLDOWN, 0f)
+            }
+            return
+        }
 
         var color = AbyssUtils.GENESIS_COLOR.setAlpha(75)
         var secondaryColor = AbyssUtils.GENESIS_COLOR.setAlpha(75)
