@@ -656,7 +656,8 @@ class PrimordialSeaRenderer(var ship: ShipAPI, var activator: PrimordialSeaActiv
         var segments = 100
 
         if (layer == CombatEngineLayers.JUST_BELOW_WIDGETS) {
-            if (ShaderLib.getScreenTexture() != 0) {
+            if (shader != 0 && ShaderLib.getScreenTexture() != 0) {
+
                 // World-space center
                 val worldCenter = ship.location
 

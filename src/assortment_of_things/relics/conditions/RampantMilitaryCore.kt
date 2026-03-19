@@ -1,17 +1,12 @@
 package assortment_of_things.relics.conditions
 
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.econ.Industry
-import com.fs.starfarer.api.campaign.econ.MarketAPI
-import com.fs.starfarer.api.campaign.econ.MarketImmigrationModifier
 import com.fs.starfarer.api.characters.FullName
 import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.impl.campaign.econ.BaseMarketConditionPlugin
 import com.fs.starfarer.api.impl.campaign.ids.*
-import com.fs.starfarer.api.impl.campaign.population.PopulationComposition
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import lunalib.lunaUtil.LunaCommons
 
 class RampantMilitaryCore : BaseMarketConditionPlugin() {
 
@@ -22,10 +17,13 @@ class RampantMilitaryCore : BaseMarketConditionPlugin() {
 
         //Man i hate Deserialisation
         try {
+            var factionID = Factions.NEUTRAL
+            if (market.factionId != null) factionID = market.factionId
+
             var core = market.memoryWithoutUpdate.get("\$rat_military_core_person") as PersonAPI?
             if (core == null) {
                 core = Global.getFactory().createPerson() as PersonAPI
-                core.setFaction(market.factionId)
+                core.setFaction(factionID)
                 core.name = FullName("Military Core", "", FullName.Gender.ANY)
                 core.portraitSprite = "graphics/portraits/cores/rat_military_core.png"
 
@@ -37,7 +35,7 @@ class RampantMilitaryCore : BaseMarketConditionPlugin() {
                 market.memoryWithoutUpdate.set("\$rat_military_core_person", core)
             }
 
-            core.setFaction(market.factionId)
+            core.setFaction(factionID)
             market.admin = core
             if (market.commDirectory.getEntryForPerson(core) == null) {
                 market.commDirectory.addPerson(core)
