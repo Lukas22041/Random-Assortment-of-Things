@@ -112,8 +112,6 @@ class NeuralShardOfficerScript : EveryFrameScript {
 
             if (member.captain?.hasTag("rat_neuro_shard") == true) {
                 for (skill in member.captain.stats.skillsCopy) {
-                    // setSkillLevel rebuilds all of the officer's skill effects even when the
-                    // level is unchanged, and this runs every frame, so skip skills at 0.
                     if (skill.level != 0f) member.captain.stats.setSkillLevel(skill.skill.id, 0f)
                 }
             }
