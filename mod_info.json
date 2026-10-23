@@ -21,6 +21,10 @@
       "id": "shaderLib",
       "name": "GraphicsLib"
     },
+	{
+      "id": "patchlib",
+      "name": "PatchLib"
+    },
 	#{
     #  "id": "nexerelin",
     #  "name": "Nexerelin"

@@ -92,10 +92,6 @@ class RATModPlugin : BaseModPlugin() {
             isHalloween = true
         }*/
 
-        if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 1 && Calendar.getInstance().get(Calendar.MONTH) == Calendar.APRIL) {
-            WhichModScript.isAprilFirst = true
-        }
-
         if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 31 && Calendar.getInstance().get(Calendar.MONTH) == Calendar.OCTOBER) {
             isHalloween = true
         }
@@ -184,7 +180,6 @@ class RATModPlugin : BaseModPlugin() {
         }
 
         Global.getSector().addTransientScript(AICoreTooltipScript())
-        Global.getSector().addTransientScript(WhichModScript())
         Global.getSector().addTransientScript(CrewConversionScript())
         Global.getSector().addTransientScript(ArtifactUIScript())
         //Global.getSector().addTransientScript(AICoreReplacerScript())

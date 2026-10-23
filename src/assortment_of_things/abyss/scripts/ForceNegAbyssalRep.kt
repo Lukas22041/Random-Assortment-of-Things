@@ -4,6 +4,10 @@ import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.util.IntervalUtil
+import lunalib.lunaUtil.campaign.FactionUtils
+import org.lazywizard.console.BaseCommand
+import org.lazywizard.lazylib.VectorUtils
+import org.lazywizard.lazylib.ui.LazyFont
 import org.magiclib.kotlin.tryGet
 
 class ForceNegAbyssalRep : EveryFrameScript {
@@ -25,7 +29,7 @@ class ForceNegAbyssalRep : EveryFrameScript {
 
             var factions = ArrayList<FactionAPI>()
             for (faction in Global.getSector().allFactions) {
-                if (faction.custom.tryGet<Boolean>("rat_abyss_faction") { false }) {
+                if (faction.custom.optBoolean("rat_abyss_faction", false) ) {
                     factions.add(faction)
                 }
             }
