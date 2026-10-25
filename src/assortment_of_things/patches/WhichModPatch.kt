@@ -21,6 +21,9 @@ import patchlib.api.query.FieldQuery
 import kotlin.text.lastIndex
 import kotlin.text.substring
 
+/**
+ * Patch that modifies the expand tooltip to mention which mod something is from
+ */
 @Patch(target = ClassMatch(type = StandardTooltipV2::class))
 object WhichModPatch {
 

@@ -11,9 +11,7 @@ import assortment_of_things.abyss.scripts.*
 import assortment_of_things.abyss.terrain.AbyssTerrainInHyperspacePlugin
 import assortment_of_things.abyss.terrain.BaseFogTerrain
 import assortment_of_things.artifacts.AddArtifactHullmod
-import assortment_of_things.artifacts.ArtifactUIScript
 import assortment_of_things.artifacts.ArtifactUtils
-import assortment_of_things.campaign.scripts.AICoreDropReplacerScript
 import assortment_of_things.campaign.scripts.ApplyRATControllerToPlayerFleet
 import assortment_of_things.campaign.ui.*
 import assortment_of_things.exotech.ExoUtils
@@ -30,8 +28,6 @@ import lunalib.lunaSettings.LunaSettings
 import org.dark.shaders.light.LightData
 import org.dark.shaders.util.ShaderLib
 import org.dark.shaders.util.TextureData
-import assortment_of_things.campaign.scripts.AICoreReplacerScript
-import assortment_of_things.campaign.scripts.SimUnlockerListener
 import assortment_of_things.exotech.ExoCampaignListener
 import assortment_of_things.exotech.ExotechGenerator
 import assortment_of_things.exotech.terrain.ExotechHyperNebula
@@ -180,8 +176,8 @@ class RATModPlugin : BaseModPlugin() {
         }
 
         Global.getSector().addTransientScript(AICoreTooltipScript())
-        Global.getSector().addTransientScript(CrewConversionScript())
-        Global.getSector().addTransientScript(ArtifactUIScript())
+        //Global.getSector().addTransientScript(CrewConversionScript())
+        //Global.getSector().addTransientScript(ArtifactUIAttacher())
         //Global.getSector().addTransientScript(AICoreReplacerScript())
         //Global.getSector().addTransientListener(AICoreDropReplacerScript())
         Global.getSector().addTransientScript(ApplyRATControllerToPlayerFleet())

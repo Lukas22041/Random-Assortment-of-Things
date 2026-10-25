@@ -4,7 +4,6 @@ import assortment_of_things.artifacts.ui.ArtifactDisplayElement
 import assortment_of_things.artifacts.ui.ArtifactSelectorElement
 import assortment_of_things.artifacts.ui.ArtifactTooltip
 import assortment_of_things.misc.*
-import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CargoStackAPI
 import com.fs.starfarer.api.campaign.CoreUITabId
@@ -22,80 +21,10 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
 import java.awt.Color
 
-class ArtifactUIScript : EveryFrameScript {
+class ArtifactUIPanel(@Transient var fleetPanel: UIPanelAPI? = null) {
 
     @Transient
     var panel: CustomPanelAPI? = null
-
-    @Transient
-    var fleetPanel: UIPanelAPI? = null
-
-    override fun isDone(): Boolean {
-        return false
-    }
-
-    override fun runWhilePaused(): Boolean {
-        return true
-    }
-
-    override fun advance(amount: Float) {
-
-        if (!Global.getSector().isPaused) return
-        if (Global.getSector().campaignUI.currentCoreTab != CoreUITabId.FLEET) return
-
-        if (!RATSettings.enableAbyss!! && !RATSettings.relicsEnabled!!) return //Return if no modules that use artifacts are active
-
-        var state = AppDriver.getInstance().currentState
-        if (state !is CampaignState) return
-
-        var core: UIPanelAPI? = null
-
-        var docked = false
-
-        var dialog = ReflectionUtils.invoke("getEncounterDialog", state)
-        if (dialog != null)
-        {
-            docked = true
-            core = ReflectionUtils.invoke("getCoreUI", dialog) as UIPanelAPI?
-        }
-
-        if (core == null) {
-            core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI?
-        }
-
-        if (core == null) return
-
-
-
-        fleetPanel = ReflectionUtils.invoke("getCurrentTab", core) as UIPanelAPI? ?: return
-        var leftPanel = fleetPanel!!.getChildrenCopy().find { if (it is UIPanelAPI && it.getChildrenCopy().any { it is LabelAPI }) true else false } as UIPanelAPI ?: return
-
-        var children = leftPanel.getChildrenCopy()
-        if (panel != null && children.contains(panel!!)) {
-            return
-        }
-
-        var table = children.find { it is UITable } as UIComponentAPI
-
-        var w = table.getWidth()
-        var h = 60f
-
-        table.position.setYAlignOffset(-h-20f)
-
-        panel = Global.getSettings().createCustom(300f, h, null)
-        leftPanel.addComponent(panel)
-        panel!!.position.aboveLeft(table, 10f)
-
-
-        recreate(panel!!, w, h)
-
-
-        var last = children.filter { it is LabelAPI }.lastOrNull()
-        if (last is UIComponentAPI) {
-            last.position.setYAlignOffset(-10f)
-        }
-
-    }
 
     fun recreateFleetList() {
         if (fleetPanel != null) {
