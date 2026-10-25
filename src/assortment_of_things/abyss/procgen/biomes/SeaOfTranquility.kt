@@ -486,6 +486,7 @@ class SeaOfTranquility() : BaseAbyssBiome() {
         data.iconSystem = iconSystem
         iconSystem.addTag(Tags.THEME_HIDDEN)
         iconSystem.addTag(Tags.SYSTEM_CUT_OFF_FROM_HYPER)
+        iconSystem.addTag(Tags.SYSTEM_ABYSSAL)
         //iconSystem.initNonStarCenter()
         //var nebula = iconSystem.addPlanet("abyss_icon_star", iconSystem.center, "Abyss", "rat_abyss_icon_star_2", 0f, 0f, 0f, 1f)
         var center = iconSystem.initStar("abyss_icon_star", "rat_abyss_hyperspace_icon", 0f, 0f)
