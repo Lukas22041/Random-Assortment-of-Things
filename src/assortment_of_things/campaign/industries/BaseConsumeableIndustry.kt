@@ -15,13 +15,13 @@ abstract class BaseConsumeableIndustry() : BaseIndustry() {
 
     override fun isAvailableToBuild(): Boolean {
         //if (market.faction != Global.getSector().playerFaction) return false
-        if (getStack() != null) return true
-        return false
+        if (getStack() == null) return false
+        return super.isAvailableToBuild()
     }
 
     override fun showWhenUnavailable(): Boolean {
-        if (getStack() != null) return true
-        return false
+        if (getStack() == null) return false
+        return super.showWhenUnavailable()
     }
 
     override fun startBuilding() {

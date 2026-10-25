@@ -77,8 +77,7 @@ class AsteroidMiningIndustry : BaseConsumeableIndustry() {
 
     override fun isAvailableToBuild(): Boolean {
         if (market.faction != Global.getSector().playerFaction) return false
-        if (getStack() != null) return true
-        return false
+        return super.isAvailableToBuild()
     }
 
     override fun showWhenUnavailable(): Boolean {
