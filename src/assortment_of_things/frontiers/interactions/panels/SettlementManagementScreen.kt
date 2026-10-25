@@ -315,7 +315,7 @@ class SettlementManagementScreen(var data: SettlementData, var dialogPlugin: Set
                 tooltip!!.addSpacer(10f)
                 var creditIcon = Global.getSettings().getAndLoadSprite("graphics/icons/frontiers/credit_icon.png")
                 var img2 = tooltip!!.beginImageWithText("graphics/icons/frontiers/credit_icon.png", 48f)
-                var income = resource.getSpec().conditions.get(data.primaryPlanet.market.conditions.find { resource.getSpec().conditions.contains(it.id) }!!.id)
+                var income = resource.getSpec().conditions.get(resource.conditionId)
                 var incomeString = Misc.getDGSCredits(income!!.toFloat())
                 img2.addPara("The richness of this sites resource hotspot promises an estimated income of ${incomeString} credits per month from exports (without refinement).", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${incomeString}")
                 tooltip!!.addImageWithText(0f)
