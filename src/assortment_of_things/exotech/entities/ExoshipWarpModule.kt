@@ -15,6 +15,10 @@ import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
+interface ExoshipWarpListener {
+    fun onWarpFinished()
+}
+
 class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEntityToken) {
 
     enum class State {
@@ -37,13 +41,13 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
 
     fun getMovementModule() = exoship.movement
 
-    var warpListener: (() -> Unit) = @JvmSerializableLambda {}
+    var warpListener: ExoshipWarpListener? = null
 
     var playWarpSoundNextFrame = false
     var framesTilWarpSound = 10
 
     //warp to specific entity to orbit
-    fun warp(entity: SectorEntityToken, withPlayer: Boolean = false, doNotHidePlayer: Boolean = false, listener: () -> Unit = {}) {
+    fun warp(entity: SectorEntityToken, withPlayer: Boolean = false, doNotHidePlayer: Boolean = false, listener: ExoshipWarpListener? = null) {
 
         val loc = MathUtils.getRandomPointOnCircumference(entity.location, entity.radius + 400f)
         var orbit = entity.containingLocation.createToken(Vector2f())
@@ -57,12 +61,12 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
     }
 
     //Warps to starsystem, selects random orbit
-    fun warp(starSystem: StarSystemAPI, withPlayer: Boolean = false, doNotHidePlayer: Boolean = false, listener: () -> Unit = {}) {
+    fun warp(starSystem: StarSystemAPI, withPlayer: Boolean = false, doNotHidePlayer: Boolean = false, listener: ExoshipWarpListener? = null) {
         var orbit = findParkingOrbit(starSystem)
         warp(orbit, starSystem, withPlayer, doNotHidePlayer, false, listener)
     }
 
-    fun doQuestlineWarp(entity: SectorEntityToken, listener: () -> Unit = {}) {
+    fun doQuestlineWarp(entity: SectorEntityToken, listener: ExoshipWarpListener? = null) {
 
         val loc = MathUtils.getRandomPointOnCircumference(entity.location, entity.radius + 400f)
         var orbit = entity.containingLocation.createToken(Vector2f())
@@ -75,7 +79,7 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         warp(orbit, entity.starSystem, false, false, true, listener)
     }
 
-    private fun warp(orbit: SectorEntityToken?, starSystem: StarSystemAPI?, withPlayer: Boolean, doNotHidePlayer: Boolean = false, skipPreperation: Boolean = false, listener: () -> Unit) {
+    private fun warp(orbit: SectorEntityToken?, starSystem: StarSystemAPI?, withPlayer: Boolean, doNotHidePlayer: Boolean = false, skipPreperation: Boolean = false, listener: ExoshipWarpListener?) {
         if (starSystem == null || starSystem == exoshipEntity.containingLocation || orbit == null) return
         if (state != State.Inactive) return
 
@@ -88,7 +92,6 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
         this.doNotHidePlayer = doNotHidePlayer
         this.skipPreperation = skipPreperation
         warpListener = listener
-        if (listener == null) warpListener = { }
 
         destinationSystem = starSystem
 
@@ -395,13 +398,12 @@ class ExoshipWarpModule(var exoship: ExoshipEntity, var exoshipEntity: SectorEnt
             }
 
 
-            if (warpListener != null) warpListener!!()
-
+            val listener = warpListener
+            warpListener = null
             doNotHidePlayer = false
             skipPreperation = false
 
-            warpListener = {  }
-
+            listener?.onWarpFinished()
 
         }
 

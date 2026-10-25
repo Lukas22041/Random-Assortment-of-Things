@@ -3,6 +3,7 @@ package assortment_of_things.exotech.interactions
 import assortment_of_things.exotech.ExoUtils
 import assortment_of_things.exotech.ExotechGenerator
 import assortment_of_things.exotech.entities.ExoshipEntity
+import assortment_of_things.exotech.entities.ExoshipWarpListener
 import assortment_of_things.exotech.intel.ExoshipIntel
 import assortment_of_things.exotech.interactions.exoship.ExoshipRecoveryContactInteraction
 import assortment_of_things.exotech.interactions.questBeginning.ExoshipRemainsIntel
@@ -158,13 +159,17 @@ class ExoshipRemainsInteraction : RATInteractionPlugin() {
                             Global.getSector().playerFleet.getAbility("fracture_jump").cooldownLeft = 99999f
                         }
 
-                        playerPlugin.warpModule.warp(planet, true, true) @JvmSerializableLambda {
-                            playerExoship.addTag(Tags.NON_CLICKABLE)
-                            Global.getSector().getExoData().getExoshipPlugin().warpModule.doQuestlineWarp(planet)  @JvmSerializableLambda {
-                                Global.getSector().getExoData().getExoship().addTag(Tags.NON_CLICKABLE)
-                                Global.getSector().campaignUI.showInteractionDialog(ExoshipRecoveryContactInteraction(), Global.getSector().getExoData().getExoship())
+                        playerPlugin.warpModule.warp(planet, true, true, object : ExoshipWarpListener {
+                            override fun onWarpFinished() {
+                                playerExoship.addTag(Tags.NON_CLICKABLE)
+                                Global.getSector().getExoData().getExoshipPlugin().warpModule.doQuestlineWarp(planet, object : ExoshipWarpListener {
+                                    override fun onWarpFinished() {
+                                        Global.getSector().getExoData().getExoship().addTag(Tags.NON_CLICKABLE)
+                                        Global.getSector().campaignUI.showInteractionDialog(ExoshipRecoveryContactInteraction(), Global.getSector().getExoData().getExoship())
+                                    }
+                                })
                             }
-                        }
+                        })
                     }
                 }
             }
