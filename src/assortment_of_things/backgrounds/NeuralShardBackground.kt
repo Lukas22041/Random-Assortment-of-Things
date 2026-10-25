@@ -112,7 +112,7 @@ class NeuralShardOfficerScript : EveryFrameScript {
 
             if (member.captain?.hasTag("rat_neuro_shard") == true) {
                 for (skill in member.captain.stats.skillsCopy) {
-                    member.captain.stats.setSkillLevel(skill.skill.id, 0f)
+                    if (skill.level != 0f) member.captain.stats.setSkillLevel(skill.skill.id, 0f)
                 }
             }
         }
