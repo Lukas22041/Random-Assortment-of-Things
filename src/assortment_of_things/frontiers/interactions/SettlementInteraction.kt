@@ -4,6 +4,7 @@ import assortment_of_things.frontiers.SettlementData
 import assortment_of_things.frontiers.interactions.panels.SettlementManagementScreen
 import assortment_of_things.misc.RATInteractionPlugin
 import com.fs.starfarer.api.campaign.CoreUITabId
+import com.fs.starfarer.api.campaign.CampaignEventListener
 import com.fs.starfarer.api.campaign.InteractionDialogPlugin
 import org.lwjgl.input.Keyboard
 
@@ -70,6 +71,11 @@ class SettlementInteraction(var data: SettlementData) : RATInteractionPlugin() {
             dialog.interactionTarget = data.primaryPlanet
             dialog.plugin = previousPlugin
             dialog.plugin.init(dialog)
+
+            for (listener in Global.getSector().allListeners) {
+                listener.reportPlayerClosedMarket(data.settlementEntity.market)
+                listener.reportPlayerOpenedMarket(dialog.interactionTarget.market)
+            }
         }
         optionPanel.setShortcut("Back", Keyboard.KEY_ESCAPE, false, false, false, false)
     }
