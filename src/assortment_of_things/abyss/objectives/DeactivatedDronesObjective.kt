@@ -224,7 +224,7 @@ class DeactivatedDronesObjective : BaseBattleObjectiveEffect() {
                     drone.mutableStats.hullDamageTakenMult.unmodify("rat_deactivated_drone")
                     drone.mutableStats.empDamageTakenMult.unmodify("rat_deactivated_drone")
 
-                    drone.shipAI = Global.getSettings().createDefaultShipAI(drone, ShipAIConfig())
+                    drone.shipAI = Global.getSettings().createDefaultShipAI(drone, ShipAIConfig(drone))
                     drone.shipAI.forceCircumstanceEvaluation()
 
                     for (weapon in drone.allWeapons) {

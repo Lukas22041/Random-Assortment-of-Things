@@ -125,7 +125,7 @@ class ThestiaShipsystem : BaseShipSystemScript() {
                 aftershadow.customData.set("rat_shadow_distance", distance)
 
                 if (aftershadow.customData.get("rat_shadow_triggered_active") != true) {
-                    aftershadow.shipAI = Global.getSettings().createDefaultShipAI(aftershadow, ShipAIConfig())
+                    aftershadow.shipAI = Global.getSettings().createDefaultShipAI(aftershadow, ShipAIConfig(aftershadow))
                     aftershadow.shipAI.forceCircumstanceEvaluation()
                 }
 
@@ -245,7 +245,7 @@ class ThestiaShipsystem : BaseShipSystemScript() {
         }
 
         clone.shipAI = null
-        clone.shipAI = Global.getSettings().createDefaultShipAI(clone, ShipAIConfig().apply { personalityOverride = Personalities.RECKLESS })
+        clone.shipAI = Global.getSettings().createDefaultShipAI(clone, ShipAIConfig(clone).apply { personalityOverride = Personalities.RECKLESS })
         clone.shipAI.forceCircumstanceEvaluation()
         clone.alphaMult = 0f
 

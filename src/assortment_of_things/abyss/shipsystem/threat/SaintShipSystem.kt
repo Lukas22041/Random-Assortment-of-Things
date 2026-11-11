@@ -399,7 +399,7 @@ class SaintShipSystem : BaseShipSystemScript() {
                 newShip!!.captain = source.captain
 
                 //HullSize size = ship.getHullSize();
-                val config = ShipAIConfig()
+                val config = ShipAIConfig(newShip)
                 config.alwaysStrafeOffensively = true
                 config.backingOffWhileNotVentingAllowed = false
                 config.turnToFaceWithUndamagedArmor = false

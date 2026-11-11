@@ -44,7 +44,7 @@ class ForgottenPact : SCBaseSkillPlugin() {
         if (Global.getCombatEngine() == null) return
 
         if (ship.isAutomated() && ship != Global.getCombatEngine().playerShip) {
-            var config = ShipAIConfig()
+            var config = ShipAIConfig(ship)
 
             config.alwaysStrafeOffensively = true
             config.backingOffWhileNotVentingAllowed = false

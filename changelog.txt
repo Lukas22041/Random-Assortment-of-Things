@@ -1,3 +1,18 @@
+Version 3.4.0
+
+- Updated to 0.98.5a
+- Added PatchLib as a hard dependency.
+- Added slight performance improvements.
+- Fixed abyssal survey data being usable in the salvage dialog
+- Fixed a bug where running out of fuel near the rat abyss could move you in to a fake starsystem
+- Fixed a bug which sometimes made the which mod feature not work.
+- Fixed a bug where consumeable industries dont show in the industry panel if you dont have enough credits
+- Fixed a crash when hovering over settlement tooltips on terraformed planets.
+- Fixed a save serialisation issue related to the exoship warp
+- Fixed a performance issue with neural shard (fix submitted by ERRORCODE509)
+
+
+
 Version 3.3.1
 
 - The player-owned genesis now also spawns one azazel with its subsystem, and the subsystems duration has been increased by 4 seconds.

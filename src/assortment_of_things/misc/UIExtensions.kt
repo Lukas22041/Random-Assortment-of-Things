@@ -8,7 +8,9 @@ import com.fs.starfarer.api.ui.UIComponentAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 
 fun UIPanelAPI.getChildrenCopy() : List<UIComponentAPI> {
-    return ReflectionUtils.invoke("getChildrenCopy", this) as List<UIComponentAPI>
+    //Used to be needed in 0.98a, lazy fix by just replacing the extension method with the new method instead
+    //return ReflectionUtils.invoke("getChildrenCopy", this) as List<UIComponentAPI>
+    return this.childrenCopy2
 }
 
 fun UIPanelAPI.getChildrenNonCopy() : List<UIComponentAPI>  {

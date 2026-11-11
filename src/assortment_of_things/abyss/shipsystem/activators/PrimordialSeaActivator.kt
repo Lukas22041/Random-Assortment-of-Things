@@ -400,7 +400,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
         }
 
         apparation.captain.setPersonality(Personalities.RECKLESS)
-        apparation.shipAI = Global.getSettings().createDefaultShipAI(apparation, ShipAIConfig().apply { alwaysStrafeOffensively = true })
+        apparation.shipAI = Global.getSettings().createDefaultShipAI(apparation, ShipAIConfig(apparation).apply { alwaysStrafeOffensively = true })
         apparation.shipAI.forceCircumstanceEvaluation()
         apparation.captain.setPersonality(Personalities.RECKLESS)
 
@@ -486,7 +486,7 @@ class PrimordialSeaActivator(var ship: ShipAPI) : MagicSubsystem(ship) {
             azazel.facing = ship.facing + MathUtils.getRandomNumberInRange(-20f, 20f)
         }
 
-        var config = ShipAIConfig()
+        var config = ShipAIConfig(azazel)
 
         config.alwaysStrafeOffensively = true
         config.backingOffWhileNotVentingAllowed = false

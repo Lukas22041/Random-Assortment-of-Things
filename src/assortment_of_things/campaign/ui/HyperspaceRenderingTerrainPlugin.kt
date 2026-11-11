@@ -23,8 +23,8 @@ class HyperspaceRenderingTerrainPlugin : BaseTerrain() {
     var fractureText:LazyFont.DrawableString = font!!.createText("The Abyssal Depths", AbyssUtils.ABYSS_COLOR.setAlpha(255), 800f)
 
 
-    override fun renderOnMapAbove(factor: Float, alphaMult: Float) {
-        super.renderOnMapAbove(factor, alphaMult)
+    override fun renderOnMapAbove(factor: Float, alphaMult: Float, radarMode: Boolean) {
+        super.renderOnMapAbove(factor, alphaMult, radarMode)
 
         if (font == null) {
             font = LazyFont.loadFont(Fonts.INSIGNIA_VERY_LARGE)

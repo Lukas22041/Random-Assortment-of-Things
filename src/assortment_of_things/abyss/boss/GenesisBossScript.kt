@@ -572,7 +572,7 @@ class GenesisBossScript(var ship: ShipAPI) : CombatLayeredRenderingPlugin, HullD
 
 
         apparation.captain.setPersonality(Personalities.RECKLESS)
-        apparation.shipAI = Global.getSettings().createDefaultShipAI(apparation, ShipAIConfig().apply { alwaysStrafeOffensively = true })
+        apparation.shipAI = Global.getSettings().createDefaultShipAI(apparation, ShipAIConfig(apparation).apply { alwaysStrafeOffensively = true })
         apparation.shipAI.forceCircumstanceEvaluation()
         apparation.captain.setPersonality(Personalities.RECKLESS)
 

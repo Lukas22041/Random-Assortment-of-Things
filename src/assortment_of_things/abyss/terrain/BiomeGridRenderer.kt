@@ -23,7 +23,6 @@ class BiomeGridRenderer : BaseTerrain() {
     }*/
 
     override fun renderOnMap(factor: Float, alphaMult: Float) {
-        super.renderOnMapAbove(factor, alphaMult)
 
         var data = AbyssUtils.getData()
         var manager = data.biomeManager
