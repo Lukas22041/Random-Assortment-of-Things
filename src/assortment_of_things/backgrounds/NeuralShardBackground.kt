@@ -22,7 +22,6 @@ import exerelin.utilities.NexFactionConfig
 import lunalib.lunaUtil.LunaCommons
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
-import org.magiclib.kotlin.getOfficerSalary
 import org.magiclib.kotlin.isAutomated
 import org.magiclib.kotlin.isDecentralized
 
@@ -136,7 +135,6 @@ class NeuralShardOfficerScript : EveryFrameScript {
 
         var player = Global.getSector().playerPerson
 
-        person.getOfficerSalary()
         person.name = FullName("${player.nameString}", "", player.gender)
         person.gender = player.gender
         //person.portraitSprite = player.portraitSprite
